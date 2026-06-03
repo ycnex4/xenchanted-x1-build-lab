@@ -487,6 +487,35 @@ Validation after merge:
 
 No source transaction proof validation, external X1 fee indexing, slot finality policy, fee normalization policy, registrar signature validation, Merkle proof, bridge proof, or BLD minting from fees is implemented yet.
 
+## Latest BuildState MVP review checkpoint
+
+The BuildState MVP model review / consolidation milestone was completed and merged into main.
+
+Merge commit:
+
+- 2834ea3 Merge branch 'buildstate-mvp-review'
+
+The milestone adds:
+
+- implementation/buildstate-mvp-review.md
+- consolidated BuildState MVP model overview
+- accounting layer review
+- replay protection review
+- registrar integration review
+- atomicity model review
+- current test coverage summary
+- known exclusions list
+- next recommended milestones
+
+Validation after merge:
+
+- npm run typecheck: passed
+- npm test: passed
+- 16 test files passed
+- 96 tests passed
+
+No TypeScript model logic was changed in this milestone.
+
 ## Current decision
 
 Create documentation first. Do not start code until the core spec, BuildState fields, state transitions, registrar model, indexer models, and economic assumptions are reviewed.
@@ -676,9 +705,9 @@ Protection keys / maps:
 Potential next documents / design areas:
 
 1. Implementation test matrix.
-2. Post-MVP integration policy.
-3. BuildState MVP model review / consolidation milestone.
-4. Registrar / instruction surface review milestone.
+2. Registrar / instruction surface review milestone.
+3. Post-MVP integration policy.
+4. Proof model design milestone.
 5. Review npm audit findings separately.
 6. Continue implementation only with clean typecheck and tests.
 
