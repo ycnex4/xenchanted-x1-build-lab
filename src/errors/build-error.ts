@@ -9,7 +9,9 @@ export enum BuildErrorCode {
   DuplicateRedeemEvent = "DUPLICATE_REDEEM_EVENT",
   InvalidRegistrarMessageKind = "INVALID_REGISTRAR_MESSAGE_KIND",
   InvalidXbpAmount = "INVALID_XBP_AMOUNT",
-  DuplicateXenBurnEvent = "DUPLICATE_XEN_BURN_EVENT"
+  DuplicateXenBurnEvent = "DUPLICATE_XEN_BURN_EVENT",
+  GenesisOriginAlreadyClaimed = "GENESIS_ORIGIN_ALREADY_CLAIMED",
+  GenesisOriginNotEligible = "GENESIS_ORIGIN_NOT_ELIGIBLE"
 }
 
 export class BuildError extends Error {
