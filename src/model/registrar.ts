@@ -4,7 +4,8 @@ export type RegistrarMessageKind =
   | "CORE_REDEEM"
   | "XEN_BURN"
   | "LOCK_XNTD"
-  | "RELOCK_XNTD";
+  | "RELOCK_XNTD"
+  | "X1_FEE_CHECKPOINT";
 
 export interface RegistrarMessage {
   messageId: string;
