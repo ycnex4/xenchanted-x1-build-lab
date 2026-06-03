@@ -1,39 +1,34 @@
 import { BuildError, BuildErrorCode } from "../errors/build-error.js";
-import { type X1Address } from "./build-state.js";
 
-export type RegistrarMessageId = string;
 export type RegistrarMessageKind =
   | "CORE_REDEEM"
   | "XEN_BURN"
-  | "GENESIS_ORIGIN"
   | "LOCK_XNTD"
-  | "UNLOCK_XNTD"
-  | "RELOCK_XNTD"
-  | "FEE_CHECKPOINT";
+  | "RELOCK_XNTD";
 
 export interface RegistrarMessage {
-  messageId: RegistrarMessageId;
+  messageId: string;
   kind: RegistrarMessageKind;
-  submittedBy: X1Address;
+  submittedBy: string;
   createdAt: bigint;
 }
 
 export interface RegistrarState {
-  registrarAuthority: X1Address;
-  processedMessages: Set<RegistrarMessageId>;
+  registrarAuthority: string;
+  processedMessages: Set<string>;
 }
 
-export function createRegistrarState(registrarAuthority: X1Address): RegistrarState {
+export function createRegistrarState(registrarAuthority: string): RegistrarState {
   return {
     registrarAuthority,
-    processedMessages: new Set<RegistrarMessageId>()
+    processedMessages: new Set<string>()
   };
 }
 
 export function acceptRegistrarMessage(
   state: RegistrarState,
   message: RegistrarMessage
-): void {
+): RegistrarMessage {
   if (message.submittedBy !== state.registrarAuthority) {
     throw new BuildError(
       BuildErrorCode.UnauthorizedRegistrar,
@@ -49,4 +44,6 @@ export function acceptRegistrarMessage(
   }
 
   state.processedMessages.add(message.messageId);
+
+  return message;
 }

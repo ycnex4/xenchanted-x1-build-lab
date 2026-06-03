@@ -9,6 +9,7 @@ export * from "./instructions/core-redeem.js";
 export * from "./instructions/genesis-origin-bld.js";
 export * from "./instructions/registrar-core-redeem.js";
 export * from "./instructions/registrar-xen-burn.js";
+export * from "./instructions/registrar-xntd-lock.js";
+export * from "./instructions/x1-fee-contribution.js";
 export * from "./instructions/xen-burn-power.js";
 export * from "./instructions/xntd-lock.js";
-export * from "./instructions/x1-fee-contribution.js";
