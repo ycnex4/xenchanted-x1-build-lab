@@ -291,6 +291,37 @@ Validation after merge:
 
 No registrar XEN_BURN integration, source XEN burn key derivation, Ethereum XEN.burn log proof validation, XEN burn amount normalization policy, Genesis Origin BLD, XNTD lock, or fee checkpoint logic is implemented yet.
 
+## Latest Registrar XEN_BURN checkpoint
+
+The Registrar XEN_BURN message integration milestone was completed and merged into main.
+
+Merge commit:
+
+- 1c97ee7 Merge branch 'registrar-xen-burn'
+
+The milestone adds:
+
+- ApplyRegistrarXenBurnInput type
+- applyRegistrarXenBurn helper
+- XEN_BURN message kind validation
+- registrar authority validation
+- processedMessages duplicate check
+- usedXenBurnEvents duplicate check
+- XEN Burn Power application through acceptXenBurnEvent
+- registrar message recording after successful XEN burn application
+- tests for non-mutating failure paths
+- tests proving BLD and unrelated accounting values are not created
+- implementation/registrar-xen-burn-notes.md
+
+Validation after merge:
+
+- npm run typecheck: passed
+- npm test: passed
+- 11 test files passed
+- 58 tests passed
+
+No source XEN burn key derivation, Ethereum XEN.burn log proof validation, XEN burn amount normalization policy, registrar signature validation, Merkle proof, bridge proof, Genesis Origin BLD, XNTD lock, or fee checkpoint logic is implemented yet.
+
 ## Current decision
 
 Create documentation first. Do not start code until the core spec, BuildState fields, state transitions, registrar model, indexer models, and economic assumptions are reviewed.
@@ -481,8 +512,8 @@ Potential next documents / design areas:
 
 1. Implementation test matrix.
 2. Post-MVP integration policy.
-3. Registrar XEN_BURN message integration milestone.
-4. Genesis Origin BLD milestone.
+3. Genesis Origin BLD milestone.
+4. XNTD lock / relock milestone.
 5. Review npm audit findings separately.
 6. Continue implementation only with clean typecheck and tests.
 
