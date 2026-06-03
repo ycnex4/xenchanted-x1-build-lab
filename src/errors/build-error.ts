@@ -4,7 +4,8 @@ export enum BuildErrorCode {
   DuplicateEthereumIdentity = "DUPLICATE_ETHEREUM_IDENTITY",
   DuplicateBuildId = "DUPLICATE_BUILD_ID",
   UnauthorizedRegistrar = "UNAUTHORIZED_REGISTRAR",
-  DuplicateRegistrarMessage = "DUPLICATE_REGISTRAR_MESSAGE"
+  DuplicateRegistrarMessage = "DUPLICATE_REGISTRAR_MESSAGE",
+  InvalidBldAmount = "INVALID_BLD_AMOUNT"
 }
 
 export class BuildError extends Error {
