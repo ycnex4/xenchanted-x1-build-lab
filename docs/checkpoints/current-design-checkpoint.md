@@ -611,6 +611,41 @@ Validation after merge:
 
 No TypeScript model logic was changed in this milestone.
 
+## Latest Proof model design checkpoint
+
+The Proof model design milestone was completed and merged into main.
+
+Merge commit:
+
+- 00238c0 Merge branch 'proof-model-design'
+
+The milestone adds:
+
+- implementation/proof-model-design.md
+- proof layer boundary definition
+- proof object categories
+- canonical event key policy
+- proof validation stages
+- Core redeem proof direction
+- XEN burn proof direction
+- XNTD lock / relock proof direction
+- X1 fee checkpoint proof direction
+- Genesis Origin eligibility proof direction
+- registrar proof pattern recommendation
+- finality policy
+- proof replay policy
+- failure policy
+- testing policy
+
+Validation after merge:
+
+- npm run typecheck: passed
+- npm test: passed
+- 16 test files passed
+- 96 tests passed
+
+No TypeScript model logic was changed in this milestone.
+
 ## Current decision
 
 Create documentation first. Do not start code until the core spec, BuildState fields, state transitions, registrar model, indexer models, and economic assumptions are reviewed.
@@ -799,10 +834,10 @@ Protection keys / maps:
 
 Potential next documents / design areas:
 
-1. Proof model design milestone.
-2. Storage / serialization model milestone.
-3. API / CLI surface design milestone.
-4. End-to-end scenario tests milestone.
+1. Storage / serialization model milestone.
+2. API / CLI surface design milestone.
+3. End-to-end scenario tests milestone.
+4. External watcher / indexer integration milestone.
 5. Review npm audit findings separately.
 6. Continue implementation only with clean typecheck and tests.
 
