@@ -46,6 +46,7 @@ Create documentation first. Do not start code until the core spec, BuildState fi
 - docs/checkpoints/current-design-checkpoint.md
 - docs/checkpoints/mvp-implementation-sequence.md
 - docs/checkpoints/documentation-consistency-review.md
+- docs/checkpoints/implementation-branch-plan.md
 
 ## Current model summary
 
@@ -187,12 +188,13 @@ Protection keys / maps:
 
 Potential next documents / design areas:
 
-1. Prepare implementation branch plan.
-2. Implementation risk checklist.
-3. Decide post-MVP BLD composability path.
-4. Final pre-implementation checkpoint.
-5. First implementation milestone definition.
-6. Run documentation consistency checklist.
+1. Implementation risk checklist.
+2. Decide post-MVP BLD composability path.
+3. Final pre-implementation checkpoint.
+4. First implementation milestone definition.
+5. Run documentation consistency checklist.
+6. Prepare scaffold branch.
+
 
 
 
