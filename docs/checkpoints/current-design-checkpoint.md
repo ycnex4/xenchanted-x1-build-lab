@@ -192,12 +192,13 @@ Protection keys / maps:
 
 Potential next documents / design areas:
 
-1. Run documentation consistency checklist.
-2. Prepare scaffold branch.
-3. Implementation test matrix.
-4. Post-MVP integration policy.
-5. Start build-mvp-scaffold branch.
-6. Begin implementation only after clean final review.
+1. Prepare scaffold branch.
+2. Implementation test matrix.
+3. Post-MVP integration policy.
+4. Start build-mvp-scaffold branch.
+5. Begin implementation only after clean final review.
+6. Keep documentation and implementation synchronized.
+
 
 
 
