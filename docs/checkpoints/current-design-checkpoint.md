@@ -142,6 +142,35 @@ Validation after merge:
 
 No Core redeem accounting, XEN burn accounting, Genesis Origin, XNTD lock, fee checkpoint, signature validation, Merkle proof, or bridge proof logic is implemented yet.
 
+## Latest Core redeem BLD checkpoint
+
+The Core redeem -> history_bld milestone was completed and merged into main.
+
+Merge commit:
+
+- d5e864e Merge branch 'core-redeem-bld'
+
+The milestone adds:
+
+- applyCoreRedeemBld input type
+- applyCoreRedeemBld transition
+- InvalidBldAmount error
+- positive BLD amount validation
+- historyBld accumulation
+- availableBld accumulation
+- updatedAt update from redeemedAt
+- tests proving unrelated layers do not change
+- implementation/core-redeem-bld-notes.md
+
+Validation after merge:
+
+- npm run typecheck: passed
+- npm test: passed
+- 6 test files passed
+- 30 tests passed
+
+No used_redeem_events replay protection, source redeem key validation, registrar integration, Core NFT proof validation, Genesis Origin BLD, XEN Burn Power, XNTD lock, or fee checkpoint logic is implemented yet.
+
 ## Current decision
 
 Create documentation first. Do not start code until the core spec, BuildState fields, state transitions, registrar model, indexer models, and economic assumptions are reviewed.
@@ -332,8 +361,8 @@ Potential next documents / design areas:
 
 1. Implementation test matrix.
 2. Post-MVP integration policy.
-3. Core redeem -> history_bld milestone.
-4. used_redeem_events replay protection milestone.
+3. used_redeem_events replay protection milestone.
+4. Registrar CORE_REDEEM message integration milestone.
 5. Review npm audit findings separately.
 6. Continue implementation only with clean typecheck and tests.
 
