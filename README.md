@@ -48,6 +48,7 @@ This repository is currently documentation-only.
 - docs/economics/bld-transfer-and-burn-mechanics.md
 - docs/economics/xntd-lock-and-relock.md
 - docs/economics/bld-tokenization-decision.md
+- docs/economics/xntd-lock-proof-model.md
 
 ### Checkpoints
 
@@ -58,6 +59,7 @@ This repository is currently documentation-only.
 The current stage is design and documentation.
 
 No implementation code should be started until the core Build spec, state fields, state transitions, registrar model, and indexer models are reviewed.
+
 
 
 
