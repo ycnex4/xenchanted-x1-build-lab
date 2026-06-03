@@ -23,6 +23,7 @@ Create documentation first. Do not start code until the core spec, BuildState fi
 
 - docs/registrar/ethereum-registrar-concept.md
 - docs/registrar/message-format.md
+- docs/registrar/trust-model-evolution.md
 
 ### Indexers
 
@@ -176,12 +177,13 @@ Protection keys / maps:
 
 Potential next documents / design areas:
 
-1. Registrar trust model evolution.
-2. Program authority / admin model.
-3. Build reader interface details.
-4. BLD tokenization decision.
-5. XNTD lock proof / bridge model.
-6. MVP implementation sequence.
+1. Program authority / admin model.
+2. Build reader interface details.
+3. BLD tokenization decision.
+4. XNTD lock proof / bridge model.
+5. MVP implementation sequence.
+6. Review full documentation consistency.
+
 
 
 
