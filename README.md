@@ -59,12 +59,14 @@ This repository is currently documentation-only.
 - docs/checkpoints/implementation-branch-plan.md
 - docs/checkpoints/implementation-risk-checklist.md
 - docs/checkpoints/final-pre-implementation-checkpoint.md
+- docs/checkpoints/first-implementation-milestone.md
 
 ## Current status
 
 The current stage is design and documentation.
 
 No implementation code should be started until the core Build spec, state fields, state transitions, registrar model, and indexer models are reviewed.
+
 
 
 

@@ -50,6 +50,7 @@ Create documentation first. Do not start code until the core spec, BuildState fi
 - docs/checkpoints/implementation-branch-plan.md
 - docs/checkpoints/implementation-risk-checklist.md
 - docs/checkpoints/final-pre-implementation-checkpoint.md
+- docs/checkpoints/first-implementation-milestone.md
 
 ## Current model summary
 
@@ -191,12 +192,13 @@ Protection keys / maps:
 
 Potential next documents / design areas:
 
-1. First implementation milestone definition.
-2. Run documentation consistency checklist.
-3. Prepare scaffold branch.
-4. Implementation test matrix.
-5. Post-MVP integration policy.
-6. Start build-mvp-scaffold branch.
+1. Run documentation consistency checklist.
+2. Prepare scaffold branch.
+3. Implementation test matrix.
+4. Post-MVP integration policy.
+5. Start build-mvp-scaffold branch.
+6. Begin implementation only after clean final review.
+
 
 
 
