@@ -545,6 +545,38 @@ Validation after merge:
 
 No TypeScript model logic was changed in this milestone.
 
+## Latest Registrar / instruction surface review checkpoint
+
+The Registrar / instruction surface review milestone was completed and merged into main.
+
+Merge commit:
+
+- 0d5421f Merge branch 'registrar-instruction-surface-review'
+
+The milestone adds:
+
+- implementation/registrar-instruction-surface-review.md
+- registrar message kind review
+- registrar state review
+- registrar integration surface table
+- non-registrar instruction surface table
+- model / state helper surface table
+- atomicity pattern review
+- failure behavior review
+- accounting separation review
+- surface consistency observations
+- known exclusions
+- recommended next milestones
+
+Validation after merge:
+
+- npm run typecheck: passed
+- npm test: passed
+- 16 test files passed
+- 96 tests passed
+
+No TypeScript model logic was changed in this milestone.
+
 ## Current decision
 
 Create documentation first. Do not start code until the core spec, BuildState fields, state transitions, registrar model, indexer models, and economic assumptions are reviewed.
@@ -733,10 +765,10 @@ Protection keys / maps:
 
 Potential next documents / design areas:
 
-1. Registrar / instruction surface review milestone.
-2. Post-MVP integration policy.
-3. Proof model design milestone.
-4. Storage / serialization model milestone.
+1. Post-MVP integration policy.
+2. Proof model design milestone.
+3. Storage / serialization model milestone.
+4. API / CLI surface design milestone.
 5. Review npm audit findings separately.
 6. Continue implementation only with clean typecheck and tests.
 
