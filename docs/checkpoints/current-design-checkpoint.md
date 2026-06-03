@@ -322,6 +322,37 @@ Validation after merge:
 
 No source XEN burn key derivation, Ethereum XEN.burn log proof validation, XEN burn amount normalization policy, registrar signature validation, Merkle proof, bridge proof, Genesis Origin BLD, XNTD lock, or fee checkpoint logic is implemented yet.
 
+## Latest Genesis Origin BLD checkpoint
+
+The Genesis Origin BLD milestone was completed and merged into main.
+
+Merge commit:
+
+- c622459 Merge branch 'genesis-origin-bld'
+
+The milestone adds:
+
+- ClaimGenesisOriginBldInput type
+- calculateGenesisOriginBld helper
+- claimGenesisOriginBld transition
+- tiered Genesis Origin allocation
+- duplicate claim protection
+- not-eligible protection
+- GenesisOriginAlreadyClaimed error
+- GenesisOriginNotEligible error
+- tests for all tier thresholds
+- tests proving unrelated layers do not change
+- implementation/genesis-origin-bld-notes.md
+
+Validation after merge:
+
+- npm run typecheck: passed
+- npm test: passed
+- 12 test files passed
+- 66 tests passed
+
+No registrar GENESIS_ORIGIN integration, genesis_origin_claimed external registry, signature validation, Merkle proof, bridge proof, XNTD lock, or fee checkpoint logic is implemented yet.
+
 ## Current decision
 
 Create documentation first. Do not start code until the core spec, BuildState fields, state transitions, registrar model, indexer models, and economic assumptions are reviewed.
@@ -512,8 +543,8 @@ Potential next documents / design areas:
 
 1. Implementation test matrix.
 2. Post-MVP integration policy.
-3. Genesis Origin BLD milestone.
-4. XNTD lock / relock milestone.
+3. XNTD lock / relock milestone.
+4. X1 Fee Contribution checkpoint milestone.
 5. Review npm audit findings separately.
 6. Continue implementation only with clean typecheck and tests.
 
