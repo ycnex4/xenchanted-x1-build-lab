@@ -18,3 +18,4 @@ export * from "./storage/serialization.js";
 export * from "./app/build-service.js";
 export * from "./proofs/proof-types.js";
 export * from "./watchers/watcher-candidates.js";
+export * from "./storage/snapshot.js";
