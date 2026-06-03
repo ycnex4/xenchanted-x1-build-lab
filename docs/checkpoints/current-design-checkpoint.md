@@ -17,6 +17,7 @@ Create documentation first. Do not start code until the core spec, BuildState fi
 - docs/build/buildstate-fields.md
 - docs/build/state-transitions.md
 - docs/build/program-instruction-layout.md
+- docs/build/pda-account-layout.md
 
 ### Registrar
 
@@ -172,10 +173,11 @@ Protection keys / maps:
 
 Potential next documents / design areas:
 
-1. PDA / account layout.
-2. BLD transfer / burn mechanics.
-3. XNTD lock implementation details.
-4. MVP trusted indexer schemas.
-5. Registrar trust model evolution.
-6. Program authority / admin model.
+1. BLD transfer / burn mechanics.
+2. XNTD lock implementation details.
+3. MVP trusted indexer schemas.
+4. Registrar trust model evolution.
+5. Program authority / admin model.
+6. Build reader interface details.
+
 

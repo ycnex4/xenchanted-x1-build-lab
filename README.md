@@ -26,6 +26,7 @@ This repository is currently documentation-only.
 - docs/build/buildstate-fields.md
 - docs/build/state-transitions.md
 - docs/build/program-instruction-layout.md
+- docs/build/pda-account-layout.md
 
 ### Registrar
 
@@ -50,5 +51,6 @@ This repository is currently documentation-only.
 The current stage is design and documentation.
 
 No implementation code should be started until the core Build spec, state fields, state transitions, registrar model, and indexer models are reviewed.
+
 
 
