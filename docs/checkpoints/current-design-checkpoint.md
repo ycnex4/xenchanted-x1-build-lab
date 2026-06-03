@@ -577,6 +577,40 @@ Validation after merge:
 
 No TypeScript model logic was changed in this milestone.
 
+## Latest Post-MVP integration policy checkpoint
+
+The Post-MVP integration policy milestone was completed and merged into main.
+
+Merge commit:
+
+- dc7fbe3 Merge branch 'post-mvp-integration-policy'
+
+The milestone adds:
+
+- implementation/post-mvp-integration-policy.md
+- MVP boundary definition
+- post-MVP integration order
+- proof layer policy
+- storage layer policy
+- serialization policy
+- API / CLI policy
+- registrar integration policy
+- event key policy
+- watcher / indexer policy
+- migration policy
+- security policy
+- testing policy
+- explicit non-goals
+
+Validation after merge:
+
+- npm run typecheck: passed
+- npm test: passed
+- 16 test files passed
+- 96 tests passed
+
+No TypeScript model logic was changed in this milestone.
+
 ## Current decision
 
 Create documentation first. Do not start code until the core spec, BuildState fields, state transitions, registrar model, indexer models, and economic assumptions are reviewed.
@@ -765,10 +799,10 @@ Protection keys / maps:
 
 Potential next documents / design areas:
 
-1. Post-MVP integration policy.
-2. Proof model design milestone.
-3. Storage / serialization model milestone.
-4. API / CLI surface design milestone.
+1. Proof model design milestone.
+2. Storage / serialization model milestone.
+3. API / CLI surface design milestone.
+4. End-to-end scenario tests milestone.
 5. Review npm audit findings separately.
 6. Continue implementation only with clean typecheck and tests.
 
