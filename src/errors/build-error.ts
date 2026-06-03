@@ -5,7 +5,8 @@ export enum BuildErrorCode {
   DuplicateBuildId = "DUPLICATE_BUILD_ID",
   UnauthorizedRegistrar = "UNAUTHORIZED_REGISTRAR",
   DuplicateRegistrarMessage = "DUPLICATE_REGISTRAR_MESSAGE",
-  InvalidBldAmount = "INVALID_BLD_AMOUNT"
+  InvalidBldAmount = "INVALID_BLD_AMOUNT",
+  DuplicateRedeemEvent = "DUPLICATE_REDEEM_EVENT"
 }
 
 export class BuildError extends Error {
