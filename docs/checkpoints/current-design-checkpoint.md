@@ -40,6 +40,7 @@ Create documentation first. Do not start code until the core spec, BuildState fi
 - docs/economics/xntd-lock-and-relock.md
 - docs/economics/bld-tokenization-decision.md
 - docs/economics/xntd-lock-proof-model.md
+- docs/economics/post-mvp-bld-composability.md
 
 ### Checkpoints
 
@@ -189,12 +190,13 @@ Protection keys / maps:
 
 Potential next documents / design areas:
 
-1. Decide post-MVP BLD composability path.
-2. Final pre-implementation checkpoint.
-3. First implementation milestone definition.
-4. Run documentation consistency checklist.
-5. Prepare scaffold branch.
-6. Implementation test matrix.
+1. Final pre-implementation checkpoint.
+2. First implementation milestone definition.
+3. Run documentation consistency checklist.
+4. Prepare scaffold branch.
+5. Implementation test matrix.
+6. Post-MVP integration policy.
+
 
 
 
