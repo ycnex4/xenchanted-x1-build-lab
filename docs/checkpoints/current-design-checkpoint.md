@@ -723,6 +723,42 @@ Validation after merge:
 
 No TypeScript model logic was changed in this milestone.
 
+## Latest End-to-end scenario tests checkpoint
+
+The End-to-end scenario tests milestone was completed and merged into main.
+
+Merge commit:
+
+- 464f6e1 Merge branch 'e2e-scenario-tests'
+
+The milestone adds:
+
+- tests/e2e-scenario.test.ts
+- implementation/e2e-scenario-tests-notes.md
+- full MVP Build lifecycle scenario
+- registrar CORE_REDEEM flow coverage
+- registrar XEN_BURN flow coverage
+- Genesis Origin BLD claim coverage
+- registrar LOCK_XNTD flow coverage
+- registrar RELOCK_XNTD flow coverage
+- registrar X1_FEE_CHECKPOINT flow coverage
+- final BuildState accounting assertions
+- registrar processedMessages assertions
+- Core redeem event replay assertions
+- XEN burn event replay assertions
+- duplicate registrar message rejection checks
+- duplicate Core redeem event rejection checks
+- duplicate XEN burn event rejection checks
+
+Validation after merge:
+
+- npm run typecheck: passed
+- npm test: passed
+- 17 test files passed
+- 98 tests passed
+
+This milestone added real test coverage.
+
 ## Current decision
 
 Create documentation first. Do not start code until the core spec, BuildState fields, state transitions, registrar model, indexer models, and economic assumptions are reviewed.
@@ -911,10 +947,10 @@ Protection keys / maps:
 
 Potential next documents / design areas:
 
-1. End-to-end scenario tests milestone.
-2. External watcher / indexer integration milestone.
-3. Storage implementation milestone.
-4. API / CLI implementation milestone.
+1. External watcher / indexer integration milestone.
+2. Storage implementation milestone.
+3. API / CLI implementation milestone.
+4. Proof object type implementation milestone.
 5. Review npm audit findings separately.
 6. Continue implementation only with clean typecheck and tests.
 
