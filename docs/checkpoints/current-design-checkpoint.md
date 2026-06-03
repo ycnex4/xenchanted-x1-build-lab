@@ -867,6 +867,49 @@ Validation after merge:
 
 This milestone added a real application service layer for future API / CLI use.
 
+## Latest Proof object type implementation checkpoint
+
+The Proof object type implementation milestone was completed and merged into main.
+
+Merge commit:
+
+- f23941b Merge branch 'proof-object-types'
+
+The milestone adds:
+
+- src/proofs/proof-types.ts
+- tests/proof-types.test.ts
+- implementation/proof-object-types-notes.md
+- ProofValidationStatus
+- ProofKind
+- CanonicalEventKey
+- CanonicalEventKeyInput
+- ProofSourceMetadata
+- BaseProof
+- CoreRedeemProof
+- XenBurnProof
+- XntdLockProof
+- XntdRelockProof
+- X1FeeCheckpointProof
+- GenesisOriginEligibilityProof
+- BuildProof union type
+- createCanonicalEventKey helper
+- createProofSourceMetadata helper
+- isValidatedProof helper
+- assertValidatedProof helper
+- canonical event key validation tests
+- proof source metadata tests
+- validated / non-validated proof tests
+
+Validation after merge:
+
+- npm run typecheck: passed
+- npm test: passed
+- 20 test files passed
+- 112 tests passed
+
+This milestone added real proof object type code and tests.
+
 ## Current decision
 
 Create documentation first. Do not start code until the core spec, BuildState fields, state transitions, registrar model, indexer models, and economic assumptions are reviewed.
@@ -1055,10 +1098,10 @@ Protection keys / maps:
 
 Potential next documents / design areas:
 
-1. Proof object type implementation milestone.
-2. Watcher candidate type implementation milestone.
-3. File snapshot storage adapter milestone.
-4. CLI command implementation milestone.
+1. Watcher candidate type implementation milestone.
+2. File snapshot storage adapter milestone.
+3. CLI command implementation milestone.
+4. Proof-to-registrar payload builder milestone.
 5. Review npm audit findings separately.
 6. Continue implementation only with clean typecheck and tests.
 
