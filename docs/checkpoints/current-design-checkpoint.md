@@ -32,6 +32,7 @@ Create documentation first. Do not start code until the core spec, BuildState fi
 ### Economics
 
 - docs/economics/bld-origin-and-native-entry.md
+- docs/economics/bld-transfer-and-burn-mechanics.md
 
 ## Current model summary
 
@@ -173,12 +174,13 @@ Protection keys / maps:
 
 Potential next documents / design areas:
 
-1. BLD transfer / burn mechanics.
-2. XNTD lock implementation details.
-3. MVP trusted indexer schemas.
-4. Registrar trust model evolution.
-5. Program authority / admin model.
-6. Build reader interface details.
+1. XNTD lock implementation details.
+2. MVP trusted indexer schemas.
+3. Registrar trust model evolution.
+4. Program authority / admin model.
+5. Build reader interface details.
+6. BLD tokenization decision.
+
 
 
 
