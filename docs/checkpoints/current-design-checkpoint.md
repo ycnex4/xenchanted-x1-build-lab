@@ -423,6 +423,39 @@ Validation after merge:
 
 No registrar X1_FEE_CHECKPOINT integration, source transaction proof validation, external X1 fee indexing, slot finality policy, fee normalization policy, bridge proof logic, or BLD minting from fees is implemented yet.
 
+## Latest Registrar LOCK_XNTD / RELOCK_XNTD checkpoint
+
+The Registrar LOCK_XNTD / RELOCK_XNTD integration milestone was completed and merged into main.
+
+Merge commit:
+
+- 37ee89a Merge branch 'registrar-xntd-lock'
+
+The milestone adds:
+
+- ApplyRegistrarXntdLockInput type
+- ApplyRegistrarXntdRelockInput type
+- applyRegistrarXntdLock helper
+- applyRegistrarXntdRelock helper
+- LOCK_XNTD message kind support
+- RELOCK_XNTD message kind support
+- registrar authority validation
+- processedMessages duplicate check
+- lock / relock application
+- registrar message recording after successful lock / relock
+- tests for non-mutating failure paths
+- tests proving unrelated accounting values are not created
+- implementation/registrar-xntd-lock-notes.md
+
+Validation after merge:
+
+- npm run typecheck: passed
+- npm test: passed
+- 15 test files passed
+- 88 tests passed
+
+No external XNTD escrow proof validation, registrar signature validation, Merkle proof, bridge proof, unlock flow, epoch parameter source, XNTD amount calculation policy, BLD transfer / burn mechanics, or Registrar X1_FEE_CHECKPOINT integration is implemented yet.
+
 ## Current decision
 
 Create documentation first. Do not start code until the core spec, BuildState fields, state transitions, registrar model, indexer models, and economic assumptions are reviewed.
@@ -613,8 +646,8 @@ Potential next documents / design areas:
 
 1. Implementation test matrix.
 2. Post-MVP integration policy.
-3. Registrar LOCK_XNTD / RELOCK_XNTD integration milestone.
-4. Registrar X1_FEE_CHECKPOINT integration milestone.
+3. Registrar X1_FEE_CHECKPOINT integration milestone.
+4. BuildState MVP model review / consolidation milestone.
 5. Review npm audit findings separately.
 6. Continue implementation only with clean typecheck and tests.
 
