@@ -456,6 +456,37 @@ Validation after merge:
 
 No external XNTD escrow proof validation, registrar signature validation, Merkle proof, bridge proof, unlock flow, epoch parameter source, XNTD amount calculation policy, BLD transfer / burn mechanics, or Registrar X1_FEE_CHECKPOINT integration is implemented yet.
 
+## Latest Registrar X1_FEE_CHECKPOINT checkpoint
+
+The Registrar X1_FEE_CHECKPOINT integration milestone was completed and merged into main.
+
+Merge commit:
+
+- d09a07a Merge branch 'registrar-x1-fee-checkpoint'
+
+The milestone adds:
+
+- ApplyRegistrarX1FeeCheckpointInput type
+- applyRegistrarX1FeeCheckpoint helper
+- X1_FEE_CHECKPOINT message kind support
+- X1_FEE_CHECKPOINT message kind validation
+- registrar authority validation
+- processedMessages duplicate check
+- fee checkpoint application
+- registrar message recording after successful checkpoint application
+- tests for non-mutating failure paths
+- tests proving BLD, XBP, and XNTD commitment are not created or changed
+- implementation/registrar-x1-fee-checkpoint-notes.md
+
+Validation after merge:
+
+- npm run typecheck: passed
+- npm test: passed
+- 16 test files passed
+- 96 tests passed
+
+No source transaction proof validation, external X1 fee indexing, slot finality policy, fee normalization policy, registrar signature validation, Merkle proof, bridge proof, or BLD minting from fees is implemented yet.
+
 ## Current decision
 
 Create documentation first. Do not start code until the core spec, BuildState fields, state transitions, registrar model, indexer models, and economic assumptions are reviewed.
@@ -646,8 +677,8 @@ Potential next documents / design areas:
 
 1. Implementation test matrix.
 2. Post-MVP integration policy.
-3. Registrar X1_FEE_CHECKPOINT integration milestone.
-4. BuildState MVP model review / consolidation milestone.
+3. BuildState MVP model review / consolidation milestone.
+4. Registrar / instruction surface review milestone.
 5. Review npm audit findings separately.
 6. Continue implementation only with clean typecheck and tests.
 
