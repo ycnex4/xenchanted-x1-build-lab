@@ -14,7 +14,10 @@ export enum BuildErrorCode {
   GenesisOriginNotEligible = "GENESIS_ORIGIN_NOT_ELIGIBLE",
   InvalidXntdLockAmount = "INVALID_XNTD_LOCK_AMOUNT",
   XntdCommitmentNotActive = "XNTD_COMMITMENT_NOT_ACTIVE",
-  InsufficientAvailableBldForRelock = "INSUFFICIENT_AVAILABLE_BLD_FOR_RELOCK"
+  InsufficientAvailableBldForRelock = "INSUFFICIENT_AVAILABLE_BLD_FOR_RELOCK",
+  InvalidFeeContributionAmount = "INVALID_FEE_CONTRIBUTION_AMOUNT",
+  InvalidFeeContributionTxCount = "INVALID_FEE_CONTRIBUTION_TX_COUNT",
+  NonIncreasingFeeCheckpointSlot = "NON_INCREASING_FEE_CHECKPOINT_SLOT"
 }
 
 export class BuildError extends Error {
