@@ -685,6 +685,44 @@ Validation after merge:
 
 No TypeScript model logic was changed in this milestone.
 
+## Latest API / CLI surface design checkpoint
+
+The API / CLI surface design milestone was completed and merged into main.
+
+Merge commit:
+
+- fbce4a1 Merge branch 'api-cli-surface-design'
+
+The milestone adds:
+
+- implementation/api-cli-surface-design.md
+- API / CLI boundary definition
+- API surface categories
+- build query API direction
+- build creation API direction
+- registrar message API direction
+- proof submission API direction
+- snapshot / storage API direction
+- health / diagnostics API direction
+- CLI command categories
+- error response policy
+- input validation policy
+- bigint input / output policy
+- idempotency policy
+- security policy
+- logging policy
+- testing policy
+- recommended implementation order
+
+Validation after merge:
+
+- npm run typecheck: passed
+- npm test: passed
+- 16 test files passed
+- 96 tests passed
+
+No TypeScript model logic was changed in this milestone.
+
 ## Current decision
 
 Create documentation first. Do not start code until the core spec, BuildState fields, state transitions, registrar model, indexer models, and economic assumptions are reviewed.
@@ -873,10 +911,10 @@ Protection keys / maps:
 
 Potential next documents / design areas:
 
-1. API / CLI surface design milestone.
-2. End-to-end scenario tests milestone.
-3. External watcher / indexer integration milestone.
-4. Storage implementation milestone.
+1. End-to-end scenario tests milestone.
+2. External watcher / indexer integration milestone.
+3. Storage implementation milestone.
+4. API / CLI implementation milestone.
 5. Review npm audit findings separately.
 6. Continue implementation only with clean typecheck and tests.
 
