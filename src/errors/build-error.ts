@@ -8,7 +8,8 @@ export enum BuildErrorCode {
   InvalidBldAmount = "INVALID_BLD_AMOUNT",
   DuplicateRedeemEvent = "DUPLICATE_REDEEM_EVENT",
   InvalidRegistrarMessageKind = "INVALID_REGISTRAR_MESSAGE_KIND",
-  InvalidXbpAmount = "INVALID_XBP_AMOUNT"
+  InvalidXbpAmount = "INVALID_XBP_AMOUNT",
+  DuplicateXenBurnEvent = "DUPLICATE_XEN_BURN_EVENT"
 }
 
 export class BuildError extends Error {
