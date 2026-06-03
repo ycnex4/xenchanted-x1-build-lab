@@ -646,6 +646,45 @@ Validation after merge:
 
 No TypeScript model logic was changed in this milestone.
 
+## Latest Storage / serialization model checkpoint
+
+The Storage / serialization model milestone was completed and merged into main.
+
+Merge commit:
+
+- 7d4add1 Merge branch 'storage-serialization-model'
+
+The milestone adds:
+
+- implementation/storage-serialization-model.md
+- storage boundary definition
+- persisted state categories
+- BuildState persistence direction
+- registry persistence direction
+- registrar state persistence direction
+- replay state persistence direction
+- bigint serialization policy
+- Set serialization policy
+- null handling policy
+- schema versioning policy
+- snapshot policy
+- migration policy
+- atomic persistence policy
+- atomic write strategy
+- backup strategy
+- integrity check direction
+- storage adapter boundary
+- future serialization tests list
+
+Validation after merge:
+
+- npm run typecheck: passed
+- npm test: passed
+- 16 test files passed
+- 96 tests passed
+
+No TypeScript model logic was changed in this milestone.
+
 ## Current decision
 
 Create documentation first. Do not start code until the core spec, BuildState fields, state transitions, registrar model, indexer models, and economic assumptions are reviewed.
@@ -834,10 +873,10 @@ Protection keys / maps:
 
 Potential next documents / design areas:
 
-1. Storage / serialization model milestone.
-2. API / CLI surface design milestone.
-3. End-to-end scenario tests milestone.
-4. External watcher / indexer integration milestone.
+1. API / CLI surface design milestone.
+2. End-to-end scenario tests milestone.
+3. External watcher / indexer integration milestone.
+4. Storage implementation milestone.
 5. Review npm audit findings separately.
 6. Continue implementation only with clean typecheck and tests.
 
