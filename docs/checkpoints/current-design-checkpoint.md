@@ -28,6 +28,7 @@ Create documentation first. Do not start code until the core spec, BuildState fi
 
 - docs/indexers/x1-fee-contribution.md
 - docs/indexers/xen-burn-power-indexing.md
+- docs/indexers/mvp-trusted-indexer-schemas.md
 
 ### Economics
 
@@ -175,12 +176,13 @@ Protection keys / maps:
 
 Potential next documents / design areas:
 
-1. MVP trusted indexer schemas.
-2. Registrar trust model evolution.
-3. Program authority / admin model.
-4. Build reader interface details.
-5. BLD tokenization decision.
-6. XNTD lock proof / bridge model.
+1. Registrar trust model evolution.
+2. Program authority / admin model.
+3. Build reader interface details.
+4. BLD tokenization decision.
+5. XNTD lock proof / bridge model.
+6. MVP implementation sequence.
+
 
 
 

@@ -37,6 +37,7 @@ This repository is currently documentation-only.
 
 - docs/indexers/x1-fee-contribution.md
 - docs/indexers/xen-burn-power-indexing.md
+- docs/indexers/mvp-trusted-indexer-schemas.md
 
 ### Economics
 
@@ -53,6 +54,7 @@ This repository is currently documentation-only.
 The current stage is design and documentation.
 
 No implementation code should be started until the core Build spec, state fields, state transitions, registrar model, and indexer models are reviewed.
+
 
 
 
