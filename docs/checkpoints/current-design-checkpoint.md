@@ -794,6 +794,42 @@ Validation after merge:
 
 No TypeScript model logic was changed in this milestone.
 
+## Latest Storage implementation checkpoint
+
+The Storage implementation milestone was completed and merged into main.
+
+Merge commit:
+
+- 6a3074c Merge branch 'storage-implementation'
+
+The milestone adds:
+
+- src/storage/serialization.ts
+- tests/storage-serialization.test.ts
+- implementation/storage-implementation-notes.md
+- serialization helpers for BuildState
+- serialization helpers for BuildRegistry
+- serialization helpers for RegistrarState
+- serialization helpers for RedeemEventState
+- serialization helpers for XenBurnEventState
+- STORAGE_SCHEMA_VERSION = 1
+- bigint decimal string serialization
+- Set serialization as sorted string arrays
+- Map serialization as sorted key-value arrays
+- duplicate set entry rejection
+- duplicate buildId rejection during registry deserialization
+- invalid bigint string rejection
+- round-trip tests for MVP state objects
+
+Validation after merge:
+
+- npm run typecheck: passed
+- npm test: passed
+- 18 test files passed
+- 103 tests passed
+
+This milestone added real storage serialization code and tests.
+
 ## Current decision
 
 Create documentation first. Do not start code until the core spec, BuildState fields, state transitions, registrar model, indexer models, and economic assumptions are reviewed.
@@ -982,10 +1018,10 @@ Protection keys / maps:
 
 Potential next documents / design areas:
 
-1. Storage implementation milestone.
-2. API / CLI implementation milestone.
-3. Proof object type implementation milestone.
-4. Watcher candidate type implementation milestone.
+1. API / CLI implementation milestone.
+2. Proof object type implementation milestone.
+3. Watcher candidate type implementation milestone.
+4. File snapshot storage adapter milestone.
 5. Review npm audit findings separately.
 6. Continue implementation only with clean typecheck and tests.
 
