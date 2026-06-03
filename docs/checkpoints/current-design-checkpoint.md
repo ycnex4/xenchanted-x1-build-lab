@@ -830,6 +830,43 @@ Validation after merge:
 
 This milestone added real storage serialization code and tests.
 
+## Latest API / CLI implementation checkpoint
+
+The API / CLI implementation milestone was completed and merged into main.
+
+Merge commit:
+
+- c87bf3c Merge branch 'api-cli-implementation'
+
+The milestone adds:
+
+- src/app/build-service.ts
+- tests/app-build-service.test.ts
+- implementation/api-cli-implementation-notes.md
+- BuildApplicationState
+- AppResult structured result type
+- application state creation helper
+- registered Build creation service helper
+- Build query service helper
+- Genesis Origin BLD service helper
+- registrar Core redeem service helper
+- registrar XEN burn service helper
+- registrar XNTD lock service helper
+- registrar XNTD relock service helper
+- registrar X1 fee checkpoint service helper
+- structured BuildError conversion
+- full lifecycle application service tests
+- non-mutating registrar rejection service test
+
+Validation after merge:
+
+- npm run typecheck: passed
+- npm test: passed
+- 19 test files passed
+- 107 tests passed
+
+This milestone added a real application service layer for future API / CLI use.
+
 ## Current decision
 
 Create documentation first. Do not start code until the core spec, BuildState fields, state transitions, registrar model, indexer models, and economic assumptions are reviewed.
@@ -1018,10 +1055,10 @@ Protection keys / maps:
 
 Potential next documents / design areas:
 
-1. API / CLI implementation milestone.
-2. Proof object type implementation milestone.
-3. Watcher candidate type implementation milestone.
-4. File snapshot storage adapter milestone.
+1. Proof object type implementation milestone.
+2. Watcher candidate type implementation milestone.
+3. File snapshot storage adapter milestone.
+4. CLI command implementation milestone.
 5. Review npm audit findings separately.
 6. Continue implementation only with clean typecheck and tests.
 
