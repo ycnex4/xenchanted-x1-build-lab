@@ -261,6 +261,36 @@ Validation after merge:
 
 No used_xen_burn_events replay protection, XEN burn event key validation, registrar XEN_BURN integration, Ethereum XEN.burn log proof validation, BLD accounting, Genesis Origin BLD, XNTD lock, or fee checkpoint logic is implemented yet.
 
+## Latest used_xen_burn_events checkpoint
+
+The used_xen_burn_events replay protection milestone was completed and merged into main.
+
+Merge commit:
+
+- f29bbf0 Merge branch 'xen-burn-event-replay'
+
+The milestone adds:
+
+- XenBurnEventKey type
+- XenBurnEvent type
+- XenBurnEventState structure
+- createXenBurnEventState factory
+- acceptXenBurnEvent helper
+- usedXenBurnEvents replay protection
+- DuplicateXenBurnEvent error
+- tests proving duplicate xenBurnKey cannot apply XBP twice
+- tests proving invalid XBP amount does not mark xenBurnKey as used
+- implementation/xen-burn-event-replay-notes.md
+
+Validation after merge:
+
+- npm run typecheck: passed
+- npm test: passed
+- 10 test files passed
+- 52 tests passed
+
+No registrar XEN_BURN integration, source XEN burn key derivation, Ethereum XEN.burn log proof validation, XEN burn amount normalization policy, Genesis Origin BLD, XNTD lock, or fee checkpoint logic is implemented yet.
+
 ## Current decision
 
 Create documentation first. Do not start code until the core spec, BuildState fields, state transitions, registrar model, indexer models, and economic assumptions are reviewed.
@@ -451,8 +481,8 @@ Potential next documents / design areas:
 
 1. Implementation test matrix.
 2. Post-MVP integration policy.
-3. used_xen_burn_events replay protection milestone.
-4. Registrar XEN_BURN message integration milestone.
+3. Registrar XEN_BURN message integration milestone.
+4. Genesis Origin BLD milestone.
 5. Review npm audit findings separately.
 6. Continue implementation only with clean typecheck and tests.
 
