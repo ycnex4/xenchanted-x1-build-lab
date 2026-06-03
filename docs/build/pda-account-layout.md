@@ -51,7 +51,7 @@ build_state = PDA(
 
 - owner
 - build_id
-- earned_bld
+- history_bld
 - available_bld
 - origin_bld
 - earned_xbp
@@ -245,7 +245,7 @@ genesis_origin_claim = PDA(
 - identity_hash
 - build_id
 - tiered_origin_bld
-- earned_bld_at_claim
+- history_bld_at_claim
 - claimed_at
 - build_genesis_epoch
 
@@ -401,3 +401,4 @@ They should not need to read:
 - Genesis Origin BLD can be claimed only once per canonical Ethereum/XC identity.
 - Fee checkpoints must move forward by slot.
 - Reader-facing data should remain simple and stable.
+

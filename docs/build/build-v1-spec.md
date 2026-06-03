@@ -60,7 +60,7 @@ Only redeemed Core NFT history creates earned BLD.
 Core redeem
 -> read Core.xenBurned
 -> normalize
--> earned_bld
+-> history_bld
 
 Actions that do not create earned BLD:
 
@@ -91,13 +91,13 @@ Examples:
 
 ### 3.4 Fields
 
-- earned_bld
+- history_bld
 - available_bld
 - origin_bld
 
-### 3.5 earned_bld
+### 3.5 history_bld
 
-earned_bld is the historical BLD earned through redeemed Core NFT history.
+history_bld is the historical BLD earned through redeemed Core NFT history.
 
 It does not decrease when the user sells, spends, or burns available BLD.
 
@@ -123,14 +123,14 @@ It exists to seed Build creation in X1 through BLD burn.
 
 Genesis Origin BLD is a one-time tiered allocation.
 
-It is based on earned_bld at the first valid xEnchanted Crypto history connection during the Build Genesis Epoch.
+It is based on history_bld at the first valid xEnchanted Crypto history connection during the Build Genesis Epoch.
 
 Allocation tiers:
 
-- earned_bld >= 1     -> origin_bld = 11
-- earned_bld >= 11    -> origin_bld = 22
-- earned_bld >= 121   -> origin_bld = 55
-- earned_bld >= 1111  -> origin_bld = 121
+- history_bld >= 1     -> origin_bld = 11
+- history_bld >= 11    -> origin_bld = 22
+- history_bld >= 121   -> origin_bld = 55
+- history_bld >= 1111  -> origin_bld = 121
 
 121 BLD is the maximum Genesis Origin cap, not the default allocation.
 
@@ -167,7 +167,7 @@ available_bld += tiered_origin_bld
 
 It must not increase:
 
-earned_bld
+history_bld
 
 ---
 
@@ -264,7 +264,7 @@ required_xntd_lock = current epoch Core L1 nominal
 ### 7.3 XC commitment activation
 
 xc_commitment_active =
-  earned_bld > 0
+  history_bld > 0
   AND locked_xntd >= required_xntd_lock
 
 ### 7.4 Relock
@@ -273,7 +273,7 @@ When a new epoch begins, the user may relock under the new requirement.
 
 Relock is allowed only if:
 
-available_bld >= earned_bld
+available_bld >= history_bld
 
 This means the user must preserve or restore the earned BLD amount before reducing or updating XNTD commitment.
 
@@ -384,7 +384,7 @@ one source event -> one accounting action -> one Build
 
 - owner
 - build_mint / build_id
-- earned_bld
+- history_bld
 - available_bld
 - origin_bld
 - earned_xbp
@@ -406,4 +406,5 @@ one source event -> one accounting action -> one Build
 ## 11. Short definition
 
 X1 Build is a voluntary NFT-like user object that records independent verified contribution layers: Core redeem contribution, global XEN Burn Power, XNTD commitment, and X1 fee contribution.
+
 

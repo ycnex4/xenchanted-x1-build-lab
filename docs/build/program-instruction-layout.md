@@ -77,7 +77,7 @@ amount_bld_to_burn = 11 BLD
 - User must burn exactly 11 BLD through the approved path.
 - Burn must be final before Build creation is accepted.
 - Build must not already exist for the same canonical identity.
-- This instruction must not create earned_bld.
+- This instruction must not create history_bld.
 - This instruction must not create XEN burn history.
 
 ---
@@ -159,8 +159,8 @@ If eligible:
 
 - Genesis Origin BLD may be granted only once.
 - Genesis Origin BLD may be granted only during Build Genesis Epoch.
-- tiered_origin_bld must match the earned_bld tier.
-- origin_bld must not increase earned_bld.
+- tiered_origin_bld must match the history_bld tier.
+- origin_bld must not increase history_bld.
 
 ## Accounting
 
@@ -187,7 +187,7 @@ This may be handled as ADD_CORE_REDEEM inside process_registrar_message.
 
 ## Updates
 
-- earned_bld
+- history_bld
 - available_bld
 - updated_at
 
@@ -200,7 +200,7 @@ This may be handled as ADD_CORE_REDEEM inside process_registrar_message.
 
 ## Accounting
 
-earned_bld += normalized_bld
+history_bld += normalized_bld
 available_bld += normalized_bld
 
 ---
@@ -265,7 +265,7 @@ This may be handled as LOCK_XNTD inside process_registrar_message.
 
 ## Validation
 
-- Build must have earned_bld > 0.
+- Build must have history_bld > 0.
 - required_xntd_lock must be based on current XC epoch Core L1 nominal.
 - Lock state must be verified.
 - Lock must not create BLD or XBP.
@@ -273,7 +273,7 @@ This may be handled as LOCK_XNTD inside process_registrar_message.
 ## Activation
 
 xc_commitment_active =
-  earned_bld > 0
+  history_bld > 0
   AND locked_xntd >= required_xntd_lock
 
 ---
@@ -337,7 +337,7 @@ This may be handled as RELOCK_XNTD inside process_registrar_message.
 
 Relock is allowed only if:
 
-available_bld >= earned_bld
+available_bld >= history_bld
 
 The new required lock must be based on current XC epoch Core L1 nominal.
 
@@ -404,7 +404,7 @@ This can be used for Build creation or future mechanics.
 ## Validation
 
 - available_bld must be greater than or equal to amount.
-- Burn must not decrease earned_bld.
+- Burn must not decrease history_bld.
 - Burn must not create XBP.
 - Burn reason must be supported.
 
@@ -431,8 +431,8 @@ Transfer available BLD if BLD is implemented as transferable state or tokenized 
 ## Validation
 
 - sender.available_bld must be greater than or equal to amount.
-- Transfer must not decrease sender.earned_bld.
-- Transfer must not increase recipient.earned_bld.
+- Transfer must not decrease sender.history_bld.
+- Transfer must not increase recipient.history_bld.
 - Transfer must not create new BLD supply.
 
 ## Note
@@ -483,7 +483,7 @@ Expose readable Build data for users and other X1 projects.
 
 - owner
 - build_id
-- earned_bld
+- history_bld
 - available_bld
 - origin_bld
 - earned_xbp
@@ -520,12 +520,13 @@ Expose X1 Fee Contribution data in a minimal reader format.
 ## 18. Main invariants
 
 - create_build alone does not create contribution fields.
-- create_build_with_bld_burn does not create earned_bld.
+- create_build_with_bld_burn does not create history_bld.
 - Registrar messages must be replay-protected.
-- Core redeem is the only source of earned_bld.
+- Core redeem is the only source of history_bld.
 - XEN.burn(user, amount) is the only source of earned_xbp.
 - X1 Fee Contribution comes only from approved cumulative checkpoints.
 - XNTD lock does not create BLD or XBP.
 - available_bld may change through allowed use, burn, transfer, or origin/earned updates.
-- earned_bld remains historical.
-- available_bld must be greater than or equal to earned_bld for relock.
+- history_bld remains historical.
+- available_bld must be greater than or equal to history_bld for relock.
+

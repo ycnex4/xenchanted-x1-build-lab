@@ -16,7 +16,7 @@
 
 | Field | Meaning | Source | Updated by | Validation |
 |---|---|---|---|---|
-| earned_bld | Historical BLD earned from redeemed Core NFT history | Core redeem events | Ethereum Registrar -> Build Program | Only from unique Core redeem source events |
+| history_bld | Historical BLD earned from redeemed Core NFT history | Core redeem events | Ethereum Registrar -> Build Program | Only from unique Core redeem source events |
 | available_bld | Current available BLD | Earned BLD, Origin BLD, transfers, burns, uses | Build Program | Cannot be changed by arbitrary totals |
 | origin_bld | Genesis Origin allocation | First valid XC history connection during Build Genesis Epoch | Ethereum Registrar -> Build Program | Granted once only as tiered allocation, not counted as earned BLD |
 
@@ -24,7 +24,7 @@
 
 Core redeem:
 
-earned_bld += normalized(Core.xenBurned)
+history_bld += normalized(Core.xenBurned)
 available_bld += normalized(Core.xenBurned)
 
 Genesis Origin allocation:
@@ -32,7 +32,7 @@ Genesis Origin allocation:
 origin_bld += tiered_origin_bld
 available_bld += tiered_origin_bld
 
-origin_bld must not increase earned_bld.
+origin_bld must not increase history_bld.
 
 Display unit:
 
@@ -71,17 +71,17 @@ XBP and BLD are separate accounting layers.
 | locked_xntd | Amount of XNTD currently locked | XNTD lock / unlock / relock action | Build Program / Registrar path | Must match actual lock state |
 | required_xntd_lock | Required lock amount for current commitment | Current XC epoch minimum Core L1 nominal | Ethereum Registrar -> Build Program | Determined by registrar at lock/relock time |
 | lock_epoch | Epoch under which current lock was made | XC epoch | Ethereum Registrar -> Build Program | Updated on lock/relock |
-| xc_commitment_active | Whether XC-derived commitment is active | Derived field | Build Program | earned_bld > 0 AND locked_xntd >= required_xntd_lock |
+| xc_commitment_active | Whether XC-derived commitment is active | Derived field | Build Program | history_bld > 0 AND locked_xntd >= required_xntd_lock |
 
 ## Rules
 
 xc_commitment_active =
-  earned_bld > 0
+  history_bld > 0
   AND locked_xntd >= required_xntd_lock
 
 Relock allowed only if:
 
-available_bld >= earned_bld
+available_bld >= history_bld
 
 Relock should not create new BLD or XBP.
 
@@ -175,7 +175,7 @@ Suggested readable output:
 BuildView:
 - owner
 - build_id
-- earned_bld
+- history_bld
 - available_bld
 - origin_bld
 - earned_xbp
@@ -206,7 +206,7 @@ Minimal BuildState v1:
 
 - owner
 - build_id
-- earned_bld
+- history_bld
 - available_bld
 - origin_bld
 - earned_xbp
@@ -231,4 +231,5 @@ BLD does not come from XBP.
 XBP does not come from BLD.
 Fee Contribution does not create BLD or XBP.
 XNTD lock does not create BLD or XBP.
+
 

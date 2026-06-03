@@ -62,24 +62,24 @@ Display unit:
 
 Fields:
 
-- earned_bld
+- history_bld
 - available_bld
 - origin_bld
 
-earned_bld is historical and does not decrease when available BLD is sold, spent, burned, or transferred.
+history_bld is historical and does not decrease when available BLD is sold, spent, burned, or transferred.
 
 ## Genesis Origin BLD
 
 Genesis Origin BLD is a one-time tiered allocation.
 
-It is based on earned_bld at the first valid xEnchanted Crypto history connection during the Build Genesis Epoch.
+It is based on history_bld at the first valid xEnchanted Crypto history connection during the Build Genesis Epoch.
 
 Allocation tiers:
 
-- earned_bld >= 1     -> origin_bld = 11
-- earned_bld >= 11    -> origin_bld = 22
-- earned_bld >= 121   -> origin_bld = 55
-- earned_bld >= 1111  -> origin_bld = 121
+- history_bld >= 1     -> origin_bld = 11
+- history_bld >= 11    -> origin_bld = 22
+- history_bld >= 121   -> origin_bld = 55
+- history_bld >= 1111  -> origin_bld = 121
 
 121 BLD is the maximum Genesis Origin cap, not the default allocation.
 
@@ -90,7 +90,7 @@ When granted:
 origin_bld += tiered_origin_bld
 available_bld += tiered_origin_bld
 
-It must not increase earned_bld.
+It must not increase history_bld.
 
 ## Build creation in X1 through BLD burn
 
@@ -100,7 +100,7 @@ Requirement:
 
 burn 11 BLD
 
-This does not create fake earned_bld or fake XEN burn history.
+This does not create fake history_bld or fake XEN burn history.
 
 This path does not require XNTD lock or relock.
 
@@ -129,12 +129,12 @@ required_xntd_lock = current epoch Core L1 nominal
 Commitment activation:
 
 xc_commitment_active =
-  earned_bld > 0
+  history_bld > 0
   AND locked_xntd >= required_xntd_lock
 
 Relock is allowed only if:
 
-available_bld >= earned_bld
+available_bld >= history_bld
 
 ## X1 Fee Contribution
 
@@ -179,5 +179,6 @@ Potential next documents / design areas:
 4. Registrar trust model evolution.
 5. Program authority / admin model.
 6. Build reader interface details.
+
 
 

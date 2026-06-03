@@ -22,15 +22,15 @@ BLD is a normalized contribution unit.
 
 ---
 
-## 3. earned_bld
+## 3. history_bld
 
-earned_bld is created only from redeemed Core NFT history.
+history_bld is created only from redeemed Core NFT history.
 
 Core redeem:
-earned_bld += normalized(Core.xenBurned)
+history_bld += normalized(Core.xenBurned)
 available_bld += normalized(Core.xenBurned)
 
-earned_bld is historical.
+history_bld is historical.
 
 It must not decrease when a user sells, spends, burns, or transfers available BLD.
 
@@ -42,7 +42,7 @@ available_bld is the currently usable / transferable / spendable BLD amount.
 
 It may come from:
 
-- earned_bld
+- history_bld
 - origin_bld
 - purchased BLD
 - received BLD
@@ -54,7 +54,7 @@ It may decrease through:
 - burn
 - use in approved mechanics
 
-available_bld must not be confused with earned_bld.
+available_bld must not be confused with history_bld.
 
 ---
 
@@ -77,10 +77,10 @@ A fixed 121 BLD allocation for every eligible Build would be too uneven.
 Example:
 
 User A:
-earned_bld = 1
+history_bld = 1
 
 User B:
-earned_bld = 500
+history_bld = 500
 
 If both receive 121 origin_bld, the allocation dominates the real contribution of User A, while being relatively small for User B.
 
@@ -92,14 +92,14 @@ Therefore, 121 BLD should be the maximum Genesis Origin cap, not the default all
 
 ## 7. Tiered Genesis Origin BLD allocation
 
-Genesis Origin BLD is tiered by earned_bld.
+Genesis Origin BLD is tiered by history_bld.
 
 Allocation tiers:
 
-- earned_bld >= 1     -> origin_bld = 11
-- earned_bld >= 11    -> origin_bld = 22
-- earned_bld >= 121   -> origin_bld = 55
-- earned_bld >= 1111  -> origin_bld = 121
+- history_bld >= 1     -> origin_bld = 11
+- history_bld >= 11    -> origin_bld = 22
+- history_bld >= 121   -> origin_bld = 55
+- history_bld >= 1111  -> origin_bld = 121
 
 This keeps the system symbolic but more fair.
 
@@ -130,7 +130,7 @@ Requirement:
 
 burn 11 BLD
 
-This creates an active Build but does not create fake earned_bld or fake XEN burn history.
+This creates an active Build but does not create fake history_bld or fake XEN burn history.
 
 The burned BLD must come from available BLD that exists in the system.
 
@@ -162,20 +162,21 @@ Therefore, it does not require XNTD lock or relock.
 
 Relock is allowed only if:
 
-available_bld >= earned_bld
+available_bld >= history_bld
 
 This means the user must preserve or restore earned BLD before reducing or updating XNTD commitment.
 
-origin_bld can be sold or used without breaking relock integrity, as long as available_bld remains greater than or equal to earned_bld.
+origin_bld can be sold or used without breaking relock integrity, as long as available_bld remains greater than or equal to history_bld.
 
 ---
 
 ## 13. Main principles
 
-- earned_bld represents real XC Core redeem contribution.
+- history_bld represents real XC Core redeem contribution.
 - origin_bld is a Genesis allocation, not earned contribution.
 - available_bld is the usable balance.
 - 121 BLD is the maximum Genesis Origin cap, not the default.
 - Build creation in X1 requires burning 11 BLD.
-- Burning 11 BLD does not create earned_bld.
+- Burning 11 BLD does not create history_bld.
 - Native Build creation does not require XNTD lock or relock.
+

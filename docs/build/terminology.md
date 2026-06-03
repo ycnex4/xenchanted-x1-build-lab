@@ -35,3 +35,4 @@ The required lock amount is tied to the minimum Core L1 nominal of the current X
 Cumulative network fees paid by an address as fee payer on X1.
 
 This tracks fee payment activity, not necessarily user activity.
+

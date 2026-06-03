@@ -37,7 +37,7 @@ Creates a canonical Build object for a user.
 
 ## Notes
 
-Build creation alone does not create earned_bld, earned_xbp, or X1 Fee Contribution.
+Build creation alone does not create history_bld, earned_xbp, or X1 Fee Contribution.
 
 ---
 
@@ -70,7 +70,7 @@ amount_bld_to_burn = 11 BLD
 
 ## Notes
 
-This transition does not create fake earned_bld.
+This transition does not create fake history_bld.
 
 It does not create fake XEN burn history.
 
@@ -97,8 +97,8 @@ Connects valid xEnchanted Crypto history to an existing or newly created Build.
 
 - Ethereum identity must be canonical for this Build.
 - Source message must not be replayed.
-- Genesis Origin BLD may be granted only once during Build Genesis Epoch as a tiered allocation based on earned_bld.
-- Connecting history alone must not create earned_bld unless a valid Core redeem source event is included.
+- Genesis Origin BLD may be granted only once during Build Genesis Epoch as a tiered allocation based on history_bld.
+- Connecting history alone must not create history_bld unless a valid Core redeem source event is included.
 
 ## Genesis Origin rule
 
@@ -107,7 +107,7 @@ If eligible:
 origin_bld += tiered_origin_bld
 available_bld += tiered_origin_bld
 
-origin_bld must not increase earned_bld.
+origin_bld must not increase history_bld.
 
 ---
 
@@ -124,7 +124,7 @@ Adds earned BLD from a verified Core redeem event.
 
 ## Updates
 
-- earned_bld
+- history_bld
 - available_bld
 - updated_at
 
@@ -137,7 +137,7 @@ Adds earned BLD from a verified Core redeem event.
 
 ## Accounting
 
-earned_bld += normalized(Core.xenBurned)
+history_bld += normalized(Core.xenBurned)
 available_bld += normalized(Core.xenBurned)
 
 ## Normalization
@@ -203,7 +203,7 @@ Locks XNTD to activate the XC commitment layer.
 
 ## Validation
 
-- Build must have earned_bld > 0.
+- Build must have history_bld > 0.
 - Required lock must be determined from the current XC epoch minimum Core L1 nominal.
 - Actual locked amount must match the lock state.
 - Lock must not create BLD or XBP.
@@ -211,7 +211,7 @@ Locks XNTD to activate the XC commitment layer.
 ## Activation rule
 
 xc_commitment_active =
-  earned_bld > 0
+  history_bld > 0
   AND locked_xntd >= required_xntd_lock
 
 ---
@@ -233,7 +233,7 @@ Unlocks XNTD and may deactivate the XC commitment layer.
 ## Validation
 
 - Unlock must not make locked_xntd negative.
-- Unlock must not modify earned_bld, available_bld, earned_xbp, or available_xbp.
+- Unlock must not modify history_bld, available_bld, earned_xbp, or available_xbp.
 
 ## Deactivation rule
 
@@ -265,7 +265,7 @@ Updates XNTD lock under a new epoch requirement.
 
 Relock is allowed only if:
 
-available_bld >= earned_bld
+available_bld >= history_bld
 
 The new required lock must be determined from the current XC epoch minimum Core L1 nominal.
 
@@ -273,7 +273,7 @@ Relock must not create BLD or XBP.
 
 ## Notes
 
-If available_bld < earned_bld, the user must restore available_bld before relock.
+If available_bld < history_bld, the user must restore available_bld before relock.
 
 ---
 
@@ -335,14 +335,14 @@ Changes available BLD through an allowed mechanism.
 ## Validation
 
 - available_bld must not become negative.
-- earned_bld must not decrease.
+- history_bld must not decrease.
 - origin_bld must not be changed unless the action specifically consumes available origin balance through accounting rules.
 
 ## Notes
 
 Selling, transferring, burning, or using available BLD affects available_bld only.
 
-Historical earned_bld remains unchanged.
+Historical history_bld remains unchanged.
 
 ---
 
@@ -370,7 +370,7 @@ Changes available XBP through an allowed mechanism.
 
 ## 13. Main invariants
 
-- earned_bld is created only from verified Core redeem history.
+- history_bld is created only from verified Core redeem history.
 - origin_bld is created only through Genesis Origin allocation.
 - earned_xbp is created only from verified XEN.burn(user, amount) calls.
 - X1 Fee Contribution is updated only through cumulative checkpoints.
@@ -378,4 +378,5 @@ Changes available XBP through an allowed mechanism.
 - BLD and XBP are separate accounting layers.
 - One source event can update one Build only once.
 - Build updates must be append-only by verified source events or valid checkpoints.
+
 

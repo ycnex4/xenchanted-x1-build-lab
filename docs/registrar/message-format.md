@@ -128,7 +128,7 @@ This message may also grant Genesis Origin BLD if eligible.
 - Message must not be replayed.
 - Genesis Origin BLD may be granted only once.
 - Genesis Origin BLD may be granted only during Build Genesis Epoch.
-- tiered_origin_bld must be derived from earned_bld tiers.
+- tiered_origin_bld must be derived from history_bld tiers.
 
 ## Accounting
 
@@ -139,7 +139,7 @@ available_bld += tiered_origin_bld
 
 Must not increase:
 
-earned_bld
+history_bld
 
 ---
 
@@ -167,7 +167,7 @@ Create earned BLD from a verified Core redeem event.
 
 ## Accounting
 
-earned_bld += normalized_bld
+history_bld += normalized_bld
 available_bld += normalized_bld
 
 ---
@@ -216,7 +216,7 @@ Record XNTD lock state for XC commitment activation.
 
 ## Validation
 
-- Build must have earned_bld > 0.
+- Build must have history_bld > 0.
 - required_xntd_lock must be based on current XC epoch Core L1 nominal.
 - Lock state must be verified.
 - Lock must not create BLD or XBP.
@@ -228,7 +228,7 @@ required_xntd_lock = payload.required_xntd_lock
 lock_epoch = payload.lock_epoch
 
 xc_commitment_active =
-  earned_bld > 0
+  history_bld > 0
   AND locked_xntd >= required_xntd_lock
 
 ---
@@ -276,7 +276,7 @@ Update XNTD commitment under a new XC epoch requirement.
 
 Relock is allowed only if:
 
-available_bld >= earned_bld
+available_bld >= history_bld
 
 The new required lock must be based on current XC epoch Core L1 nominal.
 
@@ -289,7 +289,7 @@ required_xntd_lock = new_required_xntd_lock
 lock_epoch = new_lock_epoch
 
 xc_commitment_active =
-  earned_bld > 0
+  history_bld > 0
   AND locked_xntd >= required_xntd_lock
 
 ---
@@ -323,3 +323,4 @@ If an Ethereum identity is already bound to another Build, conflicting updates m
 - One message can be processed only once.
 - One source event can update one Build only once.
 - BLD, XBP, XNTD lock, and X1 Fee Contribution remain separate accounting layers.
+

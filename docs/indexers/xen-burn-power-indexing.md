@@ -131,7 +131,7 @@ A valid XEN burn source updates:
 
 It must not update:
 
-- earned_bld
+- history_bld
 - available_bld
 - origin_bld
 - locked_xntd
@@ -206,3 +206,4 @@ The critical requirement is that each update remains tied to unique source calls
 - BLD does not create XBP.
 - One XEN burn source can update one Build only once.
 - The user argument inside XEN.burn(user, amount) is the attribution target.
+

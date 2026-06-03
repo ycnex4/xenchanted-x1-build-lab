@@ -146,7 +146,7 @@ Each message should include:
 
 Relock is allowed only if the Build has enough available BLD:
 
-available_bld >= earned_bld
+available_bld >= history_bld
 
 The registrar or X1 Build Program must enforce this rule depending on where the current available_bld state is checked.
 
@@ -156,14 +156,14 @@ The registrar or X1 Build Program must enforce this rule depending on where the 
 
 Genesis Origin BLD is a one-time tiered allocation.
 
-It is based on earned_bld at the first valid xEnchanted Crypto history connection during the Build Genesis Epoch.
+It is based on history_bld at the first valid xEnchanted Crypto history connection during the Build Genesis Epoch.
 
 Allocation tiers:
 
-- earned_bld >= 1     -> origin_bld = 11
-- earned_bld >= 11    -> origin_bld = 22
-- earned_bld >= 121   -> origin_bld = 55
-- earned_bld >= 1111  -> origin_bld = 121
+- history_bld >= 1     -> origin_bld = 11
+- history_bld >= 11    -> origin_bld = 22
+- history_bld >= 121   -> origin_bld = 55
+- history_bld >= 1111  -> origin_bld = 121
 
 121 BLD is the maximum Genesis Origin cap, not the default allocation.
 
@@ -181,7 +181,7 @@ When granted:
 origin_bld += tiered_origin_bld
 available_bld += tiered_origin_bld
 
-It must not increase earned_bld.
+It must not increase history_bld.
 
 ---
 
@@ -236,4 +236,5 @@ Ethereum Registrar does not create value by opinion.
 It only verifies source events and prepares deterministic updates.
 
 One source event can update one Build only once.
+
 
