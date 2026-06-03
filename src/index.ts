@@ -16,3 +16,4 @@ export * from "./instructions/xen-burn-power.js";
 export * from "./instructions/xntd-lock.js";
 export * from "./storage/serialization.js";
 export * from "./app/build-service.js";
+export * from "./proofs/proof-types.js";
