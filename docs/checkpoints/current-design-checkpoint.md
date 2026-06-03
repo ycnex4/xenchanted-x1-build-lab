@@ -516,6 +516,35 @@ Validation after merge:
 
 No TypeScript model logic was changed in this milestone.
 
+## Latest Implementation test matrix checkpoint
+
+The Implementation test matrix milestone was completed and merged into main.
+
+Merge commit:
+
+- 0ec81cc Merge branch 'implementation-test-matrix'
+
+The milestone adds:
+
+- implementation/implementation-test-matrix.md
+- mapping of model layers to implementation files
+- mapping of model layers to test files
+- covered property summary for each implemented layer
+- cross-cutting invariant review
+- replay protection coverage review
+- atomicity coverage review
+- known MVP gaps
+- recommended future test extensions
+
+Validation after merge:
+
+- npm run typecheck: passed
+- npm test: passed
+- 16 test files passed
+- 96 tests passed
+
+No TypeScript model logic was changed in this milestone.
+
 ## Current decision
 
 Create documentation first. Do not start code until the core spec, BuildState fields, state transitions, registrar model, indexer models, and economic assumptions are reviewed.
@@ -704,10 +733,10 @@ Protection keys / maps:
 
 Potential next documents / design areas:
 
-1. Implementation test matrix.
-2. Registrar / instruction surface review milestone.
-3. Post-MVP integration policy.
-4. Proof model design milestone.
+1. Registrar / instruction surface review milestone.
+2. Post-MVP integration policy.
+3. Proof model design milestone.
+4. Storage / serialization model milestone.
 5. Review npm audit findings separately.
 6. Continue implementation only with clean typecheck and tests.
 
