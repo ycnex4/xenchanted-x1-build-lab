@@ -111,6 +111,37 @@ Validation after merge:
 
 No registrar message processing, source-event replay protection, or accounting transitions are implemented yet.
 
+## Latest Registrar replay checkpoint
+
+The Registrar message replay protection milestone was completed and merged into main.
+
+Merge commit:
+
+- 3b2f5ea Merge branch 'registrar-replay-protection'
+
+The milestone adds:
+
+- RegistrarState structure
+- RegistrarMessage type
+- RegistrarMessageKind type
+- createRegistrarState factory
+- acceptRegistrarMessage helper
+- registrar authority check
+- processedMessages replay protection
+- UnauthorizedRegistrar error
+- DuplicateRegistrarMessage error
+- tests proving rejected messages do not mutate state
+- implementation/registrar-replay-protection-notes.md
+
+Validation after merge:
+
+- npm run typecheck: passed
+- npm test: passed
+- 5 test files passed
+- 22 tests passed
+
+No Core redeem accounting, XEN burn accounting, Genesis Origin, XNTD lock, fee checkpoint, signature validation, Merkle proof, or bridge proof logic is implemented yet.
+
 ## Current decision
 
 Create documentation first. Do not start code until the core spec, BuildState fields, state transitions, registrar model, indexer models, and economic assumptions are reviewed.
@@ -301,8 +332,8 @@ Potential next documents / design areas:
 
 1. Implementation test matrix.
 2. Post-MVP integration policy.
-3. Registrar message replay protection milestone.
-4. Core redeem -> history_bld milestone.
+3. Core redeem -> history_bld milestone.
+4. used_redeem_events replay protection milestone.
 5. Review npm audit findings separately.
 6. Continue implementation only with clean typecheck and tests.
 
