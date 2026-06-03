@@ -38,6 +38,7 @@ Create documentation first. Do not start code until the core spec, BuildState fi
 - docs/economics/bld-origin-and-native-entry.md
 - docs/economics/bld-transfer-and-burn-mechanics.md
 - docs/economics/xntd-lock-and-relock.md
+- docs/economics/bld-tokenization-decision.md
 
 ## Current model summary
 
@@ -179,12 +180,13 @@ Protection keys / maps:
 
 Potential next documents / design areas:
 
-1. BLD tokenization decision.
-2. XNTD lock proof / bridge model.
-3. MVP implementation sequence.
-4. Review full documentation consistency.
-5. Prepare implementation branch plan.
-6. Implementation risk checklist.
+1. XNTD lock proof / bridge model.
+2. MVP implementation sequence.
+3. Review full documentation consistency.
+4. Prepare implementation branch plan.
+5. Implementation risk checklist.
+6. Decide post-MVP BLD composability path.
+
 
 
 
