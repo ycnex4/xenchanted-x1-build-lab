@@ -1024,6 +1024,46 @@ Validation after merge:
 
 This milestone added a real minimal CLI command layer and tests.
 
+## Latest Proof-to-registrar payload builder checkpoint
+
+The Proof-to-registrar payload builder milestone was completed and merged into main.
+
+Merge commit:
+
+- 1e57627 Merge branch 'proof-to-registrar-builders'
+
+The milestone adds:
+
+- src/proofs/registrar-builders.ts
+- tests/proof-registrar-builders.test.ts
+- implementation/proof-to-registrar-builders-notes.md
+- CreateRegistrarPayloadInput
+- CoreRedeemRegistrarPayload
+- XenBurnRegistrarPayload
+- XntdLockRegistrarPayload
+- XntdRelockRegistrarPayload
+- X1FeeCheckpointRegistrarPayload
+- RegistrarPayloadFromProof union type
+- buildCoreRedeemRegistrarPayload helper
+- buildXenBurnRegistrarPayload helper
+- buildXntdLockRegistrarPayload helper
+- buildXntdRelockRegistrarPayload helper
+- buildX1FeeCheckpointRegistrarPayload helper
+- buildRegistrarPayloadFromProof helper
+- deterministic default proof message id policy
+- custom messageId support
+- validated proof requirement
+- Genesis Origin proof rejection for registrar payload mapping
+
+Validation after merge:
+
+- npm run typecheck: passed
+- npm test: passed
+- 24 test files passed
+- 134 tests passed
+
+This milestone added real proof-to-registrar payload builder code and tests.
+
 ## Current decision
 
 Create documentation first. Do not start code until the core spec, BuildState fields, state transitions, registrar model, indexer models, and economic assumptions are reviewed.
@@ -1212,10 +1252,10 @@ Protection keys / maps:
 
 Potential next documents / design areas:
 
-1. Proof-to-registrar payload builder milestone.
-2. Watcher-to-proof candidate conversion milestone.
-3. Snapshot migration / backup policy milestone.
-4. CLI binary entry point milestone.
+1. Watcher-to-proof candidate conversion milestone.
+2. Snapshot migration / backup policy milestone.
+3. CLI binary entry point milestone.
+4. Application service proof submission milestone.
 5. Review npm audit findings separately.
 6. Continue implementation only with clean typecheck and tests.
 
