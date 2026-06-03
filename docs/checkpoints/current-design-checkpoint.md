@@ -759,6 +759,41 @@ Validation after merge:
 
 This milestone added real test coverage.
 
+## Latest External watcher / indexer integration checkpoint
+
+The External watcher / indexer integration milestone was completed and merged into main.
+
+Merge commit:
+
+- 2c55df6 Merge branch 'watcher-indexer-integration'
+
+The milestone adds:
+
+- implementation/watcher-indexer-integration.md
+- watcher / indexer boundary definition
+- expected watcher categories
+- watcher pipeline
+- canonical event key policy
+- Core redeem watcher direction
+- XEN burn watcher direction
+- XNTD lock / relock watcher direction
+- X1 fee checkpoint indexer direction
+- duplicate handling policy
+- reorg handling policy
+- error handling policy
+- security policy
+- testing policy
+- recommended implementation order
+
+Validation after merge:
+
+- npm run typecheck: passed
+- npm test: passed
+- 17 test files passed
+- 98 tests passed
+
+No TypeScript model logic was changed in this milestone.
+
 ## Current decision
 
 Create documentation first. Do not start code until the core spec, BuildState fields, state transitions, registrar model, indexer models, and economic assumptions are reviewed.
@@ -947,10 +982,10 @@ Protection keys / maps:
 
 Potential next documents / design areas:
 
-1. External watcher / indexer integration milestone.
-2. Storage implementation milestone.
-3. API / CLI implementation milestone.
-4. Proof object type implementation milestone.
+1. Storage implementation milestone.
+2. API / CLI implementation milestone.
+3. Proof object type implementation milestone.
+4. Watcher candidate type implementation milestone.
 5. Review npm audit findings separately.
 6. Continue implementation only with clean typecheck and tests.
 
