@@ -353,6 +353,40 @@ Validation after merge:
 
 No registrar GENESIS_ORIGIN integration, genesis_origin_claimed external registry, signature validation, Merkle proof, bridge proof, XNTD lock, or fee checkpoint logic is implemented yet.
 
+## Latest XNTD lock / relock checkpoint
+
+The XNTD lock / relock milestone was completed and merged into main.
+
+Merge commit:
+
+- ff27649 Merge branch 'xntd-lock-relock'
+
+The milestone adds:
+
+- LockXntdInput type
+- RelockXntdInput type
+- lockXntd transition
+- relockXntd transition
+- positive XNTD lock amount validation
+- active commitment requirement for relock
+- relock BLD integrity rule
+- InvalidXntdLockAmount error
+- XntdCommitmentNotActive error
+- InsufficientAvailableBldForRelock error
+- tests for lock and relock behavior
+- tests proving Genesis Origin BLD does not block relock when availableBld >= historyBld
+- tests proving unrelated accounting values are not created
+- implementation/xntd-lock-relock-notes.md
+
+Validation after merge:
+
+- npm run typecheck: passed
+- npm test: passed
+- 13 test files passed
+- 73 tests passed
+
+No registrar LOCK_XNTD / RELOCK_XNTD integration, unlock flow, lock proof validation, external XNTD escrow mechanics, epoch parameter source, XNTD amount calculation policy, BLD transfer / burn mechanics, or fee checkpoint logic is implemented yet.
+
 ## Current decision
 
 Create documentation first. Do not start code until the core spec, BuildState fields, state transitions, registrar model, indexer models, and economic assumptions are reviewed.
@@ -543,8 +577,8 @@ Potential next documents / design areas:
 
 1. Implementation test matrix.
 2. Post-MVP integration policy.
-3. XNTD lock / relock milestone.
-4. X1 Fee Contribution checkpoint milestone.
+3. X1 Fee Contribution checkpoint milestone.
+4. Registrar LOCK_XNTD / RELOCK_XNTD integration milestone.
 5. Review npm audit findings separately.
 6. Continue implementation only with clean typecheck and tests.
 
