@@ -1,5 +1,8 @@
 export enum BuildErrorCode {
-  NotImplemented = "NOT_IMPLEMENTED"
+  NotImplemented = "NOT_IMPLEMENTED",
+  DuplicateBuildOwner = "DUPLICATE_BUILD_OWNER",
+  DuplicateEthereumIdentity = "DUPLICATE_ETHEREUM_IDENTITY",
+  DuplicateBuildId = "DUPLICATE_BUILD_ID"
 }
 
 export class BuildError extends Error {
