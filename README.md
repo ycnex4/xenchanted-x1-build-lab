@@ -28,6 +28,7 @@ This repository is currently documentation-only.
 - docs/build/program-instruction-layout.md
 - docs/build/pda-account-layout.md
 - docs/build/program-authority-model.md
+- docs/build/build-reader-interface.md
 
 ### Registrar
 
@@ -56,6 +57,7 @@ This repository is currently documentation-only.
 The current stage is design and documentation.
 
 No implementation code should be started until the core Build spec, state fields, state transitions, registrar model, and indexer models are reviewed.
+
 
 
 

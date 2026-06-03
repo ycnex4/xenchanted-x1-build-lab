@@ -19,6 +19,7 @@ Create documentation first. Do not start code until the core spec, BuildState fi
 - docs/build/program-instruction-layout.md
 - docs/build/pda-account-layout.md
 - docs/build/program-authority-model.md
+- docs/build/build-reader-interface.md
 
 ### Registrar
 
@@ -178,12 +179,13 @@ Protection keys / maps:
 
 Potential next documents / design areas:
 
-1. Build reader interface details.
-2. BLD tokenization decision.
-3. XNTD lock proof / bridge model.
-4. MVP implementation sequence.
-5. Review full documentation consistency.
-6. Prepare implementation branch plan.
+1. BLD tokenization decision.
+2. XNTD lock proof / bridge model.
+3. MVP implementation sequence.
+4. Review full documentation consistency.
+5. Prepare implementation branch plan.
+6. Implementation risk checklist.
+
 
 
 
