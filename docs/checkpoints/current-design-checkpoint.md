@@ -20,6 +20,7 @@ Create documentation first. Do not start code until the core spec, BuildState fi
 ### Registrar
 
 - docs/registrar/ethereum-registrar-concept.md
+- docs/registrar/message-format.md
 
 ### Indexers
 
@@ -170,9 +171,9 @@ Protection keys / maps:
 
 Potential next documents / design areas:
 
-1. Bridge / registrar message format.
-2. Build Program instruction layout.
-3. PDA / account layout.
-4. BLD transfer / burn mechanics.
-5. XNTD lock implementation details.
-6. MVP trusted indexer schemas.
+1. Build Program instruction layout.
+2. PDA / account layout.
+3. BLD transfer / burn mechanics.
+4. XNTD lock implementation details.
+5. MVP trusted indexer schemas.
+6. Registrar trust model evolution.

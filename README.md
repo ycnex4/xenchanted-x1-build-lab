@@ -29,6 +29,7 @@ This repository is currently documentation-only.
 ### Registrar
 
 - docs/registrar/ethereum-registrar-concept.md
+- docs/registrar/message-format.md
 
 ### Indexers
 
@@ -48,3 +49,4 @@ This repository is currently documentation-only.
 The current stage is design and documentation.
 
 No implementation code should be started until the core Build spec, state fields, state transitions, registrar model, and indexer models are reviewed.
+
