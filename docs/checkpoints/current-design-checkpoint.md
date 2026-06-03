@@ -951,6 +951,42 @@ Validation after merge:
 
 This milestone added real watcher candidate type code and tests.
 
+## Latest File snapshot storage adapter checkpoint
+
+The File snapshot storage adapter milestone was completed and merged into main.
+
+Merge commit:
+
+- 72b261f Merge branch 'file-snapshot-storage'
+
+The milestone adds:
+
+- src/storage/snapshot.ts
+- tests/storage-snapshot.test.ts
+- implementation/file-snapshot-storage-notes.md
+- SerializedBuildApplicationSnapshot
+- serializeBuildApplicationSnapshot helper
+- deserializeBuildApplicationSnapshot helper
+- encodeSnapshotJson helper
+- decodeSnapshotJson helper
+- saveSnapshotFile helper
+- loadSnapshotFile helper
+- full application state snapshot support
+- snapshot schema version validation
+- snapshot kind validation
+- local JSON snapshot file save / load tests
+- temporary file + rename write pattern
+- pretty JSON output with trailing newline
+
+Validation after merge:
+
+- npm run typecheck: passed
+- npm test: passed
+- 22 test files passed
+- 121 tests passed
+
+This milestone added real file snapshot storage adapter code and tests.
+
 ## Current decision
 
 Create documentation first. Do not start code until the core spec, BuildState fields, state transitions, registrar model, indexer models, and economic assumptions are reviewed.
@@ -1139,10 +1175,10 @@ Protection keys / maps:
 
 Potential next documents / design areas:
 
-1. File snapshot storage adapter milestone.
-2. CLI command implementation milestone.
-3. Proof-to-registrar payload builder milestone.
-4. Watcher-to-proof candidate conversion milestone.
+1. CLI command implementation milestone.
+2. Proof-to-registrar payload builder milestone.
+3. Watcher-to-proof candidate conversion milestone.
+4. Snapshot migration / backup policy milestone.
 5. Review npm audit findings separately.
 6. Continue implementation only with clean typecheck and tests.
 
