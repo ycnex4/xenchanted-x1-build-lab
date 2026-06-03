@@ -201,6 +201,37 @@ Validation after merge:
 
 No registrar CORE_REDEEM integration, source redeem key derivation, Ethereum log proof validation, Core NFT proof validation, XEN burn accounting, Genesis Origin BLD, XNTD lock, or fee checkpoint logic is implemented yet.
 
+## Latest Registrar CORE_REDEEM checkpoint
+
+The Registrar CORE_REDEEM message integration milestone was completed and merged into main.
+
+Merge commit:
+
+- 0dd4a22 Merge branch 'registrar-core-redeem'
+
+The milestone adds:
+
+- ApplyRegistrarCoreRedeemInput type
+- applyRegistrarCoreRedeem helper
+- CORE_REDEEM message kind validation
+- registrar authority validation
+- processedMessages duplicate check
+- usedRedeemEvents duplicate check
+- Core redeem BLD application through acceptCoreRedeemEvent
+- registrar message recording after successful redeem application
+- InvalidRegistrarMessageKind error
+- integration tests for non-mutating failure paths
+- implementation/registrar-core-redeem-notes.md
+
+Validation after merge:
+
+- npm run typecheck: passed
+- npm test: passed
+- 8 test files passed
+- 40 tests passed
+
+No source redeem key derivation, Ethereum log proof validation, Core NFT proof validation, registrar signature validation, Merkle proof, bridge proof, XEN burn accounting, Genesis Origin BLD, XNTD lock, or fee checkpoint logic is implemented yet.
+
 ## Current decision
 
 Create documentation first. Do not start code until the core spec, BuildState fields, state transitions, registrar model, indexer models, and economic assumptions are reviewed.
@@ -391,8 +422,8 @@ Potential next documents / design areas:
 
 1. Implementation test matrix.
 2. Post-MVP integration policy.
-3. Registrar CORE_REDEEM message integration milestone.
-4. XEN Burn Power milestone.
+3. XEN Burn Power milestone.
+4. used_xen_burn_events replay protection milestone.
 5. Review npm audit findings separately.
 6. Continue implementation only with clean typecheck and tests.
 
