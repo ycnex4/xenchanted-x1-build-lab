@@ -32,6 +32,31 @@ Validation after merge:
 No real accounting logic is implemented yet.
 
 
+## Latest BuildState checkpoint
+
+The BuildState account / object milestone was completed and merged into main.
+
+Merge commit:
+
+- ae7ad29 Merge branch 'buildstate-account'
+
+The milestone adds:
+
+- full TypeScript BuildState shape
+- BUILD_STATE_VERSION
+- createEmptyBuildState factory
+- initial default value tests
+- implementation/buildstate-account-notes.md
+
+Validation before merge:
+
+- npm run typecheck: passed
+- npm test: passed
+- 2 test files passed
+- 6 tests passed
+
+No real accounting transitions are implemented yet.
+
 ## Current decision
 
 Create documentation first. Do not start code until the core spec, BuildState fields, state transitions, registrar model, indexer models, and economic assumptions are reviewed.
@@ -222,7 +247,7 @@ Potential next documents / design areas:
 
 1. Implementation test matrix.
 2. Post-MVP integration policy.
-3. BuildState account / object milestone.
+3. create_build instruction milestone.
 4. Keep documentation and implementation synchronized.
 5. Review npm audit findings separately.
 6. Continue implementation only with clean typecheck and tests.
