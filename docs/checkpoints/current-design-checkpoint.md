@@ -232,6 +232,35 @@ Validation after merge:
 
 No source redeem key derivation, Ethereum log proof validation, Core NFT proof validation, registrar signature validation, Merkle proof, bridge proof, XEN burn accounting, Genesis Origin BLD, XNTD lock, or fee checkpoint logic is implemented yet.
 
+## Latest XEN Burn Power checkpoint
+
+The XEN Burn Power milestone was completed and merged into main.
+
+Merge commit:
+
+- 3852653 Merge branch 'xen-burn-power'
+
+The milestone adds:
+
+- ApplyXenBurnPowerInput type
+- applyXenBurnPower transition
+- InvalidXbpAmount error
+- positive XBP amount validation
+- earnedXbp accumulation
+- availableXbp accumulation
+- updatedAt update from burnedAt
+- tests proving unrelated layers do not change
+- implementation/xen-burn-power-notes.md
+
+Validation after merge:
+
+- npm run typecheck: passed
+- npm test: passed
+- 9 test files passed
+- 47 tests passed
+
+No used_xen_burn_events replay protection, XEN burn event key validation, registrar XEN_BURN integration, Ethereum XEN.burn log proof validation, BLD accounting, Genesis Origin BLD, XNTD lock, or fee checkpoint logic is implemented yet.
+
 ## Current decision
 
 Create documentation first. Do not start code until the core spec, BuildState fields, state transitions, registrar model, indexer models, and economic assumptions are reviewed.
@@ -422,8 +451,8 @@ Potential next documents / design areas:
 
 1. Implementation test matrix.
 2. Post-MVP integration policy.
-3. XEN Burn Power milestone.
-4. used_xen_burn_events replay protection milestone.
+3. used_xen_burn_events replay protection milestone.
+4. Registrar XEN_BURN message integration milestone.
 5. Review npm audit findings separately.
 6. Continue implementation only with clean typecheck and tests.
 
