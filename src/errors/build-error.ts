@@ -11,7 +11,10 @@ export enum BuildErrorCode {
   InvalidXbpAmount = "INVALID_XBP_AMOUNT",
   DuplicateXenBurnEvent = "DUPLICATE_XEN_BURN_EVENT",
   GenesisOriginAlreadyClaimed = "GENESIS_ORIGIN_ALREADY_CLAIMED",
-  GenesisOriginNotEligible = "GENESIS_ORIGIN_NOT_ELIGIBLE"
+  GenesisOriginNotEligible = "GENESIS_ORIGIN_NOT_ELIGIBLE",
+  InvalidXntdLockAmount = "INVALID_XNTD_LOCK_AMOUNT",
+  XntdCommitmentNotActive = "XNTD_COMMITMENT_NOT_ACTIVE",
+  InsufficientAvailableBldForRelock = "INSUFFICIENT_AVAILABLE_BLD_FOR_RELOCK"
 }
 
 export class BuildError extends Error {
