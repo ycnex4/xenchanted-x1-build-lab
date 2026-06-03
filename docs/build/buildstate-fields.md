@@ -18,7 +18,7 @@
 |---|---|---|---|---|
 | earned_bld | Historical BLD earned from redeemed Core NFT history | Core redeem events | Ethereum Registrar -> Build Program | Only from unique Core redeem source events |
 | available_bld | Current available BLD | Earned BLD, Origin BLD, transfers, burns, uses | Build Program | Cannot be changed by arbitrary totals |
-| origin_bld | Genesis Origin allocation | First valid XC history connection during Build Genesis Epoch | Ethereum Registrar -> Build Program | Granted once only, not counted as earned BLD |
+| origin_bld | Genesis Origin allocation | First valid XC history connection during Build Genesis Epoch | Ethereum Registrar -> Build Program | Granted once only as tiered allocation, not counted as earned BLD |
 
 ## Rules
 
@@ -29,8 +29,8 @@ available_bld += normalized(Core.xenBurned)
 
 Genesis Origin allocation:
 
-origin_bld += 121
-available_bld += 121
+origin_bld += tiered_origin_bld
+available_bld += tiered_origin_bld
 
 origin_bld must not increase earned_bld.
 
@@ -130,7 +130,7 @@ These may live in registrar/indexer state, Build Program state, or both dependin
 | used_redeem_events[redeem_key] | Prevents one Core redeem from creating BLD more than once |
 | used_xen_burn_events[xen_burn_key] | Prevents one XEN burn call from creating XBP more than once |
 | processed_messages[message_id] | Prevents replayed bridge / registrar messages |
-| genesis_origin_claimed[identity] | Prevents repeated 121 Origin BLD allocation |
+| genesis_origin_claimed[identity] | Prevents repeated Genesis Origin BLD allocation |
 | canonical_build_by_identity[identity] | Prevents creating multiple canonical Builds from the same identity |
 
 ## Core redeem key
@@ -231,3 +231,4 @@ BLD does not come from XBP.
 XBP does not come from BLD.
 Fee Contribution does not create BLD or XBP.
 XNTD lock does not create BLD or XBP.
+

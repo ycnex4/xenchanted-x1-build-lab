@@ -154,11 +154,18 @@ The registrar or X1 Build Program must enforce this rule depending on where the 
 
 ## 9. Genesis Origin BLD
 
-Genesis Origin BLD is a one-time allocation.
+Genesis Origin BLD is a one-time tiered allocation.
 
-Amount:
+It is based on earned_bld at the first valid xEnchanted Crypto history connection during the Build Genesis Epoch.
 
-121 BLD
+Allocation tiers:
+
+- earned_bld >= 1     -> origin_bld = 11
+- earned_bld >= 11    -> origin_bld = 22
+- earned_bld >= 121   -> origin_bld = 55
+- earned_bld >= 1111  -> origin_bld = 121
+
+121 BLD is the maximum Genesis Origin cap, not the default allocation.
 
 It may be granted only when a Build first connects valid xEnchanted Crypto history during the Build Genesis Epoch.
 
@@ -171,8 +178,8 @@ It must not be granted:
 
 When granted:
 
-origin_bld += 121
-available_bld += 121
+origin_bld += tiered_origin_bld
+available_bld += tiered_origin_bld
 
 It must not increase earned_bld.
 
@@ -229,3 +236,4 @@ Ethereum Registrar does not create value by opinion.
 It only verifies source events and prepares deterministic updates.
 
 One source event can update one Build only once.
+

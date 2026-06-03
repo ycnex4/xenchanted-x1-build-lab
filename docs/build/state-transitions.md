@@ -97,15 +97,15 @@ Connects valid xEnchanted Crypto history to an existing or newly created Build.
 
 - Ethereum identity must be canonical for this Build.
 - Source message must not be replayed.
-- Genesis Origin BLD may be granted only once during Build Genesis Epoch.
+- Genesis Origin BLD may be granted only once during Build Genesis Epoch as a tiered allocation based on earned_bld.
 - Connecting history alone must not create earned_bld unless a valid Core redeem source event is included.
 
 ## Genesis Origin rule
 
 If eligible:
 
-origin_bld += 121
-available_bld += 121
+origin_bld += tiered_origin_bld
+available_bld += tiered_origin_bld
 
 origin_bld must not increase earned_bld.
 
@@ -378,3 +378,4 @@ Changes available XBP through an allowed mechanism.
 - BLD and XBP are separate accounting layers.
 - One source event can update one Build only once.
 - Build updates must be append-only by verified source events or valid checkpoints.
+

@@ -119,23 +119,37 @@ It exists to seed Build creation in X1 through BLD burn.
 
 ## 4. Genesis Origin BLD
 
-### 4.1 Amount
+### 4.1 Tiered allocation
 
-121 BLD
+Genesis Origin BLD is a one-time tiered allocation.
 
-Symbolism:
+It is based on earned_bld at the first valid xEnchanted Crypto history connection during the Build Genesis Epoch.
 
-11 x 11 = 121
+Allocation tiers:
 
-Since Build creation in X1 requires burning 11 BLD, one Genesis Origin allocation can theoretically support 11 new Builds.
+- earned_bld >= 1     -> origin_bld = 11
+- earned_bld >= 11    -> origin_bld = 22
+- earned_bld >= 121   -> origin_bld = 55
+- earned_bld >= 1111  -> origin_bld = 121
 
-### 4.2 Eligibility
+121 BLD is the maximum Genesis Origin cap, not the default allocation.
+
+### 4.2 Symbolism
+
+Since Build creation in X1 requires burning 11 BLD, the tiers can theoretically support:
+
+- 11 BLD  -> 1 new Build
+- 22 BLD  -> 2 new Builds
+- 55 BLD  -> 5 new Builds
+- 121 BLD -> 11 new Builds
+
+### 4.3 Eligibility
 
 Genesis Origin BLD is granted only once when a Build first connects valid xEnchanted Crypto history during the Build Genesis Epoch.
 
 It does not matter whether the Build already existed in X1 before or is created together with this connection.
 
-### 4.3 Restrictions
+### 4.4 Restrictions
 
 Genesis Origin BLD is not granted:
 
@@ -144,12 +158,12 @@ Genesis Origin BLD is not granted:
 - outside Build Genesis Epoch
 - more than once per canonical Ethereum/XC identity
 
-### 4.4 Accounting
+### 4.5 Accounting
 
 When Genesis Origin BLD is granted:
 
-origin_bld += 121
-available_bld += 121
+origin_bld += tiered_origin_bld
+available_bld += tiered_origin_bld
 
 It must not increase:
 
@@ -392,3 +406,4 @@ one source event -> one accounting action -> one Build
 ## 11. Short definition
 
 X1 Build is a voluntary NFT-like user object that records independent verified contribution layers: Core redeem contribution, global XEN Burn Power, XNTD commitment, and X1 fee contribution.
+
