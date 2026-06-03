@@ -1,0 +1,16 @@
+{
+  "name": "xenchanted-x1-build-lab",
+  "version": "0.1.0",
+  "private": true,
+  "description": "X1 Build MVP design and implementation lab.",
+  "type": "module",
+  "scripts": {
+    "test": "vitest run",
+    "typecheck": "tsc --noEmit"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.0",
+    "typescript": "^5.7.0",
+    "vitest": "^2.1.0"
+  }
+}
