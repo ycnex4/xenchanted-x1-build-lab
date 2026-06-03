@@ -987,6 +987,43 @@ Validation after merge:
 
 This milestone added real file snapshot storage adapter code and tests.
 
+## Latest CLI command implementation checkpoint
+
+The CLI command implementation milestone was completed and merged into main.
+
+Merge commit:
+
+- 4ec36f1 Merge branch 'cli-command-implementation'
+
+The milestone adds:
+
+- src/cli/parse.ts
+- src/cli/commands.ts
+- tests/cli-commands.test.ts
+- implementation/cli-command-implementation-notes.md
+- parseCliArgs helper
+- getStringFlag helper
+- renderCliHelp helper
+- runCliCommand dispatcher
+- CLI_VERSION = 0.1.0
+- help command
+- version command
+- snapshot:show --file <path> command
+- snapshot summary JSON output
+- structured CLI command result
+- structured unknown command failure
+- structured missing flag failure
+- read-only CLI behavior
+
+Validation after merge:
+
+- npm run typecheck: passed
+- npm test: passed
+- 23 test files passed
+- 127 tests passed
+
+This milestone added a real minimal CLI command layer and tests.
+
 ## Current decision
 
 Create documentation first. Do not start code until the core spec, BuildState fields, state transitions, registrar model, indexer models, and economic assumptions are reviewed.
@@ -1175,10 +1212,10 @@ Protection keys / maps:
 
 Potential next documents / design areas:
 
-1. CLI command implementation milestone.
-2. Proof-to-registrar payload builder milestone.
-3. Watcher-to-proof candidate conversion milestone.
-4. Snapshot migration / backup policy milestone.
+1. Proof-to-registrar payload builder milestone.
+2. Watcher-to-proof candidate conversion milestone.
+3. Snapshot migration / backup policy milestone.
+4. CLI binary entry point milestone.
 5. Review npm audit findings separately.
 6. Continue implementation only with clean typecheck and tests.
 
