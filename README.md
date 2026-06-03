@@ -53,12 +53,14 @@ This repository is currently documentation-only.
 ### Checkpoints
 
 - docs/checkpoints/current-design-checkpoint.md
+- docs/checkpoints/mvp-implementation-sequence.md
 
 ## Current status
 
 The current stage is design and documentation.
 
 No implementation code should be started until the core Build spec, state fields, state transitions, registrar model, and indexer models are reviewed.
+
 
 
 

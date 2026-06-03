@@ -41,6 +41,11 @@ Create documentation first. Do not start code until the core spec, BuildState fi
 - docs/economics/bld-tokenization-decision.md
 - docs/economics/xntd-lock-proof-model.md
 
+### Checkpoints
+
+- docs/checkpoints/current-design-checkpoint.md
+- docs/checkpoints/mvp-implementation-sequence.md
+
 ## Current model summary
 
 X1 Build is a voluntary NFT-like user object in X1 that records independent verified contribution layers.
@@ -181,12 +186,14 @@ Protection keys / maps:
 
 Potential next documents / design areas:
 
-1. MVP implementation sequence.
-2. Review full documentation consistency.
-3. Prepare implementation branch plan.
-4. Implementation risk checklist.
-5. Decide post-MVP BLD composability path.
-6. Final pre-implementation checkpoint.
+1. Review full documentation consistency.
+2. Prepare implementation branch plan.
+3. Implementation risk checklist.
+4. Decide post-MVP BLD composability path.
+5. Final pre-implementation checkpoint.
+6. First implementation milestone definition.
+
+
 
 
 
