@@ -171,6 +171,36 @@ Validation after merge:
 
 No used_redeem_events replay protection, source redeem key validation, registrar integration, Core NFT proof validation, Genesis Origin BLD, XEN Burn Power, XNTD lock, or fee checkpoint logic is implemented yet.
 
+## Latest used_redeem_events checkpoint
+
+The used_redeem_events replay protection milestone was completed and merged into main.
+
+Merge commit:
+
+- 7cff54c Merge branch 'redeem-event-replay'
+
+The milestone adds:
+
+- RedeemEventKey type
+- CoreRedeemEvent type
+- RedeemEventState structure
+- createRedeemEventState factory
+- acceptCoreRedeemEvent helper
+- usedRedeemEvents replay protection
+- DuplicateRedeemEvent error
+- tests proving duplicate redeemKey cannot apply BLD twice
+- tests proving invalid BLD amount does not mark redeemKey as used
+- implementation/redeem-event-replay-notes.md
+
+Validation after merge:
+
+- npm run typecheck: passed
+- npm test: passed
+- 7 test files passed
+- 35 tests passed
+
+No registrar CORE_REDEEM integration, source redeem key derivation, Ethereum log proof validation, Core NFT proof validation, XEN burn accounting, Genesis Origin BLD, XNTD lock, or fee checkpoint logic is implemented yet.
+
 ## Current decision
 
 Create documentation first. Do not start code until the core spec, BuildState fields, state transitions, registrar model, indexer models, and economic assumptions are reviewed.
@@ -361,8 +391,8 @@ Potential next documents / design areas:
 
 1. Implementation test matrix.
 2. Post-MVP integration policy.
-3. used_redeem_events replay protection milestone.
-4. Registrar CORE_REDEEM message integration milestone.
+3. Registrar CORE_REDEEM message integration milestone.
+4. XEN Burn Power milestone.
 5. Review npm audit findings separately.
 6. Continue implementation only with clean typecheck and tests.
 
