@@ -4,6 +4,34 @@ Status: draft / design phase.
 
 This repository tracks the current X1 Build design before implementation.
 
+## Latest implementation checkpoint
+
+The first implementation scaffold branch was completed and merged into main.
+
+Merge commit:
+
+- 1041972 Merge branch 'build-mvp-scaffold'
+
+The scaffold adds:
+
+- TypeScript model-first setup
+- Vitest test setup
+- placeholder BuildState model
+- placeholder create_build instruction module
+- basic error module
+- scaffold test
+- implementation/build-mvp-scaffold-notes.md
+
+Validation after merge:
+
+- npm run typecheck: passed
+- npm test: passed
+- 1 test file passed
+- 1 test passed
+
+No real accounting logic is implemented yet.
+
+
 ## Current decision
 
 Create documentation first. Do not start code until the core spec, BuildState fields, state transitions, registrar model, indexer models, and economic assumptions are reviewed.
@@ -192,12 +220,12 @@ Protection keys / maps:
 
 Potential next documents / design areas:
 
-1. Prepare scaffold branch.
-2. Implementation test matrix.
-3. Post-MVP integration policy.
-4. Start build-mvp-scaffold branch.
-5. Begin implementation only after clean final review.
-6. Keep documentation and implementation synchronized.
+1. Implementation test matrix.
+2. Post-MVP integration policy.
+3. BuildState account / object milestone.
+4. Keep documentation and implementation synchronized.
+5. Review npm audit findings separately.
+6. Continue implementation only with clean typecheck and tests.
 
 
 
