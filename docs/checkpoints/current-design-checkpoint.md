@@ -57,6 +57,31 @@ Validation before merge:
 
 No real accounting transitions are implemented yet.
 
+## Latest create_build checkpoint
+
+The create_build instruction milestone was completed and merged into main.
+
+Merge commit:
+
+- 3f12ba9 Merge branch 'create-build'
+
+The milestone adds:
+
+- createBuild input type
+- createBuild function
+- empty BuildState creation through createEmptyBuildState
+- tests proving createBuild creates no contribution or commitment value
+- implementation/create-build-notes.md
+
+Validation before merge:
+
+- npm run typecheck: passed
+- npm test: passed
+- 3 test files passed
+- 12 tests passed
+
+No duplicate Build prevention, registry logic, registrar processing, or accounting transitions are implemented yet.
+
 ## Current decision
 
 Create documentation first. Do not start code until the core spec, BuildState fields, state transitions, registrar model, indexer models, and economic assumptions are reviewed.
@@ -247,8 +272,8 @@ Potential next documents / design areas:
 
 1. Implementation test matrix.
 2. Post-MVP integration policy.
-3. create_build instruction milestone.
-4. Keep documentation and implementation synchronized.
+3. canonical Build registry / duplicate prevention milestone.
+4. Registrar message replay protection milestone.
 5. Review npm audit findings separately.
 6. Continue implementation only with clean typecheck and tests.
 
