@@ -1064,6 +1064,42 @@ Validation after merge:
 
 This milestone added real proof-to-registrar payload builder code and tests.
 
+## Latest Watcher-to-proof candidate conversion checkpoint
+
+The Watcher-to-proof candidate conversion milestone was completed and merged into main.
+
+Merge commit:
+
+- 05f994e Merge branch 'watcher-to-proof-conversion'
+
+The milestone adds:
+
+- src/watchers/proof-conversion.ts
+- tests/watcher-proof-conversion.test.ts
+- implementation/watcher-to-proof-conversion-notes.md
+- WatcherProofConversionInput
+- convertCoreRedeemCandidateToProof helper
+- convertXenBurnCandidateToProof helper
+- convertXntdLockCandidateToProof helper
+- convertXntdRelockCandidateToProof helper
+- convertX1FeeCheckpointCandidateToProof helper
+- convertWatcherCandidateToProof helper
+- finalized watcher candidate requirement
+- validated proof creation from finalized watcher candidates
+- canonical event key preservation
+- Core redeem redeemKey derivation from canonical event key
+- XEN burn xenBurnKey derivation from canonical event key
+- watcher candidate to proof to registrar payload pipeline test
+
+Validation after merge:
+
+- npm run typecheck: passed
+- npm test: passed
+- 25 test files passed
+- 141 tests passed
+
+This milestone added real watcher-to-proof conversion code and tests.
+
 ## Current decision
 
 Create documentation first. Do not start code until the core spec, BuildState fields, state transitions, registrar model, indexer models, and economic assumptions are reviewed.
@@ -1252,10 +1288,10 @@ Protection keys / maps:
 
 Potential next documents / design areas:
 
-1. Watcher-to-proof candidate conversion milestone.
+1. Application service proof submission milestone.
 2. Snapshot migration / backup policy milestone.
 3. CLI binary entry point milestone.
-4. Application service proof submission milestone.
+4. End-to-end watcher-proof-registrar scenario milestone.
 5. Review npm audit findings separately.
 6. Continue implementation only with clean typecheck and tests.
 
