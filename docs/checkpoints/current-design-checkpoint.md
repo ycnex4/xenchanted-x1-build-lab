@@ -387,6 +387,42 @@ Validation after merge:
 
 No registrar LOCK_XNTD / RELOCK_XNTD integration, unlock flow, lock proof validation, external XNTD escrow mechanics, epoch parameter source, XNTD amount calculation policy, BLD transfer / burn mechanics, or fee checkpoint logic is implemented yet.
 
+## Latest X1 Fee Contribution checkpoint
+
+The X1 Fee Contribution checkpoint milestone was completed and merged into main.
+
+Merge commit:
+
+- a2ca587 Merge branch 'x1-fee-contribution'
+
+The milestone adds:
+
+- ApplyX1FeeContributionCheckpointInput type
+- applyX1FeeContributionCheckpoint transition
+- positive fee amount validation
+- positive tx count validation
+- increasing countedUntilSlot validation
+- x1FeeContribution accumulation
+- x1TxCount accumulation
+- x1FeeCountedUntilSlot update
+- lastFeeUpdateAt update
+- updatedAt update
+- InvalidFeeContributionAmount error
+- InvalidFeeContributionTxCount error
+- NonIncreasingFeeCheckpointSlot error
+- tests for valid and rejected checkpoints
+- tests proving BLD, XBP, and XNTD commitment are not created or changed
+- implementation/x1-fee-contribution-notes.md
+
+Validation after merge:
+
+- npm run typecheck: passed
+- npm test: passed
+- 14 test files passed
+- 80 tests passed
+
+No registrar X1_FEE_CHECKPOINT integration, source transaction proof validation, external X1 fee indexing, slot finality policy, fee normalization policy, bridge proof logic, or BLD minting from fees is implemented yet.
+
 ## Current decision
 
 Create documentation first. Do not start code until the core spec, BuildState fields, state transitions, registrar model, indexer models, and economic assumptions are reviewed.
@@ -577,8 +613,8 @@ Potential next documents / design areas:
 
 1. Implementation test matrix.
 2. Post-MVP integration policy.
-3. X1 Fee Contribution checkpoint milestone.
-4. Registrar LOCK_XNTD / RELOCK_XNTD integration milestone.
+3. Registrar LOCK_XNTD / RELOCK_XNTD integration milestone.
+4. Registrar X1_FEE_CHECKPOINT integration milestone.
 5. Review npm audit findings separately.
 6. Continue implementation only with clean typecheck and tests.
 
