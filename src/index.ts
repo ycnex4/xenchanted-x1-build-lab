@@ -21,3 +21,4 @@ export * from "./watchers/watcher-candidates.js";
 export * from "./storage/snapshot.js";
 export * from "./cli/parse.js";
 export * from "./cli/commands.js";
+export * from "./proofs/registrar-builders.js";
