@@ -82,6 +82,35 @@ Validation before merge:
 
 No duplicate Build prevention, registry logic, registrar processing, or accounting transitions are implemented yet.
 
+## Latest Build registry checkpoint
+
+The canonical Build registry / duplicate prevention milestone was completed and merged into main.
+
+Merge commit:
+
+- 4e8c8de Merge branch 'build-registry'
+
+The milestone adds:
+
+- BuildRegistry structure
+- createEmptyBuildRegistry factory
+- createRegisteredBuild helper
+- duplicate buildId protection
+- duplicate owner protection
+- duplicate Ethereum identity protection
+- BuildErrorCode values for duplicate registry errors
+- tests proving registry creation does not create accounting value
+- implementation/build-registry-notes.md
+
+Validation after merge:
+
+- npm run typecheck: passed
+- npm test: passed
+- 4 test files passed
+- 18 tests passed
+
+No registrar message processing, source-event replay protection, or accounting transitions are implemented yet.
+
 ## Current decision
 
 Create documentation first. Do not start code until the core spec, BuildState fields, state transitions, registrar model, indexer models, and economic assumptions are reviewed.
@@ -272,8 +301,8 @@ Potential next documents / design areas:
 
 1. Implementation test matrix.
 2. Post-MVP integration policy.
-3. canonical Build registry / duplicate prevention milestone.
-4. Registrar message replay protection milestone.
+3. Registrar message replay protection milestone.
+4. Core redeem -> history_bld milestone.
 5. Review npm audit findings separately.
 6. Continue implementation only with clean typecheck and tests.
 
