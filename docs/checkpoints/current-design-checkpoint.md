@@ -910,6 +910,47 @@ Validation after merge:
 
 This milestone added real proof object type code and tests.
 
+## Latest Watcher candidate type implementation checkpoint
+
+The Watcher candidate type implementation milestone was completed and merged into main.
+
+Merge commit:
+
+- a040bc1 Merge branch 'watcher-candidate-types'
+
+The milestone adds:
+
+- src/watchers/watcher-candidates.ts
+- tests/watcher-candidates.test.ts
+- implementation/watcher-candidate-types-notes.md
+- WatcherCandidateKind
+- WatcherCandidateBase
+- CoreRedeemCandidate
+- XenBurnCandidate
+- XntdLockCandidate
+- XntdRelockCandidate
+- X1FeeCheckpointCandidate
+- WatcherCandidate union type
+- createWatcherCandidateBase helper
+- createCoreRedeemCandidate helper
+- createXenBurnCandidate helper
+- createXntdLockCandidate helper
+- createXntdRelockCandidate helper
+- createX1FeeCheckpointCandidate helper
+- isFinalizedWatcherCandidate helper
+- assertFinalizedWatcherCandidate helper
+- watcher candidate tests for canonical event key derivation
+- watcher candidate finality tests
+
+Validation after merge:
+
+- npm run typecheck: passed
+- npm test: passed
+- 21 test files passed
+- 117 tests passed
+
+This milestone added real watcher candidate type code and tests.
+
 ## Current decision
 
 Create documentation first. Do not start code until the core spec, BuildState fields, state transitions, registrar model, indexer models, and economic assumptions are reviewed.
@@ -1098,10 +1139,10 @@ Protection keys / maps:
 
 Potential next documents / design areas:
 
-1. Watcher candidate type implementation milestone.
-2. File snapshot storage adapter milestone.
-3. CLI command implementation milestone.
-4. Proof-to-registrar payload builder milestone.
+1. File snapshot storage adapter milestone.
+2. CLI command implementation milestone.
+3. Proof-to-registrar payload builder milestone.
+4. Watcher-to-proof candidate conversion milestone.
 5. Review npm audit findings separately.
 6. Continue implementation only with clean typecheck and tests.
 
