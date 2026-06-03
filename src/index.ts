@@ -8,6 +8,7 @@ export * from "./instructions/create-build.js";
 export * from "./instructions/core-redeem.js";
 export * from "./instructions/genesis-origin-bld.js";
 export * from "./instructions/registrar-core-redeem.js";
+export * from "./instructions/registrar-x1-fee-checkpoint.js";
 export * from "./instructions/registrar-xen-burn.js";
 export * from "./instructions/registrar-xntd-lock.js";
 export * from "./instructions/x1-fee-contribution.js";
