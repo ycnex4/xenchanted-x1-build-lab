@@ -52,14 +52,19 @@ export function applyRegistrarCoreRedeem(
     );
   }
 
-  const build = acceptCoreRedeemEvent(input.redeemEvents, {
+  if (input.amountBld <= 0n) {
+    throw new BuildError(
+      BuildErrorCode.InvalidBldAmount,
+      `Core redeem BLD amount must be positive: ${input.amountBld.toString()}`
+    );
+  }
+
+  acceptRegistrarMessage(input.registrar, input.message);
+
+  return acceptCoreRedeemEvent(input.redeemEvents, {
     redeemKey: input.redeemKey,
     build: input.build,
     amountBld: input.amountBld,
     redeemedAt: input.redeemedAt
   });
-
-  acceptRegistrarMessage(input.registrar, input.message);
-
-  return build;
 }

@@ -52,14 +52,19 @@ export function applyRegistrarXenBurn(
     );
   }
 
-  const build = acceptXenBurnEvent(input.xenBurnEvents, {
+  if (input.amountXbp <= 0n) {
+    throw new BuildError(
+      BuildErrorCode.InvalidXbpAmount,
+      `XEN Burn Power amount must be positive: ${input.amountXbp.toString()}`
+    );
+  }
+
+  acceptRegistrarMessage(input.registrar, input.message);
+
+  return acceptXenBurnEvent(input.xenBurnEvents, {
     xenBurnKey: input.xenBurnKey,
     build: input.build,
     amountXbp: input.amountXbp,
     burnedAt: input.burnedAt
   });
-
-  acceptRegistrarMessage(input.registrar, input.message);
-
-  return build;
 }
