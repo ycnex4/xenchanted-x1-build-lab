@@ -1,4 +1,4 @@
-import { loadSnapshotFile } from "../storage/snapshot.js";
+import { loadSnapshotFile, verifySnapshotFile } from "../storage/snapshot.js";
 import { parseCliArgs, getStringFlag } from "./parse.js";
 
 export interface CliCommandResult {
@@ -33,6 +33,7 @@ export function renderCliHelp(): string {
     "  help",
     "  version",
     "  snapshot:show --file <path>",
+    "  snapshot:verify --file <path>",
     "",
     "Notes:",
     "  This CLI layer is intentionally minimal.",
@@ -50,6 +51,35 @@ export async function runCliCommand(args: string[]): Promise<CliCommandResult> {
 
     if (parsed.command === "version") {
       return ok(`${CLI_VERSION}\n`);
+    }
+
+    if (parsed.command === "snapshot:verify") {
+      const file = getStringFlag(parsed, "file");
+
+      if (file === undefined) {
+        return fail("Missing required flag: --file");
+      }
+
+      const snapshot = await verifySnapshotFile(file);
+
+      return ok(
+        JSON.stringify(
+          {
+            valid: true,
+            createdAt: snapshot.createdAt.toString(10),
+            buildCount: snapshot.app.registry.buildsById.size,
+            registrarAuthority: snapshot.app.registrar.registrarAuthority,
+            processedMessageCount:
+              snapshot.app.registrar.processedMessages.size,
+            usedRedeemEventCount:
+              snapshot.app.redeemEvents.usedRedeemEvents.size,
+            usedXenBurnEventCount:
+              snapshot.app.xenBurnEvents.usedXenBurnEvents.size
+          },
+          null,
+          2
+        ) + "\n"
+      );
     }
 
     if (parsed.command === "snapshot:show") {
