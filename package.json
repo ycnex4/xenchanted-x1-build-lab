@@ -6,11 +6,16 @@
   "type": "module",
   "scripts": {
     "test": "vitest run",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "build": "tsc",
+    "cli": "node ./dist/src/cli/main.js"
   },
   "devDependencies": {
     "@types/node": "^22.10.0",
     "typescript": "^5.7.0",
     "vitest": "^2.1.0"
+  },
+  "bin": {
+    "x1-build-lab": "./dist/src/cli/main.js"
   }
 }
