@@ -1472,13 +1472,63 @@ Validation after merge:
 
 This milestone completed the first full end-to-end proof submission scenario across watcher, proof, application, registrar, and replay protection layers.
 
+## Latest Snapshot verification / backup implementation checkpoint
+
+The Snapshot verification / backup implementation milestone was completed and merged into main.
+
+Merge commit:
+
+- 2aa4d9d Merge branch 'snapshot-verification-backup'
+
+The milestone adds:
+
+- verifySnapshotJson helper
+- verifySnapshotFile helper
+- saveSnapshotFileWithBackup helper
+- SaveSnapshotFileWithBackupOptions
+- default backup path policy using <snapshotPath>.bak
+- optional custom backup path support
+- temporary file verification before canonical replacement
+- existing canonical verification before backup creation
+- new canonical verification after replacement
+- temporary file cleanup on failure
+- snapshot verification tests
+- invalid JSON verification rejection test
+- invalid schema verification rejection test
+- backup creation test
+- no-backup-on-first-save test
+- corrupted canonical rejection test
+- implementation/snapshot-verification-backup-notes.md
+
+Important architectural result:
+
+- snapshot verification reuses the existing decode / deserialize path
+- backup-enabled save does not replace a corrupted canonical snapshot
+- corrupted canonical snapshots are preserved for investigation
+- backup is created only from a verified existing canonical snapshot
+- this milestone does not add migration functions
+- this milestone does not add restore helpers
+- this milestone does not add CLI mutation commands
+- storage remains accounting-preserving only
+
+Validation after merge:
+
+- npm run typecheck: passed
+- npm test: passed
+- npm run build: passed
+- 28 test files passed
+- 159 tests passed
+
+This milestone completed the first implementation step from the snapshot migration / backup policy.
+
 ## Current next steps
 
 Potential next documents / design areas:
 
-1. Snapshot verification / backup implementation milestone.
-2. Review npm audit findings separately.
-3. Continue implementation only with clean typecheck and tests.
+1. Snapshot recovery load helper milestone.
+2. CLI snapshot verification command milestone.
+3. Review npm audit findings separately.
+4. Continue implementation only with clean typecheck and tests.
 
 
 
