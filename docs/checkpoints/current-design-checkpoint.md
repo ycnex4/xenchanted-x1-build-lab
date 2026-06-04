@@ -1886,6 +1886,67 @@ Validation:
 
 This milestone improves the repository's public review entrypoint without changing runtime behavior.
 
+## Latest XNTD lock event identity design checkpoint
+
+The XNTD lock event identity design milestone was completed on the xntd-lock-event-identity-design branch.
+
+Commits:
+
+- 7165e11 Document XNTD lock event identity design
+- e641569 Link XNTD lock event identity design
+
+The milestone adds:
+
+- docs/registrar/xntd-lock-event-identity.md
+
+The milestone also links the design path from:
+
+- docs/assumptions.md
+- docs/review-readiness-summary.md
+
+Design result:
+
+- XNTD lock / relock event identity is documented before runtime implementation
+- messageId is explicitly treated as registrar message identity, not source event identity
+- lock / relock replay risk is documented as state regression risk, not double-counting risk
+- a shared XntdLockEventKey model is recommended
+- LOCK_XNTD and RELOCK_XNTD are distinguished through eventKind inside canonical source identity
+- one shared usedXntdLockEvents replay set is recommended
+- event identity should be derived from sourceChainId, sourceAddress, eventKind, transactionHash, and logIndex / eventIndex
+- ordering guards are explicitly separated from per-event replay protection
+- epoch minimum validation remains a separate integration requirement
+- unlock replay protection is deferred until unlock is designed
+
+Recommended future implementation sequence:
+
+- add XntdLockEventKey types and replay state
+- add low-level replay tests for XNTD lock event state
+- add registrar handler tests for duplicate lock / relock event keys
+- add proof and registrar payload fields
+- add watcher candidate / proof conversion support
+- update snapshot serialization if new state is stored
+- update assumptions once implemented
+
+Scope boundary:
+
+- this milestone is design-only
+- no runtime behavior changed
+- no source code changed
+- no tests changed
+- no snapshot behavior changed
+- no CLI behavior changed
+
+Validation:
+
+- npm run typecheck: passed
+- npm test: passed
+- npm run build: passed
+- npm audit --audit-level=moderate: found 0 vulnerabilities
+- 28 test files passed
+- 171 tests passed
+
+This milestone prepares the XNTD lock / relock per-event replay protection design without expanding MVP runtime scope.
+
 ## Current next steps
 
 Potential next documents / design areas:
