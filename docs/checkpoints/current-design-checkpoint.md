@@ -1372,15 +1372,63 @@ Validation after merge:
 
 This milestone completed the policy layer for future snapshot migration, backup, restore, and recovery implementation.
 
+## Latest CLI binary entry point checkpoint
+
+The CLI binary entry point milestone was completed and merged into main.
+
+Merge commit:
+
+- 96bc3c9 Merge branch 'cli-binary-entry-point'
+
+The milestone adds:
+
+- src/cli/main.ts
+- tests/cli-main.test.ts
+- implementation/cli-binary-entry-point-notes.md
+- package.json build script
+- package.json cli script
+- package.json bin entry
+- x1-build-lab binary name
+- runCliMain helper
+- memory-backed CLI main tests
+- compiled CLI manual verification
+
+The milestone verifies:
+
+- help output writes to stdout and returns exit code 0
+- version output writes to stdout and returns exit code 0
+- unknown command writes to stderr and returns exit code 1
+- compiled CLI version command works
+- compiled CLI help command works
+
+Important architectural result:
+
+- the CLI now has a real Node.js executable entry point
+- the existing command layer remains the source of command behavior
+- the CLI remains read-only
+- no state mutation commands were added
+- binary entry path matches the current TypeScript output layout
+
+Validation after merge:
+
+- npm run typecheck: passed
+- npm test: passed
+- npm run build: passed
+- node ./dist/src/cli/main.js version: passed
+- node ./dist/src/cli/main.js help: passed
+- 27 test files passed
+- 152 tests passed
+
+This milestone completed the executable CLI entry point for the existing read-only CLI command layer.
+
 ## Current next steps
 
 Potential next documents / design areas:
 
-1. CLI binary entry point milestone.
-2. End-to-end watcher-proof-registrar scenario milestone.
-3. Snapshot verification / backup implementation milestone.
-4. Review npm audit findings separately.
-5. Continue implementation only with clean typecheck and tests.
+1. End-to-end watcher-proof-registrar scenario milestone.
+2. Snapshot verification / backup implementation milestone.
+3. Review npm audit findings separately.
+4. Continue implementation only with clean typecheck and tests.
 
 
 
