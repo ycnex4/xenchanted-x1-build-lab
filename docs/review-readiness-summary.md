@@ -224,7 +224,11 @@ Explicit MVP assumptions and known limitations are documented in:
 
 - docs/assumptions.md
 
-That document should be reviewed before adding live indexer integration, production chain integration, bridge execution, or token issuance logic.
+The XNTD lock / relock event identity design path is documented in:
+
+- docs/registrar/xntd-lock-event-identity.md
+
+These documents should be reviewed before adding live indexer integration, production chain integration, bridge execution, or token issuance logic.
 
 ## Important non-goals in the current MVP
 
