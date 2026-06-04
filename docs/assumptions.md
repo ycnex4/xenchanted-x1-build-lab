@@ -65,6 +65,10 @@ Accepted MVP limitation:
 - this is low risk under the trusted indexer / registrar assumption
 - before production, add per-event replay protection for XNTD lock / relock or document the final event identity model
 
+Design path:
+
+- docs/registrar/xntd-lock-event-identity.md
+
 ## 4. requiredXntdLock source
 
 In the current MVP, requiredXntdLock is accepted from registrar-provided lock / relock input.
