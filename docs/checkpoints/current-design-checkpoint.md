@@ -1767,6 +1767,73 @@ Validation after document creation:
 
 This milestone prepares the repository for external design and implementation review.
 
+## Latest registrar mutation order and assumptions checkpoint
+
+The registrar mutation order and assumptions milestone was completed on the registrar-mutation-order-assumptions branch.
+
+Commits:
+
+- 621e8d4 Reorder registrar event mutations
+- 5a8f5d1 Add registrar mutation order notes
+- fd7b045 Document MVP assumptions and limitations
+
+The milestone addresses external review findings from Theo.
+
+Code changes:
+
+- applyRegistrarCoreRedeem now validates amountBld before any mutation
+- applyRegistrarXenBurn now validates amountXbp before any mutation
+- successful Core Redeem registrar path now marks registrar message before redeem event key
+- successful XEN Burn registrar path now marks registrar message before xen burn event key
+
+Important safety result:
+
+- invalid BLD amount does not mark messageId
+- invalid BLD amount does not mark redeemKey
+- invalid XBP amount does not mark messageId
+- invalid XBP amount does not mark xenBurnKey
+- successful registrar mutation order is now message first, event key second
+- preconditions for message kind, registrar authority, duplicate message, and duplicate event key remain unchanged
+
+Documentation changes:
+
+- implementation/registrar-mutation-order-assumptions-notes.md
+- docs/assumptions.md
+- docs/review-readiness-summary.md now links to docs/assumptions.md
+
+The assumptions document explicitly records:
+
+- trusted indexer / registrar model
+- Build ownership mapping assumption
+- XNTD lock / relock registrar-level replay protection only
+- lock / relock overwrite behavior
+- requiredXntdLock accepted from registrar in the MVP
+- no unlock flow in the MVP
+- canonicalEventKey convention
+- fee checkpoint finality assumption
+- snapshot recovery read-only behavior
+- snapshot content hash not implemented
+- no production integration guarantees yet
+
+Deferred production / post-MVP items remain:
+
+- per-event replay protection for XNTD lock / relock
+- epoch minimum validation against authoritative XC state
+- unlock flow design
+- snapshot content hash if needed
+- live indexer / production integration hardening
+
+Validation:
+
+- npm run typecheck: passed
+- npm test: passed
+- npm run build: passed
+- npm audit --audit-level=moderate: found 0 vulnerabilities
+- 28 test files passed
+- 171 tests passed
+
+This milestone keeps the MVP scope small while addressing the immediate low-effort / high-safety review findings.
+
 ## Current next steps
 
 Potential next documents / design areas:
