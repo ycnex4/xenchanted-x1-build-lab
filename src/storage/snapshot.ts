@@ -180,6 +180,57 @@ export async function loadSnapshotFile(
   return decodeSnapshotJson(json);
 }
 
+export interface LoadSnapshotFileWithRecoveryOptions {
+  backupPath?: string;
+}
+
+export interface LoadSnapshotFileWithRecoveryResult {
+  app: BuildApplicationState;
+  createdAt: bigint;
+  source: "canonical" | "backup";
+  filePath: string;
+}
+
+export async function loadSnapshotFileWithRecovery(
+  filePath: string,
+  options: LoadSnapshotFileWithRecoveryOptions = {}
+): Promise<LoadSnapshotFileWithRecoveryResult> {
+  try {
+    const snapshot = await loadSnapshotFile(filePath);
+
+    return {
+      ...snapshot,
+      source: "canonical",
+      filePath
+    };
+  } catch (canonicalError) {
+    const backupPath = options.backupPath ?? `${filePath}.bak`;
+
+    try {
+      const snapshot = await loadSnapshotFile(backupPath);
+
+      return {
+        ...snapshot,
+        source: "backup",
+        filePath: backupPath
+      };
+    } catch (backupError) {
+      const canonicalMessage =
+        canonicalError instanceof Error
+          ? canonicalError.message
+          : "Unknown canonical snapshot load error";
+      const backupMessage =
+        backupError instanceof Error
+          ? backupError.message
+          : "Unknown backup snapshot load error";
+
+      throw new Error(
+        `Failed to load canonical snapshot or backup. canonical: ${canonicalMessage}; backup: ${backupMessage}`
+      );
+    }
+  }
+}
+
 export async function saveSnapshotFileWithBackup(
   filePath: string,
   app: BuildApplicationState,

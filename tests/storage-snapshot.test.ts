@@ -11,6 +11,7 @@ import {
   decodeSnapshotJson,
   encodeSnapshotJson,
   loadSnapshotFile,
+  loadSnapshotFileWithRecovery,
   saveSnapshotFile,
   saveSnapshotFileWithBackup,
   serializeBuildApplicationSnapshot,
@@ -261,6 +262,83 @@ describe("storage snapshot", () => {
 
     expect(canonical).toBe("{not-json");
     await expect(readFile(backupPath, "utf8")).rejects.toThrow();
+  });
+
+  it("loads canonical snapshot through recovery helper when canonical is valid", async () => {
+    const dir = await mkdtemp(
+      join(tmpdir(), "x1-build-snapshot-recovery-canonical-")
+    );
+    const filePath = join(dir, "snapshot.json");
+
+    const app = createBuildApplicationState("registrar-1");
+
+    await saveSnapshotFile(filePath, app, 1000n);
+
+    const loaded = await loadSnapshotFileWithRecovery(filePath);
+
+    expect(loaded.source).toBe("canonical");
+    expect(loaded.filePath).toBe(filePath);
+    expect(loaded.createdAt).toBe(1000n);
+    expect(loaded.app.registrar.registrarAuthority).toBe("registrar-1");
+  });
+
+  it("loads backup snapshot through recovery helper when canonical is corrupted", async () => {
+    const dir = await mkdtemp(
+      join(tmpdir(), "x1-build-snapshot-recovery-backup-")
+    );
+    const filePath = join(dir, "snapshot.json");
+    const backupPath = `${filePath}.bak`;
+
+    const app = createBuildApplicationState("registrar-1");
+
+    await saveSnapshotFile(backupPath, app, 1000n);
+    await writeFile(filePath, "{not-json", "utf8");
+
+    const loaded = await loadSnapshotFileWithRecovery(filePath);
+
+    expect(loaded.source).toBe("backup");
+    expect(loaded.filePath).toBe(backupPath);
+    expect(loaded.createdAt).toBe(1000n);
+    expect(loaded.app.registrar.registrarAuthority).toBe("registrar-1");
+
+    const canonical = await readFile(filePath, "utf8");
+    expect(canonical).toBe("{not-json");
+  });
+
+  it("supports custom backup path during recovery load", async () => {
+    const dir = await mkdtemp(
+      join(tmpdir(), "x1-build-snapshot-recovery-custom-")
+    );
+    const filePath = join(dir, "snapshot.json");
+    const backupPath = join(dir, "backups", "snapshot.custom.bak");
+
+    const app = createBuildApplicationState("registrar-1");
+
+    await saveSnapshotFile(backupPath, app, 2000n);
+    await writeFile(filePath, "{not-json", "utf8");
+
+    const loaded = await loadSnapshotFileWithRecovery(filePath, {
+      backupPath
+    });
+
+    expect(loaded.source).toBe("backup");
+    expect(loaded.filePath).toBe(backupPath);
+    expect(loaded.createdAt).toBe(2000n);
+  });
+
+  it("rejects recovery load when canonical and backup are both unavailable or invalid", async () => {
+    const dir = await mkdtemp(
+      join(tmpdir(), "x1-build-snapshot-recovery-fail-")
+    );
+    const filePath = join(dir, "snapshot.json");
+    const backupPath = `${filePath}.bak`;
+
+    await writeFile(filePath, "{not-json", "utf8");
+    await writeFile(backupPath, "{also-not-json", "utf8");
+
+    await expect(loadSnapshotFileWithRecovery(filePath)).rejects.toThrow(
+      "Failed to load canonical snapshot or backup"
+    );
   });
 
 });
