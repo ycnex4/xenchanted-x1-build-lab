@@ -1,4 +1,4 @@
-import { mkdtemp, readFile } from "node:fs/promises";
+import { mkdtemp, readFile, writeFile } from "node:fs/promises";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { describe, expect, it } from "vitest";
@@ -12,7 +12,10 @@ import {
   encodeSnapshotJson,
   loadSnapshotFile,
   saveSnapshotFile,
-  serializeBuildApplicationSnapshot
+  saveSnapshotFileWithBackup,
+  serializeBuildApplicationSnapshot,
+  verifySnapshotFile,
+  verifySnapshotJson
 } from "../src/index.js";
 
 describe("storage snapshot", () => {
@@ -147,4 +150,117 @@ describe("storage snapshot", () => {
       )
     ).toThrow("Unsupported schema version for BuildApplicationSnapshot");
   });
+
+  it("verifies snapshot JSON and files", async () => {
+    const dir = await mkdtemp(join(tmpdir(), "x1-build-snapshot-verify-"));
+    const filePath = join(dir, "snapshot.json");
+
+    const app = createBuildApplicationState("registrar-1");
+    const snapshot = serializeBuildApplicationSnapshot(app, 3000n);
+    const json = encodeSnapshotJson(snapshot);
+
+    const verifiedJson = verifySnapshotJson(json);
+
+    expect(verifiedJson.createdAt).toBe(3000n);
+    expect(verifiedJson.app.registrar.registrarAuthority).toBe("registrar-1");
+
+    await saveSnapshotFile(filePath, app, 4000n);
+
+    const verifiedFile = await verifySnapshotFile(filePath);
+
+    expect(verifiedFile.createdAt).toBe(4000n);
+    expect(verifiedFile.app.registrar.registrarAuthority).toBe("registrar-1");
+  });
+
+  it("rejects invalid snapshot JSON during verification", () => {
+    expect(() => verifySnapshotJson("{not-json")).toThrow();
+  });
+
+  it("rejects invalid snapshot schema during verification", () => {
+    const app = createBuildApplicationState("registrar-1");
+    const snapshot = serializeBuildApplicationSnapshot(app, 1000n);
+
+    expect(() =>
+      verifySnapshotJson(
+        JSON.stringify({
+          ...snapshot,
+          schemaVersion: 999
+        })
+      )
+    ).toThrow("Unsupported schema version for BuildApplicationSnapshot");
+  });
+
+  it("saves snapshot with backup when canonical snapshot already exists", async () => {
+    const dir = await mkdtemp(join(tmpdir(), "x1-build-snapshot-backup-"));
+    const filePath = join(dir, "snapshot.json");
+    const backupPath = `${filePath}.bak`;
+
+    const firstApp = createBuildApplicationState("registrar-1");
+
+    const firstBuild = appCreateBuild(firstApp, {
+      owner: "x1-owner-1",
+      buildId: "build-1",
+      createdAt: 100n
+    });
+
+    expect(firstBuild.ok).toBe(true);
+
+    await saveSnapshotFile(filePath, firstApp, 1000n);
+
+    const secondApp = createBuildApplicationState("registrar-1");
+
+    const secondBuild = appCreateBuild(secondApp, {
+      owner: "x1-owner-2",
+      buildId: "build-2",
+      createdAt: 200n
+    });
+
+    expect(secondBuild.ok).toBe(true);
+
+    await saveSnapshotFileWithBackup(filePath, secondApp, 2000n);
+
+    const canonical = await loadSnapshotFile(filePath);
+    const backup = await loadSnapshotFile(backupPath);
+
+    expect(canonical.createdAt).toBe(2000n);
+    expect(canonical.app.registry.buildsById.has("build-2")).toBe(true);
+
+    expect(backup.createdAt).toBe(1000n);
+    expect(backup.app.registry.buildsById.has("build-1")).toBe(true);
+  });
+
+  it("saves snapshot without backup when canonical snapshot does not exist", async () => {
+    const dir = await mkdtemp(join(tmpdir(), "x1-build-snapshot-no-backup-"));
+    const filePath = join(dir, "snapshot.json");
+    const backupPath = `${filePath}.bak`;
+
+    const app = createBuildApplicationState("registrar-1");
+
+    await saveSnapshotFileWithBackup(filePath, app, 1000n);
+
+    const canonical = await loadSnapshotFile(filePath);
+
+    expect(canonical.createdAt).toBe(1000n);
+    await expect(readFile(backupPath, "utf8")).rejects.toThrow();
+  });
+
+  it("rejects corrupted canonical snapshot before backup-enabled save", async () => {
+    const dir = await mkdtemp(join(tmpdir(), "x1-build-snapshot-corrupt-"));
+    const filePath = join(dir, "snapshot.json");
+    const backupPath = `${filePath}.bak`;
+
+    await writeFile(filePath, "{not-json", "utf8");
+
+    const app = createBuildApplicationState("registrar-1");
+
+    await expect(
+      saveSnapshotFileWithBackup(filePath, app, 1000n)
+    ).rejects.toThrow();
+
+    const canonical = await readFile(filePath, "utf8");
+
+    expect(canonical).toBe("{not-json");
+    await expect(readFile(backupPath, "utf8")).rejects.toThrow();
+  });
+
 });
