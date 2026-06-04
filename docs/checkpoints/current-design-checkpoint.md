@@ -1563,14 +1563,61 @@ Validation after merge:
 
 This milestone completed the recovery-load layer for canonical snapshot plus backup snapshot reads.
 
+## Latest CLI snapshot verification command checkpoint
+
+The CLI snapshot verification command milestone was completed and merged into main.
+
+Merge commit:
+
+- 418bcbf Merge branch 'cli-snapshot-verify-command'
+
+The milestone adds:
+
+- snapshot:verify --file <path> CLI command
+- CLI help entry for snapshot:verify
+- verifySnapshotFile integration in the CLI command layer
+- valid snapshot verification JSON summary
+- missing --file structured failure
+- invalid snapshot structured failure
+- implementation/cli-snapshot-verify-command-notes.md
+
+The command returns a read-only JSON summary for valid snapshots:
+
+- valid
+- createdAt
+- buildCount
+- registrarAuthority
+- processedMessageCount
+- usedRedeemEventCount
+- usedXenBurnEventCount
+
+Important architectural result:
+
+- snapshot verification is now available from the executable CLI
+- the command is read-only
+- the command does not mutate snapshots
+- the command does not create backups
+- the command does not recover from backups
+- the command does not migrate snapshot files
+
+Validation after merge:
+
+- npm run typecheck: passed
+- npm test: passed
+- npm run build: passed
+- node ./dist/src/cli/main.js help: passed
+- 28 test files passed
+- 166 tests passed
+
+This milestone completed the first read-only CLI snapshot safety command.
+
 ## Current next steps
 
 Potential next documents / design areas:
 
-1. CLI snapshot verification command milestone.
-2. CLI snapshot recovery command milestone.
-3. Review npm audit findings separately.
-4. Continue implementation only with clean typecheck and tests.
+1. CLI snapshot recovery command milestone.
+2. Review npm audit findings separately.
+3. Continue implementation only with clean typecheck and tests.
 
 
 
