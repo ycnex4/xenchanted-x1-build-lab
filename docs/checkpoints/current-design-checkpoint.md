@@ -1327,13 +1327,58 @@ Validation after merge:
 
 This milestone completed the application-level bridge between validated proofs and existing registrar application service helpers.
 
+## Latest Snapshot migration / backup policy checkpoint
+
+The Snapshot migration / backup policy milestone was completed and merged into main.
+
+Merge commit:
+
+- bff811f Merge branch 'snapshot-migration-backup-policy'
+
+The milestone adds:
+
+- implementation/snapshot-migration-backup-policy.md
+- snapshot schema version policy
+- explicit migration policy
+- migration test policy
+- backup policy
+- backup creation policy
+- atomic write policy
+- restore policy
+- corrupted snapshot policy
+- replay protection preservation policy
+- snapshot timestamp policy
+- concurrency policy
+- CLI / API snapshot policy
+- snapshot security policy
+- recommended next implementation order
+
+Important architectural result:
+
+- this milestone is documentation-only
+- no TypeScript model logic changed
+- snapshot storage remains an accounting-preserving layer only
+- unsupported schema versions remain rejected by default
+- migration must be explicit and tested
+- backup restore must not silently hide corruption in normal operation
+- replay protection fields are treated as critical state
+
+Validation after merge:
+
+- npm run typecheck: passed
+- npm test: passed
+- 26 test files passed
+- 149 tests passed
+
+This milestone completed the policy layer for future snapshot migration, backup, restore, and recovery implementation.
+
 ## Current next steps
 
 Potential next documents / design areas:
 
-1. Snapshot migration / backup policy milestone.
-2. CLI binary entry point milestone.
-3. End-to-end watcher-proof-registrar scenario milestone.
+1. CLI binary entry point milestone.
+2. End-to-end watcher-proof-registrar scenario milestone.
+3. Snapshot verification / backup implementation milestone.
 4. Review npm audit findings separately.
 5. Continue implementation only with clean typecheck and tests.
 
