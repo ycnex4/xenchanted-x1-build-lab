@@ -1665,12 +1665,59 @@ Validation after merge:
 
 This milestone completed the read-only CLI snapshot recovery command layer.
 
+## Latest audit Vitest upgrade checkpoint
+
+The audit Vitest upgrade milestone was completed and merged into main.
+
+Merge commit:
+
+- b815498 Merge branch 'audit-vitest-upgrade'
+
+The milestone adds:
+
+- Vitest upgrade from ^2.1.0 to ^4.1.8
+- refreshed package-lock.json
+- vitest.config.ts
+- dist/** exclusion from Vitest test discovery
+- implementation/audit-vitest-upgrade-notes.md
+
+Reason:
+
+The previous npm audit report showed vulnerabilities through the older Vitest / Vite / esbuild dependency chain.
+
+The automatic npm audit recommendation required a breaking Vitest upgrade, so the upgrade was handled explicitly on a separate branch instead of running npm audit fix --force blindly.
+
+Important tooling result:
+
+- npm audit now reports 0 vulnerabilities
+- Vitest 4 no longer discovers compiled tests under dist/tests
+- npm test remains focused on source tests under tests/
+- this milestone changes dev tooling only
+- no protocol logic changed
+- no application state logic changed
+- no CLI behavior changed
+- no snapshot behavior changed
+
+Validation after merge:
+
+- npm run typecheck: passed
+- npm test: passed
+- npm run build: passed
+- npm audit --audit-level=moderate: found 0 vulnerabilities
+- 28 test files passed
+- 171 tests passed
+
+Runtime note:
+
+Vitest 4 dependency tooling may require newer Node versions through its dependency graph. The current local environment uses Node 24 and passes all checks.
+
+This milestone completed the npm audit review item.
+
 ## Current next steps
 
 Potential next documents / design areas:
 
-1. Review npm audit findings separately.
-2. Continue implementation only with clean typecheck and tests.
+1. Continue implementation only with clean typecheck and tests.
 
 
 
