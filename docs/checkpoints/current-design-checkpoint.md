@@ -1834,6 +1834,58 @@ Validation:
 
 This milestone keeps the MVP scope small while addressing the immediate low-effort / high-safety review findings.
 
+## Latest README review entrypoint checkpoint
+
+The README review entrypoint milestone was completed on the readme-review-entrypoint branch.
+
+Commit:
+
+- 1631649 Update README review entrypoint
+
+The milestone replaces the outdated README that described the repository as documentation-only.
+
+The README now presents the repository as a tested MVP implementation and design lab.
+
+It adds a public review entrypoint to:
+
+- docs/review-readiness-summary.md
+- docs/assumptions.md
+- docs/checkpoints/current-design-checkpoint.md
+
+It also documents:
+
+- current validation baseline
+- CLI commands
+- implemented MVP layers
+- architecture overview
+- core accounting concepts
+- snapshot safety model
+- MVP assumptions and limitations
+- current non-goals
+- document map
+- current review posture
+
+Important result:
+
+- GitHub visitors now see the current repository state immediately
+- reviewers no longer have to start from the full checkpoint history
+- the README no longer says implementation has not started
+- no source logic changed
+- no tests changed
+- no CLI behavior changed
+- no snapshot behavior changed
+
+Validation:
+
+- npm run typecheck: passed
+- npm test: passed
+- npm run build: passed
+- npm audit --audit-level=moderate: found 0 vulnerabilities
+- 28 test files passed
+- 171 tests passed
+
+This milestone improves the repository's public review entrypoint without changing runtime behavior.
+
 ## Current next steps
 
 Potential next documents / design areas:
