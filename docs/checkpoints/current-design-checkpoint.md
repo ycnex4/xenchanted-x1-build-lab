@@ -1611,13 +1611,66 @@ Validation after merge:
 
 This milestone completed the first read-only CLI snapshot safety command.
 
+## Latest CLI snapshot recovery command checkpoint
+
+The CLI snapshot recovery command milestone was completed and merged into main.
+
+Merge commit:
+
+- 57f68fd Merge branch 'cli-snapshot-recovery-command'
+
+The milestone adds:
+
+- snapshot:recover --file <path> [--backup <path>] CLI command
+- CLI help entry for snapshot:recover
+- loadSnapshotFileWithRecovery integration in the CLI command layer
+- canonical snapshot recovery CLI path
+- backup snapshot recovery CLI path
+- custom backup path support through --backup
+- missing --file structured failure
+- recovery failure structured stderr path
+- implementation/cli-snapshot-recovery-command-notes.md
+
+The command returns a read-only JSON summary for successful recovery:
+
+- recovered
+- source
+- filePath
+- createdAt
+- buildCount
+- registrarAuthority
+- processedMessageCount
+- usedRedeemEventCount
+- usedXenBurnEventCount
+
+Important architectural result:
+
+- snapshot recovery loading is now available from the executable CLI
+- the command is read-only
+- the command does not repair canonical snapshots
+- the command does not copy backup into canonical
+- the command does not delete corrupted files
+- the command does not create backups
+- the command does not migrate snapshot files
+- the command only reports which snapshot source was used
+
+Validation after merge:
+
+- npm run typecheck: passed
+- npm test: passed
+- npm run build: passed
+- node ./dist/src/cli/main.js help: passed
+- 28 test files passed
+- 171 tests passed
+
+This milestone completed the read-only CLI snapshot recovery command layer.
+
 ## Current next steps
 
 Potential next documents / design areas:
 
-1. CLI snapshot recovery command milestone.
-2. Review npm audit findings separately.
-3. Continue implementation only with clean typecheck and tests.
+1. Review npm audit findings separately.
+2. Continue implementation only with clean typecheck and tests.
 
 
 
