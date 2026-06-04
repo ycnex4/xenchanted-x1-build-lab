@@ -1284,16 +1284,58 @@ Protection keys / maps:
 - genesis_origin_claimed[identity]
 - canonical_build_by_identity[identity]
 
+## Latest Application proof submission checkpoint
+
+The Application service proof submission milestone was completed and merged into main.
+
+Merge commit:
+
+- 9ba5cad Merge branch 'app-proof-submission'
+
+The milestone adds:
+
+- src/app/proof-submission.ts
+- tests/app-proof-submission.test.ts
+- implementation/app-proof-submission-notes.md
+- appSubmitProof helper
+- application-level proof submission routing
+- validated BuildProof to registrar payload submission path
+- Build lookup by buildId before state transition
+- Core redeem proof submission through registrar application service
+- XEN burn proof submission through registrar application service
+- XNTD lock proof submission through registrar application service
+- XNTD relock proof submission through registrar application service
+- X1 fee checkpoint proof submission through registrar application service
+- structured rejection for non-validated proof
+- structured rejection for missing Build
+- structured rejection for Genesis Origin proof
+- duplicate proof submission rejection through existing registrar replay protection
+
+Important architectural result:
+
+- the proof submission service does not duplicate accounting logic
+- the proof submission service does not mutate BuildState directly
+- the proof submission service does not bypass registrar replay protection
+- Genesis Origin proof remains outside registrar payload submission
+
+Validation after merge:
+
+- npm run typecheck: passed
+- npm test: passed
+- 26 test files passed
+- 149 tests passed
+
+This milestone completed the application-level bridge between validated proofs and existing registrar application service helpers.
+
 ## Current next steps
 
 Potential next documents / design areas:
 
-1. Application service proof submission milestone.
-2. Snapshot migration / backup policy milestone.
-3. CLI binary entry point milestone.
-4. End-to-end watcher-proof-registrar scenario milestone.
-5. Review npm audit findings separately.
-6. Continue implementation only with clean typecheck and tests.
+1. Snapshot migration / backup policy milestone.
+2. CLI binary entry point milestone.
+3. End-to-end watcher-proof-registrar scenario milestone.
+4. Review npm audit findings separately.
+5. Continue implementation only with clean typecheck and tests.
 
 
 
