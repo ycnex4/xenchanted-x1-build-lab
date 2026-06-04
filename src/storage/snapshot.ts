@@ -1,4 +1,4 @@
-import { mkdir, readFile, rename, writeFile } from "node:fs/promises";
+import { access, copyFile, mkdir, readFile, rename, rm, writeFile } from "node:fs/promises";
 import { dirname } from "node:path";
 import {
   type BuildApplicationState,
@@ -52,6 +52,23 @@ function requireRecord(value: unknown, field: string): Record<string, unknown> {
   }
 
   return value as Record<string, unknown>;
+}
+
+function isNodeError(error: unknown): error is NodeJS.ErrnoException {
+  return typeof error === "object" && error !== null && "code" in error;
+}
+
+async function fileExists(filePath: string): Promise<boolean> {
+  try {
+    await access(filePath);
+    return true;
+  } catch (error) {
+    if (isNodeError(error) && error.code === "ENOENT") {
+      return false;
+    }
+
+    throw error;
+  }
 }
 
 export function serializeBuildApplicationSnapshot(
@@ -114,6 +131,30 @@ export function decodeSnapshotJson(
   return deserializeBuildApplicationSnapshot(JSON.parse(json));
 }
 
+export function verifySnapshotJson(
+  json: string
+): {
+  app: BuildApplicationState;
+  createdAt: bigint;
+} {
+  return decodeSnapshotJson(json);
+}
+
+export async function verifySnapshotFile(
+  filePath: string
+): Promise<{
+  app: BuildApplicationState;
+  createdAt: bigint;
+}> {
+  const json = await readFile(filePath, "utf8");
+
+  return verifySnapshotJson(json);
+}
+
+export interface SaveSnapshotFileWithBackupOptions {
+  backupPath?: string;
+}
+
 export async function saveSnapshotFile(
   filePath: string,
   app: BuildApplicationState,
@@ -137,4 +178,36 @@ export async function loadSnapshotFile(
   const json = await readFile(filePath, "utf8");
 
   return decodeSnapshotJson(json);
+}
+
+export async function saveSnapshotFileWithBackup(
+  filePath: string,
+  app: BuildApplicationState,
+  createdAt: bigint,
+  options: SaveSnapshotFileWithBackupOptions = {}
+): Promise<void> {
+  const snapshot = serializeBuildApplicationSnapshot(app, createdAt);
+  const json = encodeSnapshotJson(snapshot);
+  const tempPath = `${filePath}.tmp-${process.pid}-${Date.now()}`;
+
+  try {
+    await mkdir(dirname(filePath), { recursive: true });
+    await writeFile(tempPath, json, "utf8");
+    await verifySnapshotFile(tempPath);
+
+    if (await fileExists(filePath)) {
+      await verifySnapshotFile(filePath);
+
+      const backupPath = options.backupPath ?? `${filePath}.bak`;
+
+      await mkdir(dirname(backupPath), { recursive: true });
+      await copyFile(filePath, backupPath);
+    }
+
+    await rename(tempPath, filePath);
+    await verifySnapshotFile(filePath);
+  } catch (error) {
+    await rm(tempPath, { force: true });
+    throw error;
+  }
 }
