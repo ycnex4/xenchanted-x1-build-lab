@@ -1521,12 +1521,54 @@ Validation after merge:
 
 This milestone completed the first implementation step from the snapshot migration / backup policy.
 
+## Latest Snapshot recovery load helper checkpoint
+
+The Snapshot recovery load helper milestone was completed and merged into main.
+
+Merge commit:
+
+- 00fcb61 Merge branch 'snapshot-recovery-load'
+
+The milestone adds:
+
+- loadSnapshotFileWithRecovery helper
+- LoadSnapshotFileWithRecoveryOptions
+- LoadSnapshotFileWithRecoveryResult
+- canonical snapshot recovery load path
+- backup snapshot fallback path
+- default backup path policy using <snapshotPath>.bak
+- custom backup path support
+- source reporting through source: canonical | backup
+- loaded file path reporting
+- combined canonical / backup failure error
+- implementation/snapshot-recovery-load-notes.md
+
+Important architectural result:
+
+- recovery load does not repair canonical snapshots
+- recovery load does not overwrite canonical files from backup
+- recovery load does not delete corrupted files
+- recovery load reports whether canonical or backup was used
+- storage remains accounting-preserving only
+- no migration functions were added
+- no CLI recovery commands were added
+
+Validation after merge:
+
+- npm run typecheck: passed
+- npm test: passed
+- npm run build: passed
+- 28 test files passed
+- 163 tests passed
+
+This milestone completed the recovery-load layer for canonical snapshot plus backup snapshot reads.
+
 ## Current next steps
 
 Potential next documents / design areas:
 
-1. Snapshot recovery load helper milestone.
-2. CLI snapshot verification command milestone.
+1. CLI snapshot verification command milestone.
+2. CLI snapshot recovery command milestone.
 3. Review npm audit findings separately.
 4. Continue implementation only with clean typecheck and tests.
 
