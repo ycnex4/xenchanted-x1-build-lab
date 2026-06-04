@@ -1713,6 +1713,60 @@ Vitest 4 dependency tooling may require newer Node versions through its dependen
 
 This milestone completed the npm audit review item.
 
+## Latest review readiness summary checkpoint
+
+The review readiness summary milestone was completed on the review-readiness-summary branch.
+
+Commit:
+
+- 4570cfd Add review readiness summary
+
+The milestone adds:
+
+- docs/review-readiness-summary.md
+
+The summary document gives external reviewers a compact entry point for the repository.
+
+It covers:
+
+- project purpose
+- current review target
+- high-level watcher -> proof -> registrar -> BuildState architecture
+- Build state model
+- BLD terminology
+- Genesis Origin model
+- XNTD lock / relock model
+- source event protection
+- implemented layers
+- snapshot safety model
+- CLI safety model
+- validation status
+- current non-goals
+- suggested review questions for Theo
+- suggested review path
+- validation commands
+
+Important review result:
+
+- the repository now has a short review-oriented document
+- reviewers do not need to start from the full checkpoint history
+- review can focus on model correctness, replay protection, proof flow, snapshot safety, and CLI safety boundaries
+- no protocol logic changed
+- no application state logic changed
+- no CLI behavior changed
+- no snapshot behavior changed
+
+Validation after document creation:
+
+- npm run typecheck: passed
+- npm test: passed
+- npm run build: passed
+- npm audit --audit-level=moderate: found 0 vulnerabilities
+- 28 test files passed
+- 171 tests passed
+
+This milestone prepares the repository for external design and implementation review.
+
 ## Current next steps
 
 Potential next documents / design areas:
