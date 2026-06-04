@@ -1421,14 +1421,64 @@ Validation after merge:
 
 This milestone completed the executable CLI entry point for the existing read-only CLI command layer.
 
+## Latest End-to-end watcher-proof-registrar scenario checkpoint
+
+The End-to-end watcher-proof-registrar scenario milestone was completed and merged into main.
+
+Merge commit:
+
+- db012ca Merge branch 'e2e-watcher-proof-registrar-scenario'
+
+The milestone adds:
+
+- tests/e2e-watcher-proof-registrar-scenario.test.ts
+- implementation/e2e-watcher-proof-registrar-scenario-notes.md
+- full watcher candidate to proof to appSubmitProof scenario
+- Core redeem watcher candidate coverage
+- XEN burn watcher candidate coverage
+- XNTD lock watcher candidate coverage
+- XNTD relock watcher candidate coverage
+- X1 fee checkpoint watcher candidate coverage
+- final BuildState assertions
+- registrar processedMessages assertion
+- Core redeem replay set assertion
+- XEN burn replay set assertion
+- duplicate proof submission rejection assertion
+
+The tested path is:
+
+watcher candidate
+  -> validated proof
+  -> appSubmitProof
+  -> registrar application service
+  -> BuildState update
+  -> replay protection state update
+
+Important architectural result:
+
+- existing layers compose in the intended order
+- no new model logic was added
+- no accounting rules were changed
+- no new watcher validation rules were added
+- Genesis Origin remains outside registrar payload submission
+
+Validation after merge:
+
+- npm run typecheck: passed
+- npm test: passed
+- npm run build: passed
+- 28 test files passed
+- 153 tests passed
+
+This milestone completed the first full end-to-end proof submission scenario across watcher, proof, application, registrar, and replay protection layers.
+
 ## Current next steps
 
 Potential next documents / design areas:
 
-1. End-to-end watcher-proof-registrar scenario milestone.
-2. Snapshot verification / backup implementation milestone.
-3. Review npm audit findings separately.
-4. Continue implementation only with clean typecheck and tests.
+1. Snapshot verification / backup implementation milestone.
+2. Review npm audit findings separately.
+3. Continue implementation only with clean typecheck and tests.
 
 
 
