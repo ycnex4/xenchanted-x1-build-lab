@@ -115,6 +115,7 @@ export function applyRegistrarXntdLock(
   return lockXntd({
     build: input.build,
     amountXntd: input.amountXntd,
+    observedRequiredXntdLock: input.amountXntd,
     lockEpoch: input.lockEpoch,
     lockedAt: input.lockedAt
   });
@@ -163,6 +164,7 @@ export function applyRegistrarXntdRelock(
   return relockXntd({
     build: input.build,
     amountXntd: input.amountXntd,
+    observedRequiredXntdLock: input.amountXntd,
     lockEpoch: input.lockEpoch,
     relockedAt: input.relockedAt
   });

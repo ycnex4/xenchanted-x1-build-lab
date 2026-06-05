@@ -240,6 +240,7 @@ describe("X1 Fee Contribution checkpoint", () => {
     lockXntd({
       build,
       amountXntd: 500n,
+      observedRequiredXntdLock: 500n,
       lockEpoch: 1,
       lockedAt: 1070n
     });
