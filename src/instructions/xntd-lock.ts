@@ -4,6 +4,7 @@ import { type BuildState } from "../model/build-state.js";
 export interface LockXntdInput {
   build: BuildState;
   amountXntd: bigint;
+  observedRequiredXntdLock: bigint;
   lockEpoch: number;
   lockedAt: bigint;
 }
@@ -11,6 +12,7 @@ export interface LockXntdInput {
 export interface RelockXntdInput {
   build: BuildState;
   amountXntd: bigint;
+  observedRequiredXntdLock: bigint;
   lockEpoch: number;
   relockedAt: bigint;
 }
@@ -20,6 +22,29 @@ function assertPositiveXntdLockAmount(amountXntd: bigint): void {
     throw new BuildError(
       BuildErrorCode.InvalidXntdLockAmount,
       `XNTD lock amount must be positive: ${amountXntd.toString()}`
+    );
+  }
+}
+
+function assertPositiveObservedRequiredXntdLock(
+  observedRequiredXntdLock: bigint
+): void {
+  if (observedRequiredXntdLock <= 0n) {
+    throw new BuildError(
+      BuildErrorCode.InvalidXntdLockAmount,
+      `Observed required XNTD lock amount must be positive: ${observedRequiredXntdLock.toString()}`
+    );
+  }
+}
+
+function assertSufficientXntdLockAmount(
+  amountXntd: bigint,
+  observedRequiredXntdLock: bigint
+): void {
+  if (amountXntd < observedRequiredXntdLock) {
+    throw new BuildError(
+      BuildErrorCode.InvalidXntdLockAmount,
+      `XNTD lock amount must cover observed required lock: amount=${amountXntd.toString()}, required=${observedRequiredXntdLock.toString()}`
     );
   }
 }
@@ -35,9 +60,14 @@ function assertRelockBldIntegrity(build: BuildState): void {
 
 export function lockXntd(input: LockXntdInput): BuildState {
   assertPositiveXntdLockAmount(input.amountXntd);
+  assertPositiveObservedRequiredXntdLock(input.observedRequiredXntdLock);
+  assertSufficientXntdLockAmount(
+    input.amountXntd,
+    input.observedRequiredXntdLock
+  );
 
   input.build.lockedXntd = input.amountXntd;
-  input.build.requiredXntdLock = input.amountXntd;
+  input.build.requiredXntdLock = input.observedRequiredXntdLock;
   input.build.lockEpoch = input.lockEpoch;
   input.build.xcCommitmentActive = true;
   input.build.updatedAt = input.lockedAt;
@@ -47,6 +77,11 @@ export function lockXntd(input: LockXntdInput): BuildState {
 
 export function relockXntd(input: RelockXntdInput): BuildState {
   assertPositiveXntdLockAmount(input.amountXntd);
+  assertPositiveObservedRequiredXntdLock(input.observedRequiredXntdLock);
+  assertSufficientXntdLockAmount(
+    input.amountXntd,
+    input.observedRequiredXntdLock
+  );
 
   if (!input.build.xcCommitmentActive) {
     throw new BuildError(
@@ -58,7 +93,7 @@ export function relockXntd(input: RelockXntdInput): BuildState {
   assertRelockBldIntegrity(input.build);
 
   input.build.lockedXntd = input.amountXntd;
-  input.build.requiredXntdLock = input.amountXntd;
+  input.build.requiredXntdLock = input.observedRequiredXntdLock;
   input.build.lockEpoch = input.lockEpoch;
   input.build.xcCommitmentActive = true;
   input.build.updatedAt = input.relockedAt;

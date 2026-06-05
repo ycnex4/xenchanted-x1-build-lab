@@ -329,6 +329,7 @@ describe("Registrar X1_FEE_CHECKPOINT integration", () => {
     lockXntd({
       build,
       amountXntd: 500n,
+      observedRequiredXntdLock: 500n,
       lockEpoch: 1,
       lockedAt: 1070n
     });
