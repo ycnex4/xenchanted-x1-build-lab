@@ -158,10 +158,12 @@ describe("proof to registrar payload builders", () => {
 
     expect(lockPayload.message.kind).toBe("LOCK_XNTD");
     expect(lockPayload.amountXntd).toBe(500n);
+    expect(lockPayload.observedRequiredXntdLock).toBe(500n);
     expect(lockPayload.lockEpoch).toBe(1);
 
     expect(relockPayload.message.kind).toBe("RELOCK_XNTD");
     expect(relockPayload.amountXntd).toBe(250n);
+    expect(relockPayload.observedRequiredXntdLock).toBe(250n);
     expect(relockPayload.lockEpoch).toBe(2);
   });
 

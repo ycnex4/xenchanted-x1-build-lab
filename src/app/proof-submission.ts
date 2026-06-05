@@ -120,7 +120,7 @@ export function appSubmitProof(
         build,
         xntdCommitmentEventKey: lockPayload.xntdCommitmentEventKey,
         amountXntd: lockPayload.amountXntd,
-        observedRequiredXntdLock: lockPayload.amountXntd,
+        observedRequiredXntdLock: lockPayload.observedRequiredXntdLock,
         lockEpoch: lockPayload.lockEpoch,
         lockedAt: lockPayload.lockedAt
       });
@@ -135,7 +135,7 @@ export function appSubmitProof(
         build,
         xntdCommitmentEventKey: relockPayload.xntdCommitmentEventKey,
         amountXntd: relockPayload.amountXntd,
-        observedRequiredXntdLock: relockPayload.amountXntd,
+        observedRequiredXntdLock: relockPayload.observedRequiredXntdLock,
         lockEpoch: relockPayload.lockEpoch,
         relockedAt: relockPayload.relockedAt
       });
