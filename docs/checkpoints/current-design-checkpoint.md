@@ -2597,6 +2597,100 @@ Validation:
 
 This milestone completes the design chain before runtime implementation of XNTD epoch minimum validation.
 
+## Latest XNTD epoch minimum runtime implementation plan checkpoint
+
+The XNTD epoch minimum runtime implementation plan milestone was completed on the xntd-epoch-minimum-runtime-plan branch.
+
+Commit:
+
+- f014b98 Add XNTD epoch minimum runtime implementation plan
+
+New implementation plan:
+
+- implementation/xntd-epoch-minimum-runtime-plan.md
+
+Purpose:
+
+- define the planned runtime implementation sequence for XNTD lock / relock epoch minimum validation
+- introduce observedRequiredXntdLock safely across the full runtime chain before enforcing authoritative XC epoch minimum validation
+- keep this milestone documentation-only
+
+Current runtime state:
+
+- XNTD lock / relock runtime carries amountXntd, lockEpoch, and lockedAt / relockedAt
+- low-level lockXntd() / relockXntd() currently set lockedXntd = amountXntd
+- low-level lockXntd() / relockXntd() currently set requiredXntdLock = amountXntd
+
+Target runtime state:
+
+- amountXntd = actual amount locked / relocked by the user
+- observedRequiredXntdLock = requirement observed by watcher for lockEpoch
+- requiredXntdLock = Build state value recorded after registrar validation
+
+After successful validation:
+
+- lockedXntd = amountXntd
+- requiredXntdLock = observedRequiredXntdLock
+
+Runtime layers to update later:
+
+1. proof types
+2. watcher candidate types
+3. watcher candidate constructors
+4. watcher-to-proof conversion
+5. registrar payload types
+6. registrar payload builders
+7. proof submission
+8. app build service wrappers
+9. registrar XNTD lock / relock handlers
+10. low-level lockXntd() / relockXntd()
+11. tests
+
+Planned rollout:
+
+- Phase 1: add observedRequiredXntdLock to payload shapes
+- Phase 2: preserve MVP semantics initially by passing observedRequiredXntdLock = amountXntd
+- Phase 3: split low-level lock state assignment
+- Phase 4: add registrar-layer amount / observed required amount validation
+- Phase 5: add authoritative XC state validation later
+- Phase 6: update tests in layers
+
+Planned validation rules before authoritative XC state integration:
+
+- amountXntd > 0
+- observedRequiredXntdLock > 0
+- amountXntd >= observedRequiredXntdLock
+
+Authoritative validation remains a later production-readiness milestone:
+
+- observedRequiredXntdLock == authoritativeEpochMinimum(lockEpoch)
+
+Snapshot impact:
+
+- no snapshot schema change is required just because observedRequiredXntdLock is added to transient payloads
+- Build state already stores lockedXntd, requiredXntdLock, and lockEpoch
+
+CLI impact:
+
+- no CLI output change is required initially
+
+Scope boundary:
+
+- documentation-only
+- no runtime code changed
+- no tests changed in this milestone
+
+Validation:
+
+- npm run typecheck: passed
+- npm test: passed
+- npm run build: passed
+- npm audit --audit-level=moderate: found 0 vulnerabilities
+- 29 test files passed
+- 179 tests passed
+
+This milestone provides the controlled rollout plan for implementing observedRequiredXntdLock without mixing payload-shape changes, low-level state changes, registrar validation, and authoritative XC state validation into one large branch.
+
 ## Current next steps
 
 Potential next documents / design areas:
