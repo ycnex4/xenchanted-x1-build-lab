@@ -1947,6 +1947,57 @@ Validation:
 
 This milestone prepares the XNTD lock / relock per-event replay protection design without expanding MVP runtime scope.
 
+## Latest XNTD commitment event identity design polish checkpoint
+
+The XNTD commitment event identity design polish milestone was completed on the xntd-lock-event-identity-design-polish branch.
+
+Commit:
+
+- 7b7047e Polish XNTD commitment event identity design
+
+This milestone incorporates Theo's review feedback on the XNTD lock / relock event identity design.
+
+Design refinements:
+
+- renamed the recommended shared event key from XntdLockEventKey to XntdCommitmentEventKey
+- renamed the replay state to XntdCommitmentEventState
+- renamed the replay set to usedXntdCommitmentEvents
+- clarified that the replay domain covers the full XNTD commitment state, not only the initial lock action
+- added a snapshot serialization note for usedXntdCommitmentEvents
+- added a Proposed ordering guard for MVP section
+- recommended monotonic lockEpoch as the MVP ordering guard
+- kept stricter production ordering guards as a separate future decision
+- preserved epoch minimum validation as a separate integration requirement
+- preserved unlock as a future design topic
+
+Theo review conclusion:
+
+- shared commitment event key model: approved
+- eventKind inside canonical identity: approved
+- ordering guard separated from per-event replay protection: approved
+- epoch minimum validation kept separate: approved
+- unlock awareness is sufficient for the current design phase
+
+Important scope boundary:
+
+- this milestone is design-only
+- no runtime behavior changed
+- no source code changed
+- no tests changed
+- no snapshot behavior changed
+- no CLI behavior changed
+
+Validation:
+
+- npm run typecheck: passed
+- npm test: passed
+- npm run build: passed
+- npm audit --audit-level=moderate: found 0 vulnerabilities
+- 28 test files passed
+- 171 tests passed
+
+This milestone finalizes the XNTD commitment event identity design before runtime implementation.
+
 ## Current next steps
 
 Potential next documents / design areas:

@@ -92,7 +92,7 @@ Use a dedicated XNTD lock event key.
 
 Possible name:
 
-- xntdLockEventKey
+- xntdCommitmentEventKey
 
 This key should identify the source event, not the registrar message.
 
@@ -108,7 +108,7 @@ For Ethereum / XC-side events, the key should include:
 
 Recommended conceptual format:
 
-    xntdLockEventKey = hash(
+    xntdCommitmentEventKey = hash(
       sourceChainId,
       sourceAddress,
       eventKind,
@@ -127,7 +127,7 @@ There are two reasonable options.
 
 Option A:
 
-- one shared key type: XntdLockEventKey
+- one shared key type: XntdCommitmentEventKey
 - eventKind distinguishes LOCK_XNTD from RELOCK_XNTD
 
 Option B:
@@ -139,7 +139,7 @@ Recommendation:
 
 Use one shared key type:
 
-- XntdLockEventKey
+- XntdCommitmentEventKey
 
 Reason:
 
@@ -153,33 +153,41 @@ The eventKind inside the canonical event identity still distinguishes lock from 
 
 Add a new replay state:
 
-    XntdLockEventState {
-      usedXntdLockEvents: Set<XntdLockEventKey>
+    XntdCommitmentEventState {
+      usedXntdCommitmentEvents: Set<XntdCommitmentEventKey>
     }
+
+The name XntdCommitmentEventKey is preferred over XntdLockEventKey because the replay domain covers the full XNTD commitment state, not only the initial lock action.
 
 Add helper:
 
-    acceptXntdLockEvent(...)
+    acceptXntdCommitmentEvent(...)
 
 or two semantic helpers over the same state:
 
     acceptXntdLockEvent(...)
     acceptXntdRelockEvent(...)
 
-Both should use the same underlying usedXntdLockEvents set.
+Both should use the same underlying usedXntdCommitmentEvents set.
+
+Snapshot serialization note:
+
+When implemented, XntdCommitmentEventState must be included in snapshot serialization and deserialization.
+
+Otherwise, replay protection would be lost after process restart or snapshot recovery.
 
 ## Proposed registrar payload changes
 
 LOCK_XNTD payload should include:
 
-- xntdLockEventKey
+- xntdCommitmentEventKey
 - amountXntd
 - lockEpoch
 - lockedAt
 
 RELOCK_XNTD payload should include:
 
-- xntdLockEventKey
+- xntdCommitmentEventKey
 - amountXntd
 - lockEpoch
 - relockedAt
@@ -191,7 +199,7 @@ For LOCK_XNTD:
 1. message kind precondition
 2. authority precondition
 3. duplicate registrar message precondition
-4. duplicate xntdLockEventKey precondition
+4. duplicate xntdCommitmentEventKey precondition
 5. amount precondition
 6. acceptRegistrarMessage
 7. acceptXntdLockEvent
@@ -202,7 +210,7 @@ For RELOCK_XNTD:
 1. message kind precondition
 2. authority precondition
 3. duplicate registrar message precondition
-4. duplicate xntdLockEventKey precondition
+4. duplicate xntdCommitmentEventKey precondition
 5. amount precondition
 6. commitment-active precondition
 7. availableBld >= historyBld precondition
@@ -230,9 +238,38 @@ Possible ordering sources:
 
 MVP design note:
 
-The first implementation can add per-event replay protection without adding full ordering guards.
+The first implementation can add per-event replay protection without adding full production ordering guards.
 
 Before production, decide whether lock/relock must reject stale-but-unique events.
+
+## Proposed ordering guard for MVP
+
+Per-event replay protection prevents the same source event from being applied twice.
+
+It does not prevent stale-but-unique commitment events.
+
+A simple MVP ordering guard can use monotonic lockEpoch.
+
+Recommended MVP rule:
+
+    newLockEpoch > currentLockEpoch
+
+If a lock or relock event has lockEpoch less than or equal to the current Build lockEpoch, reject it.
+
+This protects against the most obvious state regression case:
+
+1. relock in epoch 2 is applied
+2. older lock / relock from epoch 1 is submitted later
+3. epoch guard rejects the stale event
+
+This does not replace production-grade ordering.
+
+For production, a stricter ordering source may still be needed, such as:
+
+- source block number
+- finalized slot / block height
+- event timestamp
+- monotonic commitment version
 
 ## Interaction with requiredXntdLock
 
@@ -252,7 +289,7 @@ The current MVP has no unlock flow.
 
 If unlock is added later, it should either:
 
-- use the same XntdLockEventKey replay state, or
+- use the same XntdCommitmentEventKey replay state, or
 - define a separate commitment event identity model covering lock / relock / unlock together
 
 Do not design unlock replay protection separately without considering lock / relock.
@@ -260,18 +297,19 @@ Do not design unlock replay protection separately without considering lock / rel
 ## Recommended implementation sequence
 
 1. Keep this design document separate from runtime code.
-2. Add XntdLockEventKey types and event state.
-3. Add low-level replay tests for XNTD lock event state.
-4. Add registrar handler tests:
+2. Add XntdCommitmentEventKey types and event state.
+3. Add low-level replay tests for XNTD commitment event state.
+4. Add snapshot serialization / deserialization for usedXntdCommitmentEvents.
+5. Add registrar handler tests:
    - duplicate lock event key is rejected
    - duplicate relock event key is rejected
    - same source event with different messageId is rejected
    - valid future relock still works
-5. Add proof / registrar payload fields.
-6. Add watcher candidate / proof conversion support.
-7. Update snapshot serialization if new state is stored.
-8. Update CLI summary fields if needed.
-9. Update assumptions once implemented.
+6. Add proof / registrar payload fields.
+7. Add watcher candidate / proof conversion support.
+8. Add MVP lockEpoch ordering guard if accepted for implementation.
+9. Update CLI summary fields if needed.
+10. Update assumptions once implemented.
 
 ## Current decision
 
@@ -281,8 +319,9 @@ No runtime behavior is changed by this document.
 
 The preferred future model is:
 
-- one shared XntdLockEventKey
-- one shared usedXntdLockEvents replay set
+- one shared XntdCommitmentEventKey
+- one shared usedXntdCommitmentEvents replay set
 - eventKind included in canonical source identity
 - registrar message replay protection plus source-event replay protection
-- ordering guard considered separately before production
+- monotonic lockEpoch as the recommended MVP ordering guard
+- stricter ordering guard considered separately before production
