@@ -279,7 +279,9 @@ The intended production rule is:
 
 Event identity does not solve epoch minimum validation.
 
-That remains a separate integration requirement.
+That remains a separate integration requirement documented in:
+
+- docs/registrar/xntd-lock-epoch-minimum-validation.md
 
 ## Interaction with unlock
 

@@ -84,6 +84,10 @@ Important implication:
 - the registrar / integration layer is responsible for submitting the correct value
 - production integration should validate the epoch minimum against the authoritative XC state source
 
+Design path:
+
+- docs/registrar/xntd-lock-epoch-minimum-validation.md
+
 ## 5. No unlock flow
 
 The current MVP includes lock and relock flows.
