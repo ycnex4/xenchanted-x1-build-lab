@@ -2304,6 +2304,94 @@ Validation:
 
 This milestone closes the documentation drift created by the XNTD commitment replay and ordering guard implementation work.
 
+## Latest XNTD lock epoch minimum validation design checkpoint
+
+The XNTD lock epoch minimum validation design milestone was completed on the required-xntd-lock-epoch-minimum-design branch.
+
+Commits:
+
+- 1bf7a6b Document XNTD lock epoch minimum validation design
+- ec14119 Link XNTD epoch minimum validation design
+- 759257e Add XNTD epoch minimum validation design notes
+
+This milestone documents the intended production validation model for XNTD lock / relock required lock amounts.
+
+New design document:
+
+- docs/registrar/xntd-lock-epoch-minimum-validation.md
+
+Implementation notes:
+
+- implementation/xntd-lock-epoch-minimum-validation-design-notes.md
+
+Linked documents:
+
+- README.md
+- docs/assumptions.md
+- docs/registrar/xntd-lock-event-identity.md
+
+Problem addressed:
+
+- the current MVP runtime sets lockedXntd = amountXntd
+- the current MVP runtime sets requiredXntdLock = amountXntd
+- this is acceptable under the trusted registrar MVP assumption
+- this is not production-complete because the runtime does not independently verify the XC epoch minimum
+
+Intended production rule:
+
+- requiredXntdLock = current epoch Core L1 nominal from xEnchanted Crypto
+
+Future production validation should require:
+
+- amountXntd > 0
+- requiredXntdLock > 0
+- amountXntd >= requiredXntdLock
+- requiredXntdLock == authoritativeEpochMinimum(lockEpoch)
+
+The design separates:
+
+- actual locked amount
+- required XNTD lock amount
+- authoritative XC epoch minimum
+- lockEpoch ordering
+- production source of truth
+
+Relationship to existing protections:
+
+- processedMessages protects registrar message replay
+- usedXntdCommitmentEvents protects source-event replay
+- monotonic lockEpoch guard protects against stale-but-unique commitment events
+- epoch minimum validation is separate and protects against under-locking
+
+Scope boundary:
+
+- design-only
+- no runtime code changed
+- no proof payload changed
+- no watcher candidate changed
+- no snapshot serialization changed
+- no CLI output changed
+- no tests changed
+
+Future implementation decisions:
+
+- decide authoritative XC state source
+- decide whether requiredXntdLock is carried in payload or derived internally
+- decide how lockEpoch maps to epoch minimum
+- decide how finalized source context is represented
+- add runtime tests for under-lock rejection and correct epoch minimum acceptance
+
+Validation:
+
+- npm run typecheck: passed
+- npm test: passed
+- npm run build: passed
+- npm audit --audit-level=moderate: found 0 vulnerabilities
+- 29 test files passed
+- 179 tests passed
+
+This milestone keeps epoch minimum validation as the next production-readiness layer after XNTD replay and ordering safety.
+
 ## Current next steps
 
 Potential next documents / design areas:
