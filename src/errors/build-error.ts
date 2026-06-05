@@ -15,6 +15,8 @@ export enum BuildErrorCode {
   InvalidXntdLockAmount = "INVALID_XNTD_LOCK_AMOUNT",
   DuplicateXntdCommitmentEvent = "DUPLICATE_XNTD_COMMITMENT_EVENT",
   NonIncreasingXntdLockEpoch = "NON_INCREASING_XNTD_LOCK_EPOCH",
+  MissingAuthoritativeXcEpochMinimum = "MISSING_AUTHORITATIVE_XC_EPOCH_MINIMUM",
+  MismatchedAuthoritativeXcEpochMinimum = "MISMATCHED_AUTHORITATIVE_XC_EPOCH_MINIMUM",
   XntdCommitmentNotActive = "XNTD_COMMITMENT_NOT_ACTIVE",
   InsufficientAvailableBldForRelock = "INSUFFICIENT_AVAILABLE_BLD_FOR_RELOCK",
   InvalidFeeContributionAmount = "INVALID_FEE_CONTRIBUTION_AMOUNT",
