@@ -11,12 +11,14 @@ import {
   createBuild,
   createRedeemEventState,
   createRegistrarState,
-  createXenBurnEventState
+  createXenBurnEventState,
+  createXntdCommitmentEventState
 } from "../src/index.js";
 
 describe("End-to-end Build scenario", () => {
   it("runs a full MVP Build lifecycle through registrar flows", () => {
     const registrar = createRegistrarState("registrar-1");
+    const xntdCommitmentEvents = createXntdCommitmentEventState();
     const redeemEvents = createRedeemEventState();
     const xenBurnEvents = createXenBurnEventState();
 
@@ -64,6 +66,7 @@ describe("End-to-end Build scenario", () => {
 
     applyRegistrarXntdLock({
       registrar,
+      xntdCommitmentEvents,
       message: {
         messageId: "message-xntd-lock-1",
         kind: "LOCK_XNTD",
@@ -71,6 +74,7 @@ describe("End-to-end Build scenario", () => {
         createdAt: 1400n
       },
       build,
+      xntdCommitmentEventKey: "e2e-xntd-commitment-1",
       amountXntd: 500n,
       lockEpoch: 1,
       lockedAt: 1400n
@@ -78,6 +82,7 @@ describe("End-to-end Build scenario", () => {
 
     applyRegistrarXntdRelock({
       registrar,
+      xntdCommitmentEvents,
       message: {
         messageId: "message-xntd-relock-1",
         kind: "RELOCK_XNTD",
@@ -85,6 +90,7 @@ describe("End-to-end Build scenario", () => {
         createdAt: 1500n
       },
       build,
+      xntdCommitmentEventKey: "e2e-xntd-commitment-2",
       amountXntd: 250n,
       lockEpoch: 2,
       relockedAt: 1500n
@@ -140,6 +146,7 @@ describe("End-to-end Build scenario", () => {
 
   it("rejects duplicate event and message replay after lifecycle start", () => {
     const registrar = createRegistrarState("registrar-1");
+    const xntdCommitmentEvents = createXntdCommitmentEventState();
     const redeemEvents = createRedeemEventState();
     const xenBurnEvents = createXenBurnEventState();
 

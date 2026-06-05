@@ -13,6 +13,7 @@ export enum BuildErrorCode {
   GenesisOriginAlreadyClaimed = "GENESIS_ORIGIN_ALREADY_CLAIMED",
   GenesisOriginNotEligible = "GENESIS_ORIGIN_NOT_ELIGIBLE",
   InvalidXntdLockAmount = "INVALID_XNTD_LOCK_AMOUNT",
+  DuplicateXntdCommitmentEvent = "DUPLICATE_XNTD_COMMITMENT_EVENT",
   XntdCommitmentNotActive = "XNTD_COMMITMENT_NOT_ACTIVE",
   InsufficientAvailableBldForRelock = "INSUFFICIENT_AVAILABLE_BLD_FOR_RELOCK",
   InvalidFeeContributionAmount = "INVALID_FEE_CONTRIBUTION_AMOUNT",

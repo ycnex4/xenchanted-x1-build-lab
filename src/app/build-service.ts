@@ -41,6 +41,10 @@ import {
   type XenBurnEventState,
   createXenBurnEventState
 } from "../model/xen-burn-events.js";
+import {
+  type XntdCommitmentEventState,
+  createXntdCommitmentEventState
+} from "../model/xntd-commitment-events.js";
 import { BuildError } from "../errors/build-error.js";
 
 export interface BuildApplicationState {
@@ -48,6 +52,7 @@ export interface BuildApplicationState {
   registrar: RegistrarState;
   redeemEvents: RedeemEventState;
   xenBurnEvents: XenBurnEventState;
+  xntdCommitmentEvents: XntdCommitmentEventState;
 }
 
 export interface AppErrorResult {
@@ -72,7 +77,8 @@ export function createBuildApplicationState(
     registry: createEmptyBuildRegistry(),
     registrar: createRegistrarState(registrarAuthority),
     redeemEvents: createRedeemEventState(),
-    xenBurnEvents: createXenBurnEventState()
+    xenBurnEvents: createXenBurnEventState(),
+    xntdCommitmentEvents: createXntdCommitmentEventState()
   };
 }
 
@@ -176,15 +182,17 @@ export function appApplyRegistrarXenBurn(
 }
 
 export function appApplyRegistrarXntdLock(
-  input: Omit<ApplyRegistrarXntdLockInput, "registrar"> & {
+  input: Omit<ApplyRegistrarXntdLockInput, "registrar" | "xntdCommitmentEvents"> & {
     app: BuildApplicationState;
   }
 ): AppResult<BuildState> {
   return runAppCommand(() =>
     applyRegistrarXntdLock({
       registrar: input.app.registrar,
+      xntdCommitmentEvents: input.app.xntdCommitmentEvents,
       message: input.message,
       build: input.build,
+      xntdCommitmentEventKey: input.xntdCommitmentEventKey,
       amountXntd: input.amountXntd,
       lockEpoch: input.lockEpoch,
       lockedAt: input.lockedAt
@@ -193,15 +201,17 @@ export function appApplyRegistrarXntdLock(
 }
 
 export function appApplyRegistrarXntdRelock(
-  input: Omit<ApplyRegistrarXntdRelockInput, "registrar"> & {
+  input: Omit<ApplyRegistrarXntdRelockInput, "registrar" | "xntdCommitmentEvents"> & {
     app: BuildApplicationState;
   }
 ): AppResult<BuildState> {
   return runAppCommand(() =>
     applyRegistrarXntdRelock({
       registrar: input.app.registrar,
+      xntdCommitmentEvents: input.app.xntdCommitmentEvents,
       message: input.message,
       build: input.build,
+      xntdCommitmentEventKey: input.xntdCommitmentEventKey,
       amountXntd: input.amountXntd,
       lockEpoch: input.lockEpoch,
       relockedAt: input.relockedAt

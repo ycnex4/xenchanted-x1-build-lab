@@ -5,6 +5,7 @@ import { describe, expect, it } from "vitest";
 import {
   appApplyRegistrarCoreRedeem,
   appApplyRegistrarX1FeeCheckpoint,
+  acceptXntdCommitmentEvent,
   appApplyRegistrarXenBurn,
   appCreateBuild,
   createBuildApplicationState,
@@ -79,6 +80,11 @@ describe("storage snapshot", () => {
       updatedAt: 130n
     });
 
+    acceptXntdCommitmentEvent(
+      app.xntdCommitmentEvents,
+      "xntd-commitment-1"
+    );
+
     const snapshot = serializeBuildApplicationSnapshot(app, 1000n);
     const restored = decodeSnapshotJson(encodeSnapshotJson(snapshot));
 
@@ -93,6 +99,11 @@ describe("storage snapshot", () => {
     expect(restored.app.xenBurnEvents.usedXenBurnEvents.has("xen-burn-1")).toBe(
       true
     );
+    expect(
+      restored.app.xntdCommitmentEvents.usedXntdCommitmentEvents.has(
+        "xntd-commitment-1"
+      )
+    ).toBe(true);
   });
 
   it("saves and loads snapshot files", async () => {

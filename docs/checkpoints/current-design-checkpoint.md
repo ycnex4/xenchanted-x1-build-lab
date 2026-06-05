@@ -1998,6 +1998,95 @@ Validation:
 
 This milestone finalizes the XNTD commitment event identity design before runtime implementation.
 
+## Latest XNTD commitment event replay state checkpoint
+
+The XNTD commitment event replay state milestone was completed on the xntd-commitment-event-replay-state branch.
+
+Commits:
+
+- d03736a Add XNTD commitment event replay state
+- 2502fdb Add XNTD commitment event replay state notes
+- 3552ac5 Persist XNTD commitment event replay state
+- 7928b42 Update XNTD commitment event replay state notes
+- 8e1334d Wire XNTD commitment event replay into registrar
+- f77306b Update XNTD commitment registrar replay notes
+
+The milestone implements the first runtime version of the XNTD commitment event replay model designed in:
+
+- docs/registrar/xntd-lock-event-identity.md
+
+Runtime additions:
+
+- XntdCommitmentEventKey
+- XntdCommitmentEventState
+- usedXntdCommitmentEvents
+- createXntdCommitmentEventState()
+- acceptXntdCommitmentEvent()
+- DuplicateXntdCommitmentEvent error code
+
+Application state / persistence additions:
+
+- BuildApplicationState now includes xntdCommitmentEvents
+- createBuildApplicationState() initializes xntdCommitmentEvents
+- SerializedXntdCommitmentEventState added
+- serializeXntdCommitmentEventState() added
+- deserializeXntdCommitmentEventState() added
+- BuildApplicationSnapshot now includes xntdCommitmentEvents
+- STORAGE_SCHEMA_VERSION bumped to 2
+- snapshot round-trip preserves usedXntdCommitmentEvents
+
+Registrar integration:
+
+- XNTD lock / relock registrar payloads now include xntdCommitmentEventKey
+- proof-submission flow derives xntdCommitmentEventKey from proof.canonicalEventKey
+- appApplyRegistrarXntdLock() passes app.xntdCommitmentEvents
+- appApplyRegistrarXntdRelock() passes app.xntdCommitmentEvents
+- applyRegistrarXntdLock() checks duplicate xntdCommitmentEventKey before mutation
+- applyRegistrarXntdRelock() checks duplicate xntdCommitmentEventKey before mutation
+
+Successful XNTD lock / relock registrar mutation order is now:
+
+1. acceptRegistrarMessage()
+2. acceptXntdCommitmentEvent()
+3. lockXntd() / relockXntd()
+
+Safety results:
+
+- duplicate source commitment event is rejected even with a different messageId
+- duplicate source commitment event does not mark the new registrar message
+- duplicate source commitment event does not mutate Build lock state
+- lock and relock share one commitment replay domain
+- invalid amount still does not mark registrar message or commitment event key
+- invalid relock still does not mark registrar message or commitment event key
+- appSubmitProof now records XNTD lock / relock canonicalEventKey in usedXntdCommitmentEvents
+
+Tests added / updated:
+
+- tests/xntd-commitment-event-replay.test.ts
+- tests/storage-snapshot.test.ts
+- tests/registrar-xntd-lock.test.ts
+- tests/app-proof-submission.test.ts
+- tests/app-build-service.test.ts
+- tests/e2e-scenario.test.ts
+
+Validation:
+
+- npm run typecheck: passed
+- npm test: passed
+- npm run build: passed
+- npm audit --audit-level=moderate: found 0 vulnerabilities
+- 29 test files passed
+- 177 tests passed
+
+Remaining future items:
+
+- CLI summaries can expose xntdCommitmentEventCount
+- lockEpoch ordering guard can be implemented as a separate milestone
+- watcher/proof payload shapes may remain unchanged while canonicalEventKey is used as xntdCommitmentEventKey
+- production epoch minimum validation remains separate
+
+This milestone closes the main known limitation that XNTD lock / relock had only registrar-level replay protection.
+
 ## Current next steps
 
 Potential next documents / design areas:

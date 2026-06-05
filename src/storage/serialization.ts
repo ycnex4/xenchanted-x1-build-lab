@@ -3,8 +3,9 @@ import { type BuildState } from "../model/build-state.js";
 import { type RedeemEventState } from "../model/redeem-events.js";
 import { type RegistrarState } from "../model/registrar.js";
 import { type XenBurnEventState } from "../model/xen-burn-events.js";
+import { type XntdCommitmentEventState } from "../model/xntd-commitment-events.js";
 
-export const STORAGE_SCHEMA_VERSION = 1 as const;
+export const STORAGE_SCHEMA_VERSION = 2 as const;
 
 export interface SerializedBuildState {
   schemaVersion: typeof STORAGE_SCHEMA_VERSION;
@@ -47,6 +48,12 @@ export interface SerializedXenBurnEventState {
   schemaVersion: typeof STORAGE_SCHEMA_VERSION;
   kind: "XenBurnEventState";
   usedXenBurnEvents: string[];
+}
+
+export interface SerializedXntdCommitmentEventState {
+  schemaVersion: typeof STORAGE_SCHEMA_VERSION;
+  kind: "XntdCommitmentEventState";
+  usedXntdCommitmentEvents: string[];
 }
 
 export interface SerializedBuildRegistry {
@@ -349,6 +356,32 @@ export function deserializeXenBurnEventState(
     usedXenBurnEvents: deserializeStringSet(
       value.usedXenBurnEvents,
       "usedXenBurnEvents"
+    )
+  };
+}
+
+export function serializeXntdCommitmentEventState(
+  state: XntdCommitmentEventState
+): SerializedXntdCommitmentEventState {
+  return {
+    schemaVersion: STORAGE_SCHEMA_VERSION,
+    kind: "XntdCommitmentEventState",
+    usedXntdCommitmentEvents: serializeStringSet(
+      state.usedXntdCommitmentEvents
+    )
+  };
+}
+
+export function deserializeXntdCommitmentEventState(
+  input: unknown
+): XntdCommitmentEventState {
+  const value = requireRecord(input, "XntdCommitmentEventState");
+  requireKind(value, "XntdCommitmentEventState");
+
+  return {
+    usedXntdCommitmentEvents: deserializeStringSet(
+      value.usedXntdCommitmentEvents,
+      "usedXntdCommitmentEvents"
     )
   };
 }
