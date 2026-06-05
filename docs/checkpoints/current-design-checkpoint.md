@@ -3157,6 +3157,93 @@ Validation:
 
 This milestone completes the runtime propagation chain for observedRequiredXntdLock from watcher candidate to Build state.
 
+## Latest observed required XNTD lock chain review checkpoint
+
+The observed required XNTD lock chain review milestone was completed on the review-observed-required-xntd-lock-chain branch.
+
+Commits:
+
+- 10e7e29 Remove observed required XNTD lock app fallback
+- cef117b Add observed required XNTD lock chain review notes
+
+This milestone reviews the completed observedRequiredXntdLock runtime propagation chain and removes the remaining app-layer compatibility fallback.
+
+Updated runtime file:
+
+- src/app/build-service.ts
+
+Implementation notes:
+
+- implementation/review-observed-required-xntd-lock-chain-notes.md
+
+Cleanup performed:
+
+Before this milestone, appApplyRegistrarXntdLock() and appApplyRegistrarXntdRelock() still used:
+
+- observedRequiredXntdLock = input.observedRequiredXntdLock ?? input.amountXntd
+
+After this milestone, they use:
+
+- observedRequiredXntdLock = input.observedRequiredXntdLock
+
+directly.
+
+Reason:
+
+- observedRequiredXntdLock now flows through the full runtime chain
+- app-service should no longer silently derive observedRequiredXntdLock from amountXntd
+- the field must be explicit by the time execution reaches app-level registrar wrappers
+
+Current explicit runtime flow:
+
+watcher candidate
+-> proof payload
+-> registrar payload
+-> proof submission
+-> app service
+-> registrar input
+-> low-level lock / relock
+-> Build state requiredXntdLock
+
+Current runtime invariant:
+
+- lockedXntd = amountXntd
+- requiredXntdLock = observedRequiredXntdLock
+- amountXntd must be >= observedRequiredXntdLock
+
+Historical docs note:
+
+Some older implementation notes and checkpoint sections still mention earlier temporary states such as:
+
+- requiredXntdLock = amountXntd
+- observedRequiredXntdLock = amountXntd
+- fallback behavior
+
+Those historical notes are intentionally not rewritten because they describe past milestones and compatibility phases.
+
+Current runtime behavior is represented by the latest checkpoints and current source code.
+
+Scope boundary:
+
+This review does not implement authoritative XC validation.
+
+Future production validation still needs:
+
+- observedRequiredXntdLock == authoritativeEpochMinimum(lockEpoch)
+
+That belongs to the registrar / integration boundary using the authoritative XC state source.
+
+Validation:
+
+- npm run typecheck: passed
+- npm test: passed
+- npm run build: passed
+- npm audit --audit-level=moderate: found 0 vulnerabilities
+- 29 test files passed
+- 186 tests passed
+
+This milestone closes the post-rollout cleanup for the observedRequiredXntdLock runtime chain.
+
 ## Current next steps
 
 Potential next documents / design areas:
