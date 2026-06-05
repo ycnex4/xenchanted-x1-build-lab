@@ -4894,6 +4894,154 @@ Validation:
 - 30 test files passed
 - 199 tests passed
 
+## Latest XC epoch minimum source block hash policy checkpoint
+
+The XC epoch minimum source block hash policy milestone was completed on the xc-epoch-minimum-source-block-hash-policy branch.
+
+Commit:
+
+- 412f17a Add XC epoch minimum source block hash policy
+
+This milestone defines the policy question around sourceBlockHash for XC epoch minimum records.
+
+Policy document:
+
+- implementation/xc-epoch-minimum-source-block-hash-policy.md
+
+This is a design-only milestone.
+
+It does not change runtime code.
+
+Current state:
+
+The mocked / production-shaped XC epoch minimum source adapter currently supports:
+
+- lockEpoch
+- minimumXntd
+- observedAt
+- sourceChainId
+- sourceBlockNumber
+- sourceBlockHash
+
+Current generic validation enforces:
+
+- lockEpoch must be an integer
+- lockEpoch must be >= 0
+- minimumXntd must be > 0
+- observedAt must be > 0
+- sourceBlockNumber must be > 0 when provided
+- duplicate records for the same epoch may only repeat the same minimum
+
+Current generic validation intentionally does not validate sourceBlockHash format.
+
+Reason:
+
+sourceBlockHash depends on source type.
+
+Possible source types include:
+
+- Ethereum finalized RPC / XC Lens read
+- trusted integration source
+- checkpoint source
+- bridge-provided source
+- X1-native verified source
+- local deterministic test source
+
+These do not all necessarily share Ethereum block hash semantics.
+
+Recommended policy:
+
+Keep sourceBlockHash optional in the generic record builder.
+
+Do not enforce global hash format in createXcEpochMinimumSourceFromRecords().
+
+Strict sourceBlockHash / provenance validation should be implemented later inside source-specific adapters.
+
+Ethereum-specific future policy:
+
+A future Ethereum / XC Lens source adapter should enforce Ethereum-specific rules:
+
+- sourceChainId must be present
+- sourceBlockNumber must be present and > 0
+- sourceBlockHash must be present
+- sourceBlockHash should be a 0x-prefixed 32-byte hex string
+- adapter should not read latest
+- adapter should use finalized / safe / explicitly confirmed block policy
+
+Checkpoint source policy:
+
+Checkpoint sources may use checkpointId, checkpointHash, checkpointRoot, signerSetId, signedAt, or finalizedAt instead of Ethereum block hash semantics.
+
+Bridge-provided source policy:
+
+Bridge sources may include bridgeMessageId, signerSetId, attestationHash, and bridge-specific provenance fields.
+
+X1-native source policy:
+
+X1-native sources may use slot, state root, checkpoint account, verified attestation, or canonical registry entry.
+
+Generic adapter responsibility:
+
+The generic createXcEpochMinimumSourceFromRecords() should continue to validate only source-agnostic invariants:
+
+- epoch validity
+- positive minimum
+- positive observation time
+- positive sourceBlockNumber if provided
+- no conflicting duplicate epoch minimums
+
+It should not validate source-specific provenance.
+
+Future implementation direction:
+
+Source-specific adapters can create records only after enforcing their own provenance rules.
+
+Examples:
+
+1. Ethereum XC Lens adapter
+   - validates sourceBlockHash as Ethereum block hash
+   - validates finalized block policy
+   - produces XcEpochMinimumRecord[]
+
+2. Checkpoint adapter
+   - validates checkpoint signatures / roots
+   - produces XcEpochMinimumRecord[]
+
+3. Bridge adapter
+   - validates bridge signer policy
+   - produces XcEpochMinimumRecord[]
+
+The generic record builder remains the final deterministic map builder.
+
+Non-goals:
+
+This milestone does not implement:
+
+- sourceBlockHash validation
+- Ethereum RPC
+- XC Core ABI
+- XC Lens ABI
+- checkpoint verification
+- bridge signer verification
+- X1-native verification
+- snapshot schema changes
+- CLI integration
+
+Conclusion:
+
+Do not add global sourceBlockHash validation to the generic source adapter.
+
+Keep sourceBlockHash optional at the generic layer.
+
+Add strict hash/provenance validation later only inside source-specific adapters.
+
+Validation:
+
+- npm run typecheck: passed
+- npm test: passed
+- npm run build: passed
+- npm audit --audit-level=moderate: found 0 vulnerabilities
+
 ## Current next steps
 
 Potential next documents / design areas:
