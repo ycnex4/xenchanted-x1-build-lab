@@ -390,6 +390,194 @@ describe("Registrar XNTD lock / relock integration", () => {
     expect(build.updatedAt).toBe(1100n);
   });
 
+  it("rejects stale unique LOCK_XNTD event without mutating state", () => {
+    const registrar = createRegistrarState("registrar-1");
+    const xntdCommitmentEvents = createXntdCommitmentEventState();
+    const build = createBuild({
+      owner: "x1-user-1",
+      buildId: "build-1",
+      createdAt: 1000n
+    });
+
+    applyRegistrarXntdLock({
+      registrar,
+      xntdCommitmentEvents,
+      message: {
+        messageId: "message-1",
+        kind: "LOCK_XNTD",
+        submittedBy: "registrar-1",
+        createdAt: 1100n
+      },
+      build,
+      xntdCommitmentEventKey: "lock-epoch-2-event",
+      amountXntd: 500n,
+      lockEpoch: 2,
+      lockedAt: 1100n
+    });
+
+    expect(() =>
+      applyRegistrarXntdLock({
+        registrar,
+        xntdCommitmentEvents,
+        message: {
+          messageId: "message-2",
+          kind: "LOCK_XNTD",
+          submittedBy: "registrar-1",
+          createdAt: 1200n
+        },
+        build,
+        xntdCommitmentEventKey: "stale-lock-epoch-1-event",
+        amountXntd: 250n,
+        lockEpoch: 1,
+        lockedAt: 1200n
+      })
+    ).toThrow(BuildError);
+
+    try {
+      applyRegistrarXntdLock({
+        registrar,
+        xntdCommitmentEvents,
+        message: {
+          messageId: "message-2",
+          kind: "LOCK_XNTD",
+          submittedBy: "registrar-1",
+          createdAt: 1200n
+        },
+        build,
+        xntdCommitmentEventKey: "stale-lock-epoch-1-event",
+        amountXntd: 250n,
+        lockEpoch: 1,
+        lockedAt: 1200n
+      });
+    } catch (error) {
+      expect(error).toBeInstanceOf(BuildError);
+      expect((error as BuildError).code).toBe(
+        BuildErrorCode.NonIncreasingXntdLockEpoch
+      );
+    }
+
+    expect(registrar.processedMessages.has("message-1")).toBe(true);
+    expect(registrar.processedMessages.has("message-2")).toBe(false);
+    expect(registrar.processedMessages.size).toBe(1);
+    expect(
+      xntdCommitmentEvents.usedXntdCommitmentEvents.has("lock-epoch-2-event")
+    ).toBe(true);
+    expect(
+      xntdCommitmentEvents.usedXntdCommitmentEvents.has(
+        "stale-lock-epoch-1-event"
+      )
+    ).toBe(false);
+    expect(xntdCommitmentEvents.usedXntdCommitmentEvents.size).toBe(1);
+    expect(build.lockedXntd).toBe(500n);
+    expect(build.requiredXntdLock).toBe(500n);
+    expect(build.lockEpoch).toBe(2);
+    expect(build.updatedAt).toBe(1100n);
+  });
+
+  it("rejects stale unique RELOCK_XNTD event without mutating state", () => {
+    const registrar = createRegistrarState("registrar-1");
+    const xntdCommitmentEvents = createXntdCommitmentEventState();
+    const build = createBuild({
+      owner: "x1-user-1",
+      buildId: "build-1",
+      createdAt: 1000n
+    });
+
+    applyCoreRedeemBld({
+      build,
+      amountBld: 11n,
+      redeemedAt: 1050n
+    });
+
+    applyRegistrarXntdLock({
+      registrar,
+      xntdCommitmentEvents,
+      message: {
+        messageId: "message-1",
+        kind: "LOCK_XNTD",
+        submittedBy: "registrar-1",
+        createdAt: 1100n
+      },
+      build,
+      xntdCommitmentEventKey: "lock-epoch-1-event",
+      amountXntd: 500n,
+      lockEpoch: 1,
+      lockedAt: 1100n
+    });
+
+    applyRegistrarXntdRelock({
+      registrar,
+      xntdCommitmentEvents,
+      message: {
+        messageId: "message-2",
+        kind: "RELOCK_XNTD",
+        submittedBy: "registrar-1",
+        createdAt: 1200n
+      },
+      build,
+      xntdCommitmentEventKey: "relock-epoch-3-event",
+      amountXntd: 250n,
+      lockEpoch: 3,
+      relockedAt: 1200n
+    });
+
+    expect(() =>
+      applyRegistrarXntdRelock({
+        registrar,
+        xntdCommitmentEvents,
+        message: {
+          messageId: "message-3",
+          kind: "RELOCK_XNTD",
+          submittedBy: "registrar-1",
+          createdAt: 1300n
+        },
+        build,
+        xntdCommitmentEventKey: "stale-relock-epoch-2-event",
+        amountXntd: 125n,
+        lockEpoch: 2,
+        relockedAt: 1300n
+      })
+    ).toThrow(BuildError);
+
+    try {
+      applyRegistrarXntdRelock({
+        registrar,
+        xntdCommitmentEvents,
+        message: {
+          messageId: "message-3",
+          kind: "RELOCK_XNTD",
+          submittedBy: "registrar-1",
+          createdAt: 1300n
+        },
+        build,
+        xntdCommitmentEventKey: "stale-relock-epoch-2-event",
+        amountXntd: 125n,
+        lockEpoch: 2,
+        relockedAt: 1300n
+      });
+    } catch (error) {
+      expect(error).toBeInstanceOf(BuildError);
+      expect((error as BuildError).code).toBe(
+        BuildErrorCode.NonIncreasingXntdLockEpoch
+      );
+    }
+
+    expect(registrar.processedMessages.has("message-1")).toBe(true);
+    expect(registrar.processedMessages.has("message-2")).toBe(true);
+    expect(registrar.processedMessages.has("message-3")).toBe(false);
+    expect(registrar.processedMessages.size).toBe(2);
+    expect(
+      xntdCommitmentEvents.usedXntdCommitmentEvents.has(
+        "stale-relock-epoch-2-event"
+      )
+    ).toBe(false);
+    expect(xntdCommitmentEvents.usedXntdCommitmentEvents.size).toBe(2);
+    expect(build.lockedXntd).toBe(250n);
+    expect(build.requiredXntdLock).toBe(250n);
+    expect(build.lockEpoch).toBe(3);
+    expect(build.updatedAt).toBe(1200n);
+  });
+
   it("rejects invalid lock amount without marking registrar message", () => {
     const registrar = createRegistrarState("registrar-1");
     const xntdCommitmentEvents = createXntdCommitmentEventState();
