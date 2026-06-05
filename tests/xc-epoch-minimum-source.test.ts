@@ -118,7 +118,7 @@ describe("XC epoch minimum source", () => {
     } catch (error) {
       expect(error).toBeInstanceOf(BuildError);
       expect((error as BuildError).code).toBe(
-        BuildErrorCode.InvalidXntdLockAmount
+        BuildErrorCode.InvalidXcEpochMinimumRecord
       );
     }
   });
@@ -134,6 +134,21 @@ describe("XC epoch minimum source", () => {
       ])
     ).toThrow(BuildError);
 
+    try {
+      createXcEpochMinimumSourceFromRecords([
+        {
+          lockEpoch: 1,
+          minimumXntd: 0n,
+          observedAt: 1000n
+        }
+      ]);
+    } catch (error) {
+      expect(error).toBeInstanceOf(BuildError);
+      expect((error as BuildError).code).toBe(
+        BuildErrorCode.InvalidXcEpochMinimumRecord
+      );
+    }
+
     expect(() =>
       createXcEpochMinimumSourceFromRecords([
         {
@@ -143,6 +158,21 @@ describe("XC epoch minimum source", () => {
         }
       ])
     ).toThrow(BuildError);
+
+    try {
+      createXcEpochMinimumSourceFromRecords([
+        {
+          lockEpoch: -1,
+          minimumXntd: 100n,
+          observedAt: 1000n
+        }
+      ]);
+    } catch (error) {
+      expect(error).toBeInstanceOf(BuildError);
+      expect((error as BuildError).code).toBe(
+        BuildErrorCode.InvalidXcEpochMinimumRecord
+      );
+    }
   });
 
   it("rejects observed required XNTD lock mismatch", () => {
