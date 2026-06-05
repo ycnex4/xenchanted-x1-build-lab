@@ -5703,11 +5703,170 @@ Suggested scope:
 - verify tests cover all intended Ethereum snapshot policy cases
 - decide whether any additional invalid-shape tests are needed before moving toward real provider / ABI design
 
+
+## Latest XC epoch minimum mocked Ethereum Lens snapshot adapter review checkpoint
+
+The XC epoch minimum mocked Ethereum Lens snapshot adapter review milestone was completed on the xc-epoch-minimum-mocked-ethereum-lens-snapshot-adapter-review branch.
+
+Commits:
+
+- a5dea0b Add mocked Ethereum XC epoch minimum adapter review notes
+
+This was a review-only milestone. No runtime behavior changed.
+
+Reviewed implementation:
+
+- 462b786 Add mocked Ethereum XC epoch minimum source adapter
+- c2033b9 Add mocked Ethereum XC epoch minimum adapter notes
+- 4400fc9 Update checkpoint after mocked Ethereum XC epoch minimum adapter
+- 29bb14c Merge branch 'xc-epoch-minimum-mocked-ethereum-lens-snapshot-adapter'
+
+Reviewed files:
+
+- src/model/ethereum-xc-epoch-minimum-source.ts
+- tests/ethereum-xc-epoch-minimum-source.test.ts
+- implementation/xc-epoch-minimum-mocked-ethereum-lens-snapshot-adapter-notes.md
+- docs/checkpoints/current-design-checkpoint.md
+
+Boundary review conclusion:
+
+The mocked Ethereum Lens snapshot adapter boundary is clean.
+
+The adapter remains source-specific and deterministic:
+
+EthereumXcLensEpochMinimumSnapshot
+-> Ethereum-specific metadata validation
+-> XcEpochMinimumRecord[]
+-> createXcEpochMinimumSourceFromRecords()
+-> XcEpochMinimumSource
+
+The generic source builder remains source-agnostic.
+
+Ethereum-specific validation was not pushed into:
+
+- src/model/xc-epoch-minimum-source.ts
+
+This preserves the intended architecture:
+
+- generic layer validates generic record invariants
+- Ethereum adapter validates Ethereum-shaped provenance metadata
+
+Network / secret / ABI assumptions review:
+
+The implementation does not introduce:
+
+- real RPC reads
+- provider configuration
+- RPC URLs
+- private keys
+- API keys
+- ABIs
+- fetch / HTTP calls
+- viem / ethers dependencies
+- process.env reads
+- CLI integration
+- snapshot persistence changes
+
+A targeted grep over the new runtime, test, and notes files found network / secret / ABI terms only in the notes file where they are explicitly documented as non-goals.
+
+No secret-bearing files were inspected.
+
+TypeScript review:
+
+The implementation is compatible with the current TypeScript settings.
+
+The finality policy runtime guard intentionally treats policy as an unknown-shaped object internally so tests can verify invalid runtime payload shapes while preserving the exported strict union type.
+
+Current exported finality policy remains:
+
+- finalized
+- safe
+- confirmed with confirmations
+
+Validation policy review:
+
+The implemented Ethereum-specific validation matches the planned mocked snapshot policy:
+
+- sourceChainId must match eip155-<number>
+- sourceBlockNumber must be > 0
+- sourceBlockHash must be 0x-prefixed 32-byte hex
+- observedAt must be > 0
+- finalizedPolicy kind must be finalized, safe, or confirmed
+- confirmed finality requires positive integer confirmations
+- epochMinimums must be non-empty
+
+The adapter lowercases valid Ethereum block hashes before mapping entries into records.
+
+Generic epoch record validation remains delegated to the existing generic builder.
+
+Test coverage review:
+
+The current tests cover the intended mocked snapshot policy cases:
+
+1. valid mocked Ethereum Lens snapshot
+2. mixed-case block hash acceptance / normalization
+3. missing or empty sourceChainId rejection
+4. non-EIP-155 sourceChainId rejection
+5. non-positive sourceBlockNumber rejection
+6. missing / invalid sourceBlockHash rejection
+7. non-positive observedAt rejection
+8. safe finality acceptance
+9. confirmed finality with positive confirmations acceptance
+10. invalid finality kind rejection
+11. confirmed finality without positive confirmations rejection
+12. empty epochMinimums rejection
+13. conflicting duplicate epoch entries rejection
+14. missing epoch returns null
+
+Additional invalid-shape tests:
+
+No additional tests are required before merging this review milestone.
+
+Possible future tests may be useful only if the adapter begins accepting unknown JSON-like input directly, for example:
+
+- missing finalizedPolicy object
+- finalizedPolicy = null
+- epochMinimums not an array
+- sourceBlockNumber not bigint
+- observedAt not bigint
+
+Those cases are not necessary now because the current function accepts the typed EthereumXcLensEpochMinimumSnapshot shape, and this milestone is not a JSON parser or RPC response decoder.
+
+Validation:
+
+- npm run typecheck: passed
+- npm test: passed
+- npm run build: passed
+- npm audit --audit-level=moderate: found 0 vulnerabilities
+
+Current test count:
+
+- 31 test files passed
+- 213 tests passed
+
+Conclusion:
+
+The mocked Ethereum Lens snapshot adapter is safe to keep as the last mocked snapshot review before a separate real provider / ABI design milestone.
+
+Recommended next milestone:
+
+xc-epoch-minimum-ethereum-lens-provider-adapter-design
+
+Suggested next scope:
+
+- design real provider / ABI integration only
+- define required XC Core / Lens address inputs
+- define finality source policy
+- define finalized / safe / confirmed block handling
+- define provider trust assumptions
+- define no-secret config boundary
+- do not implement real RPC yet unless design is reviewed first
+
 ## Current next steps
 
 Potential next documents / design areas:
 
-1. Review the mocked Ethereum Lens snapshot adapter boundary before any real RPC / ABI work.
+1. Design the real Ethereum Lens provider / ABI adapter boundary before implementation.
 2. Continue implementation only with clean typecheck and tests.
 
 
