@@ -42,32 +42,33 @@ Important implication:
 - proof payload owner / source identity checks are part of the broader registrar / application proof submission boundary
 - this assumption should be reviewed before production integration
 
-## 3. XNTD lock / relock replay protection
+## 3. XNTD lock / relock replay and ordering protection
 
-XNTD lock and relock currently use registrar-level replay protection through processed message IDs.
+XNTD lock and relock now have three runtime protection layers:
 
-They do not yet have a separate per-event replay key equivalent to:
-
-- redeemKey
-- xenBurnKey
+- registrar-level replay protection through processed message IDs
+- source-event replay protection through XntdCommitmentEventKey / usedXntdCommitmentEvents
+- monotonic lockEpoch ordering guard for stale-but-unique commitment events
 
 Lock and relock are overwrite operations, not accumulative accounting operations.
 
 Important implication:
 
 - replay with the same messageId is blocked
-- replay with a different messageId is not blocked by a dedicated lock event key
-- this does not create double-counted XNTD
-- theoretical state regression is possible if an old lock / relock is resubmitted with a new messageId
+- replay of the same source event under a different messageId is blocked
+- stale-but-unique lock / relock events with non-increasing lockEpoch are blocked
+- these protections prevent old commitment events from regressing Build lock state in the MVP model
 
-Accepted MVP limitation:
+Current MVP boundary:
 
-- this is low risk under the trusted indexer / registrar assumption
-- before production, add per-event replay protection for XNTD lock / relock or document the final event identity model
+- the ordering guard uses monotonic lockEpoch
+- production may later choose a stricter ordering source, such as source block number, finalized slot / block height, event timestamp, or monotonic commitment version
 
-Design path:
+Design and implementation path:
 
 - docs/registrar/xntd-lock-event-identity.md
+- implementation/xntd-commitment-event-replay-state-notes.md
+- implementation/xntd-lock-epoch-ordering-guard-notes.md
 
 ## 4. requiredXntdLock source
 

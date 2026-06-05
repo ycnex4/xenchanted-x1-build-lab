@@ -190,7 +190,8 @@ Important current assumptions include:
 
 - trusted indexer / registrar model
 - Build ownership mapping assumption
-- XNTD lock / relock has registrar-level replay protection only
+- XNTD lock / relock source-event replay protection
+- XNTD lock / relock monotonic lockEpoch ordering guard
 - lock / relock are overwrite operations
 - `requiredXntdLock` is accepted from registrar in the MVP
 - no unlock flow in the MVP
