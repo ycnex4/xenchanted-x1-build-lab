@@ -80,7 +80,9 @@ export async function runCliCommand(args: string[]): Promise<CliCommandResult> {
             usedRedeemEventCount:
               snapshot.app.redeemEvents.usedRedeemEvents.size,
             usedXenBurnEventCount:
-              snapshot.app.xenBurnEvents.usedXenBurnEvents.size
+              snapshot.app.xenBurnEvents.usedXenBurnEvents.size,
+            usedXntdCommitmentEventCount:
+              snapshot.app.xntdCommitmentEvents.usedXntdCommitmentEvents.size
           },
           null,
           2
@@ -109,7 +111,9 @@ export async function runCliCommand(args: string[]): Promise<CliCommandResult> {
             usedRedeemEventCount:
               snapshot.app.redeemEvents.usedRedeemEvents.size,
             usedXenBurnEventCount:
-              snapshot.app.xenBurnEvents.usedXenBurnEvents.size
+              snapshot.app.xenBurnEvents.usedXenBurnEvents.size,
+            usedXntdCommitmentEventCount:
+              snapshot.app.xntdCommitmentEvents.usedXntdCommitmentEvents.size
           },
           null,
           2
@@ -137,7 +141,9 @@ export async function runCliCommand(args: string[]): Promise<CliCommandResult> {
             usedRedeemEventCount:
               snapshot.app.redeemEvents.usedRedeemEvents.size,
             usedXenBurnEventCount:
-              snapshot.app.xenBurnEvents.usedXenBurnEvents.size
+              snapshot.app.xenBurnEvents.usedXenBurnEvents.size,
+            usedXntdCommitmentEventCount:
+              snapshot.app.xntdCommitmentEvents.usedXntdCommitmentEvents.size
           },
           null,
           2

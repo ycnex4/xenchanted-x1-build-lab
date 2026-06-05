@@ -75,6 +75,7 @@ describe("CLI command layer", () => {
       processedMessageCount: number;
       usedRedeemEventCount: number;
       usedXenBurnEventCount: number;
+      usedXntdCommitmentEventCount: number;
     };
 
     expect(parsed).toEqual({
@@ -83,7 +84,8 @@ describe("CLI command layer", () => {
       registrarAuthority: "registrar-1",
       processedMessageCount: 0,
       usedRedeemEventCount: 0,
-      usedXenBurnEventCount: 0
+      usedXenBurnEventCount: 0,
+      usedXntdCommitmentEventCount: 0
     });
   });
 
@@ -132,6 +134,7 @@ describe("CLI command layer", () => {
       processedMessageCount: number;
       usedRedeemEventCount: number;
       usedXenBurnEventCount: number;
+      usedXntdCommitmentEventCount: number;
     };
 
     expect(parsed).toEqual({
@@ -141,7 +144,8 @@ describe("CLI command layer", () => {
       registrarAuthority: "registrar-1",
       processedMessageCount: 0,
       usedRedeemEventCount: 0,
-      usedXenBurnEventCount: 0
+      usedXenBurnEventCount: 0,
+      usedXntdCommitmentEventCount: 0
     });
   });
 
@@ -197,6 +201,7 @@ describe("CLI command layer", () => {
       processedMessageCount: number;
       usedRedeemEventCount: number;
       usedXenBurnEventCount: number;
+      usedXntdCommitmentEventCount: number;
     };
 
     expect(parsed).toEqual({
@@ -208,7 +213,8 @@ describe("CLI command layer", () => {
       registrarAuthority: "registrar-1",
       processedMessageCount: 0,
       usedRedeemEventCount: 0,
-      usedXenBurnEventCount: 0
+      usedXenBurnEventCount: 0,
+      usedXntdCommitmentEventCount: 0
     });
   });
 
@@ -237,6 +243,7 @@ describe("CLI command layer", () => {
       processedMessageCount: number;
       usedRedeemEventCount: number;
       usedXenBurnEventCount: number;
+      usedXntdCommitmentEventCount: number;
     };
 
     expect(parsed.recovered).toBe(true);
@@ -244,6 +251,7 @@ describe("CLI command layer", () => {
     expect(parsed.filePath).toBe(backupPath);
     expect(parsed.createdAt).toBe("5000");
     expect(parsed.registrarAuthority).toBe("registrar-1");
+    expect(parsed.usedXntdCommitmentEventCount).toBe(0);
 
     const canonical = await readFile(filePath, "utf8");
 
@@ -281,6 +289,7 @@ describe("CLI command layer", () => {
       processedMessageCount: number;
       usedRedeemEventCount: number;
       usedXenBurnEventCount: number;
+      usedXntdCommitmentEventCount: number;
     };
 
     expect(parsed).toEqual({
@@ -292,7 +301,8 @@ describe("CLI command layer", () => {
       registrarAuthority: "registrar-1",
       processedMessageCount: 0,
       usedRedeemEventCount: 0,
-      usedXenBurnEventCount: 0
+      usedXenBurnEventCount: 0,
+      usedXntdCommitmentEventCount: 0
     });
   });
 

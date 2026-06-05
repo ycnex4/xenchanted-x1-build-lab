@@ -2087,6 +2087,61 @@ Remaining future items:
 
 This milestone closes the main known limitation that XNTD lock / relock had only registrar-level replay protection.
 
+## Latest CLI XNTD commitment event count checkpoint
+
+The CLI XNTD commitment event count milestone was completed on the cli-xntd-commitment-event-count branch.
+
+Commits:
+
+- e548f1b Show XNTD commitment event count in CLI snapshots
+- 2375ca0 Add CLI XNTD commitment event count notes
+
+The milestone updates read-only CLI snapshot summaries to expose the XNTD commitment event replay count.
+
+Updated CLI commands:
+
+- snapshot:show
+- snapshot:verify
+- snapshot:recover
+
+New output field:
+
+- usedXntdCommitmentEventCount
+
+Reason:
+
+- xntdCommitmentEvents are now part of BuildApplicationState
+- usedXntdCommitmentEvents are now persisted in snapshots
+- CLI snapshot visibility should show the new replay-state count alongside:
+  - processedMessageCount
+  - usedRedeemEventCount
+  - usedXenBurnEventCount
+
+Scope boundary:
+
+- CLI visibility only
+- no protocol state transition changes
+- no registrar behavior changes
+- no proof submission behavior changes
+- no watcher behavior changes
+- no snapshot serialization changes
+- no recovery behavior changes
+
+Tests updated:
+
+- tests/cli-commands.test.ts
+
+Validation:
+
+- npm run typecheck: passed
+- npm test: passed
+- npm run build: passed
+- npm audit --audit-level=moderate: found 0 vulnerabilities
+- 29 test files passed
+- 177 tests passed
+
+This milestone keeps operator-facing snapshot summaries aligned with the XNTD commitment event replay-state model.
+
 ## Current next steps
 
 Potential next documents / design areas:
