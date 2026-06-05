@@ -5862,11 +5862,342 @@ Suggested next scope:
 - define no-secret config boundary
 - do not implement real RPC yet unless design is reviewed first
 
+
+## Latest XC epoch minimum Ethereum Lens provider adapter design checkpoint
+
+The XC epoch minimum Ethereum Lens provider adapter design milestone was completed on the xc-epoch-minimum-ethereum-lens-provider-adapter-design branch.
+
+Commits:
+
+- 90a543e Add XC epoch minimum Ethereum Lens provider adapter design
+
+This was a design-only milestone.
+
+No runtime behavior changed.
+
+Design document added:
+
+- implementation/xc-epoch-minimum-ethereum-lens-provider-adapter-design.md
+
+Purpose:
+
+Design a future real Ethereum / XC Lens provider adapter for authoritative XC epoch minimum records.
+
+The milestone does not implement:
+
+- real RPC reads
+- provider configuration
+- ABI calls
+- CLI commands
+- snapshot persistence
+- env loading
+- secrets
+
+Current completed foundation:
+
+The runtime validation chain already supports injected XC epoch minimum source validation:
+
+watcher candidate
+-> proof conversion
+-> appSubmitProof(..., xcEpochMinimumSource)
+-> appApplyRegistrarXntdLock() / appApplyRegistrarXntdRelock()
+-> applyRegistrarXntdLock() / applyRegistrarXntdRelock()
+-> assertAuthoritativeXcEpochMinimum()
+-> Build state
+
+The runtime assertion remains:
+
+observedRequiredXntdLock == authoritativeEpochMinimum(lockEpoch)
+
+Existing generic source flow:
+
+XcEpochMinimumRecord[]
+-> createXcEpochMinimumSourceFromRecords()
+-> XcEpochMinimumSource
+
+Existing mocked Ethereum Lens snapshot adapter flow:
+
+EthereumXcLensEpochMinimumSnapshot
+-> Ethereum-specific metadata validation
+-> XcEpochMinimumRecord[]
+-> createXcEpochMinimumSourceFromRecords()
+-> XcEpochMinimumSource
+
+Provider adapter design goal:
+
+Future real provider adapter should convert finalized / safe / confirmed Ethereum XC Lens or XC Core reads into the same snapshot shape already accepted by the mocked snapshot adapter.
+
+Recommended future high-level flow:
+
+adapter config
+-> provider read at finalized / safe / confirmed block
+-> XC Lens / Core calls
+-> EthereumXcLensEpochMinimumSnapshot
+-> createXcEpochMinimumSourceFromEthereumLensSnapshot()
+-> XcEpochMinimumSource
+
+The already-reviewed mocked snapshot adapter remains the deterministic validation boundary.
+
+Recommended future adapter shape:
+
+- createXcEpochMinimumSourceFromEthereumLensProvider(input)
+
+Possible future input shape:
+
+- provider
+- chainId
+- lensAddress
+- optional coreAddress
+- finalityPolicy
+- lockEpochs
+- observedAt
+
+Provider boundary:
+
+The provider adapter should be read-only.
+
+It should not:
+
+- sign transactions
+- send transactions
+- mutate Ethereum state
+- require private keys
+- require wallet accounts
+- manage RPC URLs directly
+- read process.env directly
+
+The provider should be passed in from outer infrastructure.
+
+No-secret config boundary:
+
+Do not put RPC URLs, API keys, private keys, mnemonics, tokens, or .env reads into model code.
+
+Allowed future pattern:
+
+outer integration layer constructs provider
+-> provider is passed into adapter
+-> adapter performs read-only calls through interface
+
+Disallowed future pattern:
+
+- adapter reads process.env.RPC_URL
+- adapter embeds provider URL
+- adapter accepts private key
+- adapter logs provider URL
+- adapter logs request headers
+- adapter prints raw config
+
+Provider interface design:
+
+A narrow read-only provider interface is preferred over binding directly to viem or ethers.
+
+Possible future interface:
+
+- getChainId()
+- getBlock()
+- readContract()
+
+This keeps adapter logic testable without importing a concrete provider library.
+
+Chain ID policy:
+
+The provider adapter should:
+
+- read provider chain ID
+- convert it to eip155-<number>
+- compare with configured chain ID
+- reject mismatch before producing records
+
+Address policy:
+
+The provider adapter should require explicit XC Lens / Core addresses.
+
+The adapter should not hardcode addresses.
+
+Address validation should remain Ethereum-specific:
+
+- 0x-prefixed
+- 20-byte hex
+- normalized lowercase or checksum-preserving comparison policy
+
+ABI policy:
+
+This design milestone does not define final ABIs.
+
+Future implementation should keep ABI scope minimal and use only functions required by the chosen read strategy.
+
+Epoch minimum derivation strategies:
+
+Possible strategies documented:
+
+1. Direct Lens epoch minimum read
+2. Core protocol constants + local computation
+3. Checkpointed Ethereum reads
+
+Recommended first provider design direction:
+
+Do not choose final ABI yet in runtime.
+
+Design should support both:
+
+- direct Lens epoch minimum reads
+- protocol constants + local computation
+
+Before implementation, confirm which on-chain view exists and is intended as the source of truth.
+
+Finality policy:
+
+The provider adapter must not read latest.
+
+Allowed policies:
+
+- finalized
+- safe
+- confirmed
+
+Finalized policy:
+
+- read finalized block
+- use finalized block number for all contract reads
+- use finalized block hash in snapshot
+
+Safe policy:
+
+- read safe block
+- use safe block number for all contract reads
+- use safe block hash in snapshot
+
+Confirmed policy:
+
+- read head block only to calculate an older confirmed block number
+- read confirmed block by number
+- use confirmed block number for all contract reads
+- use confirmed block hash in snapshot
+
+Confirmed policy requires confirmations > 0.
+
+Do not use latest block directly as the provenance block.
+
+Block consistency policy:
+
+All contract reads used to produce one snapshot should be performed at one selected provenance block number.
+
+The snapshot must include:
+
+- sourceBlockNumber
+- sourceBlockHash
+
+The source block hash must correspond to the same block number used for reads.
+
+observedAt policy:
+
+For the current existing shape, selected Ethereum block timestamp is the cleanest first design for observedAt.
+
+Requested lockEpochs policy:
+
+The provider adapter should accept an explicit list of requested lockEpochs.
+
+It should not infer all epochs by default.
+
+The adapter should reject empty lockEpochs list unless a future use case requires all-current snapshot generation.
+
+Error model:
+
+For now, avoid new error codes unless runtime implementation demonstrates a real distinction.
+
+Expected future failures include:
+
+- invalid configured chain ID
+- provider chain ID mismatch
+- invalid Lens / Core address
+- unsupported finality policy
+- confirmed policy with confirmations <= 0
+- selected block has no hash
+- contract read result cannot be decoded
+- computed / read minimum is invalid
+- requested epoch missing
+
+Logging policy:
+
+If logging is later added, allowed logs should be limited to:
+
+- chain ID
+- selected block number
+- selected block hash
+- finality policy kind
+- requested lockEpochs
+- Lens / Core address
+
+Do not log:
+
+- RPC URLs
+- API keys
+- authorization headers
+- private keys
+- mnemonic
+- full env config
+
+Testing strategy:
+
+Future provider adapter implementation should start with mocked provider tests.
+
+Recommended tests include:
+
+1. finalized block selection
+2. safe block selection
+3. confirmed block selection with positive confirmations
+4. latest policy rejection
+5. provider chain ID mismatch rejection
+6. invalid configured chain ID rejection
+7. invalid Lens address rejection
+8. missing block hash rejection
+9. all reads performed at selected block number
+10. empty requested lockEpochs rejection
+11. invalid read result rejection
+12. snapshot validation propagation
+13. no process.env reads
+14. no private keys
+15. no RPC URL in adapter input
+
+Security / trust assumptions:
+
+A provider adapter is not fully trustless.
+
+Its correctness depends on:
+
+- provider honesty and availability
+- finality policy correctness
+- block hash / number consistency
+- Lens / Core address correctness
+- ABI correctness
+- adapter read strategy correctness
+- monitoring and replay/audit process
+
+Conclusion:
+
+The future real Ethereum Lens provider adapter should be a thin, read-only provider layer that produces a reviewed Ethereum snapshot shape.
+
+The mocked snapshot adapter remains the validation boundary.
+
+Provider / ABI integration should be reviewed before real network implementation.
+
+Recommended next milestone:
+
+xc-epoch-minimum-ethereum-lens-provider-adapter-design-review
+
+Suggested next scope:
+
+- review provider / ABI design boundary
+- verify no runtime implementation was added
+- verify no secret / RPC / env coupling
+- decide whether provider implementation should use a custom read provider interface first
+- decide whether direct Lens read or protocol-constant computation should be the first real strategy
+
 ## Current next steps
 
 Potential next documents / design areas:
 
-1. Design the real Ethereum Lens provider / ABI adapter boundary before implementation.
+1. Review the Ethereum Lens provider / ABI adapter design before implementation.
 2. Continue implementation only with clean typecheck and tests.
 
 
