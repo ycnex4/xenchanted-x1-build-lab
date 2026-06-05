@@ -5541,11 +5541,174 @@ Validation:
 - npm run build: passed
 - npm audit --audit-level=moderate: found 0 vulnerabilities
 
+
+## Latest XC epoch minimum mocked Ethereum Lens snapshot adapter checkpoint
+
+The XC epoch minimum mocked Ethereum Lens snapshot adapter milestone was completed on the xc-epoch-minimum-mocked-ethereum-lens-snapshot-adapter branch.
+
+Commits:
+
+- 462b786 Add mocked Ethereum XC epoch minimum source adapter
+- c2033b9 Add mocked Ethereum XC epoch minimum adapter notes
+
+This milestone implements the first source-specific XC epoch minimum adapter layer for Ethereum / XC Lens shaped data.
+
+Runtime additions:
+
+- src/model/ethereum-xc-epoch-minimum-source.ts
+
+Test additions:
+
+- tests/ethereum-xc-epoch-minimum-source.test.ts
+
+Documentation additions:
+
+- implementation/xc-epoch-minimum-mocked-ethereum-lens-snapshot-adapter-notes.md
+
+Exports added through src/index.ts:
+
+- EthereumXcLensEpochMinimumSnapshot
+- EthereumXcEpochMinimumEntry
+- EthereumFinalityPolicy
+- createXcEpochMinimumSourceFromEthereumLensSnapshot()
+
+Purpose:
+
+The authoritative XC epoch minimum runtime chain already validates:
+
+observedRequiredXntdLock == authoritativeEpochMinimum(lockEpoch)
+
+The generic source builder remains source-agnostic and accepts validated XcEpochMinimumRecord[].
+
+This milestone adds an Ethereum-specific mocked snapshot adapter that validates Ethereum-shaped source metadata before producing generic source records.
+
+Adapter flow:
+
+mocked Ethereum Lens snapshot
+-> Ethereum-specific metadata validation
+-> XcEpochMinimumRecord[]
+-> createXcEpochMinimumSourceFromRecords()
+-> XcEpochMinimumSource
+
+Snapshot shape:
+
+- sourceChainId
+- sourceBlockNumber
+- sourceBlockHash
+- observedAt
+- finalizedPolicy
+- epochMinimums
+
+Finality policy shape:
+
+- finalized
+- safe
+- confirmed with positive confirmations
+
+Ethereum-specific validation added:
+
+- sourceChainId must match eip155-<number>
+- sourceBlockNumber must be > 0
+- sourceBlockHash must be 0x-prefixed 32-byte hex
+- observedAt must be > 0
+- finalizedPolicy kind must be finalized, safe, or confirmed
+- confirmed finality requires positive integer confirmations
+- epochMinimums must be non-empty
+
+The adapter normalizes valid Ethereum block hashes to lowercase before mapping entries into generic records.
+
+Epoch entry validation remains delegated to the generic source builder:
+
+- lockEpoch must be an integer and >= 0
+- minimumXntd must be > 0
+- duplicate epoch records are allowed only when minimumXntd matches
+- conflicting duplicate epoch minimum records are rejected
+
+Error model:
+
+Malformed Ethereum snapshot input and invalid epoch entries use the existing source-record error:
+
+- InvalidXcEpochMinimumRecord
+
+No new error code was added.
+
+Resulting source behavior:
+
+- known epoch returns the authoritative minimum
+- missing epoch returns null
+- runtime assertion later converts missing epoch to MissingAuthoritativeXcEpochMinimum
+- runtime assertion converts mismatched observed value to MismatchedAuthoritativeXcEpochMinimum
+
+Tests covered:
+
+1. valid mocked Ethereum Lens snapshot
+2. mixed-case block hash acceptance / normalization
+3. missing or empty sourceChainId rejection
+4. non-EIP-155 sourceChainId rejection
+5. non-positive sourceBlockNumber rejection
+6. missing / invalid sourceBlockHash rejection
+7. non-positive observedAt rejection
+8. safe finality acceptance
+9. confirmed finality with positive confirmations acceptance
+10. invalid finality kind rejection
+11. confirmed finality without positive confirmations rejection
+12. empty epochMinimums rejection
+13. conflicting duplicate epoch entries rejection
+14. missing epoch returns null
+
+Security / operational boundary:
+
+This milestone intentionally does not add:
+
+- real Ethereum RPC reads
+- provider config
+- RPC URLs
+- private keys
+- API keys
+- ABIs
+- CLI commands
+- snapshot persistence changes
+- bridge signer verification
+- X1-native source verification
+
+The branch remains deterministic and suitable for production-shaped tests without network access.
+
+Validation:
+
+- npm run typecheck: passed
+- npm test: passed
+- npm run build: passed
+- npm audit --audit-level=moderate: found 0 vulnerabilities
+
+Current test count:
+
+- 31 test files passed
+- 213 tests passed
+
+Conclusion:
+
+The mocked Ethereum Lens snapshot adapter is now implemented as the first source-specific adapter layer.
+
+It keeps the generic XC epoch minimum source builder clean and source-agnostic while moving Ethereum-specific provenance validation into a dedicated Ethereum adapter.
+
+Recommended next milestone:
+
+xc-epoch-minimum-mocked-ethereum-lens-snapshot-adapter-review
+
+Suggested scope:
+
+- review source-specific adapter boundaries
+- verify no network / secret / ABI assumptions slipped in
+- verify exactOptionalPropertyTypes compatibility
+- verify tests cover all intended Ethereum snapshot policy cases
+- decide whether any additional invalid-shape tests are needed before moving toward real provider / ABI design
+
 ## Current next steps
 
 Potential next documents / design areas:
 
-1. Continue implementation only with clean typecheck and tests.
+1. Review the mocked Ethereum Lens snapshot adapter boundary before any real RPC / ABI work.
+2. Continue implementation only with clean typecheck and tests.
 
 
 
