@@ -113,10 +113,12 @@ describe("watcher candidate to proof conversion", () => {
 
     expect(lockProof.kind).toBe("XNTD_LOCK_PROOF");
     expect(lockProof.payload.amountXntd).toBe(500n);
+    expect(lockProof.payload.observedRequiredXntdLock).toBe(500n);
     expect(lockProof.payload.lockEpoch).toBe(1);
 
     expect(relockProof.kind).toBe("XNTD_RELOCK_PROOF");
     expect(relockProof.payload.amountXntd).toBe(250n);
+    expect(relockProof.payload.observedRequiredXntdLock).toBe(250n);
     expect(relockProof.payload.lockEpoch).toBe(2);
   });
 

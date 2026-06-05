@@ -121,7 +121,8 @@ describe("proof to registrar payload builders", () => {
       payload: {
         buildId: "build-1",
         owner: "x1-owner",
-        amountXntd: 500n,
+        amountXntd: 750n,
+        observedRequiredXntdLock: 500n,
         lockEpoch: 1,
         lockedAt: 1000n
       }
@@ -140,7 +141,8 @@ describe("proof to registrar payload builders", () => {
       payload: {
         buildId: "build-1",
         owner: "x1-owner",
-        amountXntd: 250n,
+        amountXntd: 400n,
+        observedRequiredXntdLock: 250n,
         lockEpoch: 2,
         relockedAt: 1200n
       }
@@ -157,12 +159,12 @@ describe("proof to registrar payload builders", () => {
     });
 
     expect(lockPayload.message.kind).toBe("LOCK_XNTD");
-    expect(lockPayload.amountXntd).toBe(500n);
+    expect(lockPayload.amountXntd).toBe(750n);
     expect(lockPayload.observedRequiredXntdLock).toBe(500n);
     expect(lockPayload.lockEpoch).toBe(1);
 
     expect(relockPayload.message.kind).toBe("RELOCK_XNTD");
-    expect(relockPayload.amountXntd).toBe(250n);
+    expect(relockPayload.amountXntd).toBe(400n);
     expect(relockPayload.observedRequiredXntdLock).toBe(250n);
     expect(relockPayload.lockEpoch).toBe(2);
   });
