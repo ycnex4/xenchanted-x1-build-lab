@@ -4107,6 +4107,159 @@ Validation:
 
 This milestone closes the review of the deterministic authoritative XC epoch minimum validation chain.
 
+## Latest authoritative XC epoch minimum production source plan checkpoint
+
+The authoritative XC epoch minimum production source plan milestone was completed on the authoritative-xc-epoch-minimum-production-source-plan branch.
+
+Commit:
+
+- b519fab Add authoritative XC epoch minimum production source plan
+
+This milestone defines production-source options for authoritative XC epoch minimum validation.
+
+Implementation plan:
+
+- implementation/authoritative-xc-epoch-minimum-production-source-plan.md
+
+This is a plan-only milestone.
+
+It does not change runtime code.
+
+Current completed validation chain:
+
+watcher candidate
+-> proof conversion
+-> appSubmitProof(..., xcEpochMinimumSource)
+-> app service
+-> registrar handler
+-> assertAuthoritativeXcEpochMinimum()
+-> Build state
+
+Current runtime validation rule:
+
+- observedRequiredXntdLock == authoritativeEpochMinimum(lockEpoch)
+
+when an XcEpochMinimumSource is provided.
+
+Remaining production question:
+
+The remaining question is not how to validate.
+
+The remaining question is where the production authoritative source comes from.
+
+Production source requirement:
+
+A production source must answer:
+
+What was the authoritative XC Core L1 minimum for this lockEpoch?
+
+It must not be derived from:
+
+- amountXntd
+- observedRequiredXntdLock itself
+
+It must come from an independent authoritative XC state source.
+
+Production source options reviewed:
+
+1. Trusted integration source
+2. Finalized Ethereum RPC / XC Lens read
+3. Checkpoint source
+4. Bridge-provided source
+5. X1-native verified source
+
+Recommended first production-like path:
+
+Use trusted integration source first.
+
+Then evolve to:
+
+- finalized Ethereum RPC / XC Lens read
+- checkpoint source
+
+Reason:
+
+The current runtime already has the correct boundary:
+
+appSubmitProof(..., xcEpochMinimumSource)
+
+This means production can start by creating a reliable source outside the runtime and passing it in.
+
+Do not persist the source in BuildApplicationState yet.
+
+Do not add snapshot schema changes yet.
+
+Do not introduce live RPC directly into core app state yet.
+
+Recommended near-term sequence:
+
+1. Keep deterministic source for unit/e2e tests.
+2. Add a production-source adapter design document.
+3. Define finalized block policy.
+4. Define XC Core / Lens read fields.
+5. Define failure behavior:
+   - missing epoch
+   - stale source
+   - RPC unavailable
+   - mismatched minimum
+6. Add adapter tests with mocked XC state.
+7. Only then decide whether to wire adapter into CLI / service runtime.
+
+Failure policy:
+
+If authoritative minimum is unavailable:
+
+- reject proof submission
+- do not mark registrar message as processed
+- do not mark XNTD commitment event as used
+- do not mutate Build lock state
+
+If observedRequiredXntdLock mismatches authoritative source:
+
+- reject proof submission
+- preserve mutation safety
+- report explicit mismatch error
+
+Current runtime already supports these error categories:
+
+- MissingAuthoritativeXcEpochMinimum
+- MismatchedAuthoritativeXcEpochMinimum
+
+Non-goals:
+
+This plan does not implement:
+
+- real Ethereum RPC reads
+- XC Core / Lens ABI integration
+- bridge signer logic
+- X1 on-chain verification
+- snapshot migration
+- CLI integration
+- persistent app-state source ownership
+
+Current conclusion:
+
+The deterministic validation chain is complete.
+
+The next production-readiness decision is source ownership, not validation mechanics.
+
+Recommended first path:
+
+trusted integration source -> finalized Ethereum RPC / Lens read or checkpoint source
+
+Long-term path:
+
+bridge-provided or X1-native verified source
+
+Validation:
+
+- npm run typecheck: passed
+- npm test: passed
+- npm run build: passed
+- npm audit --audit-level=moderate: found 0 vulnerabilities
+- 30 test files passed
+- 194 tests passed
+
 ## Current next steps
 
 Potential next documents / design areas:
