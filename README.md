@@ -195,6 +195,7 @@ Important current assumptions include:
 - lock / relock are overwrite operations
 - `requiredXntdLock` is accepted from registrar in the MVP
 - XNTD epoch minimum validation design is documented separately
+- authoritative XC state source design is documented separately
 - no unlock flow in the MVP
 - canonicalEventKey convention
 - fee checkpoint finality assumption

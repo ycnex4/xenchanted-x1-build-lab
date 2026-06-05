@@ -80,6 +80,10 @@ Possible source values:
 
 The exact integration can depend on the final XC contract / lens interface.
 
+The authoritative XC state source model is documented separately in:
+
+- docs/registrar/authoritative-xc-state-source.md
+
 The important principle:
 
 The Build registrar must not invent the required lock amount.

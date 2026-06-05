@@ -2478,6 +2478,125 @@ Validation:
 
 This milestone finalizes the recommended payload shape direction before any runtime implementation of epoch minimum validation.
 
+## Latest authoritative XC state source design checkpoint
+
+The authoritative XC state source design milestone was completed on the authoritative-xc-state-source-design branch.
+
+Commits:
+
+- f30da32 Document authoritative XC state source design
+- 13f824f Link authoritative XC state source design
+- a7bf2de Add authoritative XC state source design notes
+
+This milestone documents the source-of-truth model for XC epoch state used by XNTD lock / relock epoch minimum validation.
+
+New design document:
+
+- docs/registrar/authoritative-xc-state-source.md
+
+Implementation notes:
+
+- implementation/authoritative-xc-state-source-design-notes.md
+
+Linked documents:
+
+- README.md
+- docs/assumptions.md
+- docs/registrar/xntd-lock-epoch-minimum-validation.md
+
+Problem addressed:
+
+- future XNTD lock / relock validation requires observedRequiredXntdLock == authoritativeEpochMinimum(lockEpoch)
+- observedRequiredXntdLock is useful for self-describing proofs
+- but observedRequiredXntdLock is not authoritative by itself
+- the system needs a clear source-of-truth model for authoritativeEpochMinimum(lockEpoch)
+
+Decision:
+
+Use a pragmatic trusted integration path first:
+
+1. Watcher observes XC state at a finalized Ethereum block.
+2. Watcher creates LOCK_XNTD / RELOCK_XNTD candidate with:
+   - amountXntd
+   - observedRequiredXntdLock
+   - lockEpoch
+   - source block metadata
+3. Candidate becomes a validated proof.
+4. Registrar / integration layer verifies observedRequiredXntdLock against authoritative XC state for the same lockEpoch / source context.
+5. After successful validation:
+   - lockedXntd = amountXntd
+   - requiredXntdLock = observedRequiredXntdLock
+
+Short form:
+
+- B now, C later
+
+Authoritative source:
+
+- Ethereum-side xEnchanted Crypto protocol state
+- deployed XC Core contract
+- deployed XC Lens contract, if it exposes protocol parameters safely
+- finalized Ethereum block context
+
+The authoritative source must provide or allow deriving:
+
+- lockEpoch
+- currentBaseNominal
+- current Core L1 nominal
+- epoch timestamp / epochAt(timestamp), if needed
+
+Production-hardening path:
+
+A stricter production model can introduce a separate XC epoch state checkpoint proof containing:
+
+- xcEpochStateCheckpointId
+- sourceChainId
+- xcCoreAddress
+- xcLensAddress, if used
+- sourceBlockNumber
+- finalized status
+- lockEpoch
+- currentBaseNominal
+- authoritativeEpochMinimum
+
+Then LOCK_XNTD / RELOCK_XNTD proofs can reference:
+
+- xcEpochStateCheckpointId
+
+This separates:
+
+- XC state verification
+- user lock / relock event verification
+
+Relationship to existing protections:
+
+- processedMessages protects registrar message replay
+- usedXntdCommitmentEvents protects source-event replay
+- monotonic lockEpoch guard protects against stale-but-unique commitment events
+- observedRequiredXntdLock documents the observed requirement
+- authoritative XC state validation verifies the observed requirement
+
+Scope boundary:
+
+- design-only
+- no runtime code changed
+- no exact contract ABI defined
+- no exact XC Lens interface defined
+- no live RPC implementation defined
+- no Merkle proof format defined
+- no X1 on-chain verification defined
+
+Validation:
+
+- npm run typecheck: passed
+- npm test: passed
+- npm run build: passed
+- npm audit --audit-level=moderate: found 0 vulnerabilities
+- 29 test files passed
+- 179 tests passed
+
+This milestone completes the design chain before runtime implementation of XNTD epoch minimum validation.
+
 ## Current next steps
 
 Potential next documents / design areas:
