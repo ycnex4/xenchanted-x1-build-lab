@@ -2969,6 +2969,93 @@ Validation:
 
 This milestone completes the registrar payload layer of the observedRequiredXntdLock rollout while preserving proof / watcher payload compatibility.
 
+## Latest XNTD observed required lock proof payload checkpoint
+
+The XNTD observed required lock proof payload runtime milestone was completed on the xntd-observed-required-lock-proof-payload branch.
+
+Commits:
+
+- d8f7e81 Add observed required XNTD lock to proof payloads
+- 0009c37 Add XNTD observed required lock proof payload notes
+
+This milestone lifts observedRequiredXntdLock into the XNTD proof payload layer.
+
+Updated runtime files:
+
+- src/proofs/proof-types.ts
+- src/watchers/proof-conversion.ts
+- src/proofs/registrar-builders.ts
+
+Updated tests:
+
+- tests/watcher-proof-conversion.test.ts
+- tests/proof-registrar-builders.test.ts
+
+Implementation notes:
+
+- implementation/xntd-observed-required-lock-proof-payload-notes.md
+
+Runtime change:
+
+Added observedRequiredXntdLock to:
+
+- XntdLockProof.payload
+- XntdRelockProof.payload
+
+Proof payloads now carry:
+
+- amountXntd
+- observedRequiredXntdLock
+- lockEpoch
+
+Proof conversion behavior:
+
+- convertXntdLockCandidateToProof() now sets observedRequiredXntdLock
+- convertXntdRelockCandidateToProof() now sets observedRequiredXntdLock
+- if candidate payload already contains observedRequiredXntdLock as bigint, conversion uses it
+- otherwise conversion falls back to amountXntd
+
+Compatibility reason:
+
+- watcher candidate types are not updated in this milestone
+- proof conversion keeps compatibility with current watcher candidates
+- watcher candidate update remains a later layer
+
+Registrar builder change:
+
+- buildXntdLockRegistrarPayload() now reads proof.payload.observedRequiredXntdLock directly
+- buildXntdRelockRegistrarPayload() now reads proof.payload.observedRequiredXntdLock directly
+- the temporary registrar-builder unknown-field fallback helper was removed
+
+Test coverage:
+
+- XNTD lock proof payload contains observedRequiredXntdLock
+- XNTD relock proof payload contains observedRequiredXntdLock
+- registrar payload preserves separated values where amountXntd > observedRequiredXntdLock
+
+Scope boundary:
+
+This milestone does not change:
+
+- watcher candidate types
+- watcher candidate constructors
+- app proof submission tests
+- e2e tests
+- snapshot schema
+- CLI output
+- authoritative XC state validation
+
+Validation:
+
+- npm run typecheck: passed
+- npm test: passed
+- npm run build: passed
+- npm audit --audit-level=moderate: found 0 vulnerabilities
+- 29 test files passed
+- 186 tests passed
+
+This milestone completes the proof payload layer of the observedRequiredXntdLock rollout while preserving watcher candidate compatibility.
+
 ## Current next steps
 
 Potential next documents / design areas:

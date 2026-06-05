@@ -68,6 +68,7 @@ export interface XntdLockProof extends BaseProof {
     buildId: string;
     owner: string;
     amountXntd: bigint;
+    observedRequiredXntdLock: bigint;
     lockEpoch: number;
     lockedAt: bigint;
   };
@@ -79,6 +80,7 @@ export interface XntdRelockProof extends BaseProof {
     buildId: string;
     owner: string;
     amountXntd: bigint;
+    observedRequiredXntdLock: bigint;
     lockEpoch: number;
     relockedAt: bigint;
   };

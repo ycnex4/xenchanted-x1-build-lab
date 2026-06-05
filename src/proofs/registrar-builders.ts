@@ -71,18 +71,6 @@ function defaultMessageId(proof: BuildProof): string {
   return `proof:${proof.kind}:${proof.canonicalEventKey}`;
 }
 
-function observedRequiredXntdLockFromPayload(
-  payload: { amountXntd: bigint }
-): bigint {
-  const maybePayload = payload as {
-    observedRequiredXntdLock?: unknown;
-  };
-
-  return typeof maybePayload.observedRequiredXntdLock === "bigint"
-    ? maybePayload.observedRequiredXntdLock
-    : payload.amountXntd;
-}
-
 function createRegistrarMessage(
   proof: BuildProof,
   kind: RegistrarMessageKind,
@@ -137,9 +125,7 @@ export function buildXntdLockRegistrarPayload(
     buildId: proof.payload.buildId,
     xntdCommitmentEventKey: proof.canonicalEventKey,
     amountXntd: proof.payload.amountXntd,
-    observedRequiredXntdLock: observedRequiredXntdLockFromPayload(
-      proof.payload
-    ),
+    observedRequiredXntdLock: proof.payload.observedRequiredXntdLock,
     lockEpoch: proof.payload.lockEpoch,
     lockedAt: proof.payload.lockedAt
   };
@@ -156,9 +142,7 @@ export function buildXntdRelockRegistrarPayload(
     buildId: proof.payload.buildId,
     xntdCommitmentEventKey: proof.canonicalEventKey,
     amountXntd: proof.payload.amountXntd,
-    observedRequiredXntdLock: observedRequiredXntdLockFromPayload(
-      proof.payload
-    ),
+    observedRequiredXntdLock: proof.payload.observedRequiredXntdLock,
     lockEpoch: proof.payload.lockEpoch,
     relockedAt: proof.payload.relockedAt
   };
