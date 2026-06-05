@@ -24,3 +24,4 @@ export * from "./cli/commands.js";
 export * from "./proofs/registrar-builders.js";
 export * from "./watchers/proof-conversion.js";
 export * from "./app/proof-submission.js";
+export * from "./model/xntd-commitment-events.js";
