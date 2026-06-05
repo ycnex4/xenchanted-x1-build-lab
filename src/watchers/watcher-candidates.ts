@@ -48,6 +48,7 @@ export interface XntdLockCandidate extends WatcherCandidateBase {
     buildId: string;
     owner: string;
     amountXntd: bigint;
+    observedRequiredXntdLock: bigint;
     lockEpoch: number;
     lockedAt: bigint;
   };
@@ -59,6 +60,7 @@ export interface XntdRelockCandidate extends WatcherCandidateBase {
     buildId: string;
     owner: string;
     amountXntd: bigint;
+    observedRequiredXntdLock: bigint;
     lockEpoch: number;
     relockedAt: bigint;
   };
@@ -160,6 +162,7 @@ export function createXntdLockCandidate(
       buildId: input.buildId,
       owner: input.owner,
       amountXntd: input.amountXntd,
+      observedRequiredXntdLock: input.observedRequiredXntdLock,
       lockEpoch: input.lockEpoch,
       lockedAt: input.lockedAt
     }
@@ -176,6 +179,7 @@ export function createXntdRelockCandidate(
       buildId: input.buildId,
       owner: input.owner,
       amountXntd: input.amountXntd,
+      observedRequiredXntdLock: input.observedRequiredXntdLock,
       lockEpoch: input.lockEpoch,
       relockedAt: input.relockedAt
     }
