@@ -14,7 +14,7 @@ It follows the design documented in:
 
 ## Scope
 
-This milestone adds only the low-level replay state.
+This milestone adds the low-level replay state and persists it through application snapshots.
 
 It does not yet integrate the state into:
 
@@ -22,7 +22,6 @@ It does not yet integrate the state into:
 - proof payloads
 - watcher candidates
 - proof conversion
-- snapshot serialization
 - CLI summaries
 
 ## Added model
@@ -55,11 +54,30 @@ This follows the design decision that lock and relock update the same commitment
 
 The shared event key model prevents the same source event from being accepted again under a different registrar message ID.
 
+## Application state and snapshot persistence
+
+The replay state is now part of BuildApplicationState:
+
+- xntdCommitmentEvents
+
+Snapshot persistence now includes:
+
+- SerializedXntdCommitmentEventState
+- serializeXntdCommitmentEventState()
+- deserializeXntdCommitmentEventState()
+- xntdCommitmentEvents inside SerializedBuildApplicationSnapshot
+
+The storage schema version was bumped to 2.
+
 ## Tests
 
 New test file:
 
 - tests/xntd-commitment-event-replay.test.ts
+
+Updated test file:
+
+- tests/storage-snapshot.test.ts
 
 Covered behavior:
 
@@ -69,6 +87,7 @@ Covered behavior:
 - returns DuplicateXntdCommitmentEvent
 - accepts different commitment event keys
 - uses one replay domain for lock and relock source events
+- snapshot round-trip preserves usedXntdCommitmentEvents
 
 ## Validation result
 
@@ -83,8 +102,10 @@ After this milestone:
 
 ## Current boundary
 
-This milestone does not change protocol behavior yet.
+This milestone does not change registrar behavior yet.
 
-The new replay state is not yet wired into the application state or registrar handlers.
+The new replay state is now wired into application state and snapshot persistence.
 
-The next implementation step should decide whether to add snapshot serialization first or registrar integration first.
+It is not yet used by XNTD lock / relock registrar handlers.
+
+The next implementation step should wire registrar XNTD lock / relock handlers to this replay state.
