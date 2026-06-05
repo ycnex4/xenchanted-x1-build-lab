@@ -2142,6 +2142,95 @@ Validation:
 
 This milestone keeps operator-facing snapshot summaries aligned with the XNTD commitment event replay-state model.
 
+## Latest XNTD lock epoch ordering guard checkpoint
+
+The XNTD lock epoch ordering guard milestone was completed on the xntd-lock-epoch-ordering-guard branch.
+
+Commits:
+
+- e2dacb3 Add XNTD lock epoch ordering guard
+- 261a4e0 Add XNTD lock epoch ordering guard notes
+
+This milestone adds a registrar-layer ordering guard for XNTD lock / relock commitment events.
+
+Problem addressed:
+
+- XNTD commitment event replay protection rejects repeated source events.
+- It does not reject stale-but-unique source events by itself.
+- A stale-but-unique event has a different xntdCommitmentEventKey, so it is not a replay.
+- If accepted after a newer lock / relock, it could regress commitment state.
+
+Runtime additions:
+
+- NonIncreasingXntdLockEpoch error code
+- assertIncreasingLockEpoch() registrar-layer helper
+
+Ordering rule:
+
+- if build.lockEpoch is null, any incoming lockEpoch is accepted
+- if build.lockEpoch is not null, incoming lockEpoch must be greater than current build.lockEpoch
+
+Conceptual rule:
+
+- incomingLockEpoch > currentLockEpoch
+
+The guard applies to:
+
+- LOCK_XNTD
+- RELOCK_XNTD
+
+Mutation safety:
+
+The ordering guard runs before:
+
+- acceptRegistrarMessage()
+- acceptXntdCommitmentEvent()
+- lockXntd() / relockXntd()
+
+Therefore stale-but-unique events do not mark:
+
+- registrar message ID
+- XNTD commitment event key
+
+and do not mutate Build lock state.
+
+Scope boundary:
+
+- low-level lockXntd() / relockXntd() primitives were not changed
+- proof payload shape was not changed
+- watcher payload shape was not changed
+- snapshot serialization was not changed
+- CLI output was not changed
+- XNTD amount / epoch minimum validation was not changed
+
+Tests updated:
+
+- tests/registrar-xntd-lock.test.ts
+
+Test coverage added:
+
+- stale unique LOCK_XNTD event is rejected
+- stale unique RELOCK_XNTD event is rejected
+- stale event does not mark new registrar message
+- stale event does not mark new xntdCommitmentEventKey
+- stale event does not mutate Build lock state
+- accepted newer state remains unchanged
+
+Validation:
+
+- npm run typecheck: passed
+- npm test: passed
+- npm run build: passed
+- npm audit --audit-level=moderate: found 0 vulnerabilities
+- 29 test files passed
+- 179 tests passed
+
+Remaining future option:
+
+- production may later replace or strengthen lockEpoch ordering with source block number, finalized slot / block height, event timestamp, or a monotonic commitment version.
+
+For MVP, monotonic lockEpoch is the accepted ordering guard.
+
 ## Current next steps
 
 Potential next documents / design areas:

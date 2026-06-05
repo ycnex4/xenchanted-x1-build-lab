@@ -74,6 +74,18 @@ function assertRegistrarPrechecks(
   }
 }
 
+function assertIncreasingLockEpoch(
+  build: BuildState,
+  incomingLockEpoch: number
+): void {
+  if (build.lockEpoch !== null && incomingLockEpoch <= build.lockEpoch) {
+    throw new BuildError(
+      BuildErrorCode.NonIncreasingXntdLockEpoch,
+      `XNTD lock epoch must increase: current=${build.lockEpoch.toString()}, incoming=${incomingLockEpoch.toString()}`
+    );
+  }
+}
+
 export function applyRegistrarXntdLock(
   input: ApplyRegistrarXntdLockInput
 ): BuildState {
@@ -84,6 +96,8 @@ export function applyRegistrarXntdLock(
     "LOCK_XNTD",
     input.xntdCommitmentEventKey
   );
+
+  assertIncreasingLockEpoch(input.build, input.lockEpoch);
 
   if (input.amountXntd <= 0n) {
     throw new BuildError(
@@ -116,6 +130,8 @@ export function applyRegistrarXntdRelock(
     "RELOCK_XNTD",
     input.xntdCommitmentEventKey
   );
+
+  assertIncreasingLockEpoch(input.build, input.lockEpoch);
 
   if (input.amountXntd <= 0n) {
     throw new BuildError(
