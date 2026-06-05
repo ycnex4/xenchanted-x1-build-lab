@@ -76,6 +76,7 @@ describe("End-to-end Build scenario", () => {
       build,
       xntdCommitmentEventKey: "e2e-xntd-commitment-1",
       amountXntd: 500n,
+      observedRequiredXntdLock: 500n,
       lockEpoch: 1,
       lockedAt: 1400n
     });
@@ -92,6 +93,7 @@ describe("End-to-end Build scenario", () => {
       build,
       xntdCommitmentEventKey: "e2e-xntd-commitment-2",
       amountXntd: 250n,
+      observedRequiredXntdLock: 250n,
       lockEpoch: 2,
       relockedAt: 1500n
     });

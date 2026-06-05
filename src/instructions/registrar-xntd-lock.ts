@@ -19,6 +19,7 @@ export interface ApplyRegistrarXntdLockInput {
   build: BuildState;
   xntdCommitmentEventKey: XntdCommitmentEventKey;
   amountXntd: bigint;
+  observedRequiredXntdLock: bigint;
   lockEpoch: number;
   lockedAt: bigint;
 }
@@ -30,6 +31,7 @@ export interface ApplyRegistrarXntdRelockInput {
   build: BuildState;
   xntdCommitmentEventKey: XntdCommitmentEventKey;
   amountXntd: bigint;
+  observedRequiredXntdLock: bigint;
   lockEpoch: number;
   relockedAt: bigint;
 }
@@ -86,6 +88,25 @@ function assertIncreasingLockEpoch(
   }
 }
 
+function assertValidObservedRequiredXntdLock(
+  amountXntd: bigint,
+  observedRequiredXntdLock: bigint
+): void {
+  if (observedRequiredXntdLock <= 0n) {
+    throw new BuildError(
+      BuildErrorCode.InvalidXntdLockAmount,
+      `Observed required XNTD lock amount must be positive: ${observedRequiredXntdLock.toString()}`
+    );
+  }
+
+  if (amountXntd < observedRequiredXntdLock) {
+    throw new BuildError(
+      BuildErrorCode.InvalidXntdLockAmount,
+      `XNTD lock amount must cover observed required lock: amount=${amountXntd.toString()}, required=${observedRequiredXntdLock.toString()}`
+    );
+  }
+}
+
 export function applyRegistrarXntdLock(
   input: ApplyRegistrarXntdLockInput
 ): BuildState {
@@ -106,6 +127,11 @@ export function applyRegistrarXntdLock(
     );
   }
 
+  assertValidObservedRequiredXntdLock(
+    input.amountXntd,
+    input.observedRequiredXntdLock
+  );
+
   acceptRegistrarMessage(input.registrar, input.message);
   acceptXntdCommitmentEvent(
     input.xntdCommitmentEvents,
@@ -115,7 +141,7 @@ export function applyRegistrarXntdLock(
   return lockXntd({
     build: input.build,
     amountXntd: input.amountXntd,
-    observedRequiredXntdLock: input.amountXntd,
+    observedRequiredXntdLock: input.observedRequiredXntdLock,
     lockEpoch: input.lockEpoch,
     lockedAt: input.lockedAt
   });
@@ -141,6 +167,11 @@ export function applyRegistrarXntdRelock(
     );
   }
 
+  assertValidObservedRequiredXntdLock(
+    input.amountXntd,
+    input.observedRequiredXntdLock
+  );
+
   if (!input.build.xcCommitmentActive) {
     throw new BuildError(
       BuildErrorCode.XntdCommitmentNotActive,
@@ -164,7 +195,7 @@ export function applyRegistrarXntdRelock(
   return relockXntd({
     build: input.build,
     amountXntd: input.amountXntd,
-    observedRequiredXntdLock: input.amountXntd,
+    observedRequiredXntdLock: input.observedRequiredXntdLock,
     lockEpoch: input.lockEpoch,
     relockedAt: input.relockedAt
   });
