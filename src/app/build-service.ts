@@ -182,15 +182,17 @@ export function appApplyRegistrarXenBurn(
 }
 
 export function appApplyRegistrarXntdLock(
-  input: Omit<ApplyRegistrarXntdLockInput, "registrar"> & {
+  input: Omit<ApplyRegistrarXntdLockInput, "registrar" | "xntdCommitmentEvents"> & {
     app: BuildApplicationState;
   }
 ): AppResult<BuildState> {
   return runAppCommand(() =>
     applyRegistrarXntdLock({
       registrar: input.app.registrar,
+      xntdCommitmentEvents: input.app.xntdCommitmentEvents,
       message: input.message,
       build: input.build,
+      xntdCommitmentEventKey: input.xntdCommitmentEventKey,
       amountXntd: input.amountXntd,
       lockEpoch: input.lockEpoch,
       lockedAt: input.lockedAt
@@ -199,15 +201,17 @@ export function appApplyRegistrarXntdLock(
 }
 
 export function appApplyRegistrarXntdRelock(
-  input: Omit<ApplyRegistrarXntdRelockInput, "registrar"> & {
+  input: Omit<ApplyRegistrarXntdRelockInput, "registrar" | "xntdCommitmentEvents"> & {
     app: BuildApplicationState;
   }
 ): AppResult<BuildState> {
   return runAppCommand(() =>
     applyRegistrarXntdRelock({
       registrar: input.app.registrar,
+      xntdCommitmentEvents: input.app.xntdCommitmentEvents,
       message: input.message,
       build: input.build,
+      xntdCommitmentEventKey: input.xntdCommitmentEventKey,
       amountXntd: input.amountXntd,
       lockEpoch: input.lockEpoch,
       relockedAt: input.relockedAt

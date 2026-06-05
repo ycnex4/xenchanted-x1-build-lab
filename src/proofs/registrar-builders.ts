@@ -34,6 +34,7 @@ export interface XenBurnRegistrarPayload {
 export interface XntdLockRegistrarPayload {
   message: RegistrarMessage;
   buildId: string;
+  xntdCommitmentEventKey: string;
   amountXntd: bigint;
   lockEpoch: number;
   lockedAt: bigint;
@@ -42,6 +43,7 @@ export interface XntdLockRegistrarPayload {
 export interface XntdRelockRegistrarPayload {
   message: RegistrarMessage;
   buildId: string;
+  xntdCommitmentEventKey: string;
   amountXntd: bigint;
   lockEpoch: number;
   relockedAt: bigint;
@@ -119,6 +121,7 @@ export function buildXntdLockRegistrarPayload(
   return {
     message: createRegistrarMessage(proof, "LOCK_XNTD", input),
     buildId: proof.payload.buildId,
+    xntdCommitmentEventKey: proof.canonicalEventKey,
     amountXntd: proof.payload.amountXntd,
     lockEpoch: proof.payload.lockEpoch,
     lockedAt: proof.payload.lockedAt
@@ -134,6 +137,7 @@ export function buildXntdRelockRegistrarPayload(
   return {
     message: createRegistrarMessage(proof, "RELOCK_XNTD", input),
     buildId: proof.payload.buildId,
+    xntdCommitmentEventKey: proof.canonicalEventKey,
     amountXntd: proof.payload.amountXntd,
     lockEpoch: proof.payload.lockEpoch,
     relockedAt: proof.payload.relockedAt

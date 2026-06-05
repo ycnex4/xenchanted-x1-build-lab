@@ -137,6 +137,11 @@ describe("application proof submission", () => {
     const lock = appSubmitProof(app, lockProof, submitInput());
 
     expect(lock.ok).toBe(true);
+    expect(
+      app.xntdCommitmentEvents.usedXntdCommitmentEvents.has(
+        lockCandidate.canonicalEventKey
+      )
+    ).toBe(true);
     expect(build.lockedXntd).toBe(500n);
     expect(build.requiredXntdLock).toBe(500n);
     expect(build.lockEpoch).toBe(1);
@@ -164,10 +169,16 @@ describe("application proof submission", () => {
     const relock = appSubmitProof(app, relockProof, submitInput());
 
     expect(relock.ok).toBe(true);
+    expect(
+      app.xntdCommitmentEvents.usedXntdCommitmentEvents.has(
+        relockCandidate.canonicalEventKey
+      )
+    ).toBe(true);
     expect(build.lockedXntd).toBe(250n);
     expect(build.requiredXntdLock).toBe(250n);
     expect(build.lockEpoch).toBe(2);
     expect(app.registrar.processedMessages.size).toBe(2);
+    expect(app.xntdCommitmentEvents.usedXntdCommitmentEvents.size).toBe(2);
   });
 
   it("submits X1 fee checkpoint proof through registrar application service", () => {

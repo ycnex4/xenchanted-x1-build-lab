@@ -118,6 +118,7 @@ export function appSubmitProof(
         app,
         message: lockPayload.message,
         build,
+        xntdCommitmentEventKey: lockPayload.xntdCommitmentEventKey,
         amountXntd: lockPayload.amountXntd,
         lockEpoch: lockPayload.lockEpoch,
         lockedAt: lockPayload.lockedAt
@@ -131,6 +132,7 @@ export function appSubmitProof(
         app,
         message: relockPayload.message,
         build,
+        xntdCommitmentEventKey: relockPayload.xntdCommitmentEventKey,
         amountXntd: relockPayload.amountXntd,
         lockEpoch: relockPayload.lockEpoch,
         relockedAt: relockPayload.relockedAt
