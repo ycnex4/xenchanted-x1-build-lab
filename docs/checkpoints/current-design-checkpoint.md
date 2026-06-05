@@ -2691,6 +2691,104 @@ Validation:
 
 This milestone provides the controlled rollout plan for implementing observedRequiredXntdLock without mixing payload-shape changes, low-level state changes, registrar validation, and authoritative XC state validation into one large branch.
 
+## Latest XNTD observed required lock low-level checkpoint
+
+The XNTD observed required lock low-level runtime milestone was completed on the xntd-observed-required-lock-low-level branch.
+
+Commits:
+
+- b41ac2d Add observed required XNTD lock to low-level primitives
+- 2a4a43d Add XNTD observed required lock low-level notes
+
+This milestone implements the first runtime layer for observedRequiredXntdLock.
+
+Updated runtime files:
+
+- src/instructions/xntd-lock.ts
+- src/instructions/registrar-xntd-lock.ts
+
+Updated tests:
+
+- tests/xntd-lock-relock.test.ts
+- tests/registrar-x1-fee-checkpoint.test.ts
+- tests/x1-fee-contribution.test.ts
+
+Implementation notes:
+
+- implementation/xntd-observed-required-lock-low-level-notes.md
+
+Runtime change:
+
+Before this milestone, low-level lockXntd() / relockXntd() used:
+
+- lockedXntd = amountXntd
+- requiredXntdLock = amountXntd
+
+After this milestone, low-level lockXntd() / relockXntd() use:
+
+- lockedXntd = amountXntd
+- requiredXntdLock = observedRequiredXntdLock
+
+New input field:
+
+- observedRequiredXntdLock
+
+Added to:
+
+- LockXntdInput
+- RelockXntdInput
+
+Meaning:
+
+- amountXntd is the actual user locked / relocked amount
+- observedRequiredXntdLock is the observed requirement for the selected lockEpoch
+- requiredXntdLock is the Build state value recorded after validation
+
+New low-level validation:
+
+- amountXntd > 0
+- observedRequiredXntdLock > 0
+- amountXntd >= observedRequiredXntdLock
+
+Registrar compatibility:
+
+- registrar XNTD lock / relock handlers still preserve current MVP behavior
+- they pass observedRequiredXntdLock = amountXntd
+- watcher / proof / registrar payload shape remains unchanged for now
+
+Scope boundary:
+
+This milestone does not change:
+
+- proof types
+- watcher candidate types
+- watcher-to-proof conversion
+- registrar payload builders
+- proof submission payload shape
+- snapshot schema
+- CLI output
+- authoritative XC state validation
+
+Test coverage added:
+
+- lock with amountXntd > observedRequiredXntdLock
+- relock with amountXntd > observedRequiredXntdLock
+- observedRequiredXntdLock = 0 rejection
+- amountXntd < observedRequiredXntdLock lock rejection
+- amountXntd < observedRequiredXntdLock relock rejection
+- rejected invalid lock / relock does not mutate Build state
+
+Validation:
+
+- npm run typecheck: passed
+- npm test: passed
+- npm run build: passed
+- npm audit --audit-level=moderate: found 0 vulnerabilities
+- 29 test files passed
+- 184 tests passed
+
+This milestone completes the lowest runtime layer of the observedRequiredXntdLock rollout while preserving MVP registrar behavior.
+
 ## Current next steps
 
 Potential next documents / design areas:
