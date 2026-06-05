@@ -2231,6 +2231,79 @@ Remaining future option:
 
 For MVP, monotonic lockEpoch is the accepted ordering guard.
 
+## Latest XNTD commitment final state review checkpoint
+
+The XNTD commitment final state documentation review milestone was completed on the review-xntd-commitment-final-state branch.
+
+Commits:
+
+- c8cb336 Sync XNTD commitment final state docs
+- 7ccdb5c Add XNTD commitment final state review notes
+
+This milestone synchronizes current review-facing documentation after the XNTD commitment replay and ordering guard runtime milestones.
+
+Updated documents:
+
+- README.md
+- docs/assumptions.md
+- docs/registrar/xntd-lock-event-identity.md
+- implementation/review-xntd-commitment-final-state-notes.md
+
+The review removed outdated wording that described XNTD lock / relock as having only registrar-level replay protection.
+
+Current documented XNTD commitment protection model:
+
+1. processedMessages
+   - protects against replay of the same registrar messageId
+
+2. usedXntdCommitmentEvents
+   - protects against replay of the same source event under a different messageId
+
+3. monotonic lockEpoch ordering guard
+   - protects against stale-but-unique source events that are not replay events but could regress commitment state
+
+README update:
+
+- MVP assumptions now mention XNTD lock / relock source-event replay protection
+- MVP assumptions now mention monotonic lockEpoch ordering guard
+- the old registrar-level-only replay statement was removed
+
+Assumptions update:
+
+- docs/assumptions.md now describes the implemented replay / ordering model
+- the remaining production consideration is stricter ordering source selection if needed
+- requiredXntdLock epoch minimum validation remains a separate integration boundary
+
+Event identity document update:
+
+- docs/registrar/xntd-lock-event-identity.md now says the model is implemented
+- the document now serves as a design-and-implementation reference
+- it records the implemented path:
+  - XntdCommitmentEventKey
+  - usedXntdCommitmentEvents
+  - snapshot persistence
+  - registrar integration
+  - proof canonicalEventKey usage
+  - CLI summary visibility
+  - monotonic lockEpoch ordering guard
+
+Historical checkpoint note:
+
+- older entries in docs/checkpoints/current-design-checkpoint.md were not rewritten
+- they remain historical records of repository state at the time of each milestone
+- later checkpoint sections document the implemented replay and ordering guard milestones
+
+Validation:
+
+- npm run typecheck: passed
+- npm test: passed
+- npm run build: passed
+- npm audit --audit-level=moderate: found 0 vulnerabilities
+- 29 test files passed
+- 179 tests passed
+
+This milestone closes the documentation drift created by the XNTD commitment replay and ordering guard implementation work.
+
 ## Current next steps
 
 Potential next documents / design areas:
