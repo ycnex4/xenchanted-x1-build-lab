@@ -2,24 +2,22 @@
 
 ## Purpose
 
-This document defines the intended event identity model for XNTD lock and relock events.
+This document defines the event identity model for XNTD lock and relock events.
 
-The goal is to prepare a clean per-event replay protection design before changing runtime code.
+The model has now been implemented in runtime code.
 
-This document does not implement the model yet.
+It records the design rationale and the implemented replay / ordering protection path.
 
 ## Current MVP state
 
-In the current MVP, XNTD lock and relock are protected by registrar-level replay protection:
+In the current MVP, XNTD lock and relock are protected by:
 
 - processed registrar message IDs
+- XntdCommitmentEventKey source-event replay protection
+- usedXntdCommitmentEvents replay state
+- monotonic lockEpoch ordering guard
 
-There is no dedicated per-event replay key equivalent to:
-
-- redeemKey for Core Redeem
-- xenBurnKey for XEN Burn
-
-This is documented as an MVP assumption / known limitation.
+This gives XNTD lock / relock the same broad replay-safety class as Core Redeem and XEN Burn, while also addressing the overwrite-specific stale state regression risk.
 
 ## Why messageId is not enough
 
@@ -226,7 +224,7 @@ Per-event replay protection prevents the same source event from being replayed u
 
 It does not by itself prove that a newer event cannot be followed by an older but different event.
 
-For production, this may require an additional ordering guard.
+The MVP now includes a monotonic lockEpoch ordering guard.
 
 Possible ordering sources:
 
@@ -236,11 +234,11 @@ Possible ordering sources:
 - finalized slot / block height
 - monotonic commitment version
 
-MVP design note:
+MVP implementation note:
 
-The first implementation can add per-event replay protection without adding full production ordering guards.
+The first runtime implementation added both source-event replay protection and a monotonic lockEpoch ordering guard.
 
-Before production, decide whether lock/relock must reject stale-but-unique events.
+Production may still decide whether to replace or strengthen this guard with a stricter ordering source.
 
 ## Proposed ordering guard for MVP
 
@@ -294,34 +292,30 @@ If unlock is added later, it should either:
 
 Do not design unlock replay protection separately without considering lock / relock.
 
-## Recommended implementation sequence
+## Implemented runtime path
 
-1. Keep this design document separate from runtime code.
-2. Add XntdCommitmentEventKey types and event state.
-3. Add low-level replay tests for XNTD commitment event state.
-4. Add snapshot serialization / deserialization for usedXntdCommitmentEvents.
-5. Add registrar handler tests:
+The design was implemented in the following runtime milestones:
+
+1. XntdCommitmentEventKey types and event state.
+2. Low-level replay tests for XNTD commitment event state.
+3. Snapshot serialization / deserialization for usedXntdCommitmentEvents.
+4. Registrar handler integration:
    - duplicate lock event key is rejected
    - duplicate relock event key is rejected
    - same source event with different messageId is rejected
    - valid future relock still works
-6. Add proof / registrar payload fields.
-7. Add watcher candidate / proof conversion support.
-8. Add MVP lockEpoch ordering guard if accepted for implementation.
-9. Update CLI summary fields if needed.
-10. Update assumptions once implemented.
+5. Proof / registrar payload flow uses proof.canonicalEventKey as xntdCommitmentEventKey.
+6. CLI summary fields expose usedXntdCommitmentEventCount.
+7. MVP monotonic lockEpoch ordering guard was added.
+8. Assumptions and checkpoints were updated.
 
 ## Current decision
 
-The current branch is design-only.
-
-No runtime behavior is changed by this document.
-
-The preferred future model is:
+The implemented MVP model is:
 
 - one shared XntdCommitmentEventKey
 - one shared usedXntdCommitmentEvents replay set
 - eventKind included in canonical source identity
 - registrar message replay protection plus source-event replay protection
-- monotonic lockEpoch as the recommended MVP ordering guard
-- stricter ordering guard considered separately before production
+- monotonic lockEpoch ordering guard
+- stricter production ordering source considered separately
