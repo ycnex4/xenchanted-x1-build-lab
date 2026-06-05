@@ -91,30 +91,46 @@ It must derive or verify it from the authoritative XC state source.
 Future LOCK_XNTD / RELOCK_XNTD payloads should distinguish:
 
 - amountXntd
-- requiredXntdLock
+- observedRequiredXntdLock
 - lockEpoch
 - epochSource
 - epochSourceBlock or finalized source reference
 
+Recommended payload decision:
+
+Use observedRequiredXntdLock in watcher / proof / registrar payloads.
+
 Conceptual fields:
 
 amountXntd: actual amount locked / relocked
-requiredXntdLock: required minimum for this lockEpoch
+observedRequiredXntdLock: required minimum observed by the watcher for this lockEpoch
 lockEpoch: XC epoch used for the requirement
 xcEpochMinimumSource: canonical XC state source reference
 sourceBlockNumber or finalizedHeight: finalized source context
 
-The exact field names can be decided during implementation.
+Reasoning:
+
+- amountXntd is the actual user lock amount
+- observedRequiredXntdLock is the requirement observed from XC state
+- registrar validation must still verify observedRequiredXntdLock against the authoritative XC epoch minimum
+- the Build state field can remain requiredXntdLock after successful validation
+
+The proof payload should be self-describing, but not blindly trusted.
 
 ## Proposed validation rule
 
 Registrar validation should require:
 
 amountXntd > 0
-requiredXntdLock > 0
-amountXntd >= requiredXntdLock
-requiredXntdLock == authoritativeEpochMinimum(lockEpoch)
+observedRequiredXntdLock > 0
+amountXntd >= observedRequiredXntdLock
+observedRequiredXntdLock == authoritativeEpochMinimum(lockEpoch)
 lockEpoch is current or otherwise accepted by the integration policy
+
+After successful validation, Build state should record:
+
+requiredXntdLock = observedRequiredXntdLock
+lockedXntd = amountXntd
 
 The existing monotonic lockEpoch guard should remain separate:
 
@@ -183,10 +199,10 @@ This is acceptable before live production integration, but it must remain visibl
 
 1. Keep this document as design-only.
 2. Decide the authoritative XC state source.
-3. Decide whether payloads carry requiredXntdLock explicitly or registrar derives it internally.
+3. Add observedRequiredXntdLock to watcher / proof / registrar payloads.
 4. Add tests for:
-   - amountXntd < requiredXntdLock rejected
-   - requiredXntdLock mismatch rejected
+   - amountXntd < observedRequiredXntdLock rejected
+   - observedRequiredXntdLock mismatch rejected
    - correct epoch minimum accepted
    - replay protections still work
    - lockEpoch ordering guard still works
