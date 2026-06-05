@@ -16,14 +16,14 @@ export interface XcEpochMinimumRecord {
 function assertValidXcEpochMinimumRecord(record: XcEpochMinimumRecord): void {
   if (!Number.isInteger(record.lockEpoch) || record.lockEpoch < 0) {
     throw new BuildError(
-      BuildErrorCode.InvalidXntdLockAmount,
+      BuildErrorCode.InvalidXcEpochMinimumRecord,
       `Invalid XC epoch minimum record epoch: lockEpoch=${record.lockEpoch.toString()}`
     );
   }
 
   if (record.minimumXntd <= 0n) {
     throw new BuildError(
-      BuildErrorCode.InvalidXntdLockAmount,
+      BuildErrorCode.InvalidXcEpochMinimumRecord,
       `Invalid XC epoch minimum record amount: lockEpoch=${record.lockEpoch.toString()}, minimumXntd=${record.minimumXntd.toString()}`
     );
   }
@@ -44,7 +44,7 @@ export function createXcEpochMinimumSourceFromRecords(
       existingMinimum !== record.minimumXntd
     ) {
       throw new BuildError(
-        BuildErrorCode.InvalidXntdLockAmount,
+        BuildErrorCode.InvalidXcEpochMinimumRecord,
         `Conflicting XC epoch minimum records: lockEpoch=${record.lockEpoch.toString()}, existing=${existingMinimum.toString()}, next=${record.minimumXntd.toString()}`
       );
     }
