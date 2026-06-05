@@ -124,6 +124,7 @@ describe("Build application service", () => {
       build,
       xntdCommitmentEventKey: "app-xntd-commitment-1",
       amountXntd: 500n,
+      observedRequiredXntdLock: 500n,
       lockEpoch: 1,
       lockedAt: 140n
     });
@@ -141,6 +142,7 @@ describe("Build application service", () => {
       build,
       xntdCommitmentEventKey: "app-xntd-commitment-2",
       amountXntd: 250n,
+      observedRequiredXntdLock: 250n,
       lockEpoch: 2,
       relockedAt: 150n
     });

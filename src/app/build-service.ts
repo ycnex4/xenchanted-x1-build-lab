@@ -194,6 +194,8 @@ export function appApplyRegistrarXntdLock(
       build: input.build,
       xntdCommitmentEventKey: input.xntdCommitmentEventKey,
       amountXntd: input.amountXntd,
+      observedRequiredXntdLock:
+        input.observedRequiredXntdLock ?? input.amountXntd,
       lockEpoch: input.lockEpoch,
       lockedAt: input.lockedAt
     })
@@ -213,6 +215,8 @@ export function appApplyRegistrarXntdRelock(
       build: input.build,
       xntdCommitmentEventKey: input.xntdCommitmentEventKey,
       amountXntd: input.amountXntd,
+      observedRequiredXntdLock:
+        input.observedRequiredXntdLock ?? input.amountXntd,
       lockEpoch: input.lockEpoch,
       relockedAt: input.relockedAt
     })

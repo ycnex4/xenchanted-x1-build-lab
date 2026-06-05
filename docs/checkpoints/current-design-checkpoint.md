@@ -2789,6 +2789,108 @@ Validation:
 
 This milestone completes the lowest runtime layer of the observedRequiredXntdLock rollout while preserving MVP registrar behavior.
 
+## Latest XNTD observed required lock registrar input checkpoint
+
+The XNTD observed required lock registrar input runtime milestone was completed on the xntd-observed-required-lock-registrar-input branch.
+
+Commits:
+
+- 1c69914 Add observed required XNTD lock to registrar inputs
+- c798210 Add XNTD observed required lock registrar input notes
+
+This milestone lifts observedRequiredXntdLock from the low-level XNTD lock / relock primitives into the registrar input layer.
+
+Updated runtime files:
+
+- src/instructions/registrar-xntd-lock.ts
+- src/app/build-service.ts
+- src/app/proof-submission.ts
+
+Updated tests:
+
+- tests/registrar-xntd-lock.test.ts
+- tests/app-build-service.test.ts
+- tests/e2e-scenario.test.ts
+
+Implementation notes:
+
+- implementation/xntd-observed-required-lock-registrar-input-notes.md
+
+Runtime change:
+
+Added observedRequiredXntdLock to:
+
+- ApplyRegistrarXntdLockInput
+- ApplyRegistrarXntdRelockInput
+
+Registrar handlers now pass:
+
+- observedRequiredXntdLock = input.observedRequiredXntdLock
+
+into:
+
+- lockXntd()
+- relockXntd()
+
+Registrar validation now checks:
+
+- amountXntd > 0
+- observedRequiredXntdLock > 0
+- amountXntd >= observedRequiredXntdLock
+
+This is still not authoritative XC state validation.
+
+Future validation remains:
+
+- observedRequiredXntdLock == authoritativeEpochMinimum(lockEpoch)
+
+Mutation safety:
+
+- validation happens before acceptRegistrarMessage()
+- validation happens before acceptXntdCommitmentEvent()
+- rejected under-lock cases do not mark registrar message
+- rejected under-lock cases do not mark XNTD commitment event key
+- rejected under-lock cases do not mutate Build state
+
+Compatibility layer:
+
+- proof / watcher payload chain is not updated in this milestone
+- appApplyRegistrarXntdLock() accepts optional observedRequiredXntdLock
+- appApplyRegistrarXntdRelock() accepts optional observedRequiredXntdLock
+- when omitted, both default observedRequiredXntdLock to amountXntd
+- proof-submission passes observedRequiredXntdLock = amountXntd for now
+
+Scope boundary:
+
+This milestone does not change:
+
+- proof types
+- watcher candidate types
+- watcher-to-proof conversion
+- registrar payload builder types
+- snapshot schema
+- CLI output
+- authoritative XC state validation
+
+Test coverage added:
+
+- LOCK_XNTD amount below observedRequiredXntdLock rejected
+- RELOCK_XNTD amount below observedRequiredXntdLock rejected
+- rejected under-lock does not mark registrar message
+- rejected under-lock does not mark XNTD commitment event key
+- rejected under-lock does not mutate Build state
+
+Validation:
+
+- npm run typecheck: passed
+- npm test: passed
+- npm run build: passed
+- npm audit --audit-level=moderate: found 0 vulnerabilities
+- 29 test files passed
+- 186 tests passed
+
+This milestone completes the registrar input layer of the observedRequiredXntdLock rollout while preserving proof / watcher payload compatibility.
+
 ## Current next steps
 
 Potential next documents / design areas:

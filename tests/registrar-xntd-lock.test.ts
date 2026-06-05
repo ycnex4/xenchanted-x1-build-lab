@@ -32,6 +32,7 @@ describe("Registrar XNTD lock / relock integration", () => {
       build,
       xntdCommitmentEventKey: "registrar-xntd-commitment-1",
       amountXntd: 500n,
+      observedRequiredXntdLock: 500n,
       lockEpoch: 1,
       lockedAt: 1100n
     });
@@ -76,6 +77,7 @@ describe("Registrar XNTD lock / relock integration", () => {
       build,
       xntdCommitmentEventKey: "registrar-xntd-commitment-2",
       amountXntd: 500n,
+      observedRequiredXntdLock: 500n,
       lockEpoch: 1,
       lockedAt: 1100n
     });
@@ -92,6 +94,7 @@ describe("Registrar XNTD lock / relock integration", () => {
       build,
       xntdCommitmentEventKey: "registrar-xntd-commitment-3",
       amountXntd: 250n,
+      observedRequiredXntdLock: 250n,
       lockEpoch: 2,
       relockedAt: 1200n
     });
@@ -136,6 +139,7 @@ describe("Registrar XNTD lock / relock integration", () => {
         build,
         xntdCommitmentEventKey: "registrar-xntd-commitment-4",
         amountXntd: 500n,
+        observedRequiredXntdLock: 500n,
         lockEpoch: 1,
         lockedAt: 1100n
       })
@@ -154,6 +158,7 @@ describe("Registrar XNTD lock / relock integration", () => {
         build,
         xntdCommitmentEventKey: "registrar-xntd-commitment-5",
         amountXntd: 500n,
+        observedRequiredXntdLock: 500n,
         lockEpoch: 1,
         lockedAt: 1100n
       });
@@ -194,6 +199,7 @@ describe("Registrar XNTD lock / relock integration", () => {
         build,
         xntdCommitmentEventKey: "registrar-xntd-commitment-6",
         amountXntd: 500n,
+        observedRequiredXntdLock: 500n,
         lockEpoch: 1,
         lockedAt: 1100n
       })
@@ -228,6 +234,7 @@ describe("Registrar XNTD lock / relock integration", () => {
       build,
       xntdCommitmentEventKey: "registrar-xntd-commitment-7",
       amountXntd: 500n,
+      observedRequiredXntdLock: 500n,
       lockEpoch: 1,
       lockedAt: 1100n
     });
@@ -245,6 +252,7 @@ describe("Registrar XNTD lock / relock integration", () => {
         build,
         xntdCommitmentEventKey: "registrar-xntd-commitment-8",
         amountXntd: 250n,
+        observedRequiredXntdLock: 250n,
         lockEpoch: 2,
         lockedAt: 1200n
       })
@@ -278,6 +286,7 @@ describe("Registrar XNTD lock / relock integration", () => {
       build,
       xntdCommitmentEventKey: "shared-xntd-commitment-event",
       amountXntd: 500n,
+      observedRequiredXntdLock: 500n,
       lockEpoch: 1,
       lockedAt: 1100n
     });
@@ -295,6 +304,7 @@ describe("Registrar XNTD lock / relock integration", () => {
         build,
         xntdCommitmentEventKey: "shared-xntd-commitment-event",
         amountXntd: 250n,
+        observedRequiredXntdLock: 250n,
         lockEpoch: 2,
         lockedAt: 1200n
       })
@@ -313,6 +323,7 @@ describe("Registrar XNTD lock / relock integration", () => {
         build,
         xntdCommitmentEventKey: "shared-xntd-commitment-event",
         amountXntd: 250n,
+        observedRequiredXntdLock: 250n,
         lockEpoch: 2,
         lockedAt: 1200n
       });
@@ -360,6 +371,7 @@ describe("Registrar XNTD lock / relock integration", () => {
       build,
       xntdCommitmentEventKey: "shared-lock-relock-source-event",
       amountXntd: 500n,
+      observedRequiredXntdLock: 500n,
       lockEpoch: 1,
       lockedAt: 1100n
     });
@@ -377,6 +389,7 @@ describe("Registrar XNTD lock / relock integration", () => {
         build,
         xntdCommitmentEventKey: "shared-lock-relock-source-event",
         amountXntd: 250n,
+        observedRequiredXntdLock: 250n,
         lockEpoch: 2,
         relockedAt: 1200n
       })
@@ -411,6 +424,7 @@ describe("Registrar XNTD lock / relock integration", () => {
       build,
       xntdCommitmentEventKey: "lock-epoch-2-event",
       amountXntd: 500n,
+      observedRequiredXntdLock: 500n,
       lockEpoch: 2,
       lockedAt: 1100n
     });
@@ -428,6 +442,7 @@ describe("Registrar XNTD lock / relock integration", () => {
         build,
         xntdCommitmentEventKey: "stale-lock-epoch-1-event",
         amountXntd: 250n,
+        observedRequiredXntdLock: 250n,
         lockEpoch: 1,
         lockedAt: 1200n
       })
@@ -446,6 +461,7 @@ describe("Registrar XNTD lock / relock integration", () => {
         build,
         xntdCommitmentEventKey: "stale-lock-epoch-1-event",
         amountXntd: 250n,
+        observedRequiredXntdLock: 250n,
         lockEpoch: 1,
         lockedAt: 1200n
       });
@@ -501,6 +517,7 @@ describe("Registrar XNTD lock / relock integration", () => {
       build,
       xntdCommitmentEventKey: "lock-epoch-1-event",
       amountXntd: 500n,
+      observedRequiredXntdLock: 500n,
       lockEpoch: 1,
       lockedAt: 1100n
     });
@@ -517,6 +534,7 @@ describe("Registrar XNTD lock / relock integration", () => {
       build,
       xntdCommitmentEventKey: "relock-epoch-3-event",
       amountXntd: 250n,
+      observedRequiredXntdLock: 250n,
       lockEpoch: 3,
       relockedAt: 1200n
     });
@@ -534,6 +552,7 @@ describe("Registrar XNTD lock / relock integration", () => {
         build,
         xntdCommitmentEventKey: "stale-relock-epoch-2-event",
         amountXntd: 125n,
+        observedRequiredXntdLock: 125n,
         lockEpoch: 2,
         relockedAt: 1300n
       })
@@ -552,6 +571,7 @@ describe("Registrar XNTD lock / relock integration", () => {
         build,
         xntdCommitmentEventKey: "stale-relock-epoch-2-event",
         amountXntd: 125n,
+        observedRequiredXntdLock: 125n,
         lockEpoch: 2,
         relockedAt: 1300n
       });
@@ -578,6 +598,170 @@ describe("Registrar XNTD lock / relock integration", () => {
     expect(build.updatedAt).toBe(1200n);
   });
 
+  it("rejects LOCK_XNTD amount below observed required lock without mutating state", () => {
+    const registrar = createRegistrarState("registrar-1");
+    const xntdCommitmentEvents = createXntdCommitmentEventState();
+    const build = createBuild({
+      owner: "x1-user-1",
+      buildId: "build-1",
+      createdAt: 1000n
+    });
+
+    expect(() =>
+      applyRegistrarXntdLock({
+        registrar,
+        xntdCommitmentEvents,
+        message: {
+          messageId: "message-under-lock-1",
+          kind: "LOCK_XNTD",
+          submittedBy: "registrar-1",
+          createdAt: 1100n
+        },
+        build,
+        xntdCommitmentEventKey: "under-lock-event-1",
+        amountXntd: 250n,
+        observedRequiredXntdLock: 500n,
+        lockEpoch: 1,
+        lockedAt: 1100n
+      })
+    ).toThrow(BuildError);
+
+    try {
+      applyRegistrarXntdLock({
+        registrar,
+        xntdCommitmentEvents,
+        message: {
+          messageId: "message-under-lock-1",
+          kind: "LOCK_XNTD",
+          submittedBy: "registrar-1",
+          createdAt: 1100n
+        },
+        build,
+        xntdCommitmentEventKey: "under-lock-event-1",
+        amountXntd: 250n,
+        observedRequiredXntdLock: 500n,
+        lockEpoch: 1,
+        lockedAt: 1100n
+      });
+    } catch (error) {
+      expect(error).toBeInstanceOf(BuildError);
+      expect((error as BuildError).code).toBe(
+        BuildErrorCode.InvalidXntdLockAmount
+      );
+    }
+
+    expect(registrar.processedMessages.has("message-under-lock-1")).toBe(
+      false
+    );
+    expect(
+      xntdCommitmentEvents.usedXntdCommitmentEvents.has("under-lock-event-1")
+    ).toBe(false);
+    expect(registrar.processedMessages.size).toBe(0);
+    expect(xntdCommitmentEvents.usedXntdCommitmentEvents.size).toBe(0);
+    expect(build.lockedXntd).toBe(0n);
+    expect(build.requiredXntdLock).toBe(0n);
+    expect(build.lockEpoch).toBeNull();
+    expect(build.xcCommitmentActive).toBe(false);
+    expect(build.updatedAt).toBe(1000n);
+  });
+
+  it("rejects RELOCK_XNTD amount below observed required lock without mutating state", () => {
+    const registrar = createRegistrarState("registrar-1");
+    const xntdCommitmentEvents = createXntdCommitmentEventState();
+    const build = createBuild({
+      owner: "x1-user-1",
+      buildId: "build-1",
+      createdAt: 1000n
+    });
+
+    applyCoreRedeemBld({
+      build,
+      amountBld: 11n,
+      redeemedAt: 1050n
+    });
+
+    applyRegistrarXntdLock({
+      registrar,
+      xntdCommitmentEvents,
+      message: {
+        messageId: "message-before-under-relock",
+        kind: "LOCK_XNTD",
+        submittedBy: "registrar-1",
+        createdAt: 1100n
+      },
+      build,
+      xntdCommitmentEventKey: "before-under-relock-event",
+      amountXntd: 500n,
+      observedRequiredXntdLock: 500n,
+      lockEpoch: 1,
+      lockedAt: 1100n
+    });
+
+    expect(() =>
+      applyRegistrarXntdRelock({
+        registrar,
+        xntdCommitmentEvents,
+        message: {
+          messageId: "message-under-relock-1",
+          kind: "RELOCK_XNTD",
+          submittedBy: "registrar-1",
+          createdAt: 1200n
+        },
+        build,
+        xntdCommitmentEventKey: "under-relock-event-1",
+        amountXntd: 250n,
+        observedRequiredXntdLock: 500n,
+        lockEpoch: 2,
+        relockedAt: 1200n
+      })
+    ).toThrow(BuildError);
+
+    try {
+      applyRegistrarXntdRelock({
+        registrar,
+        xntdCommitmentEvents,
+        message: {
+          messageId: "message-under-relock-1",
+          kind: "RELOCK_XNTD",
+          submittedBy: "registrar-1",
+          createdAt: 1200n
+        },
+        build,
+        xntdCommitmentEventKey: "under-relock-event-1",
+        amountXntd: 250n,
+        observedRequiredXntdLock: 500n,
+        lockEpoch: 2,
+        relockedAt: 1200n
+      });
+    } catch (error) {
+      expect(error).toBeInstanceOf(BuildError);
+      expect((error as BuildError).code).toBe(
+        BuildErrorCode.InvalidXntdLockAmount
+      );
+    }
+
+    expect(registrar.processedMessages.has("message-before-under-relock")).toBe(
+      true
+    );
+    expect(registrar.processedMessages.has("message-under-relock-1")).toBe(
+      false
+    );
+    expect(
+      xntdCommitmentEvents.usedXntdCommitmentEvents.has(
+        "before-under-relock-event"
+      )
+    ).toBe(true);
+    expect(
+      xntdCommitmentEvents.usedXntdCommitmentEvents.has("under-relock-event-1")
+    ).toBe(false);
+    expect(registrar.processedMessages.size).toBe(1);
+    expect(xntdCommitmentEvents.usedXntdCommitmentEvents.size).toBe(1);
+    expect(build.lockedXntd).toBe(500n);
+    expect(build.requiredXntdLock).toBe(500n);
+    expect(build.lockEpoch).toBe(1);
+    expect(build.updatedAt).toBe(1100n);
+  });
+
   it("rejects invalid lock amount without marking registrar message", () => {
     const registrar = createRegistrarState("registrar-1");
     const xntdCommitmentEvents = createXntdCommitmentEventState();
@@ -600,6 +784,7 @@ describe("Registrar XNTD lock / relock integration", () => {
         build,
         xntdCommitmentEventKey: "registrar-xntd-commitment-9",
         amountXntd: 0n,
+        observedRequiredXntdLock: 0n,
         lockEpoch: 1,
         lockedAt: 1100n
       })
@@ -635,6 +820,7 @@ describe("Registrar XNTD lock / relock integration", () => {
         build,
         xntdCommitmentEventKey: "registrar-xntd-commitment-10",
         amountXntd: 250n,
+        observedRequiredXntdLock: 250n,
         lockEpoch: 2,
         relockedAt: 1100n
       })
@@ -669,6 +855,7 @@ describe("Registrar XNTD lock / relock integration", () => {
       build,
       xntdCommitmentEventKey: "registrar-xntd-commitment-11",
       amountXntd: 500n,
+      observedRequiredXntdLock: 500n,
       lockEpoch: 1,
       lockedAt: 1100n
     });
