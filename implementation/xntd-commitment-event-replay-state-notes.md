@@ -14,12 +14,10 @@ It follows the design documented in:
 
 ## Scope
 
-This milestone adds the low-level replay state and persists it through application snapshots.
+This milestone adds the low-level replay state, persists it through application snapshots, and wires it into XNTD lock / relock registrar handlers.
 
 It does not yet integrate the state into:
 
-- registrar XNTD lock / relock handlers
-- proof payloads
 - watcher candidates
 - proof conversion
 - CLI summaries
@@ -69,6 +67,41 @@ Snapshot persistence now includes:
 
 The storage schema version was bumped to 2.
 
+## Registrar integration
+
+XNTD lock / relock registrar payloads now include:
+
+- xntdCommitmentEventKey
+
+For proof-submission flow, this key is derived from:
+
+- proof.canonicalEventKey
+
+The application service now passes:
+
+- app.xntdCommitmentEvents
+
+into:
+
+- applyRegistrarXntdLock()
+- applyRegistrarXntdRelock()
+
+Successful registrar mutation order is now:
+
+1. acceptRegistrarMessage()
+2. acceptXntdCommitmentEvent()
+3. lockXntd() / relockXntd()
+
+Preconditions run before mutations.
+
+Duplicate xntdCommitmentEventKey is rejected before:
+
+- marking a new registrar message
+- changing Build lock state
+- changing usedXntdCommitmentEvents
+
+This protects against replaying the same XNTD commitment source event under a different messageId.
+
 ## Tests
 
 New test file:
@@ -88,6 +121,11 @@ Covered behavior:
 - accepts different commitment event keys
 - uses one replay domain for lock and relock source events
 - snapshot round-trip preserves usedXntdCommitmentEvents
+- LOCK_XNTD records xntdCommitmentEventKey
+- RELOCK_XNTD records xntdCommitmentEventKey
+- duplicate xntdCommitmentEventKey is rejected even with a different messageId
+- lock and relock share one commitment replay domain
+- appSubmitProof uses canonicalEventKey as xntdCommitmentEventKey
 
 ## Validation result
 
@@ -98,14 +136,23 @@ After this milestone:
 - npm run build: passed
 - npm audit --audit-level=moderate: found 0 vulnerabilities
 - 29 test files passed
-- 175 tests passed
+- 177 tests passed
 
 ## Current boundary
 
-This milestone does not change registrar behavior yet.
+This milestone changes registrar replay behavior for XNTD lock / relock.
 
-The new replay state is now wired into application state and snapshot persistence.
+The new replay state is wired into:
 
-It is not yet used by XNTD lock / relock registrar handlers.
+- application state
+- snapshot persistence
+- XNTD lock / relock registrar handlers
+- proof-submission registrar payload flow
 
-The next implementation step should wire registrar XNTD lock / relock handlers to this replay state.
+It is not yet wired into watcher candidate payload shape changes because proof-submission currently derives the commitment event key from proof.canonicalEventKey.
+
+The next implementation step can either:
+
+- update CLI summaries to show xntdCommitmentEventCount
+- add explicit proof payload fields if desired
+- add lockEpoch ordering guard
