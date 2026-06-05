@@ -3056,6 +3056,107 @@ Validation:
 
 This milestone completes the proof payload layer of the observedRequiredXntdLock rollout while preserving watcher candidate compatibility.
 
+## Latest XNTD observed required lock watcher candidate checkpoint
+
+The XNTD observed required lock watcher candidate runtime milestone was completed on the xntd-observed-required-lock-watcher-candidate branch.
+
+Commits:
+
+- 52d2113 Add observed required XNTD lock to watcher candidates
+- 5285319 Add XNTD observed required lock watcher candidate notes
+
+This milestone lifts observedRequiredXntdLock into the watcher candidate layer.
+
+Updated runtime files:
+
+- src/watchers/watcher-candidates.ts
+- src/watchers/proof-conversion.ts
+
+Updated tests:
+
+- tests/watcher-candidates.test.ts
+- tests/watcher-proof-conversion.test.ts
+- tests/app-proof-submission.test.ts
+- tests/e2e-watcher-proof-registrar-scenario.test.ts
+
+Implementation notes:
+
+- implementation/xntd-observed-required-lock-watcher-candidate-notes.md
+
+Runtime change:
+
+Added observedRequiredXntdLock to:
+
+- XntdLockCandidate.payload
+- XntdRelockCandidate.payload
+
+Watcher candidates now carry:
+
+- amountXntd
+- observedRequiredXntdLock
+- lockEpoch
+
+Constructor change:
+
+- createXntdLockCandidate() now includes observedRequiredXntdLock in candidate payloads
+- createXntdRelockCandidate() now includes observedRequiredXntdLock in candidate payloads
+
+Proof conversion change:
+
+- convertXntdLockCandidateToProof() now reads candidate.payload.observedRequiredXntdLock directly
+- convertXntdRelockCandidateToProof() now reads candidate.payload.observedRequiredXntdLock directly
+- the temporary proof-conversion fallback helper was removed
+
+Full runtime propagation chain after this milestone:
+
+watcher candidate
+-> proof payload
+-> registrar payload
+-> proof submission
+-> registrar input
+-> low-level lock / relock
+-> Build state requiredXntdLock
+
+Test coverage:
+
+The app proof submission test now verifies separated values through the full chain.
+
+LOCK_XNTD:
+
+- amountXntd = 750
+- observedRequiredXntdLock = 500
+- lockedXntd = 750
+- requiredXntdLock = 500
+
+RELOCK_XNTD:
+
+- amountXntd = 400
+- observedRequiredXntdLock = 250
+- lockedXntd = 400
+- requiredXntdLock = 250
+
+Scope boundary:
+
+This milestone does not change:
+
+- snapshot schema
+- CLI output
+- authoritative XC state validation
+- XC state source integration
+- proof source metadata
+- event identity model
+
+Validation:
+
+- npm run typecheck: passed
+- npm test: passed
+- npm run build: passed
+- npm audit --audit-level=moderate: found 0 vulnerabilities
+- 29 test files passed
+- 186 tests passed
+
+This milestone completes the runtime propagation chain for observedRequiredXntdLock from watcher candidate to Build state.
+
 ## Current next steps
 
 Potential next documents / design areas:
