@@ -10,6 +10,10 @@ import {
   type XntdCommitmentEventState,
   acceptXntdCommitmentEvent
 } from "../model/xntd-commitment-events.js";
+import {
+  type XcEpochMinimumSource,
+  assertAuthoritativeXcEpochMinimum
+} from "../model/xc-epoch-minimum-source.js";
 import { lockXntd, relockXntd } from "./xntd-lock.js";
 
 export interface ApplyRegistrarXntdLockInput {
@@ -20,6 +24,7 @@ export interface ApplyRegistrarXntdLockInput {
   xntdCommitmentEventKey: XntdCommitmentEventKey;
   amountXntd: bigint;
   observedRequiredXntdLock: bigint;
+  xcEpochMinimumSource?: XcEpochMinimumSource;
   lockEpoch: number;
   lockedAt: bigint;
 }
@@ -32,6 +37,7 @@ export interface ApplyRegistrarXntdRelockInput {
   xntdCommitmentEventKey: XntdCommitmentEventKey;
   amountXntd: bigint;
   observedRequiredXntdLock: bigint;
+  xcEpochMinimumSource?: XcEpochMinimumSource;
   lockEpoch: number;
   relockedAt: bigint;
 }
@@ -132,6 +138,14 @@ export function applyRegistrarXntdLock(
     input.observedRequiredXntdLock
   );
 
+  if (input.xcEpochMinimumSource !== undefined) {
+    assertAuthoritativeXcEpochMinimum(
+      input.xcEpochMinimumSource,
+      input.lockEpoch,
+      input.observedRequiredXntdLock
+    );
+  }
+
   acceptRegistrarMessage(input.registrar, input.message);
   acceptXntdCommitmentEvent(
     input.xntdCommitmentEvents,
@@ -171,6 +185,14 @@ export function applyRegistrarXntdRelock(
     input.amountXntd,
     input.observedRequiredXntdLock
   );
+
+  if (input.xcEpochMinimumSource !== undefined) {
+    assertAuthoritativeXcEpochMinimum(
+      input.xcEpochMinimumSource,
+      input.lockEpoch,
+      input.observedRequiredXntdLock
+    );
+  }
 
   if (!input.build.xcCommitmentActive) {
     throw new BuildError(

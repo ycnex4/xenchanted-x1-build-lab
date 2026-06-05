@@ -7,6 +7,7 @@ import {
   applyRegistrarXntdRelock,
   createBuild,
   createRegistrarState,
+  createStaticXcEpochMinimumSource,
   createXntdCommitmentEventState
 } from "../src/index.js";
 
@@ -115,6 +116,179 @@ describe("Registrar XNTD lock / relock integration", () => {
     expect(build.lockEpoch).toBe(2);
     expect(build.xcCommitmentActive).toBe(true);
     expect(build.updatedAt).toBe(1200n);
+  });
+
+  it("validates LOCK_XNTD against authoritative XC epoch minimum when source is provided", () => {
+    const registrar = createRegistrarState("registrar-1");
+    const xntdCommitmentEvents = createXntdCommitmentEventState();
+    const build = createBuild({
+      owner: "x1-user-1",
+      buildId: "build-1",
+      createdAt: 1000n
+    });
+    const xcEpochMinimumSource = createStaticXcEpochMinimumSource(
+      new Map<number, bigint>([[1, 500n]])
+    );
+
+    applyRegistrarXntdLock({
+      registrar,
+      xntdCommitmentEvents,
+      message: {
+        messageId: "message-authoritative-lock-1",
+        kind: "LOCK_XNTD",
+        submittedBy: "registrar-1",
+        createdAt: 1100n
+      },
+      build,
+      xntdCommitmentEventKey: "registrar-xntd-commitment-authoritative-lock-1",
+      amountXntd: 750n,
+      observedRequiredXntdLock: 500n,
+      xcEpochMinimumSource,
+      lockEpoch: 1,
+      lockedAt: 1100n
+    });
+
+    expect(registrar.processedMessages.has("message-authoritative-lock-1")).toBe(
+      true
+    );
+    expect(build.lockedXntd).toBe(750n);
+    expect(build.requiredXntdLock).toBe(500n);
+    expect(build.lockEpoch).toBe(1);
+  });
+
+  it("rejects LOCK_XNTD when observed required lock mismatches authoritative XC epoch minimum", () => {
+    const registrar = createRegistrarState("registrar-1");
+    const xntdCommitmentEvents = createXntdCommitmentEventState();
+    const build = createBuild({
+      owner: "x1-user-1",
+      buildId: "build-1",
+      createdAt: 1000n
+    });
+    const xcEpochMinimumSource = createStaticXcEpochMinimumSource(
+      new Map<number, bigint>([[1, 500n]])
+    );
+
+    expect(() =>
+      applyRegistrarXntdLock({
+        registrar,
+        xntdCommitmentEvents,
+        message: {
+          messageId: "message-authoritative-lock-2",
+          kind: "LOCK_XNTD",
+          submittedBy: "registrar-1",
+          createdAt: 1100n
+        },
+        build,
+        xntdCommitmentEventKey:
+          "registrar-xntd-commitment-authoritative-lock-2",
+        amountXntd: 750n,
+        observedRequiredXntdLock: 400n,
+        xcEpochMinimumSource,
+        lockEpoch: 1,
+        lockedAt: 1100n
+      })
+    ).toThrow(BuildError);
+
+    try {
+      applyRegistrarXntdLock({
+        registrar,
+        xntdCommitmentEvents,
+        message: {
+          messageId: "message-authoritative-lock-2",
+          kind: "LOCK_XNTD",
+          submittedBy: "registrar-1",
+          createdAt: 1100n
+        },
+        build,
+        xntdCommitmentEventKey:
+          "registrar-xntd-commitment-authoritative-lock-2b",
+        amountXntd: 750n,
+        observedRequiredXntdLock: 400n,
+        xcEpochMinimumSource,
+        lockEpoch: 1,
+        lockedAt: 1100n
+      });
+    } catch (error) {
+      expect(error).toBeInstanceOf(BuildError);
+      expect((error as BuildError).code).toBe(
+        BuildErrorCode.MismatchedAuthoritativeXcEpochMinimum
+      );
+    }
+
+    expect(registrar.processedMessages.size).toBe(0);
+    expect(xntdCommitmentEvents.usedXntdCommitmentEvents.size).toBe(0);
+    expect(build.lockedXntd).toBe(0n);
+    expect(build.requiredXntdLock).toBe(0n);
+    expect(build.lockEpoch).toBeNull();
+    expect(build.xcCommitmentActive).toBe(false);
+    expect(build.updatedAt).toBe(1000n);
+  });
+
+  it("rejects LOCK_XNTD when authoritative XC epoch minimum is missing", () => {
+    const registrar = createRegistrarState("registrar-1");
+    const xntdCommitmentEvents = createXntdCommitmentEventState();
+    const build = createBuild({
+      owner: "x1-user-1",
+      buildId: "build-1",
+      createdAt: 1000n
+    });
+    const xcEpochMinimumSource = createStaticXcEpochMinimumSource(
+      new Map<number, bigint>([[0, 1000n]])
+    );
+
+    expect(() =>
+      applyRegistrarXntdLock({
+        registrar,
+        xntdCommitmentEvents,
+        message: {
+          messageId: "message-authoritative-lock-3",
+          kind: "LOCK_XNTD",
+          submittedBy: "registrar-1",
+          createdAt: 1100n
+        },
+        build,
+        xntdCommitmentEventKey:
+          "registrar-xntd-commitment-authoritative-lock-3",
+        amountXntd: 750n,
+        observedRequiredXntdLock: 500n,
+        xcEpochMinimumSource,
+        lockEpoch: 1,
+        lockedAt: 1100n
+      })
+    ).toThrow(BuildError);
+
+    try {
+      applyRegistrarXntdLock({
+        registrar,
+        xntdCommitmentEvents,
+        message: {
+          messageId: "message-authoritative-lock-3",
+          kind: "LOCK_XNTD",
+          submittedBy: "registrar-1",
+          createdAt: 1100n
+        },
+        build,
+        xntdCommitmentEventKey:
+          "registrar-xntd-commitment-authoritative-lock-3b",
+        amountXntd: 750n,
+        observedRequiredXntdLock: 500n,
+        xcEpochMinimumSource,
+        lockEpoch: 1,
+        lockedAt: 1100n
+      });
+    } catch (error) {
+      expect(error).toBeInstanceOf(BuildError);
+      expect((error as BuildError).code).toBe(
+        BuildErrorCode.MissingAuthoritativeXcEpochMinimum
+      );
+    }
+
+    expect(registrar.processedMessages.size).toBe(0);
+    expect(xntdCommitmentEvents.usedXntdCommitmentEvents.size).toBe(0);
+    expect(build.lockedXntd).toBe(0n);
+    expect(build.requiredXntdLock).toBe(0n);
+    expect(build.lockEpoch).toBeNull();
+    expect(build.updatedAt).toBe(1000n);
   });
 
   it("rejects wrong message kind without mutating lock state", () => {
