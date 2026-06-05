@@ -4425,6 +4425,190 @@ Validation:
 - npm run build: passed
 - npm audit --audit-level=moderate: found 0 vulnerabilities
 
+## Latest authoritative XC epoch minimum production source adapter design checkpoint
+
+The authoritative XC epoch minimum production source adapter design milestone was completed on the authoritative-xc-epoch-minimum-production-source-adapter-design branch.
+
+Commit:
+
+- e1ec9b3 Add authoritative XC epoch minimum source adapter design
+
+This milestone designs the next production-readiness layer for authoritative XC epoch minimum validation.
+
+Design document:
+
+- implementation/authoritative-xc-epoch-minimum-production-source-adapter-design.md
+
+This is a design-only milestone.
+
+It does not change runtime code.
+
+Current completed boundary:
+
+The deterministic validation chain is already complete:
+
+watcher candidate
+-> proof conversion
+-> appSubmitProof(..., xcEpochMinimumSource)
+-> app service
+-> registrar handler
+-> assertAuthoritativeXcEpochMinimum()
+-> Build state
+
+Current runtime accepts:
+
+XcEpochMinimumSource {
+  authoritativeEpochMinimum(lockEpoch: number): bigint | null;
+}
+
+If provided, the runtime validates:
+
+- observedRequiredXntdLock == authoritativeEpochMinimum(lockEpoch)
+
+Adapter goal:
+
+The adapter should turn external XC epoch state into a deterministic XcEpochMinimumSource.
+
+Conceptual responsibility:
+
+external XC state
+-> validated epoch minimum records
+-> XcEpochMinimumSource
+
+The adapter must not derive the required lock from:
+
+- amountXntd
+- observedRequiredXntdLock
+- user-provided lock amount
+- mutable Build state
+
+The adapter must derive the epoch minimum from an independent XC state source.
+
+Recommended first adapter type:
+
+Start with a mocked / static production-shaped adapter.
+
+Do not start with real RPC.
+
+Reason:
+
+- keeps tests deterministic
+- validates source construction policy before network concerns
+- avoids introducing RPC secrets / provider config
+- avoids snapshot changes
+- avoids CLI changes
+- avoids ABI/address hardcoding too early
+
+Proposed future adapter shape:
+
+- XcEpochMinimumSourceAdapter
+- XcEpochMinimumSourceAdapterInput
+- XcEpochMinimumRecord
+
+Record concept:
+
+- lockEpoch
+- minimumXntd
+- observedAt
+- sourceChainId
+- sourceBlockNumber
+- sourceBlockHash
+
+Finalized block policy questions captured:
+
+1. Which block tag is acceptable?
+2. What happens if finalized state is unavailable?
+3. What happens if RPC nodes disagree?
+4. What happens near epoch boundaries?
+5. Should the source use current epoch, historical map, current + recent epochs, or checkpointed records?
+
+Recommended initial policy:
+
+- do not read latest
+- use finalized or explicitly confirmed block
+- reject missing data
+- reject stale data when policy requires freshness
+- prefer deterministic checkpoint records in tests
+
+XC Core / Lens read fields captured:
+
+- currentEpoch
+- currentBaseNominal
+- currentXenBurnAmount
+- genesisTs
+- halvingIntervalSec
+- initialNominal
+- epochAt(timestamp), if available
+- protocol parameters exposed through Lens
+
+Epoch policy:
+
+The adapter should answer the required minimum for lockEpoch.
+
+Recommended first policy:
+
+- accept lockEpoch from the observed event / proof payload
+- validate observedRequiredXntdLock against authoritativeEpochMinimum(lockEpoch)
+- later add timestamp / block cross-checks if needed
+
+Failure policy:
+
+If the adapter cannot produce an authoritative minimum:
+
+- return null for that epoch
+- runtime rejects with MissingAuthoritativeXcEpochMinimum
+
+If the adapter produces a minimum and payload differs:
+
+- runtime rejects with MismatchedAuthoritativeXcEpochMinimum
+
+If adapter input is malformed:
+
+- adapter creation should fail before proof submission
+- do not create a source from invalid records
+
+Mocked adapter test strategy captured:
+
+1. builds XcEpochMinimumSource from valid records
+2. rejects duplicate epoch records with conflicting minimums
+3. rejects zero minimum records
+4. returns null for missing epoch
+5. supports multiple epoch records
+6. preserves deterministic behavior
+7. does not read network
+8. does not require secrets
+
+Non-goals:
+
+This design milestone does not implement:
+
+- adapter runtime code
+- real Ethereum RPC
+- XC Core ABI
+- XC Lens ABI
+- provider config
+- private keys
+- RPC URLs
+- snapshot schema changes
+- CLI integration
+- bridge signer integration
+- X1 on-chain verification
+
+Current conclusion:
+
+The next safe production-readiness step is a mocked production-shaped source adapter.
+
+It should validate source records and produce an XcEpochMinimumSource without network access.
+
+Real RPC should come later, after source policy and adapter tests are stable.
+
+Validation:
+
+- npm run typecheck: passed
+- npm test: passed
+- npm run build: passed
+- npm audit --audit-level=moderate: found 0 vulnerabilities
+
 ## Current next steps
 
 Potential next documents / design areas:
