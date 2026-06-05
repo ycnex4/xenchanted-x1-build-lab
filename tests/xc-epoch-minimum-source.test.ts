@@ -175,6 +175,60 @@ describe("XC epoch minimum source", () => {
     }
   });
 
+  it("rejects invalid XC epoch minimum record metadata", () => {
+    expect(() =>
+      createXcEpochMinimumSourceFromRecords([
+        {
+          lockEpoch: 1,
+          minimumXntd: 100n,
+          observedAt: 0n
+        }
+      ])
+    ).toThrow(BuildError);
+
+    try {
+      createXcEpochMinimumSourceFromRecords([
+        {
+          lockEpoch: 1,
+          minimumXntd: 100n,
+          observedAt: 0n
+        }
+      ]);
+    } catch (error) {
+      expect(error).toBeInstanceOf(BuildError);
+      expect((error as BuildError).code).toBe(
+        BuildErrorCode.InvalidXcEpochMinimumRecord
+      );
+    }
+
+    expect(() =>
+      createXcEpochMinimumSourceFromRecords([
+        {
+          lockEpoch: 1,
+          minimumXntd: 100n,
+          observedAt: 1000n,
+          sourceBlockNumber: 0n
+        }
+      ])
+    ).toThrow(BuildError);
+
+    try {
+      createXcEpochMinimumSourceFromRecords([
+        {
+          lockEpoch: 1,
+          minimumXntd: 100n,
+          observedAt: 1000n,
+          sourceBlockNumber: 0n
+        }
+      ]);
+    } catch (error) {
+      expect(error).toBeInstanceOf(BuildError);
+      expect((error as BuildError).code).toBe(
+        BuildErrorCode.InvalidXcEpochMinimumRecord
+      );
+    }
+  });
+
   it("rejects observed required XNTD lock mismatch", () => {
     const source = createStaticXcEpochMinimumSource(
       new Map<number, bigint>([[0, 100n]])

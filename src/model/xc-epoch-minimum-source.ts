@@ -27,6 +27,23 @@ function assertValidXcEpochMinimumRecord(record: XcEpochMinimumRecord): void {
       `Invalid XC epoch minimum record amount: lockEpoch=${record.lockEpoch.toString()}, minimumXntd=${record.minimumXntd.toString()}`
     );
   }
+
+  if (record.observedAt <= 0n) {
+    throw new BuildError(
+      BuildErrorCode.InvalidXcEpochMinimumRecord,
+      `Invalid XC epoch minimum record observedAt: lockEpoch=${record.lockEpoch.toString()}, observedAt=${record.observedAt.toString()}`
+    );
+  }
+
+  if (
+    record.sourceBlockNumber !== undefined &&
+    record.sourceBlockNumber <= 0n
+  ) {
+    throw new BuildError(
+      BuildErrorCode.InvalidXcEpochMinimumRecord,
+      `Invalid XC epoch minimum record sourceBlockNumber: lockEpoch=${record.lockEpoch.toString()}, sourceBlockNumber=${record.sourceBlockNumber.toString()}`
+    );
+  }
 }
 
 export function createXcEpochMinimumSourceFromRecords(
