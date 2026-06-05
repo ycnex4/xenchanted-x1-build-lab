@@ -2392,6 +2392,92 @@ Validation:
 
 This milestone keeps epoch minimum validation as the next production-readiness layer after XNTD replay and ordering safety.
 
+## Latest XNTD required lock payload shape review checkpoint
+
+The XNTD required lock payload shape review milestone was completed on the xntd-lock-required-amount-payload-review branch.
+
+Commits:
+
+- e0ae0da Define XNTD required lock payload shape decision
+- dfd8166 Add XNTD required lock payload review notes
+
+This milestone reviews the future watcher / proof / registrar payload shape for XNTD lock / relock epoch minimum validation.
+
+Updated document:
+
+- docs/registrar/xntd-lock-epoch-minimum-validation.md
+
+Implementation notes:
+
+- implementation/xntd-lock-required-amount-payload-review-notes.md
+
+Question reviewed:
+
+- Should LOCK_XNTD / RELOCK_XNTD payloads explicitly carry the required XNTD lock amount, or should the registrar derive it internally from authoritative XC state?
+
+Decision:
+
+- future watcher / proof / registrar payloads should carry observedRequiredXntdLock
+
+Reason:
+
+- the proof remains self-describing
+- the watcher records what requirement it observed
+- the registrar does not blindly trust the payload
+- registrar / integration validation must verify observedRequiredXntdLock against authoritative XC state
+- audit / debug / logs are clearer because submitted observed requirement and authoritative expected requirement can be compared
+
+Future validation rule:
+
+- amountXntd > 0
+- observedRequiredXntdLock > 0
+- amountXntd >= observedRequiredXntdLock
+- observedRequiredXntdLock == authoritativeEpochMinimum(lockEpoch)
+
+After successful validation:
+
+- lockedXntd = amountXntd
+- requiredXntdLock = observedRequiredXntdLock
+
+Alternatives considered:
+
+1. Registrar derives requirement internally only
+   - less trust in watcher payload
+   - but proof is less self-describing and audit trail is weaker
+
+2. Payload carries requiredXntdLock directly
+   - simple naming
+   - but may imply the payload value is authoritative before validation
+
+Chosen naming:
+
+- observedRequiredXntdLock
+
+This makes clear that the value is observed by the watcher and must still be verified.
+
+Scope boundary:
+
+- design / documentation only
+- no proof types changed
+- no watcher candidate types changed
+- no proof conversion changed
+- no registrar payload builders changed
+- no proof submission changed
+- no registrar handlers changed
+- no lockXntd() / relockXntd() changes
+- no runtime tests changed
+
+Validation:
+
+- npm run typecheck: passed
+- npm test: passed
+- npm run build: passed
+- npm audit --audit-level=moderate: found 0 vulnerabilities
+- 29 test files passed
+- 179 tests passed
+
+This milestone finalizes the recommended payload shape direction before any runtime implementation of epoch minimum validation.
+
 ## Current next steps
 
 Potential next documents / design areas:
