@@ -3244,6 +3244,83 @@ Validation:
 
 This milestone closes the post-rollout cleanup for the observedRequiredXntdLock runtime chain.
 
+## Latest XNTD epoch minimum docs after runtime propagation checkpoint
+
+The XNTD epoch minimum documentation update milestone was completed on the update-xntd-epoch-minimum-docs-after-runtime-chain branch.
+
+Commits:
+
+- fea7521 Update XNTD epoch minimum docs after runtime propagation
+- da1a9e7 Add XNTD epoch minimum docs update notes
+
+This milestone updates active design documentation after the observedRequiredXntdLock runtime propagation chain was completed.
+
+Updated documents:
+
+- docs/assumptions.md
+- docs/registrar/xntd-lock-epoch-minimum-validation.md
+
+Implementation notes:
+
+- implementation/update-xntd-epoch-minimum-docs-after-runtime-chain-notes.md
+
+Main documentation correction:
+
+The previous active docs still described the older MVP equality model:
+
+- requiredXntdLock = amountXntd
+
+That is no longer the current runtime behavior.
+
+The active docs now describe the current runtime behavior:
+
+- lockedXntd = amountXntd
+- requiredXntdLock = observedRequiredXntdLock
+
+Current runtime validation:
+
+- amountXntd > 0
+- observedRequiredXntdLock > 0
+- amountXntd >= observedRequiredXntdLock
+
+Current explicit runtime flow:
+
+watcher candidate
+-> proof payload
+-> registrar payload
+-> proof submission
+-> app service
+-> registrar input
+-> low-level lock / relock
+-> Build state
+
+Still not implemented:
+
+This milestone does not implement authoritative XC validation.
+
+The remaining production-readiness rule is still:
+
+- observedRequiredXntdLock == authoritativeEpochMinimum(lockEpoch)
+
+That validation belongs to the registrar / integration boundary using the authoritative XC state source.
+
+Historical docs note:
+
+Older implementation notes and older checkpoint sections are not rewritten.
+
+They intentionally preserve the history of earlier rollout phases.
+
+Validation:
+
+- npm run typecheck: passed
+- npm test: passed
+- npm run build: passed
+- npm audit --audit-level=moderate: found 0 vulnerabilities
+- 29 test files passed
+- 186 tests passed
+
+This milestone aligns the active epoch-minimum design docs with the completed observedRequiredXntdLock runtime propagation chain.
+
 ## Current next steps
 
 Potential next documents / design areas:
