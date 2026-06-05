@@ -10,6 +10,7 @@ import {
 } from "./build-service.js";
 import { BuildError } from "../errors/build-error.js";
 import { type BuildState } from "../model/build-state.js";
+import { type XcEpochMinimumSource } from "../model/xc-epoch-minimum-source.js";
 import {
   type CoreRedeemRegistrarPayload,
   type CreateRegistrarPayloadInput,
@@ -21,7 +22,9 @@ import {
 } from "../proofs/registrar-builders.js";
 import { type BuildProof } from "../proofs/proof-types.js";
 
-export interface AppSubmitProofInput extends CreateRegistrarPayloadInput {}
+export interface AppSubmitProofInput extends CreateRegistrarPayloadInput {
+  xcEpochMinimumSource?: XcEpochMinimumSource;
+}
 
 function toAppError(error: unknown): AppErrorResult {
   if (error instanceof BuildError) {
@@ -121,6 +124,9 @@ export function appSubmitProof(
         xntdCommitmentEventKey: lockPayload.xntdCommitmentEventKey,
         amountXntd: lockPayload.amountXntd,
         observedRequiredXntdLock: lockPayload.observedRequiredXntdLock,
+        ...(input.xcEpochMinimumSource !== undefined
+          ? { xcEpochMinimumSource: input.xcEpochMinimumSource }
+          : {}),
         lockEpoch: lockPayload.lockEpoch,
         lockedAt: lockPayload.lockedAt
       });
@@ -136,6 +142,9 @@ export function appSubmitProof(
         xntdCommitmentEventKey: relockPayload.xntdCommitmentEventKey,
         amountXntd: relockPayload.amountXntd,
         observedRequiredXntdLock: relockPayload.observedRequiredXntdLock,
+        ...(input.xcEpochMinimumSource !== undefined
+          ? { xcEpochMinimumSource: input.xcEpochMinimumSource }
+          : {}),
         lockEpoch: relockPayload.lockEpoch,
         relockedAt: relockPayload.relockedAt
       });

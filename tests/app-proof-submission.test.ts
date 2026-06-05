@@ -10,6 +10,7 @@ import {
   createProofSourceMetadata,
   createX1FeeCheckpointCandidate,
   createXenBurnCandidate,
+  createStaticXcEpochMinimumSource,
   createXntdLockCandidate,
   createXntdRelockCandidate,
   convertWatcherCandidateToProof
@@ -181,6 +182,87 @@ describe("application proof submission", () => {
     expect(build.lockEpoch).toBe(2);
     expect(app.registrar.processedMessages.size).toBe(2);
     expect(app.xntdCommitmentEvents.usedXntdCommitmentEvents.size).toBe(2);
+  });
+
+  it("passes authoritative XC epoch minimum source through proof submission XNTD flow", () => {
+    const { app, build } = createRegisteredApp();
+    const xcEpochMinimumSource = createStaticXcEpochMinimumSource(
+      new Map<number, bigint>([[1, 500n]])
+    );
+
+    const lockCandidate = createXntdLockCandidate({
+      sourceChainId: "x1",
+      sourceAddress: "lock-program",
+      eventKind: "XNTD_LOCK",
+      transactionHash: "tx-lock-authoritative",
+      eventIndex: 0,
+      observedAt: 1000n,
+      finalized: true,
+      buildId: build.buildId,
+      owner: build.owner,
+      amountXntd: 750n,
+      observedRequiredXntdLock: 500n,
+      lockEpoch: 1,
+      lockedAt: 1000n
+    });
+
+    const lockProof = convertWatcherCandidateToProof(lockCandidate, {
+      validatedAt: 1100n
+    });
+
+    const lock = appSubmitProof(app, lockProof, {
+      ...submitInput(),
+      xcEpochMinimumSource
+    });
+
+    expect(lock.ok).toBe(true);
+    expect(build.lockedXntd).toBe(750n);
+    expect(build.requiredXntdLock).toBe(500n);
+    expect(build.lockEpoch).toBe(1);
+
+    const relockCandidate = createXntdRelockCandidate({
+      sourceChainId: "x1",
+      sourceAddress: "lock-program",
+      eventKind: "XNTD_RELOCK",
+      transactionHash: "tx-relock-authoritative",
+      eventIndex: 0,
+      observedAt: 1200n,
+      finalized: true,
+      buildId: build.buildId,
+      owner: build.owner,
+      amountXntd: 400n,
+      observedRequiredXntdLock: 250n,
+      lockEpoch: 2,
+      relockedAt: 1200n
+    });
+
+    const relockProof = convertWatcherCandidateToProof(relockCandidate, {
+      validatedAt: 1300n
+    });
+
+    const relock = appSubmitProof(app, relockProof, {
+      ...submitInput(),
+      xcEpochMinimumSource
+    });
+
+    expect(relock.ok).toBe(false);
+    if (!relock.ok) {
+      expect(relock.error.code).toBe("MISSING_AUTHORITATIVE_XC_EPOCH_MINIMUM");
+    }
+
+    expect(
+      app.registrar.processedMessages.has(
+        `proof:${relockProof.kind}:${relockProof.canonicalEventKey}`
+      )
+    ).toBe(false);
+    expect(
+      app.xntdCommitmentEvents.usedXntdCommitmentEvents.has(
+        relockCandidate.canonicalEventKey
+      )
+    ).toBe(false);
+    expect(build.lockedXntd).toBe(750n);
+    expect(build.requiredXntdLock).toBe(500n);
+    expect(build.lockEpoch).toBe(1);
   });
 
   it("submits X1 fee checkpoint proof through registrar application service", () => {
