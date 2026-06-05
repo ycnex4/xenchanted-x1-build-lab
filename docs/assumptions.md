@@ -72,22 +72,36 @@ Design and implementation path:
 
 ## 4. requiredXntdLock source
 
-In the current MVP, requiredXntdLock is accepted from registrar-provided lock / relock input.
+In the current runtime, XNTD lock / relock events carry two separate values:
 
-Practically, the lock amount becomes the required lock value inside the model.
+- amountXntd
+- observedRequiredXntdLock
 
-The intended production rule is that requiredXntdLock should correspond to the current epoch Core L1 nominal from xEnchanted Crypto.
+The Build model records:
+
+- lockedXntd = amountXntd
+- requiredXntdLock = observedRequiredXntdLock
+
+Current runtime validation checks:
+
+- amountXntd > 0
+- observedRequiredXntdLock > 0
+- amountXntd >= observedRequiredXntdLock
+
+The intended production rule is still that requiredXntdLock should correspond to the current epoch Core L1 nominal from xEnchanted Crypto.
 
 Important implication:
 
-- the MVP does not independently calculate the epoch minimum
-- the registrar / integration layer is responsible for submitting the correct value
-- production integration should validate the epoch minimum against the authoritative XC state source
+- the runtime now separates actual locked amount from observed required amount
+- the runtime does not yet independently calculate or verify the authoritative XC epoch minimum
+- the registrar / integration layer is responsible for submitting and eventually validating the correct observedRequiredXntdLock
+- production integration should validate observedRequiredXntdLock against the authoritative XC state source
 
 Design path:
 
 - docs/registrar/xntd-lock-epoch-minimum-validation.md
 - docs/registrar/authoritative-xc-state-source.md
+- implementation/review-observed-required-xntd-lock-chain-notes.md
 
 ## 5. No unlock flow
 

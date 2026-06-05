@@ -14,22 +14,38 @@ This document is design-only.
 
 It does not change runtime code.
 
-## Current MVP state
+## Current runtime state
 
-In the current MVP runtime, XNTD lock / relock receives:
+The current runtime propagates observedRequiredXntdLock through the full XNTD lock / relock chain:
+
+watcher candidate
+-> proof payload
+-> registrar payload
+-> proof submission
+-> app service
+-> registrar input
+-> low-level lock / relock
+-> Build state
+
+XNTD lock / relock now carries:
 
 - amountXntd
+- observedRequiredXntdLock
 - lockEpoch
 
-The low-level lock primitives currently set:
+The low-level lock primitives set:
 
 lockedXntd = amountXntd
-requiredXntdLock = amountXntd
+requiredXntdLock = observedRequiredXntdLock
 lockEpoch = input.lockEpoch
 
-This is acceptable for the current trusted registrar MVP because the registrar / integration layer is responsible for submitting correct values.
+The runtime validates:
 
-However, this is not production-complete.
+- amountXntd > 0
+- observedRequiredXntdLock > 0
+- amountXntd >= observedRequiredXntdLock
+
+This is an improvement over the earlier MVP equality model, but it is still not production-complete.
 
 ## Current production gap
 
@@ -37,34 +53,34 @@ The intended production rule is:
 
 requiredXntdLock = current epoch Core L1 nominal from xEnchanted Crypto
 
-The runtime currently does not independently verify that:
-
-requiredXntdLock == authoritative XC epoch minimum
-
-It also does not distinguish the user's actual locked amount from the required amount.
-
-In production, these values should be conceptually separate:
+The runtime now distinguishes the user's actual locked amount from the observed required amount:
 
 lockedXntd = amount actually locked by the user
-requiredXntdLock = minimum required amount for the selected/current XC epoch
+requiredXntdLock = observed required amount for the selected/current XC epoch
 
-## Why amountXntd == requiredXntdLock is not enough for production
+However, the runtime currently does not independently verify that:
+
+observedRequiredXntdLock == authoritative XC epoch minimum
+
+That authoritative validation remains the production-readiness gap.
+
+## Why observedRequiredXntdLock still needs authoritative validation
 
 If the registrar sends:
 
 amountXntd = 5
+observedRequiredXntdLock = 5
 lockEpoch = current epoch
 
-the current MVP model will set:
+the current runtime will accept the relationship between amount and requirement because:
 
-lockedXntd = 5
-requiredXntdLock = 5
+amountXntd >= observedRequiredXntdLock
 
 Even if the real XC epoch minimum is 100.
 
 This does not create token inflation by itself, but it can incorrectly mark a Build as satisfying a commitment requirement.
 
-Therefore production integration must validate the required amount against authoritative XC state.
+Therefore production integration must validate observedRequiredXntdLock against authoritative XC state.
 
 ## Authoritative source
 
@@ -187,39 +203,47 @@ Production validation must make sure that requiredXntdLock is meaningful.
 
 Otherwise, a too-low registrar-provided requiredXntdLock could make xcCommitmentActive true incorrectly.
 
-## MVP boundary
+## Current MVP boundary
 
-This document does not change the current runtime behavior.
+The current runtime already separates:
 
-The current MVP still has:
+lockedXntd = amountXntd
+requiredXntdLock = observedRequiredXntdLock
 
-requiredXntdLock = amountXntd
+However, the MVP still relies on trusted registrar / integration input for the correctness of observedRequiredXntdLock.
 
-The MVP relies on trusted registrar input.
+The runtime does not yet independently verify:
+
+observedRequiredXntdLock == authoritativeEpochMinimum(lockEpoch)
 
 This is acceptable before live production integration, but it must remain visible as an explicit integration boundary.
 
 ## Recommended implementation sequence
 
-1. Keep this document as design-only.
-2. Decide the authoritative XC state source.
-3. Add observedRequiredXntdLock to watcher / proof / registrar payloads.
-4. Add tests for:
-   - amountXntd < observedRequiredXntdLock rejected
+Completed runtime propagation:
+
+1. Add observedRequiredXntdLock to watcher / proof / registrar payloads.
+2. Propagate observedRequiredXntdLock through proof submission, app service, registrar input, and low-level lock / relock.
+3. Add tests for amountXntd < observedRequiredXntdLock rejection.
+4. Remove compatibility fallback that silently derived observedRequiredXntdLock from amountXntd.
+
+Remaining production-readiness sequence:
+
+1. Decide the exact authoritative XC state source / interface.
+2. Add registrar / integration validation for:
    - observedRequiredXntdLock mismatch rejected
    - correct epoch minimum accepted
    - replay protections still work
    - lockEpoch ordering guard still works
-5. Add registrar validation logic.
-6. Update assumptions.
-7. Update review summary / README if needed.
-8. Update checkpoint.
+3. Update assumptions.
+4. Update review summary / README if needed.
+5. Update checkpoint.
 
 ## Current decision
 
 For now:
 
-- do not change runtime code
-- keep amountXntd / requiredXntdLock equality as an MVP implementation detail
+- keep the completed observedRequiredXntdLock runtime chain
+- keep amountXntd and observedRequiredXntdLock explicit and separate
 - document production validation requirements clearly
-- treat epoch minimum validation as the next production-readiness layer after replay / ordering safety
+- treat authoritative epoch minimum validation as the next production-readiness layer after runtime propagation, replay protection, and ordering safety
