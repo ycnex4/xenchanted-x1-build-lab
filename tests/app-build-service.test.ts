@@ -8,7 +8,8 @@ import {
   appClaimGenesisOriginBld,
   appCreateBuild,
   appGetBuildById,
-  createBuildApplicationState
+  createBuildApplicationState,
+  createStaticXcEpochMinimumSource
 } from "../src/index.js";
 
 describe("Build application service", () => {
@@ -218,4 +219,84 @@ describe("Build application service", () => {
     expect(app.registrar.processedMessages.size).toBe(0);
     expect(app.redeemEvents.usedRedeemEvents.size).toBe(0);
   });
+
+  it("passes authoritative XC epoch minimum source through app XNTD lock service", () => {
+    const app = createBuildApplicationState("registrar-1");
+
+    const created = appCreateBuild(app, {
+      owner: "x1-owner-authoritative",
+      buildId: "build-authoritative",
+      ethereumIdentity: "0x00000000000000000000000000000000000000aa",
+      createdAt: 100n
+    });
+
+    expect(created.ok).toBe(true);
+    if (!created.ok) {
+      throw new Error("expected build creation to succeed");
+    }
+
+    const build = created.value;
+    const xcEpochMinimumSource = createStaticXcEpochMinimumSource(
+      new Map<number, bigint>([[1, 500n]])
+    );
+
+    const lock = appApplyRegistrarXntdLock({
+      app,
+      message: {
+        messageId: "message-lock-authoritative-1",
+        kind: "LOCK_XNTD",
+        submittedBy: "registrar-1",
+        createdAt: 140n
+      },
+      build,
+      xntdCommitmentEventKey: "app-xntd-commitment-authoritative-1",
+      amountXntd: 750n,
+      observedRequiredXntdLock: 500n,
+      xcEpochMinimumSource,
+      lockEpoch: 1,
+      lockedAt: 140n
+    });
+
+    expect(lock.ok).toBe(true);
+    expect(build.lockedXntd).toBe(750n);
+    expect(build.requiredXntdLock).toBe(500n);
+    expect(build.lockEpoch).toBe(1);
+
+    const missingEpochRelock = appApplyRegistrarXntdRelock({
+      app,
+      message: {
+        messageId: "message-relock-authoritative-1",
+        kind: "RELOCK_XNTD",
+        submittedBy: "registrar-1",
+        createdAt: 150n
+      },
+      build,
+      xntdCommitmentEventKey: "app-xntd-commitment-authoritative-2",
+      amountXntd: 400n,
+      observedRequiredXntdLock: 250n,
+      xcEpochMinimumSource,
+      lockEpoch: 2,
+      relockedAt: 150n
+    });
+
+    expect(missingEpochRelock.ok).toBe(false);
+    if (!missingEpochRelock.ok) {
+      expect(missingEpochRelock.error.code).toBe(
+        "MISSING_AUTHORITATIVE_XC_EPOCH_MINIMUM"
+      );
+    }
+
+    expect(
+      app.registrar.processedMessages.has("message-relock-authoritative-1")
+    ).toBe(false);
+    expect(
+      app.xntdCommitmentEvents.usedXntdCommitmentEvents.has(
+        "app-xntd-commitment-authoritative-2"
+      )
+    ).toBe(false);
+    expect(build.lockedXntd).toBe(750n);
+    expect(build.requiredXntdLock).toBe(500n);
+    expect(build.lockEpoch).toBe(1);
+  });
+
 });

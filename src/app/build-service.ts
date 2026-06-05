@@ -195,6 +195,9 @@ export function appApplyRegistrarXntdLock(
       xntdCommitmentEventKey: input.xntdCommitmentEventKey,
       amountXntd: input.amountXntd,
       observedRequiredXntdLock: input.observedRequiredXntdLock,
+      ...(input.xcEpochMinimumSource !== undefined
+        ? { xcEpochMinimumSource: input.xcEpochMinimumSource }
+        : {}),
       lockEpoch: input.lockEpoch,
       lockedAt: input.lockedAt
     })
@@ -215,6 +218,9 @@ export function appApplyRegistrarXntdRelock(
       xntdCommitmentEventKey: input.xntdCommitmentEventKey,
       amountXntd: input.amountXntd,
       observedRequiredXntdLock: input.observedRequiredXntdLock,
+      ...(input.xcEpochMinimumSource !== undefined
+        ? { xcEpochMinimumSource: input.xcEpochMinimumSource }
+        : {}),
       lockEpoch: input.lockEpoch,
       relockedAt: input.relockedAt
     })

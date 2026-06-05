@@ -3637,6 +3637,112 @@ Validation:
 
 This milestone closes the registrar-level authoritative validation hook while preserving app-level compatibility.
 
+## Latest authoritative XC epoch minimum app service injection checkpoint
+
+The authoritative XC epoch minimum app service injection milestone was completed on the authoritative-xc-epoch-minimum-app-service-injection branch.
+
+Commits:
+
+- b6898e4 Pass authoritative XC epoch minimum source through app service
+- 7a25bba Add authoritative XC epoch minimum app service notes
+
+This milestone passes the optional authoritative XC epoch minimum source through the application service XNTD lock / relock wrappers.
+
+Updated runtime file:
+
+- src/app/build-service.ts
+
+Updated tests:
+
+- tests/app-build-service.test.ts
+
+Implementation notes:
+
+- implementation/authoritative-xc-epoch-minimum-app-service-injection-notes.md
+
+Runtime change:
+
+The following app service functions now forward xcEpochMinimumSource when provided:
+
+- appApplyRegistrarXntdLock()
+- appApplyRegistrarXntdRelock()
+
+Forwarding uses conditional object spread:
+
+- if xcEpochMinimumSource is provided, it is passed to the registrar handler
+- if xcEpochMinimumSource is undefined, the field is omitted
+
+This preserves compatibility with exactOptionalPropertyTypes.
+
+Validation behavior:
+
+When a caller provides xcEpochMinimumSource:
+
+appApplyRegistrarXntdLock()
+-> applyRegistrarXntdLock()
+-> assertAuthoritativeXcEpochMinimum()
+
+and:
+
+appApplyRegistrarXntdRelock()
+-> applyRegistrarXntdRelock()
+-> assertAuthoritativeXcEpochMinimum()
+
+Therefore app-service callers can now trigger registrar-level validation of:
+
+- observedRequiredXntdLock == authoritativeEpochMinimum(lockEpoch)
+
+Compatibility behavior:
+
+xcEpochMinimumSource remains optional.
+
+Existing app-service call sites that do not pass the source continue to work.
+
+Test coverage:
+
+- appApplyRegistrarXntdLock() succeeds when the source contains the matching epoch minimum
+- appApplyRegistrarXntdRelock() returns a structured error when the source is missing the relock epoch minimum
+- rejected app-service relock does not mark the registrar message as processed
+- rejected app-service relock does not mark the XNTD commitment event key as used
+- rejected app-service relock does not mutate Build lockedXntd, requiredXntdLock, or lockEpoch
+
+Scope boundary:
+
+This milestone does not update:
+
+- appSubmitProof()
+- proof submission payload flow
+- watcher proof conversion
+- registrar payload builders
+- snapshot schema
+- storage serialization
+- CLI output
+- real Ethereum RPC integration
+- XC Core / Lens ABI integration
+
+Next step:
+
+The next layer should decide how proof submission receives / owns the authoritative XC epoch minimum source.
+
+Likely next step:
+
+- add optional xcEpochMinimumSource to appSubmitProof() input
+- pass it into appApplyRegistrarXntdLock() / appApplyRegistrarXntdRelock()
+- add app-proof-submission tests
+
+Do not persist the source in snapshots yet.
+
+Validation:
+
+- npm run typecheck: passed
+- npm test: passed
+- npm run build: passed
+- npm audit --audit-level=moderate: found 0 vulnerabilities
+- 30 test files passed
+- 193 tests passed
+
+This milestone extends authoritative validation one layer upward while keeping proof submission and persistence unchanged.
+
 ## Current next steps
 
 Potential next documents / design areas:
