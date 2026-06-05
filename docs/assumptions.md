@@ -87,6 +87,7 @@ Important implication:
 Design path:
 
 - docs/registrar/xntd-lock-epoch-minimum-validation.md
+- docs/registrar/authoritative-xc-state-source.md
 
 ## 5. No unlock flow
 
