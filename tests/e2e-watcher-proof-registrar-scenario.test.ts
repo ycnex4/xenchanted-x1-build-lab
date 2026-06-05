@@ -6,6 +6,7 @@ import {
   createCoreRedeemCandidate,
   createX1FeeCheckpointCandidate,
   createXenBurnCandidate,
+  createStaticXcEpochMinimumSource,
   createXntdLockCandidate,
   createXntdRelockCandidate,
   convertWatcherCandidateToProof
@@ -14,7 +15,8 @@ import {
 function submitProofFromWatcherCandidate(
   app: ReturnType<typeof createBuildApplicationState>,
   candidate: Parameters<typeof convertWatcherCandidateToProof>[0],
-  createdAt: bigint
+  createdAt: bigint,
+  extraInput: Partial<Parameters<typeof appSubmitProof>[2]> = {}
 ) {
   const proof = convertWatcherCandidateToProof(candidate, {
     validatedAt: createdAt - 1n
@@ -22,7 +24,8 @@ function submitProofFromWatcherCandidate(
 
   return appSubmitProof(app, proof, {
     submittedBy: "registrar-1",
-    createdAt
+    createdAt,
+    ...extraInput
   });
 }
 
@@ -44,6 +47,12 @@ describe("end-to-end watcher proof registrar scenario", () => {
     }
 
     const build = created.value;
+    const xcEpochMinimumSource = createStaticXcEpochMinimumSource(
+      new Map<number, bigint>([
+        [1, 500n],
+        [2, 250n]
+      ])
+    );
 
     const coreRedeemCandidate = createCoreRedeemCandidate({
       sourceChainId: "eip155-1",
@@ -110,7 +119,9 @@ describe("end-to-end watcher proof registrar scenario", () => {
       lockedAt: 1300n
     });
 
-    const lock = submitProofFromWatcherCandidate(app, lockCandidate, 1310n);
+    const lock = submitProofFromWatcherCandidate(app, lockCandidate, 1310n, {
+      xcEpochMinimumSource
+    });
 
     expect(lock.ok).toBe(true);
 
@@ -134,7 +145,8 @@ describe("end-to-end watcher proof registrar scenario", () => {
     const relock = submitProofFromWatcherCandidate(
       app,
       relockCandidate,
-      1410n
+      1410n,
+      { xcEpochMinimumSource }
     );
 
     expect(relock.ok).toBe(true);
