@@ -3321,6 +3321,111 @@ Validation:
 
 This milestone aligns the active epoch-minimum design docs with the completed observedRequiredXntdLock runtime propagation chain.
 
+## Latest authoritative XC epoch minimum validation runtime plan checkpoint
+
+The authoritative XC epoch minimum validation runtime plan milestone was completed on the authoritative-xc-epoch-minimum-validation-runtime-plan branch.
+
+Commit:
+
+- fdf3f8e Add authoritative XC epoch minimum validation runtime plan
+
+This milestone defines the next runtime implementation path for validating XNTD lock / relock required amounts against authoritative XC epoch state.
+
+Implementation plan:
+
+- implementation/authoritative-xc-epoch-minimum-validation-runtime-plan.md
+
+This is a plan-only milestone.
+
+It does not change runtime code.
+
+Current completed state:
+
+The observedRequiredXntdLock runtime propagation chain is complete.
+
+Current explicit runtime flow:
+
+watcher candidate
+-> proof payload
+-> registrar payload
+-> proof submission
+-> app service
+-> registrar input
+-> low-level lock / relock
+-> Build state
+
+Current runtime records:
+
+- lockedXntd = amountXntd
+- requiredXntdLock = observedRequiredXntdLock
+
+Current runtime validation checks:
+
+- amountXntd > 0
+- observedRequiredXntdLock > 0
+- amountXntd >= observedRequiredXntdLock
+- monotonic lockEpoch ordering
+- registrar message replay protection
+- XNTD commitment event replay protection
+
+Remaining production-readiness gap:
+
+- observedRequiredXntdLock == authoritativeEpochMinimum(lockEpoch)
+
+Recommended next runtime layer:
+
+- do not start with live Ethereum RPC
+- introduce a local deterministic authoritative epoch minimum source / validator
+- validate at the registrar / integration boundary
+- keep low-level lockXntd() / relockXntd() as deterministic state transition helpers
+
+Conceptual source:
+
+- authoritativeEpochMinimum(lockEpoch: number): bigint | null
+
+Registrar validation rule:
+
+- reject if authoritative minimum for lockEpoch is missing
+- reject if observedRequiredXntdLock != authoritativeEpochMinimum(lockEpoch)
+- perform this validation before acceptRegistrarMessage()
+- perform this validation before acceptXntdCommitmentEvent()
+- perform this validation before lockXntd() / relockXntd()
+
+Mutation safety requirement:
+
+Rejected authoritative epoch minimum validation must not mutate:
+
+- registrar.processedMessages
+- xntdCommitmentEvents.usedXntdCommitmentEvents
+- Build state
+
+Recommended implementation style:
+
+- start with direct registrar-level tests
+- do not update snapshot schema yet
+- do not persist any XC epoch source in BuildApplicationState yet
+- decide app-level injection only after registrar-level validation is correct and tested
+
+Non-goals for the first runtime layer:
+
+- real Ethereum RPC reads
+- XC Core ABI integration
+- XC Lens ABI integration
+- finalized block verification
+- Merkle proofs
+- X1 on-chain verification
+- persisted epoch checkpoint storage
+- snapshot schema migration
+
+Validation target for this plan milestone:
+
+- npm run typecheck
+- npm test
+- npm run build
+- npm audit --audit-level=moderate
+
+This milestone prepares the next implementation layer without increasing runtime complexity prematurely.
+
 ## Current next steps
 
 Potential next documents / design areas:
