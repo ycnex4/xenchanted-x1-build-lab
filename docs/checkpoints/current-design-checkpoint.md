@@ -3743,6 +3743,124 @@ Validation:
 
 This milestone extends authoritative validation one layer upward while keeping proof submission and persistence unchanged.
 
+## Latest authoritative XC epoch minimum proof submission injection checkpoint
+
+The authoritative XC epoch minimum proof submission injection milestone was completed on the authoritative-xc-epoch-minimum-proof-submission-injection branch.
+
+Commits:
+
+- 1c04f2d Pass authoritative XC epoch minimum source through proof submission
+- 7d7581e Add authoritative XC epoch minimum proof submission notes
+
+This milestone passes the optional authoritative XC epoch minimum source through appSubmitProof() for XNTD lock / relock proof submission.
+
+Updated runtime file:
+
+- src/app/proof-submission.ts
+
+Updated tests:
+
+- tests/app-proof-submission.test.ts
+
+Implementation notes:
+
+- implementation/authoritative-xc-epoch-minimum-proof-submission-injection-notes.md
+
+Runtime change:
+
+AppSubmitProofInput now supports:
+
+- xcEpochMinimumSource?: XcEpochMinimumSource
+
+For XNTD proof kinds:
+
+- XNTD_LOCK_PROOF
+- XNTD_RELOCK_PROOF
+
+appSubmitProof() forwards xcEpochMinimumSource into:
+
+- appApplyRegistrarXntdLock()
+- appApplyRegistrarXntdRelock()
+
+Forwarding uses conditional object spread:
+
+- if xcEpochMinimumSource is provided, it is passed down
+- if xcEpochMinimumSource is undefined, the field is omitted
+
+This preserves compatibility with exactOptionalPropertyTypes.
+
+Validation behavior:
+
+When proof submission receives xcEpochMinimumSource:
+
+appSubmitProof()
+-> appApplyRegistrarXntdLock() / appApplyRegistrarXntdRelock()
+-> applyRegistrarXntdLock() / applyRegistrarXntdRelock()
+-> assertAuthoritativeXcEpochMinimum()
+
+Therefore proof submission callers can now trigger validation of:
+
+- observedRequiredXntdLock == authoritativeEpochMinimum(lockEpoch)
+
+Compatibility behavior:
+
+xcEpochMinimumSource remains optional.
+
+Existing proof submission call sites that do not pass the source continue to work.
+
+Test coverage:
+
+- appSubmitProof() accepts an XNTD_LOCK_PROOF when the source contains the matching epoch minimum
+- appSubmitProof() rejects an XNTD_RELOCK_PROOF when the source is missing the relock epoch minimum
+- rejected relock proof submission returns a structured app error
+- rejected relock proof submission does not mark the registrar message as processed
+- rejected relock proof submission does not mark the XNTD commitment event key as used
+- rejected relock proof submission does not mutate Build lockedXntd, requiredXntdLock, or lockEpoch
+
+Scope boundary:
+
+This milestone does not update:
+
+- watcher proof conversion
+- registrar payload builders
+- snapshot schema
+- storage serialization
+- CLI output
+- real Ethereum RPC integration
+- XC Core / Lens ABI integration
+- persistent app state source ownership
+
+Current validation chain:
+
+The optional authoritative source can now flow through:
+
+appSubmitProof()
+-> appApplyRegistrarXntdLock() / appApplyRegistrarXntdRelock()
+-> applyRegistrarXntdLock() / applyRegistrarXntdRelock()
+-> assertAuthoritativeXcEpochMinimum()
+
+Next step:
+
+The next layer should decide whether to add the authoritative source to the e2e watcher-proof-registrar scenario.
+
+Potential next step:
+
+- add source injection to tests/e2e-watcher-proof-registrar-scenario.test.ts
+- keep it test-only
+- do not persist the source in snapshots
+- do not introduce real RPC yet
+
+Validation:
+
+- npm run typecheck: passed
+- npm test: passed
+- npm run build: passed
+- npm audit --audit-level=moderate: found 0 vulnerabilities
+- 30 test files passed
+- 194 tests passed
+
+This milestone extends authoritative validation into proof submission while keeping persistence and external integrations unchanged.
+
 ## Current next steps
 
 Potential next documents / design areas:
