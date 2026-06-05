@@ -4718,6 +4718,97 @@ Next step:
 
 After merge, a possible next runtime hardening step is to add a dedicated error code for invalid XC epoch minimum source records, but only if it is useful enough to justify expanding the error model.
 
+## Latest invalid XC epoch minimum record error checkpoint
+
+The invalid XC epoch minimum record error milestone was completed on the invalid-xc-epoch-minimum-record-error branch.
+
+Commits:
+
+- 6342ac8 Add invalid XC epoch minimum record error
+- 5f1f066 Add invalid XC epoch minimum record error notes
+
+This milestone separates XC epoch minimum source-record validation errors from XNTD lock amount validation errors.
+
+Updated runtime files:
+
+- src/errors/build-error.ts
+- src/model/xc-epoch-minimum-source.ts
+
+Updated tests:
+
+- tests/xc-epoch-minimum-source.test.ts
+
+Implementation notes:
+
+- implementation/invalid-xc-epoch-minimum-record-error-notes.md
+
+Runtime change:
+
+Added BuildErrorCode:
+
+- InvalidXcEpochMinimumRecord
+
+The source adapter now uses InvalidXcEpochMinimumRecord for:
+
+- invalid lockEpoch
+- zero / negative minimumXntd
+- conflicting duplicate epoch minimum records
+
+Error model after this milestone:
+
+XNTD lock amount errors:
+
+- InvalidXntdLockAmount
+
+Source availability errors:
+
+- MissingAuthoritativeXcEpochMinimum
+
+Source mismatch errors:
+
+- MismatchedAuthoritativeXcEpochMinimum
+
+Source record construction errors:
+
+- InvalidXcEpochMinimumRecord
+
+Test coverage:
+
+Updated / strengthened tests verify that invalid source records throw:
+
+- InvalidXcEpochMinimumRecord
+
+Covered cases:
+
+- conflicting duplicate epoch records
+- zero minimumXntd
+- negative lockEpoch
+
+Scope boundary:
+
+This milestone does not change:
+
+- authoritative validation flow
+- appSubmitProof()
+- app service
+- registrar handlers
+- snapshot schema
+- storage serialization
+- CLI output
+- real Ethereum RPC integration
+- XC Core / Lens ABI integration
+
+Validation:
+
+- npm run typecheck: passed
+- npm test: passed
+- npm run build: passed
+- npm audit --audit-level=moderate: found 0 vulnerabilities
+- 30 test files passed
+- 198 tests passed
+
+This milestone makes the source adapter error model more precise without changing the validation flow.
+
 ## Current next steps
 
 Potential next documents / design areas:
