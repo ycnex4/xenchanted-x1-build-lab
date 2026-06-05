@@ -10,14 +10,17 @@ import {
   type SerializedRedeemEventState,
   type SerializedRegistrarState,
   type SerializedXenBurnEventState,
+  type SerializedXntdCommitmentEventState,
   deserializeBuildRegistry,
   deserializeRedeemEventState,
   deserializeRegistrarState,
   deserializeXenBurnEventState,
+  deserializeXntdCommitmentEventState,
   serializeBuildRegistry,
   serializeRedeemEventState,
   serializeRegistrarState,
-  serializeXenBurnEventState
+  serializeXenBurnEventState,
+  serializeXntdCommitmentEventState
 } from "./serialization.js";
 
 export interface SerializedBuildApplicationSnapshot {
@@ -28,6 +31,7 @@ export interface SerializedBuildApplicationSnapshot {
   registrar: SerializedRegistrarState;
   redeemEvents: SerializedRedeemEventState;
   xenBurnEvents: SerializedXenBurnEventState;
+  xntdCommitmentEvents: SerializedXntdCommitmentEventState;
 }
 
 function serializeBigint(value: bigint): string {
@@ -82,7 +86,10 @@ export function serializeBuildApplicationSnapshot(
     registry: serializeBuildRegistry(app.registry),
     registrar: serializeRegistrarState(app.registrar),
     redeemEvents: serializeRedeemEventState(app.redeemEvents),
-    xenBurnEvents: serializeXenBurnEventState(app.xenBurnEvents)
+    xenBurnEvents: serializeXenBurnEventState(app.xenBurnEvents),
+    xntdCommitmentEvents: serializeXntdCommitmentEventState(
+      app.xntdCommitmentEvents
+    )
   };
 }
 
@@ -109,6 +116,9 @@ export function deserializeBuildApplicationSnapshot(
   app.registrar = registrar;
   app.redeemEvents = deserializeRedeemEventState(value.redeemEvents);
   app.xenBurnEvents = deserializeXenBurnEventState(value.xenBurnEvents);
+  app.xntdCommitmentEvents = deserializeXntdCommitmentEventState(
+    value.xntdCommitmentEvents
+  );
 
   return {
     app,

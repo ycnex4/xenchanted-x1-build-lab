@@ -41,6 +41,10 @@ import {
   type XenBurnEventState,
   createXenBurnEventState
 } from "../model/xen-burn-events.js";
+import {
+  type XntdCommitmentEventState,
+  createXntdCommitmentEventState
+} from "../model/xntd-commitment-events.js";
 import { BuildError } from "../errors/build-error.js";
 
 export interface BuildApplicationState {
@@ -48,6 +52,7 @@ export interface BuildApplicationState {
   registrar: RegistrarState;
   redeemEvents: RedeemEventState;
   xenBurnEvents: XenBurnEventState;
+  xntdCommitmentEvents: XntdCommitmentEventState;
 }
 
 export interface AppErrorResult {
@@ -72,7 +77,8 @@ export function createBuildApplicationState(
     registry: createEmptyBuildRegistry(),
     registrar: createRegistrarState(registrarAuthority),
     redeemEvents: createRedeemEventState(),
-    xenBurnEvents: createXenBurnEventState()
+    xenBurnEvents: createXenBurnEventState(),
+    xntdCommitmentEvents: createXntdCommitmentEventState()
   };
 }
 
