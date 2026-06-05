@@ -2891,6 +2891,84 @@ Validation:
 
 This milestone completes the registrar input layer of the observedRequiredXntdLock rollout while preserving proof / watcher payload compatibility.
 
+## Latest XNTD observed required lock registrar payload checkpoint
+
+The XNTD observed required lock registrar payload runtime milestone was completed on the xntd-observed-required-lock-registrar-payload branch.
+
+Commits:
+
+- 27d7832 Add observed required XNTD lock to registrar payloads
+- 99ffdd7 Add XNTD observed required lock registrar payload notes
+
+This milestone lifts observedRequiredXntdLock into the registrar payload builder layer.
+
+Updated runtime files:
+
+- src/proofs/registrar-builders.ts
+- src/app/proof-submission.ts
+
+Updated tests:
+
+- tests/proof-registrar-builders.test.ts
+
+Implementation notes:
+
+- implementation/xntd-observed-required-lock-registrar-payload-notes.md
+
+Runtime change:
+
+Added observedRequiredXntdLock to:
+
+- XntdLockRegistrarPayload
+- XntdRelockRegistrarPayload
+
+Registrar payloads now carry:
+
+- amountXntd
+- observedRequiredXntdLock
+- lockEpoch
+
+Builder behavior:
+
+- buildXntdLockRegistrarPayload() now sets observedRequiredXntdLock
+- buildXntdRelockRegistrarPayload() now sets observedRequiredXntdLock
+
+Compatibility behavior:
+
+- if proof.payload.observedRequiredXntdLock exists and is bigint, builder uses it
+- otherwise builder falls back to proof.payload.amountXntd
+- current proof types / watcher candidates are not changed in this milestone
+
+Proof submission change:
+
+- LOCK_XNTD now uses lockPayload.observedRequiredXntdLock
+- RELOCK_XNTD now uses relockPayload.observedRequiredXntdLock
+- proof-submission no longer invents observedRequiredXntdLock from amountXntd directly
+
+Scope boundary:
+
+This milestone does not change:
+
+- proof types
+- watcher candidate types
+- watcher-to-proof conversion
+- app proof submission tests
+- e2e tests
+- snapshot schema
+- CLI output
+- authoritative XC state validation
+
+Validation:
+
+- npm run typecheck: passed
+- npm test: passed
+- npm run build: passed
+- npm audit --audit-level=moderate: found 0 vulnerabilities
+- 29 test files passed
+- 186 tests passed
+
+This milestone completes the registrar payload layer of the observedRequiredXntdLock rollout while preserving proof / watcher payload compatibility.
+
 ## Current next steps
 
 Potential next documents / design areas:
