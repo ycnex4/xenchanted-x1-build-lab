@@ -68,18 +68,6 @@ export function convertXenBurnCandidateToProof(
   };
 }
 
-function observedRequiredXntdLockFromCandidatePayload(
-  payload: { amountXntd: bigint }
-): bigint {
-  const maybePayload = payload as {
-    observedRequiredXntdLock?: unknown;
-  };
-
-  return typeof maybePayload.observedRequiredXntdLock === "bigint"
-    ? maybePayload.observedRequiredXntdLock
-    : payload.amountXntd;
-}
-
 export function convertXntdLockCandidateToProof(
   candidate: XntdLockCandidate,
   input: WatcherProofConversionInput
@@ -97,9 +85,7 @@ export function convertXntdLockCandidateToProof(
       buildId: candidate.payload.buildId,
       owner: candidate.payload.owner,
       amountXntd: candidate.payload.amountXntd,
-      observedRequiredXntdLock: observedRequiredXntdLockFromCandidatePayload(
-        candidate.payload
-      ),
+      observedRequiredXntdLock: candidate.payload.observedRequiredXntdLock,
       lockEpoch: candidate.payload.lockEpoch,
       lockedAt: candidate.payload.lockedAt
     }
@@ -123,9 +109,7 @@ export function convertXntdRelockCandidateToProof(
       buildId: candidate.payload.buildId,
       owner: candidate.payload.owner,
       amountXntd: candidate.payload.amountXntd,
-      observedRequiredXntdLock: observedRequiredXntdLockFromCandidatePayload(
-        candidate.payload
-      ),
+      observedRequiredXntdLock: candidate.payload.observedRequiredXntdLock,
       lockEpoch: candidate.payload.lockEpoch,
       relockedAt: candidate.payload.relockedAt
     }

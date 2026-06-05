@@ -105,6 +105,7 @@ describe("end-to-end watcher proof registrar scenario", () => {
       buildId: build.buildId,
       owner: build.owner,
       amountXntd: 500n,
+      observedRequiredXntdLock: 500n,
       lockEpoch: 1,
       lockedAt: 1300n
     });
@@ -125,6 +126,7 @@ describe("end-to-end watcher proof registrar scenario", () => {
       buildId: build.buildId,
       owner: build.owner,
       amountXntd: 250n,
+      observedRequiredXntdLock: 250n,
       lockEpoch: 2,
       relockedAt: 1400n
     });

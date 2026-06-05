@@ -72,6 +72,7 @@ describe("watcher candidates", () => {
       buildId: "build-1",
       owner: "x1-owner",
       amountXntd: 500n,
+      observedRequiredXntdLock: 500n,
       lockEpoch: 1,
       lockedAt: 1000n
     });
@@ -87,6 +88,7 @@ describe("watcher candidates", () => {
       buildId: "build-1",
       owner: "x1-owner",
       amountXntd: 250n,
+      observedRequiredXntdLock: 250n,
       lockEpoch: 2,
       relockedAt: 1100n
     });

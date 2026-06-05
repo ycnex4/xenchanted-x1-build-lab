@@ -125,7 +125,8 @@ describe("application proof submission", () => {
       finalized: true,
       buildId: build.buildId,
       owner: build.owner,
-      amountXntd: 500n,
+      amountXntd: 750n,
+      observedRequiredXntdLock: 500n,
       lockEpoch: 1,
       lockedAt: 1000n
     });
@@ -142,7 +143,7 @@ describe("application proof submission", () => {
         lockCandidate.canonicalEventKey
       )
     ).toBe(true);
-    expect(build.lockedXntd).toBe(500n);
+    expect(build.lockedXntd).toBe(750n);
     expect(build.requiredXntdLock).toBe(500n);
     expect(build.lockEpoch).toBe(1);
     expect(build.xcCommitmentActive).toBe(true);
@@ -157,7 +158,8 @@ describe("application proof submission", () => {
       finalized: true,
       buildId: build.buildId,
       owner: build.owner,
-      amountXntd: 250n,
+      amountXntd: 400n,
+      observedRequiredXntdLock: 250n,
       lockEpoch: 2,
       relockedAt: 1200n
     });
@@ -174,7 +176,7 @@ describe("application proof submission", () => {
         relockCandidate.canonicalEventKey
       )
     ).toBe(true);
-    expect(build.lockedXntd).toBe(250n);
+    expect(build.lockedXntd).toBe(400n);
     expect(build.requiredXntdLock).toBe(250n);
     expect(build.lockEpoch).toBe(2);
     expect(app.registrar.processedMessages.size).toBe(2);
