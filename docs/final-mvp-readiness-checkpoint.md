@@ -175,6 +175,10 @@ UNCOMMITTED does not erase or invalidate:
 - Core redeem history
 - Build history
 
+`appGetBuildView()` may return `UNKNOWN` when context-dependent epoch information is required but unavailable.
+
+`UNKNOWN` is a status signal, not an error.
+
 ## appGetBuildView()
 
 The app view helper returns:

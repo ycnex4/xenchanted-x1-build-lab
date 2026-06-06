@@ -190,6 +190,8 @@ It returns:
 
 `commitmentStatus` does not mean Build validity and does not erase historical contribution.
 
+`appGetBuildView()` may return `UNKNOWN` when context-dependent epoch information is required but unavailable. `UNKNOWN` is a status signal, not an error.
+
 ## Snapshot safety
 
 Snapshot helpers are intentionally conservative.
