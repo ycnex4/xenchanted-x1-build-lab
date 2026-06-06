@@ -12847,3 +12847,68 @@ Manual refusal without env remained safe:
 Recommended next step after merge:
 
     complete XC protocol params source milestone
+
+## Latest XC protocol params source completion checkpoint
+
+The XC protocol params source milestone was completed on the `xc-protocol-params-source-completion-checkpoint` branch.
+
+This milestone is documentation-only.
+
+New document:
+
+- `implementation/xc-protocol-params-source-completion-checkpoint.md`
+
+The checkpoint closes the completed chain:
+
+- protocol params source design
+- protocol params source design review
+- mocked/tested source implementation
+- implementation review
+- merge to main
+
+Implemented source:
+
+- `src/ethereum/xc-protocol-params-source.ts`
+- `tests/xc-protocol-params-source.test.ts`
+- `src/index.ts`
+
+The source models deployed XC Lens reads through:
+
+    getProtocolParams()
+
+The source remains separate from:
+
+    XcEpochMinimumSource
+
+The implementation uses an injected minimal provider with only:
+
+    readContract()
+
+The implementation does not add:
+
+- real RPC execution
+- viem import
+- ethers import
+- createPublicClient
+- http transport
+- process.env read
+- private key support
+- mnemonic support
+- wallet client support
+- writeContract
+- sendTransaction
+
+Final validation baseline:
+
+- `npm run typecheck` passed
+- `npm test` passed: 38 test files, 296 tests
+- `npm run build` passed
+- `npm audit --audit-level=moderate` found 0 vulnerabilities
+
+Safe refusal without env remained active:
+
+    Missing required Ethereum script secret config: XC_ETHEREUM_RPC_URL
+
+Recommended next milestone:
+
+    xc-protocol-params-build-validation-design
