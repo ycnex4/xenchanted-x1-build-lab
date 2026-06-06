@@ -12783,3 +12783,67 @@ Manual refusal without env remained safe:
 Recommended next milestone after merge:
 
     xc-protocol-params-source
+
+## Latest XC protocol params source review checkpoint
+
+The XC protocol params source review milestone was completed on the `xc-protocol-params-source-review` branch.
+
+This milestone is review-only.
+
+New document:
+
+- `implementation/xc-protocol-params-source-review-notes.md`
+
+Reviewed files:
+
+- `src/ethereum/xc-protocol-params-source.ts`
+- `tests/xc-protocol-params-source.test.ts`
+- `src/index.ts`
+
+Review conclusion:
+
+- XC protocol params source implementation accepted
+- `getProtocolParams()` read path implemented through injected `readContract()`
+- implementation remains separate from `XcEpochMinimumSource`
+- object-like tuple normalization covered
+- array-like tuple normalization covered
+- sanitized error handling covered
+- no changes required before merge
+
+The implementation added:
+
+- `XcProtocolParamsReadProvider`
+- `XcProtocolParams`
+- `XcProtocolParamsSource`
+- `XcProtocolParamsSourceConfig`
+- `createXcProtocolParamsSourceFromEthereumReadProvider()`
+- `normalizeXcProtocolParams()`
+
+The review confirms that the implementation does not add:
+
+- real RPC execution
+- viem import
+- ethers import
+- createPublicClient
+- http transport
+- process.env read
+- private key support
+- mnemonic support
+- wallet client support
+- writeContract
+- sendTransaction
+
+Validation baseline for review:
+
+- `npm run typecheck` passed
+- `npm test` passed: 38 test files, 296 tests
+- `npm run build` passed
+- `npm audit --audit-level=moderate` found 0 vulnerabilities
+
+Manual refusal without env remained safe:
+
+    Missing required Ethereum script secret config: XC_ETHEREUM_RPC_URL
+
+Recommended next step after merge:
+
+    complete XC protocol params source milestone
