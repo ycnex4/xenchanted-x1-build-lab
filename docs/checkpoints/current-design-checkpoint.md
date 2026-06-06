@@ -13487,3 +13487,72 @@ Manual refusal without env remained safe:
 Recommended next milestone after merge:
 
     xc-build-validation-app-service-context
+
+## Latest XC Build validation app service context review checkpoint
+
+The XC Build validation app service context review milestone was completed on the `xc-build-validation-app-service-context-review` branch.
+
+This milestone is review-only.
+
+New document:
+
+- `implementation/xc-build-validation-app-service-context-review-notes.md`
+
+Reviewed files:
+
+- `src/app/proof-submission.ts`
+- `tests/app-proof-submission.test.ts`
+
+Review conclusion:
+
+- XC Build validation app service context implementation accepted
+- optional `xcBuildValidationContext` support added to app proof submission input
+- implementation is backwards-compatible
+- no global Build validity enforcement added
+- no real RPC added
+- no `XcProtocolParamsSource` usage added
+- no process.env read added
+- no watcher, registrar, or proof payload behavior changed
+- no changes required before merge
+
+Runtime input now accepts:
+
+    xcBuildValidationContext?: XcBuildValidationContext
+
+The review confirms that the implementation does not add:
+
+- currentEpoch enforcement
+- requiredForgeMinimum enforcement
+- requiredXntdLockMinimum enforcement
+- real RPC execution
+- viem import
+- ethers import
+- createPublicClient
+- http transport
+- process.env read
+- private key support
+- mnemonic support
+- wallet client support
+- writeContract
+- sendTransaction
+- `XcProtocolParamsSource` usage
+- watcher candidate changes
+- registrar behavior changes
+- proof payload changes
+- package dependency changes
+- scripts
+
+Validation baseline for review:
+
+- `npm run typecheck` passed
+- `npm test` passed: 40 test files, 317 tests
+- `npm run build` passed
+- `npm audit --audit-level=moderate` found 0 vulnerabilities
+
+Manual refusal without env remained safe:
+
+    Missing required Ethereum script secret config: XC_ETHEREUM_RPC_URL
+
+Recommended next step after merge:
+
+    complete XC Build validation app service context milestone
