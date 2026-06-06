@@ -12722,3 +12722,64 @@ Validation baseline for design:
 Safe refusal without env remained active:
 
     Missing required Ethereum script secret config: XC_ETHEREUM_RPC_URL
+
+## Latest XC protocol params source design review checkpoint
+
+The XC protocol params source design review milestone was completed on the `xc-protocol-params-source-design-review` branch.
+
+This milestone is review-only.
+
+New document:
+
+- `implementation/xc-protocol-params-source-design-review-notes.md`
+
+Reviewed files:
+
+- `implementation/xc-protocol-params-source-design.md`
+- `docs/checkpoints/current-design-checkpoint.md`
+
+Review conclusion:
+
+- XC protocol params source design accepted
+- design-only boundary preserved
+- deployed XC Lens read path confirmed as `getProtocolParams()`
+- deployed XC Lens should not be modeled as `epochMinimum(uint256)`
+- `XcProtocolParamsSource` should remain separate from `XcEpochMinimumSource`
+- no changes required before merge
+
+The review confirms that the future implementation should use mocked providers only and should not add:
+
+- real RPC execution
+- new dependencies
+- process.env reads
+- public client construction
+- private key support
+- mnemonic support
+- wallet client support
+- writeContract
+- sendTransaction
+
+Likely authoritative fields for later X1 Build validation remain:
+
+- currentEpoch
+- currentBaseNominal
+- currentXenBurnAmount
+- halvingInterval
+- xenBurnHalvingInterval
+- nextHalvingTs
+- genesisTs
+
+Validation baseline for review:
+
+- `npm run typecheck` passed
+- `npm test` passed: 37 test files, 286 tests
+- `npm run build` passed
+- `npm audit --audit-level=moderate` found 0 vulnerabilities
+
+Manual refusal without env remained safe:
+
+    Missing required Ethereum script secret config: XC_ETHEREUM_RPC_URL
+
+Recommended next milestone after merge:
+
+    xc-protocol-params-source
