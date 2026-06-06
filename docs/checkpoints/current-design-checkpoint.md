@@ -11959,3 +11959,81 @@ to:
 No dependencies changed.
 
 No real RPC was added.
+
+## Latest XC epoch minimum mocked script entrypoint review checkpoint
+
+The XC epoch minimum mocked script entrypoint review milestone was completed on the `xc-epoch-minimum-mocked-script-entrypoint-review` branch.
+
+This milestone is review-only.
+
+New document:
+
+- `implementation/xc-epoch-minimum-mocked-script-entrypoint-review-notes.md`
+
+Reviewed files:
+
+- `src/ethereum/ethereum-script-runner.ts`
+- `tests/ethereum-script-runner.test.ts`
+- `src/index.ts`
+- `docs/checkpoints/current-design-checkpoint.md`
+
+Review conclusion:
+
+- mocked script runner accepted
+- provided-client boundary preserved
+- no implementation changes required before merge
+
+The review confirms that the runner:
+
+- accepts env-like object
+- accepts already provided public client
+- accepts output writer abstraction
+- calls `parseEthereumScriptConfig()`
+- calls `summarizeEthereumScriptConfig()`
+- calls `createXcEpochMinimumSourceFromReadonlyEthereumPublicClient()`
+- reads epoch minimums through `source.authoritativeEpochMinimum(lockEpoch)`
+- writes only safe output lines
+- returns only safe structured result
+
+The review confirms that the runner does not add:
+
+- real RPC calls
+- viem dependency
+- runtime viem imports
+- ethers imports
+- process.env reads
+- public client construction
+- RPC URL factory
+- HTTP transport construction
+- private key support
+- mnemonic support
+- signer support
+- wallet client support
+- transaction sending
+- writeContract / sendTransaction path
+- raw env printing
+- full config printing
+- RPC URL / API key printing
+
+The review command checked runtime/test/package boundaries:
+
+```bash
+grep -RniE "from ['\"]viem['\"]|from ['\"]ethers['\"]|createPublicClient|http\\(|writeContract|sendTransaction|walletClient|privateKey|mnemonic|process\\.env" src tests package.json || true
+```
+
+No forbidden runtime/test/package matches were found.
+
+Validation baseline for review:
+
+- `npm run typecheck` passed
+- `npm test` passed: 37 test files, 286 tests
+- `npm run build` passed
+- `npm audit --audit-level=moderate` found 0 vulnerabilities
+
+Recommended next milestone after merge:
+
+```text
+xc-epoch-minimum-manual-rpc-smoke-script-design
+```
+
+The next milestone should still be design-only and should define the future manual-only real RPC smoke script boundary before adding viem or real RPC.
