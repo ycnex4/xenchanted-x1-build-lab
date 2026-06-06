@@ -14164,3 +14164,59 @@ Final validation baseline:
 Recommended next milestone:
 
     xc-build-active-status-model
+
+## Latest XC Build active status model review checkpoint
+
+The XC Build active status model review milestone was completed on the `xc-build-active-status-model-review` branch.
+
+This milestone is review-only.
+
+New document:
+
+- `implementation/xc-build-active-status-model-review-notes.md`
+
+Reviewed files:
+
+- `src/model/build-active-status.ts`
+- `tests/build-active-status.test.ts`
+- `src/index.ts`
+
+Review conclusion:
+
+- XC Build active status model implementation accepted
+- implementation adds read-only `getBuildActiveStatus()`
+- implementation exports helper and types through `src/index.ts`
+- implementation adds focused unit tests
+- implementation is read-only and non-mutating
+- implementation does not change appSubmitProof
+- implementation does not change watcher behavior
+- implementation does not change registrar behavior
+- implementation does not change proof payload behavior
+- implementation does not introduce real RPC
+- implementation does not introduce Forge requirements
+
+Accepted status values:
+
+    ACTIVE
+    INACTIVE
+    UNKNOWN
+
+Accepted reason values:
+
+    ACTIVE_LOCK_CURRENT
+    INACTIVE_NO_HISTORY
+    INACTIVE_NO_LOCK
+    INACTIVE_LOCK_BELOW_REQUIRED
+    INACTIVE_RELOCK_REQUIRED
+    UNKNOWN_NO_CURRENT_CONTEXT
+
+Validation baseline for review:
+
+- `npm run typecheck` passed
+- `npm test` passed: 41 test files, 323 tests
+- `npm run build` passed
+- `npm audit --audit-level=moderate` found 0 vulnerabilities
+
+Recommended next milestone after merge:
+
+    xc-build-active-status-model-completion-checkpoint
