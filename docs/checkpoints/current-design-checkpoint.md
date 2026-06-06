@@ -13027,3 +13027,64 @@ Manual refusal without env remained safe:
 Recommended next milestone after merge:
 
     xc-protocol-params-build-validation
+
+## Latest XC protocol params build validation review checkpoint
+
+The XC protocol params build validation review milestone was completed on the `xc-protocol-params-build-validation-review` branch.
+
+This milestone is review-only.
+
+New document:
+
+- `implementation/xc-protocol-params-build-validation-review-notes.md`
+
+Reviewed files:
+
+- `src/model/xc-protocol-params-build-validation.ts`
+- `tests/xc-protocol-params-build-validation.test.ts`
+- `src/index.ts`
+
+Review conclusion:
+
+- XC protocol params build validation implementation accepted
+- helper remains pure/mocked
+- helper derives Build requirements from `XcProtocolParams`
+- helper does not call real RPC
+- helper does not import viem or ethers
+- helper does not read process.env
+- helper does not add wallet or transaction paths
+- no changes required before merge
+
+The implementation derives:
+
+- currentEpoch
+- requiredBaseNominal
+- requiredXenBurnAmount
+- requiredXntdLockMinimum
+- requiredForgeMinimum
+- nextHalvingTs
+- genesisTs
+- halvingInterval
+- xenBurnHalvingInterval
+
+Current requirement derivation:
+
+    requiredBaseNominal = currentBaseNominal
+    requiredXenBurnAmount = currentXenBurnAmount
+    requiredXntdLockMinimum = currentBaseNominal
+    requiredForgeMinimum = currentBaseNominal * 5
+
+Validation baseline for review:
+
+- `npm run typecheck` passed
+- `npm test` passed: 39 test files, 309 tests
+- `npm run build` passed
+- `npm audit --audit-level=moderate` found 0 vulnerabilities
+
+Manual refusal without env remained safe:
+
+    Missing required Ethereum script secret config: XC_ETHEREUM_RPC_URL
+
+Recommended next step after merge:
+
+    complete XC protocol params build validation milestone
