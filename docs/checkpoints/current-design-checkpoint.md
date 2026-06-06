@@ -8760,11 +8760,416 @@ Suggested next scope:
 - keep model layer provider-library agnostic
 - do not implement real RPC until design review is complete
 
+
+## Latest XC epoch minimum real read-only RPC integration design checkpoint
+
+The XC epoch minimum real read-only RPC integration design milestone was completed on the xc-epoch-minimum-real-readonly-rpc-integration-design branch.
+
+Commits:
+
+- 861f1d6 Add XC epoch minimum real read-only RPC integration design
+
+This was a design-only milestone.
+
+No runtime behavior changed.
+
+Design document added:
+
+- implementation/xc-epoch-minimum-real-readonly-rpc-integration-design.md
+
+Purpose:
+
+Design the real read-only RPC integration boundary for the XC epoch minimum Ethereum provider path.
+
+This milestone does not implement:
+
+- real RPC reads
+- runtime RPC execution
+- env reads in model or wrapper code
+- secret printing
+- private keys
+- signers
+- wallet clients
+- transaction sending
+
+Current foundation:
+
+The provider path currently has these completed layers:
+
+EthereumReadProvider
+-> Ethereum Lens provider adapter
+-> EthereumXcLensEpochMinimumSnapshot
+-> Ethereum snapshot adapter
+-> XcEpochMinimumSource
+
+The mocked real viem wrapper is already implemented and reviewed:
+
+- src/ethereum/ethereum-viem-read-provider-wrapper.ts
+
+It adapts a structurally typed viem-like PublicClient into EthereumReadProvider:
+
+viem-like PublicClient
+-> createEthereumReadProviderFromViemPublicClient(publicClient)
+-> EthereumReadProvider
+
+The model layer remains provider-library agnostic.
+
+Design goal:
+
+The real read-only RPC integration should define where a real public client is constructed and how it is passed into the already-reviewed wrapper without moving RPC URLs, env, API keys, provider construction, or secret-bearing config into the model layer or wrapper.
+
+Future intended flow:
+
+outer integration / script / app layer
+-> reads config from a safe source
+-> constructs real read-only public client
+-> passes public client into createEthereumReadProviderFromViemPublicClient(publicClient)
+-> passes EthereumReadProvider into createXcEpochMinimumSourceFromEthereumLensProvider()
+-> receives XcEpochMinimumSource
+
+Boundary rule:
+
+The following layers must remain free from env reads and RPC URL construction:
+
+- src/model/*
+- src/ethereum/ethereum-viem-read-provider-wrapper.ts
+- src/ethereum/ethereum-read-provider-wrapper.ts
+
+The real RPC integration boundary should live outside src/model and outside the generic wrapper.
+
+Recommended future location candidates:
+
+- src/ethereum/ethereum-readonly-rpc-integration.ts
+- src/integration/ethereum-readonly-rpc-integration.ts
+- scripts/read-xc-epoch-minimum-source.ts
+
+Preferred direction:
+
+- keep reusable integration code outside src/model
+- keep CLI / script env handling outside reusable library code if possible
+- pass constructed public client objects inward
+
+Config ownership:
+
+Config ownership belongs to the outer integration layer.
+
+Config may include:
+
+- chainId
+- lensAddress
+- finalityPolicy
+- lockEpochs
+- epochMinimumFunctionName
+- epochMinimumAbi
+- public client object
+
+Config must not include in model/wrapper input:
+
+- RPC URL
+- API key
+- authorization header
+- private key
+- mnemonic
+- signer
+- wallet client
+- account
+
+Env ownership:
+
+The model layer must not read process.env.
+
+The wrapper layer must not read process.env.
+
+If env is used later, it must be read only by an outer app / script / integration entrypoint.
+
+Allowed future pattern:
+
+script reads process.env.XC_ETHEREUM_RPC_URL
+-> script creates public client
+-> script passes public client to integration helper
+-> integration helper passes client to wrapper
+-> wrapper returns EthereumReadProvider
+-> provider adapter produces XcEpochMinimumSource
+
+Disallowed pattern:
+
+- model reads process.env
+- wrapper reads process.env
+- provider adapter reads process.env
+- source builder reads process.env
+
+RPC URL / API key policy:
+
+RPC URLs and API keys are secret-bearing or sensitive operational config.
+
+They must not be:
+
+- logged
+- included in thrown error messages
+- stored in snapshots
+- stored in checkpoint records
+- passed into model-layer constructors
+- passed into createXcEpochMinimumSourceFromEthereumLensProvider()
+- passed into createEthereumReadProviderFromViemPublicClient()
+
+Preferred first real integration approach:
+
+- create the public client in a script / app entrypoint
+- pass the public client object inward
+
+Avoid first:
+
+- createEthereumReadProviderFromRpcUrl(rpcUrl)
+- createXcEpochMinimumSourceFromRpcUrl(rpcUrl)
+
+Read-only requirement:
+
+The real integration path must be read-only.
+
+It must not require:
+
+- private key
+- mnemonic
+- signer
+- wallet client
+- account
+- sendTransaction
+- writeContract
+- approve
+- transaction simulation for writes
+
+Allowed read-only calls:
+
+- getChainId()
+- getBlock()
+- readContract()
+
+Chain and address policy:
+
+The integration should require explicit chainId and explicit Lens address.
+
+The provider adapter already validates:
+
+- configured chainId format
+- provider chain ID match
+- Lens address format
+- finality policy
+- lockEpochs
+- selected block provenance
+- read result shape
+
+The outer integration should not bypass those checks.
+
+Recommended future integration inputs:
+
+- publicClient
+- chainId
+- lensAddress
+- finalityPolicy
+- lockEpochs
+- epochMinimumFunctionName
+- epochMinimumAbi
+
+Finality policy:
+
+Supported finality policies remain:
+
+- finalized
+- safe
+- confirmed
+
+Unsupported:
+
+- latest as provenance policy
+
+The real RPC integration should not silently change policy.
+
+If finalized / safe is unsupported by a provider, the integration must surface a sanitized error.
+
+Do not silently downgrade:
+
+- finalized -> latest
+- safe -> latest
+
+If a fallback is ever added, it must be explicit in config and documented.
+
+Confirmed policy behavior:
+
+Confirmed policy may read the current head only to calculate an older confirmed block number.
+
+Then all contract reads must use the selected confirmed block number.
+
+Existing provider adapter behavior should remain the source of truth.
+
+Provider error sanitization:
+
+Allowed error context:
+
+- operation name
+- chain ID
+- block tag
+- block number
+- contract address
+- function name
+- high-level provider failure category
+
+Disallowed error context:
+
+- RPC URL
+- API key
+- authorization header
+- private key
+- mnemonic
+- signer object
+- wallet account secret material
+- full env dump
+- transport internals that include URL / headers
+
+Preferred cautious decision:
+
+- outer integration owns secret-bearing config
+- wrapper can wrap low-level errors only if it never includes transport config
+- tests should verify no RPC URL / API key appears in thrown messages
+
+Snapshot policy:
+
+EthereumXcLensEpochMinimumSnapshot must not include:
+
+- RPC URL
+- API key
+- env config
+- provider object
+- transport config
+- private key
+- signer
+- wallet client
+
+Snapshot may include:
+
+- sourceChainId
+- sourceBlockNumber
+- sourceBlockHash
+- observedAt
+- finalizedPolicy
+- epochMinimums
+
+Logging policy:
+
+No logging by default in reusable model / wrapper / provider layers.
+
+Safe future script logs may include:
+
+- chain ID
+- finality policy
+- selected block number
+- selected block hash
+- Lens address
+- lockEpoch count
+- function name
+
+Unsafe fields:
+
+- RPC URL
+- API key
+- authorization header
+- env dump
+- private key
+- mnemonic
+- signer / wallet internals
+- transport config
+
+ABI policy:
+
+The real RPC integration should not hardcode a large ABI unless necessary.
+
+Preferred initial approach:
+
+- pass epochMinimumAbi explicitly from outer integration
+- pass epochMinimumFunctionName explicitly or use a safe default
+
+Possible later approach:
+
+- add a minimal XC Lens ABI module
+- keep it separate from model logic
+- document source of ABI
+
+Testing strategy for future implementation:
+
+The next implementation milestone after design review should still avoid real RPC unless explicitly approved.
+
+Recommended first implementation tests with mocked public client / mocked config:
+
+1. constructs source from a provided public client
+2. does not accept RPC URL in model-facing input
+3. does not read process.env in model/wrapper/integration helper
+4. passes public client into createEthereumReadProviderFromViemPublicClient()
+5. passes EthereumReadProvider into createXcEpochMinimumSourceFromEthereumLensProvider()
+6. preserves finalized finality policy
+7. preserves safe finality policy
+8. preserves confirmed finality policy
+9. does not downgrade finalized / safe
+10. propagates sanitized provider errors
+11. error messages do not contain RPC URL
+12. error messages do not contain API key
+13. snapshot does not contain RPC URL / API key / env config
+14. integration result works with authoritativeEpochMinimum(lockEpoch)
+
+Real RPC tests should be a later separate milestone after design review and implementation review.
+
+Non-goals:
+
+This design does not add:
+
+- real RPC execution
+- viem dependency installation
+- env reads
+- RPC URL factory
+- private key support
+- signer support
+- wallet client support
+- transaction sending
+- CLI command
+- production address config
+- snapshot persistence migration
+- bridge signer verification
+- X1-native verification
+
+Validation:
+
+- npm run typecheck: passed
+- npm test: passed
+- npm run build: passed
+- npm audit --audit-level=moderate: found 0 vulnerabilities
+
+Current test count:
+
+- 34 test files passed
+- 251 tests passed
+
+Conclusion:
+
+The real read-only RPC integration should be an outer infrastructure boundary.
+
+It should construct or receive a real public client outside the model and wrapper layers, keep RPC URL / API key / env ownership outside protocol logic, and pass only a read-only public client inward to the existing viem-like wrapper and provider adapter path.
+
+Recommended next milestone:
+
+xc-epoch-minimum-real-readonly-rpc-integration-design-review
+
+Suggested next scope:
+
+- review real read-only RPC integration design
+- confirm no real RPC implementation was added
+- confirm env/RPC URL ownership stays outside model and wrapper
+- confirm snapshot/logging/error redaction policy
+- decide whether first implementation should use a provided public client helper only
+- do not implement real RPC until design review is complete
+
 ## Current next steps
 
 Potential next documents / design areas:
 
-1. Design the real read-only RPC integration boundary.
+1. Review the real read-only RPC integration design before implementation.
 2. Continue implementation only with clean typecheck and tests.
 
 
