@@ -13849,3 +13849,67 @@ Manual refusal without env remained safe:
 Recommended next milestone:
 
     xc-build-active-validity-rule-design-review
+
+## Latest XC Build active validity rule design review checkpoint
+
+The XC Build active validity rule design review milestone was completed on the `xc-build-active-validity-rule-design-review` branch.
+
+This milestone is review-only.
+
+New document:
+
+- `implementation/xc-build-active-validity-rule-design-review-notes.md`
+
+Reviewed files:
+
+- `implementation/xc-build-active-validity-rule-design.md`
+- `docs/checkpoints/current-design-checkpoint.md`
+
+Review conclusion:
+
+- XC Build active validity rule design accepted
+- design-only boundary preserved
+- active status is an optional current-commitment signal
+- inactive Build keeps historical contribution
+- inactive Build does not lose `history_bld`
+- inactive Build does not invalidate Core redeem proof
+- external X1 projects may choose whether to use active status
+- active status should not be treated as universal punishment
+- XNTD lock / relock are the basis of active status
+- Forge participation is out of scope for MVP active validity
+
+Accepted MVP active validity rule:
+
+    Active status is an optional current-commitment signal.
+    It is based on XNTD lock / relock state.
+    Inactive Build keeps historical contribution.
+    External X1 projects may choose whether to use active status.
+    Forge participation is out of scope for MVP active validity.
+
+The review confirms that the policy should not add:
+
+- runtime code
+- tests
+- dependencies
+- real RPC execution
+- appSubmitProof behavior changes
+- watcher behavior changes
+- registrar behavior changes
+- proof payload behavior changes
+- active status enforcement
+- external project policy
+- inactive Build history erasure
+- Forge requirements
+- unlock mechanics
+- BLD transfer/sale rule changes
+
+Validation baseline for review:
+
+- `npm run typecheck` passed
+- `npm test` passed: 40 test files, 317 tests
+- `npm run build` passed
+- `npm audit --audit-level=moderate` found 0 vulnerabilities
+
+Recommended next milestone after merge:
+
+    xc-build-active-status-model-design
