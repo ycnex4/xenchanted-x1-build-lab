@@ -11733,3 +11733,104 @@ No runtime code changed.
 No dependencies changed.
 
 No real RPC was added.
+
+## Latest XC epoch minimum mocked script entrypoint design checkpoint
+
+The XC epoch minimum mocked script entrypoint design milestone was completed on the `xc-epoch-minimum-mocked-script-entrypoint-design` branch.
+
+This milestone is design-only.
+
+New document:
+
+- `implementation/xc-epoch-minimum-mocked-script-entrypoint-design.md`
+
+Purpose:
+
+- design the future mocked/testable script runner
+- keep the runner outside `src/model`
+- define the provided-client boundary
+- define safe output policy
+- define dependency injection rules
+- define error sanitization expectations
+- define ABI path handling for the first mocked runner milestone
+- keep future real RPC separated from the mocked runner
+- define the expected implementation files for the next milestone
+
+The proposed future implementation files are:
+
+```text
+src/ethereum/ethereum-script-runner.ts
+tests/ethereum-script-runner.test.ts
+```
+
+The expected export update is:
+
+```text
+src/index.ts
+```
+
+The proposed future runner function is:
+
+```text
+runEthereumXcEpochMinimumReadFromProvidedClient(input)
+```
+
+The name should preserve the important boundary:
+
+```text
+FromProvidedClient
+```
+
+The mocked runner design confirms that the next implementation milestone should still not add:
+
+- real RPC calls
+- viem dependency
+- runtime viem imports
+- ethers dependency
+- process.env reads
+- public client construction
+- RPC URL factory
+- HTTP transport construction
+- private key support
+- mnemonic support
+- signer support
+- wallet client support
+- transaction sending
+- writeContract / sendTransaction paths
+- raw env printing
+- full config printing
+- RPC URL / API key printing
+
+The intended safe flow remains:
+
+```text
+env-like input
+-> parseEthereumScriptConfig()
+-> summarizeEthereumScriptConfig()
+-> injected mocked/provided public client
+-> createXcEpochMinimumSourceFromReadonlyEthereumPublicClient()
+-> read source data
+-> write safe output only
+```
+
+The design explicitly states that the parser may continue to keep `rpcUrl` in the full parsed config for a future outer real script, but the mocked runner must not print it, pass it into helpers, or construct transport from it.
+
+ABI path policy for the first mocked runner implementation:
+
+- parse and summarize whether ABI path is present
+- do not load files
+- use default epoch minimum ABI
+- leave ABI loading for a separate milestone if needed
+
+Validation baseline after the design document:
+
+- `npm run typecheck` passed
+- `npm test` passed: 36 test files, 278 tests
+- `npm run build` passed
+- `npm audit --audit-level=moderate` found 0 vulnerabilities
+
+No runtime code changed.
+
+No dependencies changed.
+
+No real RPC was added.
