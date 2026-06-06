@@ -15,14 +15,20 @@ The current implementation focuses on:
 - proof conversion
 - snapshot persistence and recovery safety
 - read-only CLI inspection / verification / recovery commands
+- commitmentStatus as current XNTD commitment signal
+- appGetBuildView as read-only app/service view
 
 This repository is not a production chain deployment yet.
 
 It is a tested MVP implementation lab intended for design review, architectural review, and incremental hardening.
 
+The MVP implementation lab is complete at the current scope.
+
+It remains a lab, not a production deployment.
+
 ## Current review target
 
-The current review target is the correctness of the implemented model and the safety of the MVP architecture.
+The current review target is the correctness of the completed MVP implementation lab and the safety of the MVP architecture.
 
 The most important question is whether the current accounting model, proof flow, replay protection, snapshot behavior, and CLI safety boundaries are coherent and hard to misuse.
 
@@ -62,6 +68,7 @@ Build state tracks contribution-related data such as:
 - XNTD lock / relock status
 - X1 fee contribution checkpoints
 - replay protection state
+- commitmentStatus as current XNTD commitment signal
 
 The model distinguishes historical accounting from currently available / usable accounting.
 
@@ -98,11 +105,21 @@ Current intended lock rule:
 
     required_xntd_lock = current epoch Core L1 nominal
 
-Commitment active condition:
+Commitment status is exposed through:
 
-    xc_commitment_active =
-      history_bld > 0
-      AND locked_xntd >= required_xntd_lock
+    commitmentStatus
+
+Implemented status values:
+
+    COMMITTED
+    UNCOMMITTED
+    UNKNOWN
+
+Meaning:
+
+    commitmentStatus = current XNTD commitment signal
+
+UNCOMMITTED does not mean invalid Build history.
 
 Relock is allowed only when:
 
@@ -138,6 +155,8 @@ The current repository includes tested layers for:
 - XNTD lock and relock
 - X1 fee contribution checkpoints
 - registrar replay protection
+- source event replay protection
+- XNTD commitment event replay protection
 - registrar handlers
 - proof object types
 - proof-to-registrar builders
@@ -154,6 +173,13 @@ The current repository includes tested layers for:
 - CLI snapshot show
 - CLI snapshot verify
 - CLI snapshot recover
+- authoritative XC epoch minimum source
+- authoritative XC epoch minimum provider source
+- XC protocol params source
+- XC protocol params build validation
+- XC Build validation context
+- XC Build commitment status model
+- app Build view exposing commitmentStatus
 
 ## Snapshot safety model
 
@@ -209,8 +235,8 @@ Current validation baseline:
     npm test: passed
     npm run build: passed
     npm audit --audit-level=moderate: found 0 vulnerabilities
-    28 test files passed
-    171 tests passed
+    42 test files passed
+    328 tests passed
 
 Current test tooling:
 
@@ -230,6 +256,10 @@ The XNTD lock / relock event identity design path is documented in:
 
 These documents should be reviewed before adding live indexer integration, production chain integration, bridge execution, or token issuance logic.
 
+The final MVP readiness checkpoint is documented in:
+
+- docs/final-mvp-readiness-checkpoint.md
+
 ## Important non-goals in the current MVP
 
 The current MVP intentionally does not include:
@@ -244,6 +274,10 @@ The current MVP intentionally does not include:
 - admin / governance logic
 - token issuance logic on X1
 - UI
+- Build actor profile
+- Forge participation requirement
+- unlock flow
+- BLD marketplace
 
 These are future layers and should not be assumed to exist in the current MVP.
 
@@ -258,9 +292,12 @@ Recommended review focus:
 5. Is application proof submission correctly separated from low-level registrar handlers?
 6. Is the XNTD lock / relock rule logically sound?
 7. Is the snapshot verification / backup / recovery model conservative enough?
-8. Are CLI commands safely read-only?
-9. Are there any hidden places where one event could affect accounting more than once?
-10. Are there any model assumptions that should be documented more explicitly before moving toward integration?
+8. Is commitmentStatus framed correctly as current XNTD commitment signal rather than Build validity?
+9. Is appGetBuildView the right minimal app/service view layer?
+10. Are the final MVP non-goals clear enough to prevent scope expansion?
+11. Are CLI commands safely read-only?
+12. Are there any hidden places where one event could affect accounting more than once?
+13. Are there any model assumptions that should be documented more explicitly before moving toward integration?
 
 ## Suggested review approach
 
