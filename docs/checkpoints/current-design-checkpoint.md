@@ -13741,3 +13741,67 @@ Manual refusal without env remained safe:
 Recommended next milestone after merge:
 
     xc-build-active-validity-rule-design
+
+## Latest XC Build validation epoch policy completion checkpoint
+
+The XC Build validation epoch policy milestone was completed on the `xc-build-validation-epoch-policy-completion-checkpoint` branch.
+
+This milestone is documentation-only.
+
+New document:
+
+- `implementation/xc-build-validation-epoch-policy-completion-checkpoint.md`
+
+The checkpoint closes the completed chain:
+
+- epoch policy design
+- epoch policy design review
+- merge to main
+
+Accepted MVP epoch policy:
+
+    historical contribution remains historical
+    active validity may require current XNTD lock/relock compliance
+    currentEpoch should not invalidate Core redeem history
+    Forge participation is out of scope for MVP Build validity
+
+Core redeem proof is historical.
+
+`history_bld` is historical and non-decreasing.
+
+XNTD lock / relock are the active validity layer.
+
+`currentEpoch` should not reject historical Core redeem proof.
+
+Forge participation is out of scope for MVP Build validity and should not be used as an implicit Build activation or epoch validation requirement.
+
+This milestone does not add:
+
+- runtime code
+- tests
+- dependencies
+- real RPC execution
+- appSubmitProof behavior changes
+- watcher behavior changes
+- registrar behavior changes
+- proof payload behavior changes
+- global Build validity enforcement
+- Forge requirements
+- currentEpoch enforcement in code
+- requiredXntdLockMinimum enforcement in code
+- BLD transfer/sale rule changes
+
+Final validation baseline:
+
+- `npm run typecheck` passed
+- `npm test` passed: 40 test files, 317 tests
+- `npm run build` passed
+- `npm audit --audit-level=moderate` found 0 vulnerabilities
+
+Safe refusal without env remained active:
+
+    Missing required Ethereum script secret config: XC_ETHEREUM_RPC_URL
+
+Recommended next milestone:
+
+    xc-build-active-validity-rule-design
