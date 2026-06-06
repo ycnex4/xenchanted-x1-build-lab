@@ -33,3 +33,4 @@ export * from "./ethereum/ethereum-viem-read-provider-wrapper.js";
 export * from "./ethereum/ethereum-readonly-rpc-integration.js";
 export * from "./ethereum/ethereum-script-config.js";
 export * from "./ethereum/ethereum-script-runner.js";
+export * from "./ethereum/xc-protocol-params-source.js";
