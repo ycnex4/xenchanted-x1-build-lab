@@ -13676,3 +13676,68 @@ Manual refusal without env remained safe:
 Recommended next milestone:
 
     xc-build-validation-epoch-policy-design-review
+
+## Latest XC Build validation epoch policy design review checkpoint
+
+The XC Build validation epoch policy design review milestone was completed on the `xc-build-validation-epoch-policy-design-review` branch.
+
+This milestone is review-only.
+
+New document:
+
+- `implementation/xc-build-validation-epoch-policy-design-review-notes.md`
+
+Reviewed files:
+
+- `implementation/xc-build-validation-epoch-policy-design.md`
+- `docs/checkpoints/current-design-checkpoint.md`
+
+Review conclusion:
+
+- XC Build validation epoch policy design accepted
+- design-only boundary preserved
+- historical contribution and current active validity remain separate layers
+- Core redeem proof remains historical
+- `history_bld` remains historical and non-decreasing
+- XNTD lock / relock are the active validity layer
+- `currentEpoch` should not invalidate historical Core redeem history
+- Forge participation is out of scope for MVP Build validity
+- no runtime enforcement should be added before a focused implementation milestone
+
+The review confirms that the policy should not add:
+
+- runtime code
+- tests
+- dependencies
+- real RPC execution
+- appSubmitProof behavior changes
+- watcher behavior changes
+- registrar behavior changes
+- proof payload behavior changes
+- global Build validity enforcement
+- Forge requirements
+- currentEpoch enforcement in code
+- requiredXntdLockMinimum enforcement in code
+- BLD transfer/sale rule changes
+
+Accepted MVP epoch policy:
+
+    historical contribution remains historical
+    active validity may require current XNTD lock/relock compliance
+    currentEpoch should not invalidate Core redeem history
+    Forge participation is out of scope for MVP Build validity
+
+Validation baseline for review:
+
+- `npm run typecheck` passed
+- `npm test` passed: 40 test files, 317 tests
+- `npm run build` passed
+- `npm audit --audit-level=moderate` found 0 vulnerabilities
+
+Manual refusal without env remained safe:
+
+    Missing required Ethereum script secret config: XC_ETHEREUM_RPC_URL
+
+Recommended next milestone after merge:
+
+    xc-build-active-validity-rule-design
