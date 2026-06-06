@@ -12912,3 +12912,53 @@ Safe refusal without env remained active:
 Recommended next milestone:
 
     xc-protocol-params-build-validation-design
+
+## Latest XC protocol params build validation design checkpoint
+
+The XC protocol params build validation design milestone was completed on the `xc-protocol-params-build-validation-design` branch.
+
+This milestone is design-only.
+
+New document:
+
+- `implementation/xc-protocol-params-build-validation-design.md`
+
+Design conclusion:
+
+- future X1 Build validation should consume `XcProtocolParams`
+- deployed XC protocol params should be treated as authoritative XC economic context
+- validation should use `getProtocolParams()` output through `XcProtocolParamsSource`
+- validation should not call real RPC directly
+- validation should not hardcode XC economic values when Lens params can be used
+- validation should remain pure/mocked in the first implementation
+
+Likely authoritative fields:
+
+- currentEpoch
+- currentBaseNominal
+- currentXenBurnAmount
+- halvingInterval
+- xenBurnHalvingInterval
+- nextHalvingTs
+- genesisTs
+
+Recommended next milestone after review:
+
+    xc-protocol-params-build-validation
+
+Expected first implementation files:
+
+- `src/model/xc-protocol-params-build-validation.ts`
+- `tests/xc-protocol-params-build-validation.test.ts`
+- `src/index.ts`
+
+Validation baseline for design:
+
+- `npm run typecheck` passed
+- `npm test` passed: 38 test files, 296 tests
+- `npm run build` passed
+- `npm audit --audit-level=moderate` found 0 vulnerabilities
+
+Manual refusal without env remained safe:
+
+    Missing required Ethereum script secret config: XC_ETHEREUM_RPC_URL
