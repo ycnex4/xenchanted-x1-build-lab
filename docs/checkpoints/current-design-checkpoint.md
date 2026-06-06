@@ -7524,11 +7524,220 @@ Suggested next scope:
 - verify block/readContract mapping
 - decide whether any extra wrapper edge-case tests are needed before real viem wrapper design
 
+
+## Latest XC epoch minimum mocked Ethereum provider wrapper review checkpoint
+
+The XC epoch minimum mocked Ethereum provider wrapper review milestone was completed on the xc-epoch-minimum-mocked-ethereum-provider-wrapper-review branch.
+
+Commits:
+
+- 999501f Add mocked Ethereum provider wrapper review notes
+
+This was a review-only milestone.
+
+No runtime behavior changed.
+
+Review note added:
+
+- implementation/xc-epoch-minimum-mocked-ethereum-provider-wrapper-review-notes.md
+
+Reviewed runtime:
+
+- src/ethereum/ethereum-read-provider-wrapper.ts
+
+Reviewed tests:
+
+- tests/ethereum-read-provider-wrapper.test.ts
+
+Reviewed prior commits:
+
+- 14d800a Add mocked Ethereum read provider wrapper
+- 8b67431 Add mocked Ethereum provider wrapper notes
+- 46be704 Update checkpoint after mocked Ethereum provider wrapper
+- 85de67b Merge branch 'xc-epoch-minimum-mocked-ethereum-provider-wrapper'
+
+Review conclusion:
+
+The mocked Ethereum provider wrapper boundary is clean.
+
+The wrapper lives in:
+
+- src/ethereum/ethereum-read-provider-wrapper.ts
+
+It does not live in src/model.
+
+The model layer remains provider-library agnostic.
+
+The model layer does not import the wrapper.
+
+The wrapper imports model-facing EthereumReadProvider types, which is the intended dependency direction.
+
+Runtime boundary review:
+
+The wrapper does not import or call:
+
+- process.env
+- fetch
+- http / https
+- viem
+- ethers
+- wallet APIs
+- signer APIs
+
+The wrapper does not accept:
+
+- RPC URL
+- private key
+- mnemonic
+- API key
+- signer
+- wallet account
+- env config
+
+A targeted grep over the runtime file, test file, and notes file found RPC / secret / provider-library terms only in the notes file where they are documented as non-goals.
+
+A targeted grep over src/model found no references to:
+
+- ethereum-read-provider-wrapper
+- createEthereumReadProviderFromPublicClient
+
+This confirms that src/model does not depend on the wrapper.
+
+Public client shape review:
+
+The wrapper uses a mocked viem-style public client shape:
+
+- getChainId()
+- getBlock()
+- readContract()
+
+This remains dependency-free.
+
+No real viem dependency was introduced.
+
+No ethers dependency was introduced.
+
+Mapping review:
+
+getChainId:
+
+- number | bigint -> bigint
+
+getBlock:
+
+- { blockTag: "finalized" } -> publicClient.getBlock({ blockTag: "finalized" })
+- { blockTag: "safe" } -> publicClient.getBlock({ blockTag: "safe" })
+- { blockNumber } -> publicClient.getBlock({ blockNumber })
+- {} -> publicClient.getBlock({ blockTag: "latest" })
+
+Review decision:
+
+- empty input maps to latest only for confirmed-policy head calculation
+- wrapper does not reinterpret empty input as finalized or safe
+
+Block result mapping:
+
+- missing block -> null
+- missing block number -> null
+- hash preserved as string | null
+- timestamp number | bigint -> bigint
+
+readContract:
+
+- address passed unchanged
+- abi passed unchanged
+- functionName passed unchanged
+- args passed unchanged
+- blockNumber passed unchanged
+- raw decoded result returned as unknown
+
+Test coverage review:
+
+The current tests cover:
+
+1. getChainId number result maps to bigint
+2. getChainId bigint result maps to bigint
+3. finalized block tag maps to public client getBlock
+4. safe block tag maps to public client getBlock
+5. number timestamp maps to bigint timestamp
+6. blockNumber read maps to public client getBlock
+7. empty getBlock input maps to latest head block read
+8. missing block maps to null
+9. missing block number maps to null
+10. missing block hash maps to hash null
+11. readContract input passes through unchanged
+12. integration with existing Ethereum Lens provider adapter without real RPC
+
+Additional edge-case test decision:
+
+No additional tests are required before merging this review milestone.
+
+Possible future tests for real viem wrapper design / implementation may include:
+
+- viem-specific block timestamp shape
+- viem-specific block number shape
+- viem-specific null block response
+- viem-specific readContract error mapping
+- finalized / safe support differences across providers
+
+Those are not required in the current dependency-free mocked wrapper layer.
+
+Security / operational review:
+
+This milestone does not add:
+
+- real Ethereum RPC
+- env reads
+- RPC URL factory
+- private keys
+- API keys
+- mnemonic
+- signer support
+- wallet support
+- transaction sending
+- CLI commands
+- production address config
+- snapshot persistence
+- bridge signer verification
+- X1-native verification
+
+Validation:
+
+- npm run typecheck: passed
+- npm test: passed
+- npm run build: passed
+- npm audit --audit-level=moderate: found 0 vulnerabilities
+
+Current test count:
+
+- 33 test files passed
+- 238 tests passed
+
+Conclusion:
+
+The mocked Ethereum provider wrapper is safe to keep as the dependency-free infrastructure wrapper boundary.
+
+It adapts a viem-style public client shape into EthereumReadProvider without moving provider-library dependencies, RPC URLs, env, secrets, or signers into the model layer.
+
+Recommended next milestone:
+
+xc-epoch-minimum-real-viem-wrapper-design
+
+Suggested next scope:
+
+- design real viem wrapper boundary only
+- decide exact viem public client type shape
+- define viem getBlock mapping
+- define viem readContract mapping
+- define error redaction policy
+- keep RPC URL / env / API keys outside model code
+- do not implement real RPC until design review is complete
+
 ## Current next steps
 
 Potential next documents / design areas:
 
-1. Review the mocked Ethereum provider wrapper boundary before real viem wrapper design.
+1. Design the real viem wrapper boundary before implementation.
 2. Continue implementation only with clean typecheck and tests.
 
 
