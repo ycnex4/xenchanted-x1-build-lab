@@ -11665,3 +11665,71 @@ Potential next documents / design areas:
 
 
 
+
+## Latest XC epoch minimum script implementation planning checkpoint
+
+The XC epoch minimum script implementation planning milestone was completed on the `xc-epoch-minimum-script-implementation-planning` branch.
+
+This milestone is planning-only.
+
+New document:
+
+- `implementation/xc-epoch-minimum-script-implementation-planning.md`
+
+Purpose:
+
+- define the next safe implementation step for the Ethereum XC epoch minimum source path
+- keep real RPC disabled
+- keep viem dependency out of the project for now
+- keep process.env reads out of model, wrapper, helper, and parser layers
+- define the mocked script entrypoint as the recommended next milestone
+- preserve the rule that only safe summaries may be printed
+
+The recommended next branch is:
+
+```text
+xc-epoch-minimum-mocked-script-entrypoint-design
+```
+
+The next safe step should be mocked script entrypoint design, not real RPC implementation.
+
+The planning document confirms that the next milestone should still not add:
+
+- real RPC calls
+- viem installation
+- process.env integration
+- public client construction
+- RPC URL factory
+- private keys
+- signers
+- wallet clients
+- transaction sending
+- writeContract / sendTransaction paths
+- raw env printing
+- full config printing
+- RPC URL / API key printing
+
+The proposed future mocked script entrypoint shape is:
+
+```text
+env-like input
+-> parseEthereumScriptConfig()
+-> summarizeEthereumScriptConfig()
+-> injected mocked/provided public client
+-> createXcEpochMinimumSourceFromReadonlyEthereumPublicClient()
+-> read source data
+-> print safe summary only
+```
+
+Validation baseline after the planning document:
+
+- `npm run typecheck` passed
+- `npm test` passed: 36 test files, 278 tests
+- `npm run build` passed
+- `npm audit --audit-level=moderate` found 0 vulnerabilities
+
+No runtime code changed.
+
+No dependencies changed.
+
+No real RPC was added.
