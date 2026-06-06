@@ -14220,3 +14220,85 @@ Validation baseline for review:
 Recommended next milestone after merge:
 
     xc-build-active-status-model-completion-checkpoint
+
+## Latest XC Build active status model completion checkpoint
+
+The XC Build active status model runtime milestone was completed on the `xc-build-active-status-model-completion-checkpoint` branch.
+
+This milestone is documentation-only.
+
+New document:
+
+- `implementation/xc-build-active-status-model-completion-checkpoint.md`
+
+The checkpoint closes the completed chain:
+
+- active status model design
+- active status model design review
+- active status model design completion checkpoint
+- active status model runtime implementation
+- active status model runtime review
+- merge to main
+
+Runtime files added:
+
+- `src/model/build-active-status.ts`
+- `tests/build-active-status.test.ts`
+
+Runtime export updated:
+
+- `src/index.ts`
+
+Implemented helper:
+
+    getBuildActiveStatus()
+
+Implemented status values:
+
+    ACTIVE
+    INACTIVE
+    UNKNOWN
+
+Implemented reason values:
+
+    ACTIVE_LOCK_CURRENT
+    INACTIVE_NO_HISTORY
+    INACTIVE_NO_LOCK
+    INACTIVE_LOCK_BELOW_REQUIRED
+    INACTIVE_RELOCK_REQUIRED
+    UNKNOWN_NO_CURRENT_CONTEXT
+
+Implemented behavior:
+
+- `INACTIVE_NO_HISTORY` when `historyBld == 0`
+- `INACTIVE_NO_LOCK` when history exists but no XNTD lock exists
+- `ACTIVE_LOCK_CURRENT` when history and sufficient lock exist
+- `INACTIVE_LOCK_BELOW_REQUIRED` when a provided current requirement exceeds locked XNTD
+- `UNKNOWN_NO_CURRENT_CONTEXT` when strict current context is required but missing
+
+The implementation is read-only and non-mutating.
+
+The implementation does not change:
+
+- appSubmitProof behavior
+- watcher behavior
+- registrar behavior
+- proof payload behavior
+- ethereum/RPC code
+- scripts
+- dependencies
+- CLI commands
+- BLD transfer/sale rules
+- Forge requirements
+- unlock mechanics
+
+Final validation baseline:
+
+- `npm run typecheck` passed
+- `npm test` passed: 41 test files, 323 tests
+- `npm run build` passed
+- `npm audit --audit-level=moderate` found 0 vulnerabilities
+
+Recommended next milestone:
+
+    xc-build-active-status-app-integration-design
