@@ -35,3 +35,4 @@ export * from "./ethereum/ethereum-script-config.js";
 export * from "./ethereum/ethereum-script-runner.js";
 export * from "./ethereum/xc-protocol-params-source.js";
 export * from "./model/xc-protocol-params-build-validation.js";
+export * from "./model/xc-build-validation-context.js";
