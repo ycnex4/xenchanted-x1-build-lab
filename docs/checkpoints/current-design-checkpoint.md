@@ -14565,3 +14565,58 @@ Validation baseline:
 Recommended next milestone:
 
     xc-build-commitment-status-app-view
+
+## Latest XC Build commitment status app view review checkpoint
+
+The XC Build commitment status app view review milestone was completed on the `xc-build-commitment-status-app-view-review` branch.
+
+This milestone is review-only.
+
+New document:
+
+- `implementation/xc-build-commitment-status-app-view-review-notes.md`
+
+Reviewed files:
+
+- `src/app/build-view.ts`
+- `tests/app-build-view.test.ts`
+- `src/index.ts`
+
+Review conclusion:
+
+- XC Build commitment status app view implementation accepted
+- implementation adds read-only `appGetBuildView()`
+- implementation returns Build state plus commitmentStatus
+- implementation exports helper and types through `src/index.ts`
+- implementation handles optional fields correctly under `exactOptionalPropertyTypes`
+- implementation adds focused unit tests
+- implementation is read-only and non-mutating
+- implementation does not change appSubmitProof
+- implementation does not change watcher behavior
+- implementation does not change registrar behavior
+- implementation does not change proof payload behavior
+- implementation does not introduce real RPC
+- implementation does not introduce Forge requirements
+- implementation does not introduce Build actor scope
+
+Implemented app view:
+
+    AppBuildView {
+      build
+      commitmentStatus
+    }
+
+Implemented helper:
+
+    appGetBuildView()
+
+Validation baseline for review:
+
+- `npm run typecheck` passed
+- `npm test` passed: 42 test files, 328 tests
+- `npm run build` passed
+- `npm audit --audit-level=moderate` found 0 vulnerabilities
+
+Recommended next milestone after merge:
+
+    xc-build-commitment-status-app-view-completion-checkpoint
