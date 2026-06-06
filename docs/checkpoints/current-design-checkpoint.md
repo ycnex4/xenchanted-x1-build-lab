@@ -6794,11 +6794,295 @@ Suggested next scope:
 - define how wrapper maps contract reads to unknown results
 - do not implement real RPC until wrapper design is reviewed
 
+
+## Latest XC epoch minimum Ethereum provider wrapper design checkpoint
+
+The XC epoch minimum Ethereum provider wrapper design milestone was completed on the xc-epoch-minimum-ethereum-provider-wrapper-design branch.
+
+Commits:
+
+- bc084d9 Add XC epoch minimum Ethereum provider wrapper design
+
+This was a design-only milestone.
+
+No runtime behavior changed.
+
+Design document added:
+
+- implementation/xc-epoch-minimum-ethereum-provider-wrapper-design.md
+
+Purpose:
+
+Design the concrete Ethereum provider wrapper boundary for the XC epoch minimum provider adapter.
+
+This milestone does not implement:
+
+- real RPC reads
+- viem / ethers runtime code
+- env reads
+- secrets
+- CLI commands
+
+Current foundation:
+
+The model-layer provider adapter is already implemented and reviewed:
+
+EthereumReadProvider
+-> createXcEpochMinimumSourceFromEthereumLensProvider()
+-> EthereumXcLensEpochMinimumSnapshot
+-> createXcEpochMinimumSourceFromEthereumLensSnapshot()
+-> XcEpochMinimumSource
+
+The model-layer adapter uses only a custom read-only provider interface:
+
+- getChainId()
+- getBlock()
+- readContract()
+
+It does not import concrete provider libraries and does not accept:
+
+- RPC URL
+- private key
+- mnemonic
+- API key
+- signer
+- wallet account
+- env config
+
+Design goal:
+
+Future concrete provider wrapper should adapt an external Ethereum client into the already-reviewed EthereumReadProvider interface.
+
+Recommended high-level flow:
+
+outer integration / application layer
+-> constructs concrete Ethereum client
+-> wraps concrete client as EthereumReadProvider
+-> passes wrapper into createXcEpochMinimumSourceFromEthereumLensProvider()
+-> model layer remains provider-library agnostic
+
+Wrapper responsibility:
+
+The concrete wrapper should be responsible for:
+
+- mapping provider chain ID reads to bigint
+- mapping block reads to EthereumBlockSnapshot
+- mapping contract reads to unknown
+- translating finalized / safe / blockNumber requests into concrete client calls
+- normalizing provider-specific null / missing block behavior
+- surfacing read errors without exposing secrets
+
+The wrapper should not:
+
+- decide protocol economics
+- compute epoch minimums
+- perform Build-state validation
+
+Model-layer boundary:
+
+These files should remain free from concrete provider dependency imports:
+
+- src/model/ethereum-xc-epoch-minimum-provider-source.ts
+- src/model/ethereum-xc-epoch-minimum-source.ts
+- src/model/xc-epoch-minimum-source.ts
+
+Do not import viem or ethers into model files.
+
+If a real wrapper is added later, it should live outside the model source layer or in a clearly separated adapter / infrastructure layer.
+
+Concrete provider library choice:
+
+Two realistic choices were documented:
+
+- viem
+- ethers
+
+Recommended first wrapper direction:
+
+- viem-style read-only public client wrapper
+
+Design decision:
+
+- do not add either library yet
+- keep implementation choice outside model layer
+- prefer viem wrapper if the project later needs a concrete implementation and dependency fit is acceptable
+
+No-secret construction boundary:
+
+Allowed future pattern:
+
+app / script / integration reads config
+-> app / script / integration constructs concrete public client
+-> wrapper receives public client object
+-> wrapper implements EthereumReadProvider
+-> model adapter receives wrapper
+
+Disallowed pattern:
+
+- wrapper reads process.env.RPC_URL
+- wrapper reads process.env.ALCHEMY_KEY
+- wrapper reads process.env.INFURA_KEY
+- wrapper accepts private key
+- wrapper accepts mnemonic
+- wrapper accepts signer
+- wrapper logs RPC URL
+- wrapper logs authorization headers
+
+RPC URL policy:
+
+RPC URLs may exist only in outer infrastructure configuration.
+
+They must not be passed into:
+
+- createXcEpochMinimumSourceFromEthereumLensProvider()
+
+If a concrete wrapper factory is later added, prefer:
+
+- createEthereumReadProviderFromPublicClient(publicClient)
+
+over:
+
+- createEthereumReadProviderFromRpcUrl(rpcUrl)
+
+Private key / signer policy:
+
+The concrete provider wrapper must be read-only.
+
+It must not support:
+
+- private keys
+- mnemonic phrases
+- signers
+- wallet clients
+- transaction sending
+- account mutation
+- approvals
+- writes
+
+Block read mapping:
+
+The wrapper must map EthereumBlockReadInput to concrete provider block reads:
+
+- finalized -> concrete finalized block tag
+- safe -> concrete safe block tag
+- blockNumber -> concrete block number read
+- empty input -> current head read for confirmed-policy calculation only
+
+The wrapper should not reinterpret empty input as a provenance-safe block.
+
+Block snapshot mapping:
+
+The wrapper must map concrete block result to:
+
+EthereumBlockSnapshot {
+  number: bigint;
+  hash: string | null;
+  timestamp: bigint;
+}
+
+Required behavior:
+
+- missing block -> null
+- missing block number -> null or wrapper error
+- missing hash -> hash: null
+- timestamp -> bigint seconds
+- timestamp conversion must be explicit if provider returns number / hex / Date-like value
+
+Contract read mapping:
+
+The wrapper must map EthereumContractReadInput to concrete provider readContract calls.
+
+Required behavior:
+
+- use exactly input.blockNumber for the contract read
+- pass address as provided by model adapter
+- pass abi as provided by caller / integration
+- pass functionName as provided
+- pass args as provided
+- return raw decoded result as unknown
+
+ABI handling:
+
+The wrapper should not hardcode XC Lens ABI unless a later implementation milestone explicitly decides to include a minimal ABI module.
+
+Preferred boundary:
+
+- model adapter receives epochMinimumAbi as unknown
+- wrapper passes abi through to concrete client
+- outer integration chooses ABI
+
+Testing strategy:
+
+The concrete wrapper implementation should be tested with a mocked concrete client, not a real RPC endpoint.
+
+Recommended tests include:
+
+1. maps getChainId result to bigint
+2. maps finalized block tag to concrete client getBlock
+3. maps safe block tag to concrete client getBlock
+4. maps blockNumber read to concrete client getBlock
+5. maps empty getBlock input to head block read
+6. maps missing block to null
+7. maps block hash / number / timestamp into EthereumBlockSnapshot
+8. maps readContract input with exact blockNumber
+9. passes abi / functionName / args through unchanged
+10. does not accept RPC URL
+11. does not read process.env
+12. does not require private key
+13. does not require signer
+14. does not expose secret-bearing config in errors
+
+Non-goals:
+
+This design does not add:
+
+- real RPC execution
+- env loading
+- CLI command
+- RPC URL factory
+- private key support
+- signer support
+- transaction sending
+- production address config
+- snapshot persistence
+- bridge signer verification
+- X1-native verification
+
+Validation:
+
+- npm run typecheck: passed
+- npm test: passed
+- npm run build: passed
+- npm audit --audit-level=moderate: found 0 vulnerabilities
+
+Current test count:
+
+- 32 test files passed
+- 227 tests passed
+
+Conclusion:
+
+The concrete Ethereum provider wrapper should remain an outer read-only infrastructure adapter.
+
+It should adapt a concrete public client to EthereumReadProvider without moving RPC URLs, env, API keys, signers, or provider-library dependencies into the model-layer XC epoch minimum source logic.
+
+Recommended next milestone:
+
+xc-epoch-minimum-ethereum-provider-wrapper-design-review
+
+Suggested next scope:
+
+- review concrete provider wrapper boundary
+- verify design keeps model layer provider-library agnostic
+- verify RPC URLs / env / API keys stay outside model code
+- decide whether viem-style public client wrapper should be the first mocked implementation
+- do not implement real RPC until wrapper design review is complete
+
 ## Current next steps
 
 Potential next documents / design areas:
 
-1. Design the concrete Ethereum provider wrapper boundary before real RPC implementation.
+1. Review the concrete Ethereum provider wrapper design before implementation.
 2. Continue implementation only with clean typecheck and tests.
 
 
