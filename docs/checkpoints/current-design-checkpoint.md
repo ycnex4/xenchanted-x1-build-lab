@@ -13258,3 +13258,58 @@ Validation baseline for review:
 Manual refusal without env remained safe:
 
     Missing required Ethereum script secret config: XC_ETHEREUM_RPC_URL
+
+## Latest XC Build validation context review checkpoint
+
+The XC Build validation context review milestone was completed on the `xc-build-validation-context-review` branch.
+
+This milestone is review-only.
+
+New document:
+
+- `implementation/xc-build-validation-context-review-notes.md`
+
+Reviewed files:
+
+- `src/model/xc-build-validation-context.ts`
+- `tests/xc-build-validation-context.test.ts`
+- `src/index.ts`
+
+Review conclusion:
+
+- XC Build validation context implementation accepted
+- context helper remains pure/mocked
+- context helper combines `protocolParams` and derived `requirements`
+- context helper does not call real RPC
+- context helper does not call `XcProtocolParamsSource`
+- context helper does not read process.env
+- context helper does not modify app, registrar, watcher, or proof submission behavior
+- no changes required before merge
+
+The implementation exposes:
+
+- `XcBuildValidationContext`
+- `CreateXcBuildValidationContextInput`
+- `createXcBuildValidationContextFromProtocolParams()`
+
+The context shape is intentionally minimal:
+
+    {
+      protocolParams,
+      requirements
+    }
+
+Validation baseline for review:
+
+- `npm run typecheck` passed
+- `npm test` passed: 40 test files, 316 tests
+- `npm run build` passed
+- `npm audit --audit-level=moderate` found 0 vulnerabilities
+
+Manual refusal without env remained safe:
+
+    Missing required Ethereum script secret config: XC_ETHEREUM_RPC_URL
+
+Recommended next step after merge:
+
+    complete XC Build validation context milestone
