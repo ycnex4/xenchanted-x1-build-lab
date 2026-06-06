@@ -27,3 +27,4 @@ export * from "./app/proof-submission.js";
 export * from "./model/xntd-commitment-events.js";
 export * from "./model/xc-epoch-minimum-source.js";
 export * from "./model/ethereum-xc-epoch-minimum-source.js";
+export * from "./model/ethereum-xc-epoch-minimum-provider-source.js";
