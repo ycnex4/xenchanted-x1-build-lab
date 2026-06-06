@@ -14695,3 +14695,102 @@ Final validation baseline:
 Recommended next milestone:
 
     final-mvp-readiness-checkpoint
+
+## Latest final MVP readiness checkpoint
+
+The final MVP readiness checkpoint was completed on the `final-mvp-readiness-checkpoint` branch.
+
+This milestone is documentation-only.
+
+New document:
+
+- `docs/final-mvp-readiness-checkpoint.md`
+
+The checkpoint records that the current repository is a tested MVP implementation lab.
+
+Current main baseline:
+
+    main -> 433e041 Merge branch 'xc-build-commitment-status-app-view-completion-checkpoint'
+
+Validation baseline:
+
+- `npm run typecheck` passed
+- `npm test` passed: 42 test files, 328 tests
+- `npm run build` passed
+- `npm audit --audit-level=moderate` found 0 vulnerabilities
+
+Implemented MVP flow:
+
+    watcher candidate
+    -> proof object
+    -> appSubmitProof
+    -> registrar handler
+    -> BuildState update
+    -> replay protection
+    -> snapshot persistence / CLI inspection
+
+Major implemented layers:
+
+- Build state
+- Build registry
+- create build flow
+- Core redeem BLD accounting
+- XEN Burn Power accounting
+- Genesis Origin BLD accounting
+- XNTD lock and relock state
+- X1 fee contribution checkpoints
+- registrar replay protection
+- source event replay protection
+- XNTD commitment event replay protection
+- registrar handlers
+- proof object types
+- proof-to-registrar payload builders
+- watcher candidate types
+- watcher-to-proof conversion
+- app proof submission
+- end-to-end watcher-proof-registrar scenario
+- storage serialization
+- snapshot verification / backup / recovery
+- read-only CLI command layer
+- Ethereum read provider wrappers
+- authoritative XC epoch minimum source and provider source
+- XC protocol params source
+- XC protocol params build validation
+- XC Build validation context
+- XC Build commitment status model
+- app Build view exposing commitmentStatus
+
+Commitment status terminology is accepted:
+
+    commitmentStatus = current XNTD commitment signal
+
+Implemented app view:
+
+    appGetBuildView()
+
+with:
+
+    AppBuildView {
+      build
+      commitmentStatus
+    }
+
+The MVP remains a trusted-indexer / trusted-registrar implementation lab.
+
+The MVP is not yet:
+
+- production chain deployment
+- trustless proof verification system
+- live watcher service runtime
+- bridge execution system
+- token issuance deployment
+- UI product
+- operator production stack
+
+Build actor remains a future layer and is not part of the completed MVP scope.
+
+Decision:
+
+    The xEnchanted X1 Build Lab MVP implementation lab is complete at the current scope.
+    The completed scope is a tested implementation lab, not a production deployment.
+    Next work should be post-MVP readiness, review, and hardening, not further MVP scope expansion.
