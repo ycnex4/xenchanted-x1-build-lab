@@ -13556,3 +13556,80 @@ Manual refusal without env remained safe:
 Recommended next step after merge:
 
     complete XC Build validation app service context milestone
+
+## Latest XC Build validation app service context completion checkpoint
+
+The XC Build validation app service context milestone was completed on the `xc-build-validation-app-service-context-completion-checkpoint` branch.
+
+This milestone is documentation-only.
+
+New document:
+
+- `implementation/xc-build-validation-app-service-context-completion-checkpoint.md`
+
+The checkpoint closes the completed chain:
+
+- app service context design
+- app service context design review
+- backwards-compatible runtime implementation
+- implementation review
+- merge to main
+
+Implemented source:
+
+- `src/app/proof-submission.ts`
+- `tests/app-proof-submission.test.ts`
+
+`AppSubmitProofInput` now accepts:
+
+    xcBuildValidationContext?: XcBuildValidationContext
+
+The field is optional.
+
+Existing callers without `xcBuildValidationContext` remain valid.
+
+The protocol-context pipeline now exists in a safe, staged form:
+
+    XcProtocolParams
+    -> deriveCurrentXcBuildRequirements()
+    -> XcBuildValidationContext
+    -> optional xcBuildValidationContext in appSubmitProof()
+
+This milestone does not add:
+
+- global Build validity enforcement
+- currentEpoch enforcement
+- requiredForgeMinimum enforcement
+- requiredXntdLockMinimum enforcement
+- real RPC execution
+- `XcProtocolParamsSource` usage
+- viem import
+- ethers import
+- createPublicClient
+- http transport
+- process.env read
+- private key support
+- mnemonic support
+- wallet client support
+- writeContract
+- sendTransaction
+- watcher candidate changes
+- registrar behavior changes
+- proof payload changes
+- package dependency changes
+- scripts
+
+Final validation baseline:
+
+- `npm run typecheck` passed
+- `npm test` passed: 40 test files, 317 tests
+- `npm run build` passed
+- `npm audit --audit-level=moderate` found 0 vulnerabilities
+
+Safe refusal without env remained active:
+
+    Missing required Ethereum script secret config: XC_ETHEREUM_RPC_URL
+
+Recommended next milestone:
+
+    xc-build-validation-epoch-policy-design
