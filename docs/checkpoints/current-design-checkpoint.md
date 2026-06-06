@@ -6605,11 +6605,200 @@ Suggested next scope:
 - verify snapshot adapter remains the Ethereum-shaped validation boundary
 - decide whether any extra provider edge-case tests are needed before moving toward real provider wrapper design
 
+
+## Latest XC epoch minimum mocked Ethereum Lens provider adapter review checkpoint
+
+The XC epoch minimum mocked Ethereum Lens provider adapter review milestone was completed on the xc-epoch-minimum-mocked-ethereum-lens-provider-adapter-review branch.
+
+Commits:
+
+- 813a423 Add mocked Ethereum XC epoch minimum provider adapter review notes
+
+This was a review-only milestone.
+
+No runtime behavior changed.
+
+Review note added:
+
+- implementation/xc-epoch-minimum-mocked-ethereum-lens-provider-adapter-review-notes.md
+
+Reviewed implementation:
+
+- src/model/ethereum-xc-epoch-minimum-provider-source.ts
+
+Reviewed tests:
+
+- tests/ethereum-xc-epoch-minimum-provider-source.test.ts
+
+Reviewed prior commits:
+
+- 6c7414a Add mocked Ethereum XC epoch minimum provider adapter
+- ffe0087 Add mocked Ethereum XC epoch minimum provider adapter notes
+- 1f9a411 Update checkpoint after mocked Ethereum XC epoch minimum provider adapter
+- bcf1495 Merge branch 'xc-epoch-minimum-mocked-ethereum-lens-provider-adapter'
+
+Review conclusion:
+
+The mocked Ethereum Lens provider adapter runtime boundary is clean.
+
+The implementation remains a mocked read-only provider layer.
+
+It does not perform real Ethereum RPC and does not introduce env / secret / direct RPC URL coupling.
+
+Runtime boundary review:
+
+The runtime adapter does not import or call:
+
+- process.env
+- fetch
+- http / https
+- viem
+- ethers
+- wallet APIs
+- signer APIs
+
+The adapter receives only a custom read-only provider object.
+
+The adapter input does not accept:
+
+- RPC URL
+- private key
+- mnemonic
+- API key
+- signer
+- wallet account
+- env config
+
+Provider interface review:
+
+The runtime uses the intended custom read-only interface:
+
+- getChainId()
+- getBlock()
+- readContract()
+
+This confirms the design decision:
+
+- keep provider construction outside model code
+- keep RPC URL / API key handling outside adapter input
+- use mocked provider objects in tests
+- avoid direct viem / ethers dependency in this layer
+
+Finality behavior review:
+
+The implementation correctly supports:
+
+- finalized
+- safe
+- confirmed
+
+finalized:
+
+- getBlock({ blockTag: "finalized" })
+- all contract reads use finalized block number
+
+safe:
+
+- getBlock({ blockTag: "safe" })
+- all contract reads use safe block number
+
+confirmed:
+
+- getBlock({}) is used only to get head block number
+- confirmedBlockNumber = head.number - confirmations
+- getBlock({ blockNumber: confirmedBlockNumber })
+- all contract reads use confirmed block number
+
+latest is not supported as a provenance policy.
+
+Selected block consistency review:
+
+All contract reads use the selected provenance block number.
+
+The adapter also requires:
+
+- selected block exists
+- selected block number > 0
+- selected block hash is present
+- selected block timestamp > 0
+
+Chain and address validation review:
+
+The adapter validates:
+
+- configured chainId matches eip155-<number>
+- provider chain ID is converted to eip155-<number>
+- provider chain ID must match configured chainId
+- lensAddress must be 0x-prefixed 20-byte hex
+- lensAddress is normalized to lowercase before contract reads
+
+Snapshot validation boundary review:
+
+The provider adapter builds EthereumXcLensEpochMinimumSnapshot and delegates Ethereum-shaped validation to:
+
+createXcEpochMinimumSourceFromEthereumLensSnapshot(snapshot)
+
+This preserves the snapshot adapter as the validation boundary.
+
+Test coverage review:
+
+The current provider adapter tests cover:
+
+1. finalized block selection and source build
+2. safe block selection and source build
+3. confirmed block selection with positive confirmations
+4. latest finality rejection
+5. confirmed finality without positive confirmations rejection
+6. provider chain ID mismatch rejection
+7. invalid configured chain ID rejection
+8. invalid Lens address rejection
+9. selected block without hash rejection
+10. empty requested lockEpochs rejection
+11. invalid contract read result rejection
+12. normalized Lens address and selected block number passed into reads
+13. snapshot validation propagation through existing snapshot adapter
+14. missing epoch returns null through resulting source
+
+Additional edge-case test decision:
+
+No additional tests are required before merging this review milestone.
+
+Validation:
+
+- npm run typecheck: passed
+- npm test: passed
+- npm run build: passed
+- npm audit --audit-level=moderate: found 0 vulnerabilities
+
+Current test count:
+
+- 32 test files passed
+- 227 tests passed
+
+Conclusion:
+
+The mocked Ethereum Lens provider adapter is safe to keep as the read-only provider boundary.
+
+It proves finality block selection, selected-block read consistency, chain/address validation, and snapshot conversion without real network access.
+
+Recommended next milestone:
+
+xc-epoch-minimum-ethereum-provider-wrapper-design
+
+Suggested next scope:
+
+- design concrete provider wrapper boundary only
+- decide whether viem or ethers wrapper should be used externally
+- keep RPC URLs / env / API keys outside model code
+- define how wrapper maps provider block reads to EthereumBlockSnapshot
+- define how wrapper maps contract reads to unknown results
+- do not implement real RPC until wrapper design is reviewed
+
 ## Current next steps
 
 Potential next documents / design areas:
 
-1. Review the mocked Ethereum Lens provider adapter runtime boundary before any real provider wrapper design.
+1. Design the concrete Ethereum provider wrapper boundary before real RPC implementation.
 2. Continue implementation only with clean typecheck and tests.
 
 
