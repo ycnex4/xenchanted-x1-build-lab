@@ -14095,3 +14095,72 @@ Validation baseline for review:
 Recommended next milestone after merge:
 
     xc-build-active-status-model
+
+## Latest XC Build active status model design completion checkpoint
+
+The XC Build active status model design milestone was completed on the `xc-build-active-status-model-design-completion-checkpoint` branch.
+
+This milestone is documentation-only.
+
+New document:
+
+- `implementation/xc-build-active-status-model-design-completion-checkpoint.md`
+
+The checkpoint closes the completed chain:
+
+- active status model design
+- active status model design review
+- merge to main
+
+Accepted helper name:
+
+    getBuildActiveStatus()
+
+Accepted status values:
+
+    ACTIVE
+    INACTIVE
+    UNKNOWN
+
+Accepted reason values:
+
+    ACTIVE_LOCK_CURRENT
+    INACTIVE_NO_HISTORY
+    INACTIVE_NO_LOCK
+    INACTIVE_LOCK_BELOW_REQUIRED
+    INACTIVE_RELOCK_REQUIRED
+    UNKNOWN_NO_CURRENT_CONTEXT
+
+Accepted model fields:
+
+    isActive
+    status
+    reason
+    historyBld
+    availableBld
+    lockedXntd
+    requiredXntdLock
+    lockEpoch
+    currentEpoch
+    needsRelock
+
+The active status model is read-only and non-mutating.
+
+Inactive status does not erase historical contribution.
+
+Unknown status does not mean invalid history.
+
+currentEpoch may affect active status, but must not invalidate Core redeem history.
+
+Forge participation remains out of scope for MVP active status.
+
+Final validation baseline:
+
+- `npm run typecheck` passed
+- `npm test` passed: 40 test files, 317 tests
+- `npm run build` passed
+- `npm audit --audit-level=moderate` found 0 vulnerabilities
+
+Recommended next milestone:
+
+    xc-build-active-status-model
