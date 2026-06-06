@@ -8066,11 +8066,287 @@ Suggested next scope:
 - decide whether next implementation should stay structurally typed first
 - do not implement real RPC until design review is complete
 
+
+## Latest XC epoch minimum real viem wrapper design review checkpoint
+
+The XC epoch minimum real viem wrapper design review milestone was completed on the xc-epoch-minimum-real-viem-wrapper-design-review branch.
+
+Commits:
+
+- e9e2f16 Add XC epoch minimum real viem wrapper design review notes
+
+This was a review-only milestone.
+
+No runtime behavior changed.
+
+Review note added:
+
+- implementation/xc-epoch-minimum-real-viem-wrapper-design-review-notes.md
+
+Reviewed design:
+
+- implementation/xc-epoch-minimum-real-viem-wrapper-design.md
+
+Reviewed prior commits:
+
+- 9289deb Add XC epoch minimum real viem wrapper design
+- fb8f264 Update checkpoint after XC epoch minimum real viem wrapper design
+- 0717d05 Merge branch 'xc-epoch-minimum-real-viem-wrapper-design'
+
+Review conclusion:
+
+The real viem wrapper design boundary is clean.
+
+This remains a design-only stage.
+
+No runtime viem imports were added.
+
+No viem dependency was installed.
+
+No real RPC behavior was added.
+
+The model layer remains viem-free.
+
+Runtime / dependency review:
+
+A targeted grep confirmed:
+
+- no real viem imports in src
+- no ethers imports in src
+- no process.env reads in runtime wrapper path
+- no direct RPC URL factory
+- no signer / wallet / write path in runtime wrapper path
+
+The design document contains viem / RPC / env / secret terms only as explicit boundary rules, non-goals, and future implementation policy.
+
+Model-layer boundary review:
+
+The following model files must remain free from viem imports:
+
+- src/model/ethereum-xc-epoch-minimum-provider-source.ts
+- src/model/ethereum-xc-epoch-minimum-source.ts
+- src/model/xc-epoch-minimum-source.ts
+
+Review decision:
+
+- keep src/model provider-library agnostic
+- keep EthereumReadProvider as the model-facing abstraction
+- place real viem wrapper outside src/model
+
+Recommended future location remains:
+
+- src/ethereum/ethereum-viem-read-provider-wrapper.ts
+
+PublicClient construction boundary review:
+
+The design correctly prevents the wrapper from constructing a viem PublicClient from RPC URL.
+
+Allowed future pattern:
+
+outer integration reads config
+-> outer integration creates viem PublicClient
+-> wrapper receives PublicClient
+-> wrapper returns EthereumReadProvider
+
+Disallowed in wrapper:
+
+- createPublicClient({ transport: http(process.env.RPC_URL) })
+- process.env reads
+- direct RPC URL input
+- API key input
+- private key input
+- wallet client input
+- signer input
+
+Review decision:
+
+- keep createEthereumReadProviderFromViemPublicClient(publicClient)-style construction
+- do not add createEthereumReadProviderFromRpcUrl(rpcUrl) in the next implementation
+
+Real viem PublicClient shape review:
+
+The wrapper should depend only on read-only PublicClient capabilities:
+
+- getChainId()
+- getBlock()
+- readContract()
+
+The wrapper must not require:
+
+- walletClient
+- account
+- signer
+- sendTransaction
+- writeContract
+- private key
+- mnemonic
+
+Review decision:
+
+- next implementation should stay read-only and structurally typed first
+- do not add real RPC execution yet
+
+Mapping review:
+
+Chain ID:
+
+- viem getChainId number -> bigint
+
+Block reads:
+
+- finalized -> publicClient.getBlock({ blockTag: "finalized" })
+- safe -> publicClient.getBlock({ blockTag: "safe" })
+- blockNumber -> publicClient.getBlock({ blockNumber })
+- {} -> publicClient.getBlock({ blockTag: "latest" })
+
+Review decision:
+
+- empty input remains latest only for confirmed-policy head calculation
+- do not reinterpret empty input as finalized or safe
+- do not silently downgrade finalized / safe to latest
+- if provider does not support finalized / safe, surface a sanitized error
+
+Block mapping:
+
+- missing block -> null
+- missing block number -> null
+- missing hash -> hash: null
+- timestamp -> bigint
+
+Contract read mapping:
+
+- pass address unchanged
+- pass abi unchanged
+- pass functionName unchanged
+- pass args unchanged
+- pass blockNumber unchanged
+- return decoded result as unknown
+- do not validate epoch minimum economics in the wrapper
+
+Address / ABI boundary review:
+
+The design keeps:
+
+- model-facing address as string
+- model-facing abi as unknown
+
+Review decision:
+
+- wrapper may cast after provider adapter validation
+- wrapper should not loosen validation in model layer
+- wrapper should not hardcode XC Lens ABI at this stage
+
+Error redaction review:
+
+Allowed error context:
+
+- operation name
+- block tag
+- block number
+- chain ID
+- contract address
+- function name
+
+Disallowed error context:
+
+- RPC URL
+- API key
+- authorization header
+- env dump
+- private key
+- mnemonic
+- signer object
+- full transport config
+
+Review decision:
+
+- wrapper should not log by default
+- future wrapped errors should use sanitized messages
+
+Dependency policy decision:
+
+The next implementation should stay structurally typed first.
+
+Do not install viem yet unless the implementation clearly needs official types.
+
+If viem is later added, keep imports isolated in:
+
+- src/ethereum
+
+and never in:
+
+- src/model
+
+Testing strategy review:
+
+The next implementation should use mocked viem PublicClient objects.
+
+No real RPC test in the implementation milestone.
+
+Recommended tests:
+
+1. maps viem getChainId number to bigint
+2. maps finalized block tag to publicClient.getBlock({ blockTag: "finalized" })
+3. maps safe block tag to publicClient.getBlock({ blockTag: "safe" })
+4. maps blockNumber to publicClient.getBlock({ blockNumber })
+5. maps empty input to publicClient.getBlock({ blockTag: "latest" })
+6. maps null block to null
+7. maps null block number to null
+8. maps null block hash to hash null
+9. maps bigint timestamp to bigint
+10. maps number timestamp to bigint if test shape allows number
+11. passes readContract address / abi / functionName / args / blockNumber unchanged
+12. returns readContract result as unknown
+13. propagates sanitized getBlock errors
+14. propagates sanitized readContract errors
+15. does not read process.env
+16. does not accept RPC URL
+17. does not require private key
+18. does not require signer / wallet client
+19. integration with createXcEpochMinimumSourceFromEthereumLensProvider using mocked viem client
+
+Validation:
+
+- npm run typecheck: passed
+- npm test: passed
+- npm run build: passed
+- npm audit --audit-level=moderate: found 0 vulnerabilities
+
+Current test count:
+
+- 33 test files passed
+- 238 tests passed
+
+Conclusion:
+
+The real viem wrapper design is ready for a mocked implementation milestone.
+
+The next implementation should stay structurally typed, use mocked viem PublicClient objects, and still avoid real RPC, env reads, RPC URL factories, private keys, signers, wallets, and transaction sending.
+
+Recommended next milestone:
+
+xc-epoch-minimum-mocked-real-viem-wrapper
+
+Suggested next scope:
+
+- implement real viem wrapper boundary with mocked viem client
+- no npm install viem unless clearly needed
+- no real RPC
+- no env reads
+- no secrets
+- no RPC URL factory
+- no private keys
+- no signers
+- no wallet client
+- no transaction sending
+- tests only with mocked viem client
+- integration test with existing provider adapter
+
 ## Current next steps
 
 Potential next documents / design areas:
 
-1. Review the real viem wrapper design before implementation.
+1. Implement the mocked real viem wrapper boundary with structurally typed mocked PublicClient.
 2. Continue implementation only with clean typecheck and tests.
 
 
