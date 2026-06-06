@@ -12669,3 +12669,56 @@ Safe refusal without env remained active:
 Recommended next milestone:
 
     xc-protocol-params-source-design
+
+## Latest XC protocol params source design checkpoint
+
+The XC protocol params source design milestone was completed on the `xc-protocol-params-source-design` branch.
+
+This milestone is design-only.
+
+New document:
+
+- `implementation/xc-protocol-params-source-design.md`
+
+Design conclusion:
+
+- deployed mainnet xEnchantedNFTLens should be modeled through `getProtocolParams()`
+- deployed mainnet xEnchantedNFTLens should not be treated as an `epochMinimum(uint256)` source
+- a new `XcProtocolParamsSource` should be added separately from the existing `XcEpochMinimumSource`
+- implementation should use mocked providers only
+- implementation should not add real RPC execution
+- implementation should not add dependencies
+- implementation should not read process.env
+- implementation should not construct public clients
+- implementation should not add private key, mnemonic, wallet client, writeContract, or sendTransaction paths
+
+Likely authoritative fields for future X1 Build validation:
+
+- currentEpoch
+- currentBaseNominal
+- currentXenBurnAmount
+- halvingInterval
+- xenBurnHalvingInterval
+- nextHalvingTs
+- genesisTs
+
+Recommended implementation branch after design review:
+
+    xc-protocol-params-source
+
+Expected implementation files:
+
+- `src/ethereum/xc-protocol-params-source.ts`
+- `tests/xc-protocol-params-source.test.ts`
+- `src/index.ts`
+
+Validation baseline for design:
+
+- `npm run typecheck` passed
+- `npm test` passed: 37 test files, 286 tests
+- `npm run build` passed
+- `npm audit --audit-level=moderate` found 0 vulnerabilities
+
+Safe refusal without env remained active:
+
+    Missing required Ethereum script secret config: XC_ETHEREUM_RPC_URL
