@@ -1,29 +1,29 @@
 import { describe, expect, it } from "vitest";
 import {
   createEmptyBuildState,
-  getBuildActiveStatus,
+  getBuildCommitmentStatus,
   lockXntd
 } from "../src/index.js";
 
-describe("Build active status", () => {
-  it("returns INACTIVE_NO_HISTORY for a Build without historical contribution", () => {
+describe("Build commitment status", () => {
+  it("returns NO_HISTORY for a Build without historical contribution", () => {
     const build = createEmptyBuildState({
       buildId: "build-1",
       owner: "owner-1",
       createdAt: 1n
     });
 
-    const status = getBuildActiveStatus({ build });
+    const status = getBuildCommitmentStatus({ build });
 
     expect(status.isActive).toBe(false);
-    expect(status.status).toBe("INACTIVE");
-    expect(status.reason).toBe("INACTIVE_NO_HISTORY");
+    expect(status.status).toBe("UNCOMMITTED");
+    expect(status.reason).toBe("NO_HISTORY");
     expect(status.historyBld).toBe(0n);
     expect(status.availableBld).toBe(0n);
     expect(status.needsRelock).toBe(false);
   });
 
-  it("returns INACTIVE_NO_LOCK when history exists but no XNTD is locked", () => {
+  it("returns NO_COMMITMENT when history exists but no XNTD is locked", () => {
     const build = createEmptyBuildState({
       buildId: "build-1",
       owner: "owner-1",
@@ -33,11 +33,11 @@ describe("Build active status", () => {
     build.historyBld = 121n;
     build.availableBld = 121n;
 
-    const status = getBuildActiveStatus({ build });
+    const status = getBuildCommitmentStatus({ build });
 
     expect(status.isActive).toBe(false);
-    expect(status.status).toBe("INACTIVE");
-    expect(status.reason).toBe("INACTIVE_NO_LOCK");
+    expect(status.status).toBe("UNCOMMITTED");
+    expect(status.reason).toBe("NO_COMMITMENT");
     expect(status.historyBld).toBe(121n);
     expect(status.availableBld).toBe(121n);
     expect(status.lockedXntd).toBe(0n);
@@ -45,7 +45,7 @@ describe("Build active status", () => {
     expect(status.lockEpoch).toBe(null);
   });
 
-  it("returns ACTIVE_LOCK_CURRENT when history and sufficient lock exist", () => {
+  it("returns COMMITMENT_CURRENT when history and sufficient lock exist", () => {
     const build = createEmptyBuildState({
       buildId: "build-1",
       owner: "owner-1",
@@ -63,11 +63,11 @@ describe("Build active status", () => {
       lockedAt: 10n
     });
 
-    const status = getBuildActiveStatus({ build });
+    const status = getBuildCommitmentStatus({ build });
 
     expect(status.isActive).toBe(true);
-    expect(status.status).toBe("ACTIVE");
-    expect(status.reason).toBe("ACTIVE_LOCK_CURRENT");
+    expect(status.status).toBe("COMMITTED");
+    expect(status.reason).toBe("COMMITMENT_CURRENT");
     expect(status.historyBld).toBe(121n);
     expect(status.availableBld).toBe(121n);
     expect(status.lockedXntd).toBe(100n);
@@ -76,7 +76,7 @@ describe("Build active status", () => {
     expect(status.needsRelock).toBe(false);
   });
 
-  it("returns INACTIVE_LOCK_BELOW_REQUIRED when current requirement exceeds locked XNTD", () => {
+  it("returns COMMITMENT_BELOW_REQUIRED when current requirement exceeds locked XNTD", () => {
     const build = createEmptyBuildState({
       buildId: "build-1",
       owner: "owner-1",
@@ -94,15 +94,15 @@ describe("Build active status", () => {
       lockedAt: 10n
     });
 
-    const status = getBuildActiveStatus({
+    const status = getBuildCommitmentStatus({
       build,
       currentEpoch: 1n,
       currentRequiredXntdLock: 200n
     });
 
     expect(status.isActive).toBe(false);
-    expect(status.status).toBe("INACTIVE");
-    expect(status.reason).toBe("INACTIVE_LOCK_BELOW_REQUIRED");
+    expect(status.status).toBe("UNCOMMITTED");
+    expect(status.reason).toBe("COMMITMENT_BELOW_REQUIRED");
     expect(status.lockedXntd).toBe(100n);
     expect(status.requiredXntdLock).toBe(200n);
     expect(status.currentEpoch).toBe(1n);
@@ -127,7 +127,7 @@ describe("Build active status", () => {
       lockedAt: 10n
     });
 
-    const status = getBuildActiveStatus({
+    const status = getBuildCommitmentStatus({
       build,
       requireCurrentEpoch: true
     });
@@ -168,7 +168,7 @@ describe("Build active status", () => {
       lockEpoch: build.lockEpoch
     };
 
-    getBuildActiveStatus({
+    getBuildCommitmentStatus({
       build,
       currentEpoch: 1n,
       currentRequiredXntdLock: 200n

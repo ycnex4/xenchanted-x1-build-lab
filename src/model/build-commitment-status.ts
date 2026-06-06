@@ -1,19 +1,19 @@
 import type { BuildState } from "./build-state.js";
 
-export type BuildActiveStatusValue = "ACTIVE" | "INACTIVE" | "UNKNOWN";
+export type BuildCommitmentStatusValue = "COMMITTED" | "UNCOMMITTED" | "UNKNOWN";
 
-export type BuildActiveStatusReason =
-  | "ACTIVE_LOCK_CURRENT"
-  | "INACTIVE_NO_HISTORY"
-  | "INACTIVE_NO_LOCK"
-  | "INACTIVE_LOCK_BELOW_REQUIRED"
-  | "INACTIVE_RELOCK_REQUIRED"
+export type BuildCommitmentStatusReason =
+  | "COMMITMENT_CURRENT"
+  | "NO_HISTORY"
+  | "NO_COMMITMENT"
+  | "COMMITMENT_BELOW_REQUIRED"
+  | "RECOMMITMENT_REQUIRED"
   | "UNKNOWN_NO_CURRENT_CONTEXT";
 
-export interface BuildActiveStatus {
+export interface BuildCommitmentStatus {
   readonly isActive: boolean;
-  readonly status: BuildActiveStatusValue;
-  readonly reason: BuildActiveStatusReason;
+  readonly status: BuildCommitmentStatusValue;
+  readonly reason: BuildCommitmentStatusReason;
   readonly historyBld: bigint;
   readonly availableBld: bigint;
   readonly lockedXntd: bigint;
@@ -23,16 +23,16 @@ export interface BuildActiveStatus {
   readonly needsRelock: boolean;
 }
 
-export interface GetBuildActiveStatusInput {
+export interface GetBuildCommitmentStatusInput {
   readonly build: BuildState;
   readonly currentEpoch?: bigint;
   readonly currentRequiredXntdLock?: bigint;
   readonly requireCurrentEpoch?: boolean;
 }
 
-export function getBuildActiveStatus(
-  input: GetBuildActiveStatusInput
-): BuildActiveStatus {
+export function getBuildCommitmentStatus(
+  input: GetBuildCommitmentStatusInput
+): BuildCommitmentStatus {
   const { build } = input;
 
   const historyBld = build.historyBld;
@@ -63,8 +63,8 @@ export function getBuildActiveStatus(
   if (historyBld === 0n) {
     return {
       isActive: false,
-      status: "INACTIVE",
-      reason: "INACTIVE_NO_HISTORY",
+      status: "UNCOMMITTED",
+      reason: "NO_HISTORY",
       historyBld,
       availableBld,
       lockedXntd,
@@ -78,8 +78,8 @@ export function getBuildActiveStatus(
   if (lockedXntd === 0n || lockEpoch === null) {
     return {
       isActive: false,
-      status: "INACTIVE",
-      reason: "INACTIVE_NO_LOCK",
+      status: "UNCOMMITTED",
+      reason: "NO_COMMITMENT",
       historyBld,
       availableBld,
       lockedXntd,
@@ -93,8 +93,8 @@ export function getBuildActiveStatus(
   if (requiredXntdLock > 0n && lockedXntd < requiredXntdLock) {
     return {
       isActive: false,
-      status: "INACTIVE",
-      reason: "INACTIVE_LOCK_BELOW_REQUIRED",
+      status: "UNCOMMITTED",
+      reason: "COMMITMENT_BELOW_REQUIRED",
       historyBld,
       availableBld,
       lockedXntd,
@@ -107,8 +107,8 @@ export function getBuildActiveStatus(
 
   return {
     isActive: true,
-    status: "ACTIVE",
-    reason: "ACTIVE_LOCK_CURRENT",
+    status: "COMMITTED",
+    reason: "COMMITMENT_CURRENT",
     historyBld,
     availableBld,
     lockedXntd,
