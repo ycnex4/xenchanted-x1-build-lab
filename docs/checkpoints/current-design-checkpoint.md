@@ -14302,3 +14302,101 @@ Final validation baseline:
 Recommended next milestone:
 
     xc-build-active-status-app-integration-design
+
+## Latest XC Build commitment status rename checkpoint
+
+The Build status terminology was renamed on the `xc-build-commitment-status-rename` branch and documented on the `xc-build-commitment-status-rename-checkpoint` branch.
+
+The rename changed terminology from:
+
+    active status
+
+to:
+
+    commitment status
+
+Reason:
+
+The previous active / inactive wording implied the wrong effect.
+
+It could imply that inactive Build means invalid, disabled, or punished Build.
+
+The intended model is different:
+
+    Build history remains valid.
+    Commitment status only describes current XNTD commitment.
+
+Runtime rename:
+
+- `src/model/build-active-status.ts` -> `src/model/build-commitment-status.ts`
+- `tests/build-active-status.test.ts` -> `tests/build-commitment-status.test.ts`
+
+Helper rename:
+
+    getBuildActiveStatus()
+    -> getBuildCommitmentStatus()
+
+Type rename:
+
+    BuildActiveStatus
+    -> BuildCommitmentStatus
+
+Status rename:
+
+    ACTIVE -> COMMITTED
+    INACTIVE -> UNCOMMITTED
+    UNKNOWN remains UNKNOWN
+
+Reason rename:
+
+    ACTIVE_LOCK_CURRENT -> COMMITMENT_CURRENT
+    INACTIVE_NO_HISTORY -> NO_HISTORY
+    INACTIVE_NO_LOCK -> NO_COMMITMENT
+    INACTIVE_LOCK_BELOW_REQUIRED -> COMMITMENT_BELOW_REQUIRED
+    INACTIVE_RELOCK_REQUIRED -> RECOMMITMENT_REQUIRED
+    UNKNOWN_NO_CURRENT_CONTEXT remains UNKNOWN_NO_CURRENT_CONTEXT
+
+Meaning:
+
+    commitmentStatus = current XNTD commitment signal
+
+It does not erase or invalidate:
+
+- historyBld
+- availableBld
+- originBld
+- Core redeem history
+- Build history
+
+The rename did not change:
+
+- appSubmitProof behavior
+- watcher behavior
+- registrar behavior
+- proof payload behavior
+- ethereum/RPC code
+- scripts
+- dependencies
+- CLI commands
+- BLD transfer/sale rules
+- Forge requirements
+- unlock mechanics
+
+Validation after merge:
+
+- `npm run typecheck` passed
+- `npm test` passed: 41 test files, 323 tests
+- `npm run build` passed
+- `npm audit --audit-level=moderate` found 0 vulnerabilities
+
+Important follow-up:
+
+The previous `xc-build-active-status-app-integration-design` branch used old terminology and should not be merged.
+
+Future app/service design should use:
+
+    commitmentStatus
+
+Recommended next milestone:
+
+    xc-build-commitment-status-app-integration-design
