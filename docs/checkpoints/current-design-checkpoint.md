@@ -6193,11 +6193,217 @@ Suggested next scope:
 - decide whether provider implementation should use a custom read provider interface first
 - decide whether direct Lens read or protocol-constant computation should be the first real strategy
 
+
+## Latest XC epoch minimum Ethereum Lens provider adapter design review checkpoint
+
+The XC epoch minimum Ethereum Lens provider adapter design review milestone was completed on the xc-epoch-minimum-ethereum-lens-provider-adapter-design-review branch.
+
+Commits:
+
+- 4ace8bd Add XC epoch minimum Ethereum provider adapter design review notes
+
+This was a review-only milestone.
+
+No runtime behavior changed.
+
+Review note added:
+
+- implementation/xc-epoch-minimum-ethereum-lens-provider-adapter-design-review-notes.md
+
+Reviewed design:
+
+- implementation/xc-epoch-minimum-ethereum-lens-provider-adapter-design.md
+
+Reviewed prior commits:
+
+- 90a543e Add XC epoch minimum Ethereum Lens provider adapter design
+- c5e4fc1 Update checkpoint after XC epoch minimum Ethereum provider adapter design
+- cf44d52 Merge branch 'xc-epoch-minimum-ethereum-lens-provider-adapter-design'
+
+Review conclusion:
+
+The Ethereum Lens provider / ABI adapter design boundary is clean.
+
+The design remains design-only and does not add:
+
+- runtime code
+- real RPC reads
+- provider configuration
+- ABI calls
+- CLI commands
+- snapshot persistence
+- env loading
+- secrets
+
+Future provider adapter shape remains:
+
+provider read at finalized / safe / confirmed block
+-> XC Lens / Core calls
+-> EthereumXcLensEpochMinimumSnapshot
+-> createXcEpochMinimumSourceFromEthereumLensSnapshot()
+-> XcEpochMinimumSource
+
+The mocked snapshot adapter remains the deterministic validation boundary.
+
+Secret / RPC / env coupling review:
+
+The future provider adapter should not:
+
+- read process.env directly
+- accept private keys
+- accept RPC URLs directly
+- accept mnemonics
+- accept API keys
+- log provider URLs
+- log headers
+- print raw config
+
+Correct future pattern:
+
+outer integration layer constructs provider
+-> provider is passed into adapter
+-> adapter performs read-only calls through a narrow interface
+
+A targeted grep over the design file found secret / RPC / ABI terms only in boundary, non-goal, and future design sections.
+
+No secret-bearing files were inspected.
+
+Provider interface review:
+
+The review confirms that the first implementation should use a custom read-only provider interface before binding to a concrete provider library.
+
+Preferred future abstraction:
+
+- getChainId()
+- getBlock()
+- readContract()
+
+This avoids direct viem / ethers dependency in the first provider adapter layer unless isolated behind the interface.
+
+Finality policy review:
+
+Allowed future policies remain:
+
+- finalized
+- safe
+- confirmed
+
+Latest remains unsupported.
+
+Confirmed policy may read head only to calculate an older confirmed block number, then must read the selected confirmed block by number.
+
+All contract reads for one snapshot must use the selected provenance block number.
+
+The selected block must have a block hash.
+
+Chain and address policy review:
+
+Provider adapter implementation should:
+
+- validate configured chain ID as eip155-<number>
+- compare configured chain ID against provider chain ID
+- reject mismatch before producing records
+- require explicit Lens / Core addresses
+- validate Ethereum addresses inside provider adapter, not generic source builder
+
+ABI / epoch minimum strategy review:
+
+The design intentionally does not lock final ABI yet.
+
+Possible strategies remain:
+
+1. Direct Lens epoch minimum read
+2. Core protocol constants + local computation
+3. Checkpointed Ethereum reads
+
+Review decision:
+
+- first implementation should prove the read-only provider boundary with mocked provider tests
+- do not perform real RPC yet
+- do not lock final ABI in runtime until actual XC Lens/Core view source is confirmed
+
+Preferred first real strategy after mocked provider implementation:
+
+- direct Lens epoch minimum read if Lens exposes historical epoch minimums
+
+Fallback:
+
+- protocol constants + local computation if direct historical minimums are not exposed
+
+observedAt review:
+
+For provider-produced snapshots, first mocked provider implementation should use selected block timestamp for observedAt.
+
+Requested lockEpochs review:
+
+Provider adapter implementation should require explicit non-empty lockEpochs.
+
+No implicit unbounded epoch scans.
+
+Error model review:
+
+Reuse InvalidXcEpochMinimumRecord for the first mocked provider adapter implementation unless runtime implementation reveals a real need for a dedicated adapter-config error.
+
+Testing strategy review:
+
+The first mocked provider adapter implementation should test:
+
+1. finalized block selection
+2. safe block selection
+3. confirmed block selection with positive confirmations
+4. latest policy rejection
+5. provider chain ID mismatch rejection
+6. invalid configured chain ID rejection
+7. invalid Lens address rejection
+8. missing block hash rejection
+9. all reads performed at selected block number
+10. empty requested lockEpochs rejection
+11. invalid read result rejection
+12. snapshot validation propagation
+13. no process.env reads
+14. no private keys
+15. no RPC URL in adapter input
+
+Validation:
+
+- npm run typecheck: passed
+- npm test: passed
+- npm run build: passed
+- npm audit --audit-level=moderate: found 0 vulnerabilities
+
+Current test count:
+
+- 31 test files passed
+- 213 tests passed
+
+Conclusion:
+
+The Ethereum Lens provider / ABI adapter design is ready to proceed to a mocked provider implementation milestone.
+
+The implementation should not perform real Ethereum RPC yet.
+
+Recommended next milestone:
+
+xc-epoch-minimum-mocked-ethereum-lens-provider-adapter
+
+Suggested next scope:
+
+- implement mocked read-only provider interface
+- no real RPC
+- no env reads
+- no secrets
+- no private keys
+- no direct RPC URL input
+- no CLI command
+- produce EthereumXcLensEpochMinimumSnapshot
+- reuse createXcEpochMinimumSourceFromEthereumLensSnapshot()
+- tests only with mocked provider
+
 ## Current next steps
 
 Potential next documents / design areas:
 
-1. Review the Ethereum Lens provider / ABI adapter design before implementation.
+1. Implement the mocked Ethereum Lens provider adapter using a custom read-only provider interface.
 2. Continue implementation only with clean typecheck and tests.
 
 
