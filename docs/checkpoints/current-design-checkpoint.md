@@ -14446,3 +14446,60 @@ Validation baseline for design:
 Recommended next milestone:
 
     xc-build-commitment-status-app-integration-design-review
+
+## Latest XC Build commitment status app integration design review checkpoint
+
+The XC Build commitment status app integration design review milestone was completed on the `xc-build-commitment-status-app-integration-design-review` branch.
+
+This milestone is review-only.
+
+New document:
+
+- `implementation/xc-build-commitment-status-app-integration-design-review-notes.md`
+
+Reviewed files:
+
+- `implementation/xc-build-commitment-status-app-integration-design.md`
+- `docs/checkpoints/current-design-checkpoint.md`
+
+Review conclusion:
+
+- XC Build commitment status app integration design accepted
+- design-only boundary preserved
+- `commitmentStatus` remains optional current XNTD commitment context
+- commitment status is not global enforcement
+- UNCOMMITTED Build must not cause historical proof rejection
+- appSubmitProof behavior remains unchanged
+- watcher behavior remains unchanged
+- registrar behavior remains unchanged
+- proof payload behavior remains unchanged
+- app/service view layer should not call real RPC directly
+- current context should remain dependency-injected
+- external X1 project usage remains optional
+- Forge participation remains out of scope for MVP commitment status
+
+Accepted future helper direction:
+
+    appGetBuildView()
+
+Accepted future view direction:
+
+    AppBuildView {
+      build
+      commitmentStatus
+    }
+
+The review intentionally does not add future Build actor checks.
+
+Build actor remains a separate future idea and is not part of this milestone.
+
+Validation baseline for review:
+
+- `npm run typecheck` passed
+- `npm test` passed: 41 test files, 323 tests
+- `npm run build` passed
+- `npm audit --audit-level=moderate` found 0 vulnerabilities
+
+Recommended next milestone after merge:
+
+    xc-build-commitment-status-app-integration-completion-checkpoint
