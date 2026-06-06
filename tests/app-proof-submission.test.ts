@@ -4,6 +4,7 @@ import {
   type GenesisOriginEligibilityProof,
   appCreateBuild,
   appSubmitProof,
+  createXcBuildValidationContextFromProtocolParams,
   createBuildApplicationState,
   createCanonicalEventKey,
   createCoreRedeemCandidate,
@@ -46,6 +47,24 @@ function submitInput(messageId?: string) {
   };
 }
 
+const protocolParams = {
+  genesisTs: 1780166915n,
+  halvingInterval: 15552000n,
+  xenBurnHalvingInterval: 31104000n,
+  currentEpoch: 0n,
+  nextHalvingTs: 1795718915n,
+  initialNominal: 100000000000000000000n,
+  currentBaseNominal: 100000000000000000000n,
+  initialXenBurn: 100000000000000000000000000n,
+  currentXenBurnAmount: 100000000000000000000000000n,
+  enchantMultiplier: 3n,
+  maxLevel: 22,
+  baseAprBpsNow: 1000,
+  bpsDenom: 10000n,
+  earlyPenaltyBps: 100n,
+  maxWalletNfts: 60n
+};
+
 describe("application proof submission", () => {
   it("submits Core redeem proof through registrar application service", () => {
     const { app, build } = createRegisteredApp();
@@ -78,6 +97,47 @@ describe("application proof submission", () => {
     expect(app.redeemEvents.usedRedeemEvents.has(candidate.canonicalEventKey)).toBe(
       true
     );
+  });
+
+  it("accepts XC Build validation context without changing Core redeem behavior", () => {
+    const { app, build } = createRegisteredApp();
+    const xcBuildValidationContext =
+      createXcBuildValidationContextFromProtocolParams({
+        protocolParams
+      });
+
+    const candidate = createCoreRedeemCandidate({
+      sourceChainId: "eip155-1",
+      sourceAddress: "0xcore",
+      eventKind: "CORE_REDEEM",
+      transactionHash: "0xtx-core-context",
+      eventIndex: 0,
+      observedAt: 1000n,
+      finalized: true,
+      buildId: build.buildId,
+      owner: build.owner,
+      amountBld: 121n,
+      redeemedAt: 1000n,
+      coreTokenId: "1"
+    });
+
+    const proof = convertWatcherCandidateToProof(candidate, {
+      validatedAt: 1100n
+    });
+
+    const result = appSubmitProof(app, proof, {
+      ...submitInput(),
+      xcBuildValidationContext
+    });
+
+    expect(result.ok).toBe(true);
+    expect(build.historyBld).toBe(121n);
+    expect(build.availableBld).toBe(121n);
+    expect(xcBuildValidationContext.protocolParams).toBe(protocolParams);
+    expect(
+      xcBuildValidationContext.requirements.requiredXntdLockMinimum
+    ).toBe(protocolParams.currentBaseNominal);
+    expect(app.registrar.processedMessages.size).toBe(1);
   });
 
   it("submits XEN burn proof through registrar application service", () => {
