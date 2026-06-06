@@ -9,7 +9,8 @@
     "typecheck": "tsc --noEmit",
     "build": "tsc",
     "cli": "node ./dist/src/cli/main.js",
-    "smoke:xc-epoch-minimum:rpc": "node ./dist/scripts/read-xc-epoch-minimum-source.js"
+    "smoke:xc-epoch-minimum:rpc": "node ./dist/scripts/read-xc-epoch-minimum-source.js",
+    "smoke:xc-protocol-params:rpc": "node ./dist/scripts/read-xc-protocol-params.js"
   },
   "devDependencies": {
     "@types/node": "^22.10.0",
