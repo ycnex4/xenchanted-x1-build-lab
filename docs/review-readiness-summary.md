@@ -121,6 +121,8 @@ Meaning:
 
 UNCOMMITTED does not mean invalid Build history.
 
+`appGetBuildView()` may return `UNKNOWN` when context-dependent epoch information is required but unavailable. `UNKNOWN` is a status signal, not an error.
+
 Relock is allowed only when:
 
     available_bld >= history_bld
