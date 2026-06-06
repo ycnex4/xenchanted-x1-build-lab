@@ -7733,11 +7733,344 @@ Suggested next scope:
 - keep RPC URL / env / API keys outside model code
 - do not implement real RPC until design review is complete
 
+
+## Latest XC epoch minimum real viem wrapper design checkpoint
+
+The XC epoch minimum real viem wrapper design milestone was completed on the xc-epoch-minimum-real-viem-wrapper-design branch.
+
+Commits:
+
+- 9289deb Add XC epoch minimum real viem wrapper design
+
+This was a design-only milestone.
+
+No runtime behavior changed.
+
+Design document added:
+
+- implementation/xc-epoch-minimum-real-viem-wrapper-design.md
+
+Purpose:
+
+Design the real viem wrapper boundary for the XC epoch minimum Ethereum provider path.
+
+This milestone does not implement:
+
+- real RPC reads
+- npm install viem
+- runtime viem imports
+- env reads
+- secrets
+- private keys
+- signers
+- direct RPC URL factory
+
+Current foundation:
+
+The dependency-free wrapper is already implemented and reviewed:
+
+- src/ethereum/ethereum-read-provider-wrapper.ts
+
+It adapts a mocked viem-style public client shape into EthereumReadProvider.
+
+The provider path is:
+
+public client-like object
+-> createEthereumReadProviderFromPublicClient(publicClient)
+-> EthereumReadProvider
+-> createXcEpochMinimumSourceFromEthereumLensProvider()
+-> EthereumXcLensEpochMinimumSnapshot
+-> createXcEpochMinimumSourceFromEthereumLensSnapshot()
+-> XcEpochMinimumSource
+
+The model layer remains provider-library agnostic.
+
+Design goal:
+
+The real viem wrapper should adapt an actual viem PublicClient into the existing EthereumReadProvider interface without changing the model layer.
+
+Future flow:
+
+outer integration / app / script layer
+-> creates viem PublicClient
+-> passes PublicClient to viem wrapper
+-> viem wrapper exposes EthereumReadProvider
+-> existing provider adapter consumes EthereumReadProvider
+
+Boundary rule:
+
+The model layer must not import viem.
+
+These files must remain free from viem imports:
+
+- src/model/ethereum-xc-epoch-minimum-provider-source.ts
+- src/model/ethereum-xc-epoch-minimum-source.ts
+- src/model/xc-epoch-minimum-source.ts
+
+Recommended future wrapper location:
+
+- src/ethereum/ethereum-viem-read-provider-wrapper.ts
+
+Dependency direction:
+
+Allowed:
+
+src/ethereum/ethereum-viem-read-provider-wrapper.ts
+-> imports viem types / functions if needed
+-> imports EthereumReadProvider model-facing types
+
+Disallowed:
+
+src/model/*
+-> imports viem
+
+src/model/*
+-> imports real viem wrapper
+
+The model layer must only know about EthereumReadProvider.
+
+PublicClient construction boundary:
+
+Allowed future pattern:
+
+outer integration reads config
+-> outer integration creates viem PublicClient
+-> wrapper receives PublicClient
+-> wrapper returns EthereumReadProvider
+
+Disallowed in wrapper:
+
+- createPublicClient({ transport: http(process.env.RPC_URL) })
+- process.env reads
+- direct RPC URL input
+- API key input
+- private key input
+- wallet client input
+- signer input
+
+Preferred future factory shape:
+
+- createEthereumReadProviderFromViemPublicClient(publicClient)
+
+Avoid in first implementation:
+
+- createEthereumReadProviderFromRpcUrl(rpcUrl)
+
+Real viem PublicClient shape:
+
+The real wrapper should depend only on read-only PublicClient capabilities:
+
+- getChainId()
+- getBlock()
+- readContract()
+
+It should not require:
+
+- walletClient
+- account
+- signer
+- sendTransaction
+- writeContract
+- private key
+- mnemonic
+
+Chain ID mapping:
+
+- viem getChainId returns number
+- wrapper maps number -> bigint
+- provider adapter later maps bigint into eip155-<number>
+- wrapper does not decide chain correctness
+
+Block read mapping:
+
+Existing EthereumBlockReadInput supports:
+
+- { blockTag: "finalized" }
+- { blockTag: "safe" }
+- { blockNumber: bigint }
+- {}
+
+Real viem wrapper mapping:
+
+- finalized -> publicClient.getBlock({ blockTag: "finalized" })
+- safe -> publicClient.getBlock({ blockTag: "safe" })
+- blockNumber -> publicClient.getBlock({ blockNumber })
+- {} -> publicClient.getBlock({ blockTag: "latest" })
+
+The empty input remains only for confirmed-policy head calculation.
+
+The wrapper must not reinterpret empty input as finalized or safe.
+
+Finality support caveat:
+
+The wrapper should not silently downgrade:
+
+- finalized -> latest
+- safe -> latest
+
+If viem / provider returns an error for unsupported finalized or safe block tags, the wrapper should surface a sanitized read error.
+
+Block result mapping:
+
+Viem block result should be mapped into EthereumBlockSnapshot:
+
+- number: bigint
+- hash: string | null
+- timestamp: bigint
+
+Mapping policy:
+
+- missing block -> null
+- missing block number -> null
+- missing hash -> hash: null
+- timestamp -> bigint
+
+Contract read mapping:
+
+Real viem wrapper maps EthereumContractReadInput to:
+
+publicClient.readContract({
+  address,
+  abi,
+  functionName,
+  args,
+  blockNumber
+})
+
+Required behavior:
+
+- pass address unchanged
+- pass abi unchanged
+- pass functionName unchanged
+- pass args unchanged
+- pass blockNumber unchanged
+- return decoded result as unknown
+- do not validate epoch minimum economics in wrapper
+
+Address / ABI boundary:
+
+- model-facing address remains string
+- wrapper may cast after model/provider adapter validation
+- model-facing abi remains unknown
+- wrapper passes abi through to viem readContract
+- avoid hardcoding XC Lens ABI in wrapper
+
+Error redaction policy:
+
+Allowed error context:
+
+- operation name
+- block tag
+- block number
+- chain ID
+- contract address
+- function name
+
+Disallowed error context:
+
+- RPC URL
+- API key
+- authorization header
+- env dump
+- private key
+- mnemonic
+- signer object
+- full transport config
+
+The wrapper should not log by default.
+
+Testing strategy for future implementation:
+
+The first real viem wrapper implementation should still use mocked viem PublicClient objects.
+
+No real RPC test in the implementation milestone.
+
+Recommended tests include:
+
+1. maps viem getChainId number to bigint
+2. maps finalized block tag to publicClient.getBlock({ blockTag: "finalized" })
+3. maps safe block tag to publicClient.getBlock({ blockTag: "safe" })
+4. maps blockNumber to publicClient.getBlock({ blockNumber })
+5. maps empty input to publicClient.getBlock({ blockTag: "latest" })
+6. maps null block to null
+7. maps null block number to null
+8. maps null block hash to hash null
+9. maps bigint timestamp to bigint
+10. maps number timestamp to bigint if test shape allows number
+11. passes readContract address / abi / functionName / args / blockNumber unchanged
+12. returns readContract result as unknown
+13. propagates sanitized getBlock errors
+14. propagates sanitized readContract errors
+15. does not read process.env
+16. does not accept RPC URL
+17. does not require private key
+18. does not require signer / wallet client
+19. integration with createXcEpochMinimumSourceFromEthereumLensProvider using mocked viem client
+
+Dependency policy:
+
+The design review should decide whether the next implementation adds a real viem dev/runtime dependency or continues with structural typing only.
+
+Preferred cautious path:
+
+- keep wrapper structurally typed first
+- no npm install viem until an implementation truly needs official types
+- if viem is added, keep import isolated in src/ethereum only
+
+Non-goals:
+
+This design does not add:
+
+- real Ethereum RPC
+- viem runtime code
+- npm install viem
+- env reads
+- RPC URL factory
+- private key support
+- signer support
+- wallet support
+- transaction sending
+- CLI commands
+- production address config
+- snapshot persistence
+- bridge signer verification
+- X1-native verification
+
+Validation:
+
+- npm run typecheck: passed
+- npm test: passed
+- npm run build: passed
+- npm audit --audit-level=moderate: found 0 vulnerabilities
+
+Current test count:
+
+- 33 test files passed
+- 238 tests passed
+
+Conclusion:
+
+The real viem wrapper should remain a read-only infrastructure adapter outside the model layer.
+
+It should adapt a viem PublicClient into EthereumReadProvider while keeping RPC URLs, env, API keys, signers, wallets, and real network execution outside this layer.
+
+Recommended next milestone:
+
+xc-epoch-minimum-real-viem-wrapper-design-review
+
+Suggested next scope:
+
+- review real viem wrapper design
+- confirm no runtime viem/RPC was added
+- confirm model layer remains viem-free
+- decide whether next implementation should stay structurally typed first
+- do not implement real RPC until design review is complete
+
 ## Current next steps
 
 Potential next documents / design areas:
 
-1. Design the real viem wrapper boundary before implementation.
+1. Review the real viem wrapper design before implementation.
 2. Continue implementation only with clean typecheck and tests.
 
 
