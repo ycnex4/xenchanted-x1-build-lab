@@ -14400,3 +14400,49 @@ Future app/service design should use:
 Recommended next milestone:
 
     xc-build-commitment-status-app-integration-design
+
+## Latest XC Build commitment status app integration design checkpoint
+
+The XC Build commitment status app integration design milestone was completed on the `xc-build-commitment-status-app-integration-design` branch.
+
+This milestone is design-only.
+
+New document:
+
+- `implementation/xc-build-commitment-status-app-integration-design.md`
+
+Design conclusion:
+
+- app/service layer should expose `commitmentStatus` as optional current XNTD commitment context
+- commitment status should not become global enforcement automatically
+- UNCOMMITTED Build should not cause historical proof rejection
+- appSubmitProof behavior should remain unchanged
+- watcher behavior should remain unchanged
+- registrar behavior should remain unchanged
+- proof payload behavior should remain unchanged
+- app/service integration should not call real RPC directly
+- current context should be dependency-injected
+- external X1 project usage remains optional
+- Forge participation remains out of scope for MVP commitment status
+
+Recommended future helper direction:
+
+    appGetBuildView()
+
+Possible future view shape:
+
+    AppBuildView {
+      build
+      commitmentStatus
+    }
+
+Validation baseline for design:
+
+- `npm run typecheck` passed
+- `npm test` passed: 41 test files, 323 tests
+- `npm run build` passed
+- `npm audit --audit-level=moderate` found 0 vulnerabilities
+
+Recommended next milestone:
+
+    xc-build-commitment-status-app-integration-design-review
