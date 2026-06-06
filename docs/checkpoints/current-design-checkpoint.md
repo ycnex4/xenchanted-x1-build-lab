@@ -13805,3 +13805,47 @@ Safe refusal without env remained active:
 Recommended next milestone:
 
     xc-build-active-validity-rule-design
+
+## Latest XC Build active validity rule design checkpoint
+
+The XC Build active validity rule design milestone was completed on the `xc-build-active-validity-rule-design` branch.
+
+This milestone is design-only.
+
+New document:
+
+- `implementation/xc-build-active-validity-rule-design.md`
+
+Design conclusion:
+
+- active status is an optional current-commitment signal
+- active status is based on XNTD lock / relock state
+- inactive Build keeps historical contribution
+- inactive Build does not lose `history_bld`
+- inactive Build does not invalidate Core redeem proof
+- external X1 projects may choose whether to use active status
+- active status should not be treated as a universal punishment
+- Forge participation is out of scope for MVP active validity
+
+Accepted MVP active validity rule:
+
+    Active status is an optional current-commitment signal.
+    It is based on XNTD lock / relock state.
+    Inactive Build keeps historical contribution.
+    External X1 projects may choose whether to use active status.
+    Forge participation is out of scope for MVP active validity.
+
+Validation baseline for design:
+
+- `npm run typecheck` passed
+- `npm test` passed: 40 test files, 317 tests
+- `npm run build` passed
+- `npm audit --audit-level=moderate` found 0 vulnerabilities
+
+Manual refusal without env remained safe:
+
+    Missing required Ethereum script secret config: XC_ETHEREUM_RPC_URL
+
+Recommended next milestone:
+
+    xc-build-active-validity-rule-design-review
