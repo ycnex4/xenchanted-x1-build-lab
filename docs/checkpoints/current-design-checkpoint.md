@@ -12611,3 +12611,61 @@ Manual refusal without env remained safe:
 Recommended next step after merge:
 
     complete current XC epoch minimum / protocol params RPC smoke milestone
+
+## Latest XC epoch minimum / protocol params RPC smoke completion checkpoint
+
+The XC epoch minimum / protocol params RPC smoke milestone was completed on the `xc-epoch-minimum-rpc-smoke-completion-checkpoint` branch.
+
+This milestone is documentation-only.
+
+New document:
+
+- `implementation/xc-epoch-minimum-rpc-smoke-completion-checkpoint.md`
+
+The checkpoint closes the completed chain:
+
+- mocked XC epoch minimum source abstractions
+- Ethereum read provider abstraction
+- mocked provider wrapper
+- viem-like read provider wrapper
+- provided-client RPC integration helper
+- mocked script config parser
+- mocked/testable script runner
+- manual-only RPC smoke script
+- safe real RPC run notes
+- notes review
+- sanitized mainnet protocol params smoke run
+- smoke run review
+
+Final accepted mainnet deployed XC Lens read path:
+
+    getProtocolParams()
+
+The deployed mainnet xEnchantedNFTLens does not expose:
+
+    epochMinimum(uint256)
+
+The successful sanitized mainnet read confirmed:
+
+    chainId=eip155-1
+    providerChainId=1
+    lensAddress=0xd4b90d7392c1565d558c80122dee76b5b3bb6c23
+    function=getProtocolParams()
+    completed=true
+
+No RPC URL, API key, private key, mnemonic, seed phrase, `.env` content, or raw environment content was committed.
+
+Final validation baseline:
+
+- `npm run typecheck` passed
+- `npm test` passed: 37 test files, 286 tests
+- `npm run build` passed
+- `npm audit --audit-level=moderate` found 0 vulnerabilities
+
+Safe refusal without env remained active:
+
+    Missing required Ethereum script secret config: XC_ETHEREUM_RPC_URL
+
+Recommended next milestone:
+
+    xc-protocol-params-source-design
