@@ -13382,3 +13382,43 @@ Safe refusal without env remained active:
 Recommended next milestone:
 
     xc-build-validation-app-service-context-design
+
+## Latest XC Build validation app service context design checkpoint
+
+The XC Build validation app service context design milestone was completed on the `xc-build-validation-app-service-context-design` branch.
+
+This milestone is design-only.
+
+New document:
+
+- `implementation/xc-build-validation-app-service-context-design.md`
+
+Design conclusion:
+
+- app/proof submission should eventually accept optional `XcBuildValidationContext`
+- context remains protocol context, not proof of user action
+- first implementation should be backwards-compatible
+- no global Build validity enforcement should be added in the first app-service context branch
+- no watcher, registrar, or proof payload behavior should be changed unless explicitly needed
+- no real RPC should be added
+
+Recommended next milestone after review:
+
+    xc-build-validation-app-service-context
+
+Suggested future implementation target:
+
+- `src/app/proof-submission.ts`
+- `tests/app-proof-submission.test.ts`
+- possibly `tests/e2e-watcher-proof-registrar-scenario.test.ts`
+
+Validation baseline for design:
+
+- `npm run typecheck` passed
+- `npm test` passed: 40 test files, 316 tests
+- `npm run build` passed
+- `npm audit --audit-level=moderate` found 0 vulnerabilities
+
+Manual refusal without env remained safe:
+
+    Missing required Ethereum script secret config: XC_ETHEREUM_RPC_URL
