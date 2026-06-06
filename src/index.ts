@@ -30,3 +30,4 @@ export * from "./model/ethereum-xc-epoch-minimum-source.js";
 export * from "./model/ethereum-xc-epoch-minimum-provider-source.js";
 export * from "./ethereum/ethereum-read-provider-wrapper.js";
 export * from "./ethereum/ethereum-viem-read-provider-wrapper.js";
+export * from "./ethereum/ethereum-readonly-rpc-integration.js";

@@ -9514,11 +9514,177 @@ Suggested next scope:
 - verify sanitized errors
 - verify source integration
 
+
+## Latest XC epoch minimum mocked read-only RPC integration checkpoint
+
+The XC epoch minimum mocked read-only RPC integration milestone was completed on the xc-epoch-minimum-mocked-readonly-rpc-integration branch.
+
+Commits:
+
+- cd29e08 Add mocked read-only RPC integration helper
+- f83b1ac Add mocked read-only RPC integration notes
+
+This milestone implements the mocked read-only RPC integration helper using a provided public client.
+
+Runtime additions:
+
+- src/ethereum/ethereum-readonly-rpc-integration.ts
+
+Test additions:
+
+- tests/ethereum-readonly-rpc-integration.test.ts
+
+Documentation additions:
+
+- implementation/xc-epoch-minimum-mocked-readonly-rpc-integration-notes.md
+
+Exports added through src/index.ts:
+
+- EthereumReadonlyRpcIntegrationInput
+- createXcEpochMinimumSourceFromReadonlyEthereumPublicClient()
+- createEthereumReadProviderFromReadonlyEthereumPublicClient()
+
+Purpose:
+
+The helper proves the intended outer integration boundary using a provided public client.
+
+It keeps RPC URL / API key / env ownership outside model, wrapper, and helper code while integrating with the existing Ethereum provider adapter path.
+
+Flow:
+
+provided public client
+-> createEthereumReadProviderFromReadonlyEthereumPublicClient(publicClient)
+-> EthereumReadProvider
+-> createXcEpochMinimumSourceFromEthereumLensProvider()
+-> XcEpochMinimumSource
+
+Boundary:
+
+The helper lives outside src/model.
+
+The helper does not construct a public client.
+
+The helper receives an already-created public client object.
+
+The helper does not accept:
+
+- RPC URL
+- API key
+- authorization header
+- private key
+- mnemonic
+- signer
+- wallet client
+- account
+- env config
+
+No viem dependency was installed.
+
+No viem runtime import was added.
+
+No ethers dependency or import was added.
+
+No real RPC execution was added.
+
+Input shape:
+
+The helper accepts:
+
+- publicClient
+- chainId
+- lensAddress
+- finalityPolicy
+- lockEpochs
+- optional epochMinimumFunctionName
+- optional epochMinimumAbi
+
+The optional fields are only forwarded when present, preserving exactOptionalPropertyTypes behavior.
+
+Function behavior:
+
+createXcEpochMinimumSourceFromReadonlyEthereumPublicClient(input):
+
+- creates EthereumReadProvider from input.publicClient
+- passes provider and source config into createXcEpochMinimumSourceFromEthereumLensProvider()
+- returns XcEpochMinimumSource
+
+createEthereumReadProviderFromReadonlyEthereumPublicClient(publicClient):
+
+- delegates to createEthereumReadProviderFromViemPublicClient(publicClient)
+
+Tests covered:
+
+1. creates EthereumReadProvider from provided public client
+2. constructs source from provided public client without real RPC
+3. preserves finalized finality policy
+4. preserves safe finality policy
+5. preserves confirmed finality policy
+6. passes explicit function name and ABI through
+7. uses provider adapter defaults when optional metadata is omitted
+8. does not downgrade finalized to latest
+9. does not downgrade safe to latest
+10. propagates sanitized provider errors without adding RPC URL or API key
+11. does not expose RPC URL or API key in successful source state
+
+Security / operational boundary:
+
+This milestone intentionally does not add:
+
+- real Ethereum RPC
+- viem dependency
+- viem runtime imports
+- ethers dependency
+- env reads
+- RPC URL factory
+- private keys
+- API keys
+- mnemonic
+- signer support
+- wallet client support
+- account support
+- transaction sending
+- CLI commands
+- production address config
+- snapshot persistence
+- bridge signer verification
+- X1-native verification
+
+Validation:
+
+- npm run typecheck: passed
+- npm test: passed
+- npm run build: passed
+- npm audit --audit-level=moderate: found 0 vulnerabilities
+
+Current test count:
+
+- 35 test files passed
+- 261 tests passed
+
+Conclusion:
+
+The mocked read-only RPC integration helper now proves the intended outer integration boundary using a provided public client.
+
+It keeps RPC URL / API key / env ownership outside model, wrapper, and helper code while integrating with the existing Ethereum provider adapter path.
+
+Recommended next milestone:
+
+xc-epoch-minimum-mocked-readonly-rpc-integration-review
+
+Suggested next scope:
+
+- review mocked read-only RPC integration helper boundary
+- verify no real RPC / env / secrets / RPC URL factory
+- verify no private keys / signers / wallet client
+- verify model layer remains provider-library agnostic
+- verify helper only accepts a provided public client
+- decide whether extra sanitized-error tests are needed before real RPC integration planning
+
 ## Current next steps
 
 Potential next documents / design areas:
 
-1. Implement the mocked read-only RPC integration helper using a provided public client.
+1. Review the mocked read-only RPC integration helper boundary.
 2. Continue implementation only with clean typecheck and tests.
 
 
