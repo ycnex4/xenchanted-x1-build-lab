@@ -12153,3 +12153,75 @@ Recommended next milestone:
 ```text
 xc-epoch-minimum-manual-rpc-smoke-script-design-review
 ```
+
+## Latest XC epoch minimum manual RPC smoke script design review checkpoint
+
+The XC epoch minimum manual RPC smoke script design review milestone was completed on the `xc-epoch-minimum-manual-rpc-smoke-script-design-review` branch.
+
+This milestone is review-only.
+
+New document:
+
+- `implementation/xc-epoch-minimum-manual-rpc-smoke-script-design-review-notes.md`
+
+Reviewed document:
+
+- `implementation/xc-epoch-minimum-manual-rpc-smoke-script-design.md`
+
+Review conclusion:
+
+- manual RPC smoke script design accepted
+- design-only boundary preserved
+- no changes required before merge
+
+The review confirms that the design milestone did not add:
+
+- real RPC implementation
+- viem dependency
+- script file
+- process.env runtime usage
+- public client construction
+- signer support
+- wallet client support
+- transaction capability
+- writeContract / sendTransaction path
+
+The review confirms the intended future script path:
+
+```text
+scripts/read-xc-epoch-minimum-source.ts
+```
+
+That file was not added in the design milestone.
+
+The review confirms that the future script must remain manual-only and must not run as part of:
+
+- npm test
+- npm run build
+- CI
+- default package lifecycle scripts
+- pretest
+- postinstall
+- prepare
+- any automatic check
+
+The review confirms that the future script must require:
+
+```text
+XC_ETHEREUM_REAL_RPC_CONFIRM=I_UNDERSTAND_THIS_USES_REAL_RPC
+```
+
+The review confirms that future real RPC ownership must stay at the script edge only.
+
+Validation baseline for review:
+
+- `npm run typecheck` passed
+- `npm test` passed: 37 test files, 286 tests
+- `npm run build` passed
+- `npm audit --audit-level=moderate` found 0 vulnerabilities
+
+Recommended next milestone after merge:
+
+```text
+xc-epoch-minimum-manual-rpc-smoke-script
+```
