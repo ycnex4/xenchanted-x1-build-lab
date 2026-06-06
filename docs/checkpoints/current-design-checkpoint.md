@@ -14017,3 +14017,81 @@ Validation baseline for design:
 Recommended next milestone:
 
     xc-build-active-status-model-design-review
+
+## Latest XC Build active status model design review checkpoint
+
+The XC Build active status model design review milestone was completed on the `xc-build-active-status-model-design-review` branch.
+
+This milestone is review-only.
+
+New document:
+
+- `implementation/xc-build-active-status-model-design-review-notes.md`
+
+Reviewed files:
+
+- `implementation/xc-build-active-status-model-design.md`
+- `docs/checkpoints/current-design-checkpoint.md`
+
+Review conclusion:
+
+- XC Build active status model design accepted
+- design-only boundary preserved
+- active status model is read-only and non-mutating
+- recommended helper name is `getBuildActiveStatus()`
+- accepted status values are `ACTIVE`, `INACTIVE`, and `UNKNOWN`
+- accepted reason values cover active, no history, no lock, below required, relock required, and unknown current context
+- inactive status does not erase historical contribution
+- currentEpoch may affect active status but must not invalidate Core redeem history
+- Forge participation remains out of scope for MVP active status
+
+Accepted status values:
+
+    ACTIVE
+    INACTIVE
+    UNKNOWN
+
+Accepted reason values:
+
+    ACTIVE_LOCK_CURRENT
+    INACTIVE_NO_HISTORY
+    INACTIVE_NO_LOCK
+    INACTIVE_LOCK_BELOW_REQUIRED
+    INACTIVE_RELOCK_REQUIRED
+    UNKNOWN_NO_CURRENT_CONTEXT
+
+Accepted model fields:
+
+    isActive
+    status
+    reason
+    historyBld
+    availableBld
+    lockedXntd
+    requiredXntdLock
+    lockEpoch
+    currentEpoch
+    needsRelock
+
+The review confirms that future status calculation must not mutate:
+
+- history_bld
+- available_bld
+- origin_bld
+- lockedXntd
+- requiredXntdLock
+- lockEpoch
+- replay protection state
+- registrar state
+- proof state
+
+Validation baseline for review:
+
+- `npm run typecheck` passed
+- `npm test` passed: 40 test files, 317 tests
+- `npm run build` passed
+- `npm audit --audit-level=moderate` found 0 vulnerabilities
+
+Recommended next milestone after merge:
+
+    xc-build-active-status-model
