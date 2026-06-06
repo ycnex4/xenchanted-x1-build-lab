@@ -10524,11 +10524,347 @@ Suggested next scope:
 - define sanitized error boundaries for the script
 - do not implement real RPC until script construction design review is complete
 
+
+## Latest XC epoch minimum script public client construction design checkpoint
+
+The XC epoch minimum script public client construction design milestone was completed on the xc-epoch-minimum-script-public-client-construction-design branch.
+
+Commits:
+
+- 43fcd40 Add script public client construction design
+
+This was a design-only milestone.
+
+No runtime behavior changed.
+
+Design document added:
+
+- implementation/xc-epoch-minimum-script-public-client-construction-design.md
+
+Purpose:
+
+Design the script-only public client construction boundary for the XC epoch minimum Ethereum provider path.
+
+This milestone does not implement:
+
+- real RPC
+- viem dependency installation
+- runtime viem imports
+- env reads
+- RPC URL factory
+- private keys
+- signers
+- wallet clients
+- transaction sending
+
+Current completed foundation:
+
+provided public client
+-> createXcEpochMinimumSourceFromReadonlyEthereumPublicClient()
+-> createEthereumReadProviderFromReadonlyEthereumPublicClient()
+-> createEthereumReadProviderFromViemPublicClient()
+-> EthereumReadProvider
+-> createXcEpochMinimumSourceFromEthereumLensProvider()
+-> XcEpochMinimumSource
+
+Design goal:
+
+A future script may construct a real read-only public client while keeping secret-bearing configuration at the outermost edge.
+
+The script should be the only layer allowed to read env.
+
+The model layer, wrappers, and integration helper must remain free from:
+
+- env reads
+- RPC URL ownership
+- public client construction
+- private keys
+- signers
+- wallet clients
+- transaction sending
+
+Exact future script path:
+
+- scripts/read-xc-epoch-minimum-source.ts
+
+Reason:
+
+- script-only construction keeps RPC URL / API key ownership outside exported library APIs
+- script-only construction is easier to gate with explicit confirmation
+- script-only construction avoids creating a reusable RPC URL factory too early
+- script-only construction keeps src/model and src/ethereum helper layers clean
+
+Dependency decision:
+
+Recommended future dependency:
+
+- viem
+
+Design-stage decision:
+
+- do not install viem in this design milestone
+- do not import viem in this design milestone
+- decide exact viem version only in implementation or implementation-design milestone
+- keep viem imports out of src/model permanently
+
+Future script responsibility:
+
+A future script may be responsible for:
+
+- reading safe env config
+- validating required fields
+- constructing a read-only public client
+- creating XcEpochMinimumSource through the existing helper
+- printing safe summary output
+- refusing unsafe or incomplete configuration
+
+A future script must not:
+
+- print RPC URL
+- print API key
+- print raw env object
+- print full config object
+- accept private key
+- accept mnemonic
+- construct signer
+- construct wallet client
+- send transaction
+- call writeContract
+- call sendTransaction
+- run as part of npm test or CI if it uses real RPC
+
+Future env names:
+
+Required future env names:
+
+- XC_ETHEREUM_RPC_URL
+- XC_ETHEREUM_CHAIN_ID
+- XC_ETHEREUM_LENS_ADDRESS
+- XC_ETHEREUM_FINALITY
+- XC_ETHEREUM_LOCK_EPOCHS
+
+Required only for confirmed finality:
+
+- XC_ETHEREUM_CONFIRMATIONS
+
+Optional future env names:
+
+- XC_ETHEREUM_EPOCH_MINIMUM_FUNCTION
+- XC_ETHEREUM_EPOCH_MINIMUM_ABI_PATH
+
+Manual real RPC confirmation:
+
+- XC_ETHEREUM_REAL_RPC_CONFIRM=I_UNDERSTAND_THIS_USES_REAL_RPC
+
+Env parsing rules:
+
+- XC_ETHEREUM_RPC_URL is required for real RPC script, but must never be printed, included in thrown errors, or stored in snapshots.
+- XC_ETHEREUM_CHAIN_ID must use eip155-N format and is safe to print after validation.
+- XC_ETHEREUM_LENS_ADDRESS must use 0x + 40 hex chars and is safe to print after validation.
+- XC_ETHEREUM_FINALITY must be finalized, safe, or confirmed.
+- XC_ETHEREUM_CONFIRMATIONS is required only when finality is confirmed.
+- XC_ETHEREUM_LOCK_EPOCHS is a comma-separated positive integer list.
+- XC_ETHEREUM_EPOCH_MINIMUM_FUNCTION is optional and defaults to epochMinimum.
+- XC_ETHEREUM_EPOCH_MINIMUM_ABI_PATH is optional; preferred first implementation may avoid it and use minimal ABI design later.
+- XC_ETHEREUM_REAL_RPC_CONFIRM must equal I_UNDERSTAND_THIS_USES_REAL_RPC.
+
+Config object boundary:
+
+Future script may build an internal config object, but that config object must not be printed directly.
+
+Secret-bearing config includes:
+
+- rpcUrl
+- transport options
+- authorization headers
+- API-key-bearing URLs
+
+Secret-bearing config must stay inside script-local construction scope.
+
+It must not be passed into:
+
+- src/model
+- src/ethereum/ethereum-readonly-rpc-integration.ts
+- createXcEpochMinimumSourceFromReadonlyEthereumPublicClient()
+- createEthereumReadProviderFromReadonlyEthereumPublicClient()
+
+Only the constructed public client object should be passed inward.
+
+Error handling design:
+
+Future script errors should be sanitized.
+
+Allowed error context:
+
+- operation name
+- chain ID
+- Lens address
+- finality policy
+- confirmations count
+- lock epoch count
+- block tag
+- block number
+- function name
+- high-level failure category
+
+Disallowed error context:
+
+- RPC URL
+- API key
+- authorization header
+- raw env object
+- full config object
+- transport config
+- private key
+- mnemonic
+- signer object
+- wallet client internals
+
+Recommended future error helpers:
+
+- sanitizeUnknownError(error)
+- failWithSanitizedMessage(message)
+- assertNoSecretLikeText(message)
+
+Provider unsupported finalized / safe policy:
+
+A future script must not silently downgrade:
+
+- finalized -> latest
+- safe -> latest
+
+If provider does not support finalized or safe:
+
+- fail with sanitized message
+- recommend using explicit confirmed finality configuration if appropriate
+- do not automatically change policy
+
+Future script output:
+
+Allowed output:
+
+- real RPC confirmation accepted
+- chain ID
+- Lens address
+- finality policy
+- confirmations count if applicable
+- lock epoch count
+- function name
+- selected block number
+- selected block hash
+- number of loaded epoch minimums
+
+Disallowed output:
+
+- RPC URL
+- API key
+- raw env values
+- full config object
+- transport config
+- authorization headers
+- private key
+- mnemonic
+- signer / wallet internals
+
+Package script design:
+
+Possible future package script:
+
+- smoke:xc-epoch-minimum:ethereum
+
+Design decision:
+
+- do not add package script in this design milestone
+- add it only when manual-only smoke implementation exists
+- do not make it part of test, build, or CI
+
+Real RPC smoke policy:
+
+Future real RPC script should be manual-only.
+
+It should require:
+
+- npm run build
+- XC_ETHEREUM_REAL_RPC_CONFIRM=I_UNDERSTAND_THIS_USES_REAL_RPC
+
+It should not run during:
+
+- npm test
+- npm run build
+- CI
+
+It should only perform:
+
+- getChainId
+- getBlock
+- readContract
+
+It must not perform:
+
+- sendTransaction
+- writeContract
+- approve
+- signer calls
+- wallet calls
+
+Testing strategy for future implementation:
+
+Before any real RPC script is implemented, add mocked tests for env/config parsing and error sanitization.
+
+Recommended mocked tests:
+
+1. parses required env into safe config without printing RPC URL
+2. rejects missing RPC URL with sanitized message
+3. rejects invalid chain ID
+4. rejects invalid Lens address
+5. rejects invalid finality
+6. requires confirmations for confirmed finality
+7. rejects non-positive confirmations
+8. parses lock epoch list
+9. rejects empty lock epoch list
+10. requires explicit real RPC confirmation
+11. never includes RPC URL in error message
+12. never includes API-key-looking text in error message
+13. does not construct signer / wallet client
+14. does not expose raw env object
+15. passes only constructed public client into existing helper
+
+Validation:
+
+- npm run typecheck: passed
+- npm test: passed
+- npm run build: passed
+- npm audit --audit-level=moderate: found 0 vulnerabilities
+
+Current test count:
+
+- 35 test files passed
+- 261 tests passed
+
+Conclusion:
+
+Script-only public client construction should keep real RPC at the outermost edge.
+
+The future script may own env reading and public client construction, but model, wrappers, and integration helper must remain free from RPC URL ownership, env reads, provider construction, private keys, signers, wallet clients, and transaction sending.
+
+Recommended next milestone:
+
+xc-epoch-minimum-script-public-client-construction-design-review
+
+Suggested next scope:
+
+- review script-only public client construction design
+- confirm no real RPC / viem install / env reads were added
+- confirm script path and env parsing policy
+- confirm sanitized error boundary
+- confirm manual-only smoke policy
+- do not implement real RPC until design review is complete
+
 ## Current next steps
 
 Potential next documents / design areas:
 
-1. Design script-only public client construction before implementation.
+1. Review the script-only public client construction design before implementation.
 2. Continue implementation only with clean typecheck and tests.
 
 
