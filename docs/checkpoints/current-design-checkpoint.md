@@ -13150,3 +13150,43 @@ Safe refusal without env remained active:
 Recommended next milestone:
 
     xc-build-validation-integration-design
+
+## Latest XC Build validation integration design checkpoint
+
+The XC Build validation integration design milestone was completed on the `xc-build-validation-integration-design` branch.
+
+This milestone is design-only.
+
+New document:
+
+- `implementation/xc-build-validation-integration-design.md`
+
+Design conclusion:
+
+- `XcProtocolParams` and derived requirements are protocol context, not proof of user action
+- first integration should not modify registrar, watcher, or app proof behavior directly
+- pure validation should not call `XcProtocolParamsSource`
+- derived requirements should be passed explicitly through a validation context
+- future app/service integration should combine protocol context and proof validation at orchestration level
+- first implementation should remain pure/mocked
+
+Recommended next milestone after review:
+
+    xc-build-validation-context
+
+Expected first implementation files:
+
+- `src/model/xc-build-validation-context.ts`
+- `tests/xc-build-validation-context.test.ts`
+- `src/index.ts`
+
+Validation baseline for design:
+
+- `npm run typecheck` passed
+- `npm test` passed: 39 test files, 309 tests
+- `npm run build` passed
+- `npm audit --audit-level=moderate` found 0 vulnerabilities
+
+Manual refusal without env remained safe:
+
+    Missing required Ethereum script secret config: XC_ETHEREUM_RPC_URL
