@@ -11834,3 +11834,128 @@ No runtime code changed.
 No dependencies changed.
 
 No real RPC was added.
+
+## Latest XC epoch minimum mocked script entrypoint implementation checkpoint
+
+The XC epoch minimum mocked script entrypoint implementation milestone was completed on the `xc-epoch-minimum-mocked-script-entrypoint` branch.
+
+This milestone adds a mocked/testable runner only.
+
+New runtime file:
+
+- `src/ethereum/ethereum-script-runner.ts`
+
+New test file:
+
+- `tests/ethereum-script-runner.test.ts`
+
+Updated export:
+
+- `src/index.ts`
+
+New exported runner:
+
+```text
+runEthereumXcEpochMinimumReadFromProvidedClient(input)
+```
+
+New exported runner types:
+
+```text
+EthereumScriptRunnerOutput
+EthereumScriptRunnerInput
+EthereumScriptRunnerEpochMinimumResult
+EthereumScriptRunnerResult
+```
+
+The runner implements the provided-client path:
+
+```text
+env-like input
+-> parseEthereumScriptConfig()
+-> summarizeEthereumScriptConfig()
+-> provided public client
+-> createXcEpochMinimumSourceFromReadonlyEthereumPublicClient()
+-> source.authoritativeEpochMinimum(lockEpoch)
+-> safe output writer
+-> safe structured result
+```
+
+The implementation preserves the safety boundary:
+
+- does not add real RPC calls
+- does not install viem
+- does not import viem at runtime
+- does not import ethers
+- does not read process.env
+- does not construct a public client
+- does not create an RPC URL factory
+- does not construct HTTP transport
+- does not accept private keys
+- does not accept mnemonics
+- does not create signers
+- does not create wallet clients
+- does not send transactions
+- does not call writeContract
+- does not call sendTransaction
+- does not print rpcUrl
+- does not print raw env
+- does not print full parsed config
+
+The runner keeps the full parsed config only as a local variable and returns only:
+
+- safeConfigSummary
+- epochMinimums
+- completed
+
+The runner writes only safe output lines:
+
+- chainId
+- lensAddress
+- finality
+- lockEpochCount
+- epochMinimumFunctionName
+- hasEpochMinimumAbiPath
+- realRpcConfirmed
+- epoch minimum result lines
+- completed=true
+
+ABI path remains metadata-only in this milestone:
+
+- ABI path may be parsed and summarized
+- ABI files are not loaded
+- default epoch minimum ABI behavior is preserved
+
+Tests added:
+
+- runs with env-like input and provided mocked public client
+- writes safe config summary without RPC URL or API-key-like values
+- does not return full parsed config object
+- passes confirmed finality policy through to source helper
+- passes lock epochs and function name through to contract reads
+- keeps ABI path as metadata only
+- propagates sanitized parser validation errors
+- uses provided public client only
+
+Validation baseline after implementation:
+
+- `npm run typecheck` passed
+- `npm test` passed: 37 test files, 286 tests
+- `npm run build` passed
+- `npm audit --audit-level=moderate` found 0 vulnerabilities
+
+Test count increased from:
+
+```text
+36 test files / 278 tests
+```
+
+to:
+
+```text
+37 test files / 286 tests
+```
+
+No dependencies changed.
+
+No real RPC was added.
