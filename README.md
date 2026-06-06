@@ -16,6 +16,7 @@ Start here:
 
 Important supporting documents:
 
+- [Final MVP readiness checkpoint](docs/final-mvp-readiness-checkpoint.md)
 - [Assumptions](docs/assumptions.md)
 - [Current design checkpoint](docs/checkpoints/current-design-checkpoint.md)
 
@@ -28,6 +29,7 @@ The review summary explains:
 - BLD terminology
 - Genesis Origin model
 - XNTD lock / relock model
+- commitmentStatus / appGetBuildView model
 - source event protection
 - implemented layers
 - snapshot safety model
@@ -43,18 +45,23 @@ The assumptions document explicitly records MVP trust boundaries and known limit
 Current main baseline:
 
 - TypeScript typecheck: passing
-- Tests: 40 files / 317 tests passing
+- Tests: 42 files / 328 tests passing
 - Build: passing
 - npm audit: 0 vulnerabilities
 
 Latest reviewed main includes:
 
+- final MVP readiness checkpoint
+- commitmentStatus model
+- appGetBuildView app/service view
+- authoritative XC epoch minimum validation path
+- XC Build validation context
+- XNTD observed required lock propagation
+- XNTD commitment event replay protection
 - registrar mutation order hardening
 - explicit MVP assumptions / known limitations
-- review readiness summary
 - CLI snapshot verification and recovery commands
 - snapshot verification / backup / recovery helpers
-- Vitest 4 upgrade with `dist/**` excluded from test discovery
 
 ## Validation commands
 
@@ -67,8 +74,8 @@ Run:
 
 Expected current result:
 
-    40 test files passed
-    317 tests passed
+    42 test files passed
+    328 tests passed
     found 0 vulnerabilities
 
 ## CLI
@@ -105,6 +112,8 @@ The current repository includes tested layers for:
 - XNTD lock and relock
 - X1 fee contribution checkpoints
 - registrar replay protection
+- source event replay protection
+- XNTD commitment event replay protection
 - registrar handlers
 - proof object types
 - proof-to-registrar builders
@@ -121,6 +130,13 @@ The current repository includes tested layers for:
 - CLI snapshot show
 - CLI snapshot verify
 - CLI snapshot recover
+- authoritative XC epoch minimum source
+- authoritative XC epoch minimum provider source
+- XC protocol params source
+- XC protocol params build validation
+- XC Build validation context
+- XC Build commitment status model
+- app Build view exposing commitmentStatus
 
 ## Architecture overview
 
@@ -159,6 +175,20 @@ The model also tracks:
 - XNTD lock / relock state
 - X1 fee contribution checkpoints
 - replay protection state
+- commitmentStatus as current XNTD commitment signal
+
+The current app/service view helper is:
+
+    appGetBuildView()
+
+It returns:
+
+    AppBuildView {
+      build
+      commitmentStatus
+    }
+
+`commitmentStatus` does not mean Build validity and does not erase historical contribution.
 
 ## Snapshot safety
 
@@ -222,6 +252,7 @@ These are future layers and should not be assumed to exist in the current MVP.
 Review / checkpoint:
 
 - [Review readiness summary](docs/review-readiness-summary.md)
+- [Final MVP readiness checkpoint](docs/final-mvp-readiness-checkpoint.md)
 - [Assumptions](docs/assumptions.md)
 - [Current design checkpoint](docs/checkpoints/current-design-checkpoint.md)
 
