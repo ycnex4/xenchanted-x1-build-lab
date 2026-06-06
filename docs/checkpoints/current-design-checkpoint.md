@@ -12465,3 +12465,68 @@ Default next step:
 ```text
 notes-only first
 ```
+
+## Latest XC epoch minimum real RPC smoke run notes review checkpoint
+
+The XC epoch minimum real RPC smoke run notes review milestone was completed on the `xc-epoch-minimum-real-rpc-smoke-run-notes-review` branch.
+
+This milestone is review-only.
+
+New document:
+
+- `implementation/xc-epoch-minimum-real-rpc-smoke-run-notes-review-notes.md`
+
+Reviewed files:
+
+- `implementation/xc-epoch-minimum-real-rpc-smoke-run-notes.md`
+- `docs/checkpoints/current-design-checkpoint.md`
+
+Review conclusion:
+
+- real RPC smoke run notes accepted
+- notes-only boundary preserved
+- no real RPC run was performed
+- no changes required before merge
+
+The review confirms that the notes document defines a safe manual procedure for a future real RPC smoke run.
+
+The notes explicitly prohibit printing or pasting:
+
+- RPC URL
+- API key
+- private key
+- mnemonic
+- seed phrase
+- `.env` contents
+- raw environment content
+
+The review confirms that forbidden commands appear only as warnings inside the notes document, not as executable project scripts:
+
+```text
+echo $XC_ETHEREUM_RPC_URL
+env
+printenv
+cat .env
+grep RPC .env
+```
+
+Validation baseline for review:
+
+- `npm run typecheck` passed
+- `npm test` passed: 37 test files, 286 tests
+- `npm run build` passed
+- `npm audit --audit-level=moderate` found 0 vulnerabilities
+
+Manual refusal without env remained safe:
+
+```text
+Missing required Ethereum script secret config: XC_ETHEREUM_RPC_URL
+```
+
+No RPC URL, API key, private key, mnemonic, seed phrase, `.env` content, or raw environment content was printed.
+
+Recommended next step after merge:
+
+```text
+optional manual real RPC smoke run
+```
