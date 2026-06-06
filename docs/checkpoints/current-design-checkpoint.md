@@ -12423,3 +12423,45 @@ Recommended next milestone after merge:
 ```text
 xc-epoch-minimum-real-rpc-smoke-run-notes
 ```
+
+## Latest XC epoch minimum real RPC smoke run notes checkpoint
+
+The XC epoch minimum real RPC smoke run notes milestone was started on the `xc-epoch-minimum-real-rpc-smoke-run-notes` branch.
+
+This checkpoint is notes-only.
+
+New document:
+
+- `implementation/xc-epoch-minimum-real-rpc-smoke-run-notes.md`
+
+Purpose:
+
+- document safe manual procedure for a future real RPC smoke run
+- avoid printing RPC URLs or API keys
+- avoid reading or printing `.env`
+- require hidden input for RPC URL
+- define allowed sanitized output
+- define forbidden output
+- define safe failure logging
+- keep real RPC run optional and local
+
+Baseline before notes:
+
+- `npm run typecheck` passed
+- `npm test` passed: 37 test files, 286 tests
+- `npm run build` passed
+- `npm audit --audit-level=moderate` found 0 vulnerabilities
+
+Manual refusal without env remained safe:
+
+```text
+Missing required Ethereum script secret config: XC_ETHEREUM_RPC_URL
+```
+
+No RPC URL, API key, private key, mnemonic, or seed phrase was printed.
+
+Default next step:
+
+```text
+notes-only first
+```
