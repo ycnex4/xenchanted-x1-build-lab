@@ -12565,3 +12565,49 @@ completed=true
 The previous generic `epochMinimum(lockEpoch)` smoke attempt reached mainnet and validated chain ID, but failed with a sanitized runtime error because the deployed `xEnchantedNFTLens` does not expose `epochMinimum(uint256)`. The correct deployed XC Lens read path is `getProtocolParams()`.
 
 No RPC URL, API key, private key, mnemonic, seed phrase, `.env` content, or raw environment content was printed or recorded.
+
+## Latest XC mainnet protocol params real RPC smoke run review checkpoint
+
+The XC mainnet protocol params real RPC smoke run review milestone was completed on the xc-mainnet-protocol-params-real-rpc-smoke-run-review branch.
+
+This milestone is review-only.
+
+New document:
+
+- implementation/xc-mainnet-protocol-params-real-rpc-smoke-run-review-notes.md
+
+Reviewed files:
+
+- implementation/xc-mainnet-protocol-params-real-rpc-smoke-run-result.md
+- docs/checkpoints/current-design-checkpoint.md
+
+Review conclusion:
+
+- sanitized mainnet protocol params real RPC smoke result accepted
+- getProtocolParams() read path confirmed for deployed xEnchanted Crypto NFT Lens
+- epochMinimum(uint256) mismatch correctly identified as ABI/function mismatch for this Lens
+- no changes required before merge
+
+The review confirms the successful sanitized result:
+
+    xcProtocolParamsSmoke=true
+    providerChainId=1
+    function=getProtocolParams()
+    completed=true
+
+The review confirms that no RPC URL, API key, private key, mnemonic, seed phrase, .env content, raw environment content, provider account details, or transport config was recorded.
+
+Validation baseline for review:
+
+- npm run typecheck passed
+- npm test passed: 37 test files, 286 tests
+- npm run build passed
+- npm audit --audit-level=moderate found 0 vulnerabilities
+
+Manual refusal without env remained safe:
+
+    Missing required Ethereum script secret config: XC_ETHEREUM_RPC_URL
+
+Recommended next step after merge:
+
+    complete current XC epoch minimum / protocol params RPC smoke milestone
