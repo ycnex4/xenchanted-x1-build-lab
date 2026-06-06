@@ -13913,3 +13913,66 @@ Validation baseline for review:
 Recommended next milestone after merge:
 
     xc-build-active-status-model-design
+
+## Latest XC Build active validity rule completion checkpoint
+
+The XC Build active validity rule milestone was completed on the `xc-build-active-validity-rule-completion-checkpoint` branch.
+
+This milestone is documentation-only.
+
+New document:
+
+- `implementation/xc-build-active-validity-rule-completion-checkpoint.md`
+
+The checkpoint closes the completed chain:
+
+- active validity rule design
+- active validity rule design review
+- merge to main
+
+Accepted MVP active validity rule:
+
+    Active status is an optional current-commitment signal.
+    It is based on XNTD lock / relock state.
+    Inactive Build keeps historical contribution.
+    External X1 projects may choose whether to use active status.
+    Forge participation is out of scope for MVP active validity.
+
+Inactive Build does not mean:
+
+- history is invalid
+- Build is deleted
+- Core redeem proof is rejected
+- history_bld is reduced
+- available_bld is automatically reduced
+- external projects must ignore the Build
+
+External X1 projects may choose whether to use active status.
+
+This milestone does not add:
+
+- runtime code
+- tests
+- dependencies
+- real RPC execution
+- appSubmitProof behavior changes
+- watcher behavior changes
+- registrar behavior changes
+- proof payload behavior changes
+- active status enforcement
+- external project policy
+- inactive Build history erasure
+- Forge requirements
+- unlock mechanics
+- BLD transfer/sale rule changes
+
+Final validation baseline:
+
+- `npm run typecheck` passed
+- `npm test` passed: 40 test files, 317 tests
+- `npm run build` passed
+- `npm audit --audit-level=moderate` found 0 vulnerabilities
+
+Recommended next milestone:
+
+    xc-build-active-status-model-design
