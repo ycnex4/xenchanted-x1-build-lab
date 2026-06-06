@@ -12962,3 +12962,68 @@ Validation baseline for design:
 Manual refusal without env remained safe:
 
     Missing required Ethereum script secret config: XC_ETHEREUM_RPC_URL
+
+## Latest XC protocol params build validation design review checkpoint
+
+The XC protocol params build validation design review milestone was completed on the `xc-protocol-params-build-validation-design-review` branch.
+
+This milestone is review-only.
+
+New document:
+
+- `implementation/xc-protocol-params-build-validation-design-review-notes.md`
+
+Reviewed files:
+
+- `implementation/xc-protocol-params-build-validation-design.md`
+- `docs/checkpoints/current-design-checkpoint.md`
+
+Review conclusion:
+
+- XC protocol params build validation design accepted
+- design-only boundary preserved
+- `XcProtocolParams` accepted as authoritative XC economic context for future X1 Build validation
+- protocol params context remains separate from user action proof validation
+- future first implementation should remain pure and mocked
+- no changes required before merge
+
+The review confirms likely authoritative fields:
+
+- currentEpoch
+- currentBaseNominal
+- currentXenBurnAmount
+- halvingInterval
+- xenBurnHalvingInterval
+- nextHalvingTs
+- genesisTs
+
+The review confirms that the future first implementation should not add:
+
+- real RPC execution
+- viem import
+- ethers import
+- createPublicClient
+- http transport
+- process.env read
+- private key support
+- mnemonic support
+- wallet client support
+- writeContract
+- sendTransaction
+- bridge logic
+- transaction logic
+
+Validation baseline for review:
+
+- `npm run typecheck` passed
+- `npm test` passed: 38 test files, 296 tests
+- `npm run build` passed
+- `npm audit --audit-level=moderate` found 0 vulnerabilities
+
+Manual refusal without env remained safe:
+
+    Missing required Ethereum script secret config: XC_ETHEREUM_RPC_URL
+
+Recommended next milestone after merge:
+
+    xc-protocol-params-build-validation
