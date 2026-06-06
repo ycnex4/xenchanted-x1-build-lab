@@ -10,6 +10,7 @@ import {
 } from "./build-service.js";
 import { BuildError } from "../errors/build-error.js";
 import { type BuildState } from "../model/build-state.js";
+import { type XcBuildValidationContext } from "../model/xc-build-validation-context.js";
 import { type XcEpochMinimumSource } from "../model/xc-epoch-minimum-source.js";
 import {
   type CoreRedeemRegistrarPayload,
@@ -24,6 +25,7 @@ import { type BuildProof } from "../proofs/proof-types.js";
 
 export interface AppSubmitProofInput extends CreateRegistrarPayloadInput {
   xcEpochMinimumSource?: XcEpochMinimumSource;
+  xcBuildValidationContext?: XcBuildValidationContext;
 }
 
 function toAppError(error: unknown): AppErrorResult {
