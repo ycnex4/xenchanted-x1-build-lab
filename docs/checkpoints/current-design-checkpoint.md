@@ -13422,3 +13422,68 @@ Validation baseline for design:
 Manual refusal without env remained safe:
 
     Missing required Ethereum script secret config: XC_ETHEREUM_RPC_URL
+
+## Latest XC Build validation app service context design review checkpoint
+
+The XC Build validation app service context design review milestone was completed on the `xc-build-validation-app-service-context-design-review` branch.
+
+This milestone is review-only.
+
+New document:
+
+- `implementation/xc-build-validation-app-service-context-design-review-notes.md`
+
+Reviewed files:
+
+- `implementation/xc-build-validation-app-service-context-design.md`
+- `docs/checkpoints/current-design-checkpoint.md`
+
+Review conclusion:
+
+- XC Build validation app service context design accepted
+- design-only boundary preserved
+- optional `XcBuildValidationContext` at app/proof submission boundary accepted
+- backward compatibility requirement accepted
+- first runtime implementation should not add global Build validity enforcement
+- first runtime implementation should not change watcher, registrar, or proof payload behavior unless explicitly needed
+- no changes required before merge
+
+Recommended optional input name:
+
+    xcBuildValidationContext?: XcBuildValidationContext
+
+The review confirms that the future first implementation should not add:
+
+- real RPC execution
+- scripts
+- dependencies
+- direct `XcProtocolParamsSource` calls
+- process.env reads
+- viem import
+- ethers import
+- createPublicClient
+- http transport
+- private key support
+- mnemonic support
+- wallet client support
+- writeContract
+- sendTransaction
+- watcher candidate changes
+- registrar behavior changes
+- proof payload changes unless explicitly needed
+- global Build validity enforcement
+
+Validation baseline for review:
+
+- `npm run typecheck` passed
+- `npm test` passed: 40 test files, 316 tests
+- `npm run build` passed
+- `npm audit --audit-level=moderate` found 0 vulnerabilities
+
+Manual refusal without env remained safe:
+
+    Missing required Ethereum script secret config: XC_ETHEREUM_RPC_URL
+
+Recommended next milestone after merge:
+
+    xc-build-validation-app-service-context
