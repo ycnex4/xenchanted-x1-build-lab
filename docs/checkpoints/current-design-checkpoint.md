@@ -13190,3 +13190,71 @@ Validation baseline for design:
 Manual refusal without env remained safe:
 
     Missing required Ethereum script secret config: XC_ETHEREUM_RPC_URL
+
+## Latest XC Build validation integration design review checkpoint
+
+The XC Build validation integration design review milestone was completed on the `xc-build-validation-integration-design-review` branch.
+
+This milestone is review-only.
+
+New document:
+
+- `implementation/xc-build-validation-integration-design-review-notes.md`
+
+Reviewed files:
+
+- `implementation/xc-build-validation-integration-design.md`
+- `docs/checkpoints/current-design-checkpoint.md`
+
+Review conclusion:
+
+- XC Build validation integration design accepted
+- design-only boundary preserved
+- `XcProtocolParams` and derived requirements remain protocol context, not proof of user action
+- first implementation should not modify registrar, watcher, or app proof behavior directly
+- first implementation should introduce a pure validation context layer
+- no changes required before merge
+
+Recommended next milestone after merge:
+
+    xc-build-validation-context
+
+Expected first implementation files:
+
+- `src/model/xc-build-validation-context.ts`
+- `tests/xc-build-validation-context.test.ts`
+- `src/index.ts`
+
+The review confirms that the future first implementation should not add:
+
+- real RPC execution
+- scripts
+- dependencies
+- direct `XcProtocolParamsSource` calls inside pure model code
+- registrar state transition changes
+- watcher candidate generation changes
+- global Build requirement enforcement
+- epoch policy finalization
+- lock/relock rule changes
+- bridge logic
+- viem import
+- ethers import
+- createPublicClient
+- http transport
+- process.env read
+- private key support
+- mnemonic support
+- wallet client support
+- writeContract
+- sendTransaction
+
+Validation baseline for review:
+
+- `npm run typecheck` passed
+- `npm test` passed: 39 test files, 309 tests
+- `npm run build` passed
+- `npm audit --audit-level=moderate` found 0 vulnerabilities
+
+Manual refusal without env remained safe:
+
+    Missing required Ethereum script secret config: XC_ETHEREUM_RPC_URL
