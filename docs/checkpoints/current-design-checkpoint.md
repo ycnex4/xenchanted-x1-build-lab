@@ -12037,3 +12037,119 @@ xc-epoch-minimum-manual-rpc-smoke-script-design
 ```
 
 The next milestone should still be design-only and should define the future manual-only real RPC smoke script boundary before adding viem or real RPC.
+
+## Latest XC epoch minimum manual RPC smoke script design checkpoint
+
+The XC epoch minimum manual RPC smoke script design milestone was completed on the `xc-epoch-minimum-manual-rpc-smoke-script-design` branch.
+
+This milestone is design-only.
+
+New document:
+
+- `implementation/xc-epoch-minimum-manual-rpc-smoke-script-design.md`
+
+Purpose:
+
+- design the future manual-only real RPC smoke script
+- keep real RPC implementation out of this milestone
+- keep viem dependency out of this milestone
+- keep script file creation out of this milestone
+- define the future script-edge-only process.env boundary
+- define future read-only public client construction rules
+- define safe output and sanitized error policy
+- define manual-only execution rules
+- define confirmation requirement
+- define future chain handling policy
+- define ABI path policy for the first real smoke script
+
+The proposed future script file is:
+
+```text
+scripts/read-xc-epoch-minimum-source.ts
+```
+
+This file was not added in this milestone.
+
+The intended future flow is:
+
+```text
+manual script invocation
+-> read process.env at script edge only
+-> parseEthereumScriptConfig(process.env-like object)
+-> create read-only public client
+-> runEthereumXcEpochMinimumReadFromProvidedClient({
+     env,
+     publicClient,
+     output
+   })
+-> print safe output only
+```
+
+The future script must require:
+
+```text
+XC_ETHEREUM_REAL_RPC_CONFIRM=I_UNDERSTAND_THIS_USES_REAL_RPC
+```
+
+The future script may eventually add `viem`, but only at the script-edge implementation milestone.
+
+The design confirms that the future script must not:
+
+- print RPC URL
+- print API key
+- print raw process.env
+- print full config object
+- print transport config
+- print provider internals
+- accept private keys
+- accept mnemonics
+- create signers
+- create wallet clients
+- send transactions
+- call writeContract
+- call sendTransaction
+- perform approvals
+- perform token transfers
+- run as part of npm test
+- run as part of npm run build
+- run in CI/default package lifecycle scripts
+
+Recommended first supported real chain:
+
+```text
+eip155-1
+```
+
+Optional future Sepolia support must be explicit:
+
+```text
+eip155-11155111
+```
+
+ABI path policy for the first real smoke script:
+
+- use default epoch minimum ABI behavior
+- parse ABI path presence through existing config parser
+- do not load ABI file yet
+- create a separate design milestone before ABI file loading
+
+Validation baseline after the design document:
+
+- `npm run typecheck` passed
+- `npm test` passed: 37 test files, 286 tests
+- `npm run build` passed
+- `npm audit --audit-level=moderate` found 0 vulnerabilities
+
+No runtime code changed.
+
+No dependencies changed.
+
+No real RPC was added.
+
+No script file was added.
+
+Recommended next milestone:
+
+```text
+xc-epoch-minimum-manual-rpc-smoke-script-design-review
+```
