@@ -12354,3 +12354,72 @@ Boundary grep also confirmed no source/script/test/package matches for:
 - `sendTransaction`
 
 No real RPC URL, API key, private key, mnemonic, or seed phrase was printed.
+
+## Latest XC epoch minimum manual RPC smoke script review checkpoint
+
+The XC epoch minimum manual RPC smoke script review milestone was completed on the `xc-epoch-minimum-manual-rpc-smoke-script-review` branch.
+
+This milestone is review-only.
+
+New document:
+
+- `implementation/xc-epoch-minimum-manual-rpc-smoke-script-review-notes.md`
+
+Reviewed files:
+
+- `scripts/read-xc-epoch-minimum-source.ts`
+- `package.json`
+- `package-lock.json`
+- `tsconfig.json`
+- `docs/checkpoints/current-design-checkpoint.md`
+
+Review conclusion:
+
+- manual RPC smoke script implementation accepted
+- manual-only boundary preserved
+- no implementation changes required before merge
+
+The review confirms:
+
+- `viem`, `createPublicClient`, `http`, and `process.env` appear only in the script-edge file
+- no `privateKey`
+- no `mnemonic`
+- no `walletClient`
+- no `writeContract`
+- no `sendTransaction`
+- no signer path
+- no contract write path
+- no default/CI execution path
+
+The script file is:
+
+```text
+scripts/read-xc-epoch-minimum-source.ts
+```
+
+The manual package script is:
+
+```text
+npm run smoke:xc-epoch-minimum:rpc
+```
+
+The built script safely refused without env before RPC:
+
+```text
+Missing required Ethereum script secret config: XC_ETHEREUM_RPC_URL
+```
+
+Validation baseline for review:
+
+- `npm run typecheck` passed
+- `npm test` passed: 37 test files, 286 tests
+- `npm run build` passed
+- `npm audit --audit-level=moderate` found 0 vulnerabilities
+
+No RPC URL, API key, private key, mnemonic, or seed phrase was printed.
+
+Recommended next milestone after merge:
+
+```text
+xc-epoch-minimum-real-rpc-smoke-run-notes
+```
