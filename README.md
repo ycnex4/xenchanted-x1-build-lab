@@ -12,12 +12,12 @@ It is a tested MVP implementation lab intended for architecture review, accounti
 
 Start here:
 
-- `docs/review-readiness-summary.md`
+- [Review readiness summary](docs/review-readiness-summary.md)
 
 Important supporting documents:
 
-- `docs/assumptions.md`
-- `docs/checkpoints/current-design-checkpoint.md`
+- [Assumptions](docs/assumptions.md)
+- [Current design checkpoint](docs/checkpoints/current-design-checkpoint.md)
 
 The review summary explains:
 
@@ -43,7 +43,7 @@ The assumptions document explicitly records MVP trust boundaries and known limit
 Current main baseline:
 
 - TypeScript typecheck: passing
-- Tests: 28 files / 171 tests passing
+- Tests: 40 files / 317 tests passing
 - Build: passing
 - npm audit: 0 vulnerabilities
 
@@ -67,8 +67,8 @@ Run:
 
 Expected current result:
 
-    28 test files passed
-    171 tests passed
+    40 test files passed
+    317 tests passed
     found 0 vulnerabilities
 
 ## CLI
@@ -184,7 +184,7 @@ Snapshot recovery does not:
 
 See:
 
-- `docs/assumptions.md`
+- [Assumptions](docs/assumptions.md)
 
 Important current assumptions include:
 
@@ -221,41 +221,41 @@ These are future layers and should not be assumed to exist in the current MVP.
 
 Review / checkpoint:
 
-- `docs/review-readiness-summary.md`
-- `docs/assumptions.md`
-- `docs/checkpoints/current-design-checkpoint.md`
+- [Review readiness summary](docs/review-readiness-summary.md)
+- [Assumptions](docs/assumptions.md)
+- [Current design checkpoint](docs/checkpoints/current-design-checkpoint.md)
 
 Build:
 
-- `docs/build/terminology.md`
-- `docs/build/build-v1-spec.md`
-- `docs/build/buildstate-fields.md`
-- `docs/build/state-transitions.md`
-- `docs/build/program-instruction-layout.md`
-- `docs/build/pda-account-layout.md`
-- `docs/build/program-authority-model.md`
-- `docs/build/build-reader-interface.md`
+- [Terminology](docs/build/terminology.md)
+- [Build v1 spec](docs/build/build-v1-spec.md)
+- [Build state fields](docs/build/buildstate-fields.md)
+- [State transitions](docs/build/state-transitions.md)
+- [Program instruction layout](docs/build/program-instruction-layout.md)
+- [PDA account layout](docs/build/pda-account-layout.md)
+- [Program authority model](docs/build/program-authority-model.md)
+- [Build reader interface](docs/build/build-reader-interface.md)
 
 Registrar:
 
-- `docs/registrar/ethereum-registrar-concept.md`
-- `docs/registrar/message-format.md`
-- `docs/registrar/trust-model-evolution.md`
+- [Ethereum registrar concept](docs/registrar/ethereum-registrar-concept.md)
+- [Message format](docs/registrar/message-format.md)
+- [Trust model evolution](docs/registrar/trust-model-evolution.md)
 
 Indexers:
 
-- `docs/indexers/x1-fee-contribution.md`
-- `docs/indexers/xen-burn-power-indexing.md`
-- `docs/indexers/mvp-trusted-indexer-schemas.md`
+- [X1 fee contribution](docs/indexers/x1-fee-contribution.md)
+- [XEN burn power indexing](docs/indexers/xen-burn-power-indexing.md)
+- [MVP trusted indexer schemas](docs/indexers/mvp-trusted-indexer-schemas.md)
 
 Economics:
 
-- `docs/economics/bld-origin-and-native-entry.md`
-- `docs/economics/bld-transfer-and-burn-mechanics.md`
-- `docs/economics/xntd-lock-and-relock.md`
-- `docs/economics/bld-tokenization-decision.md`
-- `docs/economics/xntd-lock-proof-model.md`
-- `docs/economics/post-mvp-bld-composability.md`
+- [BLD origin and native entry](docs/economics/bld-origin-and-native-entry.md)
+- [BLD transfer and burn mechanics](docs/economics/bld-transfer-and-burn-mechanics.md)
+- [XNTD lock and relock](docs/economics/xntd-lock-and-relock.md)
+- [BLD tokenization decision](docs/economics/bld-tokenization-decision.md)
+- [XNTD lock proof model](docs/economics/xntd-lock-proof-model.md)
+- [Post-MVP BLD composability](docs/economics/post-mvp-bld-composability.md)
 
 Implementation notes:
 
