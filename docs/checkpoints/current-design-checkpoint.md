@@ -14620,3 +14620,78 @@ Validation baseline for review:
 Recommended next milestone after merge:
 
     xc-build-commitment-status-app-view-completion-checkpoint
+
+## Latest XC Build commitment status app view completion checkpoint
+
+The XC Build commitment status app view runtime milestone was completed on the `xc-build-commitment-status-app-view-completion-checkpoint` branch.
+
+This milestone is documentation-only.
+
+New document:
+
+- `implementation/xc-build-commitment-status-app-view-completion-checkpoint.md`
+
+The checkpoint closes the completed chain:
+
+- commitment status app integration design
+- commitment status app integration design review
+- commitment status app integration completion checkpoint
+- commitment status app view runtime implementation
+- commitment status app view runtime review
+- merge to main
+
+Runtime files added:
+
+- `src/app/build-view.ts`
+- `tests/app-build-view.test.ts`
+
+Runtime export updated:
+
+- `src/index.ts`
+
+Implemented helper:
+
+    appGetBuildView()
+
+Implemented app view:
+
+    AppBuildView {
+      build
+      commitmentStatus
+    }
+
+The helper is read-only and non-mutating.
+
+The helper exposes commitmentStatus as app/service context.
+
+The helper does not enforce commitmentStatus.
+
+The helper does not reject historical proofs.
+
+The helper does not treat UNCOMMITTED as invalid Build history.
+
+The milestone did not change:
+
+- appSubmitProof behavior
+- watcher behavior
+- registrar behavior
+- proof payload behavior
+- ethereum/RPC code
+- scripts
+- dependencies
+- CLI commands
+- BLD transfer/sale rules
+- Forge requirements
+- unlock mechanics
+- Build actor scope
+
+Final validation baseline:
+
+- `npm run typecheck` passed
+- `npm test` passed: 42 test files, 328 tests
+- `npm run build` passed
+- `npm audit --audit-level=moderate` found 0 vulnerabilities
+
+Recommended next milestone:
+
+    final-mvp-readiness-checkpoint
