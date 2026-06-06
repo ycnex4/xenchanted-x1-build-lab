@@ -62,6 +62,9 @@ Latest reviewed main includes:
 - explicit MVP assumptions / known limitations
 - CLI snapshot verification and recovery commands
 - snapshot verification / backup / recovery helpers
+- post-MVP deployment readiness notes
+- read-only RPC smoke path review
+- successful mainnet XC protocol params smoke via getProtocolParams()
 
 ## Validation commands
 
@@ -89,6 +92,15 @@ Current commands:
     npm run cli -- snapshot:show --file <path>
     npm run cli -- snapshot:verify --file <path>
     npm run cli -- snapshot:recover --file <path> [--backup <path>]
+
+Read-only RPC smoke commands:
+
+    npm run smoke:xc-epoch-minimum:rpc
+    npm run smoke:xc-protocol-params:rpc
+
+The protocol params smoke command has been confirmed against mainnet xEnchantedNFTLens through getProtocolParams().
+
+The RPC smoke commands require local environment variables and must not print RPC URLs, API keys, private keys, mnemonics, seed phrases, or `.env` contents.
 
 CLI boundaries:
 
@@ -255,6 +267,9 @@ Review / checkpoint:
 
 - [Review readiness summary](docs/review-readiness-summary.md)
 - [Final MVP readiness checkpoint](docs/final-mvp-readiness-checkpoint.md)
+- [Deployment readiness](docs/deployment-readiness.md)
+- [Read-only RPC smoke review](docs/read-only-rpc-smoke-review.md)
+- [XC protocol params RPC smoke result](docs/xc-protocol-params-rpc-smoke-result.md)
 - [Assumptions](docs/assumptions.md)
 - [Current design checkpoint](docs/checkpoints/current-design-checkpoint.md)
 
@@ -304,6 +319,10 @@ Source:
 
 ## Current review posture
 
-The repository is ready for design and implementation review.
+The repository is ready for design, implementation, and post-MVP deployment-readiness review.
 
-The next recommended step is review-driven planning before adding new integration complexity.
+MVP implementation lab scope is complete.
+
+A controlled read-only mainnet RPC smoke for XC protocol params has completed successfully.
+
+The next recommended step is staging/runtime design before adding new protocol features or Build actor scope.
