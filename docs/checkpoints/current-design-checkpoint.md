@@ -12530,3 +12530,38 @@ Recommended next step after merge:
 ```text
 optional manual real RPC smoke run
 ```
+
+## Latest XC mainnet protocol params real RPC smoke run result checkpoint
+
+A sanitized real RPC smoke run result was recorded on the `xc-epoch-minimum-real-rpc-smoke-run` branch.
+
+New document:
+
+- `implementation/xc-mainnet-protocol-params-real-rpc-smoke-run-result.md`
+
+The run confirmed that Ethereum mainnet RPC was reachable and the deployed xEnchanted Crypto NFT Lens could be read through `getProtocolParams()`.
+
+Network:
+
+```text
+chainId=eip155-1
+providerChainId=1
+```
+
+Lens:
+
+```text
+lensAddress=0xd4b90d7392c1565d558c80122dee76b5b3bb6c23
+function=getProtocolParams()
+```
+
+Result:
+
+```text
+xcProtocolParamsSmoke=true
+completed=true
+```
+
+The previous generic `epochMinimum(lockEpoch)` smoke attempt reached mainnet and validated chain ID, but failed with a sanitized runtime error because the deployed `xEnchantedNFTLens` does not expose `epochMinimum(uint256)`. The correct deployed XC Lens read path is `getProtocolParams()`.
+
+No RPC URL, API key, private key, mnemonic, seed phrase, `.env` content, or raw environment content was printed or recorded.
