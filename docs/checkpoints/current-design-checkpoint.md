@@ -12225,3 +12225,132 @@ Recommended next milestone after merge:
 ```text
 xc-epoch-minimum-manual-rpc-smoke-script
 ```
+
+## Latest XC epoch minimum manual RPC smoke script implementation checkpoint
+
+The XC epoch minimum manual RPC smoke script implementation milestone was completed on the `xc-epoch-minimum-manual-rpc-smoke-script` branch.
+
+This milestone adds a manual-only real RPC smoke script.
+
+New script:
+
+- `scripts/read-xc-epoch-minimum-source.ts`
+
+Updated files:
+
+- `package.json`
+- `package-lock.json`
+- `tsconfig.json`
+
+New dependency:
+
+- `viem`
+
+New manual package script:
+
+```text
+npm run smoke:xc-epoch-minimum:rpc
+```
+
+The package script runs:
+
+```text
+node ./dist/scripts/read-xc-epoch-minimum-source.js
+```
+
+The script is included in TypeScript build through:
+
+```text
+scripts/**/*.ts
+```
+
+The script is manual-only and is not part of:
+
+- `npm test`
+- `npm run build`
+- CI
+- default package lifecycle scripts
+- pretest
+- postinstall
+- prepare
+
+The implementation keeps real RPC ownership at the script edge only.
+
+The script reads `process.env` only inside:
+
+```text
+scripts/read-xc-epoch-minimum-source.ts
+```
+
+The script constructs the viem public client only inside:
+
+```text
+scripts/read-xc-epoch-minimum-source.ts
+```
+
+The script then passes the provided read-only public client into:
+
+```text
+runEthereumXcEpochMinimumReadFromProvidedClient()
+```
+
+The script requires the existing parser confirmation:
+
+```text
+XC_ETHEREUM_REAL_RPC_CONFIRM=I_UNDERSTAND_THIS_USES_REAL_RPC
+```
+
+Supported chains are explicit:
+
+```text
+eip155-1
+eip155-11155111
+```
+
+The script verifies provider chain ID against configured chain ID before reading contract data.
+
+The script uses only read-only client operations:
+
+- `getChainId`
+- `getBlock`
+- `readContract`
+
+The script does not add:
+
+- private key support
+- mnemonic support
+- signer support
+- wallet client support
+- writeContract
+- sendTransaction
+- approvals
+- token transfers
+- any contract write path
+
+Safety checks performed:
+
+- `npm run typecheck` passed
+- `npm test` passed: 37 test files, 286 tests
+- `npm run build` passed
+- `npm audit --audit-level=moderate` found 0 vulnerabilities
+- running `node ./dist/scripts/read-xc-epoch-minimum-source.js` without env safely refused before RPC with:
+  - `Missing required Ethereum script secret config: XC_ETHEREUM_RPC_URL`
+
+Boundary grep confirmed:
+
+- `viem`
+- `createPublicClient`
+- `http(`
+- `process.env`
+
+appear only in the script-edge file.
+
+Boundary grep also confirmed no source/script/test/package matches for:
+
+- `privateKey`
+- `mnemonic`
+- `walletClient`
+- `writeContract`
+- `sendTransaction`
+
+No real RPC URL, API key, private key, mnemonic, or seed phrase was printed.

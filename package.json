@@ -8,7 +8,8 @@
     "test": "vitest run",
     "typecheck": "tsc --noEmit",
     "build": "tsc",
-    "cli": "node ./dist/src/cli/main.js"
+    "cli": "node ./dist/src/cli/main.js",
+    "smoke:xc-epoch-minimum:rpc": "node ./dist/scripts/read-xc-epoch-minimum-source.js"
   },
   "devDependencies": {
     "@types/node": "^22.10.0",
@@ -17,5 +18,8 @@
   },
   "bin": {
     "x1-build-lab": "./dist/src/cli/main.js"
+  },
+  "dependencies": {
+    "viem": "^2.52.2"
   }
 }
