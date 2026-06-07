@@ -19009,3 +19009,112 @@ Current conclusion:
 Stage 1 Gateway now has pure verifier helpers that validate the locked message fixture and reject the main invalid route, evidence, recipient, domain, message hash, and amount-rule cases.
 
 The next milestone can add Ed25519 guardian signature verifier helpers or begin mapping these validation helpers toward an X1 mint core test model.
+
+## Latest Stage 1 Ed25519 guardian signature verifier helpers checkpoint
+
+The Stage 1 Ed25519 guardian signature verifier helpers milestone was completed on the stage-1-gateway-ed25519-verifier-helpers branch.
+
+Commits:
+
+- pending Add Stage 1 Ed25519 verifier helpers
+- pending Merge branch 'stage-1-gateway-ed25519-verifier-helpers'
+
+This milestone adds reusable Stage 1 Ed25519 guardian signature verification helpers.
+
+Source additions:
+
+- src/gateway/stage-1-ed25519-verifier.ts
+
+Test additions:
+
+- tests/stage-1-gateway-ed25519-verifier.test.ts
+
+Export updates:
+
+- src/index.ts exports Stage 1 Ed25519 verifier helpers
+
+README updated:
+
+- Stage 1 Ed25519 guardian signature verifier helpers
+
+Purpose:
+
+Add a deterministic Ed25519 signature verification layer for Stage 1 Gateway guardian signatures before guardian-set, quorum, X1 mint core, relayer, watcher, frontend gateway, or deployment runtime work begins.
+
+The helper module provides:
+
+- STAGE1_ED25519_VERIFICATION_ERROR
+- Stage1Ed25519VerificationErrorCode
+- Stage1Ed25519VerificationInput
+- Stage1Ed25519VerificationResult
+- validateStage1Ed25519InputLengths()
+- verifyStage1Ed25519GuardianSignature()
+
+The verifier checks:
+
+- messageHash length = 32 bytes
+- guardianPublicKey length = 32 bytes
+- guardianSignature length = 64 bytes
+- Ed25519 signature verifies over the exact 32-byte messageHash
+
+The tests verify:
+
+- valid deterministic test-only guardian signature is accepted
+- valid signature against wrong messageHash is rejected
+- altered signature is rejected
+- signature over a different messageHash is rejected against the canonical messageHash
+- valid signature with wrong guardian public key is rejected
+- malformed messageHash / public key / signature lengths are rejected before verification
+
+Fixture values used:
+
+- docs/gateway/generated/stage-1-gateway-vectors.json
+
+Safety boundary:
+
+The verifier helpers are pure Ed25519 verification helpers.
+
+The tests only read generated public test vector data.
+
+They do not read:
+
+- .env files
+- production private keys
+- RPC URLs
+- API keys
+- seed phrases
+- mnemonic values
+- production credentials
+
+They do not perform:
+
+- production signing
+- real RPC reads
+- Ethereum contract execution
+- X1 runtime execution
+- relayer submission
+- watcher verification
+- gateway minting
+
+This is an Ed25519 verifier-helper milestone only.
+
+It does not implement:
+
+- guardian-set management
+- guardian quorum
+- signer rotation
+- Ethereum contracts
+- X1 programs
+- XXXL token runtime
+- X1 mint core
+- processed burn registry runtime
+- relayer runtime
+- watcher runtime
+- frontend gateway flow
+- deployment logic
+
+Current conclusion:
+
+Stage 1 Gateway now has reusable Ed25519 guardian signature verifier helpers that validate the locked deterministic public test vector and reject wrong hash, wrong public key, altered signature, different-message signature, and malformed-length cases.
+
+The next milestone can combine message verification plus Ed25519 signature verification into a single Stage 1 gateway approval verifier helper, or continue toward guardian-set / quorum modeling.
