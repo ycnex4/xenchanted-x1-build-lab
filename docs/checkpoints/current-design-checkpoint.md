@@ -18760,8 +18760,8 @@ The Stage 1 generator shared encoding helpers milestone was completed on the sta
 
 Commits:
 
-- pending Refactor Stage 1 generator to shared encoding helpers
-- pending Merge branch 'stage-1-gateway-generator-shared-helpers'
+- 4bbb867 Refactor Stage 1 generator to shared encoding helpers
+- 8f0d1a8 Merge branch 'stage-1-gateway-generator-shared-helpers'
 
 This milestone refactors the Stage 1 vector generator to use the shared Stage 1 encoding helper module.
 
