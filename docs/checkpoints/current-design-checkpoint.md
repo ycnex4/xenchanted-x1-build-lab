@@ -19361,3 +19361,115 @@ Current conclusion:
 Stage 1 Gateway now has a reusable guardian quorum model that aggregates approval verification results, prevents duplicate guardian approvals from counting twice, rejects unknown guardians, and reports whether the configured threshold was reached.
 
 The next milestone can add signer rotation design/modeling, or begin mapping guardian quorum approval toward an X1 mint core test model.
+
+## Latest Stage 1 processed burn registry model checkpoint
+
+The Stage 1 processed burn registry model milestone was completed on the stage-1-gateway-processed-burn-registry-model branch.
+
+Commits:
+
+- pending Add Stage 1 processed burn registry model
+- pending Merge branch 'stage-1-gateway-processed-burn-registry-model'
+
+This milestone adds a pure Stage 1 processed burn registry model for canonicalEventKey replay protection.
+
+Source additions:
+
+- src/gateway/stage-1-processed-burn-registry.ts
+
+Test additions:
+
+- tests/stage-1-gateway-processed-burn-registry.test.ts
+
+Export updates:
+
+- src/index.ts exports Stage 1 processed burn registry helpers
+
+README updated:
+
+- Stage 1 processed burn registry model
+
+Purpose:
+
+Add deterministic replay-protection modeling for processed Stage 1 Gateway burns before X1 mint core, relayer, watcher, frontend gateway, processed account storage, or deployment runtime work begins.
+
+The helper module provides:
+
+- STAGE1_PROCESSED_BURN_REGISTRY_ERROR
+- Stage1ProcessedBurnRegistryErrorCode
+- Stage1ProcessedBurnRegistry
+- Stage1ProcessedBurnRegistryCheckResult
+- Stage1ProcessedBurnRegistryMarkResult
+- createStage1ProcessedBurnRegistry()
+- stage1CanonicalEventKeyHex()
+- checkStage1BurnNotProcessed()
+- markStage1BurnProcessed()
+
+The registry model checks:
+
+- canonicalEventKey is represented by normalized lowercase hex
+- unprocessed canonicalEventKey can be checked without mutating state
+- unprocessed canonicalEventKey can be marked processed
+- already processed canonicalEventKey is rejected
+- duplicate processing does not mutate state again
+- different canonicalEventKeys are tracked independently
+
+The tests verify:
+
+- empty processed burn registry creation
+- unprocessed check without mutation
+- successful mark processed
+- duplicate canonicalEventKey rejection
+- lowercase normalization for preloaded keys
+- independent tracking for distinct canonicalEventKeys
+
+Fixture values used:
+
+- docs/gateway/generated/stage-1-gateway-vectors.json
+
+Safety boundary:
+
+The processed burn registry model is a pure deterministic model.
+
+The tests only read generated public test vector data.
+
+They do not read:
+
+- .env files
+- production private keys
+- RPC URLs
+- API keys
+- seed phrases
+- mnemonic values
+- production credentials
+
+They do not perform:
+
+- production signing
+- real RPC reads
+- Ethereum contract execution
+- X1 runtime execution
+- relayer submission
+- watcher verification
+- gateway minting
+
+This is a processed burn registry model milestone only.
+
+It does not implement:
+
+- X1 account storage
+- atomic X1 instruction execution
+- Ethereum contracts
+- X1 programs
+- XXXL token runtime
+- X1 mint core
+- relayer runtime
+- watcher runtime
+- frontend gateway flow
+- deployment logic
+
+Current conclusion:
+
+Stage 1 Gateway now has a reusable processed burn registry model for canonicalEventKey replay protection.
+
+The next milestone can combine guardian quorum approval plus processed-burn replay protection into a single Stage 1 mint authorization model, or begin mapping this registry behavior toward an X1 mint core test model.
