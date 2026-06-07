@@ -17856,9 +17856,10 @@ Implementation should still not begin until exact cryptographic test vectors and
 
 The Stage 1 X1 deployment authority model milestone was completed on the stage-1-x1-deployment-authority-model branch.
 
-Commit:
+Commits:
 
-- pending
+- e7bee8e Define Stage 1 X1 deployment authority model
+- 33ef0bd Merge branch 'stage-1-x1-deployment-authority-model'
 
 This milestone defines the Stage 1 deployment authority requirements for the X1 XXXL mint core.
 
