@@ -75,6 +75,7 @@ Latest reviewed main includes:
 - Stage 1 gateway Theo review notes
 - Stage 1 gateway pre-implementation blockers
 - Stage 1 gateway hash, signature, and recipient decisions
+- Stage 1 gateway mandatory source block fields
 - X1-native Forge / Stake dual nominal model
 
 ## Validation commands
