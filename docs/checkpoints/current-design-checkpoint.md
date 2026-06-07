@@ -19368,8 +19368,8 @@ The Stage 1 processed burn registry model milestone was completed on the stage-1
 
 Commits:
 
-- pending Add Stage 1 processed burn registry model
-- pending Merge branch 'stage-1-gateway-processed-burn-registry-model'
+- 516b488 Add Stage 1 processed burn registry model
+- e1d4e89 Merge branch 'stage-1-gateway-processed-burn-registry-model'
 
 This milestone adds a pure Stage 1 processed burn registry model for canonicalEventKey replay protection.
 
