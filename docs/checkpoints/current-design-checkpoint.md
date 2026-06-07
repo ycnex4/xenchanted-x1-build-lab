@@ -16656,3 +16656,172 @@ keccak256 + Ed25519 + 32-byte X1 / SVM recipient
 This is the preferred balance between Ethereum-native source evidence and X1/SVM-native execution verification.
 
 Implementation should still not begin until the remaining blockers are resolved and exact test vectors are produced.
+
+## Latest Stage 1 gateway mandatory source block fields checkpoint
+
+The Stage 1 gateway mandatory source block fields milestone was completed on the stage-1-gateway-mandatory-source-block-fields branch.
+
+Commit:
+
+- pending
+
+This milestone closes the Stage 1 Gateway pre-implementation blocker for mandatory source block fields.
+
+Design document added:
+
+- docs/gateway/stage-1-gateway-mandatory-source-block-fields.md
+
+Purpose:
+
+Define that sourceBlockNumber and sourceBlockHash are mandatory signed fields for Stage 1 Gateway messages.
+
+This is a design decision milestone only.
+
+It does not implement:
+
+- Ethereum contracts
+- X1 programs
+- XXXL token runtime
+- X1 mint core
+- processed burn registry
+- guardian runtime
+- relayer runtime
+- watcher runtime
+- frontend gateway flow
+- real RPC reads
+- env reads
+- private keys
+- API keys
+- mnemonic handling
+- deployment logic
+
+Decision:
+
+sourceBlockNumber and sourceBlockHash are mandatory signed fields for Stage 1.
+
+They must be included in:
+
+- gateway message schema
+- canonical field order
+- canonical encoded message
+- messageHash preimage
+- guardian signed payload
+- test vectors
+- guardian acceptance rules
+- finality rule design
+
+Reason:
+
+Guardians must sign only finalized canonical Ethereum burn evidence.
+
+The signed message should bind to the observed canonical Ethereum block.
+
+Mandatory source block fields help prevent ambiguity around:
+
+- reorged-out events
+- non-finalized evidence
+- provider disagreement
+- stale event observations
+- evidence replay with incomplete source context
+
+Mandatory fields:
+
+- sourceBlockNumber
+- sourceBlockHash
+
+Field meaning:
+
+- sourceBlockNumber is the Ethereum block number containing the accepted burn event
+- sourceBlockHash is the Ethereum block hash containing the accepted burn event
+
+Both values must come from the same canonical finalized Ethereum block that contains the accepted burn event.
+
+Replay protection remains based on:
+
+canonicalEventKey = keccak256(ENCODE(sourceChainId, sourceToken, sourceBurnTxHash, sourceBurnEventIndex))
+
+sourceBlockNumber and sourceBlockHash are not the primary replay key.
+
+Their role is to bind the signed message to the finalized source block context that guardians accepted.
+
+Guardian rejection rules added:
+
+Guardians must reject evidence if:
+
+- sourceBlockNumber is missing
+- sourceBlockHash is missing
+- sourceBlockHash is not a 32-byte Ethereum block hash
+- sourceBlockNumber does not match the block containing the burn event
+- sourceBlockHash does not match the block containing the burn event
+- the block is not canonical according to the chosen finality rule
+- the block is not finalized enough according to the chosen finality rule
+- the burn event is not present in that block
+- the transaction receipt block hash differs from sourceBlockHash
+- providers disagree and the finality policy cannot resolve the disagreement
+
+Message schema implication:
+
+sourceBlockNumber and sourceBlockHash are required fields.
+
+They are not optional.
+
+They are not display-only metadata.
+
+They are part of the signed message.
+
+Canonical encoding implication:
+
+The existing canonical field order already includes sourceBlockNumber and sourceBlockHash.
+
+No field order change is needed.
+
+The decision is that fields 9 and 10 are mandatory and cannot be omitted or zero-filled as unused optional fields.
+
+Invalid cases documented:
+
+- sourceBlockNumber omitted
+- sourceBlockHash omitted
+- sourceBlockNumber encoded as a decimal string
+- sourceBlockHash encoded as a hex display string instead of bytes
+- sourceBlockHash with wrong length
+- sourceBlockHash not matching transaction receipt block hash
+- sourceBlockNumber not matching transaction receipt block number
+- sourceBlockHash from a reorged-out block
+- sourceBlockHash from a non-canonical block
+- sourceBlockNumber and sourceBlockHash from different blocks
+
+Test vector implications:
+
+Exact test vectors must include:
+
+- sourceBlockNumber
+- sourceBlockHash
+- sourceBurnTxHash
+- sourceBurnEventIndex
+- canonicalEventKey
+- full encoded message bytes
+- messageHash
+
+Invalid vectors must include:
+
+- missing sourceBlockNumber
+- missing sourceBlockHash
+- wrong sourceBlockHash
+- wrong sourceBlockNumber
+- sourceBlockHash wrong length
+- sourceBlockHash from different block
+- reorged-out sourceBlockHash scenario note
+
+Finality rule dependency:
+
+This milestone does not define the finality rule.
+
+It prepares for the finality rule by making the signed message bind to block identity.
+
+Current conclusion:
+
+Stage 1 requires sourceBlockNumber and sourceBlockHash as mandatory signed fields.
+
+This closes the mandatory source block field blocker.
+
+Implementation should still not begin until the remaining blockers are resolved and exact test vectors are produced.
