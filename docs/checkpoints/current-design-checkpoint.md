@@ -17851,3 +17851,218 @@ Stage 1 burn amount policy is:
 This closes the burn amount policy requirement-definition blocker.
 
 Implementation should still not begin until exact cryptographic test vectors and exact X1 deployment authority model are documented.
+
+## Latest Stage 1 X1 deployment authority model checkpoint
+
+The Stage 1 X1 deployment authority model milestone was completed on the stage-1-x1-deployment-authority-model branch.
+
+Commit:
+
+- pending
+
+This milestone defines the Stage 1 deployment authority requirements for the X1 XXXL mint core.
+
+Design document added:
+
+- docs/gateway/stage-1-x1-deployment-authority-model.md
+
+Purpose:
+
+Define the deployment authority model requirements that must be satisfied before implementation or production approval.
+
+This is a design / readiness milestone only.
+
+It does not implement:
+
+- Ethereum contracts
+- X1 programs
+- XXXL token runtime
+- X1 mint core
+- processed burn registry
+- guardian runtime
+- relayer runtime
+- watcher runtime
+- frontend gateway flow
+- real RPC reads
+- env reads
+- private keys
+- API keys
+- mnemonic handling
+- deployment logic
+
+Core authority principle:
+
+Stage 1 authority model must preserve this boundary:
+
+- guardians verify Ethereum burn evidence
+- relayers transport approved messages
+- mint core enforces immutable monetary route rules
+- no operator can mint XXXL outside verified gateway messages
+
+The mint core must be the only path that can mint Stage 1 XXXL from Ethereum XNTD burn evidence.
+
+Immutable route rules:
+
+The following route rules must not be changeable after production deployment:
+
+- source chain is Ethereum mainnet
+- source token is expected Ethereum XNTD token
+- routeId is the Stage 1 Ethereum XNTD to X1 XXXL route
+- sourceChainWeightBps = 10000
+- xxxlMintAmount = burnedAmount
+- mint token is XXXL
+- hash function is keccak256
+- guardian signature standard is Ed25519
+- X1 recipient is 32 raw bytes
+- x1RecipientHash = keccak256(x1RecipientBytes)
+- sourceBlockNumber and sourceBlockHash are mandatory signed fields
+- replay protection uses canonicalEventKey
+- processed registry prevents duplicate minting
+
+Deployment authority requirement:
+
+Before production approval, the project must know exactly:
+
+- how X1 programs / contracts are deployed
+- whether deployed programs / contracts are upgradeable
+- who controls upgrade authority at deployment
+- how upgrade authority is removed, disabled, or constrained
+- whether token mint authority is separate from program authority
+- who controls token mint authority at deployment
+- how token mint authority is constrained to the mint core
+- whether any admin, deployer, guardian, relayer, or governance path can mint outside the verified route
+- how users can independently verify the authority state
+
+Acceptable production outcomes may include:
+
+- non-upgradeable mint core
+- upgrade authority permanently removed
+- route rules hardcoded in deployed code
+- mint authority owned only by immutable mint core
+- mint authority unable to mint outside verified gateway messages
+- public verification procedure for authority state
+- separate operational configuration that cannot change monetary route rules
+
+Unacceptable production outcomes:
+
+- deployer can upgrade route rules after launch
+- admin can change source token
+- admin can change source chain
+- admin can change sourceChainWeightBps
+- admin can change xxxlMintAmount formula
+- admin can change mint token
+- guardian set can change monetary policy
+- relayer can choose mint amount
+- token mint authority can mint XXXL outside the mint core
+- governance can silently change Stage 1 route rules
+- processed registry can be bypassed by privileged authority
+- emergency function can create supply outside verified burn evidence
+
+Mint authority model:
+
+Stage 1 must define how XXXL mint authority works.
+
+Required properties:
+
+- mint authority cannot be used by a human operator to mint arbitrary XXXL
+- mint authority cannot be used by relayers to mint arbitrary XXXL
+- mint authority cannot be used by guardians to mint arbitrary XXXL
+- mint authority is constrained to verified Stage 1 gateway execution
+- mint authority cannot bypass processed registry
+- mint authority cannot bypass immutable route validation
+- mint authority cannot bypass guardian threshold verification
+
+Preferred direction:
+
+The X1 XXXL token mint authority should be controlled by the mint core or by an authority mechanism that only the mint core can exercise under verified message rules.
+
+Upgrade authority model:
+
+Stage 1 must define whether the X1 mint core is upgradeable.
+
+Preferred production direction:
+
+No production upgrade authority should be able to alter Stage 1 monetary route rules.
+
+Guardian authority boundary:
+
+Guardians may sign approvals only after verifying source burn evidence.
+
+Guardians must not be able to change route rules, choose arbitrary mint amounts, bypass processed registry, or mint without burn evidence.
+
+Relayer authority boundary:
+
+Relayers may submit approved messages and execution payloads.
+
+Relayers must not be able to change recipient, amount, source chain, source token, routeId, canonicalEventKey, signature verification, processed registry, or mint without valid guardian approval.
+
+Emergency controls:
+
+Emergency controls, if any, must not create XXXL supply outside verified gateway messages.
+
+Potentially acceptable:
+
+- pause new mint executions
+- pause relayer frontend submission
+- pause guardian signing
+- publish incident status
+
+Not acceptable:
+
+- admin mint
+- admin route rewrite
+- admin processed-registry bypass
+- admin recipient rewrite
+- admin amount rewrite
+- admin replay override
+- admin mint after failed verification
+
+Public verification checklist:
+
+Before production, the project must publish a public verification checklist covering:
+
+- deployed mint core identity
+- deployed XXXL mint identity
+- routeId
+- source chain
+- source token
+- mint token
+- sourceChainWeightBps
+- mint formula
+- guardian signature standard
+- guardian threshold model
+- processed registry identity
+- upgrade authority status
+- mint authority status
+- whether admin mint exists
+- whether route rules are mutable
+- whether emergency controls can mint
+- whether processed registry can be bypassed
+
+Test implications:
+
+Future tests or verification scripts should include:
+
+- mint core rejects wrong sourceChainWeightBps
+- mint core rejects wrong xxxlMintAmount
+- mint core rejects wrong source token
+- mint core rejects wrong source chain
+- mint core rejects wrong mint token
+- mint core rejects duplicate canonicalEventKey
+- no admin mint path exists
+- no relayer amount override exists
+- no guardian monetary override exists
+- upgrade authority status is verifiable
+- mint authority status is verifiable
+
+Current conclusion:
+
+Stage 1 requires a deployment authority model where route rules and monetary conversion cannot be changed by deployers, administrators, guardians, relayers, or mutable governance after production deployment.
+
+The exact X1 runtime deployment mechanism still must be confirmed before implementation.
+
+Production readiness requires public verification of upgrade authority, mint authority, route rule immutability, and absence of admin mint paths.
+
+This closes the deployment authority model requirement-definition layer.
+
+Implementation should still not begin until exact cryptographic test vectors are documented and the X1 runtime authority mechanics are confirmed.
