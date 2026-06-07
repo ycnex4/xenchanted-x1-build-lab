@@ -42,3 +42,4 @@ export * from "./gateway/stage-1-encoding.js";
 export * from "./gateway/stage-1-verifier.js";
 export * from "./gateway/stage-1-ed25519-verifier.js";
 export * from "./gateway/stage-1-approval-verifier.js";
+export * from "./gateway/stage-1-guardian-quorum.js";
