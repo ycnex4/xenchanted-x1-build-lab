@@ -18385,8 +18385,8 @@ The Stage 1 generated gateway vectors milestone was completed on the stage-1-gat
 
 Commits:
 
-- pending Add Stage 1 gateway vector generator
-- pending Merge branch 'stage-1-gateway-vector-generator'
+- 66c4968 Add Stage 1 gateway vector generator
+- 5f5ac47 Merge branch 'stage-1-gateway-vector-generator'
 
 This milestone adds the first practical Stage 1 Gateway script and generated expected vector output.
 
