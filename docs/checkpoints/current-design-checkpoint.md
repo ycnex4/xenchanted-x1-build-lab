@@ -18292,3 +18292,88 @@ This milestone locks the Stage 1 exact cryptographic test vector profile:
 - messageHash derived from domainSeparator plus encoded gateway mint message
 
 The next milestone should add a deterministic vector generation script and generated expected output values.
+
+## Latest Stage 1 exact vectors Theo review notes checkpoint
+
+The Stage 1 exact vectors Theo review notes milestone was completed on the stage-1-exact-vectors-theo-review-notes branch.
+
+Commit:
+
+- pending
+
+This milestone records Theo's X1 / SVM review of the Stage 1 exact cryptographic test vector profile.
+
+Design document updated:
+
+- docs/gateway/stage-1-exact-cryptographic-test-vectors.md
+
+README updated:
+
+- Stage 1 exact vectors Theo review notes
+
+Purpose:
+
+Record X1 / SVM-specific review feedback before generating exact cryptographic vector outputs.
+
+This is a documentation / review milestone only.
+
+It does not implement:
+
+- Ethereum contracts
+- X1 programs
+- XXXL token runtime
+- X1 mint core
+- processed burn registry
+- guardian runtime
+- relayer runtime
+- watcher runtime
+- frontend gateway flow
+- real RPC reads
+- env reads
+- private keys
+- API keys
+- mnemonic handling
+- deployment logic
+
+Theo's conclusion:
+
+No X1-specific blocker was identified.
+
+Confirmed as acceptable for Stage 1:
+
+- keccak256 for the Stage 1 payload size
+- Ed25519 signing over messageHash
+- 32-byte fixed-width signed payload encoding
+- raw x1RecipientBytes bound through x1RecipientHash
+- messageHash = keccak256(domainSeparator || encodedGatewayMintMessage)
+
+X1 / SVM notes recorded:
+
+- Ed25519 verification is natural for SVM
+- signing messageHash is better than signing 608 raw message bytes
+- sol_keccak256 over 640 bytes remains within the expected syscall size boundary
+- 32-byte fixed-width signed payload is practical
+- Ethereum addresses left-padded to 32 bytes are acceptable
+
+Clarifications added before vector generation:
+
+- all uint256 fields are encoded as 32-byte big-endian values
+- big-endian means most significant byte first
+- Ethereum addresses are 20-byte values left-padded with zero bytes to 32 bytes
+- right-padding Ethereum addresses is invalid
+- X1 / SVM mint core deserialization must convert big-endian signed payload numbers into native runtime format before arithmetic or comparisons
+- the custom fixed-width signed payload encoding is not Borsh
+- the custom fixed-width signed payload encoding is not X1 account storage encoding
+- byte order applies to signed payload verification, not necessarily to X1 account storage
+- canonicalEventKeyPreimage length is 128 bytes
+- encodedGatewayMintMessage length is 608 bytes
+- messageHashPreimage length is 640 bytes
+- Ed25519 test signatures must use deterministic test-only keys
+
+Current conclusion:
+
+Theo confirmed the exact cryptographic vector profile is reasonable for X1 / SVM.
+
+The review adds byte-order, address-padding, deserialization, and preimage-length clarifications before generator implementation.
+
+The next milestone should add a deterministic vector generation script and generated expected output values.

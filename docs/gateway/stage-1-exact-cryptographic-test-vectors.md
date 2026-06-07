@@ -69,8 +69,10 @@ Rules:
 - no field may be omitted
 - unused optional fields are encoded as zero
 - all unsigned integers are encoded as uint256 big-endian 32-byte words
+- big-endian means most significant byte first
 - all bytes32 values are encoded as exact 32 bytes
-- Ethereum addresses are encoded as 20 bytes left-padded to 32 bytes
+- Ethereum addresses are encoded as 20 bytes left-padded with zero bytes to 32 bytes
+- right-padding Ethereum addresses is invalid
 - x1RecipientBytes are not included directly in the signed message
 - x1RecipientHash is included in the signed message
 - base58 is display-only and never canonical payload encoding
@@ -78,6 +80,31 @@ Rules:
 - no JSON canonicalization is used
 - no string concatenation is used
 - no decimal string amount encoding is used
+
+## X1 / SVM review notes
+
+Theo reviewed this exact vector profile through the X1 / SVM lens.
+
+Conclusion:
+
+- no X1-specific blocker was identified
+- keccak256 is acceptable for this Stage 1 payload size
+- Ed25519 signing over messageHash is acceptable and natural for SVM verification
+- 32-byte fixed-width signed payload encoding is practical
+- raw x1RecipientBytes bound through x1RecipientHash is the right approach
+
+Required clarifications before vector generation:
+
+- all uint256 fields are encoded as 32-byte big-endian values
+- big-endian means most significant byte first
+- Ethereum addresses are 20-byte values left-padded with zero bytes to 32 bytes
+- X1 / SVM mint core deserialization must convert big-endian signed payload numbers into the native runtime format before arithmetic or comparisons
+- this custom fixed-width signed payload encoding is not Borsh and is not account storage encoding
+- the byte order applies to signed payload verification, not necessarily to X1 account storage
+- canonicalEventKeyPreimage length is 128 bytes
+- encodedGatewayMintMessage length is 608 bytes
+- messageHashPreimage length is 640 bytes
+- Ed25519 test signatures must use deterministic test-only keys
 
 ## Domain constant hashing
 
@@ -127,6 +154,10 @@ sourceToken ||
 sourceBurnTxHash ||
 sourceBurnEventIndex
 
+The canonicalEventKeyPreimage length is:
+
+4 * 32 = 128 bytes
+
 Where:
 
 - sourceChainId is uint256 encoded as 32 bytes
@@ -165,6 +196,16 @@ Each field is exactly 32 bytes.
 The total encodedGatewayMintMessage length is:
 
 19 * 32 = 608 bytes
+
+X1 / SVM implementation note:
+
+The signed payload uses custom fixed-width big-endian encoding.
+
+The X1 mint core must deserialize these 32-byte big-endian numeric fields and convert them into the native runtime representation before arithmetic, range checks, or comparisons.
+
+This encoding is for signature verification and test vectors.
+
+It is not a requirement for X1 account storage layout.
 
 ## Message hash profile
 
