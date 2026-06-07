@@ -66,6 +66,10 @@ Latest reviewed main includes:
 - read-only RPC smoke path review
 - successful mainnet XC protocol params smoke via getProtocolParams()
 - XNTD-to-XXXL burn-to-mint gateway design
+- Stage 1 XXXL gateway architecture boundary
+- Stage 1 XXXL gateway implementation plan
+- Stage 1 Ethereum burn event schema
+- Stage 1 gateway message schema
 - X1-native Forge / Stake dual nominal model
 
 ## Validation commands
