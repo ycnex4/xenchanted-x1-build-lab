@@ -19249,8 +19249,8 @@ The Stage 1 guardian quorum model milestone was completed on the stage-1-gateway
 
 Commits:
 
-- pending Add Stage 1 guardian quorum model
-- pending Merge branch 'stage-1-gateway-guardian-quorum-model'
+- 0f712fe Add Stage 1 guardian quorum model
+- 4dfa561 Merge branch 'stage-1-gateway-guardian-quorum-model'
 
 This milestone adds a pure Stage 1 guardian-set / quorum model on top of the Stage 1 gateway approval verifier.
 
