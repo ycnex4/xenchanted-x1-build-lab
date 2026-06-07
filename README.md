@@ -93,6 +93,7 @@ Latest reviewed main includes:
 - Stage 1 gateway approval verifier
 - Stage 1 guardian quorum model
 - Stage 1 processed burn registry model
+- Stage 1 mint authorization model
 - X1-native Forge / Stake dual nominal model
 
 ## Validation commands

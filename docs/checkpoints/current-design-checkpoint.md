@@ -19473,3 +19473,114 @@ Current conclusion:
 Stage 1 Gateway now has a reusable processed burn registry model for canonicalEventKey replay protection.
 
 The next milestone can combine guardian quorum approval plus processed-burn replay protection into a single Stage 1 mint authorization model, or begin mapping this registry behavior toward an X1 mint core test model.
+
+## Latest Stage 1 mint authorization model checkpoint
+
+The Stage 1 mint authorization model milestone was completed on the stage-1-gateway-mint-authorization-model branch.
+
+Commits:
+
+- pending Add Stage 1 mint authorization model
+- pending Merge branch 'stage-1-gateway-mint-authorization-model'
+
+This milestone adds a pure Stage 1 mint authorization model that composes guardian quorum verification and processed burn replay protection.
+
+Source additions:
+
+- src/gateway/stage-1-mint-authorization.ts
+
+Test additions:
+
+- tests/stage-1-gateway-mint-authorization.test.ts
+
+Export updates:
+
+- src/index.ts exports Stage 1 mint authorization helpers
+
+README updated:
+
+- Stage 1 mint authorization model
+
+Purpose:
+
+Add deterministic Stage 1 mint authorization before X1 mint core, XXXL balance mutation, relayer, watcher, frontend gateway, processed account storage, or deployment runtime work begins.
+
+The mint authorization model composes:
+
+- verifyStage1GuardianQuorum()
+- checkStage1BurnNotProcessed()
+- markStage1BurnProcessed()
+
+The helper module provides:
+
+- STAGE1_MINT_AUTHORIZATION_ERROR
+- Stage1MintAuthorizationErrorCode
+- Stage1MintAuthorizationInput
+- Stage1MintAuthorizationResult
+- authorizeStage1Mint()
+
+The authorization model checks:
+
+- guardian quorum verification passes
+- canonicalEventKey has not already been processed
+- successful authorization marks canonicalEventKey processed
+- failed quorum does not mark canonicalEventKey processed
+- already processed canonicalEventKey is rejected
+- combined quorum and replay failures are surfaced together
+
+The tests verify:
+
+- valid quorum plus unprocessed canonicalEventKey authorizes mint and marks processed
+- duplicate canonicalEventKey replay is rejected and does not mark again
+- invalid quorum is rejected and does not mark processed
+- invalid quorum plus already processed burn returns both errors
+
+Fixture values used:
+
+- docs/gateway/generated/stage-1-gateway-vectors.json
+
+Safety boundary:
+
+The mint authorization model is a pure deterministic model.
+
+The tests only read generated public test vector data.
+
+They do not read:
+
+- .env files
+- production private keys
+- RPC URLs
+- API keys
+- seed phrases
+- mnemonic values
+- production credentials
+
+They do not perform:
+
+- production signing
+- real RPC reads
+- Ethereum contract execution
+- X1 runtime execution
+- relayer submission
+- watcher verification
+- gateway minting
+
+This is a mint authorization model milestone only.
+
+It does not implement:
+
+- X1 account storage
+- atomic X1 instruction execution
+- XXXL token balance mutation
+- Ethereum contracts
+- X1 programs
+- relayer runtime
+- watcher runtime
+- frontend gateway flow
+- deployment logic
+
+Current conclusion:
+
+Stage 1 Gateway now has a reusable mint authorization model that combines guardian quorum approval and canonicalEventKey replay protection.
+
+The next milestone can build a Stage 1 mint core test model that consumes this authorization result and models XXXL balance / total supply mutation.
