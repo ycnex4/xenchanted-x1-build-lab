@@ -28,6 +28,27 @@ This is not a lock/wrapped bridge and not a transfer of the same token.
 
 There should be no permanent Ethereum escrow treasury holding source-chain XNTD.
 
+## Precedent and novelty note
+
+No direct precedent is currently assumed for this exact model.
+
+The gateway combines several properties that are usually separate in existing cross-chain systems:
+
+- source-chain burn
+- destination-chain mint
+- one-way conversion
+- multi-source future design
+- variable source-chain weights
+- one unified destination token class
+- no wrapped representation
+- no reverse redemption path
+
+This means the gateway must not be treated as a standard wrapped bridge.
+
+Wrapped-bridge assumptions are not sufficient for this design.
+
+The model should be considered a novel burn-to-mint gateway pattern and requires independent security analysis before any production deployment.
+
 ## Why burn-to-mint
 
 Burn-to-mint is cleaner than lock/wrap for this model.

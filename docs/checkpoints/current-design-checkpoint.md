@@ -15119,3 +15119,37 @@ The next design-hardening step is to preserve the current architecture while str
     no guardian control over monetary policy
 
 Implementation should not begin until this Stage 1 architecture is reviewed as a whole.
+
+
+## Latest gateway precedent and novelty note
+
+A follow-up review noted that no direct precedent should be assumed for the full XXXL gateway model.
+
+The model combines:
+
+- source-chain burn
+- destination-chain mint
+- one-way conversion
+- future multi-source inputs
+- variable source-chain weights
+- one unified destination token class
+- no wrapped source-token representation
+- no reverse gateway redemption path
+
+This makes the XNTD-to-XXXL Gateway different from standard lock/mint bridges, wrapped-token bridges, native multi-chain issuance, and swap-based systems.
+
+Design consequence:
+
+    wrapped-bridge assumptions are not sufficient.
+
+The gateway should be treated as a novel burn-to-mint gateway pattern.
+
+This strengthens the need for:
+
+- narrow Stage 1 scope
+- immutable Stage 1 mint rules
+- independent security analysis
+- explicit no-reverse-direction UX disclosure
+- conservative production readiness gates
+
+This note does not approve implementation or deployment.
