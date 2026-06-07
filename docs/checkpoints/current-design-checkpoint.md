@@ -15900,3 +15900,187 @@ Required future test vectors include:
 - invalid wrong mint token example
 
 Implementation should still not begin until encoding, hash function, signature standard, finality rule, and X1 recipient type are reviewed.
+
+## Latest Stage 1 gateway test vectors checkpoint
+
+The Stage 1 gateway test vectors milestone was completed on the stage-1-gateway-test-vectors branch.
+
+Commit:
+
+- pending
+
+This milestone adds the test vector requirements layer for the XNTD-to-XXXL Gateway.
+
+Design document added:
+
+- docs/gateway/stage-1-gateway-test-vectors.md
+
+Purpose:
+
+Define the future valid and invalid vector set that should exist before implementation, so independent implementations agree on source event normalization, canonicalEventKey derivation, x1RecipientHash handling, message field order, messageHash preimage, route rule validation, replay handling, and invalid encoding rejection.
+
+This is a design-only milestone.
+
+It does not implement:
+
+- Ethereum contracts
+- X1 programs
+- XXXL token runtime
+- X1 mint core
+- processed burn registry
+- guardian runtime
+- relayer runtime
+- watcher runtime
+- frontend gateway flow
+- real RPC reads
+- env reads
+- private keys
+- API keys
+- mnemonic handling
+- deployment logic
+
+The document intentionally does not provide final cryptographic hashes yet.
+
+Final numeric hashes and signatures should be added only after:
+
+- target X1 hash function is selected
+- target X1 address / recipient type is selected
+- guardian signature standard is selected
+- canonical binary encoding is finalized
+- domain separator is finalized
+- target mint core identity format is finalized
+
+Core vector principle:
+
+A valid test vector must allow independent implementations to derive the same result from the same input.
+
+If two implementations produce different canonical bytes or hashes for the same vector, the design is not ready for implementation.
+
+If an invalid vector can be accepted by any conforming implementation, the design is not ready for implementation.
+
+Required vector categories documented:
+
+- valid source burn event normalization
+- valid canonicalEventKey derivation
+- valid x1RecipientHash derivation
+- valid domain constants
+- valid domain separator
+- valid gateway message field order
+- valid messageHash preimage
+- valid full mint approval message
+- invalid wrong source chain
+- invalid wrong source token
+- invalid zero burned amount
+- invalid empty X1 recipient
+- invalid recipient hash mismatch
+- invalid sourceChainWeightBps
+- invalid xxxlMintAmount
+- invalid canonicalEventKey
+- invalid optional field omission
+- invalid field order
+- invalid string amount encoding
+- invalid JSON-dependent encoding
+- invalid replay / duplicate canonicalEventKey
+- invalid cross-domain signature reuse
+
+Placeholder notation documented:
+
+- HASH(value)
+- BYTES32(value)
+- ADDRESS20(value)
+- UINT(value)
+- UINT256(value)
+- ENCODE(fields...)
+- DOMAIN_SEPARATOR(fields...)
+- MESSAGE_HASH(domainSeparator, encodedMessage)
+- SIGNATURE(messageHash)
+
+These placeholders are not implementation syntax.
+
+They describe what final vectors must later replace with exact bytes, hashes, and signatures.
+
+The document defines the expected valid vector structure:
+
+- source event
+- normalized fields
+- canonicalEventKey preimage
+- canonicalEventKey
+- x1RecipientHash preimage
+- x1RecipientHash
+- domain constants
+- domain separator
+- message fields
+- encoded message bytes
+- messageHash preimage
+- messageHash
+- guardian signatures
+- expected X1 verification result
+- expected processed key
+- expected mint recipient
+- expected mint amount
+
+The valid vector must preserve the Stage 1 semantic boundary:
+
+- sourceChainId = Ethereum mainnet
+- sourceChainWeightBps = 10000
+- xxxlMintAmount = burnedAmount
+- Stage 1 full-weight conversion does not mean XXXL is Ethereum XNTD
+- Stage 1 full-weight conversion does not create a price peg
+- Stage 1 Gateway is not a wrapped bridge
+
+Invalid vector cases documented:
+
+- wrong source chain
+- wrong source token
+- zero burned amount
+- empty recipient
+- recipient hash mismatch
+- wrong route weight
+- wrong mint amount
+- wrong canonicalEventKey
+- optional field omission
+- wrong field order
+- amount encoded as string
+- JSON-dependent encoding
+- duplicate canonicalEventKey
+- cross-domain replay
+
+Future fixture file layout suggested:
+
+- fixtures/gateway/stage-1/
+
+Potential future fixture files documented:
+
+- valid-ethereum-xntd-burn-to-xxxl.json
+- invalid-wrong-source-chain.json
+- invalid-wrong-source-token.json
+- invalid-zero-burned-amount.json
+- invalid-empty-recipient.json
+- invalid-recipient-hash-mismatch.json
+- invalid-wrong-route-weight.json
+- invalid-wrong-mint-amount.json
+- invalid-wrong-canonical-event-key.json
+- invalid-optional-field-omission.json
+- invalid-wrong-field-order.json
+- invalid-string-amount.json
+- invalid-json-canonicalization.json
+- invalid-duplicate-canonical-event-key.json
+- invalid-cross-domain-replay.json
+
+These files should be added only when final encoding and hash choices are made.
+
+Production readiness implication:
+
+Production implementation should not begin until final hash function, signature standard, X1 recipient type, canonical binary encoding, domain separator, and exact test vectors are reviewed.
+
+Current preferred direction:
+
+- document placeholder vectors now
+- add exact cryptographic vectors later
+- never use live user data in vectors
+- never include real secrets
+- require independent implementations to match exact bytes and hashes
+- require invalid vectors to fail deterministically
+- use vectors as the bridge between design and implementation
+
+Implementation should still not begin until final encoding, hash function, signature standard, finality rule, X1 recipient type, and exact test vectors are reviewed.
