@@ -15905,9 +15905,10 @@ Implementation should still not begin until encoding, hash function, signature s
 
 The Stage 1 gateway test vectors milestone was completed on the stage-1-gateway-test-vectors branch.
 
-Commit:
+Commits:
 
-- pending
+- 6aac88f Define Stage 1 gateway test vectors
+- 69e2df0 Merge branch 'stage-1-gateway-test-vectors'
 
 This milestone adds the test vector requirements layer for the XNTD-to-XXXL Gateway.
 
