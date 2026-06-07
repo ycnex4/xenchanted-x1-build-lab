@@ -18874,8 +18874,8 @@ The Stage 1 gateway verifier helpers milestone was completed on the stage-1-gate
 
 Commits:
 
-- pending Add Stage 1 gateway verifier helpers
-- pending Merge branch 'stage-1-gateway-verifier-helpers'
+- 2451d86 Add Stage 1 gateway verifier helpers
+- 50785da Merge branch 'stage-1-gateway-verifier-helpers'
 
 This milestone adds pure Stage 1 Gateway verifier helpers on top of the shared encoding module.
 
