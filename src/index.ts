@@ -38,3 +38,4 @@ export * from "./model/xc-protocol-params-build-validation.js";
 export * from "./model/xc-build-validation-context.js";
 export * from "./model/build-commitment-status.js";
 export * from "./app/build-view.js";
+export * from "./gateway/stage-1-encoding.js";
