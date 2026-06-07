@@ -24,6 +24,25 @@ Stage 1 is the first production-oriented architecture target for:
 
     Ethereum XNTD burn -> X1-native XXXL mint
 
+## Precedent and novelty note
+
+Stage 1 should not rely on assumptions from standard lock/mint or wrapped-token bridges.
+
+The broader XXXL model is a novel burn-to-mint gateway pattern:
+
+    source-chain XNTD burn -> X1-native XXXL mint
+
+No direct precedent is assumed for the full future model with:
+
+- one-way burn-to-mint conversion
+- future multi-source inputs
+- variable source-chain weights
+- one unified X1-native token class
+- no wrapped source-token representation
+- no reverse gateway redemption
+
+For Stage 1, this increases the need for narrow scope, independent review, conservative assumptions, and explicit user disclosure.
+
 ## Core framing
 
 This is not a wrapped bridge.
