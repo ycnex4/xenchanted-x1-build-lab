@@ -16992,3 +16992,192 @@ Stage 1 requires an immutable X1 mint core whose route rules and monetary conver
 This closes the immutability requirement-definition blocker.
 
 Implementation should still not begin until the exact X1 deployment and authority model is documented and exact test vectors are produced.
+
+## Latest Stage 1 processed burn atomicity checkpoint
+
+The Stage 1 processed burn atomicity milestone was completed on the stage-1-processed-burn-atomicity branch.
+
+Commit:
+
+- pending
+
+This milestone defines the Stage 1 processed-burn registry and atomic check-and-mint requirements for the XNTD-to-XXXL Gateway.
+
+Design document added:
+
+- docs/gateway/stage-1-processed-burn-atomicity.md
+
+Purpose:
+
+Prevent one Ethereum XNTD burn event from minting XXXL more than once on X1.
+
+This is a design / readiness milestone only.
+
+It does not implement:
+
+- Ethereum contracts
+- X1 programs
+- XXXL token runtime
+- X1 mint core
+- processed burn registry
+- guardian runtime
+- relayer runtime
+- watcher runtime
+- frontend gateway flow
+- real RPC reads
+- env reads
+- private keys
+- API keys
+- mnemonic handling
+- deployment logic
+
+Core rule:
+
+One canonicalEventKey can produce at most one successful XXXL mint.
+
+Atomic sequence requirement:
+
+The X1 mint path must atomically:
+
+1. verify the message and guardian signatures
+2. check canonicalEventKey is unprocessed
+3. mark canonicalEventKey as processed
+4. mint XXXL to x1RecipientBytes
+
+These steps must be atomic or protected by X1 runtime guarantees.
+
+Processed registry key:
+
+The processed-burn registry must key by canonicalEventKey.
+
+The registry must not key by:
+
+- sourceNonce alone
+- sourceSender alone
+- x1RecipientHash alone
+- burnedAmount alone
+- sourceBurnTxHash alone without sourceBurnEventIndex
+- sourceBlockHash alone
+- guardian messageHash alone
+- relayer transaction id
+
+The replay anchor remains the exact Ethereum log identity.
+
+Required processed record direction:
+
+A successful processed-burn record should include enough data for verification, indexing, and audit.
+
+Recommended processed record fields include:
+
+- canonicalEventKey
+- sourceChainId
+- sourceToken
+- sourceSender
+- sourceBurnTxHash
+- sourceBurnEventIndex
+- sourceBlockNumber
+- sourceBlockHash
+- sourceNonce
+- x1RecipientHash
+- x1RecipientBytes
+- burnedAmount
+- sourceChainWeightBps
+- xxxlMintAmount
+- mintToken
+- messageHash
+- guardianSetId or signerSetVersion if used
+- processedAtSlot or processedAtBlock
+- x1MintTxId or execution id if available
+
+Check-before-mark anti-pattern rejected:
+
+The design rejects non-atomic check-then-later-mark flow because two relayers could pass the unprocessed check before either marks the key.
+
+Mark-before-mint risk documented:
+
+If mint fails, the processed mark must also fail / roll back.
+
+There must be no stuck processed record without the corresponding mint.
+
+Duplicate submission behavior documented:
+
+- first valid execution may mint
+- every later execution for the same canonicalEventKey must fail or return already processed without minting
+- duplicate rejection must not alter mint amount
+- duplicate rejection must not alter recipient
+- duplicate rejection must not overwrite processed record
+- duplicate rejection must not require guardian intervention
+
+Relayer race behavior documented:
+
+If two relayers submit the same approval at nearly the same time:
+
+- at most one succeeds
+- at most one mint occurs
+- processed registry ends in exactly one processed state
+- losing submission receives duplicate / already processed result
+- no partial mint is possible
+- no double mint is possible
+
+Failure behavior documented:
+
+If verification, route rule validation, guardian threshold, or recipient validation fails before processed mark:
+
+- no processed record is written
+- no mint occurs
+
+If mint fails:
+
+- no processed record remains unless the mint also succeeded
+- failed execution must be retryable after the issue is corrected, if correction is possible
+- no burned Ethereum event should be permanently blocked by a failed X1-side partial state update
+
+No privileged bypass requirement documented:
+
+There must be no privileged path that can:
+
+- mark arbitrary canonicalEventKey as processed without verification
+- unmark processed burns
+- overwrite processed records
+- mint XXXL outside verified gateway messages
+- mint again for an already processed canonicalEventKey
+- bypass guardian threshold
+- bypass immutable route rules
+
+Processed record immutability documented:
+
+After a canonicalEventKey is processed, its record should be immutable.
+
+A processed record must not be overwritten to change recipient, amount, source transaction, source event index, source block identity, route rule values, messageHash, or mint token.
+
+Event / log requirements documented:
+
+The X1 mint core should emit or record a successful mint event containing enough fields for frontend display, watcher reconciliation, audit, incident investigation, and user support.
+
+Test vector implications:
+
+Future exact test vectors and tests must include:
+
+- valid first mint for canonicalEventKey
+- duplicate submission rejected
+- duplicate relayer race scenario note
+- wrong canonicalEventKey rejected
+- already processed canonicalEventKey rejected
+- failed signature does not mark processed
+- failed route rule does not mark processed
+- failed recipient validation does not mark processed
+- failed mint rolls back processed mark
+- processed record cannot be overwritten
+- privileged bypass impossible or not present
+
+Current conclusion:
+
+Stage 1 requires an atomic processed-burn check-and-mint model.
+
+The processed registry must key by canonicalEventKey.
+
+For each canonicalEventKey, at most one successful XXXL mint may occur.
+
+This closes the atomic processed-burn requirement-definition blocker.
+
+Implementation should still not begin until the exact X1 runtime atomicity model, finality rule, deployment authority model, and exact test vectors are documented.
