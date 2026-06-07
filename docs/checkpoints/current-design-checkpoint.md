@@ -15710,3 +15710,192 @@ Validation:
 - no runtime tests required before docs-only commit
 
 Implementation should still not begin until message encoding, signature format, finality rule, and X1 recipient type are reviewed.
+
+## Latest Stage 1 gateway canonical encoding checkpoint
+
+The Stage 1 gateway canonical encoding milestone was completed on the stage-1-gateway-canonical-encoding branch.
+
+Commit:
+
+- pending
+
+This milestone adds the preferred canonical encoding direction for the XNTD-to-XXXL Gateway message layer.
+
+Design document added:
+
+- docs/gateway/stage-1-gateway-canonical-encoding.md
+
+Purpose:
+
+Define how Stage 1 gateway message fields should become canonical bytes, hashes, and guardian signed payloads.
+
+This is a design-only milestone.
+
+It does not implement:
+
+- Ethereum contracts
+- X1 programs
+- XXXL token runtime
+- X1 mint core
+- processed burn registry
+- guardian runtime
+- relayer runtime
+- watcher runtime
+- frontend gateway flow
+- real RPC reads
+- env reads
+- private keys
+- API keys
+- mnemonic handling
+- deployment logic
+
+The main security principle:
+
+Every participant deriving the same Stage 1 message from the same finalized Ethereum burn log must produce the same canonical bytes.
+
+If two honest implementations can produce different bytes for the same intended message, the encoding is not acceptable.
+
+If two different messages can produce the same bytes or hash, the encoding is not acceptable.
+
+If signatures can be reused across routes, chains, tokens, schemas, message types, networks, or mint cores, the encoding is not acceptable.
+
+Preferred canonical encoding direction:
+
+- explicit field order
+- fixed-width numeric fields
+- fixed-width hashes
+- explicit dynamic-bytes hashing
+- bytes32 constants for domain fields
+- no string concatenation
+- no JSON canonicalization
+- no locale-dependent formatting
+- no decimal string amount encoding
+- no implicit field omission
+- no unordered maps
+- no optional-field ambiguity
+
+Preferred fixed field order:
+
+1. messageType
+2. schemaVersion
+3. routeId
+4. sourceChainId
+5. sourceToken
+6. sourceSender
+7. sourceBurnTxHash
+8. sourceBurnEventIndex
+9. sourceBlockNumber
+10. sourceBlockHash
+11. sourceNonce
+12. canonicalEventKey
+13. x1RecipientHash
+14. burnedAmount
+15. sourceChainWeightBps
+16. xxxlMintAmount
+17. mintToken
+18. deadlineOrFinalityBlock
+19. messageNonce
+
+Optional-field direction:
+
+- include all fields in the canonical payload
+- encode unused optional fields as zero
+- do not omit optional fields
+
+Preferred domain constants:
+
+- messageType = hash("X1_GATEWAY_MINT")
+- routeId = hash("ETHEREUM_XNTD_TO_X1_XXXL_STAGE_1")
+- mintToken = hash("XXXL")
+
+Preferred x1Recipient direction:
+
+- keep x1Recipient type open until X1 runtime constraints are confirmed
+- derive x1RecipientHash = hash(x1RecipientBytes)
+- include x1RecipientHash in the signed payload
+- carry raw x1Recipient bytes as execution / evidence payload
+- verify hash(x1RecipientBytes) == x1RecipientHash before minting
+
+canonicalEventKey direction remains:
+
+canonicalEventKey = hash(sourceChainId, sourceToken, sourceBurnTxHash, sourceBurnEventIndex)
+
+Preferred message hash direction:
+
+messageHash = hash(domainSeparator, encodedGatewayMintMessage)
+
+Guardian signing boundary:
+
+Guardians should sign the deterministic messageHash, not loosely structured JSON.
+
+The guardian runtime may display decoded fields for human review, but the signature must bind to exact canonical bytes.
+
+Evidence payload vs signed payload boundary:
+
+- signed payload should be compact, canonical, and fixed
+- evidence payload may include additional verification / display metadata
+- evidence payload must not change the signed monetary meaning
+- X1 verifier must not trust unsigned evidence fields to override signed fields
+
+Route rule binding:
+
+The immutable Stage 1 route rule is:
+
+sourceChainWeightBps = 10000
+xxxlMintAmount = burnedAmount
+
+The canonical message should include both values.
+
+The X1 mint core should also independently verify them from immutable route rules.
+
+This double-binding is intentional:
+
+- the signed message states the expected value
+- the mint core checks that the value matches the route rule
+
+Processed burn registry direction:
+
+X1 processed burn registry should key by canonicalEventKey.
+
+The registry should not key by:
+
+- sourceNonce alone
+- sourceSender alone
+- x1Recipient alone
+- burnedAmount alone
+- transaction hash alone without log index
+
+Invalid encoding examples documented:
+
+- JSON object where field order matters implicitly
+- JSON object where numeric amounts are decimal strings
+- hex strings without length normalization
+- mixed-case address strings treated as canonical bytes
+- string concatenation
+- optional field omission
+- sourceNonce replacing transaction hash + log index
+- guardians choosing xxxlMintAmount manually
+- route weight omitted from signed payload
+- mintToken omitted from signed payload
+- missing domain separation
+- payloads reusable across testnet and mainnet
+- payloads reusable across different mint cores
+
+Test vector requirement before implementation:
+
+No implementation should begin until at least one complete example message can be encoded and hashed identically by independent code.
+
+Required future test vectors include:
+
+- domain constants
+- x1RecipientHash example
+- canonicalEventKey example
+- full message encoded bytes example
+- messageHash example
+- invalid field order example
+- invalid optional omission example
+- invalid amount string example
+- invalid wrong route id example
+- invalid wrong mint token example
+
+Implementation should still not begin until encoding, hash function, signature standard, finality rule, and X1 recipient type are reviewed.
