@@ -65,6 +65,7 @@ Latest reviewed main includes:
 - post-MVP deployment readiness notes
 - read-only RPC smoke path review
 - successful mainnet XC protocol params smoke via getProtocolParams()
+- XNTD burn-to-mint bridge to X1 design
 
 ## Validation commands
 
@@ -273,6 +274,10 @@ Review / checkpoint:
 - [Assumptions](docs/assumptions.md)
 - [Current design checkpoint](docs/checkpoints/current-design-checkpoint.md)
 
+Bridge:
+
+- [XNTD burn-to-mint bridge to X1 design](docs/bridge/xntd-burn-to-mint-bridge-design.md)
+
 Build:
 
 - [Terminology](docs/build/terminology.md)
@@ -325,4 +330,6 @@ MVP implementation lab scope is complete.
 
 A controlled read-only mainnet RPC smoke for XC protocol params has completed successfully.
 
-The next recommended step is staging/runtime design before adding new protocol features or Build actor scope.
+The XNTD burn-to-mint bridge to X1 is documented as a design-only future layer. It is not implemented, deployed, or approved for production by the current repository.
+
+The next recommended step is staging/runtime and bridge-risk review before adding new protocol features or Build actor scope.
