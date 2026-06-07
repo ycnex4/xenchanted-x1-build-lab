@@ -15530,3 +15530,182 @@ The repository now has:
 The next step is to define the gateway message schema.
 
 Implementation should still not begin.
+
+## Latest Stage 1 gateway message schema checkpoint
+
+The Stage 1 gateway message schema milestone was completed on the stage-1-gateway-message-schema branch.
+
+Commit:
+
+- pending
+
+This milestone adds the next technical design layer for the XNTD-to-XXXL Gateway.
+
+Design document added:
+
+- docs/gateway/stage-1-gateway-message-schema.md
+
+Purpose:
+
+Define the deterministic message that guardians sign for X1 XXXL mint approval.
+
+This is a design-only milestone.
+
+It does not implement:
+
+- Ethereum contracts
+- X1 programs
+- XXXL token runtime
+- guardian runtime
+- relayer runtime
+- watcher runtime
+- frontend gateway flow
+- real RPC reads
+- env reads
+- private keys
+- API keys
+- mnemonic handling
+- deployment logic
+
+Current Stage 1 route:
+
+Ethereum XNTD burn -> immutable X1 XXXL mint core -> XXXL mint
+
+Architecture boundary remains:
+
+gateway guardians = verification layer
+
+immutable mint core / route rules = monetary conversion rules
+
+Guardians must not control XXXL monetary policy.
+
+The message schema defines:
+
+- messageType
+- schemaVersion
+- routeId
+- sourceChainId
+- sourceToken
+- sourceSender
+- sourceBurnTxHash
+- sourceBurnEventIndex
+- sourceBlockNumber
+- sourceBlockHash
+- sourceNonce
+- canonicalEventKey
+- x1Recipient
+- x1RecipientHash
+- burnedAmount
+- sourceChainWeightBps
+- xxxlMintAmount
+- mintToken
+- optional deadlineOrFinalityBlock
+- optional messageNonce
+
+Preferred Stage 1 constants:
+
+- messageType = X1_GATEWAY_MINT
+- schemaVersion = 1
+- routeId = ETHEREUM_XNTD_TO_X1_XXXL_STAGE_1
+- sourceChainId = Ethereum mainnet
+- sourceToken = expected Ethereum XNTD token
+- sourceChainWeightBps = 10000
+- xxxlMintAmount = burnedAmount
+- mintToken = XXXL
+
+Replay protection direction:
+
+canonicalEventKey = hash(sourceChainId, sourceToken, sourceBurnTxHash, sourceBurnEventIndex)
+
+The canonical replay anchor remains the exact Ethereum log:
+
+- transaction hash
+- log index
+
+The design keeps sourceNonce useful for indexing and user display, but not as the primary replay key.
+
+Deterministic derivation:
+
+A finalized Ethereum burn event should derive one canonical X1GatewayMintMessage.
+
+Any participant deriving the message from the same finalized Ethereum log should produce the same payload.
+
+Guardian responsibility:
+
+Guardians sign only after verifying:
+
+- expected event name
+- Ethereum mainnet source chain
+- expected XNTD source token
+- succeeded burn transaction
+- canonical finalized block inclusion
+- non-empty X1 recipient
+- burnedAmount > 0
+- correct x1RecipientHash
+- correct canonicalEventKey
+- unprocessed source burn on X1
+- sourceChainWeightBps == 10000
+- xxxlMintAmount == burnedAmount
+- expected message type, schema version, route id, and mint token
+
+Relayer responsibility:
+
+The relayer transports signed messages and evidence references.
+
+The relayer must not define monetary values.
+
+The relayer must not be able to change:
+
+- x1Recipient
+- burnedAmount
+- xxxlMintAmount
+- sourceChainWeightBps
+- canonicalEventKey
+
+X1 verification responsibility:
+
+The X1 mint path should verify the exact canonical message payload, guardian threshold, immutable route rules, and processed-burn registry before minting.
+
+Only after successful verification should X1 mark canonicalEventKey as processed and mint XXXL to x1Recipient.
+
+Frontend state mapping documented:
+
+- Burn submitted
+- Burn confirmed
+- Burn finalized
+- Guardian approval pending
+- Guardian approved
+- Relayer submitted
+- XXXL minted
+- Already processed / duplicate
+- Rejected evidence
+
+Important semantic boundary:
+
+Stage 1 uses full-weight Ethereum conversion.
+
+This does not mean XXXL is Ethereum XNTD.
+
+This does not create a price peg.
+
+This is not a standard wrapped bridge.
+
+Open questions before implementation include:
+
+- exact canonical binary encoding
+- hash function
+- signature standard
+- typed message hash format
+- X1 recipient type
+- finality rule
+- signer set epoch / version
+- evidence metadata requirements
+- frontend rejected / reorged evidence display
+- relayer retry representation
+
+Validation:
+
+- docs-only change
+- no runtime tests required before docs-only commit
+
+Implementation should still not begin until message encoding, signature format, finality rule, and X1 recipient type are reviewed.
