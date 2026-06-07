@@ -16826,3 +16826,168 @@ Stage 1 requires sourceBlockNumber and sourceBlockHash as mandatory signed field
 This closes the mandatory source block field blocker.
 
 Implementation should still not begin until the remaining blockers are resolved and exact test vectors are produced.
+
+## Latest Stage 1 X1 mint core immutability checkpoint
+
+The Stage 1 X1 mint core immutability milestone was completed on the stage-1-x1-mint-core-immutability branch.
+
+Commit:
+
+- pending
+
+This milestone defines the Stage 1 immutability requirements for the X1 XXXL mint core.
+
+Design document added:
+
+- docs/gateway/stage-1-x1-mint-core-immutability.md
+
+Purpose:
+
+Define the immutability requirements that keep Stage 1 monetary conversion rules outside guardian, relayer, deployer, administrator, or mutable governance control.
+
+This is a design / readiness milestone only.
+
+It does not implement:
+
+- Ethereum contracts
+- X1 programs
+- XXXL token runtime
+- X1 mint core
+- processed burn registry
+- guardian runtime
+- relayer runtime
+- watcher runtime
+- frontend gateway flow
+- real RPC reads
+- env reads
+- private keys
+- API keys
+- mnemonic handling
+- deployment logic
+
+Core boundary:
+
+- gateway guardians = verification layer
+- immutable mint core / route rules = monetary conversion rules
+- relayer = execution / transport layer without discretion
+
+Core principle:
+
+The X1 mint core must enforce monetary conversion rules independently from guardian signatures.
+
+Guardian signatures prove that source burn evidence was verified.
+
+Guardian signatures must not define monetary policy.
+
+The mint core must reject any message that violates immutable Stage 1 route rules, even if guardians signed it.
+
+Immutable Stage 1 route rules documented:
+
+- source chain is Ethereum mainnet
+- source token is the expected Ethereum XNTD token
+- routeId is the Stage 1 Ethereum XNTD to X1 XXXL route
+- sourceChainWeightBps = 10000
+- xxxlMintAmount = burnedAmount
+- mint token is XXXL
+- canonicalEventKey is derived from sourceChainId, sourceToken, sourceBurnTxHash, and sourceBurnEventIndex
+- hash function is keccak256
+- guardian signature standard is Ed25519
+- X1 recipient is 32 raw bytes
+- x1RecipientHash = keccak256(x1RecipientBytes)
+- sourceBlockNumber and sourceBlockHash are mandatory signed fields
+
+Mint core verification requirements documented:
+
+Before minting XXXL, the X1 mint core must verify:
+
+- messageType is expected
+- schemaVersion is supported
+- routeId is expected Stage 1 route
+- sourceChainId is Ethereum mainnet
+- sourceToken is expected Ethereum XNTD token
+- sourceChainWeightBps equals 10000
+- xxxlMintAmount equals burnedAmount
+- mintToken is XXXL
+- burnedAmount is greater than zero
+- x1RecipientBytes length is exactly 32 bytes
+- x1RecipientBytes is not 32 zero bytes
+- keccak256(x1RecipientBytes) equals x1RecipientHash
+- sourceBlockNumber is present
+- sourceBlockHash is present and exactly 32 bytes
+- canonicalEventKey is derived correctly
+- guardian signatures satisfy the required Ed25519 threshold
+- canonicalEventKey has not been processed before
+
+Guardian overreach rejection documented:
+
+The mint core must reject guardian-approved messages if any immutable route value is wrong.
+
+Guardian threshold is necessary but not sufficient.
+
+A valid guardian threshold cannot override route rules.
+
+Relayer limitation documented:
+
+The relayer may transport signed messages, signatures, raw x1RecipientBytes, evidence references, and execution metadata.
+
+The relayer must not be able to change monetary values or route identity.
+
+Deployment authority requirement documented:
+
+Route rules and monetary conversion logic must not remain controllable by a deployer, admin, guardian set, relayer, or mutable governance path after production deployment.
+
+Before implementation or production approval, the project must define:
+
+- whether X1 programs / contracts are upgradeable
+- whether deployer authority exists
+- how deployer authority is removed, disabled, or constrained
+- whether mint authority exists separately from program authority
+- whether mint authority can be changed
+- whether any governance / timelock path exists
+- which values are immutable forever
+- which values, if any, can be operationally configured
+- how users can verify the deployed immutability state
+
+Acceptable production outcomes may include:
+
+- non-upgradeable mint core
+- upgrade authority permanently removed
+- route rules hardcoded in deployed code
+- mint authority constrained to the immutable mint core
+- mutable operational settings separated from monetary route rules
+- public verification procedure showing no mutable authority can alter route rules
+
+Unacceptable production outcomes documented:
+
+- guardians can change route weight
+- guardians can change mint formula
+- relayer can choose mint amount
+- deployer can upgrade route rules after launch
+- admin can change source token
+- admin can change source chain
+- admin can change mint token
+- governance can change monetary conversion without a new explicit route / deployment
+- mint authority can mint XXXL outside verified gateway messages
+- processed burn registry can be bypassed by privileged authority
+
+Operational configuration boundary documented:
+
+Some operational configuration may be acceptable only if it does not affect monetary conversion.
+
+Guardian set mutability distinction documented:
+
+Guardian set management is not the same as monetary policy.
+
+Guardian rotation may be acceptable only if it cannot alter route rules or mint without valid burn evidence.
+
+User verification requirement documented:
+
+Before production, users should be able to verify deployed mint core identity, immutable route parameters, authority state, and whether any admin can alter route rules.
+
+Current conclusion:
+
+Stage 1 requires an immutable X1 mint core whose route rules and monetary conversion logic cannot be changed by guardians, relayers, deployers, administrators, or mutable governance after production deployment.
+
+This closes the immutability requirement-definition blocker.
+
+Implementation should still not begin until the exact X1 deployment and authority model is documented and exact test vectors are produced.
