@@ -89,6 +89,7 @@ Latest reviewed main includes:
 - Stage 1 gateway encoding helpers
 - Stage 1 generator shared encoding helpers
 - Stage 1 gateway verifier helpers
+- Stage 1 Ed25519 guardian signature verifier helpers
 - X1-native Forge / Stake dual nominal model
 
 ## Validation commands
