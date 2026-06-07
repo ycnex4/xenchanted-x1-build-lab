@@ -81,6 +81,7 @@ Latest reviewed main includes:
 - Stage 1 Ethereum finality rule
 - Stage 1 recipient safety policy
 - Stage 1 burn amount policy
+- Stage 1 X1 deployment authority model
 - X1-native Forge / Stake dual nominal model
 
 ## Validation commands
