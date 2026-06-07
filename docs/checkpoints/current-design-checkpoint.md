@@ -18633,3 +18633,123 @@ Current conclusion:
 The generated Stage 1 Gateway vector output is now protected by fast fixture tests.
 
 The next milestone can begin extracting reusable Stage 1 encoding / vector verification helpers, or can proceed toward parser/verifier tests using the locked fixture values.
+
+## Latest Stage 1 gateway encoding helpers checkpoint
+
+The Stage 1 gateway encoding helpers milestone was completed on the stage-1-gateway-encoding-helpers branch.
+
+Commits:
+
+- pending Add Stage 1 gateway encoding helpers
+- pending Merge branch 'stage-1-gateway-encoding-helpers'
+
+This milestone adds reusable Stage 1 Gateway encoding and hashing helpers.
+
+Source additions:
+
+- src/gateway/stage-1-encoding.ts
+
+Test additions:
+
+- tests/stage-1-gateway-encoding.test.ts
+
+Export updates:
+
+- src/index.ts exports Stage 1 gateway encoding helpers
+
+README updated:
+
+- Stage 1 gateway encoding helpers
+
+Purpose:
+
+Move Stage 1 fixed-width encoding primitives into reusable source code before parser, verifier, X1 mint core, relayer, watcher, or frontend gateway runtime work begins.
+
+The helper module provides:
+
+- STAGE1_GATEWAY_FIELD_ORDER
+- Stage1GatewayFieldName
+- Stage1GatewayMintMessageFields
+- strip0x()
+- hexToBytes()
+- bytesToHex()
+- concatBytes()
+- utf8Bytes()
+- keccakBytes()
+- keccakUtf8Label()
+- bytes32()
+- uint256Be()
+- addressToBytes32LeftPadded()
+- buildStage1CanonicalEventKeyPreimage()
+- buildStage1DomainSeparatorPreimage()
+- encodeStage1GatewayMintMessage()
+- buildStage1MessageHashPreimage()
+
+The tests verify:
+
+- uint256 big-endian 32-byte encoding
+- Ethereum address left-padding to 32 bytes
+- malformed Ethereum address rejection
+- label hash reproduction from the generated fixture
+- canonicalEventKeyPreimage reproduction
+- canonicalEventKey reproduction
+- x1RecipientHash reproduction
+- domainSeparatorPreimage reproduction
+- domainSeparator reproduction
+- encodedGatewayMintMessage reproduction
+- messageHashPreimage reproduction
+- messageHash reproduction
+- encoded field-by-field reproduction
+- malformed fixed-width field rejection
+- malformed domainSeparator rejection
+
+Fixture values used:
+
+- docs/gateway/generated/stage-1-gateway-vectors.json
+
+Safety boundary:
+
+The helpers are pure deterministic encoding / hashing helpers.
+
+The tests only read the generated fixture file.
+
+They do not read:
+
+- .env files
+- private keys
+- RPC URLs
+- API keys
+- seed phrases
+- mnemonic values
+- production credentials
+
+They do not perform:
+
+- real RPC reads
+- production signing
+- Ethereum contract execution
+- X1 runtime execution
+- relayer submission
+- watcher verification
+- gateway minting
+
+This is an encoding-helper milestone only.
+
+It does not implement:
+
+- Ethereum contracts
+- X1 programs
+- XXXL token runtime
+- X1 mint core
+- processed burn registry runtime
+- guardian runtime
+- relayer runtime
+- watcher runtime
+- frontend gateway flow
+- deployment logic
+
+Current conclusion:
+
+Stage 1 Gateway now has reusable encoding / hashing primitives that reproduce the locked generated fixture values.
+
+The next milestone can either migrate the generator to use these shared helpers or add parser/verifier helpers on top of them.
