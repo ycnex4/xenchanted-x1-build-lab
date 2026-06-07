@@ -15535,9 +15535,10 @@ Implementation should still not begin.
 
 The Stage 1 gateway message schema milestone was completed on the stage-1-gateway-message-schema branch.
 
-Commit:
+Commits:
 
-- pending
+- be7896b Define Stage 1 gateway message schema
+- 457abba Merge branch 'stage-1-gateway-message-schema'
 
 This milestone adds the next technical design layer for the XNTD-to-XXXL Gateway.
 
