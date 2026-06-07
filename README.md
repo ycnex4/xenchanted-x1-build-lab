@@ -66,6 +66,7 @@ Latest reviewed main includes:
 - read-only RPC smoke path review
 - successful mainnet XC protocol params smoke via getProtocolParams()
 - XNTD burn-to-mint bridge to X1 design
+- X1-native Forge / Stake dual nominal model
 
 ## Validation commands
 
@@ -278,6 +279,10 @@ Bridge:
 
 - [XNTD burn-to-mint bridge to X1 design](docs/bridge/xntd-burn-to-mint-bridge-design.md)
 
+X1-native:
+
+- [X1 Forge / Stake dual nominal model](docs/x1-native/x1-forge-stake-dual-nominal-model.md)
+
 Build:
 
 - [Terminology](docs/build/terminology.md)
@@ -332,4 +337,6 @@ A controlled read-only mainnet RPC smoke for XC protocol params has completed su
 
 The XNTD burn-to-mint bridge to X1 is documented as a design-only future layer. It is not implemented, deployed, or approved for production by the current repository.
 
-The next recommended step is staging/runtime and bridge-risk review before adding new protocol features or Build actor scope.
+The X1-native Forge / Stake dual nominal model is also documented as a design-only future layer. It is not implemented, deployed, or approved for production by the current repository.
+
+The next recommended step is staging/runtime, gateway-risk review, and X1-native model review before adding new protocol features or Build actor scope.
