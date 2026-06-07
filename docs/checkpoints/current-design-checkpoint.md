@@ -17404,9 +17404,10 @@ Implementation should still not begin until exact provider policy, fallback conf
 
 The Stage 1 recipient safety policy milestone was completed on the stage-1-recipient-safety-policy branch.
 
-Commit:
+Commits:
 
-- pending
+- 1f17e62 Define Stage 1 recipient safety policy
+- 5995517 Merge branch 'stage-1-recipient-safety-policy'
 
 This milestone defines the Stage 1 recipient safety policy for the XNTD-to-XXXL Gateway.
 
