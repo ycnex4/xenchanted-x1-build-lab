@@ -16463,9 +16463,10 @@ The next recommended document is a decision document for hash function, signatur
 
 The Stage 1 gateway hash, signature, and recipient decisions milestone was completed on the stage-1-gateway-hash-signature-recipient-decisions branch.
 
-Commit:
+Commits:
 
-- pending
+- ca4b787 Define Stage 1 gateway hash signature recipient decisions
+- 89b8357 Merge branch 'stage-1-gateway-hash-signature-recipient-decisions'
 
 This milestone resolves the first three Stage 1 Gateway pre-implementation blockers:
 
