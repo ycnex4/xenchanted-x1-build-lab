@@ -18067,3 +18067,227 @@ Production readiness requires public verification of upgrade authority, mint aut
 This closes the deployment authority model requirement-definition layer.
 
 Implementation should still not begin until exact cryptographic test vectors are documented and the X1 runtime authority mechanics are confirmed.
+
+## Latest Stage 1 exact cryptographic test vectors checkpoint
+
+The Stage 1 exact cryptographic test vectors milestone was completed on the stage-1-exact-cryptographic-test-vectors branch.
+
+Commit:
+
+- pending
+
+This milestone defines the exact Stage 1 cryptographic test vector profile for the XNTD-to-XXXL Gateway.
+
+Design document added:
+
+- docs/gateway/stage-1-exact-cryptographic-test-vectors.md
+
+Purpose:
+
+Turn the Stage 1 message, encoding, hash, signature, recipient, finality, replay, amount, and authority decisions into an exact test-vector profile.
+
+This is a design / test-vector specification milestone only.
+
+It does not implement:
+
+- Ethereum contracts
+- X1 programs
+- XXXL token runtime
+- X1 mint core
+- processed burn registry
+- guardian runtime
+- relayer runtime
+- watcher runtime
+- frontend gateway flow
+- real RPC reads
+- env reads
+- private keys
+- API keys
+- mnemonic handling
+- deployment logic
+
+Cryptographic decisions locked:
+
+- hash function = keccak256
+- guardian signature standard = Ed25519
+- X1 recipient type = 32 raw bytes X1 / SVM public key
+- x1RecipientHash = keccak256(x1RecipientBytes)
+- canonicalEventKey = keccak256(encoded canonical event key preimage)
+- messageHash = keccak256(domainSeparator || encodedGatewayMintMessage)
+- guardian signature payload = messageHash
+- sourceChainId = 1
+- sourceChainWeightBps = 10000
+- xxxlMintAmount = burnedAmount
+
+Exact encoding profile:
+
+- every message field is exactly 32 bytes
+- field order is fixed
+- no field may be omitted
+- unused optional fields are encoded as zero
+- all unsigned integers are encoded as uint256 big-endian 32-byte words
+- all bytes32 values are encoded as exact 32 bytes
+- Ethereum addresses are encoded as 20 bytes left-padded to 32 bytes
+- x1RecipientBytes are not included directly in the signed message
+- x1RecipientHash is included in the signed message
+- base58 is display-only and never canonical payload encoding
+- hex strings are display-only and never canonical payload encoding
+- no JSON canonicalization is used
+- no string concatenation is used
+- no decimal string amount encoding is used
+
+Domain constant hashing:
+
+String labels are converted to bytes32 constants using:
+
+keccak256(utf8(label))
+
+Stage 1 constants:
+
+- messageType = keccak256("X1_GATEWAY_MINT")
+- routeId = keccak256("ETHEREUM_XNTD_TO_X1_XXXL_STAGE_1")
+- mintToken = keccak256("XXXL")
+- protocolNameHash = keccak256("xEnchanted XNTD-to-XXXL Gateway")
+- gatewayVersionHash = keccak256("Stage1")
+- messageTypeFamilyHash = keccak256("X1GatewayMintMessage")
+
+Domain separator profile:
+
+domainSeparator = keccak256(
+    protocolNameHash ||
+    gatewayVersionHash ||
+    targetX1NetworkId ||
+    targetMintCoreId ||
+    messageTypeFamilyHash
+)
+
+Canonical event key profile:
+
+canonicalEventKey = keccak256(
+    sourceChainId ||
+    sourceToken ||
+    sourceBurnTxHash ||
+    sourceBurnEventIndex
+)
+
+Gateway mint message field order locked:
+
+1. messageType
+2. schemaVersion
+3. routeId
+4. sourceChainId
+5. sourceToken
+6. sourceSender
+7. sourceBurnTxHash
+8. sourceBurnEventIndex
+9. sourceBlockNumber
+10. sourceBlockHash
+11. sourceNonce
+12. canonicalEventKey
+13. x1RecipientHash
+14. burnedAmount
+15. sourceChainWeightBps
+16. xxxlMintAmount
+17. mintToken
+18. deadlineOrFinalityBlock
+19. messageNonce
+
+Each field is exactly 32 bytes.
+
+encodedGatewayMintMessage length:
+
+19 * 32 = 608 bytes
+
+messageHash preimage:
+
+domainSeparator || encodedGatewayMintMessage
+
+messageHash preimage length:
+
+32 + 608 = 640 bytes
+
+Sample Vector 1 locked:
+
+- Vector ID = STAGE1_GATEWAY_VALID_001
+- sourceChainId = 1
+- sourceToken = 0x1111111111111111111111111111111111111111
+- sourceSender = 0x2222222222222222222222222222222222222222
+- sourceBurnTxHash = 0xaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+- sourceBurnEventIndex = 7
+- sourceBlockNumber = 19000000
+- sourceBlockHash = 0xbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb
+- sourceNonce = 42
+- x1RecipientBytes = 0x0102030405060708090a0b0c0d0e0f101112131415161718191a1b1c1d1e1f20
+- burnedAmount = 1000000000000000000000
+- sourceChainWeightBps = 10000
+- xxxlMintAmount = 1000000000000000000000
+- deadlineOrFinalityBlock = 0
+- messageNonce = 0
+- targetX1NetworkId = 1001
+- targetMintCoreId = 0xcccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
+
+Ed25519 signing vector requirement:
+
+- deterministic test-only Ed25519 keys
+- guardian signature payload is exactly messageHash
+- signature must verify against guardianPublicKey and messageHash
+- wrong messageHash must fail verification
+- wrong public key must fail verification
+- altered signature must fail verification
+
+Required generated valid vectors:
+
+- valid Stage 1 gateway mint message
+- valid x1RecipientHash
+- valid canonicalEventKey
+- valid domainSeparator
+- valid encodedGatewayMintMessage
+- valid messageHash
+- valid Ed25519 guardian signature over messageHash
+
+Required invalid vectors include:
+
+- wrong field order
+- omitted optional field
+- deadlineOrFinalityBlock omitted instead of zero-filled
+- messageNonce omitted instead of zero-filled
+- amount encoded as decimal string
+- wrong sourceChainId
+- wrong sourceToken
+- wrong sourceBurnTxHash
+- wrong sourceBurnEventIndex
+- wrong sourceBlockNumber
+- wrong sourceBlockHash
+- wrong canonicalEventKey
+- wrong x1RecipientHash
+- empty x1RecipientBytes
+- non-32-byte x1RecipientBytes
+- 32 zero bytes x1RecipientBytes
+- burnedAmount equals zero
+- xxxlMintAmount differs from burnedAmount
+- sourceChainWeightBps differs from 10000
+- wrong mintToken
+- wrong routeId
+- wrong domainSeparator
+- wrong targetX1NetworkId
+- wrong targetMintCoreId
+- wrong messageHash
+- wrong Ed25519 signature
+- valid signature over a different messageHash
+- duplicate canonicalEventKey already processed
+
+Current conclusion:
+
+This milestone locks the Stage 1 exact cryptographic test vector profile:
+
+- keccak256
+- Ed25519
+- 32-byte X1 recipient
+- 32-byte fixed-width field encoding
+- 19-field message order
+- 608-byte encoded message
+- 640-byte messageHash preimage
+- canonicalEventKey derived from source chain, source token, source transaction hash, and source log index
+- messageHash derived from domainSeparator plus encoded gateway mint message
+
+The next milestone should add a deterministic vector generation script and generated expected output values.

@@ -82,6 +82,7 @@ Latest reviewed main includes:
 - Stage 1 recipient safety policy
 - Stage 1 burn amount policy
 - Stage 1 X1 deployment authority model
+- Stage 1 exact cryptographic test vectors
 - X1-native Forge / Stake dual nominal model
 
 ## Validation commands
