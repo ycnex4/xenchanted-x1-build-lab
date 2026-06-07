@@ -19118,3 +19118,127 @@ Current conclusion:
 Stage 1 Gateway now has reusable Ed25519 guardian signature verifier helpers that validate the locked deterministic public test vector and reject wrong hash, wrong public key, altered signature, different-message signature, and malformed-length cases.
 
 The next milestone can combine message verification plus Ed25519 signature verification into a single Stage 1 gateway approval verifier helper, or continue toward guardian-set / quorum modeling.
+
+## Latest Stage 1 gateway approval verifier checkpoint
+
+The Stage 1 gateway approval verifier milestone was completed on the stage-1-gateway-approval-verifier branch.
+
+Commits:
+
+- pending Add Stage 1 gateway approval verifier
+- pending Merge branch 'stage-1-gateway-approval-verifier'
+
+This milestone adds a pure Stage 1 Gateway approval verifier that composes the message verifier and Ed25519 guardian signature verifier.
+
+Source additions:
+
+- src/gateway/stage-1-approval-verifier.ts
+
+Test additions:
+
+- tests/stage-1-gateway-approval-verifier.test.ts
+
+Export updates:
+
+- src/index.ts exports Stage 1 gateway approval verifier helpers
+
+README updated:
+
+- Stage 1 gateway approval verifier
+
+Purpose:
+
+Add a single deterministic approval verification helper before guardian-set, quorum, X1 mint core, relayer, watcher, frontend gateway, or deployment runtime work begins.
+
+The approval verifier composes:
+
+- verifyStage1GatewayMintMessage()
+- verifyStage1Ed25519GuardianSignature()
+
+The helper module provides:
+
+- Stage1GatewayApprovalVerificationInput
+- Stage1GatewayApprovalVerificationResult
+- verifyStage1GatewayApproval()
+
+The approval verifier checks both layers:
+
+Message verification:
+
+- route constants
+- source route values
+- evidence binding
+- recipient binding
+- domain separator
+- messageHash
+- burnedAmount > 0
+- sourceChainWeightBps = 10000
+- xxxlMintAmount = burnedAmount
+
+Signature verification:
+
+- messageHash length = 32 bytes
+- guardianPublicKey length = 32 bytes
+- guardianSignature length = 64 bytes
+- Ed25519 signature verifies over the exact messageHash
+
+The tests verify:
+
+- valid message plus valid guardian signature is accepted
+- invalid message is rejected even when signature is valid for the supplied hash
+- invalid signature is rejected even when message is valid
+- both message and signature failures are surfaced together
+- malformed Ed25519 approval inputs are rejected while valid message verification remains visible
+
+Fixture values used:
+
+- docs/gateway/generated/stage-1-gateway-vectors.json
+
+Safety boundary:
+
+The approval verifier is a pure composition helper.
+
+The tests only read generated public test vector data.
+
+They do not read:
+
+- .env files
+- production private keys
+- RPC URLs
+- API keys
+- seed phrases
+- mnemonic values
+- production credentials
+
+They do not perform:
+
+- production signing
+- real RPC reads
+- Ethereum contract execution
+- X1 runtime execution
+- relayer submission
+- watcher verification
+- gateway minting
+
+This is an approval-verifier helper milestone only.
+
+It does not implement:
+
+- guardian-set management
+- guardian quorum
+- signer rotation
+- Ethereum contracts
+- X1 programs
+- XXXL token runtime
+- X1 mint core
+- processed burn registry runtime
+- relayer runtime
+- watcher runtime
+- frontend gateway flow
+- deployment logic
+
+Current conclusion:
+
+Stage 1 Gateway now has a reusable approval verifier that returns a combined message-verification and signature-verification result without hiding which layer failed.
+
+The next milestone can model guardian-set / quorum rules, or begin mapping approval verification toward an X1 mint core test model.
