@@ -279,6 +279,7 @@ Gateway:
 
 - [XNTD-to-XXXL burn-to-mint gateway design](docs/gateway/xntd-to-xxxl-burn-to-mint-gateway-design.md)
 - [Stage 1 XXXL Gateway architecture](docs/gateway/stage-1-xxxl-gateway-architecture.md)
+- [Stage 1 XXXL Gateway implementation plan](docs/gateway/stage-1-xxxl-gateway-implementation-plan.md)
 
 X1-native:
 
@@ -336,7 +337,7 @@ MVP implementation lab scope is complete.
 
 A controlled read-only mainnet RPC smoke for XC protocol params has completed successfully.
 
-The XNTD-to-XXXL burn-to-mint gateway is documented as a design-only future layer. Stage 1 gateway architecture is also documented, but it is not implemented, deployed, or approved for production by the current repository.
+The XNTD-to-XXXL burn-to-mint gateway is documented as a design-only future layer. Stage 1 gateway architecture and implementation planning are also documented, but the gateway is not implemented, deployed, or approved for production by the current repository.
 
 The X1-native Forge / Stake dual nominal model is also documented as a design-only future layer. It is not implemented, deployed, or approved for production by the current repository.
 
