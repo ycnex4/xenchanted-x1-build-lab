@@ -15041,3 +15041,81 @@ Recommended next review focus:
 5. X1-side program architecture before implementation
 
 Do not start implementation until the gateway / XXXL / X1 Forge direction is reviewed again as a whole.
+
+
+## Latest Theo post-MVP architecture review notes
+
+Theo reviewed the full post-MVP Gateway / XXXL / X1 Forge / X1 Stake / Build direction after the terminology and checkpoint updates.
+
+Review result:
+
+    No architecture-level blockers.
+
+The strategic line was considered coherent and mature for the design / hardening phase.
+
+Reviewed line:
+
+    Gateway brings energy into X1.
+    XXXL carries that energy.
+    X1 Forge transforms liquid XXXL into long-term positions.
+    X1 Stake gives those positions slow productive value.
+    Build records participation / history / state later.
+
+### Main structural recommendation
+
+The most important recommendation is:
+
+    XXXL mint core should be immutable for Stage 1.
+
+For Stage 1:
+
+- Ethereum route should be immutable / hardcoded in the X1 mint core
+- Ethereum source-chain weight should be `10000 bps`
+- gateway guardians should not control XXXL monetary policy
+- gateway guardians should only verify burn evidence and approve deterministic mint messages
+- future source routes should use separately reviewed adapters / route definitions
+- coefficient changes must not be retroactive
+
+This separates:
+
+    verification work -> gateway guardians
+    monetary conversion rules -> immutable mint core / immutable route rules
+
+### Additional review notes incorporated
+
+The design should explicitly document:
+
+- XXXL is a different asset from Ethereum XNTD
+- gateway conversion does not create a price peg between XNTD and XXXL
+- gateway is one-way
+- XXXL cannot be converted back to XNTD through the gateway
+- first guardian set may be bootstrapped by the project
+- bootstrapped trust should be disclosed for Stage 1
+- lost guardian keys require a recovery / rotation path
+- Build actor can remain future scope
+- a minimal Build event recorder may run in parallel if useful
+
+### X1 Forge / Stake UX note
+
+The technical terms remain:
+
+    mainNominal
+    stakeNominal
+
+Recommended user-facing labels:
+
+    mainNominal -> Redeem Value
+    stakeNominal -> Staking Power
+
+This avoids confusing users with two different "nominal" values.
+
+### Current decision
+
+The next design-hardening step is to preserve the current architecture while strengthening the Stage 1 boundary:
+
+    immutable XXXL mint core
+    immutable Ethereum route rules
+    governed gateway operations only
+    no guardian control over monetary policy
+
+Implementation should not begin until this Stage 1 architecture is reviewed as a whole.

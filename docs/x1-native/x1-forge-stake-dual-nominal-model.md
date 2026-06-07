@@ -188,6 +188,25 @@ Important rule:
 
 stakeNominal is staking power only.
 
+## User-facing labels
+
+The technical names are:
+
+    mainNominal
+    stakeNominal
+
+The user interface should avoid presenting both values as "nominal" to users.
+
+Recommended user-facing labels:
+
+    mainNominal -> Redeem Value
+    stakeNominal -> Staking Power
+
+This should make the model easier to understand:
+
+    Redeem Value = what may be used for redeem / conservative value.
+    Staking Power = what may be used for stake reward calculation.
+
 ## Stake reward rule
 
 Stake-like rewards may use stakeNominal as the reward base.
@@ -292,6 +311,10 @@ This prevents users from assuming that a higher stakeNominal means a higher rede
 
 Build is not required for the first X1-native Forge / Stake model.
 
+However, a minimal Build event recorder may run in parallel with gateway, X1 Forge, or X1 Stake development.
+
+Full Build actor scope can remain future work.
+
 Build may later record:
 
 - participation
@@ -301,6 +324,10 @@ Build may later record:
 - project / user / actor context
 
 Do not block X1 Forge / Stake design on Build actor.
+
+Build actor remains future scope.
+
+A minimal Build event recorder may be considered earlier if it is useful for recording gateway, Forge, or Stake actions.
 
 Build remains a future memory / state layer.
 

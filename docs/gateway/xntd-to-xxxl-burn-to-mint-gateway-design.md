@@ -39,7 +39,15 @@ It reduces custody risk.
 It fits the first-principles framing better:
 
     source-chain XNTD is destroyed
-    XXXL is created from verified burn evidence
+    XXXL is created as a separate X1-native token from verified burn evidence
+
+XXXL has different supply, different utility, and different market dynamics from Ethereum XNTD.
+
+Gateway conversion does not create a price peg between XNTD and XXXL.
+
+There is no reverse direction in this design.
+
+XXXL cannot be converted back to XNTD through the gateway.
 
 The gateway is still an optional infrastructure layer.
 
@@ -93,6 +101,31 @@ Example coefficients:
     Experimental source chain: 1000 bps
 
 The exact future coefficients are not defined in this document.
+
+## Immutable Stage 1 XXXL mint core
+
+For Stage 1, the Ethereum route should be immutable in the X1 mint core.
+
+The Stage 1 X1 mint core should hardcode or otherwise immutably define:
+
+- source chain: Ethereum
+- source token: XNTD
+- source-chain weight: 10000 bps
+- mint formula: `xxxlMintAmount = burnedAmount * 10000 / 10000`
+- processed burn replay protection
+- one accepted source burn event -> one XXXL mint operation
+
+Gateway guardians must not control XXXL monetary policy.
+
+Gateway guardians should only verify burn evidence and approve deterministic mint messages.
+
+No guardian vote should be able to change the Ethereum Stage 1 coefficient.
+
+No guardian vote should be able to mint XXXL without valid burn evidence.
+
+Future source routes should be added through separately reviewed source adapters or route definitions, not by mutating the Ethereum route.
+
+Existing route rules must not be changed retroactively for already-processed burns.
 
 ## Coefficient governance principle
 
@@ -244,6 +277,12 @@ The 700+ X1 validators are not the quorum.
 
 They are a future candidate pool for finding the first small group of willing gateway / Build infrastructure operators.
 
+The first guardian set may be bootstrapped by the project.
+
+This is acceptable for Stage 1 only if the trust model is disclosed clearly.
+
+A later stage should transition toward more community-selected or independently selected guardians.
+
 Initial gateway guardians may come from:
 
 - X1 validators
@@ -290,6 +329,12 @@ Example direction:
     guardian set change: 4-of-5 plus timelock
 
 The exact rule is not finalized in this document, but guardian rotation must be designed before Stage 1 production deployment.
+
+Guardian key recovery and rotation must also be defined before production use.
+
+If guardian keys are lost, the gateway should not become permanently stuck.
+
+Lost-key recovery must still preserve the stricter guardian-set-change rule, public notice, and timelock expectations.
 
 ## Guardian responsibilities
 
@@ -401,6 +446,22 @@ Reduced coefficients are a future multi-chain extension.
 
 Stage 2 may add other source chains.
 
+Future source-chain support should prefer separate immutable source adapters or route definitions.
+
+A source adapter / route should define:
+
+- source chain
+- source token
+- burn event format
+- source-chain weight
+- mint calculation
+- finality policy
+- replay key format
+
+Changing coefficients through a mutable global map is not the preferred model.
+
+If a future source route needs different rules, a new reviewed route / adapter should be added instead of retroactively changing old rules.
+
 Each source chain must have:
 
 - chain id
@@ -427,6 +488,9 @@ Main risks:
 - RPC inconsistency
 - incident response delay
 - user misunderstanding gateway risk
+- user misunderstanding XXXL as pegged or reversible XNTD
+- guardian control over monetary policy if mint rules are not immutable
+- guardian key loss without recovery / rotation path
 
 These risks require separate security and incident-response design before production deployment.
 
@@ -440,6 +504,8 @@ Required gateway-risk items before implementation:
 - emergency pause design
 - transparent fee schedule
 - audit requirement
+- explicit no-reverse-direction UX disclosure
+- Stage 1 immutable mint core / immutable Ethereum route rules
 
 Items that may remain separate implementation/security milestones:
 
