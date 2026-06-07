@@ -16997,9 +16997,10 @@ Implementation should still not begin until the exact X1 deployment and authorit
 
 The Stage 1 processed burn atomicity milestone was completed on the stage-1-processed-burn-atomicity branch.
 
-Commit:
+Commits:
 
-- pending
+- c5e56a8 Define Stage 1 processed burn atomicity
+- 51ef8be Merge branch 'stage-1-processed-burn-atomicity'
 
 This milestone defines the Stage 1 processed-burn registry and atomic check-and-mint requirements for the XNTD-to-XXXL Gateway.
 
