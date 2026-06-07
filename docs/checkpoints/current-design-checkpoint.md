@@ -16251,3 +16251,209 @@ Implementation should still not begin yet.
 The next recommended design document is:
 
 - docs/gateway/stage-1-gateway-pre-implementation-blockers.md
+
+## Latest Stage 1 gateway pre-implementation blockers checkpoint
+
+The Stage 1 gateway pre-implementation blockers milestone was completed on the stage-1-gateway-pre-implementation-blockers branch.
+
+Commit:
+
+- pending
+
+This milestone converts Theo's Stage 1 Gateway review into an explicit pre-implementation blocker gate.
+
+Design document added:
+
+- docs/gateway/stage-1-gateway-pre-implementation-blockers.md
+
+Purpose:
+
+Define the remaining decisions that must be resolved before Stage 1 Gateway implementation begins.
+
+This is a design / readiness milestone only.
+
+It does not implement:
+
+- Ethereum contracts
+- X1 programs
+- XXXL token runtime
+- X1 mint core
+- processed burn registry
+- guardian runtime
+- relayer runtime
+- watcher runtime
+- frontend gateway flow
+- real RPC reads
+- env reads
+- private keys
+- API keys
+- mnemonic handling
+- deployment logic
+
+The Stage 1 route remains:
+
+Ethereum XNTD burn -> immutable X1 XXXL mint core -> XXXL mint
+
+The core boundary remains:
+
+- gateway guardians = verification layer
+- immutable mint core / route rules = monetary conversion rules
+- relayer = execution / transport layer without discretion
+
+Guardians must not control XXXL monetary policy.
+
+Pre-implementation blockers documented:
+
+1. final hash function choice
+2. final signature standard
+3. final X1 recipient type and normalization
+4. sourceBlockNumber and sourceBlockHash as mandatory signed fields
+5. X1 mint core immutability mechanism
+6. atomic processed-burn check-and-mint
+7. finality rule
+8. zero / burn recipient policy
+9. burn amount min/max policy
+10. exact cryptographic test vectors
+
+Blocker 1: final hash function choice.
+
+The final hash function must be selected for:
+
+- canonicalEventKey
+- x1RecipientHash
+- domain constants
+- domainSeparator
+- messageHash
+
+Blocker 2: final signature standard.
+
+The guardian signature standard must define:
+
+- signature algorithm
+- public key / signer identity format
+- signature byte format
+- guardian set representation
+- threshold rule
+- signature ordering / deduplication rules
+- malleability rejection rules
+- verification behavior on X1
+
+Blocker 3: final X1 recipient type and normalization.
+
+The design must define:
+
+- exact X1 recipient type
+- exact recipient byte encoding
+- exact normalization rule
+- exact invalid recipient cases
+- exact zero / burn recipient policy
+- exact hash preimage for x1RecipientHash
+
+Blocker 4: sourceBlockNumber and sourceBlockHash as mandatory signed fields.
+
+Decision accepted from Theo review:
+
+Stage 1 signed message should treat sourceBlockNumber and sourceBlockHash as required fields.
+
+Required updates before implementation:
+
+- message schema must clearly mark sourceBlockNumber and sourceBlockHash as mandatory
+- canonical encoding must include both in fixed field order
+- test vectors must include both
+- guardian acceptance rules must reject missing block number or block hash
+- finality rule must reference these fields
+
+Blocker 5: X1 mint core immutability mechanism.
+
+The design must define:
+
+- how X1 mint core is deployed
+- whether code can be upgraded
+- whether route rules can be changed
+- whether mint authority can be changed
+- whether deployer authority exists after deployment
+- how deployer authority is removed or disabled
+- whether any governance / timelock path exists
+- which parameters are immutable forever
+- which parameters, if any, are operationally configurable
+
+Stage 1 immutable route rules include:
+
+- source chain is Ethereum mainnet
+- source token is expected Ethereum XNTD token
+- sourceChainWeightBps = 10000
+- xxxlMintAmount = burnedAmount
+- mint token is XXXL
+- replay key is canonicalEventKey
+
+Blocker 6: atomic processed-burn check-and-mint.
+
+The X1 mint path must atomically:
+
+1. verify message and signatures
+2. check canonicalEventKey is unprocessed
+3. mark canonicalEventKey as processed
+4. mint XXXL
+
+The processed registry must not allow duplicate minting for the same canonicalEventKey.
+
+Blocker 7: finality rule.
+
+The design must define:
+
+- finality model
+- minimum confirmation rule, if used
+- whether finalized block tag is used
+- whether multiple providers are required
+- behavior during reorgs
+- behavior if providers disagree
+- handling of sourceBlockHash mismatch
+- handling of source burn event disappearing after reorg
+
+Blocker 8: zero / burn recipient policy.
+
+The design must decide whether Stage 1 rejects:
+
+- empty recipients
+- zero recipients
+- known burn recipients
+- malformed recipients
+
+Blocker 9: burn amount min/max policy.
+
+The design must decide:
+
+- zero amount rejection
+- optional minimum burn amount
+- optional maximum burn amount
+- where amount rules are enforced
+- whether min/max is immutable route policy
+
+Preferred direction:
+
+Reject zero amount.
+
+Do not add arbitrary min/max unless there is a clear security, UX, or spam-control reason.
+
+Blocker 10: exact cryptographic test vectors.
+
+Exact vectors must be created after finalizing:
+
+- hash function
+- signature standard
+- X1 recipient type
+- canonical binary encoding
+- domain separator
+- target mint core identity format
+
+Implementation gate:
+
+Implementation is blocked until all blockers are resolved, documented, and reviewed.
+
+Current conclusion:
+
+Stage 1 Gateway design is strong enough to move into pre-implementation decision resolution.
+
+It is not ready for code yet.
+
+The next recommended document is a decision document for hash function, signature standard, and X1 recipient type.
