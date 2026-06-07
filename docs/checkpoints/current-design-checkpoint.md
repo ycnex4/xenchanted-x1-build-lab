@@ -18509,3 +18509,127 @@ Current conclusion:
 The Stage 1 Gateway now has deterministic generated expected outputs for the exact cryptographic vector profile.
 
 The next milestone should review the generated vector values and then use them as fixed fixtures for future parser, verifier, and X1 mint core tests.
+
+## Latest Stage 1 gateway vector fixture tests checkpoint
+
+The Stage 1 gateway vector fixture tests milestone was completed on the stage-1-gateway-vector-fixtures branch.
+
+Commits:
+
+- pending Add Stage 1 gateway vector fixture tests
+- pending Merge branch 'stage-1-gateway-vector-fixtures'
+
+This milestone adds fixture-level tests for the generated Stage 1 Gateway vector output.
+
+Test additions:
+
+- tests/stage-1-gateway-vectors.test.ts
+
+README updated:
+
+- Stage 1 gateway vector fixture tests
+
+Purpose:
+
+Lock the generated Stage 1 Gateway vector JSON as a stable test fixture before adding parser, verifier, X1 mint core, relayer, watcher, or frontend gateway runtime code.
+
+The tests verify:
+
+- vector profile metadata
+- hash function = keccak256
+- signature standard = Ed25519
+- signature payload = messageHash
+- X1 recipient type = 32 raw bytes X1/SVM public key
+- processed registry key = canonicalEventKey
+- fieldOrder length = 19
+- canonicalEventKeyPreimage length = 128 bytes
+- domainSeparatorPreimage length = 160 bytes
+- encodedGatewayMintMessage length = 608 bytes
+- messageHashPreimage length = 640 bytes
+- Ed25519 private key seed length = 32 bytes
+- Ed25519 public key length = 32 bytes
+- Ed25519 signature length = 64 bytes
+- valid vector id = STAGE1_GATEWAY_VALID_001
+- locked messageHash
+- locked deterministic test-only guardianPublicKey
+- valid Ed25519 signature verification result
+- wrong messageHash verification failure
+- wrong public key verification failure
+- altered signature verification failure
+- valid signature over a different messageHash fails against the canonical messageHash
+- required invalid vector id coverage
+
+Required invalid vector coverage locked by tests:
+
+- wrong field order
+- deadlineOrFinalityBlock omitted instead of zero-filled
+- messageNonce omitted instead of zero-filled
+- burnedAmount encoded as decimal string
+- wrong sourceChainId
+- wrong sourceToken
+- wrong sourceBurnTxHash
+- wrong sourceBurnEventIndex
+- wrong sourceBlockNumber
+- wrong sourceBlockHash
+- wrong canonicalEventKey
+- wrong x1RecipientHash
+- empty x1RecipientBytes
+- non-32-byte x1RecipientBytes
+- 32 zero bytes x1RecipientBytes
+- burnedAmount equals zero
+- xxxlMintAmount differs from burnedAmount
+- sourceChainWeightBps differs from 10000
+- wrong mintToken
+- wrong routeId
+- wrong domainSeparator
+- wrong targetX1NetworkId
+- wrong targetMintCoreId
+- wrong messageHash
+- wrong Ed25519 signature
+- valid signature over a different messageHash
+- duplicate canonicalEventKey already processed
+
+Safety boundary:
+
+The tests only read the generated fixture file.
+
+They do not read:
+
+- .env files
+- private keys
+- RPC URLs
+- API keys
+- seed phrases
+- mnemonic values
+- production credentials
+
+They do not perform:
+
+- real RPC reads
+- production signing
+- Ethereum contract execution
+- X1 runtime execution
+- relayer submission
+- watcher verification
+- gateway minting
+
+This is a fixture-test milestone only.
+
+It does not implement:
+
+- Ethereum contracts
+- X1 programs
+- XXXL token runtime
+- X1 mint core
+- processed burn registry runtime
+- guardian runtime
+- relayer runtime
+- watcher runtime
+- frontend gateway flow
+- deployment logic
+
+Current conclusion:
+
+The generated Stage 1 Gateway vector output is now protected by fast fixture tests.
+
+The next milestone can begin extracting reusable Stage 1 encoding / vector verification helpers, or can proceed toward parser/verifier tests using the locked fixture values.
