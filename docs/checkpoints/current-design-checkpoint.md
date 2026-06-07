@@ -18640,8 +18640,8 @@ The Stage 1 gateway encoding helpers milestone was completed on the stage-1-gate
 
 Commits:
 
-- pending Add Stage 1 gateway encoding helpers
-- pending Merge branch 'stage-1-gateway-encoding-helpers'
+- 014935c Add Stage 1 gateway encoding helpers
+- b183e8a Merge branch 'stage-1-gateway-encoding-helpers'
 
 This milestone adds reusable Stage 1 Gateway encoding and hashing helpers.
 
