@@ -14794,3 +14794,250 @@ Decision:
     The xEnchanted X1 Build Lab MVP implementation lab is complete at the current scope.
     The completed scope is a tested implementation lab, not a production deployment.
     Next work should be post-MVP readiness, review, and hardening, not further MVP scope expansion.
+
+## Latest post-MVP Gateway and X1-native model checkpoint
+
+This checkpoint records the post-MVP direction after the completed implementation lab, read-only mainnet protocol params smoke, gateway terminology update, and X1-native model design.
+
+Commits / milestones included:
+
+- `cb8b30a` — Merge branch `xntd-to-xxxl-gateway-terminology-risk-update`
+- `c9d21bf` — Update gateway terminology and risk notes
+- `1c099b8` — Merge branch `x1-native-forge-naming-sync`
+- `7e16e17` — Clarify X1 Forge naming model
+- `7e6567a` — Merge branch `x1-forge-stake-dual-nominal-model`
+- `65851dc` — Design X1 Forge Stake dual nominal model
+- `f1bb351` — Merge branch `x1-native-model-readme-sync`
+- `52f4d48` — Link X1 native dual nominal model from README
+
+Current validation baseline remains:
+
+- `npm run typecheck` passed
+- `npm test` passed: 42 test files, 328 tests
+- `npm run build` passed
+- `npm audit --audit-level=moderate` found 0 vulnerabilities
+
+### Terminology update
+
+The previous "XNTD bridge to X1" framing has been replaced by the more accurate gateway framing:
+
+    XNTD-to-XXXL Gateway
+
+The reason is that the model is not a wrapped bridge and not a transfer of the same token.
+
+The intended model is:
+
+    source-chain XNTD burn -> X1-native XXXL mint
+
+XNTD is destroyed on the source chain.
+
+XXXL is minted on X1 as a new X1-native token with different origin and future utility.
+
+### Current gateway direction
+
+The current gateway design is documented in:
+
+- `docs/gateway/xntd-to-xxxl-burn-to-mint-gateway-design.md`
+
+Primary route:
+
+    Ethereum XNTD burn -> X1 XXXL mint
+
+Initial source-chain weight:
+
+    Ethereum = 10000 bps
+
+Future source chains may be added later with reduced source-chain weights.
+
+Formula:
+
+    xxxlMintAmount = burnedAmount * sourceChainWeightBps / 10000
+
+The gateway should mint one unified XXXL token, not multiple origin-specific token classes.
+
+Source-chain differences should be reflected through deterministic conversion weights and gateway history, not through separate token classes.
+
+### Gateway guardians
+
+The current target model is:
+
+    5 gateway guardians
+    3-of-5 threshold
+
+The 700+ X1 validators are not the quorum.
+
+They are a future candidate pool for finding the first small group of willing gateway / Build infrastructure operators.
+
+Gateway guardians verify source-chain burn evidence and approve deterministic XXXL mint messages.
+
+They must not:
+
+- change recipient
+- change amount
+- choose custom coefficients for individual users
+- rewrite gateway history
+- mint without burn evidence
+- act as protocol governance over XC core rules
+
+### Gateway risk notes now documented
+
+Theo's bridge-risk review was incorporated into the gateway design.
+
+The gateway document now explicitly covers:
+
+- irreversible burn / no undo
+- reorg safety policy
+- mint failure recovery
+- coefficient governance principle
+- guardian independence
+- guardian set update timelock
+- required gateway-risk items before implementation
+- emergency pause as a future required design item
+- transparent fee schedule as a future required design item
+- audit requirement as a future required design item
+
+The gateway remains a design-only future layer.
+
+It is not implemented.
+
+It is not deployed.
+
+It is not approved for production.
+
+### Relationship to XC core
+
+The gateway is an optional burn-to-mint conversion layer.
+
+It does not change immutable XC core protocol rules.
+
+It does not give gateway operators admin power over XC core.
+
+It does not modify Ethereum-side XC history.
+
+Users who do not accept gateway risk can choose not to use the gateway.
+
+### X1-native token direction
+
+The X1-native token name is:
+
+    XXXL
+
+XXXL is not Ethereum XNTD.
+
+XXXL is a new X1-native token that may be minted from:
+
+- verified Ethereum XNTD burns
+- future source-chain XNTD burns with reduced weights
+- future X1-native mechanics, if designed
+
+This naming avoids the false impression that X1 receives the same token as Ethereum XNTD.
+
+### X1-native Forge / Stake direction
+
+The X1-native dual nominal model is documented in:
+
+- `docs/x1-native/x1-forge-stake-dual-nominal-model.md`
+
+Current working names:
+
+- Gateway: `XNTD-to-XXXL Gateway`
+- Token: `XXXL`
+- Forge mechanic: `X1 Forge`
+- Forge object: `X1 Forged Position`
+- Stake mechanic: `X1 Stake`
+- Build: future memory / state layer
+
+X1 Forge continues the Forge idea under X1-native rules.
+
+It is not a direct copy of Ethereum XC Forge.
+
+### Dual nominal model
+
+Future X1 Forged Positions may use two nominal values:
+
+    mainNominal
+    stakeNominal
+
+Meaning:
+
+    mainNominal = redeem / conservative value
+    stakeNominal = staking reward power
+
+mainNominal may grow conservatively, for example by summing parent main nominals.
+
+stakeNominal may grow softly with level through a mild coefficient or level bonus.
+
+Ethereum Core-style `*3` growth is considered too aggressive for this X1-native Forge / Stake purpose.
+
+Important rule:
+
+    redeem must not use stakeNominal
+
+stakeNominal is staking power only.
+
+### Economic principle
+
+X1 Forge should transform liquid XXXL into a long-term X1 Forged Position.
+
+X1 Stake may give that position slow productive value.
+
+Stake yield must not quickly neutralize the XXXL burned or committed through Forge-like actions.
+
+If stake rewards quickly return what was burned or committed, Forge becomes delayed emission and loses its supply-discipline purpose.
+
+### Frontend role
+
+The existing xEnchanted frontend may later be used as the UX interface for X1 Forge and X1 Stake.
+
+The frontend should not be the source of truth.
+
+X1-side rules must define and enforce:
+
+- formulas
+- limits
+- nominal calculations
+- redeem calculations
+- stake reward calculations
+- APR / duration rules, if used
+
+Frontend previews are UX helpers only.
+
+### Strategic sequence
+
+Current post-MVP practical direction:
+
+    Gateway brings energy into X1.
+    XXXL carries that energy.
+    X1 Forge transforms liquid XXXL into long-term positions.
+    X1 Stake gives those positions slow productive value.
+    Build records participation / history / state later.
+
+This means the practical focus may shift toward gateway and X1-native economic foundations before returning to Build actor or full Build program implementation.
+
+### Current non-goals
+
+The current repository still does not implement:
+
+- XNTD-to-XXXL gateway runtime
+- Ethereum burn contract
+- X1 XXXL mint program
+- gateway guardian runtime
+- X1 Forge program
+- X1 Stake program
+- XXXL token implementation
+- Build actor
+- production deployment
+
+All of these remain future layers.
+
+### Next recommended review focus
+
+Recommended next review focus:
+
+1. Gateway risk review after terminology update
+2. X1-native Forge / Stake dual nominal model review
+3. Immutable XXXL mint core vs governed gateway layer architecture
+4. Guardian / gateway operator model
+5. X1-side program architecture before implementation
+
+Do not start implementation until the gateway / XXXL / X1 Forge direction is reviewed again as a whole.
