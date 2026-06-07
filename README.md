@@ -70,6 +70,7 @@ Latest reviewed main includes:
 - Stage 1 XXXL gateway implementation plan
 - Stage 1 Ethereum burn event schema
 - Stage 1 gateway message schema
+- Stage 1 gateway canonical encoding
 - X1-native Forge / Stake dual nominal model
 
 ## Validation commands
