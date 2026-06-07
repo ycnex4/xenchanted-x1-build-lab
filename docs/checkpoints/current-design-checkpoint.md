@@ -17617,9 +17617,10 @@ Implementation should still not begin until burn amount min/max policy, exact X1
 
 The Stage 1 burn amount policy milestone was completed on the stage-1-burn-amount-policy branch.
 
-Commit:
+Commits:
 
-- pending
+- 99267dc Define Stage 1 burn amount policy
+- 55d1697 Merge branch 'stage-1-burn-amount-policy'
 
 This milestone defines the Stage 1 burn amount policy for the XNTD-to-XXXL Gateway.
 
