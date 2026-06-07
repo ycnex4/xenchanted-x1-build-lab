@@ -73,6 +73,7 @@ Latest reviewed main includes:
 - Stage 1 gateway canonical encoding
 - Stage 1 gateway test vectors
 - Stage 1 gateway Theo review notes
+- Stage 1 gateway pre-implementation blockers
 - X1-native Forge / Stake dual nominal model
 
 ## Validation commands
