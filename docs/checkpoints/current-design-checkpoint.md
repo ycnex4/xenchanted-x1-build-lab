@@ -16256,9 +16256,10 @@ The next recommended design document is:
 
 The Stage 1 gateway pre-implementation blockers milestone was completed on the stage-1-gateway-pre-implementation-blockers branch.
 
-Commit:
+Commits:
 
-- pending
+- 7b9b76d Define Stage 1 gateway pre-implementation blockers
+- 72a70b6 Merge branch 'stage-1-gateway-pre-implementation-blockers'
 
 This milestone converts Theo's Stage 1 Gateway review into an explicit pre-implementation blocker gate.
 
