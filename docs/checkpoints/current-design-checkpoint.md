@@ -17187,9 +17187,10 @@ Implementation should still not begin until the exact X1 runtime atomicity model
 
 The Stage 1 Ethereum finality rule milestone was completed on the stage-1-ethereum-finality-rule branch.
 
-Commit:
+Commits:
 
-- pending
+- ee3a7ce Define Stage 1 Ethereum finality rule
+- 6b42fbe Merge branch 'stage-1-ethereum-finality-rule'
 
 This milestone defines the Stage 1 Ethereum finality rule for the XNTD-to-XXXL Gateway.
 
