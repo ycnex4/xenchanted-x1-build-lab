@@ -53,6 +53,21 @@ Conceptual chain:
     -> position may participate in X1 Stake-like mechanics
     -> Build layer may later record participation / history / state
 
+## Naming
+
+This document uses the following working names:
+
+- Gateway: XNTD-to-XXXL Gateway
+- Token: XXXL
+- Forge mechanic: X1 Forge
+- Forge object: X1 Forged Position
+- Stake mechanic: X1 Stake
+- Build: future memory / state layer
+
+X1 Forge continues the Forge idea under X1-native rules.
+
+It is not a direct copy of Ethereum XC Forge.
+
 ## Not a direct copy of Ethereum XC
 
 X1-native Forge and Stake should not be assumed to be direct copies of Ethereum xEnchanted Crypto Forge and Stake.
