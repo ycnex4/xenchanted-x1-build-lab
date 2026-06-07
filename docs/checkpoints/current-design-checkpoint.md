@@ -16090,9 +16090,10 @@ Implementation should still not begin until final encoding, hash function, signa
 
 The Stage 1 gateway Theo review notes milestone was completed on the stage-1-gateway-theo-review-notes branch.
 
-Commit:
+Commits:
 
-- pending
+- 99d2014 Add Stage 1 gateway Theo review notes
+- 1d5447e Merge branch 'stage-1-gateway-theo-review-notes'
 
 This milestone records Theo's review of the Stage 1 XNTD-to-XXXL Gateway design chain.
 
