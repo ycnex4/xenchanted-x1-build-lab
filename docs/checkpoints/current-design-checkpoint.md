@@ -19125,8 +19125,8 @@ The Stage 1 gateway approval verifier milestone was completed on the stage-1-gat
 
 Commits:
 
-- pending Add Stage 1 gateway approval verifier
-- pending Merge branch 'stage-1-gateway-approval-verifier'
+- 7dddb54 Add Stage 1 gateway approval verifier
+- b5d4ed4 Merge branch 'stage-1-gateway-approval-verifier'
 
 This milestone adds a pure Stage 1 Gateway approval verifier that composes the message verifier and Ed25519 guardian signature verifier.
 
