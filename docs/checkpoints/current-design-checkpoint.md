@@ -18753,3 +18753,117 @@ Current conclusion:
 Stage 1 Gateway now has reusable encoding / hashing primitives that reproduce the locked generated fixture values.
 
 The next milestone can either migrate the generator to use these shared helpers or add parser/verifier helpers on top of them.
+
+## Latest Stage 1 generator shared encoding helpers checkpoint
+
+The Stage 1 generator shared encoding helpers milestone was completed on the stage-1-gateway-generator-shared-helpers branch.
+
+Commits:
+
+- pending Refactor Stage 1 generator to shared encoding helpers
+- pending Merge branch 'stage-1-gateway-generator-shared-helpers'
+
+This milestone refactors the Stage 1 vector generator to use the shared Stage 1 encoding helper module.
+
+Script updated:
+
+- scripts/generate-stage-1-gateway-vectors.js
+
+README updated:
+
+- Stage 1 generator shared encoding helpers
+
+Purpose:
+
+Remove duplicated Stage 1 encoding and hashing logic from the generator script so the encoding rules have one reusable source in src/gateway/stage-1-encoding.ts.
+
+The generator now loads the compiled shared helper module:
+
+- dist/src/gateway/stage-1-encoding.js
+
+The generator now uses shared helpers for:
+
+- STAGE1_GATEWAY_FIELD_ORDER
+- addressToBytes32LeftPadded()
+- buildStage1CanonicalEventKeyPreimage()
+- buildStage1DomainSeparatorPreimage()
+- buildStage1MessageHashPreimage()
+- bytes32()
+- bytesToHex()
+- concatBytes()
+- encodeStage1GatewayMintMessage()
+- hexToBytes()
+- keccakBytes()
+- keccakUtf8Label()
+- uint256Be()
+- utf8Bytes()
+
+Direct generator command preserved:
+
+- node scripts/generate-stage-1-gateway-vectors.js
+
+If the compiled shared helper is missing or stale, the generator runs:
+
+- npm run build
+
+This keeps the existing direct generator workflow while still using the shared source implementation.
+
+Generated vector stability confirmed:
+
+- valid vector id remains STAGE1_GATEWAY_VALID_001
+- messageHash remains 0xe0d6278f3ca300a33f07f5d799cfa1072807aa2287ccc6edada206d529c8dea6
+- guardianPublicKey remains 0x03a107bff3ce10be1d70dd18e74bc09967e4d6309ba50d5f1ddc8664125531b8
+- invalid vector count remains 27
+- generated JSON remains unchanged
+
+Clean build-output scenario confirmed:
+
+- rm -rf dist
+- node scripts/generate-stage-1-gateway-vectors.js
+- generator rebuilt dist through npm run build
+- generated vector output remained unchanged
+
+Safety boundary:
+
+The generator still only uses deterministic test-only Ed25519 vector material.
+
+It does not read:
+
+- .env files
+- production private keys
+- RPC URLs
+- API keys
+- seed phrases
+- mnemonic values
+- production credentials
+
+It does not perform:
+
+- real RPC reads
+- production signing
+- Ethereum contract execution
+- X1 runtime execution
+- relayer submission
+- watcher verification
+- gateway minting
+
+This is a generator refactor milestone only.
+
+It does not implement:
+
+- Ethereum contracts
+- X1 programs
+- XXXL token runtime
+- X1 mint core
+- processed burn registry runtime
+- guardian runtime
+- relayer runtime
+- watcher runtime
+- frontend gateway flow
+- deployment logic
+
+Current conclusion:
+
+The Stage 1 generator now uses the shared encoding / hashing primitives instead of maintaining duplicated local implementations.
+
+The next milestone can add parser / verifier helpers on top of the shared encoding module.

@@ -1,116 +1,72 @@
+import { execFileSync } from "node:child_process";
+import { existsSync, statSync } from "node:fs";
 import { mkdir, writeFile } from "node:fs/promises";
 import { dirname, resolve } from "node:path";
-import { keccak256 } from "viem";
 import * as ed25519 from "@noble/ed25519";
 
 const OUTPUT_PATH = "docs/gateway/generated/stage-1-gateway-vectors.json";
 
-const FIELD_ORDER = [
-  "messageType",
-  "schemaVersion",
-  "routeId",
-  "sourceChainId",
-  "sourceToken",
-  "sourceSender",
-  "sourceBurnTxHash",
-  "sourceBurnEventIndex",
-  "sourceBlockNumber",
-  "sourceBlockHash",
-  "sourceNonce",
-  "canonicalEventKey",
-  "x1RecipientHash",
-  "burnedAmount",
-  "sourceChainWeightBps",
-  "xxxlMintAmount",
-  "mintToken",
-  "deadlineOrFinalityBlock",
-  "messageNonce",
-];
+const SHARED_ENCODING_SOURCE_PATH = "src/gateway/stage-1-encoding.ts";
+const SHARED_ENCODING_DIST_PATH = "dist/src/gateway/stage-1-encoding.js";
+
+let FIELD_ORDER;
+let addressToBytes32LeftPadded;
+let buildCanonicalEventKeyPreimage;
+let buildDomainSeparatorPreimage;
+let buildMessageHashPreimage;
+let bytes32;
+let bytesToHex;
+let concatBytes;
+let encodeStage1GatewayMintMessage;
+let hexToBytes;
+let keccakBytes;
+let keccakLabel;
+let uint256Be;
+let utf8Bytes;
+
+function ensureSharedEncodingHelperIsBuilt() {
+  const distExists = existsSync(SHARED_ENCODING_DIST_PATH);
+  const sourceExists = existsSync(SHARED_ENCODING_SOURCE_PATH);
+
+  const distIsStale =
+    distExists &&
+    sourceExists &&
+    statSync(SHARED_ENCODING_SOURCE_PATH).mtimeMs >
+      statSync(SHARED_ENCODING_DIST_PATH).mtimeMs;
+
+  if (!distExists || distIsStale) {
+    execFileSync("npm", ["run", "build"], {
+      stdio: "inherit",
+    });
+  }
+}
+
+async function loadSharedEncodingHelpers() {
+  ensureSharedEncodingHelperIsBuilt();
+
+  const shared = await import(
+    `../${SHARED_ENCODING_DIST_PATH}?cacheBust=${Date.now()}`
+  );
+
+  FIELD_ORDER = shared.STAGE1_GATEWAY_FIELD_ORDER;
+  addressToBytes32LeftPadded = shared.addressToBytes32LeftPadded;
+  buildCanonicalEventKeyPreimage =
+    shared.buildStage1CanonicalEventKeyPreimage;
+  buildDomainSeparatorPreimage = shared.buildStage1DomainSeparatorPreimage;
+  buildMessageHashPreimage = shared.buildStage1MessageHashPreimage;
+  bytes32 = shared.bytes32;
+  bytesToHex = shared.bytesToHex;
+  concatBytes = shared.concatBytes;
+  encodeStage1GatewayMintMessage = shared.encodeStage1GatewayMintMessage;
+  hexToBytes = shared.hexToBytes;
+  keccakBytes = shared.keccakBytes;
+  keccakLabel = shared.keccakUtf8Label;
+  uint256Be = shared.uint256Be;
+  utf8Bytes = shared.utf8Bytes;
+}
 
 const TEST_ONLY_GUARDIAN_PRIVATE_KEY_SEED =
   "0x000102030405060708090a0b0c0d0e0f101112131415161718191a1b1c1d1e1f";
-
-function strip0x(value) {
-  if (typeof value !== "string") {
-    throw new TypeError("Expected hex string");
-  }
-
-  return value.startsWith("0x") ? value.slice(2) : value;
-}
-
-function assertEvenHex(hex, label) {
-  if (hex.length % 2 !== 0) {
-    throw new Error(`${label} must have an even number of hex characters`);
-  }
-
-  if (!/^[0-9a-fA-F]*$/.test(hex)) {
-    throw new Error(`${label} must be hex`);
-  }
-}
-
-function hexToBytes(value, expectedLength, label = "hex value") {
-  const hex = strip0x(value);
-  assertEvenHex(hex, label);
-
-  const bytes = Uint8Array.from(Buffer.from(hex, "hex"));
-
-  if (expectedLength !== undefined && bytes.length !== expectedLength) {
-    throw new Error(
-      `${label} must be ${expectedLength} bytes, got ${bytes.length}`,
-    );
-  }
-
-  return bytes;
-}
-
-function bytesToHex(bytes) {
-  return `0x${Buffer.from(bytes).toString("hex")}`;
-}
-
-function concatBytes(...parts) {
-  const totalLength = parts.reduce((sum, part) => sum + part.length, 0);
-  const out = new Uint8Array(totalLength);
-
-  let offset = 0;
-  for (const part of parts) {
-    out.set(part, offset);
-    offset += part.length;
-  }
-
-  return out;
-}
-
-function utf8Bytes(value) {
-  return new TextEncoder().encode(value);
-}
-
-function keccakBytes(bytes) {
-  return keccak256(bytesToHex(bytes));
-}
-
-function keccakLabel(label) {
-  return keccakBytes(utf8Bytes(label));
-}
-
-function uint256Be(value) {
-  const number = BigInt(value);
-  const maxUint256 = (1n << 256n) - 1n;
-
-  if (number < 0n || number > maxUint256) {
-    throw new Error(`uint256 out of range: ${value}`);
-  }
-
-  return hexToBytes(`0x${number.toString(16).padStart(64, "0")}`, 32, "uint256");
-}
-
-function bytes32(value, label = "bytes32") {
-  return hexToBytes(value, 32, label);
-}
-
-function addressToBytes32LeftPadded(address) {
-  const addressBytes = hexToBytes(address, 20, "Ethereum address");
-  return concatBytes(new Uint8Array(12), addressBytes);
-}
 
 function asciiDecimalStringPaddedTo32(value) {
   const ascii = utf8Bytes(String(value));
@@ -124,6 +80,14 @@ function asciiDecimalStringPaddedTo32(value) {
 }
 
 function encodeGatewayMintMessage(fields, order = FIELD_ORDER) {
+  const isCanonicalOrder =
+    order.length === FIELD_ORDER.length &&
+    order.every((fieldName, index) => fieldName === FIELD_ORDER[index]);
+
+  if (isCanonicalOrder) {
+    return encodeStage1GatewayMintMessage(fields);
+  }
+
   const encodedFields = order.map((fieldName) => {
     const field = fields[fieldName];
 
@@ -143,40 +107,6 @@ function encodeGatewayMintMessage(fields, order = FIELD_ORDER) {
 
 function encodeGatewayMintMessageAllowingOmission(fields, order) {
   return concatBytes(...order.map((fieldName) => fields[fieldName]));
-}
-
-function buildCanonicalEventKeyPreimage({
-  sourceChainId,
-  sourceToken,
-  sourceBurnTxHash,
-  sourceBurnEventIndex,
-}) {
-  return concatBytes(
-    sourceChainId,
-    sourceToken,
-    sourceBurnTxHash,
-    sourceBurnEventIndex,
-  );
-}
-
-function buildDomainSeparatorPreimage({
-  protocolNameHash,
-  gatewayVersionHash,
-  targetX1NetworkId,
-  targetMintCoreId,
-  messageTypeFamilyHash,
-}) {
-  return concatBytes(
-    protocolNameHash,
-    gatewayVersionHash,
-    targetX1NetworkId,
-    targetMintCoreId,
-    messageTypeFamilyHash,
-  );
-}
-
-function buildMessageHashPreimage(domainSeparator, encodedGatewayMintMessage) {
-  return concatBytes(domainSeparator, encodedGatewayMintMessage);
 }
 
 function cloneFields(fields) {
@@ -255,6 +185,8 @@ function requireLength(bytes, expectedLength, label) {
 }
 
 async function main() {
+  await loadSharedEncodingHelpers();
+
   const labels = {
     messageTypeLabel: "X1_GATEWAY_MINT",
     routeIdLabel: "ETHEREUM_XNTD_TO_X1_XXXL_STAGE_1",
