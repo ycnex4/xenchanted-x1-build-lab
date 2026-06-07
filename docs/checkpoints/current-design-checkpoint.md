@@ -18378,3 +18378,134 @@ Theo confirmed the exact cryptographic vector profile is reasonable for X1 / SVM
 The review adds byte-order, address-padding, deserialization, and preimage-length clarifications before generator implementation.
 
 The next milestone should add a deterministic vector generation script and generated expected output values.
+
+## Latest Stage 1 generated gateway vectors checkpoint
+
+The Stage 1 generated gateway vectors milestone was completed on the stage-1-gateway-vector-generator branch.
+
+Commits:
+
+- pending Add Stage 1 gateway vector generator
+- pending Merge branch 'stage-1-gateway-vector-generator'
+
+This milestone adds the first practical Stage 1 Gateway script and generated expected vector output.
+
+Runtime/script additions:
+
+- scripts/generate-stage-1-gateway-vectors.js
+
+Generated vector output:
+
+- docs/gateway/generated/stage-1-gateway-vectors.json
+
+Dependency additions:
+
+- @noble/ed25519 for deterministic Ed25519 test vector signing and verification
+
+README updated:
+
+- Stage 1 generated gateway vectors
+
+Purpose:
+
+Generate deterministic exact cryptographic test vectors for the Stage 1 XNTD-to-XXXL Gateway before any X1 mint core, relayer, watcher, or frontend gateway runtime is implemented.
+
+The generator computes:
+
+- keccak256 label hashes
+- x1RecipientHash
+- canonicalEventKeyPreimage
+- canonicalEventKey
+- domainSeparatorPreimage
+- domainSeparator
+- 19-field encodedGatewayMintMessage
+- messageHashPreimage
+- messageHash
+- deterministic test-only Ed25519 guardian public key
+- deterministic test-only Ed25519 guardian signature over messageHash
+
+Generated valid vector:
+
+- STAGE1_GATEWAY_VALID_001
+
+Generated invalid vector coverage:
+
+- wrong field order
+- deadlineOrFinalityBlock omitted instead of zero-filled
+- messageNonce omitted instead of zero-filled
+- burnedAmount encoded as decimal string
+- wrong sourceChainId
+- wrong sourceToken
+- wrong sourceBurnTxHash
+- wrong sourceBurnEventIndex
+- wrong sourceBlockNumber
+- wrong sourceBlockHash
+- wrong canonicalEventKey
+- wrong x1RecipientHash
+- empty x1RecipientBytes
+- non-32-byte x1RecipientBytes
+- 32 zero bytes x1RecipientBytes
+- burnedAmount equals zero
+- xxxlMintAmount differs from burnedAmount
+- sourceChainWeightBps differs from 10000
+- wrong mintToken
+- wrong routeId
+- wrong domainSeparator
+- wrong targetX1NetworkId
+- wrong targetMintCoreId
+- wrong messageHash
+- wrong Ed25519 signature
+- valid signature over a different messageHash
+- duplicate canonicalEventKey already processed
+
+Generated vector checks confirmed:
+
+- fieldOrder = 19
+- encodedGatewayMintMessage = 608 bytes
+- messageHashPreimage = 640 bytes
+- valid Ed25519 signature verifies
+- wrong messageHash fails verification
+- wrong public key fails verification
+- altered signature fails verification
+- valid signature over a different messageHash fails against the canonical messageHash
+
+Safety boundary:
+
+The generated Ed25519 private key seed is deterministic test-only vector material.
+
+It must never be used for production signing.
+
+The generator does not read:
+
+- .env files
+- private keys
+- RPC URLs
+- API keys
+- seed phrases
+- mnemonic values
+- production credentials
+
+This is a script / vector-output milestone only.
+
+It does not implement:
+
+- Ethereum contracts
+- X1 programs
+- XXXL token runtime
+- X1 mint core
+- processed burn registry runtime
+- guardian runtime
+- relayer runtime
+- watcher runtime
+- frontend gateway flow
+- real RPC reads
+- env reads
+- production private keys
+- production signing
+- deployment logic
+
+Current conclusion:
+
+The Stage 1 Gateway now has deterministic generated expected outputs for the exact cryptographic vector profile.
+
+The next milestone should review the generated vector values and then use them as fixed fixtures for future parser, verifier, and X1 mint core tests.

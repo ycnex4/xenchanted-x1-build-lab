@@ -21,6 +21,7 @@
     "x1-build-lab": "./dist/src/cli/main.js"
   },
   "dependencies": {
+    "@noble/ed25519": "^3.1.0",
     "viem": "^2.52.2"
   }
 }
