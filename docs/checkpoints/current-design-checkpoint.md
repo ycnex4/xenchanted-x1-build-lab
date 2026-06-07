@@ -18072,9 +18072,10 @@ Implementation should still not begin until exact cryptographic test vectors are
 
 The Stage 1 exact cryptographic test vectors milestone was completed on the stage-1-exact-cryptographic-test-vectors branch.
 
-Commit:
+Commits:
 
-- pending
+- fd3c24c Define Stage 1 exact cryptographic test vector profile
+- 5b330e2 Merge branch 'stage-1-exact-cryptographic-test-vectors'
 
 This milestone defines the exact Stage 1 cryptographic test vector profile for the XNTD-to-XXXL Gateway.
 
