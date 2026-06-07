@@ -19016,8 +19016,8 @@ The Stage 1 Ed25519 guardian signature verifier helpers milestone was completed 
 
 Commits:
 
-- pending Add Stage 1 Ed25519 verifier helpers
-- pending Merge branch 'stage-1-gateway-ed25519-verifier-helpers'
+- d6d2ff0 Add Stage 1 Ed25519 verifier helpers
+- 7528764 Merge branch 'stage-1-gateway-ed25519-verifier-helpers'
 
 This milestone adds reusable Stage 1 Ed25519 guardian signature verification helpers.
 
