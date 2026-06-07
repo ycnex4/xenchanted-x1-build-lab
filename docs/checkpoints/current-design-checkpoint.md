@@ -15367,3 +15367,166 @@ Implementation should not begin until the following are reviewed as a whole:
 - incident response boundary
 
 This checkpoint does not approve implementation or deployment.
+
+## Latest Stage 1 Ethereum burn event schema checkpoint
+
+This checkpoint records the first Stage 1 technical design layer after the Stage 1 Gateway planning baseline.
+
+Current main baseline:
+
+- `d596eb9` — Merge branch `stage-1-ethereum-burn-event-schema`
+- `93d8119` — Link Ethereum burn event schema from README
+- `a97ce51` — Define Stage 1 Ethereum burn event schema
+- `c0fc928` — Merge branch `stage-1-gateway-planning-checkpoint`
+- `d49e3a6` — Update checkpoint with Stage 1 gateway planning baseline
+
+Current validation baseline after merge:
+
+- `npm run typecheck` passed
+- `npm test` passed: 42 test files, 328 tests
+- `npm run build` passed
+- `npm audit --audit-level=moderate` found 0 vulnerabilities
+
+### New technical design document
+
+The first Stage 1 technical design layer is now documented in:
+
+    docs/gateway/stage-1-ethereum-burn-event-schema.md
+
+This document defines the Ethereum-side burn event schema for the XNTD-to-XXXL Gateway.
+
+It is still design-only.
+
+No runtime code was added.
+
+No contracts or X1 programs were implemented.
+
+No deployment was approved.
+
+### Purpose of the burn event schema
+
+The Ethereum burn event becomes source evidence for X1 XXXL minting.
+
+The Stage 1 route remains:
+
+    Ethereum XNTD burn
+    -> immutable X1 XXXL mint core
+    -> XXXL mint
+
+The Ethereum burn event is only source evidence.
+
+It does not mint XXXL by itself.
+
+It does not authorize arbitrary minting.
+
+It does not create wrapped XNTD.
+
+It does not create a reverse redemption claim.
+
+### Preferred Ethereum-side direction
+
+Preferred function direction:
+
+    burnForX1Gateway(x1Recipient, amount)
+
+Preferred event direction:
+
+    XntdBurnedForX1Gateway
+
+The event should include:
+
+- sourceSender
+- x1RecipientHash
+- x1Recipient
+- burnedAmount
+- sourceChainId
+- sourceToken
+- sourceNonce
+
+### Canonical replay key direction
+
+The canonical replay key should be derived from Ethereum log identity:
+
+    canonicalEventKey = hash(sourceChainId, sourceToken, sourceBurnTxHash, sourceBurnEventIndex)
+
+Reason:
+
+- sourceNonce is useful for indexing and user display
+- replay protection should bind to the exact Ethereum log
+- transaction hash + log index ties the X1 mint to one emitted burn event
+
+### Guardian verification scope
+
+The burn event schema defines guardian acceptance and rejection rules.
+
+Guardians may accept a burn only if:
+
+- event name matches expected Stage 1 event
+- source chain is Ethereum mainnet
+- source token is the expected XNTD token
+- burn transaction succeeded
+- event exists in a canonical finalized block
+- x1Recipient is present and non-empty
+- burnedAmount > 0
+- canonicalEventKey is derived correctly
+- source burn has not already been processed on X1
+- expected xxxlMintAmount is derived correctly
+
+Guardians must reject wrong-chain, wrong-token, failed, unfinalized, reorged-out, zero-amount, empty-recipient, malformed, duplicate, or incomplete evidence.
+
+### X1 mint message mapping direction
+
+The burn event maps into the future deterministic X1 mint message:
+
+    sourceSender -> sourceSender
+    x1Recipient -> x1Recipient
+    burnedAmount -> burnedAmount
+    sourceChainId -> sourceChainId
+    sourceToken -> sourceToken
+    tx hash -> sourceBurnTxHash
+    log index -> sourceBurnEventIndex
+    canonicalEventKey -> canonicalEventKey
+    sourceChainWeightBps -> 10000
+    xxxlMintAmount -> burnedAmount
+
+The next technical design step should define this deterministic gateway message schema.
+
+### Current open questions before implementation
+
+Open questions remain:
+
+1. Should the burn function live in XNTD or a dedicated gateway burn contract?
+2. Can the burn path be no-admin / immutable?
+3. Does Stage 1 require approve + burn, or can it be one transaction?
+4. What exact type should x1Recipient use?
+5. Should sourceNonce be included?
+6. What minimum recipient validation should Ethereum enforce?
+7. Should burn amount min/max exist?
+8. What finality rule should guardians use?
+9. What exact canonicalEventKey encoding should X1 use?
+10. How should the frontend show pending / finalized / approved / minted states?
+
+### Next technical design document
+
+The next recommended technical design document is:
+
+    docs/gateway/stage-1-gateway-message-schema.md
+
+Purpose:
+
+    define the exact deterministic message guardians sign for X1 XXXL mint approval.
+
+This should be done before any runtime implementation.
+
+### Current decision
+
+The repository now has:
+
+- Stage 1 Gateway general design
+- Stage 1 Gateway architecture boundary
+- Stage 1 Gateway implementation plan
+- Stage 1 Ethereum burn event schema
+
+The next step is to define the gateway message schema.
+
+Implementation should still not begin.
