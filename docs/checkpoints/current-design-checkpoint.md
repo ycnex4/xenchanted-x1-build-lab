@@ -16831,9 +16831,10 @@ Implementation should still not begin until the remaining blockers are resolved 
 
 The Stage 1 X1 mint core immutability milestone was completed on the stage-1-x1-mint-core-immutability branch.
 
-Commit:
+Commits:
 
-- pending
+- 6f587e5 Define Stage 1 X1 mint core immutability
+- 9b4d54b Merge branch 'stage-1-x1-mint-core-immutability'
 
 This milestone defines the Stage 1 immutability requirements for the X1 XXXL mint core.
 
