@@ -18297,9 +18297,10 @@ The next milestone should add a deterministic vector generation script and gener
 
 The Stage 1 exact vectors Theo review notes milestone was completed on the stage-1-exact-vectors-theo-review-notes branch.
 
-Commit:
+Commits:
 
-- pending
+- 255b675 Add Stage 1 exact vectors Theo review notes
+- 863d083 Merge branch 'stage-1-exact-vectors-theo-review-notes'
 
 This milestone records Theo's X1 / SVM review of the Stage 1 exact cryptographic test vector profile.
 
