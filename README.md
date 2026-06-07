@@ -80,6 +80,7 @@ Latest reviewed main includes:
 - Stage 1 processed burn atomicity
 - Stage 1 Ethereum finality rule
 - Stage 1 recipient safety policy
+- Stage 1 burn amount policy
 - X1-native Forge / Stake dual nominal model
 
 ## Validation commands
