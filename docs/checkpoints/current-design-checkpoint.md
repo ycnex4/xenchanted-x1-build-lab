@@ -15153,3 +15153,217 @@ This strengthens the need for:
 - conservative production readiness gates
 
 This note does not approve implementation or deployment.
+
+## Latest Stage 1 XXXL Gateway planning checkpoint
+
+This checkpoint records the current Stage 1 XXXL Gateway planning baseline.
+
+Current main baseline:
+
+- `d4a6f7f` — Merge branch `stage-1-xxxl-gateway-implementation-plan`
+- `7303988` — Link Stage 1 gateway implementation plan from README
+- `dc8eae9` — Add Stage 1 XXXL gateway implementation plan
+- `57218f1` — Merge branch `gateway-precedent-novelty-note`
+- `598846a` — Add gateway precedent and novelty note
+- `0423fa5` — Merge branch `stage-1-xxxl-gateway-architecture`
+- `c7def4b` — Link Stage 1 gateway architecture from README
+- `26d40b2` — Define Stage 1 XXXL gateway architecture
+
+Current validation baseline after merge:
+
+- `npm run typecheck` passed
+- `npm test` passed: 42 test files, 328 tests
+- `npm run build` passed
+- `npm audit --audit-level=moderate` found 0 vulnerabilities
+
+### Stage 1 Gateway document set
+
+The Stage 1 Gateway design is now documented at three levels:
+
+1. General Gateway Design
+
+   `docs/gateway/xntd-to-xxxl-burn-to-mint-gateway-design.md`
+
+2. Stage 1 Architecture Boundary
+
+   `docs/gateway/stage-1-xxxl-gateway-architecture.md`
+
+3. Stage 1 Implementation Plan
+
+   `docs/gateway/stage-1-xxxl-gateway-implementation-plan.md`
+
+The README document map links these gateway documents.
+
+### Current Stage 1 boundary
+
+The current Stage 1 boundary is:
+
+    Ethereum XNTD burn
+    -> immutable X1 XXXL mint core
+    -> XXXL mint
+
+Stage 1 is Ethereum-only.
+
+Stage 1 source route:
+
+    sourceChain = Ethereum
+    sourceToken = XNTD
+    sourceChainWeightBps = 10000
+
+Stage 1 formula:
+
+    xxxlMintAmount = burnedAmount
+
+Equivalent full formula:
+
+    xxxlMintAmount = burnedAmount * 10000 / 10000
+
+This does not mean XXXL is the same asset as XNTD.
+
+It means only that the Ethereum Stage 1 source route uses a full-weight conversion coefficient.
+
+### Core architectural separation
+
+Stage 1 must preserve the separation between:
+
+    verification work
+    monetary conversion rules
+
+Gateway guardians handle verification work.
+
+The immutable X1 mint core / immutable route rules define monetary conversion rules.
+
+Gateway guardians must not control XXXL monetary policy.
+
+Gateway guardians must not be able to:
+
+- change the Ethereum source weight
+- add source chains in Stage 1
+- mint XXXL without valid burn evidence
+- choose custom coefficients for individual users
+- modify already-processed burn history
+
+### Novelty / precedent note
+
+The gateway is not a standard wrapped-token bridge.
+
+No direct precedent is assumed for the full XXXL model.
+
+The model combines:
+
+- source-chain burn
+- destination-chain mint
+- one-way conversion
+- future multi-source inputs
+- variable source-chain weights
+- one unified destination token class
+- no wrapped source-token representation
+- no reverse gateway redemption path
+
+Design consequence:
+
+    wrapped-bridge assumptions are not sufficient.
+
+The model should be treated as a novel burn-to-mint gateway pattern.
+
+Independent security analysis is required before any production deployment.
+
+### Stage 1 implementation plan components
+
+The implementation plan currently identifies these future components:
+
+1. Ethereum burn contract / function
+2. Ethereum burn event format
+3. X1 XXXL token / mint core
+4. X1 processed burn registry
+5. deterministic gateway message format
+6. guardian signing format
+7. guardian verification runtime
+8. relayer runtime
+9. read-only watcher / indexer
+10. frontend gateway flow
+11. monitoring and incident response
+12. staging test environment
+13. production readiness checklist
+
+This is planning only.
+
+No runtime implementation has started.
+
+### Current implementation order
+
+Recommended future implementation order:
+
+1. finalize Ethereum burn event schema
+2. finalize deterministic mint message schema
+3. design X1 XXXL mint core
+4. design processed burn registry
+5. design guardian key / signature model
+6. design guardian runtime
+7. design relayer runtime
+8. design frontend flow
+9. design monitoring / incident response
+10. build local prototype
+11. build staging prototype
+12. run full staging tests
+13. external review / audit
+14. production readiness decision
+
+### Stage 1 non-goals
+
+Stage 1 still does not include:
+
+- reverse XXXL -> XNTD conversion
+- sidechain source routes
+- mutable source-chain coefficients
+- X1 Forge implementation
+- X1 Stake implementation
+- Build actor
+- full Build program
+- BLD marketplace
+- production slashing mechanics
+- multi-chain expansion
+
+### Production readiness blockers
+
+Before any production deployment, Stage 1 still requires:
+
+- Ethereum burn path reviewed
+- X1 mint core reviewed
+- immutable Stage 1 rules confirmed
+- guardian set selected
+- bootstrapped trust disclosed
+- guardian key management documented
+- guardian rotation documented
+- lost-key recovery documented
+- reorg/finality policy finalized
+- deterministic message format finalized
+- signature verification finalized
+- replay protection tested
+- mint retry tested
+- emergency pause designed
+- fee model disclosed
+- frontend disclosure implemented
+- monitoring implemented
+- incident response documented
+- external review / audit plan completed
+
+### Current decision
+
+The repository now has a coherent Stage 1 Gateway planning baseline.
+
+The next work should be review-driven hardening of the Stage 1 implementation plan before any runtime code is added.
+
+Implementation should not begin until the following are reviewed as a whole:
+
+- Ethereum burn event format
+- X1 immutable mint core design
+- guardian signature format
+- processed burn replay protection
+- guardian rotation / key recovery
+- reorg/finality policy
+- mint retry policy
+- frontend disclosure flow
+- incident response boundary
+
+This checkpoint does not approve implementation or deployment.
