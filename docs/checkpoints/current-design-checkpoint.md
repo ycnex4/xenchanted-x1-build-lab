@@ -16458,3 +16458,200 @@ Stage 1 Gateway design is strong enough to move into pre-implementation decision
 It is not ready for code yet.
 
 The next recommended document is a decision document for hash function, signature standard, and X1 recipient type.
+
+## Latest Stage 1 gateway hash, signature, and recipient decisions checkpoint
+
+The Stage 1 gateway hash, signature, and recipient decisions milestone was completed on the stage-1-gateway-hash-signature-recipient-decisions branch.
+
+Commit:
+
+- pending
+
+This milestone resolves the first three Stage 1 Gateway pre-implementation blockers:
+
+1. final hash function choice
+2. final guardian signature standard
+3. final X1 recipient type and normalization
+
+Design document added:
+
+- docs/gateway/stage-1-gateway-hash-signature-recipient-decisions.md
+
+Purpose:
+
+Define the Stage 1 Gateway decision for hash function, guardian signature standard, and X1 recipient canonical encoding.
+
+This is a design decision milestone only.
+
+It does not implement:
+
+- Ethereum contracts
+- X1 programs
+- XXXL token runtime
+- X1 mint core
+- processed burn registry
+- guardian runtime
+- relayer runtime
+- watcher runtime
+- frontend gateway flow
+- real RPC reads
+- env reads
+- private keys
+- API keys
+- mnemonic handling
+- deployment logic
+
+Decision context:
+
+X1 is SVM-compatible.
+
+Stage 1 verification choices should respect both environments:
+
+- Ethereum is the source chain and uses keccak256 naturally
+- X1 is the execution / mint environment and uses SVM-native account and signature assumptions
+
+The goal is not to emulate EVM on X1.
+
+The goal is to use each environment where it is strongest.
+
+Final Stage 1 decisions:
+
+- hash function = keccak256
+- guardian signature standard = Ed25519
+- X1 recipient type = 32 raw bytes X1 / SVM public key
+- x1RecipientHash = keccak256(x1RecipientBytes)
+- base58 is display-only and not canonical protocol encoding
+- 32 zero bytes recipient must be rejected
+
+Hash decision:
+
+Stage 1 gateway commitments use keccak256 for:
+
+- canonicalEventKey
+- x1RecipientHash
+- domain constants
+- domainSeparator
+- messageHash
+
+Rationale:
+
+- Stage 1 source chain is Ethereum
+- Ethereum burn evidence and tooling naturally use keccak256
+- canonicalEventKey is derived from Ethereum burn event identity
+- viem / ethers / Ethereum indexers can generate vectors easily
+- message payloads are small enough for practical SVM keccak verification
+- using one hash model avoids mixed-hash complexity
+
+SHA-256 is not selected for Stage 1 gateway commitments.
+
+Reason:
+
+- it is cheaper on SVM, but less natural for Ethereum-source event commitments
+- it would create a mixed Ethereum/SVM hash model
+- test vectors and tooling are simpler if one hash function is used
+- Stage 1 payload sizes are small enough that keccak256 cost is acceptable
+
+Guardian signature decision:
+
+Stage 1 guardians use Ed25519 signatures.
+
+Rationale:
+
+- X1 is SVM-compatible
+- Ed25519 is native to SVM
+- Ed25519 verification is cheaper and simpler than secp256k1 recovery on SVM
+- guardians are infrastructure operators, not ordinary Ethereum users
+- guardians can use fresh X1-native keys
+- there is no hard requirement to reuse existing EVM guardian keys
+- this avoids unnecessary EVM emulation in the X1 mint path
+
+secp256k1 is not selected as the Stage 1 default.
+
+It remains a documented fallback only if reusing existing EVM guardian keys becomes a hard requirement.
+
+Recipient decision:
+
+Stage 1 X1 recipient is a 32-byte raw X1 / SVM public key.
+
+Canonical protocol encoding:
+
+- exactly 32 raw bytes
+- no base58 in signed payload
+- no display string in signed payload
+- no variable-length recipient bytes
+- no checksum/casing rules
+- no alternate encodings for the same recipient
+
+Display encoding:
+
+- base58 may be used in UI
+- base58 may be used in logs or human-readable views
+- base58 is not canonical protocol encoding
+- base58 must be decoded to exactly 32 bytes before hashing or verification
+
+Recipient rejection rules:
+
+Stage 1 must reject:
+
+- empty recipient
+- recipient length not equal to 32 bytes
+- malformed recipient bytes
+- x1RecipientHash mismatch
+- 32 zero bytes recipient
+
+Message schema implications:
+
+- x1RecipientHash is mandatory
+- sourceBlockNumber is mandatory
+- sourceBlockHash is mandatory
+- canonicalEventKey uses keccak256
+- x1RecipientHash uses keccak256
+- domainSeparator uses keccak256
+- messageHash uses keccak256
+- guardian signatures are Ed25519 signatures over messageHash
+- x1RecipientBytes are supplied as execution / evidence payload
+
+Test vector implications:
+
+Exact test vectors must include:
+
+- keccak256 domain constants
+- keccak256 x1RecipientHash for a 32-byte dummy recipient
+- keccak256 canonicalEventKey
+- keccak256 domainSeparator
+- full encoded message bytes
+- keccak256 messageHash
+- Ed25519 test guardian public key
+- Ed25519 signature over messageHash
+- valid verification case
+- invalid wrong hash case
+- invalid wrong signature case
+- invalid recipient length case
+- invalid all-zero recipient case
+- invalid base58-as-canonical case
+
+Resolved blockers:
+
+- final hash function choice
+- final signature standard
+- final X1 recipient type and normalization
+
+Remaining blockers:
+
+1. sourceBlockNumber and sourceBlockHash mandatory field updates
+2. X1 mint core immutability mechanism
+3. atomic processed-burn check-and-mint model
+4. finality rule
+5. zero / burn recipient policy beyond 32 zero bytes
+6. burn amount min/max policy
+7. exact cryptographic test vectors
+
+Current conclusion:
+
+Stage 1 adopts:
+
+keccak256 + Ed25519 + 32-byte X1 / SVM recipient
+
+This is the preferred balance between Ethereum-native source evidence and X1/SVM-native execution verification.
+
+Implementation should still not begin until the remaining blockers are resolved and exact test vectors are produced.
