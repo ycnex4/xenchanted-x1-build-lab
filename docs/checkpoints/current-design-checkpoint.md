@@ -17399,3 +17399,215 @@ The preferred finality direction is Ethereum finalized block status, with a cons
 This closes the Ethereum finality rule requirement-definition blocker.
 
 Implementation should still not begin until exact provider policy, fallback confirmation depth, X1 authority model, and exact test vectors are documented.
+
+## Latest Stage 1 recipient safety policy checkpoint
+
+The Stage 1 recipient safety policy milestone was completed on the stage-1-recipient-safety-policy branch.
+
+Commit:
+
+- pending
+
+This milestone defines the Stage 1 recipient safety policy for the XNTD-to-XXXL Gateway.
+
+Design document added:
+
+- docs/gateway/stage-1-recipient-safety-policy.md
+
+Purpose:
+
+Prevent users from burning Ethereum XNTD with an invalid, malformed, empty, zero, or unusable X1 recipient.
+
+This is a design / readiness milestone only.
+
+It does not implement:
+
+- Ethereum contracts
+- X1 programs
+- XXXL token runtime
+- X1 mint core
+- processed burn registry
+- guardian runtime
+- relayer runtime
+- watcher runtime
+- frontend gateway flow
+- real RPC reads
+- env reads
+- private keys
+- API keys
+- mnemonic handling
+- deployment logic
+
+Core rule:
+
+Invalid X1 recipients must be rejected before guardian approval and before X1 mint execution.
+
+Frontend validation should also reject invalid recipients before the Ethereum burn transaction whenever possible.
+
+Canonical recipient format:
+
+- exactly 32 raw bytes
+- X1 / SVM public key format
+- not a string
+- not base58 text
+- not variable-length bytes
+- not an Ethereum address
+- not an EIP-55 address
+- not checksum-casing dependent
+
+Base58 may be used only as display / input format.
+
+Protocol-level recipient bytes must be exactly 32 raw bytes.
+
+Recipient hash:
+
+x1RecipientHash = keccak256(x1RecipientBytes)
+
+A hash match is necessary but not sufficient.
+
+The recipient bytes must also pass recipient safety validation.
+
+Mandatory rejection cases:
+
+Stage 1 must reject:
+
+- empty recipient
+- missing recipient
+- recipient length not equal to 32 bytes
+- malformed recipient bytes
+- base58 string used directly as canonical bytes
+- Ethereum address used as X1 recipient bytes
+- 32 zero bytes recipient
+- x1RecipientHash mismatch
+- recipient format that cannot be decoded into exactly 32 bytes
+- recipient value forbidden by the final X1 runtime policy
+
+32 zero bytes policy:
+
+Stage 1 must reject the 32-byte all-zero recipient.
+
+Known burn / blackhole recipient policy:
+
+Stage 1 must reject known protocol-forbidden burn / blackhole recipients if the X1 runtime or community standard defines such addresses.
+
+Current Stage 1 minimum policy:
+
+- reject 32 zero bytes
+- treat additional known burn / blackhole recipient list as an implementation-time policy item
+
+The recipient safety policy must not become a discretionary blacklist.
+
+No discretionary recipient censorship:
+
+Recipient safety checks exist to prevent user loss and malformed execution.
+
+They must not become a general censorship mechanism.
+
+Frontend validation:
+
+Frontend should validate recipient before the user burns Ethereum XNTD.
+
+Frontend should reject:
+
+- empty input
+- invalid base58 input
+- decoded recipient not exactly 32 bytes
+- all-zero recipient
+- known forbidden burn / blackhole recipients if policy exists
+- Ethereum address pasted as recipient
+- malformed copied value
+
+Frontend validation is a UX safety layer.
+
+It does not replace guardian or mint core validation.
+
+Ethereum burn function validation:
+
+Preferred direction:
+
+- accept recipient input in a format that can be validated before burn
+- reject empty recipient
+- reject malformed recipient if format permits
+- reject all-zero 32-byte recipient if raw bytes are supplied
+- emit both x1Recipient and x1RecipientHash according to the event schema
+
+Minimum Ethereum-side requirement:
+
+Do not allow obviously empty recipient evidence.
+
+Preferred Ethereum-side requirement:
+
+Reject anything that cannot be decoded into exactly 32 recipient bytes before burning.
+
+Guardian validation:
+
+Guardians must reject burn evidence if:
+
+- x1Recipient is missing
+- x1Recipient cannot be decoded into exactly 32 raw bytes
+- x1RecipientBytes are 32 zero bytes
+- x1RecipientHash does not equal keccak256(x1RecipientBytes)
+- x1Recipient appears to be a malformed display string
+- event payload is incomplete
+- event payload is ambiguous
+- final forbidden-recipient policy rejects the recipient
+
+X1 mint core validation:
+
+X1 mint core must reject execution if:
+
+- raw x1RecipientBytes are missing
+- raw x1RecipientBytes length is not exactly 32 bytes
+- raw x1RecipientBytes are 32 zero bytes
+- keccak256(x1RecipientBytes) does not equal signed x1RecipientHash
+- recipient violates final X1 runtime recipient policy
+
+Relayer behavior:
+
+Relayers must not modify recipient data.
+
+If relayer-submitted x1RecipientBytes do not match the signed x1RecipientHash, X1 mint core must reject.
+
+Event schema implication:
+
+The Ethereum burn event direction remains:
+
+- x1RecipientHash
+- x1Recipient
+
+Preferred production direction:
+
+Emit data in a way that allows guardians to derive exactly one x1RecipientBytes value.
+
+Test vector implications:
+
+Future tests and vectors must include:
+
+- valid 32-byte recipient
+- valid base58 display decoded into 32 bytes
+- empty recipient rejected
+- missing recipient rejected
+- wrong-length recipient rejected
+- 32 zero bytes rejected
+- Ethereum address used as X1 recipient rejected
+- base58 string used directly as canonical bytes rejected
+- x1RecipientHash mismatch rejected
+- known forbidden recipient rejected if policy list exists
+- relayer recipient substitution rejected
+- frontend invalid recipient before burn scenario
+
+Current conclusion:
+
+Stage 1 recipient safety policy requires canonical 32-byte X1 / SVM recipient bytes.
+
+Stage 1 must reject empty, malformed, non-32-byte, all-zero, hash-mismatched, and policy-forbidden recipients.
+
+Frontend should prevent clearly invalid recipient burns before the Ethereum transaction.
+
+Guardians must reject invalid recipient evidence.
+
+X1 mint core must reject invalid recipient execution payloads.
+
+This closes the recipient safety policy requirement-definition blocker.
+
+Implementation should still not begin until burn amount min/max policy, exact X1 deployment authority model, and exact cryptographic test vectors are documented.

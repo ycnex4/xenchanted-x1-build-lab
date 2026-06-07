@@ -79,6 +79,7 @@ Latest reviewed main includes:
 - Stage 1 X1 mint core immutability
 - Stage 1 processed burn atomicity
 - Stage 1 Ethereum finality rule
+- Stage 1 recipient safety policy
 - X1-native Forge / Stake dual nominal model
 
 ## Validation commands
