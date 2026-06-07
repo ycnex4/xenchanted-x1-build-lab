@@ -16661,9 +16661,10 @@ Implementation should still not begin until the remaining blockers are resolved 
 
 The Stage 1 gateway mandatory source block fields milestone was completed on the stage-1-gateway-mandatory-source-block-fields branch.
 
-Commit:
+Commits:
 
-- pending
+- 70c456a Define Stage 1 gateway mandatory source block fields
+- 2769087 Merge branch 'stage-1-gateway-mandatory-source-block-fields'
 
 This milestone closes the Stage 1 Gateway pre-implementation blocker for mandatory source block fields.
 
