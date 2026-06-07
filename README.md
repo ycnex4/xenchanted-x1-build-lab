@@ -85,6 +85,7 @@ Latest reviewed main includes:
 - Stage 1 exact cryptographic test vectors
 - Stage 1 exact vectors Theo review notes
 - Stage 1 generated gateway vectors
+- Stage 1 gateway vector fixture tests
 - X1-native Forge / Stake dual nominal model
 
 ## Validation commands
