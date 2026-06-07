@@ -17182,3 +17182,219 @@ For each canonicalEventKey, at most one successful XXXL mint may occur.
 This closes the atomic processed-burn requirement-definition blocker.
 
 Implementation should still not begin until the exact X1 runtime atomicity model, finality rule, deployment authority model, and exact test vectors are documented.
+
+## Latest Stage 1 Ethereum finality rule checkpoint
+
+The Stage 1 Ethereum finality rule milestone was completed on the stage-1-ethereum-finality-rule branch.
+
+Commit:
+
+- pending
+
+This milestone defines the Stage 1 Ethereum finality rule for the XNTD-to-XXXL Gateway.
+
+Design document added:
+
+- docs/gateway/stage-1-ethereum-finality-rule.md
+
+Purpose:
+
+Define when Ethereum-side XNTD burn evidence is canonical and finalized enough for guardians to approve X1 XXXL minting.
+
+This is a design / readiness milestone only.
+
+It does not implement:
+
+- Ethereum contracts
+- X1 programs
+- XXXL token runtime
+- X1 mint core
+- processed burn registry
+- guardian runtime
+- relayer runtime
+- watcher runtime
+- frontend gateway flow
+- real RPC reads
+- env reads
+- private keys
+- API keys
+- mnemonic handling
+- deployment logic
+
+Core rule:
+
+Guardians must not sign burn evidence until the source Ethereum block is finalized enough under the Stage 1 finality policy.
+
+Finality objective:
+
+The finality rule protects against:
+
+- signing reorged-out burn events
+- signing non-canonical burn events
+- signing events before sufficient Ethereum finality
+- provider disagreement
+- stale receipt data
+- sourceBlockHash mismatch
+- transaction hash / log index evidence without stable block context
+
+Required source block binding:
+
+Every signed Stage 1 message must include:
+
+- sourceBlockNumber
+- sourceBlockHash
+
+Guardian verification must confirm:
+
+- transaction receipt exists
+- transaction succeeded
+- receipt block number equals sourceBlockNumber
+- receipt block hash equals sourceBlockHash
+- burn log exists in that receipt
+- burn log index equals sourceBurnEventIndex
+- block is canonical
+- block satisfies Stage 1 finality rule
+
+Preferred finality direction:
+
+Use Ethereum finalized block status when reliable RPC support exists.
+
+A guardian may accept a burn event as finalized if:
+
+- the burn receipt block is at or before the latest finalized Ethereum block
+- sourceBlockHash matches the canonical block hash at sourceBlockNumber
+- the burn transaction succeeded
+- the expected event exists in the receipt
+- all Stage 1 guardian acceptance rules pass
+
+Conservative fallback direction:
+
+If finalized block tag support is unavailable, inconsistent, or unreliable, guardians may use a conservative confirmation-depth fallback.
+
+Fallback requirement:
+
+- source block must be at least N confirmations deep
+- N must be chosen conservatively before implementation
+- provider responses must agree on sourceBlockHash
+- provider responses must agree that the source block is canonical
+- provider responses must agree that the transaction receipt is in that block
+
+The exact N is not fixed by this document.
+
+Production implementation must choose and document the exact confirmation depth if fallback mode is used.
+
+Provider agreement direction:
+
+Guardians should use at least two independent Ethereum RPC providers for finality-critical checks.
+
+Guardians should reject or delay evidence if providers disagree about:
+
+- source block identity
+- receipt inclusion
+- receipt block hash
+- finalized status
+- fallback confirmation status
+
+Reorg handling:
+
+Guardians must reject evidence if:
+
+- sourceBlockHash is no longer canonical
+- transaction receipt is no longer found
+- receipt blockHash differs from signed sourceBlockHash
+- burn log is missing from the canonical receipt
+- sourceBurnEventIndex no longer identifies the expected burn event
+- source block was reorged out before approval
+
+Relayer responsibility:
+
+The relayer should not attempt to submit an approval for evidence that is known to be non-final, reorged, rejected, or disputed.
+
+However, finality verification is primarily guardian responsibility.
+
+For Stage 1, finality is enforced by guardian verification policy and signed message discipline.
+
+Watcher / indexer states documented:
+
+- observed
+- confirmed
+- waiting for finality
+- finalized
+- guardian approval pending
+- guardian approved
+- relayer submitted
+- minted on X1
+- rejected
+- reorged out
+- provider disagreement
+- already processed
+
+Frontend states documented:
+
+- Burn submitted
+- Burn confirmed
+- Waiting for Ethereum finality
+- Finalized
+- Guardian approval pending
+- Guardian approved
+- Relayer submitted
+- XXXL minted
+- Rejected evidence
+- Reorged out
+- Already processed
+
+Invalid finality cases documented:
+
+- burn transaction failed
+- burn transaction not found
+- expected burn event not found
+- sourceBlockNumber missing
+- sourceBlockHash missing
+- sourceBlockHash wrong length
+- receipt blockHash differs from sourceBlockHash
+- canonical block hash at sourceBlockNumber differs from sourceBlockHash
+- source block is newer than finalized block
+- source block has insufficient fallback confirmations
+- providers disagree about source block identity
+- burn event is reorged out
+- burn log index points to a different event
+- source chain is not Ethereum mainnet
+- source token is not expected XNTD token
+
+Relationship to processed registry:
+
+Finality determines whether a burn can be approved.
+
+Processed registry determines whether an approved burn has already minted.
+
+Both are required.
+
+Production decision still required:
+
+Before implementation, the project must still choose the exact operational rule:
+
+- finalized block tag only
+- finalized block tag preferred with confirmation fallback
+- fixed confirmation depth
+- multi-provider policy
+- exact number of providers
+- exact confirmation depth N if fallback is used
+- exact behavior for provider disagreement
+
+Recommended production direction:
+
+- prefer finalized block tag when available and reliable
+- use conservative confirmation-depth fallback only when finalized block data is unavailable or unreliable
+- require provider agreement for finality-critical fields
+
+Current conclusion:
+
+Stage 1 guardians must sign only canonical Ethereum burn evidence that satisfies the Stage 1 finality rule.
+
+The signed message must include sourceBlockNumber and sourceBlockHash.
+
+The preferred finality direction is Ethereum finalized block status, with a conservative confirmation-depth fallback only if finalized block support is unavailable or unreliable.
+
+This closes the Ethereum finality rule requirement-definition blocker.
+
+Implementation should still not begin until exact provider policy, fallback confirmation depth, X1 authority model, and exact test vectors are documented.
