@@ -15715,9 +15715,10 @@ Implementation should still not begin until message encoding, signature format, 
 
 The Stage 1 gateway canonical encoding milestone was completed on the stage-1-gateway-canonical-encoding branch.
 
-Commit:
+Commits:
 
-- pending
+- 8a4b754 Define Stage 1 gateway canonical encoding
+- 88bbaf2 Merge branch 'stage-1-gateway-canonical-encoding'
 
 This milestone adds the preferred canonical encoding direction for the XNTD-to-XXXL Gateway message layer.
 
