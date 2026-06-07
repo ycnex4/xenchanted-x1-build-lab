@@ -18516,8 +18516,8 @@ The Stage 1 gateway vector fixture tests milestone was completed on the stage-1-
 
 Commits:
 
-- pending Add Stage 1 gateway vector fixture tests
-- pending Merge branch 'stage-1-gateway-vector-fixtures'
+- 58450aa Add Stage 1 gateway vector fixture tests
+- c96f493 Merge branch 'stage-1-gateway-vector-fixtures'
 
 This milestone adds fixture-level tests for the generated Stage 1 Gateway vector output.
 
