@@ -77,6 +77,7 @@ Latest reviewed main includes:
 - Stage 1 gateway hash, signature, and recipient decisions
 - Stage 1 gateway mandatory source block fields
 - Stage 1 X1 mint core immutability
+- Stage 1 processed burn atomicity
 - X1-native Forge / Stake dual nominal model
 
 ## Validation commands
