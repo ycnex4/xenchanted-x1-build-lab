@@ -18867,3 +18867,145 @@ Current conclusion:
 The Stage 1 generator now uses the shared encoding / hashing primitives instead of maintaining duplicated local implementations.
 
 The next milestone can add parser / verifier helpers on top of the shared encoding module.
+
+## Latest Stage 1 gateway verifier helpers checkpoint
+
+The Stage 1 gateway verifier helpers milestone was completed on the stage-1-gateway-verifier-helpers branch.
+
+Commits:
+
+- pending Add Stage 1 gateway verifier helpers
+- pending Merge branch 'stage-1-gateway-verifier-helpers'
+
+This milestone adds pure Stage 1 Gateway verifier helpers on top of the shared encoding module.
+
+Source additions:
+
+- src/gateway/stage-1-verifier.ts
+
+Test additions:
+
+- tests/stage-1-gateway-verifier.test.ts
+
+Export updates:
+
+- src/index.ts exports Stage 1 gateway verifier helpers
+
+README updated:
+
+- Stage 1 gateway verifier helpers
+
+Purpose:
+
+Add a deterministic validation layer for Stage 1 Gateway mint messages before X1 mint core, relayer, watcher, frontend gateway, or deployment runtime work begins.
+
+The verifier helper module provides:
+
+- Stage 1 label constants
+- Stage 1 route constants
+- Stage 1 verification error codes
+- Stage1RouteVerificationConfig
+- Stage1GatewayVerificationInput
+- Stage1GatewayVerificationResult
+- Stage1GatewayComputedValues
+- bytesEqual()
+- isZeroBytes()
+- uint256BeToBigInt()
+- stage1GatewayMessageType()
+- stage1GatewayRouteId()
+- stage1GatewayMintToken()
+- stage1GatewayProtocolNameHash()
+- stage1GatewayVersionHash()
+- stage1GatewayMessageTypeFamilyHash()
+- computeStage1CanonicalEventKey()
+- computeStage1X1RecipientHash()
+- computeStage1DomainSeparator()
+- computeStage1MessageHash()
+- computeStage1GatewayValues()
+- verifyStage1GatewayMintMessage()
+
+The verifier checks:
+
+- x1RecipientBytes length = 32
+- x1RecipientBytes is not 32 zero bytes
+- messageType = keccak256("X1_GATEWAY_MINT")
+- routeId = keccak256("ETHEREUM_XNTD_TO_X1_XXXL_STAGE_1")
+- mintToken = keccak256("XXXL")
+- sourceChainId = Ethereum mainnet chainId 1
+- sourceToken = configured Ethereum XNTD token address
+- burnedAmount > 0
+- sourceChainWeightBps = 10000
+- xxxlMintAmount = burnedAmount
+- canonicalEventKey = keccak256(sourceChainId || sourceToken || sourceBurnTxHash || sourceBurnEventIndex)
+- x1RecipientHash = keccak256(x1RecipientBytes)
+- domainSeparator matches configured target X1 network and target mint core
+- messageHash matches domainSeparator || encodedGatewayMintMessage
+
+The tests verify:
+
+- computed canonicalEventKey matches the locked fixture
+- computed x1RecipientHash matches the locked fixture
+- computed domainSeparator matches the locked fixture
+- computed messageHash matches the locked fixture
+- computed encodedGatewayMintMessage matches the locked fixture
+- computed messageHashPreimage matches the locked fixture
+- the valid Stage 1 fixture is accepted
+- wrong route constants are rejected
+- wrong source route values are rejected
+- amount rule violations are rejected
+- wrong canonicalEventKey is rejected
+- wrong x1RecipientHash is rejected
+- invalid recipient bytes are rejected
+- wrong domainSeparator is rejected
+- wrong messageHash is rejected
+
+Fixture values used:
+
+- docs/gateway/generated/stage-1-gateway-vectors.json
+
+Safety boundary:
+
+The verifier helpers are pure deterministic validation helpers.
+
+The tests only read the generated fixture file.
+
+They do not read:
+
+- .env files
+- private keys
+- RPC URLs
+- API keys
+- seed phrases
+- mnemonic values
+- production credentials
+
+They do not perform:
+
+- real RPC reads
+- production signing
+- Ethereum contract execution
+- X1 runtime execution
+- relayer submission
+- watcher verification
+- gateway minting
+
+This is a verifier-helper milestone only.
+
+It does not implement:
+
+- Ethereum contracts
+- X1 programs
+- XXXL token runtime
+- X1 mint core
+- processed burn registry runtime
+- guardian runtime
+- relayer runtime
+- watcher runtime
+- frontend gateway flow
+- deployment logic
+
+Current conclusion:
+
+Stage 1 Gateway now has pure verifier helpers that validate the locked message fixture and reject the main invalid route, evidence, recipient, domain, message hash, and amount-rule cases.
+
+The next milestone can add Ed25519 guardian signature verifier helpers or begin mapping these validation helpers toward an X1 mint core test model.
