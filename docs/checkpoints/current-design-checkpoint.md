@@ -19480,8 +19480,8 @@ The Stage 1 mint authorization model milestone was completed on the stage-1-gate
 
 Commits:
 
-- pending Add Stage 1 mint authorization model
-- pending Merge branch 'stage-1-gateway-mint-authorization-model'
+- da05286 Add Stage 1 mint authorization model
+- 2b2522b Merge branch 'stage-1-gateway-mint-authorization-model'
 
 This milestone adds a pure Stage 1 mint authorization model that composes guardian quorum verification and processed burn replay protection.
 
