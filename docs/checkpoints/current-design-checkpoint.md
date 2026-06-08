@@ -19817,3 +19817,101 @@ Current conclusion:
 Stage 1 Gateway now has a single deterministic state object that groups route config, guardian quorum config, processed burn registry, and mint core state.
 
 The next milestone can build a Stage 1 end-to-end gateway scenario that executes the full generated vector flow through state-backed mint core execution and rejects replay.
+
+## Latest Stage 1 gateway end-to-end scenario checkpoint
+
+The Stage 1 gateway end-to-end scenario milestone was completed on the stage-1-gateway-e2e-scenario branch.
+
+Commits:
+
+- pending Add Stage 1 gateway end-to-end scenario
+- pending Merge branch 'stage-1-gateway-e2e-scenario'
+
+This milestone adds a full pure Stage 1 Gateway end-to-end scenario test using the generated fixture vector and the state-backed mint core model.
+
+Test additions:
+
+- tests/stage-1-gateway-e2e-scenario.test.ts
+
+README updated:
+
+- Stage 1 gateway end-to-end scenario
+
+Purpose:
+
+Add the first complete Stage 1 proof-of-design scenario before negative e2e matrix, closed baseline checkpoint, real X1 account storage, real XXXL token runtime, relayer, watcher, frontend gateway, or deployment runtime work begins.
+
+The scenario composes:
+
+- generated Stage 1 gateway fixture vector
+- createStage1GatewayState()
+- executeStage1MintCore()
+- Stage1GatewayState.routeConfig
+- Stage1GatewayState.guardianQuorum
+- Stage1GatewayState.processedBurnRegistry
+- Stage1GatewayState.mintCoreState
+
+The end-to-end flow verifies:
+
+- generated fixture vector is converted into message fields
+- Stage1GatewayState starts with empty processed burn registry
+- Stage1GatewayState starts with empty mint core balances
+- Stage1GatewayState starts with zero totalMinted
+- first execution passes message verification
+- first execution passes Ed25519 guardian signature verification
+- first execution passes guardian quorum verification
+- first execution passes mint authorization
+- first execution marks canonicalEventKey processed
+- first execution mints XXXL to recipient
+- first execution increases totalMinted
+- second execution with the same canonicalEventKey is rejected as replay
+- replay does not mint again
+- replay does not change recipient balance
+- replay does not change totalMinted
+- replay does not add a second processed burn entry
+
+Safety boundary:
+
+The e2e scenario is a pure deterministic test.
+
+The test only reads generated public test vector data.
+
+It does not read:
+
+- .env files
+- production private keys
+- RPC URLs
+- API keys
+- seed phrases
+- mnemonic values
+- production credentials
+
+It does not perform:
+
+- production signing
+- real RPC reads
+- Ethereum contract execution
+- X1 runtime execution
+- relayer submission
+- watcher verification
+- gateway minting
+
+This is an end-to-end model scenario milestone only.
+
+It does not implement:
+
+- real X1 account storage
+- atomic X1 instruction execution
+- deployed XXXL token runtime
+- Ethereum contracts
+- X1 programs
+- relayer runtime
+- watcher runtime
+- frontend gateway flow
+- deployment logic
+
+Current conclusion:
+
+Stage 1 Gateway now has a complete state-backed proof-of-design scenario: a valid generated vector executes once, mutates processed burn and mint state, and replay is rejected without additional mutation.
+
+The next milestone can add a Stage 1 negative end-to-end matrix for malformed message, invalid guardian, quorum failure, route mismatch, and replay cases at the full-flow level.
