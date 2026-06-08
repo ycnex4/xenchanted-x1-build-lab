@@ -19915,3 +19915,102 @@ Current conclusion:
 Stage 1 Gateway now has a complete state-backed proof-of-design scenario: a valid generated vector executes once, mutates processed burn and mint state, and replay is rejected without additional mutation.
 
 The next milestone can add a Stage 1 negative end-to-end matrix for malformed message, invalid guardian, quorum failure, route mismatch, and replay cases at the full-flow level.
+
+## Latest Stage 1 gateway negative end-to-end matrix checkpoint
+
+The Stage 1 gateway negative end-to-end matrix milestone was completed on the stage-1-gateway-negative-e2e-matrix branch.
+
+Commits:
+
+- pending Add Stage 1 gateway negative end-to-end matrix
+- pending Merge branch 'stage-1-gateway-negative-e2e-matrix'
+
+This milestone adds a pure Stage 1 Gateway negative end-to-end matrix test using the generated fixture vector, Stage1GatewayState, and the state-backed mint core model.
+
+Test additions:
+
+- tests/stage-1-gateway-negative-e2e-matrix.test.ts
+
+README updated:
+
+- Stage 1 gateway negative end-to-end matrix
+
+Purpose:
+
+Add full-flow negative coverage after the positive Stage 1 end-to-end scenario.
+
+The matrix verifies that invalid full-flow inputs are rejected before mint state mutation.
+
+The negative end-to-end matrix covers:
+
+- malformed message fields
+- route mismatch
+- invalid guardian signature
+- unknown guardian approval
+- quorum failure
+- preprocessed canonicalEventKey replay
+
+For each relevant rejected case, the test checks that:
+
+- mint core result is not ok
+- minted is false
+- authorization is not accepted
+- canonicalEventKey is not marked processed by the failed attempt
+- recipient balance is unchanged
+- totalMinted is unchanged
+- processed burn registry is unchanged, except for the deliberately preloaded replay case
+
+The replay case checks:
+
+- preprocessed canonicalEventKey is rejected
+- quorum can still be valid
+- authorization fails due to BurnAlreadyProcessed
+- no second processed burn entry is added
+- no XXXL is minted
+- totalMinted remains zero
+
+Safety boundary:
+
+The negative e2e matrix is a pure deterministic test.
+
+The test only reads generated public test vector data.
+
+It does not read:
+
+- .env files
+- production private keys
+- RPC URLs
+- API keys
+- seed phrases
+- mnemonic values
+- production credentials
+
+It does not perform:
+
+- production signing
+- real RPC reads
+- Ethereum contract execution
+- X1 runtime execution
+- relayer submission
+- watcher verification
+- gateway minting
+
+This is a negative end-to-end model test milestone only.
+
+It does not implement:
+
+- real X1 account storage
+- atomic X1 instruction execution
+- deployed XXXL token runtime
+- Ethereum contracts
+- X1 programs
+- relayer runtime
+- watcher runtime
+- frontend gateway flow
+- deployment logic
+
+Current conclusion:
+
+Stage 1 Gateway now has both a positive state-backed end-to-end scenario and a negative full-flow matrix proving that malformed messages, route mismatch, invalid guardians, quorum failure, and replay do not mutate mint state.
+
+The next milestone can close the Stage 1 Gateway baseline with a concise checkpoint summarizing the completed model stack, test coverage, safety boundaries, and remaining non-Stage-1 runtime work.
