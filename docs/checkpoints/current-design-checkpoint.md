@@ -20682,3 +20682,55 @@ Stage 2 should not begin until these assumptions are answered or explicitly mark
 If runtime assumptions are strong, direct mint may be the cleanest flow.
 
 If runtime assumptions are uncertain, claim-based flow is the safer fallback.
+
+
+## Stage 1.8 review refinements checkpoint
+
+The Stage 1.8 runtime assumptions checkpoint was reviewed after merge into main.
+
+Review conclusion:
+
+- no blockers were identified before Stage 2 planning
+- Stage 1.8 was considered a mature checkpoint
+- direct mint vs claim-based criteria were considered strong
+- claim-based fallback was considered appropriate when CPI or account creation assumptions are unclear
+- pause boundary was considered strong
+- logs/events/error codes can remain an open Stage 2 implementation detail
+
+Branch:
+
+- stage-1-8-review-refinements
+
+Refinements added:
+
+- compute budget / transaction size limits
+- canonicalEventKey derivation immutability under upgradeability
+- source chain fork handling
+
+Compute budget / transaction size refinement:
+
+Stage 2 must confirm whether gateway verification, guardian signature checking, CPI mint, and processed burn mark can fit within X1 compute budget and transaction size limits.
+
+This matters more for direct mint because direct mint may require verification, processed mark, state updates, and token program CPI in one atomic transaction.
+
+canonicalEventKey derivation refinement:
+
+Stage 2 must confirm whether upgrade authority can change canonicalEventKey derivation.
+
+If canonicalEventKey derivation can change, migration or invalidation rules for existing processed burn entries must be explicit.
+
+Upgradeability must not silently change canonicalEventKey meaning in a way that enables replay or breaks processed burn registry persistence.
+
+Source chain fork handling refinement:
+
+Stage 2 must confirm how the gateway handles source chain forks where the same burn event exists on multiple forks.
+
+The design should determine whether canonicalEventKey includes fork-specific data such as block hash, finalized checkpoint, fork id, or another fork-disambiguating value.
+
+Source fork handling must not allow the same burn event to produce multiple X1-side results.
+
+Current conclusion:
+
+These refinements strengthen Stage 1.8 without changing repository runtime behavior.
+
+Stage 2 planning remains unblocked, but concrete X1 runtime assumptions must be reviewed before implementation.
