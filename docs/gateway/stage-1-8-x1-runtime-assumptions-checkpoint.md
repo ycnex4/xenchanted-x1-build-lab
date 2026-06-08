@@ -97,6 +97,7 @@ Future Stage 2 planning should confirm assumptions in these categories:
 - finality and source event confirmation
 - event indexing / auditability
 - error and failure semantics
+- compute budget / transaction size limits
 
 ## Transaction atomicity
 
@@ -348,6 +349,17 @@ Stage 1.8 does not choose final upgrade model.
 
 It records that upgradeability is a blocker assumption for Stage 2 design.
 
+Additional canonicalEventKey derivation question:
+
+- can upgrade authority change canonicalEventKey derivation?
+- if canonicalEventKey derivation changes, how are existing processed burn entries migrated or invalidated?
+- can a derivation change make old processed entries unreachable?
+- can a derivation change create collisions with old processed entries?
+
+Required principle:
+
+    Upgradeability must not silently change canonicalEventKey meaning in a way that enables replay or breaks processed burn registry persistence.
+
 ## Pause authority assumptions
 
 Pause protects runtime safety.
@@ -449,6 +461,18 @@ Required principle:
 Future chain reconfiguration should not invalidate already processed burn entries.
 
 Future chain reconfiguration should not allow already processed burn entries to be processed again.
+
+Source chain fork handling questions:
+
+- how does the gateway handle source chain forks where the same burn event exists on multiple forks?
+- does canonicalEventKey include fork-specific data such as block hash, finalized checkpoint, fork id, or another fork-disambiguating value?
+- can guardians sign evidence from the wrong fork?
+- can a finalized event on one fork be replayed through another fork?
+- should fork risk affect source coefficient or source acceptance?
+
+Required principle:
+
+    Source fork handling must not allow the same burn event to produce multiple X1-side results.
 
 ## Source coefficient criteria
 
@@ -627,6 +651,12 @@ Before Stage 2 begins, these questions should have explicit answers:
 24. What events/logs are emitted for successful processing?
 
 25. What errors are emitted for rejection?
+
+26. Can gateway verification, guardian signature checking, CPI mint, and processed burn mark fit within X1 compute budget and transaction size limits?
+
+27. Can upgrade authority change canonicalEventKey derivation? If so, how are existing processed burn entries migrated or invalidated?
+
+28. How does the gateway handle source chain forks where the same burn event exists on multiple forks? Does canonicalEventKey include fork-specific data?
 
 ## Out-of-scope items
 
