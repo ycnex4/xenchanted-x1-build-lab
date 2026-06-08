@@ -19584,3 +19584,124 @@ Current conclusion:
 Stage 1 Gateway now has a reusable mint authorization model that combines guardian quorum approval and canonicalEventKey replay protection.
 
 The next milestone can build a Stage 1 mint core test model that consumes this authorization result and models XXXL balance / total supply mutation.
+
+## Latest Stage 1 mint core model checkpoint
+
+The Stage 1 mint core model milestone was completed on the stage-1-gateway-mint-core-model branch.
+
+Commits:
+
+- pending Add Stage 1 mint core model
+- pending Merge branch 'stage-1-gateway-mint-core-model'
+
+This milestone adds a pure Stage 1 mint core model that consumes Stage 1 mint authorization and models XXXL balance / total minted mutation.
+
+Source additions:
+
+- src/gateway/stage-1-mint-core.ts
+
+Test additions:
+
+- tests/stage-1-gateway-mint-core.test.ts
+
+Export updates:
+
+- src/index.ts exports Stage 1 mint core helpers
+
+README updated:
+
+- Stage 1 mint core model
+
+Purpose:
+
+Add deterministic Stage 1 mint core modeling before X1 account storage, real XXXL token runtime, relayer, watcher, frontend gateway, or deployment runtime work begins.
+
+The mint core model composes:
+
+- authorizeStage1Mint()
+- Stage1ProcessedBurnRegistry
+- Stage1MintCoreState balancesByX1Recipient
+- Stage1MintCoreState totalMinted
+
+The helper module provides:
+
+- STAGE1_MINT_CORE_ERROR
+- Stage1MintCoreErrorCode
+- Stage1MintCoreState
+- Stage1MintCoreResult
+- Stage1MintCoreInput
+- createStage1MintCoreState()
+- stage1X1RecipientHex()
+- stage1MintAmountFromFields()
+- executeStage1MintCore()
+
+The mint core model checks:
+
+- successful authorization mints XXXL to the X1 recipient
+- successful authorization increases totalMinted
+- successful authorization leaves canonicalEventKey marked processed by authorization
+- existing recipient balance is increased instead of replaced
+- existing totalMinted is increased instead of replaced
+- replay is rejected
+- replay does not mint again
+- invalid authorization is rejected
+- invalid authorization does not change balances
+- invalid authorization does not change totalMinted
+- invalid authorization does not mark canonicalEventKey processed
+
+The tests verify:
+
+- valid authorization mints XXXL and increases totalMinted
+- existing recipient balance and totalMinted are incremented
+- replay is rejected without changing balance or totalMinted
+- invalid authorization is rejected without changing balance, totalMinted, or processed registry
+
+Fixture values used:
+
+- docs/gateway/generated/stage-1-gateway-vectors.json
+
+Safety boundary:
+
+The mint core model is a pure deterministic model.
+
+The tests only read generated public test vector data.
+
+They do not read:
+
+- .env files
+- production private keys
+- RPC URLs
+- API keys
+- seed phrases
+- mnemonic values
+- production credentials
+
+They do not perform:
+
+- production signing
+- real RPC reads
+- Ethereum contract execution
+- X1 runtime execution
+- relayer submission
+- watcher verification
+- gateway minting
+
+This is a mint core model milestone only.
+
+It does not implement:
+
+- real X1 account storage
+- atomic X1 instruction execution
+- deployed XXXL token runtime
+- Ethereum contracts
+- X1 programs
+- relayer runtime
+- watcher runtime
+- frontend gateway flow
+- deployment logic
+
+Current conclusion:
+
+Stage 1 Gateway now has a pure mint core model that consumes mint authorization and models XXXL recipient balance plus totalMinted mutation.
+
+The next milestone can build a Stage 1 gateway state model that groups route config, guardian quorum config, processed burn registry, and mint core state into one deterministic Stage 1 Gateway state object.

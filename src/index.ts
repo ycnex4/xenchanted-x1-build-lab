@@ -45,3 +45,4 @@ export * from "./gateway/stage-1-approval-verifier.js";
 export * from "./gateway/stage-1-guardian-quorum.js";
 export * from "./gateway/stage-1-processed-burn-registry.js";
 export * from "./gateway/stage-1-mint-authorization.js";
+export * from "./gateway/stage-1-mint-core.js";
