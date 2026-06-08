@@ -243,7 +243,11 @@ If coefficient version is not included in the signed message or domain, an old m
 
 Safer design direction:
 
-    The signed message should bind to the coefficient version or route/config version that determines the coefficient.
+    The signed message must bind to the route version and/or coefficient version that determines the coefficient.
+
+The mint core must use the coefficient version from the signed message, not the currently active config coefficient at submission time.
+
+Coefficient changes apply only to messages signed after activation.
 
 This preserves deterministic interpretation.
 
@@ -331,6 +335,10 @@ Important principle:
     The same source burn event must not be mintable twice.
 
 This remains true across guardian rotations, coefficient changes, route changes, and runtime upgrades.
+
+The processed burn registry is global across all routes.
+
+A canonicalEventKey processed under any route must not be processable under any other route, guardian set, coefficient version, or runtime upgrade.
 
 ## Processed burn sharding
 
@@ -538,6 +546,12 @@ Pause should not allow:
 - hidden coefficient changes
 - changing monetary rules without explicit versioning
 
+Pause prevents new mints, but must never modify processed burn registry entries, recipient balances, or totalMinted.
+
+Pause does not undo past mints.
+
+Pause does not enable replay of previously processed events.
+
 Core framing:
 
     Pause protects runtime safety.
@@ -654,6 +668,7 @@ Invalid states:
 - replay mark created under one route and mint under another
 - CPI mint succeeded but processed mark failed
 - processed mark succeeded but CPI mint failed
+- processed burn entry created for canonicalEventKey A, but mint credited to the recipient intended for canonicalEventKey B
 
 ## CPI / cross-program implications
 
