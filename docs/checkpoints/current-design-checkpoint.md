@@ -20591,3 +20591,94 @@ Current conclusion:
 These refinements strengthen Stage 1.7 without changing repository runtime behavior.
 
 Stage 2 runtime implementation should still not begin until account/storage responsibilities and X1 runtime assumptions are reviewed against concrete X1 execution guarantees.
+
+
+## Stage 1.8 X1 runtime assumptions checkpoint
+
+The Stage 1.8 X1 runtime assumptions checkpoint was started after Stage 1.7 account/storage layout design and Stage 1.7 review refinements were completed and merged into main.
+
+Branch:
+
+- stage-1-8-x1-runtime-assumptions-checkpoint
+
+Document added:
+
+- docs/gateway/stage-1-8-x1-runtime-assumptions-checkpoint.md
+
+README update:
+
+- added Stage 1.8 X1 runtime assumptions checkpoint to the project summary list
+- linked the Stage 1.8 checkpoint from the Gateway documentation section
+- updated the next recommended gateway step to start with Stage 1.8 X1 runtime assumptions review
+
+Purpose:
+
+Stage 1.8 is a design-only checkpoint.
+
+It does not implement X1 gateway runtime code, deployed X1 programs, deployed Ethereum contracts, production keys, production guardian operations, relayer runtime, watcher runtime, frontend flow, token deployment, direct mint flow, claim-based flow, pause runtime, or account allocation scripts.
+
+The goal is to list the X1 execution guarantees, account behavior, token program assumptions, upgrade authority assumptions, CPI / cross-program assumptions, rent / storage assumptions, and direct mint vs claim-based decision criteria that must be reviewed before implementation.
+
+Baseline:
+
+Stage 1 proved deterministic gateway verification and mint authorization in a pure model.
+
+Stage 1.5 mapped the deterministic model to future runtime concerns.
+
+Stage 1.6 defined guardian set management design.
+
+Stage 1.7 defined the future X1-side account / storage layout responsibilities.
+
+Stage 1.7 review refinements strengthened cross-route replay protection, coefficient version binding, pause boundaries, and account-write atomicity invalid states.
+
+Main assumption categories covered:
+
+- transaction atomicity
+- CPI atomicity
+- account write rollback
+- token program interface
+- token mint authority
+- recipient token account behavior
+- account creation flow
+- rent / storage model
+- processed burn registry persistence
+- deterministic account derivation
+- program upgradeability
+- pause authority
+- guardian set account behavior
+- route / coefficient version binding
+- source chain identity
+- source coefficient criteria
+- finality assumptions
+- direct mint decision criteria
+- claim-based decision criteria
+- fallback decision rule
+- minimum questions before Stage 2
+
+Core Stage 1.8 question:
+
+What must be true about X1 runtime behavior before Stage 2 can safely implement the gateway?
+
+Highest-priority assumptions:
+
+- transaction writes must be understood as fully atomic or not
+- CPI calls must be understood as atomic with caller state or not
+- token mint behavior must be known before choosing direct mint
+- recipient token account creation and rent responsibility must be known
+- processed burn registry persistence must be guaranteed
+- program upgradeability must not silently break replay protection or mint rules
+- pause authority must not own monetary rules
+- routeVersion and/or coefficientVersion must be bound to signed message interpretation
+- sourceChainId must be stable for canonicalEventKey semantics
+- finality policy must be route-specific and explicit
+- direct mint vs claim-based flow must be chosen from concrete X1 runtime assumptions
+
+Current conclusion:
+
+Stage 1.8 defines the runtime assumptions that must be reviewed before Stage 2 gateway runtime implementation.
+
+Stage 2 should not begin until these assumptions are answered or explicitly marked as implementation blockers.
+
+If runtime assumptions are strong, direct mint may be the cleanest flow.
+
+If runtime assumptions are uncertain, claim-based flow is the safer fallback.
