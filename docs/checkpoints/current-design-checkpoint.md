@@ -19591,8 +19591,8 @@ The Stage 1 mint core model milestone was completed on the stage-1-gateway-mint-
 
 Commits:
 
-- pending Add Stage 1 mint core model
-- pending Merge branch 'stage-1-gateway-mint-core-model'
+- de1f53d Add Stage 1 mint core model
+- b8efd9e Merge branch 'stage-1-gateway-mint-core-model'
 
 This milestone adds a pure Stage 1 mint core model that consumes Stage 1 mint authorization and models XXXL balance / total minted mutation.
 
