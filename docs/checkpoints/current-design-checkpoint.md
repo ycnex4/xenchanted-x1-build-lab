@@ -20368,3 +20368,78 @@ Current conclusion:
 Stage 1.5 remains closed as a mapping milestone.
 
 These refinements strengthen the document before the next runtime-facing design work, especially guardian set management design and X1 account/storage layout design.
+
+
+## Stage 1.6 guardian set management design checkpoint
+
+The Stage 1.6 guardian set management design milestone was started after Stage 1.5 runtime mapping notes and Theo review refinements were completed and merged into main.
+
+Branch:
+
+- stage-1-6-guardian-set-management-design
+
+Document added:
+
+- docs/gateway/stage-1-6-guardian-set-management-design.md
+
+README update:
+
+- added Stage 1.6 guardian set management design to the project summary list
+- linked the Stage 1.6 guardian set management design from the Gateway documentation section
+- updated the next recommended gateway step to start with Stage 1.6 guardian set management review
+
+Purpose:
+
+Stage 1.6 is a design-only milestone.
+
+It does not implement production guardian operations, production keys, runtime governance, deployed X1 programs, deployed Ethereum contracts, relayer runtime, watcher runtime, emergency pause implementation, guardian rotation implementation, or Stage 2 runtime code.
+
+The goal is to define how guardian set identity, versioning, rotation, compromise recovery, pending message validity, emergency pause boundaries, threshold safety, runtime storage implications, and processed burn registry interaction should be framed before any X1 gateway runtime is written.
+
+Baseline:
+
+Stage 1 proved deterministic verification for a given guardian set.
+
+Stage 1.5 mapped Stage 1 invariants to future runtime concerns.
+
+Stage 1.6 focuses specifically on the guardian set design boundary.
+
+Main design topics covered:
+
+- guardian role boundary
+- guardian set identity
+- guardian set versioning
+- signed message binding
+- rotation models
+- compromise and recovery
+- pending message validity
+- emergency pause boundary
+- threshold safety
+- runtime storage implications
+- interaction with processed burn registry
+- out-of-scope runtime and production items
+- current conclusion before Stage 2 runtime implementation
+
+Core guardian boundary:
+
+Guardian quorum authorizes evidence acceptance.
+
+Guardian quorum does not own the monetary rules.
+
+Important design direction:
+
+A signed message should bind to a guardian set identity or version.
+
+This avoids ambiguity when guardian sets rotate and prevents signatures from one guardian set from being interpreted under another guardian set.
+
+Important processed burn principle:
+
+The same source burn event must not be mintable twice just because guardian set version changes.
+
+Therefore, guardianSetVersion should not allow bypassing canonicalEventKey replay protection.
+
+Stage 1.6 conclusion:
+
+Guardian set management is a required design layer before future runtime implementation.
+
+Stage 2 runtime implementation should not begin until guardian set management and X1 account/storage layout are both designed clearly enough to avoid hardcoding unstable assumptions.
