@@ -20535,3 +20535,59 @@ Current conclusion:
 Stage 1.7 defines the storage responsibilities that should be resolved before Stage 2 runtime implementation.
 
 Stage 2 runtime implementation should not begin until these account/storage responsibilities are reviewed and stable enough to avoid hardcoding unstable assumptions.
+
+
+## Stage 1.7 review refinements checkpoint
+
+The Stage 1.7 design checkpoint was reviewed after merge into main.
+
+Review conclusion:
+
+- no blockers were identified before follow-up refinement
+- Stage 1.7 was considered a mature design checkpoint
+- storage responsibilities were considered cleanly separated
+- account-write atomicity was considered strong
+- direct mint vs claim-based flow remains correctly open until X1 runtime assumptions are clearer
+
+Branch:
+
+- stage-1-7-review-refinements
+
+Refinements added:
+
+- cross-route replay principle
+- coefficient version binding
+- pause boundary clarification
+- additional invalid atomicity state
+
+Cross-route replay principle:
+
+The processed burn registry is global across all routes.
+
+A canonicalEventKey processed under any route must not be processable under any other route, guardian set, coefficient version, or runtime upgrade.
+
+Coefficient version binding:
+
+The signed message must bind to the route version and/or coefficient version that determines the coefficient.
+
+The mint core must use the coefficient version from the signed message, not the currently active config coefficient at submission time.
+
+Coefficient changes apply only to messages signed after activation.
+
+Pause boundary:
+
+Pause prevents new mints, but must never modify processed burn registry entries, recipient balances, or totalMinted.
+
+Pause does not undo past mints.
+
+Pause does not enable replay of previously processed events.
+
+Additional invalid atomicity state:
+
+- processed burn entry created for canonicalEventKey A, but mint credited to the recipient intended for canonicalEventKey B
+
+Current conclusion:
+
+These refinements strengthen Stage 1.7 without changing repository runtime behavior.
+
+Stage 2 runtime implementation should still not begin until account/storage responsibilities and X1 runtime assumptions are reviewed against concrete X1 execution guarantees.
