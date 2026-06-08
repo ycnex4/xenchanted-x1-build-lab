@@ -140,6 +140,25 @@ Preferred runtime mapping:
 
 The Stage 1 model proves check-before-mark logic at the model level. Runtime must preserve the same property at the account-write level.
 
+### CPI / cross-program atomicity gap
+
+If the future X1 runtime represents XXXL minting through a separate token program, SPL-like token program, or custom mint program, the processed burn mark and the XXXL mint may require separate cross-program calls.
+
+This creates an additional runtime mapping gap.
+
+The runtime must avoid a split where:
+
+- the processed burn mark succeeds but the XXXL mint CPI fails
+- the XXXL mint CPI succeeds but the processed burn mark fails
+- the gateway instruction delegates minting to another program without preserving all-or-nothing transaction semantics
+
+Required runtime framing:
+
+    Stage 1 proves check-before-mark at model level.
+    Future runtime must preserve check-before-mark and mark-with-mint atomicity at account-write and CPI boundary level.
+
+This does not require Stage 1 code changes. It is a runtime design requirement that must be handled before production X1 gateway implementation.
+
 ## XXXL mint state mapping
 
 Stage 1 treats XXXL minting as deterministic balance mutation:
@@ -187,6 +206,42 @@ Stage 1 only proves that a given guardian set and threshold can verify approvals
 Guardian signatures authorize that a source-chain burn event is accepted. They should not be able to arbitrarily choose recipient, amount, route, or monetary rules outside the signed canonical message.
 
 If guardian rotation requires a managed layer, that managed layer should be treated as transport / verification infrastructure, not as mutable monetary core.
+
+### Guardian key compromise and recovery
+
+Runtime design must also define what happens if one or more guardian keys are compromised while signed messages may still be pending.
+
+Open runtime questions:
+
+- can a compromised guardian key be removed quickly?
+- can pending messages signed by a compromised guardian remain valid?
+- does message validity depend on guardian set version at signing time or submission time?
+- can a guardian set be revoked without mutating monetary rules?
+- is there a recovery path if threshold safety is degraded?
+- how are users protected from stale approvals after a guardian compromise?
+
+This is not a Stage 1 blocker, because Stage 1 only proves deterministic verification for a given guardian set.
+
+For production, compromise recovery belongs to guardian operations and runtime governance / transport design, not to arbitrary mutable mint policy.
+
+### Emergency pause boundary
+
+The runtime design may need an emergency pause or submission stop for severe transport-layer incidents, such as guardian compromise, message-format bug, replay-risk discovery, or source-chain indexing failure.
+
+This must be framed carefully.
+
+An emergency pause should not become a mutable monetary-control mechanism.
+
+Open runtime questions:
+
+- can the runtime pause message submission without changing mint conversion rules?
+- who or what can trigger an emergency pause?
+- is pause authority time-limited, guardian-controlled, governance-controlled, or runtime-config controlled?
+- can unpause happen without changing the immutable mint rules?
+- are already-processed burns always final?
+- are valid but unsubmitted messages delayed, expired, or permanently invalidated during a pause?
+
+Stage 1.5 does not choose a pause model. It records that emergency control, if introduced, must belong to the runtime safety boundary rather than the core monetary rule boundary.
 
 ## Relayer and watcher boundaries
 
@@ -250,6 +305,18 @@ Stage 1 validates:
 Stage 1 does not define practical min/max limits.
 
 Production design may need additional limits for dust prevention, storage spam prevention, fee economics, source-chain event sanity, overflow safety, per-message maximums, per-route maximums, or per-epoch maximums.
+
+Dust and spam prevention should be treated as a runtime storage and state-growth question, not only as a monetary question.
+
+For example, if a very small XNTD burn can create a processed burn registry entry and a tiny XXXL balance update, the runtime may become vulnerable to low-value state growth.
+
+Open runtime questions:
+
+- should there be a practical minimum burnedAmount?
+- should the minimum depend on source chain, fee cost, or X1 storage cost?
+- should tiny burns be valid but economically irrational because relayer fees exceed value?
+- should relayers ignore dust while the runtime still remains deterministic?
+- should the gateway reject dust at verification time or only at runtime policy level?
 
 Important distinction:
 
@@ -358,12 +425,15 @@ The next runtime-facing work should not rewrite Stage 1. It should map Stage 1 i
 The most important runtime mapping items are:
 
 - processed burn atomicity
+- CPI / cross-program atomicity
 - X1 account/storage layout
 - XXXL mint state representation
 - guardian set versioning and rotation model
+- guardian key compromise and recovery
+- emergency pause boundary
 - relayer/watcher boundary
 - recipient format validation
-- burn amount policy
+- burn amount and dust/spam policy
 - message expiry / TTL policy
 
 Until those are documented and reviewed, Stage 2 runtime implementation should not begin.

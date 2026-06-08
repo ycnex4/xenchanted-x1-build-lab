@@ -20302,3 +20302,69 @@ The next runtime-facing work should map Stage 1 invariants into X1 runtime desig
 - recipient and amount derived from canonical signed message
 
 Stage 2 runtime implementation should not begin until the Stage 1.5 mapping notes are reviewed.
+
+
+## Stage 1.5 Theo review refinements checkpoint
+
+The Stage 1.5 Theo review refinements milestone was started after external review of the completed Stage 1.5 runtime mapping notes.
+
+Branch:
+
+- stage-1-5-theo-review-refinements
+
+Reviewed baseline:
+
+- docs/gateway/stage-1-5-runtime-mapping-notes.md
+- merge commit before refinements: a6a1b4c Merge branch 'stage-1-5-runtime-mapping-notes'
+
+Theo review conclusion:
+
+Stage 1.5 was considered a correct and clean bridging document between the Stage 1 deterministic model baseline and future X1 runtime design.
+
+No blocker was identified before the next runtime-facing design milestone.
+
+Refinements added from review:
+
+- CPI / cross-program atomicity gap
+- guardian key compromise and recovery
+- emergency pause boundary
+- stronger dust/spam prevention framing as a runtime storage and state-growth question
+
+CPI / cross-program atomicity refinement:
+
+If XXXL minting is performed through a separate token program, SPL-like token program, or custom mint program, the future X1 gateway instruction must preserve all-or-nothing behavior across processed burn marking and mint execution.
+
+The invalid states remain:
+
+- processed burn marked but mint failed
+- mint succeeded but processed burn was not marked
+- processed burn checked in one transaction and marked in another
+- processed burn mark and mint split across unsafe CPI boundaries
+
+Guardian compromise refinement:
+
+Runtime design must define what happens if guardian keys are compromised while signed messages may still be pending.
+
+Open questions now include:
+
+- compromised guardian removal
+- pending message validity
+- guardian set version at signing time vs submission time
+- stale approvals after compromise
+- recovery if threshold safety is degraded
+
+Emergency pause boundary refinement:
+
+The notes now record that an emergency pause may be needed for transport-layer safety incidents, but it must not become a mutable monetary-control mechanism.
+
+Dust/spam refinement:
+
+The notes now distinguish monetary amount policy from runtime storage/state-growth policy.
+
+A tiny burn can still create registry and mint state writes, so production design must explicitly decide whether practical minimums are required.
+
+Current conclusion:
+
+Stage 1.5 remains closed as a mapping milestone.
+
+These refinements strengthen the document before the next runtime-facing design work, especially guardian set management design and X1 account/storage layout design.
