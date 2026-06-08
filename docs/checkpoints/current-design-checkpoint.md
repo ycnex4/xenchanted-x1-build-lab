@@ -19824,8 +19824,8 @@ The Stage 1 gateway end-to-end scenario milestone was completed on the stage-1-g
 
 Commits:
 
-- pending Add Stage 1 gateway end-to-end scenario
-- pending Merge branch 'stage-1-gateway-e2e-scenario'
+- c23413c Add Stage 1 gateway end-to-end scenario
+- 5ccbafb Merge branch 'stage-1-gateway-e2e-scenario'
 
 This milestone adds a full pure Stage 1 Gateway end-to-end scenario test using the generated fixture vector and the state-backed mint core model.
 
