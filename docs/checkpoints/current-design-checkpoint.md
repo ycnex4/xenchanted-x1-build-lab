@@ -20443,3 +20443,95 @@ Stage 1.6 conclusion:
 Guardian set management is a required design layer before future runtime implementation.
 
 Stage 2 runtime implementation should not begin until guardian set management and X1 account/storage layout are both designed clearly enough to avoid hardcoding unstable assumptions.
+
+
+## Stage 1.7 X1 account/storage layout design checkpoint
+
+The Stage 1.7 X1 account/storage layout design milestone was started after Stage 1.6 guardian set management design was completed and merged into main.
+
+Branch:
+
+- stage-1-7-x1-account-storage-layout-design
+
+Document added:
+
+- docs/gateway/stage-1-7-x1-account-storage-layout-design.md
+
+README update:
+
+- added Stage 1.7 X1 account/storage layout design to the project summary list
+- linked the Stage 1.7 X1 account/storage layout design from the Gateway documentation section
+- updated the next recommended gateway step to start with Stage 1.7 X1 account/storage layout review
+
+Purpose:
+
+Stage 1.7 is a design-only milestone.
+
+It does not implement X1 gateway runtime code, deployed X1 programs, deployed Ethereum contracts, production keys, production guardian operations, relayer runtime, watcher runtime, frontend flow, token deployment, emergency pause implementation, account allocation scripts, or Stage 2 runtime code.
+
+The goal is to define the future X1-side storage categories, account responsibilities, versioning boundaries, replay-protection layout, guardian references, source coefficient storage, mint-state representation, and atomicity requirements that future X1 runtime code must preserve.
+
+Baseline:
+
+Stage 1 proved deterministic gateway verification and mint authorization in a pure model.
+
+Stage 1.5 mapped the deterministic model to future runtime concerns.
+
+Stage 1.6 defined the guardian set management design boundary.
+
+Stage 1.7 focuses on where future X1 runtime state should live and how it should be separated.
+
+Main design topics covered:
+
+- storage design principles
+- proposed storage categories
+- gateway config state
+- route and source-chain config
+- source coefficient state
+- guardian set reference state
+- processed burn registry
+- processed burn sharding
+- processed burn entry fields
+- mint state
+- recipient balance / token account state
+- pause / emergency state
+- versioning and config binding
+- message verification context
+- account-write atomicity
+- CPI / cross-program implications
+- claim-based alternative
+- indexing and audit state
+- out-of-scope runtime and production items
+
+Important source hierarchy:
+
+Ethereum-side XC is expected to be the primary source.
+
+Sidechains can be additional sources with reduced coefficients.
+
+The runtime storage model must make this hierarchy explicit rather than implicit.
+
+Important replay-protection principle:
+
+The same source burn event must not be mintable twice.
+
+This remains true across guardian rotations, coefficient changes, route changes, and runtime upgrades.
+
+Important account-write atomicity principle:
+
+A canonicalEventKey must be marked processed if and only if the corresponding mint or claim result succeeds.
+
+Invalid states include:
+
+- processed entry created but mint failed
+- mint succeeded but processed entry missing
+- recipient balance changed but totalMinted not updated
+- totalMinted updated but recipient balance missing
+- CPI mint succeeded but processed mark failed
+- processed mark succeeded but CPI mint failed
+
+Current conclusion:
+
+Stage 1.7 defines the storage responsibilities that should be resolved before Stage 2 runtime implementation.
+
+Stage 2 runtime implementation should not begin until these account/storage responsibilities are reviewed and stable enough to avoid hardcoding unstable assumptions.
