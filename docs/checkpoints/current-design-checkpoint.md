@@ -19922,8 +19922,8 @@ The Stage 1 gateway negative end-to-end matrix milestone was completed on the st
 
 Commits:
 
-- pending Add Stage 1 gateway negative end-to-end matrix
-- pending Merge branch 'stage-1-gateway-negative-e2e-matrix'
+- 4d2e421 Add Stage 1 gateway negative end-to-end matrix
+- 1b3ccfe Merge branch 'stage-1-gateway-negative-e2e-matrix'
 
 This milestone adds a pure Stage 1 Gateway negative end-to-end matrix test using the generated fixture vector, Stage1GatewayState, and the state-backed mint core model.
 
