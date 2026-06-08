@@ -20014,3 +20014,212 @@ Current conclusion:
 Stage 1 Gateway now has both a positive state-backed end-to-end scenario and a negative full-flow matrix proving that malformed messages, route mismatch, invalid guardians, quorum failure, and replay do not mutate mint state.
 
 The next milestone can close the Stage 1 Gateway baseline with a concise checkpoint summarizing the completed model stack, test coverage, safety boundaries, and remaining non-Stage-1 runtime work.
+
+## Latest Stage 1 gateway baseline checkpoint
+
+The Stage 1 gateway baseline checkpoint milestone was completed on the stage-1-gateway-baseline-checkpoint branch.
+
+Commits:
+
+- pending Add Stage 1 gateway baseline checkpoint
+- pending Merge branch 'stage-1-gateway-baseline-checkpoint'
+
+This milestone closes the Stage 1 Gateway baseline as a pure deterministic model.
+
+README updated:
+
+- Stage 1 gateway baseline checkpoint
+
+Purpose:
+
+Record the completed Stage 1 Gateway model stack, test coverage, safety boundary, and remaining non-Stage-1 runtime / integration work.
+
+Completed Stage 1 Gateway model stack:
+
+1. deterministic vector generator
+2. generated fixture JSON
+3. fixture tests locking vector profile
+4. reusable encoding / hashing helpers
+5. generator refactored to shared encoding helpers
+6. pure verifier helpers for route / evidence / recipient / domain / message / amount checks
+7. Ed25519 guardian signature verifier helpers
+8. unified Stage 1 gateway approval verifier
+9. guardian-set / quorum model
+10. processed burn registry model
+11. mint authorization model
+12. mint core model
+13. gateway state model
+14. positive end-to-end gateway scenario
+15. negative end-to-end gateway matrix
+
+Current Stage 1 Gateway source/test files:
+
+Source files:
+
+- src/gateway/stage-1-encoding.ts
+- src/gateway/stage-1-verifier.ts
+- src/gateway/stage-1-ed25519-verifier.ts
+- src/gateway/stage-1-approval-verifier.ts
+- src/gateway/stage-1-guardian-quorum.ts
+- src/gateway/stage-1-processed-burn-registry.ts
+- src/gateway/stage-1-mint-authorization.ts
+- src/gateway/stage-1-mint-core.ts
+- src/gateway/stage-1-gateway-state.ts
+
+Generated fixture:
+
+- docs/gateway/generated/stage-1-gateway-vectors.json
+
+Generator:
+
+- scripts/generate-stage-1-gateway-vectors.js
+
+Tests:
+
+- tests/stage-1-gateway-vectors.test.ts
+- tests/stage-1-gateway-encoding.test.ts
+- tests/stage-1-gateway-verifier.test.ts
+- tests/stage-1-gateway-ed25519-verifier.test.ts
+- tests/stage-1-gateway-approval-verifier.test.ts
+- tests/stage-1-gateway-guardian-quorum.test.ts
+- tests/stage-1-gateway-processed-burn-registry.test.ts
+- tests/stage-1-gateway-mint-authorization.test.ts
+- tests/stage-1-gateway-mint-core.test.ts
+- tests/stage-1-gateway-state.test.ts
+- tests/stage-1-gateway-e2e-scenario.test.ts
+- tests/stage-1-gateway-negative-e2e-matrix.test.ts
+
+Stage 1 model behavior now covered:
+
+- deterministic fixture generation
+- generated vector stability
+- encoding and hashing
+- canonical event key calculation
+- X1 recipient hash calculation
+- domain separator calculation
+- message hash calculation
+- route validation
+- evidence validation
+- recipient validation
+- amount validation
+- Ed25519 guardian signature verification
+- approval verification
+- guardian quorum verification
+- empty guardian set rejection
+- invalid threshold rejection
+- quorum-not-reached rejection
+- duplicate guardian approval rejection
+- unknown guardian rejection
+- invalid signature rejection
+- processed burn registry initialization
+- duplicate canonicalEventKey replay rejection
+- mint authorization composition
+- mint core balance mutation
+- mint core totalMinted mutation
+- gateway state composition
+- positive state-backed end-to-end mint flow
+- negative state-backed full-flow matrix
+
+Positive end-to-end guarantee:
+
+A valid generated Stage 1 fixture vector can be executed once through:
+
+- Stage1GatewayState
+- executeStage1MintCore()
+- authorization
+- quorum verification
+- approval verification
+- message verification
+- processed burn registry
+- mint core state mutation
+
+The first execution:
+
+- passes verification
+- passes quorum
+- marks canonicalEventKey processed
+- mints XXXL to the X1 recipient
+- increases totalMinted
+
+Replay guarantee:
+
+A second execution using the same canonicalEventKey is rejected.
+
+The replay attempt:
+
+- does not mint again
+- does not change recipient balance
+- does not change totalMinted
+- does not add a second processed burn entry
+
+Negative matrix guarantee:
+
+The full-flow negative matrix rejects:
+
+- malformed message fields
+- route mismatch
+- invalid guardian signature
+- unknown guardian approval
+- quorum failure
+- preprocessed canonicalEventKey replay
+
+Rejected paths do not mutate mint state.
+
+Safety boundary:
+
+Stage 1 Gateway is a pure deterministic model baseline.
+
+The Stage 1 tests only read generated public test vector data.
+
+They do not read:
+
+- .env files
+- production private keys
+- RPC URLs
+- API keys
+- seed phrases
+- mnemonic values
+- production credentials
+
+They do not perform:
+
+- production signing
+- real RPC reads
+- Ethereum contract execution
+- X1 runtime execution
+- relayer submission
+- watcher verification
+- gateway minting
+
+What Stage 1 intentionally does not implement:
+
+- real X1 account storage
+- atomic X1 instruction execution
+- deployed XXXL token runtime
+- Ethereum contracts
+- X1 programs
+- relayer runtime
+- watcher runtime
+- frontend gateway flow
+- deployment logic
+- guardian operations / rotation runtime
+- fee collection runtime
+- production key management
+- production bridge governance
+- mainnet / X1 deployment
+
+Current conclusion:
+
+Stage 1 Gateway is closed as a deterministic model baseline.
+
+It proves the core bridge-to-mint logic shape without introducing runtime authority, production keys, live network dependencies, or deployment assumptions.
+
+The next work should be treated as a new phase beyond Stage 1 model baseline, for example:
+
+- Stage 1.5 runtime mapping notes
+- X1 account storage model
+- XXXL token runtime model
+- relayer / watcher boundary design
+- guardian operations and key rotation design
+- integration test harness
+- eventual deployment research
