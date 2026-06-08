@@ -19705,3 +19705,115 @@ Current conclusion:
 Stage 1 Gateway now has a pure mint core model that consumes mint authorization and models XXXL recipient balance plus totalMinted mutation.
 
 The next milestone can build a Stage 1 gateway state model that groups route config, guardian quorum config, processed burn registry, and mint core state into one deterministic Stage 1 Gateway state object.
+
+## Latest Stage 1 gateway state model checkpoint
+
+The Stage 1 gateway state model milestone was completed on the stage-1-gateway-state-model branch.
+
+Commits:
+
+- pending Add Stage 1 gateway state model
+- pending Merge branch 'stage-1-gateway-state-model'
+
+This milestone adds a pure Stage 1 Gateway state model that groups route config, guardian quorum config, processed burn registry, and mint core state.
+
+Source additions:
+
+- src/gateway/stage-1-gateway-state.ts
+
+Test additions:
+
+- tests/stage-1-gateway-state.test.ts
+
+Export updates:
+
+- src/index.ts exports Stage 1 gateway state helpers
+
+README updated:
+
+- Stage 1 gateway state model
+
+Purpose:
+
+Add a deterministic Stage 1 Gateway state container before end-to-end gateway flow, real X1 account storage, real XXXL token runtime, relayer, watcher, frontend gateway, or deployment runtime work begins.
+
+The gateway state model groups:
+
+- routeConfig
+- guardianQuorum
+- processedBurnRegistry
+- mintCoreState
+
+The helper module provides:
+
+- Stage1GatewayRouteConfig
+- Stage1GatewayState
+- CreateStage1GatewayStateInput
+- createStage1GatewayState()
+
+The gateway state model checks:
+
+- route config is stored as part of state
+- guardian quorum config is stored as part of state
+- processed burn registry is initialized
+- mint core state is initialized
+- processed burn registry can be preloaded
+- mint core balances can be preloaded
+- totalMinted can be preloaded
+- processed burn registry and mint core state remain independent mutable sub-states
+
+The tests verify:
+
+- empty Stage 1 gateway state creation from route and guardian quorum config
+- preloaded processed burns, balances, and totalMinted
+- independent mutable processed burn registry and mint core state
+
+Fixture values used:
+
+- docs/gateway/generated/stage-1-gateway-vectors.json
+
+Safety boundary:
+
+The gateway state model is a pure deterministic model.
+
+The tests only read generated public test vector data.
+
+They do not read:
+
+- .env files
+- production private keys
+- RPC URLs
+- API keys
+- seed phrases
+- mnemonic values
+- production credentials
+
+They do not perform:
+
+- production signing
+- real RPC reads
+- Ethereum contract execution
+- X1 runtime execution
+- relayer submission
+- watcher verification
+- gateway minting
+
+This is a gateway state model milestone only.
+
+It does not implement:
+
+- real X1 account storage
+- atomic X1 instruction execution
+- deployed XXXL token runtime
+- Ethereum contracts
+- X1 programs
+- relayer runtime
+- watcher runtime
+- frontend gateway flow
+- deployment logic
+
+Current conclusion:
+
+Stage 1 Gateway now has a single deterministic state object that groups route config, guardian quorum config, processed burn registry, and mint core state.
+
+The next milestone can build a Stage 1 end-to-end gateway scenario that executes the full generated vector flow through state-backed mint core execution and rejects replay.
