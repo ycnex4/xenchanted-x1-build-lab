@@ -19712,8 +19712,8 @@ The Stage 1 gateway state model milestone was completed on the stage-1-gateway-s
 
 Commits:
 
-- pending Add Stage 1 gateway state model
-- pending Merge branch 'stage-1-gateway-state-model'
+- 465e071 Add Stage 1 gateway state model
+- f925470 Merge branch 'stage-1-gateway-state-model'
 
 This milestone adds a pure Stage 1 Gateway state model that groups route config, guardian quorum config, processed burn registry, and mint core state.
 
