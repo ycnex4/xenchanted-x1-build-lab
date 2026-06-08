@@ -96,6 +96,7 @@ Latest reviewed main includes:
 - Stage 1 mint authorization model
 - Stage 1 mint core model
 - Stage 1 gateway state model
+- Stage 1 gateway end-to-end scenario
 - X1-native Forge / Stake dual nominal model
 
 ## Validation commands
