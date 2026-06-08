@@ -20223,3 +20223,82 @@ The next work should be treated as a new phase beyond Stage 1 model baseline, fo
 - guardian operations and key rotation design
 - integration test harness
 - eventual deployment research
+
+## Stage 1.5 runtime mapping notes checkpoint
+
+The Stage 1.5 runtime mapping notes milestone was started after the Stage 1 Gateway deterministic model baseline was closed.
+
+Branch:
+
+- stage-1-5-runtime-mapping-notes
+
+Document added:
+
+- docs/gateway/stage-1-5-runtime-mapping-notes.md
+
+README update:
+
+- added Stage 1.5 runtime mapping notes to the project summary list
+- linked the Stage 1.5 runtime mapping notes from the Gateway documentation section
+- updated the next recommended gateway step to start with Stage 1.5 runtime mapping review
+
+Purpose:
+
+Stage 1.5 does not implement runtime code.
+
+It documents how the completed Stage 1 Gateway pure deterministic model should map to future X1 runtime entities, without introducing production keys, live RPC, deployed Ethereum contracts, deployed X1 programs, relayer runtime, watcher runtime, frontend gateway flow, production bridge governance, or deployment logic.
+
+The document preserves the boundary between:
+
+- Stage 1 deterministic model invariants
+- future X1 account/storage mapping
+- future runtime atomicity requirements
+- future guardian operations
+- future relayer/watcher boundaries
+- future XXXL mint state representation
+
+Main mapping topics covered:
+
+- Stage 1 model baseline recap
+- runtime mapping principles
+- X1 account and storage mapping
+- processed burn atomicity
+- XXXL mint state mapping
+- guardian set management
+- relayer and watcher boundaries
+- recipient validation
+- burn amount limits
+- message expiry and TTL
+- runtime failure behavior
+- out-of-scope runtime items
+- current conclusion before Stage 2 runtime implementation
+
+Key invariant preserved:
+
+No XXXL mint state should be mutated unless message validation, guardian quorum, and replay protection all pass.
+
+Important runtime atomicity rule:
+
+A canonicalEventKey must be marked processed if and only if the corresponding XXXL mint succeeds.
+
+Runtime states to avoid:
+
+- processed burn marked but mint failed
+- mint succeeded but processed burn was not marked
+- processed burn checked in one transaction and marked in another
+
+Stage 1.5 conclusion:
+
+Stage 1 should remain closed as a deterministic gateway model baseline.
+
+The next runtime-facing work should map Stage 1 invariants into X1 runtime design while preserving separation of concerns:
+
+- verification before authorization
+- authorization before mint mutation
+- processed burn replay protection before mint
+- processed burn mark atomic with mint
+- relayer untrusted
+- guardian quorum required
+- recipient and amount derived from canonical signed message
+
+Stage 2 runtime implementation should not begin until the Stage 1.5 mapping notes are reviewed.
