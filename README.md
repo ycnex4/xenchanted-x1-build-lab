@@ -99,6 +99,7 @@ Latest reviewed main includes:
 - Stage 1 gateway end-to-end scenario
 - Stage 1 gateway negative end-to-end matrix
 - Stage 1 gateway baseline checkpoint
+- Stage 1.5 runtime mapping notes
 - X1-native Forge / Stake dual nominal model
 
 ## Validation commands
@@ -371,8 +372,9 @@ MVP implementation lab scope is complete.
 
 A controlled read-only mainnet RPC smoke for XC protocol params has completed successfully.
 
+- [Stage 1.5 runtime mapping notes](docs/gateway/stage-1-5-runtime-mapping-notes.md)
 The XNTD-to-XXXL burn-to-mint gateway is documented as a design-only future layer. Stage 1 gateway architecture, implementation planning, and Ethereum burn event schema are also documented, but the gateway is not implemented, deployed, or approved for production by the current repository.
 
 The X1-native Forge / Stake dual nominal model is also documented as a design-only future layer. It is not implemented, deployed, or approved for production by the current repository.
 
-The next recommended step is staging/runtime, gateway-risk review, and X1-native model review before adding new protocol features or Build actor scope.
+The next recommended step is Stage 1.5 runtime mapping review, followed by staging/runtime, gateway-risk review, and X1-native model review before adding new protocol features or Build actor scope.
