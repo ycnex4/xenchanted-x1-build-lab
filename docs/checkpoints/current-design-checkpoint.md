@@ -21172,3 +21172,67 @@ If evidence confirms strong atomicity, safe token mint rollback, deterministic r
 If direct mint constraints fail but claim creation and redemption can be proven safe, claim-based flow remains the fallback candidate.
 
 If neither risk cluster is resolved, neither candidate should be implemented.
+
+
+## Stage 2.6 X1 runtime evidence collection plan
+
+The Stage 2.6 X1 runtime evidence collection plan was started after Stage 2.5 gateway risk review was completed and merged into main.
+
+Branch:
+
+- stage-2-6-x1-runtime-evidence-plan
+
+Document added:
+
+- docs/gateway/stage-2-6-x1-runtime-evidence-plan.md
+
+README update:
+
+- added Stage 2.6 X1 runtime evidence collection plan to the project summary list
+- linked the Stage 2.6 plan from the Gateway documentation section
+- updated the next recommended gateway step to collecting X1 runtime evidence or creating clearly isolated prototype-only experiments
+
+Purpose:
+
+Stage 2.6 is a planning-only checkpoint.
+
+It does not implement runtime code, deploy an X1 program, create production mint authority, enable real cross-chain minting, or approve a final gateway architecture.
+
+The purpose is to define which X1 runtime facts must be proven before direct mint, claim-based flow, or any production-like gateway implementation can begin.
+
+Main areas covered:
+
+- evidence categories
+- evidence quality levels
+- evidence register
+- transaction-level atomicity
+- account write rollback
+- CPI/token mint rollback
+- token mint authority model
+- deterministic account derivation
+- processed burn registry persistence
+- maximum transaction size
+- compute budget
+- event/log availability and indexing
+- token account creation and handling
+- pause state behavior
+- upgrade and migration constraints
+- source route finality model
+- source fork handling model
+- guardian signature verification limits
+- rent and storage behavior
+- evidence recording format
+- prototype-only rules
+- architecture impact matrix
+
+Main conclusion:
+
+Stage 2 should remain in planning and evidence collection.
+
+The repository now has enough design context to know what must not be implemented prematurely.
+
+The next useful step is to collect X1 runtime evidence or create clearly isolated prototype-only experiments for the highest-risk assumptions.
+
+The first evidence targets should be transaction atomicity, account write rollback, CPI/token mint rollback, token mint authority model, deterministic account derivation, and processed burn registry persistence.
+
+Only after those are supported by evidence should the architecture choice between direct mint and claim-based flow become an implementation planning topic.
