@@ -103,6 +103,7 @@ Latest reviewed main includes:
 - Stage 1.6 guardian set management design
 - Stage 1.7 X1 account/storage layout design
 - Stage 1.8 X1 runtime assumptions checkpoint
+- Stage 1.9 Stage 2 planning readiness checkpoint
 - X1-native Forge / Stake dual nominal model
 
 ## Validation commands
@@ -379,8 +380,9 @@ A controlled read-only mainnet RPC smoke for XC protocol params has completed su
 - [Stage 1.6 guardian set management design](docs/gateway/stage-1-6-guardian-set-management-design.md)
 - [Stage 1.7 X1 account/storage layout design](docs/gateway/stage-1-7-x1-account-storage-layout-design.md)
 - [Stage 1.8 X1 runtime assumptions checkpoint](docs/gateway/stage-1-8-x1-runtime-assumptions-checkpoint.md)
+- [Stage 1.9 Stage 2 planning readiness checkpoint](docs/gateway/stage-1-9-stage-2-planning-readiness.md)
 The XNTD-to-XXXL burn-to-mint gateway is documented as a design-only future layer. Stage 1 gateway architecture, implementation planning, and Ethereum burn event schema are also documented, but the gateway is not implemented, deployed, or approved for production by the current repository.
 
 The X1-native Forge / Stake dual nominal model is also documented as a design-only future layer. It is not implemented, deployed, or approved for production by the current repository.
 
-The next recommended step is Stage 1.8 X1 runtime assumptions review, followed by staging/runtime, gateway-risk review, and X1-native model review before adding new protocol features or Build actor scope.
+The next recommended step is Stage 1.9 Stage 2 planning readiness review, followed by Stage 2 planning, gateway-risk review, and X1-native model review before adding new protocol features or Build actor scope.
