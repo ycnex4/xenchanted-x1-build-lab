@@ -20985,3 +20985,64 @@ Direct mint is a strong candidate only if X1 runtime guarantees are strong.
 It should remain a candidate, not an implementation decision.
 
 The next useful step is to draft the claim-based candidate runtime design and compare it against the direct mint design.
+
+
+## Stage 2.3 claim-based candidate runtime design
+
+The Stage 2.3 claim-based candidate runtime design was started after Stage 2.2 direct mint candidate runtime design was completed and merged into main.
+
+Branch:
+
+- stage-2-3-claim-based-candidate-runtime-design
+
+Document added:
+
+- docs/gateway/stage-2-3-claim-based-candidate-runtime-design.md
+
+README update:
+
+- added Stage 2.3 claim-based candidate runtime design to the project summary list
+- linked the Stage 2.3 design from the Gateway documentation section
+- updated the next recommended gateway step to direct mint vs claim-based architecture comparison
+
+Purpose:
+
+Stage 2.3 is a planning-only checkpoint.
+
+It does not implement runtime code, deploy an X1 program, create production mint authority, enable real cross-chain minting, or choose claim-based flow as the final architecture.
+
+The purpose is to describe the claim-based path as the second candidate architecture so it can be compared against the direct mint candidate from Stage 2.2.
+
+Main areas covered:
+
+- claim-based definition
+- candidate participants
+- candidate accounts
+- candidate instruction flow
+- createGatewayClaim
+- redeemGatewayClaim
+- claim account fields
+- claim creation atomicity
+- claim redemption atomicity
+- replay protection
+- claim ownership
+- rent and storage
+- pause behavior
+- upgradeability behavior
+- source fork handling
+- failure states
+- claim-based blockers
+- claim-based test plan
+- comparison notes
+
+Main conclusion:
+
+Claim-based flow is a strong candidate when X1 runtime assumptions are incomplete or direct mint atomicity cannot be proven.
+
+It is not automatically safer.
+
+It trades direct mint atomicity pressure for claim-state complexity.
+
+It should remain a candidate, not an implementation decision.
+
+The next useful step is to compare direct mint and claim-based candidate designs side by side and define an architecture choice gate.
