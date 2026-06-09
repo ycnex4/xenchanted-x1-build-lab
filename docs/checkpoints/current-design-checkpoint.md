@@ -21290,3 +21290,40 @@ The next useful step is to begin the first prototype-only evidence branch for tr
 The preferred first evidence targets are EV-01 transaction-level atomicity and EV-02 account write rollback.
 
 These are foundational for both direct mint and claim-based flow.
+
+
+## Stage 2.8 gateway planning baseline checkpoint
+
+The Stage 2.8 gateway planning baseline checkpoint was started after Stage 2.7 prototype-only experiment boundaries was completed and merged into main.
+
+Branch:
+
+- stage-2-8-gateway-planning-baseline-checkpoint
+
+Document added:
+
+- docs/gateway/stage-2-8-gateway-planning-baseline-checkpoint.md
+
+README update:
+
+- added Stage 2.8 gateway planning baseline checkpoint to the project summary list
+- linked the Stage 2.8 baseline checkpoint from the Gateway documentation section
+- updated the next recommended gateway step to the first prototype-only evidence branch for EV-01 transaction-level atomicity and EV-02 account write rollback, or collecting official X1 runtime documentation if available
+
+Purpose:
+
+Stage 2.8 is a documentation-only checkpoint.
+
+It does not implement runtime code, deploy an X1 program, create production mint authority, enable real cross-chain minting, or approve a final gateway architecture.
+
+The purpose is to summarize the completed Stage 2.0 through Stage 2.7 planning sequence and define the next allowed work boundary.
+
+Main conclusion:
+
+Stage 2 gateway planning baseline is complete.
+
+The repository now has enough planning structure to prevent premature gateway implementation.
+
+The next step should be evidence collection, not runtime implementation.
+
+Until EV-01 transaction-level atomicity and EV-02 account write rollback are supported by evidence, both direct mint and claim-based runtime implementation should remain blocked.
