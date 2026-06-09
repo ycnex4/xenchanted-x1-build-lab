@@ -111,6 +111,7 @@ Latest reviewed main includes:
 - Stage 2.4 direct mint vs claim-based architecture comparison
 - Stage 2.5 gateway risk review
 - Stage 2.6 X1 runtime evidence collection plan
+- Stage 2.7 prototype-only experiment boundaries
 - X1-native Forge / Stake dual nominal model
 
 ## Validation commands
@@ -395,8 +396,9 @@ A controlled read-only mainnet RPC smoke for XC protocol params has completed su
 - [Stage 2.4 Direct mint vs claim-based architecture comparison](docs/gateway/stage-2-4-direct-vs-claim-architecture-comparison.md)
 - [Stage 2.5 Gateway risk review](docs/gateway/stage-2-5-gateway-risk-review.md)
 - [Stage 2.6 X1 runtime evidence collection plan](docs/gateway/stage-2-6-x1-runtime-evidence-plan.md)
+- [Stage 2.7 Prototype-only experiment boundaries](docs/gateway/stage-2-7-prototype-only-experiment-boundaries.md)
 The XNTD-to-XXXL burn-to-mint gateway is documented as a design-only future layer. Stage 1 gateway architecture, implementation planning, and Ethereum burn event schema are also documented, but the gateway is not implemented, deployed, or approved for production by the current repository.
 
 The X1-native Forge / Stake dual nominal model is also documented as a design-only future layer. It is not implemented, deployed, or approved for production by the current repository.
 
-The next recommended step is collecting X1 runtime evidence or creating clearly isolated prototype-only experiments for the highest-risk gateway assumptions before adding new protocol features or Build actor scope.
+The next recommended step is the first prototype-only evidence branch for transaction atomicity and account write rollback, or collecting official X1 runtime documentation if available.

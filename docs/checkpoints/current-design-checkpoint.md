@@ -21236,3 +21236,57 @@ The next useful step is to collect X1 runtime evidence or create clearly isolate
 The first evidence targets should be transaction atomicity, account write rollback, CPI/token mint rollback, token mint authority model, deterministic account derivation, and processed burn registry persistence.
 
 Only after those are supported by evidence should the architecture choice between direct mint and claim-based flow become an implementation planning topic.
+
+
+## Stage 2.7 prototype-only experiment boundaries
+
+The Stage 2.7 prototype-only experiment boundaries checkpoint was started after Stage 2.6 X1 runtime evidence collection plan was completed and merged into main.
+
+Branch:
+
+- stage-2-7-prototype-only-experiment-boundaries
+
+Document added:
+
+- docs/gateway/stage-2-7-prototype-only-experiment-boundaries.md
+
+README update:
+
+- added Stage 2.7 prototype-only experiment boundaries to the project summary list
+- linked the Stage 2.7 boundaries document from the Gateway documentation section
+- updated the next recommended gateway step to the first prototype-only evidence branch for transaction atomicity and account write rollback, or collecting official X1 runtime documentation if available
+
+Purpose:
+
+Stage 2.7 is a planning-only checkpoint.
+
+It does not implement production runtime code, deploy an X1 program, create production mint authority, enable real cross-chain minting, or approve a final gateway architecture.
+
+The purpose is to make sure future evidence collection does not accidentally become hidden gateway implementation.
+
+Main areas covered:
+
+- prototype-only definition
+- non-negotiable boundaries
+- allowed prototype categories
+- disallowed prototype categories
+- required prototype document format
+- evidence ID mapping
+- branch naming
+- commit rules
+- file placement
+- safety rules for commands
+- merge requirements
+- architecture decision rule
+
+Main conclusion:
+
+Stage 2.7 defines the guardrails for future prototype-only work.
+
+The repository should continue to avoid production gateway implementation until evidence exists.
+
+The next useful step is to begin the first prototype-only evidence branch for transaction atomicity and account write rollback, or to collect official X1 documentation if available.
+
+The preferred first evidence targets are EV-01 transaction-level atomicity and EV-02 account write rollback.
+
+These are foundational for both direct mint and claim-based flow.
