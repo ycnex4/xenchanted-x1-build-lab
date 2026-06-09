@@ -20931,3 +20931,57 @@ Claim-based flow may be safer under uncertainty but adds claim-state complexity.
 Both tracks remain planning candidates until concrete X1 runtime facts are confirmed.
 
 The next useful step is to draft direct mint and claim-based candidate runtime designs as separate comparable planning documents.
+
+
+## Stage 2.2 direct mint candidate runtime design
+
+The Stage 2.2 direct mint candidate runtime design was started after Stage 2.1 runtime assumption dependency table was completed and merged into main.
+
+Branch:
+
+- stage-2-2-direct-mint-candidate-runtime-design
+
+Document added:
+
+- docs/gateway/stage-2-2-direct-mint-candidate-runtime-design.md
+
+README update:
+
+- added Stage 2.2 direct mint candidate runtime design to the project summary list
+- linked the Stage 2.2 design from the Gateway documentation section
+- updated the next recommended gateway step to the claim-based candidate runtime design
+
+Purpose:
+
+Stage 2.2 is a planning-only checkpoint.
+
+It does not implement runtime code, deploy an X1 program, create production mint authority, enable real cross-chain minting, or choose direct mint as the final architecture.
+
+The purpose is to describe the direct mint path as one candidate architecture so it can later be compared against the claim-based candidate.
+
+Main areas covered:
+
+- direct mint definition
+- candidate participants
+- candidate accounts
+- candidate instruction flow
+- required atomicity
+- replay protection
+- message binding
+- guardian verification
+- route and coefficient binding
+- pause behavior
+- upgradeability behavior
+- source fork handling
+- failure states
+- direct mint blockers
+- direct mint test plan
+- comparison notes
+
+Main conclusion:
+
+Direct mint is a strong candidate only if X1 runtime guarantees are strong.
+
+It should remain a candidate, not an implementation decision.
+
+The next useful step is to draft the claim-based candidate runtime design and compare it against the direct mint design.
