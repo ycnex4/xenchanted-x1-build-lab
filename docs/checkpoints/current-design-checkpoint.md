@@ -21327,3 +21327,37 @@ The repository now has enough planning structure to prevent premature gateway im
 The next step should be evidence collection, not runtime implementation.
 
 Until EV-01 transaction-level atomicity and EV-02 account write rollback are supported by evidence, both direct mint and claim-based runtime implementation should remain blocked.
+
+
+## EV-01 / EV-02 atomic rollback prototype evidence plan
+
+The first prototype-only evidence branch was started after the Stage 2.8 gateway planning baseline checkpoint.
+
+Branch:
+
+- prototype-x1-evidence-atomic-rollback
+
+Document added:
+
+- docs/gateway/evidence/ev-01-ev-02-atomic-rollback-prototype.md
+
+README update:
+
+- linked the EV-01 / EV-02 atomic rollback prototype evidence plan from the Gateway documentation section
+
+Purpose:
+
+This is an evidence plan only.
+
+It does not implement gateway runtime behavior, bridge logic, minting, relayer behavior, guardian logic, claim creation, claim redemption, or production X1 deployment.
+
+Covered evidence IDs:
+
+- EV-01 transaction-level atomicity
+- EV-02 account write rollback
+
+Current status:
+
+No runtime evidence has been collected yet.
+
+Direct mint and claim-based runtime implementation remain blocked until EV-01 and EV-02 have evidence-backed results.
