@@ -20734,3 +20734,84 @@ Current conclusion:
 These refinements strengthen Stage 1.8 without changing repository runtime behavior.
 
 Stage 2 planning remains unblocked, but concrete X1 runtime assumptions must be reviewed before implementation.
+
+
+## Stage 1.9 Stage 2 planning readiness checkpoint
+
+The Stage 1.9 Stage 2 planning readiness checkpoint was started after Stage 1.8 runtime assumptions checkpoint and Stage 1.8 review refinements were completed and merged into main.
+
+Branch:
+
+- stage-1-9-stage-2-planning-readiness
+
+Document added:
+
+- docs/gateway/stage-1-9-stage-2-planning-readiness.md
+
+README update:
+
+- added Stage 1.9 Stage 2 planning readiness checkpoint to the project summary list
+- linked the Stage 1.9 checkpoint from the Gateway documentation section
+- updated the next recommended gateway step to start with Stage 1.9 Stage 2 planning readiness review
+
+Purpose:
+
+Stage 1.9 is a design-only checkpoint.
+
+It does not implement X1 gateway runtime code, deployed X1 programs, deployed Ethereum contracts, production keys, production guardian operations, relayer runtime, watcher runtime, frontend flow, token deployment, direct mint flow, claim-based flow, pause runtime, account allocation scripts, or Stage 2 implementation.
+
+The goal is to summarize what has been completed across Stage 1.5 through Stage 1.8, identify what can be considered stable for planning, list what remains unresolved before implementation, and define the boundary between Stage 2 planning and Stage 2 implementation.
+
+Main areas summarized:
+
+- Stage 1 gateway baseline status
+- Stage 1.5 runtime mapping status
+- Stage 1.6 guardian set management status
+- Stage 1.7 account/storage layout status
+- Stage 1.8 runtime assumptions status
+- stable design anchors
+- Stage 2 planning boundary
+- Stage 2 implementation boundary
+- blockers before Stage 2 implementation
+- non-blocking open questions
+- recommended next sequence
+
+Stable design anchors:
+
+- canonical message and domain separation
+- canonicalEventKey as replay anchor
+- guardian quorum boundary
+- source coefficient boundary
+- pause boundary
+- upgradeability boundary
+- atomicity boundary
+- direct mint vs claim-based boundary
+
+Blockers before Stage 2 implementation:
+
+- unknown CPI atomicity
+- unknown transaction rollback behavior
+- unknown token program interface
+- unknown recipient token account creation model
+- unknown processed burn registry persistence
+- unknown upgrade authority model
+- unknown canonicalEventKey derivation immutability/migration model
+- unknown source chain fork handling
+- unknown compute budget / transaction size constraints
+- unknown account rent/storage model
+- unknown route/coefficient version binding in runtime message format
+- unknown finality policy per source route
+
+Current conclusion:
+
+Stage 1.9 marks the transition from Stage 1 design checkpoints toward Stage 2 planning readiness.
+
+Stage 1.5 through Stage 1.8 created enough design structure to begin Stage 2 planning.
+
+They did not create enough certainty to begin Stage 2 implementation.
+
+The next appropriate step is Stage 2 planning, not runtime deployment.
+
+The strongest current rule remains:
+
+Do not implement runtime behavior that depends on unconfirmed X1 assumptions.
