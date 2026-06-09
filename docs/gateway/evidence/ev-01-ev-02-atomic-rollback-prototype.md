@@ -119,6 +119,29 @@ After the experiment is performed, this document should be updated with:
 - remaining uncertainty
 - conclusion
 
+
+## Local reference model
+
+A local TypeScript reference model was added in a later branch:
+
+- src/prototypes/atomic-rollback-reference.ts
+- tests/prototypes/atomic-rollback-reference.test.ts
+
+Purpose:
+
+- define expected atomic rollback semantics
+- prove that the local reference model rolls back all writes on failure
+- prove that successful operations persist all writes
+- explicitly keep EV-01 and EV-02 open
+
+This is not X1 runtime evidence.
+
+This does not prove X1 transaction atomicity.
+
+This does not prove X1 account write rollback.
+
+The next required step is to repeat the same rollback scenario in the X1 testnet/runtime environment.
+
 ## Current status
 
 Status: planned.
