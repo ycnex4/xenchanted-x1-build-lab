@@ -20815,3 +20815,69 @@ The next appropriate step is Stage 2 planning, not runtime deployment.
 The strongest current rule remains:
 
 Do not implement runtime behavior that depends on unconfirmed X1 assumptions.
+
+
+## Stage 2.0 gateway runtime planning outline
+
+The Stage 2.0 gateway runtime planning outline was started after Stage 1.9 Stage 2 planning readiness checkpoint was completed and merged into main.
+
+Branch:
+
+- stage-2-0-gateway-runtime-planning-outline
+
+Document added:
+
+- docs/gateway/stage-2-0-gateway-runtime-planning-outline.md
+
+README update:
+
+- added Stage 2.0 gateway runtime planning outline to the project summary list
+- linked the Stage 2.0 outline from the Gateway documentation section
+- updated the next recommended gateway step to the Stage 2 runtime assumption dependency table
+
+Purpose:
+
+Stage 2.0 is a planning-only checkpoint.
+
+It does not implement runtime code, deploy an X1 program, create production mint authority, create production guardian operations, enable real cross-chain minting, or choose final direct mint / claim-based architecture.
+
+The purpose is to turn the completed Stage 1 design checkpoints into a structured Stage 2 planning map.
+
+Main planning areas:
+
+- runtime architecture planning
+- account layout planning
+- instruction planning
+- direct mint candidate planning
+- claim-based candidate planning
+- token interface planning
+- processed burn registry planning
+- guardian verification planning
+- source coefficient planning
+- pause planning
+- upgradeability planning
+- runtime assumption dependency mapping
+- test planning
+- audit planning
+- implementation gate definition
+
+Candidate tracks:
+
+- Track A: Direct mint candidate
+- Track B: Claim-based candidate
+
+Direct mint remains viable only if X1 runtime assumptions are strong enough to guarantee that processed burn mark and mint result commit atomically.
+
+Claim-based flow remains a safer candidate if runtime assumptions are incomplete, but it introduces claim-state complexity and must be explicitly replay-safe.
+
+Stage 2.0 defines the next required document as a runtime assumption dependency table comparing direct mint and claim-based flow against concrete X1 runtime facts.
+
+Current conclusion:
+
+Stage 2.0 begins gateway runtime planning.
+
+It does not begin gateway runtime implementation.
+
+The repository remains in design/planning mode for the X1-side gateway.
+
+The next useful step is a runtime assumption dependency table that compares direct mint and claim-based flow against concrete X1 runtime facts.
