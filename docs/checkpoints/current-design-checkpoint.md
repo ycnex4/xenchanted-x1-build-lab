@@ -21104,3 +21104,71 @@ Claim-based flow should remain the fallback candidate if direct mint atomicity, 
 Claim-based flow is not weaker by default, but it is more complex and requires stronger lifecycle discipline.
 
 The next useful step is a gateway risk review that uses this comparison to identify the highest-risk unresolved assumptions before any runtime implementation begins.
+
+
+## Stage 2.5 gateway risk review
+
+The Stage 2.5 gateway risk review was started after Stage 2.4 direct mint vs claim-based architecture comparison was completed and merged into main.
+
+Branch:
+
+- stage-2-5-gateway-risk-review
+
+Document added:
+
+- docs/gateway/stage-2-5-gateway-risk-review.md
+
+README update:
+
+- added Stage 2.5 gateway risk review to the project summary list
+- linked the Stage 2.5 risk review from the Gateway documentation section
+- updated the next recommended gateway step to X1 runtime evidence collection or prototype-only experiments
+
+Purpose:
+
+Stage 2.5 is a planning-only checkpoint.
+
+It does not implement runtime code, deploy an X1 program, create production mint authority, enable real cross-chain minting, or approve a final gateway architecture.
+
+The purpose is to collect the highest-risk unresolved assumptions from Stage 2 runtime planning before any implementation begins.
+
+Main areas covered:
+
+- risk severity model
+- risk status model
+- risk register
+- X1 transaction atomicity
+- CPI/token mint rollback behavior
+- processed burn registry durability
+- canonicalEventKey immutability
+- route and coefficient version binding
+- guardian quorum and signature verification
+- source chain finality and forks
+- pause behavior
+- upgrade boundaries
+- claim lifecycle and replay protection
+- claim ownership ambiguity
+- recipient token account handling
+- storage and rent
+- compute budget
+- transaction size limits
+- indexing and observability
+- relayer trust creep
+- mint authority model
+- manual recovery requirement
+- migration meaning preservation
+- cross-risk conclusions
+
+Main conclusion:
+
+Do not implement gateway runtime behavior yet.
+
+The next step should be X1 runtime evidence collection or prototype-only experiments focused on the highest-risk assumptions.
+
+The highest-risk dependency cluster is transaction atomicity, CPI/token mint rollback, processed burn registry durability, canonicalEventKey immutability, source finality/fork handling, and mint authority model.
+
+If evidence confirms strong atomicity, safe token mint rollback, deterministic recipient account handling, and acceptable compute/transaction limits, direct mint should remain the preferred candidate.
+
+If direct mint constraints fail but claim creation and redemption can be proven safe, claim-based flow remains the fallback candidate.
+
+If neither risk cluster is resolved, neither candidate should be implemented.
