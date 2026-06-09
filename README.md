@@ -108,6 +108,7 @@ Latest reviewed main includes:
 - Stage 2.1 runtime assumption dependency table
 - Stage 2.2 direct mint candidate runtime design
 - Stage 2.3 claim-based candidate runtime design
+- Stage 2.4 direct mint vs claim-based architecture comparison
 - X1-native Forge / Stake dual nominal model
 
 ## Validation commands
@@ -389,8 +390,9 @@ A controlled read-only mainnet RPC smoke for XC protocol params has completed su
 - [Stage 2.1 Runtime assumption dependency table](docs/gateway/stage-2-1-runtime-assumption-dependency-table.md)
 - [Stage 2.2 Direct mint candidate runtime design](docs/gateway/stage-2-2-direct-mint-candidate-runtime-design.md)
 - [Stage 2.3 Claim-based candidate runtime design](docs/gateway/stage-2-3-claim-based-candidate-runtime-design.md)
+- [Stage 2.4 Direct mint vs claim-based architecture comparison](docs/gateway/stage-2-4-direct-vs-claim-architecture-comparison.md)
 The XNTD-to-XXXL burn-to-mint gateway is documented as a design-only future layer. Stage 1 gateway architecture, implementation planning, and Ethereum burn event schema are also documented, but the gateway is not implemented, deployed, or approved for production by the current repository.
 
 The X1-native Forge / Stake dual nominal model is also documented as a design-only future layer. It is not implemented, deployed, or approved for production by the current repository.
 
-The next recommended step is direct mint vs claim-based architecture comparison, followed by gateway-risk review and X1-native model review before adding new protocol features or Build actor scope.
+The next recommended step is gateway-risk review, followed by X1-native model review before adding new protocol features or Build actor scope.
