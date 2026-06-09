@@ -21046,3 +21046,61 @@ It trades direct mint atomicity pressure for claim-state complexity.
 It should remain a candidate, not an implementation decision.
 
 The next useful step is to compare direct mint and claim-based candidate designs side by side and define an architecture choice gate.
+
+
+## Stage 2.4 direct mint vs claim-based architecture comparison
+
+The Stage 2.4 direct mint vs claim-based architecture comparison was started after both candidate runtime designs were completed and merged into main.
+
+Branch:
+
+- stage-2-4-direct-vs-claim-architecture-comparison
+
+Document added:
+
+- docs/gateway/stage-2-4-direct-vs-claim-architecture-comparison.md
+
+README update:
+
+- added Stage 2.4 direct mint vs claim-based architecture comparison to the project summary list
+- linked the Stage 2.4 comparison from the Gateway documentation section
+- updated the next recommended gateway step to gateway-risk review
+
+Purpose:
+
+Stage 2.4 is a planning-only checkpoint.
+
+It does not implement runtime code, deploy an X1 program, create production mint authority, enable real cross-chain minting, or choose a final gateway architecture.
+
+The purpose is to compare Stage 2.2 direct mint and Stage 2.3 claim-based flow side by side and define an architecture choice gate.
+
+Main areas covered:
+
+- candidate summary
+- high-level comparison
+- user experience
+- atomicity requirements
+- replay protection
+- storage and rent pressure
+- recipient token account handling
+- failure recovery
+- indexing and discovery
+- guardian responsibilities
+- runtime assumption dependency
+- implementation blockers
+- testing burden
+- migration and upgrade risk
+- architecture choice gate
+- current recommendation
+
+Main conclusion:
+
+Direct mint should remain the preferred candidate if X1 runtime guarantees are strong enough.
+
+It better matches the desired user experience and keeps state surface smaller.
+
+Claim-based flow should remain the fallback candidate if direct mint atomicity, recipient account handling, or transaction size constraints cannot be proven.
+
+Claim-based flow is not weaker by default, but it is more complex and requires stronger lifecycle discipline.
+
+The next useful step is a gateway risk review that uses this comparison to identify the highest-risk unresolved assumptions before any runtime implementation begins.
