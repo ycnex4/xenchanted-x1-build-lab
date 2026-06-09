@@ -21361,3 +21361,38 @@ Current status:
 No runtime evidence has been collected yet.
 
 Direct mint and claim-based runtime implementation remain blocked until EV-01 and EV-02 have evidence-backed results.
+
+
+## Atomic rollback reference model checkpoint
+
+A local reference model was added after the EV-01 / EV-02 evidence plan.
+
+Branch:
+
+- prototype-x1-atomic-rollback-reference-model
+
+Commit:
+
+- f571cdb Add atomic rollback reference model
+
+Files added:
+
+- src/prototypes/atomic-rollback-reference.ts
+- tests/prototypes/atomic-rollback-reference.test.ts
+
+Purpose:
+
+The reference model defines the expected rollback semantics for future X1 runtime evidence:
+
+- failed atomic operation restores the previous ledger snapshot
+- multiple account writes roll back together
+- successful atomic operation persists all writes
+- the test suite explicitly states that EV-01 and EV-02 remain open
+
+Important limitation:
+
+This is local reference behavior only.
+
+It does not prove X1 runtime behavior.
+
+The next evidence step should be performed against the X1 testnet/runtime environment.
