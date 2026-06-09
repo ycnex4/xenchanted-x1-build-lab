@@ -20881,3 +20881,53 @@ It does not begin gateway runtime implementation.
 The repository remains in design/planning mode for the X1-side gateway.
 
 The next useful step is a runtime assumption dependency table that compares direct mint and claim-based flow against concrete X1 runtime facts.
+
+
+## Stage 2.1 runtime assumption dependency table
+
+The Stage 2.1 runtime assumption dependency table was started after Stage 2.0 gateway runtime planning outline was completed and merged into main.
+
+Branch:
+
+- stage-2-1-runtime-assumption-dependency-table
+
+Document added:
+
+- docs/gateway/stage-2-1-runtime-assumption-dependency-table.md
+
+README update:
+
+- added Stage 2.1 runtime assumption dependency table to the project summary list
+- linked the Stage 2.1 table from the Gateway documentation section
+- updated the next recommended gateway step to direct mint vs claim-based candidate runtime design
+
+Purpose:
+
+Stage 2.1 is a planning-only checkpoint.
+
+It does not implement runtime code, deploy an X1 program, create production mint authority, enable real cross-chain minting, or choose final direct mint / claim-based architecture.
+
+The purpose is to compare each known X1 runtime assumption against both candidate gateway tracks:
+
+- direct mint
+- claim-based flow
+
+Main table fields:
+
+- runtime assumption
+- current status
+- direct mint impact
+- claim-based impact
+- blocker level
+- evidence needed
+- planned resolution
+
+Main conclusion:
+
+Direct mint is clean but requires stronger runtime guarantees.
+
+Claim-based flow may be safer under uncertainty but adds claim-state complexity.
+
+Both tracks remain planning candidates until concrete X1 runtime facts are confirmed.
+
+The next useful step is to draft direct mint and claim-based candidate runtime designs as separate comparable planning documents.
