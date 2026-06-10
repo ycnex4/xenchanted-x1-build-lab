@@ -21598,3 +21598,58 @@ Stage 1.10 plus Theo review refinements now define the first implementation dire
 - relayer-paid ProcessedBurnEntry rent
 
 The next appropriate step is a minimal Stage 2 runtime implementation prototype branch, not production deployment.
+
+
+## Stage 2 direct mint gateway skeleton testnet evidence
+
+The first Stage 2 direct mint gateway skeleton was implemented locally in the X1 runtime prototype repository.
+
+Prototype repository:
+
+- `~/xenchanted-x1-lab/hello-x1`
+
+Prototype branch:
+
+- `stage-2-direct-mint-gateway-skeleton`
+
+Local commits:
+
+- `a66b92b Add Stage 2 direct mint gateway skeleton`
+- `7d664e4 Add Stage 2 direct mint gateway skeleton test`
+
+The updated program was deployed to X1 testnet.
+
+Program id:
+
+- `9tCJe4M1MJQtE1gDxNYNE75fNUGpSAKiX56rgUMR8984`
+
+Deploy signature:
+
+- `3EbU65uWo3zwVGGo3KJ1rXsgDPVfsTUPKFaJo15WPu8F9yvKojs5rpQQP9S5Wsg5xf2fgigRvBDPnyEQY2rvR5cK`
+
+The following test passed on X1 testnet:
+
+- `tests/gateway_direct_mint_skeleton.ts`
+
+Result:
+
+- `2 passing`
+
+Evidence confirmed:
+
+- initialize_gateway_config works
+- set_guardian_set works
+- submit_mint_approval creates ProcessedBurnEntry
+- replay with the same canonical_event_key is rejected
+- unknown guardian approvals are rejected
+- failed unknown guardian path does not create ProcessedBurnEntry
+
+A new evidence document was added:
+
+- docs/gateway/evidence/stage-2-direct-mint-skeleton-testnet-evidence.md
+
+Current conclusion:
+
+Stage 2 has moved from design-only planning into a minimal X1 testnet runtime skeleton.
+
+This does not yet prove token mint CPI, real guardian cryptographic verification, production relayer correctness, or final bridge readiness.
