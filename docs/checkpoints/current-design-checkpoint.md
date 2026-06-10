@@ -21518,3 +21518,37 @@ Conclusion:
 Scope remains limited:
 
 This confirms the required rollback behavior for the probe scenario only. It does not implement production gateway, bridge, mint authority, relayer, watcher, or frontend gateway logic.
+
+
+## Stage 1.10 X1 program instruction and PDA derivation design
+
+The Stage 1.10 X1 program instruction and PDA derivation design milestone was started after the EV-01 / EV-02 X1 testnet rollback probe passed and was documented.
+
+This stage was created because Stage 1.9 already exists as the Stage 2 planning readiness checkpoint, while the new Theo review clarified that one more design milestone is needed before any X1 runtime implementation begins.
+
+Stage 1.10 is design-only.
+
+It does not implement X1 gateway runtime code, bridge logic, production mint authority, relayer runtime, watcher runtime, frontend gateway flow, production guardian keys, or deployed production programs.
+
+The goal is to define:
+
+- gateway instruction boundaries
+- concrete PDA seeds
+- candidate account structs
+- signer and guardian verification boundaries
+- CPI and mint authority design
+- direct mint vs claim-based execution boundary
+- failure atomicity matrix
+- blockers before Stage 2 runtime implementation
+
+The new document is:
+
+- docs/gateway/stage-1-10-x1-program-instruction-and-pda-derivation-design.md
+
+Current conclusion:
+
+EV-01 and EV-02 removed the atomic rollback blocker.
+
+They did not remove the program design blocker.
+
+Stage 2 runtime code should not begin until Stage 1.10 is reviewed and the open instruction/PDA/CPI/mint-authority decisions are either resolved or explicitly marked as implementation blockers.
