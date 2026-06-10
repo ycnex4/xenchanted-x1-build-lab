@@ -391,6 +391,7 @@ A controlled read-only mainnet RPC smoke for XC protocol params has completed su
 - [Stage 1.8 X1 runtime assumptions checkpoint](docs/gateway/stage-1-8-x1-runtime-assumptions-checkpoint.md)
 - [Stage 1.9 Stage 2 planning readiness checkpoint](docs/gateway/stage-1-9-stage-2-planning-readiness.md)
 - [Stage 1.10 X1 program instruction and PDA derivation design](docs/gateway/stage-1-10-x1-program-instruction-and-pda-derivation-design.md)
+- [Stage 1.10 Theo review refinements](docs/gateway/stage-1-10-theo-review-refinements.md)
 - [Stage 2.0 Gateway runtime planning outline](docs/gateway/stage-2-0-gateway-runtime-planning-outline.md)
 - [Stage 2.1 Runtime assumption dependency table](docs/gateway/stage-2-1-runtime-assumption-dependency-table.md)
 - [Stage 2.2 Direct mint candidate runtime design](docs/gateway/stage-2-2-direct-mint-candidate-runtime-design.md)
