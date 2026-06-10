@@ -168,6 +168,36 @@ Status:
 - EV-01 remains open
 - EV-02 remains open
 
+
+
+## Theo sanity-check on X1 testnet deployment blocker
+
+Theo reviewed the X1 testnet rollback probe blocker and confirmed the interpretation:
+
+- InstructionFallbackNotFound means the deployed on-chain program does not contain the new instruction discriminator.
+- The rollback test client was most likely reaching the old deployed program.
+- The failed upgrade/deploy is the blocker, not the rollback test logic.
+- Repeated failed upgrades should not leave partial program state, because Solana/Anchor-style program upgrade is atomic.
+- The practical risk is leftover buffer accounts, not partially upgraded program logic.
+
+Observed deployment blockers:
+
+- Blockhash expired
+- Max retries exceeded
+- 429 Too Many Requests
+
+Theo's recommended next steps, ranked by practicality:
+
+1. Use a fresh program ID for the rollback probe instead of upgrading the old program.
+2. Build release / smaller program if possible.
+3. If public X1 RPC remains unstable, try another RPC endpoint.
+4. If deploy still fails, use buffer-based deploy as a fallback.
+5. Local validator can provide faster feedback, but it would not count as X1 testnet runtime evidence.
+
+Current conclusion:
+
+The local probe remains prepared, but EV-01 and EV-02 remain open until the rollback scenario is successfully executed against X1 testnet runtime.
+
 ## Current status
 
 Status: planned.

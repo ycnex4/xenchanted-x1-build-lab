@@ -21477,3 +21477,19 @@ Conclusion:
 The testnet probe is prepared locally, but EV-01 and EV-02 remain open.
 
 No runtime rollback evidence has been collected yet.
+
+
+## Theo sanity-check on X1 testnet rollback probe blocker
+
+Theo confirmed the current interpretation of the X1 testnet rollback probe blocker:
+
+- InstructionFallbackNotFound means the deployed program is still the old version and does not contain the new instruction discriminator.
+- The failed deploy/upgrade is the blocker, not the rollback test logic.
+- Failed program upgrades should not leave partial program logic/state because the upgrade path is atomic.
+- Public X1 RPC instability is consistent with the observed Blockhash expired, Max retries exceeded, and 429 Too Many Requests errors.
+
+Recommended next action:
+
+- try a fresh program ID for the rollback probe instead of upgrading the existing hello_x1 program
+- keep the probe testnet-only
+- keep EV-01 and EV-02 open until the rollback scenario is successfully executed on X1 testnet
