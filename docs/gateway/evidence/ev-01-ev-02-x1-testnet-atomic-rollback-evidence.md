@@ -198,6 +198,51 @@ Current conclusion:
 
 The local probe remains prepared, but EV-01 and EV-02 remain open until the rollback scenario is successfully executed against X1 testnet runtime.
 
+
+
+## X1 testnet rollback probe result
+
+The EV-01 / EV-02 rollback probe was successfully executed against X1 testnet runtime.
+
+Fresh probe program:
+
+- Program ID: 9tCJe4M1MJQtE1gDxNYNE75fNUGpSAKiX56rgUMR8984
+- Deploy signature: 63FmJHD7KGV1n6Z8zyWn9qkvhDpagi8tHkWd5MUWYU4Ppdg2JaYyZY6WbH5XhuZ9P7UvXERqhTK8oyyaFkz4ZA1q
+
+Probe execution:
+
+- command: yarn ts-mocha -p ./tsconfig.json -t 1000000 tests/atomic_rollback_probe.ts
+- result: 1 passing
+
+Observed test result:
+
+- EV-01 / EV-02 X1 atomic rollback probe
+- keeps rollback probe state unchanged after intentional failure
+- 1 passing
+
+What the probe verified:
+
+1. initialize_rollback_probe created and initialized a RollbackProbe account.
+2. write_then_fail attempted to mutate the same account.
+3. write_then_fail intentionally returned an error after mutation.
+4. The client re-read the account after the failed transaction.
+5. The account state remained equal to the initial state.
+
+Interpretation:
+
+This provides X1 testnet runtime evidence that a failed instruction transaction rolls back account writes in this probe scenario.
+
+Status:
+
+- EV-01 transaction-level atomicity: confirmed by X1 testnet probe
+- EV-02 account write rollback: confirmed by X1 testnet probe
+
+Scope:
+
+This is runtime evidence for the rollback behavior needed before gateway design can continue.
+
+It is not a production gateway implementation, not bridge logic, not mint authority logic, and not a relayer/watcher implementation.
+
 ## Current status
 
 Status: planned.
