@@ -21493,3 +21493,28 @@ Recommended next action:
 - try a fresh program ID for the rollback probe instead of upgrading the existing hello_x1 program
 - keep the probe testnet-only
 - keep EV-01 and EV-02 open until the rollback scenario is successfully executed on X1 testnet
+
+
+## X1 testnet rollback evidence pass
+
+The X1 testnet rollback probe has now passed against a fresh deployed probe program.
+
+Fresh probe program:
+
+- Program ID: 9tCJe4M1MJQtE1gDxNYNE75fNUGpSAKiX56rgUMR8984
+- Deploy signature: 63FmJHD7KGV1n6Z8zyWn9qkvhDpagi8tHkWd5MUWYU4Ppdg2JaYyZY6WbH5XhuZ9P7UvXERqhTK8oyyaFkz4ZA1q
+
+Runtime test result:
+
+- yarn ts-mocha -p ./tsconfig.json -t 1000000 tests/atomic_rollback_probe.ts
+- 1 passing
+- rollback probe state remained unchanged after intentional failure
+
+Conclusion:
+
+- EV-01 transaction-level atomicity is confirmed by the X1 testnet probe.
+- EV-02 account write rollback is confirmed by the X1 testnet probe.
+
+Scope remains limited:
+
+This confirms the required rollback behavior for the probe scenario only. It does not implement production gateway, bridge, mint authority, relayer, watcher, or frontend gateway logic.
