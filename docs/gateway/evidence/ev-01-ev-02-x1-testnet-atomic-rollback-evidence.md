@@ -110,6 +110,64 @@ The experiment fails if:
 - behavior is inconsistent between runs
 - the runtime behavior is unclear or unobservable
 
+
+
+## X1 testnet probe preparation attempt
+
+A local X1 Anchor-style testnet probe was prepared in the separate local repository:
+
+- ~/xenchanted-x1-lab/hello-x1
+
+Local branch:
+
+- ev-01-ev-02-atomic-rollback-testnet-probe
+
+Local commits:
+
+- be66899 Add atomic rollback testnet probe instructions
+- cfb3407 Add atomic rollback testnet probe client
+
+Probe program additions:
+
+- RollbackProbe state account
+- initialize_rollback_probe instruction
+- write_then_fail instruction
+- IntentionalRollbackFailure error
+
+Probe client addition:
+
+- tests/atomic_rollback_probe.ts
+
+Local checks:
+
+- cargo test passed
+- anchor build passed
+
+Runtime attempt result:
+
+The X1 testnet runtime evidence was not collected yet.
+
+The updated program could not be deployed to X1 testnet during this attempt because deploy/upgrade failed with RPC/testnet reliability errors:
+
+- Blockhash expired
+- Max retries exceeded
+- 429 Too Many Requests
+
+After the failed deploy, the client test still reached the old deployed program version and failed with:
+
+- InstructionFallbackNotFound
+
+Interpretation:
+
+This does not prove or disprove EV-01 or EV-02.
+
+It only proves that the rollback probe code and client were prepared locally, while runtime evidence remains blocked by X1 testnet deployment/RPC availability.
+
+Status:
+
+- EV-01 remains open
+- EV-02 remains open
+
 ## Current status
 
 Status: planned.

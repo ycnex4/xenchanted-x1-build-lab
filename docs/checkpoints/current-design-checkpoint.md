@@ -21431,3 +21431,49 @@ Current status:
 - EV-01 remains open
 - EV-02 remains open
 - next step is to identify the exact X1 testnet toolchain/commands previously used for the XXL test and design the smallest safe rollback experiment
+
+
+## X1 testnet rollback probe status checkpoint
+
+A local X1 testnet rollback probe was prepared outside this repository in the separate local Anchor-style lab:
+
+- ~/xenchanted-x1-lab/hello-x1
+
+Local branch:
+
+- ev-01-ev-02-atomic-rollback-testnet-probe
+
+Local commits:
+
+- be66899 Add atomic rollback testnet probe instructions
+- cfb3407 Add atomic rollback testnet probe client
+
+What was prepared:
+
+- RollbackProbe state account
+- initialize_rollback_probe instruction
+- write_then_fail instruction
+- IntentionalRollbackFailure error
+- tests/atomic_rollback_probe.ts client test
+
+Local validation:
+
+- cargo test passed
+- anchor build passed
+
+Runtime evidence status:
+
+The probe was not successfully deployed to X1 testnet during this attempt.
+
+Observed deployment/runtime blockers:
+
+- Blockhash expired
+- Max retries exceeded
+- 429 Too Many Requests
+- old deployed program still returned InstructionFallbackNotFound when the client tried to call the new instruction
+
+Conclusion:
+
+The testnet probe is prepared locally, but EV-01 and EV-02 remain open.
+
+No runtime rollback evidence has been collected yet.
