@@ -21552,3 +21552,49 @@ EV-01 and EV-02 removed the atomic rollback blocker.
 They did not remove the program design blocker.
 
 Stage 2 runtime code should not begin until Stage 1.10 is reviewed and the open instruction/PDA/CPI/mint-authority decisions are either resolved or explicitly marked as implementation blockers.
+
+
+## Stage 1.10 Theo review refinements
+
+Theo reviewed the Stage 1.10 X1 program instruction and PDA derivation design.
+
+The review confirmed the document as a strong pre-implementation design layer and identified the remaining mandatory decisions before the first X1 gateway implementation branch.
+
+A new refinement document was added:
+
+- docs/gateway/stage-1-10-theo-review-refinements.md
+
+Theo confirmed these design strengths:
+
+- the six-instruction candidate set is appropriate
+- processed_burn PDA derivation using canonical_event_key is correct
+- the failure atomicity matrix is strong and concrete
+- guardian verification inside submit_mint_approval is the preferred first design
+
+Mandatory decisions recorded by this refinement:
+
+- first implementation path: direct mint
+- guardian verification: inside submit_mint_approval
+- mint authority model: gateway PDA signs token mint CPI
+- ProcessedBurnEntry rent payer: relayer payer account
+
+Additional refinements recorded:
+
+- GuardianSet account size is fixed at creation time and tied to guardian_count
+- guardian set size changes require a new GuardianSet PDA version
+- pause affects mint/claim flows but must not block recovery or unpause
+- ProcessedBurnEntry accounts remain permanent replay protection
+- ClaimEntry cleanup remains post-MVP or fallback-path design unless claim-based flow is selected
+
+Current conclusion:
+
+EV-01 and EV-02 removed the atomic rollback blocker.
+
+Stage 1.10 plus Theo review refinements now define the first implementation direction:
+
+- direct mint first
+- guardian verification in submit_mint_approval
+- gateway PDA mint authority
+- relayer-paid ProcessedBurnEntry rent
+
+The next appropriate step is a minimal Stage 2 runtime implementation prototype branch, not production deployment.
