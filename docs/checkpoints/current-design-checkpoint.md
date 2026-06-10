@@ -21396,3 +21396,38 @@ This is local reference behavior only.
 It does not prove X1 runtime behavior.
 
 The next evidence step should be performed against the X1 testnet/runtime environment.
+
+
+## X1 testnet atomic rollback evidence plan checkpoint
+
+A testnet evidence plan was added after the local atomic rollback reference model.
+
+Branch:
+
+- prototype-x1-testnet-atomic-rollback-evidence
+
+Commit:
+
+- 9ac05fe Add X1 testnet atomic rollback evidence plan
+
+Document added:
+
+- docs/gateway/evidence/ev-01-ev-02-x1-testnet-atomic-rollback-evidence.md
+
+Purpose:
+
+This document defines the first real X1 testnet/runtime evidence experiment for EV-01 and EV-02.
+
+It follows the local reference model but does not yet collect runtime evidence.
+
+Important boundary:
+
+This remains testnet-only planning.
+
+No gateway runtime, bridge implementation, XXXL mint authority, live token minting, guardian verification, relayer production logic, or frontend bridge UX has been implemented.
+
+Current status:
+
+- EV-01 remains open
+- EV-02 remains open
+- next step is to identify the exact X1 testnet toolchain/commands previously used for the XXL test and design the smallest safe rollback experiment
