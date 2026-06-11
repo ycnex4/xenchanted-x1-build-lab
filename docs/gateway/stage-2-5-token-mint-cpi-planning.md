@@ -1,0 +1,272 @@
+# Stage 2.5 Token Mint CPI Planning
+
+This document defines the planning boundary for Stage 2.5 token mint CPI integration after the Stage 2.4 guardian approval layer passed live X1 testnet evidence.
+
+## Status before Stage 2.5
+
+Stage 2.4 is complete at the guardian approval layer.
+
+Live X1 testnet evidence exists for:
+
+- context-bound message_hash
+- Ed25519 guardian signatures
+- prior instruction scanning
+- non-Ed25519 instruction interleaving
+- guardian set membership
+- ProcessedBurnEntry creation on success
+- replay rejection
+- missing signature rejection
+- unknown guardian rejection
+
+Theo review conclusion:
+
+- guardian approval layer is closed for Stage 2
+- no blockers remain before Stage 2.5 planning
+- token mint CPI planning is the correct next step
+
+## Stage 2.5 goal
+
+Stage 2.5 introduces planning for minting XXXL through token mint CPI after guardian approval succeeds.
+
+The goal is not to rush into production.
+
+The goal is to design and test the next atomic boundary:
+
+    guardian approval + replay protection + mint CPI
+
+The mint and ProcessedBurnEntry mark must be atomic.
+
+If mint CPI fails, ProcessedBurnEntry must not remain created.
+
+EV-01 and EV-02 rollback evidence support this assumption, but Stage 2.5 must prove it with token mint CPI tests.
+
+## Required design decisions before CPI code
+
+### 1. Token program ID
+
+Stage 2.5 must decide which token program XXXL uses on X1:
+
+- SPL Token / TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA
+- Token-2022 / TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb
+
+This decision affects:
+
+- CPI interface
+- account constraints
+- mint account layout
+- recipient token account layout
+- client test setup
+- future production compatibility
+
+Open decision:
+
+- choose token program ID before implementation
+
+### 2. XXXL mint account status
+
+Stage 2.5 must decide how the XXXL mint account is created.
+
+Options:
+
+1. Pre-create XXXL mint before gateway deploy.
+2. Add a controlled create_xxxl_mint instruction.
+3. Add mint setup into initialize_gateway_config.
+
+Preferred direction for Stage 2.5 prototype:
+
+- keep mint creation separate from submit_mint_approval
+- keep submit_mint_approval focused on approval + replay mark + mint CPI
+- avoid mixing gateway configuration with token setup until the mint authority model is confirmed
+
+Open decision:
+
+- define whether the XXXL mint is pre-created or created by a dedicated setup instruction
+
+### 3. Gateway PDA mint authority
+
+Stage 2.5 should use a gateway PDA as mint authority.
+
+The gateway PDA should sign the mint CPI through signer seeds.
+
+The token mint authority should not be an externally controlled wallet once the prototype reaches the CPI evidence stage.
+
+Required properties:
+
+- gateway PDA is deterministic
+- mint authority is the gateway PDA
+- mint CPI uses PDA signer seeds
+- no admin wallet can mint outside the gateway rules
+
+Open decision:
+
+- exact PDA seed model for mint authority
+
+Candidate:
+
+    seeds = [b"gateway"]
+
+or a dedicated mint authority PDA:
+
+    seeds = [b"mint_authority"]
+
+### 4. Recipient token account
+
+SPL Token mint_to does not mint directly to a wallet owner.
+
+It mints to a token account.
+
+Stage 2.5 must decide who creates or provides recipient_token_account.
+
+Options:
+
+1. Recipient token account must already exist.
+2. Relayer creates associated token account before submit.
+3. Gateway instruction creates associated token account if missing.
+4. Separate create_recipient_token_account instruction.
+
+Preferred direction for Stage 2.5 prototype:
+
+- require recipient_token_account to be passed in
+- reject if it is not valid for recipient and XXXL mint
+- do not create associated token account inside submit_mint_approval in the first CPI prototype
+
+Reason:
+
+- keeps the first mint CPI boundary smaller
+- reduces account complexity
+- makes failure modes easier to test
+
+Open decision:
+
+- whether associated token account creation is inside or outside gateway
+
+### 5. Compute budget
+
+Stage 2.4 already uses:
+
+- Ed25519 verification instructions
+- prior instruction scanning
+- context-bound keccak hash
+- account creation for ProcessedBurnEntry
+
+Stage 2.5 adds:
+
+- token mint CPI
+- token account checks
+- PDA signer seeds
+
+Client transactions may need ComputeBudgetProgram.setComputeUnitLimit.
+
+Open decision:
+
+- add compute budget instruction to test client before submit_mint_approval
+
+Expected Stage 2.5 test transaction shape:
+
+1. optional ComputeBudgetProgram.setComputeUnitLimit
+2. Ed25519 instruction for guardian A
+3. optional non-Ed25519 interleaving instruction
+4. Ed25519 instruction for guardian B
+5. submit_mint_approval with mint CPI
+
+## Stage 2.5 atomicity requirement
+
+The following must happen atomically inside submit_mint_approval:
+
+1. verify gateway not paused
+2. verify minted_amount > 0
+3. verify active guardian set
+4. derive and verify context-bound message_hash
+5. scan prior Ed25519 instructions
+6. verify guardian membership and quorum
+7. create ProcessedBurnEntry
+8. mint XXXL through CPI
+
+If any step fails, no ProcessedBurnEntry should remain and no XXXL should be minted.
+
+## Stage 2.5 test requirements
+
+Local/runtime tests should cover:
+
+### Success path
+
+- valid context-bound message_hash
+- valid guardian signatures
+- valid recipient token account
+- ProcessedBurnEntry created
+- XXXL minted to recipient token account
+- replay rejected
+
+### Mint CPI failure rollback
+
+- valid guardian approvals
+- invalid mint account or invalid recipient token account
+- CPI fails
+- ProcessedBurnEntry does not remain
+- no token balance increase
+
+### Replay with mint
+
+- first submit succeeds and mints
+- second submit with same canonical_event_key fails
+- no second mint occurs
+
+### Wrong context
+
+- guardians sign context A
+- relayer submits context B
+- expected_message_hash mismatch
+- no ProcessedBurnEntry
+- no mint
+
+### Unknown guardian
+
+- valid Ed25519 signatures from unknown guardians
+- no ProcessedBurnEntry
+- no mint
+
+### Missing signature
+
+- approved guardian listed but no matching Ed25519 instruction
+- no ProcessedBurnEntry
+- no mint
+
+### Token account mismatch
+
+- recipient_token_account does not belong to recipient
+- no ProcessedBurnEntry
+- no mint
+
+### Mint authority mismatch
+
+- XXXL mint authority is not gateway PDA
+- CPI fails
+- no ProcessedBurnEntry
+- no mint
+
+## What Stage 2.5 does not prove yet
+
+Stage 2.5 planning does not prove:
+
+- production watcher correctness
+- production relayer operations
+- production guardian key management
+- production fee policy
+- production deployment readiness
+- mainnet gateway readiness
+
+## Current conclusion
+
+Stage 2.5 can begin.
+
+The guardian approval layer is closed for Stage 2.
+
+The next implementation boundary is token mint CPI planning and then prototype implementation.
+
+Before writing CPI code, the following decisions must be made:
+
+1. SPL Token or Token-2022
+2. XXXL mint creation path
+3. gateway PDA mint authority seed model
+4. recipient token account creation/provision policy
+5. compute budget strategy
