@@ -21989,3 +21989,30 @@ Stage 2.5 prerequisites:
 Current conclusion:
 
 Stage 2.5 may begin, but CPI code should not be written before these prerequisites are decided.
+
+
+## Stage 2.5 SPL Token decision
+
+Theo reviewed the Stage 2.5 token program choice and agreed that the first token mint CPI prototype should use standard SPL Token.
+
+Decision:
+
+- use SPL Token for the first Stage 2.5 CPI prototype
+- token program id: TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA
+- do not use Token-2022 in the first CPI prototype
+- keep Token-2022 as a future compatibility option only if extensions become necessary
+
+Reason:
+
+- Stage 2.5 is proving gateway atomicity, not extension behavior
+- SPL Token has a simpler CPI interface
+- SPL Token avoids Token-2022 extension edge cases
+- SPL Token reduces account and compute complexity for the first prototype
+
+Document added:
+
+- docs/gateway/stage-2-5-spl-token-decision.md
+
+Current conclusion:
+
+Stage 2.5 prerequisite 1 is closed.
