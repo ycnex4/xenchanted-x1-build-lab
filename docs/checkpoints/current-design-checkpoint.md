@@ -21797,3 +21797,41 @@ Current conclusion:
 Scanning refinement is applied locally and parser evidence is stronger.
 
 Before token mint CPI or production gateway direction, message_hash binding must be solved.
+
+
+## Stage 2.4 message hash binding design
+
+Stage 2.4 defines the message_hash binding model for guardian approvals.
+
+The goal is to prevent guardian signatures from authorizing opaque hashes that can be reused with different submitted context.
+
+The bound context includes:
+
+- message_type
+- route_id
+- source_chain_id
+- source_token
+- canonical_event_key
+- x1_recipient
+- minted_amount
+- guardian_set_version
+- deadline_or_finality_block
+- message_nonce
+
+Reference construction:
+
+- message_hash = keccak256(canonical ordered fixed-width context)
+
+Local deterministic tests were added:
+
+- tests/stage-2-message-hash-binding.test.ts
+
+The tests verify that message_hash changes when any context field changes, including canonical_event_key, recipient, minted_amount, route_id, source_chain_id, source_token, guardian_set_version, deadline/finality, message_nonce, and message_type.
+
+The tests also verify the relayer-reuse attack case where a signature for one event and recipient is attempted against a different event and recipient.
+
+Current conclusion:
+
+Message hash binding is now specified at the design/reference-test layer.
+
+Runtime implementation is still required before token mint CPI or production gateway direction.
