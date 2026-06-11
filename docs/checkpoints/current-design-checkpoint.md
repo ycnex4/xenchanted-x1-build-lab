@@ -21835,3 +21835,61 @@ Current conclusion:
 Message hash binding is now specified at the design/reference-test layer.
 
 Runtime implementation is still required before token mint CPI or production gateway direction.
+
+
+## Stage 2.4 runtime message hash binding evidence
+
+Stage 2.4 message_hash binding was implemented in the X1 runtime prototype.
+
+Prototype repository:
+
+- ~/xenchanted-x1-lab/hello-x1
+
+Prototype branch:
+
+- stage-2-guardian-signature-verification
+
+Relevant local commits:
+
+- d8bd927 Bind guardian message hash to mint context
+- bec701b Update gateway test to sign bound message hash
+- 7207e0f Fix gateway test bound hash arguments
+
+The runtime now derives expected_message_hash inside submit_mint_approval from:
+
+- message_type
+- route_id
+- source_chain_id
+- source_token
+- canonical_event_key
+- recipient
+- minted_amount
+- guardian_set_version
+- deadline_or_finality_block
+- message_nonce
+
+The runtime requires expected_message_hash == message_hash before guardian signature verification.
+
+Local evidence:
+
+- cargo test -p hello-x1 binding_
+- 7 passed
+- 0 failed
+
+Parser evidence remains:
+
+- cargo test -p hello-x1 parser_
+- 7 passed
+- 0 failed
+
+Build evidence:
+
+- anchor build passed
+
+The TypeScript gateway test was updated to sign the context-bound message_hash and to pass the new submitMintApproval argument shape.
+
+Current conclusion:
+
+The message_hash binding blocker is now addressed at the local runtime prototype level.
+
+This still requires live X1 testnet execution before it can be considered testnet evidence or production direction.
