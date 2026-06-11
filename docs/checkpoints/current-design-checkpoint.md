@@ -21893,3 +21893,61 @@ Current conclusion:
 The message_hash binding blocker is now addressed at the local runtime prototype level.
 
 This still requires live X1 testnet execution before it can be considered testnet evidence or production direction.
+
+
+## Stage 2.4 runtime binding X1 testnet evidence
+
+Stage 2.4 refined guardian signature flow was deployed and tested on live X1 testnet.
+
+Runtime prototype repository:
+
+- ~/xenchanted-x1-lab/hello-x1
+
+Prototype branch:
+
+- stage-2-guardian-signature-verification
+
+Relevant local runtime commits:
+
+- d8bd927 Bind guardian message hash to mint context
+- bec701b Update gateway test to sign bound message hash
+- 7207e0f Fix gateway test bound hash arguments
+
+X1 testnet program id:
+
+- 9tCJe4M1MJQtE1gDxNYNE75fNUGpSAKiX56rgUMR8984
+
+Deploy result:
+
+- DEPLOY_EXIT=0
+
+Last deployed slot:
+
+- 164855038
+
+Program data length:
+
+- 238288 bytes
+- 0x3a2d0
+
+Live test result:
+
+- Stage 2 direct mint gateway skeleton
+- 3 passing
+
+The live X1 testnet test covered:
+
+- context-bound message_hash
+- Ed25519 verification instructions
+- prior instruction scanning
+- interleaved non-Ed25519 SystemProgram transfer
+- ProcessedBurnEntry creation
+- replay rejection
+- missing signature rejection
+- unknown guardian rejection even with valid Ed25519 signatures
+
+Current conclusion:
+
+Stage 2.4 now has live X1 testnet evidence for the refined guardian signature approval path with context-bound message_hash.
+
+This still does not prove token mint CPI or production gateway readiness.
