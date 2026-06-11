@@ -85,32 +85,44 @@ Open decision:
 
 - define whether the XXXL mint is pre-created or created by a dedicated setup instruction
 
-### 3. Gateway PDA mint authority
+### 3. Prototype-only gateway PDA mint authority
 
-Stage 2.5 should use a gateway PDA as mint authority.
+Stage 2.5 may use a gateway mint_authority PDA for the first CPI prototype.
 
-The gateway PDA should sign the mint CPI through signer seeds.
+This is a prototype-only authority model.
 
-The token mint authority should not be an externally controlled wallet once the prototype reaches the CPI evidence stage.
+It is not the final XXXL production mint authority model.
 
-Required properties:
+The purpose of Stage 2.5 is to prove:
 
-- gateway PDA is deterministic
-- mint authority is the gateway PDA
-- mint CPI uses PDA signer seeds
-- no admin wallet can mint outside the gateway rules
+    gateway verification + replay protection + SPL Token mint CPI = atomic
 
-Open decision:
+Stage 2.5 does not decide all future XXXL mint sources.
 
-- exact PDA seed model for mint authority
+Future X1-side mechanics may also mint XXXL:
 
-Candidate:
+- Stake redeem
+- Forge redeem
+- future reward/redeem mechanics
 
-    seeds = [b"gateway"]
+Because SPL Token has a single mint authority, final production authority cannot be assumed to be gateway-only if other protocol modules also need mint rights.
 
-or a dedicated mint authority PDA:
+Stage 2.5 prototype authority decision:
 
-    seeds = [b"mint_authority"]
+- use a gateway PDA as prototype-only mint authority
+- mint CPI uses gateway PDA signer seeds
+- document this as non-final
+- keep final authority model open until Stake/Forge architecture is defined
+
+Likely future production direction:
+
+- separate XXXL Core/Minter authority program
+- or another shared authority layer for multiple approved protocol mint paths
+
+Required Stage 2.5 property:
+
+- no external wallet should mint directly during the CPI prototype
+- the gateway PDA is acceptable only as a testnet/prototype mint authority
 
 ### 4. Recipient token account
 
@@ -270,6 +282,6 @@ Before writing CPI code, the following decisions must be made:
 
 1. SPL Token or Token-2022: closed, use standard SPL Token for first prototype
 2. XXXL mint creation path
-3. gateway PDA mint authority seed model
+3. gateway PDA mint authority seed model: prototype-only, final authority remains open until Stake/Forge architecture
 4. recipient token account creation/provision policy
 5. compute budget strategy
