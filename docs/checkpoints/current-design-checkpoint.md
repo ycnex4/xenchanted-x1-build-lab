@@ -21653,3 +21653,49 @@ Current conclusion:
 Stage 2 has moved from design-only planning into a minimal X1 testnet runtime skeleton.
 
 This does not yet prove token mint CPI, real guardian cryptographic verification, production relayer correctness, or final bridge readiness.
+
+
+## Stage 2 guardian signature verification compile evidence
+
+Guardian signature verification was implemented in the X1 runtime prototype at compile level.
+
+Prototype repository:
+
+- ~/xenchanted-x1-lab/hello-x1
+
+Prototype branch:
+
+- stage-2-guardian-signature-verification
+
+Local commit:
+
+- ccdc41c Add guardian signature verification prototype
+
+The implementation extends submit_mint_approval to accept message_hash and approved_guardians, requires the instructions sysvar account, and verifies prior Ed25519 verification instructions in the same transaction.
+
+The X1 / Anchor toolchain required modular Solana crates instead of the old monolithic solana-program import path:
+
+- solana-instructions-sysvar = 3.0.1
+- solana-sdk-ids = 3.1.0
+
+anchor build completed successfully.
+
+Known warnings remain non-blocking:
+
+- ambiguous glob re-exports from existing instruction module exports
+- AccountInfo deprecation warning for instructions_sysvar
+
+Live X1 testnet deploy and runtime tests were attempted but not completed because the public X1 testnet RPC / deploy path became unreliable.
+
+Observed infrastructure symptoms included:
+
+- 429 Too Many Requests
+- Blockhash expired retries
+- deploy waiting for next block for an extended time
+- Max retries exceeded during program data writes
+
+Current conclusion:
+
+Stage 2 guardian signature verification has moved from design-only planning into a compile-level runtime prototype.
+
+This is not yet live testnet evidence and not production gateway readiness.
