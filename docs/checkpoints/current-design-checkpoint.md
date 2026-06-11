@@ -21699,3 +21699,43 @@ Current conclusion:
 Stage 2 guardian signature verification has moved from design-only planning into a compile-level runtime prototype.
 
 This is not yet live testnet evidence and not production gateway readiness.
+
+
+## Stage 2 guardian signature parser reference tests
+
+Local parser-level reference tests were added for Stage 2 guardian signature verification.
+
+Prototype repository:
+
+- ~/xenchanted-x1-lab/hello-x1
+
+Prototype branch:
+
+- stage-2-guardian-signature-verification
+
+Local commits:
+
+- ccdc41c Add guardian signature verification prototype
+- 104bdd7 Add guardian signature parser reference tests
+
+The parser reference tests verify Ed25519 instruction data layout handling for:
+
+- correct guardian public key and message_hash acceptance
+- wrong guardian public key rejection
+- wrong message_hash rejection
+- non-32-byte message rejection
+- truncated instruction data rejection
+
+Local test result:
+
+- cargo test -p hello-x1 parser_
+- 5 passed
+- 0 failed
+
+anchor build completed successfully after adding the tests.
+
+Current conclusion:
+
+Guardian signature verification now has local parser reference test evidence in addition to compile-level evidence.
+
+This still does not claim live X1 testnet execution because the public X1 testnet RPC / deploy path was previously unreliable.
