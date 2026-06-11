@@ -58,9 +58,12 @@ This decision affects:
 - client test setup
 - future production compatibility
 
-Open decision:
+Decision:
 
-- choose token program ID before implementation
+- use standard SPL Token for the first Stage 2.5 CPI prototype
+- token program id: TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA
+- do not use Token-2022 in the first CPI prototype
+- keep Token-2022 as a future compatibility option if extensions become necessary
 
 ### 2. XXXL mint account status
 
@@ -265,7 +268,7 @@ The next implementation boundary is token mint CPI planning and then prototype i
 
 Before writing CPI code, the following decisions must be made:
 
-1. SPL Token or Token-2022
+1. SPL Token or Token-2022: closed, use standard SPL Token for first prototype
 2. XXXL mint creation path
 3. gateway PDA mint authority seed model
 4. recipient token account creation/provision policy
