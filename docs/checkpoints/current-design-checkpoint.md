@@ -21739,3 +21739,61 @@ Current conclusion:
 Guardian signature verification now has local parser reference test evidence in addition to compile-level evidence.
 
 This still does not claim live X1 testnet execution because the public X1 testnet RPC / deploy path was previously unreliable.
+
+
+## Stage 2 Theo guardian signature refinements
+
+Theo reviewed the Stage 2 guardian signature verification path.
+
+Theo confirmed that Ed25519 verification instruction plus instructions sysvar inspection is the correct SVM runtime direction.
+
+Theo recommended replacing the initial immediately-preceding-instructions assumption with scanning of prior transaction instructions.
+
+This refinement was applied in the X1 runtime prototype.
+
+Prototype repository:
+
+- ~/xenchanted-x1-lab/hello-x1
+
+Prototype branch:
+
+- stage-2-guardian-signature-verification
+
+Local commits:
+
+- ccdc41c Add guardian signature verification prototype
+- 104bdd7 Add guardian signature parser reference tests
+- 6adbeb0 Scan prior Ed25519 instructions for guardian approvals
+- f898350 Limit guardian parser helper to tests
+
+Current behavior:
+
+- submit_mint_approval scans all prior instructions
+- non-Ed25519 instructions are skipped
+- Ed25519 instructions are parsed and matched against approved_guardians and message_hash
+- duplicate approved_guardians are rejected
+- every approved guardian must have a matching prior Ed25519 signature
+
+Parser reference tests were expanded to 7 tests.
+
+Local result:
+
+- cargo test -p hello-x1 parser_
+- 7 passed
+- 0 failed
+
+anchor build completed successfully.
+
+The live transaction test was also prepared with a non-Ed25519 SystemProgram transfer interleaved between Ed25519 verification instructions and submit_mint_approval.
+
+This still requires live X1 testnet execution.
+
+Theo also identified message_hash binding as a production blocker.
+
+Current prototype verifies that guardians signed the provided message_hash, but the on-chain program does not yet derive or verify that message_hash is bound to canonical_event_key, recipient, minted_amount, route_id, guardian_set_version, and deadline/finality context.
+
+Current conclusion:
+
+Scanning refinement is applied locally and parser evidence is stronger.
+
+Before token mint CPI or production gateway direction, message_hash binding must be solved.
