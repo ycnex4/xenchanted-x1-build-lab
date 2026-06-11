@@ -21951,3 +21951,41 @@ Current conclusion:
 Stage 2.4 now has live X1 testnet evidence for the refined guardian signature approval path with context-bound message_hash.
 
 This still does not prove token mint CPI or production gateway readiness.
+
+
+## Stage 2.5 token mint CPI planning
+
+Theo reviewed the Stage 2.4 live X1 testnet result and confirmed:
+
+- guardian approval layer is closed for Stage 2
+- no blockers remain before Stage 2.5 planning
+- token mint CPI planning is the correct next step
+
+Closed with live X1 testnet evidence:
+
+- transaction atomicity
+- account write rollback
+- context-bound message_hash
+- Ed25519 verification with prior instruction scanning
+- non-Ed25519 interleaving
+- guardian set membership
+- ProcessedBurnEntry creation on success
+- replay protection
+- missing signature rejection
+- unknown guardian rejection
+
+Stage 2.5 planning document added:
+
+- docs/gateway/stage-2-5-token-mint-cpi-planning.md
+
+Stage 2.5 prerequisites:
+
+1. choose token program ID: SPL Token or Token-2022
+2. define XXXL mint account creation path
+3. define gateway PDA mint authority seed model
+4. define recipient token account policy
+5. define compute budget strategy
+
+Current conclusion:
+
+Stage 2.5 may begin, but CPI code should not be written before these prerequisites are decided.
