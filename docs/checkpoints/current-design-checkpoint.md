@@ -22016,3 +22016,34 @@ Document added:
 Current conclusion:
 
 Stage 2.5 prerequisite 1 is closed.
+
+
+## Stage 2.5 prototype-only mint authority boundary
+
+Theo reviewed the Stage 2.5 mint authority question after the future Stake redeem and Forge redeem mint paths were identified.
+
+Conclusion:
+
+- gateway PDA mint authority is acceptable for Stage 2.5 prototype-only CPI evidence
+- gateway PDA mint authority is not the final XXXL production authority model
+- Stage 2.5 proves gateway verification + replay protection + mint CPI atomicity
+- Stage 2.5 does not decide all future XXXL mint sources
+- final authority model remains open until Stake and Forge architecture are defined
+
+Important future mint paths:
+
+- gateway mint from verified Ethereum/XC event
+- Stake redeem / reward mint path
+- Forge redeem mint path
+- possible future X1-side protocol mint paths
+
+Likely future production direction:
+
+- separate XXXL Core/Minter authority program
+- or another shared authority model that can authorize multiple protocol mint paths
+
+Current conclusion:
+
+Stage 2.5 can proceed with gateway PDA as prototype-only mint authority.
+
+A later milestone must decide the final XXXL authority model before production-like design.

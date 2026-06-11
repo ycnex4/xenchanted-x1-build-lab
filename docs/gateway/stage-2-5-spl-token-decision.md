@@ -72,3 +72,48 @@ The next design decisions are:
 Prerequisite 1 for Stage 2.5 is closed.
 
 The first Stage 2.5 CPI prototype will use SPL Token.
+
+
+## Prototype-only mint authority boundary
+
+Stage 2.5 may use a gateway mint_authority PDA for the first CPI prototype.
+
+This is explicitly prototype-only.
+
+It is not the final XXXL production authority model.
+
+Reason:
+
+- Stage 2.5 proves gateway verification + replay protection + mint CPI atomicity.
+- Stage 2.5 does not decide all future XXXL mint sources.
+- Future X1-side mechanics may also mint XXXL.
+- Stake redeem may require reward minting.
+- Forge redeem may require token minting.
+- Other future protocol mechanics may introduce additional mint paths.
+
+Therefore, the final XXXL authority model remains open until Stake and Forge architecture are defined.
+
+Likely future production direction:
+
+- a separate XXXL Core/Minter authority program
+- or another shared authority model that can support multiple approved protocol mint paths
+
+Gateway PDA authority must not be treated as the final production model.
+
+## Theo authority review conclusion
+
+Theo confirmed:
+
+- gateway PDA mint authority is acceptable for Stage 2.5 prototype-only CPI evidence
+- it should not be treated as the final authority model
+- the final XXXL authority model remains TBD before production
+- Stake redeem, Forge redeem, and other X1-side mechanics may require a separate Core/Minter authority layer
+- no blocker exists against using gateway PDA for Stage 2.5 if this limitation is documented
+
+Current authority status:
+
+| Stage | Mint authority | Status |
+| --- | --- | --- |
+| Stage 2.5 CPI prototype | Gateway PDA | Prototype-only |
+| Stake/Forge design | TBD | Open |
+| Production | Likely Core/Minter PDA | Future decision |
