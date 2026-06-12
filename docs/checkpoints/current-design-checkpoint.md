@@ -22197,3 +22197,59 @@ Document added:
 Current conclusion:
 
 Stage 2.5 planning prerequisites are closed and runtime CPI implementation may begin.
+
+
+## Stage 2.5 token mint CPI testnet evidence
+
+Stage 2.5 reached live X1 testnet CPI success.
+
+Runtime repo:
+
+- ~/xenchanted-x1-lab/hello-x1
+
+Runtime branch:
+
+- stage-2-5-token-mint-cpi-runtime
+
+Runtime commit:
+
+- 9ec4f66 Add Stage 2.5 token mint CPI runtime path
+
+Program:
+
+- 9tCJe4M1MJQtE1gDxNYNE75fNUGpSAKiX56rgUMR8984
+
+Successful deploy signature:
+
+- 34xtHwaBWvTj26zTicxX42aDFBHykTurwbEuvGkM2V3KFpUhNNfp4Rp2VwqBEjRcDmXvbETDCmouQhwARUjRW2yf
+
+Deployment evidence:
+
+- previous deployed slot: 164855038
+- new deployed slot: 165158591
+- new data length: 261464 bytes
+
+Live test result:
+
+- 3 passing
+- verifies guardian signatures, initializes processed burn, and rejects replay
+- rejects missing guardian signature instruction
+- rejects unknown guardian even with valid Ed25519 signatures
+
+Evidence proven:
+
+- guardian signatures
+- context-bound message_hash
+- gateway validation
+- replay protection
+- ProcessedBurnEntry
+- SPL Token mint_to CPI
+- replay rejection after success
+
+Document added:
+
+- docs/gateway/evidence/stage-2-5-token-mint-cpi-testnet-evidence.md
+
+Current conclusion:
+
+Stage 2.5 has reached live X1 testnet CPI success. The gateway prototype now performs an atomic path that records ProcessedBurnEntry and mints XXXL through SPL Token mint_to CPI.
