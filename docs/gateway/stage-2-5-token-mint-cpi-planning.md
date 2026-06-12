@@ -155,9 +155,13 @@ Reason:
 - reduces account complexity
 - makes failure modes easier to test
 
-Open decision:
+Decision:
 
-- whether associated token account creation is inside or outside gateway
+- recipient_token_account must be created outside the gateway program for the first Stage 2.5 CPI prototype
+- submit_mint_approval receives recipient_token_account as an account
+- submit_mint_approval verifies recipient_token_account.owner == recipient
+- submit_mint_approval verifies recipient_token_account.mint == GatewayConfig.xxxl_mint
+- do not create associated token accounts inside submit_mint_approval in the first CPI prototype
 
 ### 5. Compute budget
 
@@ -287,5 +291,5 @@ Before writing CPI code, the following decisions must be made:
 1. SPL Token or Token-2022: closed, use standard SPL Token for first prototype
 2. XXXL mint creation path: closed for prototype, pre-create outside gateway program
 3. gateway PDA mint authority seed model: closed for prototype, use [b"mint_authority"], final authority remains open until Stake/Forge architecture
-4. recipient token account creation/provision policy
+4. recipient token account creation/provision policy: closed for prototype, create outside gateway and validate in submit_mint_approval
 5. compute budget strategy
