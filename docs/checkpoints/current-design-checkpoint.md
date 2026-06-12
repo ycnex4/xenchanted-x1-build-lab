@@ -22405,3 +22405,69 @@ Document added:
 Current conclusion:
 
 Stage 2.8 defines the off-chain transaction assembly boundary. The relayer is an execution helper; the protocol remains the source of truth.
+
+
+## Stage 2.9 TypeScript relayer prototype evidence
+
+Stage 2.9 adds a reusable TypeScript relayer/client prototype for the X1 direct mint gateway.
+
+Runtime repo:
+
+- ~/xenchanted-x1-lab/hello-x1
+
+Runtime branch:
+
+- stage-2-9-typescript-relayer-prototype
+
+Runtime commit:
+
+- f0dbb4f Add Stage 2.9 TypeScript relayer prototype
+
+Base runtime commit:
+
+- 374b100 Clean up Stage 2 runtime account hygiene
+
+Scope:
+
+- TypeScript relayer prototype
+- no on-chain runtime change
+- transaction assembly extracted from the existing live matrix test into a reusable helper
+
+Files added in runtime repo:
+
+- tests/helpers/stage2RelayerPrototype.ts
+- tests/stage2_relayer_prototype.test.ts
+
+Relayer helper responsibilities:
+
+- Stage 2 message hash derivation
+- PDA derivation for gateway_config, guardian_set, processed_burn, and mint_authority
+- recipient token account preparation
+- recipient token balance reading
+- processed burn existence check
+- compute budget instruction creation
+- Ed25519 guardian approval instruction creation
+- submit_mint_approval instruction creation
+- full transaction assembly
+
+Transaction shape:
+
+- ComputeBudgetProgram.setComputeUnitLimit
+- Ed25519 guardian approval instructions
+- submit_mint_approval
+
+Checks passed:
+
+- cargo test -p hello-x1 binding_
+- cargo test -p hello-x1 parser_
+- anchor build
+- Stage 2.9 relayer prototype live test: 1 passing
+- Stage 2.6 live rollback matrix: 6 passing
+
+Document added:
+
+- docs/gateway/evidence/stage-2-9-typescript-relayer-prototype-evidence.md
+
+Current conclusion:
+
+Stage 2.9 confirms that the relayer transaction shape can be assembled outside the matrix test as a reusable TypeScript relayer/client prototype while preserving the live direct mint behavior and rollback matrix.
