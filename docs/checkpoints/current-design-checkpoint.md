@@ -22253,3 +22253,56 @@ Document added:
 Current conclusion:
 
 Stage 2.5 has reached live X1 testnet CPI success. The gateway prototype now performs an atomic path that records ProcessedBurnEntry and mints XXXL through SPL Token mint_to CPI.
+
+
+## Stage 2.6 CPI failure rollback matrix evidence
+
+Stage 2.6 reached live X1 testnet CPI failure rollback evidence.
+
+Runtime repo:
+
+- ~/xenchanted-x1-lab/hello-x1
+
+Runtime branch:
+
+- stage-2-6-cpi-failure-rollback-matrix
+
+Runtime commit:
+
+- de931e7 Add Stage 2.6 CPI failure rollback matrix
+
+Base Stage 2.5 runtime commit:
+
+- 9ec4f66 Add Stage 2.5 token mint CPI runtime path
+
+Program:
+
+- 9tCJe4M1MJQtE1gDxNYNE75fNUGpSAKiX56rgUMR8984
+
+Live test result:
+
+- 6 passing
+- verifies guardian signatures, initializes processed burn, mints tokens, rejects replay, and rolls back failed CPI
+- rejects missing guardian signature instruction
+- rejects wrong xxxl mint and leaves no processed burn
+- rejects recipient token account with wrong mint and leaves no processed burn
+- rejects recipient token account with wrong owner and leaves no processed burn
+- rejects unknown guardian even with valid Ed25519 signatures
+
+Evidence proven:
+
+- successful mint increases recipient token balance
+- replay does not mint again
+- failed mint_to CPI rolls back ProcessedBurnEntry
+- failed mint_to CPI does not change recipient token balance
+- wrong xxxl_mint is rejected without processed state
+- wrong recipient token account mint is rejected without processed state
+- wrong recipient token account owner is rejected without processed state
+
+Document added:
+
+- docs/gateway/evidence/stage-2-6-cpi-failure-rollback-matrix-evidence.md
+
+Current conclusion:
+
+Stage 2.6 confirms CPI failure atomicity for the direct mint gateway prototype. The gateway does not leave a burn falsely marked as processed when the token mint did not happen.
