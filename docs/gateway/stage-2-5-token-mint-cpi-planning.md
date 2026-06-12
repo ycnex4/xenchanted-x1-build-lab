@@ -112,8 +112,9 @@ Because SPL Token has a single mint authority, final production authority cannot
 
 Stage 2.5 prototype authority decision:
 
-- use a gateway PDA as prototype-only mint authority
-- mint CPI uses gateway PDA signer seeds
+- use a dedicated mint_authority PDA as prototype-only mint authority
+- PDA seed model: [b"mint_authority"]
+- mint CPI uses mint_authority PDA signer seeds
 - document this as non-final
 - keep final authority model open until Stake/Forge architecture is defined
 
@@ -285,6 +286,6 @@ Before writing CPI code, the following decisions must be made:
 
 1. SPL Token or Token-2022: closed, use standard SPL Token for first prototype
 2. XXXL mint creation path: closed for prototype, pre-create outside gateway program
-3. gateway PDA mint authority seed model: prototype-only, final authority remains open until Stake/Forge architecture
+3. gateway PDA mint authority seed model: closed for prototype, use [b"mint_authority"], final authority remains open until Stake/Forge architecture
 4. recipient token account creation/provision policy
 5. compute budget strategy
