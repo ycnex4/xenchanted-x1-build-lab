@@ -22106,3 +22106,31 @@ Document added:
 Current conclusion:
 
 The first Stage 2.5 CPI prototype will use [b"mint_authority"] as the prototype mint authority PDA seed model.
+
+
+## Stage 2.5 recipient token account policy
+
+Stage 2.5 prerequisite 4 is closed for the prototype.
+
+Decision:
+
+- recipient_token_account must be created outside the gateway program
+- submit_mint_approval receives recipient_token_account as an account
+- submit_mint_approval must verify recipient_token_account.owner == recipient
+- submit_mint_approval must verify recipient_token_account.mint == GatewayConfig.xxxl_mint
+- submit_mint_approval must not create associated token accounts in the first CPI prototype
+
+Reason:
+
+- Stage 2.5 proves gateway verification + replay protection + SPL Token mint CPI atomicity
+- recipient token account creation is outside the first CPI proof boundary
+- avoiding ATA creation inside submit_mint_approval keeps the prototype smaller and easier to test
+- failure/rollback cases are easier to isolate
+
+Document added:
+
+- docs/gateway/stage-2-5-recipient-token-account-policy.md
+
+Current conclusion:
+
+The Stage 2.5 CPI prototype should create recipient token accounts in setup/client code and keep submit_mint_approval focused on validation, replay marking, and mint_to CPI.
