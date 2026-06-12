@@ -22306,3 +22306,52 @@ Document added:
 Current conclusion:
 
 Stage 2.6 confirms CPI failure atomicity for the direct mint gateway prototype. The gateway does not leave a burn falsely marked as processed when the token mint did not happen.
+
+
+## Stage 2.7 runtime account hygiene evidence
+
+Stage 2.7 completed runtime account hygiene cleanup for the X1 gateway prototype.
+
+Runtime repo:
+
+- ~/xenchanted-x1-lab/hello-x1
+
+Runtime branch:
+
+- stage-2-7-runtime-account-hygiene
+
+Runtime commit:
+
+- 374b100 Clean up Stage 2 runtime account hygiene
+
+Base Stage 2.6 runtime commit:
+
+- de931e7 Add Stage 2.6 CPI failure rollback matrix
+
+Scope:
+
+- hygiene-only runtime cleanup
+- no protocol logic change
+- remove ambiguous glob re-export warning
+- remove deprecated AccountInfo warning for instructions_sysvar
+
+Runtime changes:
+
+- instruction module re-exports changed from public glob exports to crate-local glob exports
+- submit_mint_approval instructions_sysvar account changed from AccountInfo to UncheckedAccount
+- explicit to_account_info conversion added before reading prior Ed25519 instructions
+
+Checks passed:
+
+- cargo test -p hello-x1 binding_
+- cargo test -p hello-x1 parser_
+- anchor build
+- Stage 2.6 live testnet matrix remained 6 passing
+
+Document added:
+
+- docs/gateway/evidence/stage-2-7-runtime-account-hygiene-evidence.md
+
+Current conclusion:
+
+Stage 2.7 confirms that runtime account hygiene cleanup preserves the Stage 2.5 and Stage 2.6 behavior while removing the Rust / Anchor warnings.
