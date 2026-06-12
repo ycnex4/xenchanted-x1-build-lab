@@ -22355,3 +22355,53 @@ Document added:
 Current conclusion:
 
 Stage 2.7 confirms that runtime account hygiene cleanup preserves the Stage 2.5 and Stage 2.6 behavior while removing the Rust / Anchor warnings.
+
+
+## Stage 2.8 relayer transaction shape
+
+Stage 2.8 defines the relayer / watcher transaction shape for the X1 direct mint gateway prototype.
+
+Scope:
+
+- design and transaction-shape stage
+- no on-chain runtime change
+- specify how an external relayer assembles the X1 transaction
+- preserve the Stage 2.5 / 2.6 runtime guarantees
+
+Transaction order:
+
+- ComputeBudgetProgram.setComputeUnitLimit
+- Ed25519 guardian approval instructions
+- submit_mint_approval
+
+Relayer inputs:
+
+- canonical_event_key
+- recipient
+- minted_amount
+- deadline_or_finality_block
+- message_nonce
+- guardian_set_version
+- guardian approvals
+- required X1 accounts
+
+Relayer boundary:
+
+- relayer submits transactions
+- protocol validates rules
+- relayer does not control economics, quorum, replay protection, mint authority, or expected XXXL mint
+
+Retry policy:
+
+- retry is safe only after checking confirmation ambiguity
+- processed_burn state is the idempotency anchor
+- if processed_burn exists, relayer must stop
+- relayer must not submit a different message for the same canonical_event_key
+
+Document added:
+
+- docs/gateway/stage-2-8-relayer-transaction-shape.md
+
+Current conclusion:
+
+Stage 2.8 defines the off-chain transaction assembly boundary. The relayer is an execution helper; the protocol remains the source of truth.

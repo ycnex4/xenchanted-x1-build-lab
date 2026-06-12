@@ -410,6 +410,7 @@ A controlled read-only mainnet RPC smoke for XC protocol params has completed su
 - [Stage 2.5 Token mint CPI testnet evidence](docs/gateway/evidence/stage-2-5-token-mint-cpi-testnet-evidence.md)
 - [Stage 2.6 CPI failure rollback matrix evidence](docs/gateway/evidence/stage-2-6-cpi-failure-rollback-matrix-evidence.md)
 - [Stage 2.7 Runtime account hygiene evidence](docs/gateway/evidence/stage-2-7-runtime-account-hygiene-evidence.md)
+- [Stage 2.8 Relayer transaction shape](docs/gateway/stage-2-8-relayer-transaction-shape.md)
 - [Stage 2.0 Gateway runtime planning outline](docs/gateway/stage-2-0-gateway-runtime-planning-outline.md)
 - [Stage 2.1 Runtime assumption dependency table](docs/gateway/stage-2-1-runtime-assumption-dependency-table.md)
 - [Stage 2.2 Direct mint candidate runtime design](docs/gateway/stage-2-2-direct-mint-candidate-runtime-design.md)
