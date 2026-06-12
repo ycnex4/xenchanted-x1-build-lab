@@ -22161,3 +22161,39 @@ Document added:
 Current conclusion:
 
 The Stage 2.5 CPI prototype should add ComputeBudgetProgram.setComputeUnitLimit in the client/test transaction for the full CPI path.
+
+
+## Stage 2.5 deployment prerequisites
+
+Theo reviewed the Stage 2.5 implementation boundary and confirmed that there are no blockers before runtime CPI implementation.
+
+Implementation boundary status:
+
+- accepted for CPI implementation
+- no blockers
+
+Deployment prerequisite edge case:
+
+- GatewayConfig.xxxl_mint may point to the correct mint
+- but the SPL Token mint authority may not be the prototype mint_authority PDA
+- this should cause mint_to CPI to fail
+- ProcessedBurnEntry must not remain created if mint_to CPI fails
+
+Required setup before testnet CPI evidence:
+
+1. test XXXL SPL Token mint exists
+2. GatewayConfig.xxxl_mint points to that mint
+3. test XXXL mint authority is mint_authority PDA
+4. mint_authority PDA seed model is [b"mint_authority"]
+5. recipient_token_account exists
+6. recipient_token_account.owner == recipient
+7. recipient_token_account.mint == GatewayConfig.xxxl_mint
+8. client/test transaction includes ComputeBudgetProgram.setComputeUnitLimit
+
+Document added:
+
+- docs/gateway/stage-2-5-deployment-prerequisites.md
+
+Current conclusion:
+
+Stage 2.5 planning prerequisites are closed and runtime CPI implementation may begin.
