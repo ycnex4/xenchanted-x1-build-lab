@@ -180,9 +180,11 @@ Stage 2.5 adds:
 
 Client transactions may need ComputeBudgetProgram.setComputeUnitLimit.
 
-Open decision:
+Decision:
 
-- add compute budget instruction to test client before submit_mint_approval
+- add ComputeBudgetProgram.setComputeUnitLimit to the client/test transaction before submit_mint_approval for the full CPI path
+- treat compute budget as a client/test execution strategy, not an on-chain protocol rule
+- do not store compute budget settings in GatewayConfig
 
 Expected Stage 2.5 test transaction shape:
 
@@ -292,4 +294,4 @@ Before writing CPI code, the following decisions must be made:
 2. XXXL mint creation path: closed for prototype, pre-create outside gateway program
 3. gateway PDA mint authority seed model: closed for prototype, use [b"mint_authority"], final authority remains open until Stake/Forge architecture
 4. recipient token account creation/provision policy: closed for prototype, create outside gateway and validate in submit_mint_approval
-5. compute budget strategy
+5. compute budget strategy: closed for prototype, add ComputeBudgetProgram.setComputeUnitLimit in client/test transaction

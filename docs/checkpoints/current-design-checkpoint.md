@@ -22134,3 +22134,30 @@ Document added:
 Current conclusion:
 
 The Stage 2.5 CPI prototype should create recipient token accounts in setup/client code and keep submit_mint_approval focused on validation, replay marking, and mint_to CPI.
+
+
+## Stage 2.5 compute budget strategy
+
+Stage 2.5 prerequisite 5 is closed for the prototype.
+
+Decision:
+
+- add ComputeBudgetProgram.setComputeUnitLimit to the client/test transaction before submit_mint_approval
+- use it for the full gateway mint CPI path
+- treat compute budget as a client/test execution strategy
+- do not treat compute budget as an on-chain protocol rule
+- do not store compute budget settings in GatewayConfig
+
+Reason:
+
+- Stage 2.5 transactions include Ed25519 verification instructions, prior instruction scanning, message_hash derivation, ProcessedBurnEntry creation, token account validation, and SPL Token mint_to CPI
+- without explicit compute budget, test failures may reflect runtime compute limits rather than gateway logic
+- compute budget should support execution without changing protocol authorization rules
+
+Document added:
+
+- docs/gateway/stage-2-5-compute-budget-strategy.md
+
+Current conclusion:
+
+The Stage 2.5 CPI prototype should add ComputeBudgetProgram.setComputeUnitLimit in the client/test transaction for the full CPI path.
