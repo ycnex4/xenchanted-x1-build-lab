@@ -22074,3 +22074,35 @@ Document added:
 Current conclusion:
 
 The Stage 2.5 CPI prototype should create the test XXXL mint in setup/deploy code and keep submit_mint_approval focused on validation, replay marking, and mint_to CPI.
+
+
+## Stage 2.5 mint authority PDA decision
+
+Stage 2.5 prerequisite 3 is closed for the prototype.
+
+Decision:
+
+- use a dedicated prototype mint_authority PDA
+- PDA seed model: [b"mint_authority"]
+- do not use GatewayConfig PDA as token mint authority
+- keep GatewayConfig responsible for configuration/state
+- keep mint_authority PDA responsible only for signing SPL Token mint CPI
+
+Reason:
+
+- separates configuration from token mint authority
+- keeps prototype roles easier to reason about
+- avoids mixing config storage and CPI signer authority
+- remains compatible with later redesign toward a shared XXXL Core/Minter authority model
+
+This decision remains prototype-only.
+
+The final XXXL production mint authority model remains open until Stake and Forge architecture are defined.
+
+Document added:
+
+- docs/gateway/stage-2-5-mint-authority-pda-decision.md
+
+Current conclusion:
+
+The first Stage 2.5 CPI prototype will use [b"mint_authority"] as the prototype mint authority PDA seed model.

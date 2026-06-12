@@ -403,6 +403,7 @@ A controlled read-only mainnet RPC smoke for XC protocol params has completed su
 - [Stage 2.5 Token mint CPI planning](docs/gateway/stage-2-5-token-mint-cpi-planning.md)
 - [Stage 2.5 SPL Token decision](docs/gateway/stage-2-5-spl-token-decision.md)
 - [Stage 2.5 XXXL mint creation decision](docs/gateway/stage-2-5-xxxl-mint-creation-decision.md)
+- [Stage 2.5 Mint authority PDA decision](docs/gateway/stage-2-5-mint-authority-pda-decision.md)
 - [Stage 2.0 Gateway runtime planning outline](docs/gateway/stage-2-0-gateway-runtime-planning-outline.md)
 - [Stage 2.1 Runtime assumption dependency table](docs/gateway/stage-2-1-runtime-assumption-dependency-table.md)
 - [Stage 2.2 Direct mint candidate runtime design](docs/gateway/stage-2-2-direct-mint-candidate-runtime-design.md)
