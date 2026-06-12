@@ -22591,3 +22591,60 @@ Document added:
 Current conclusion:
 
 Stage 2.11 confirms that the relayer can recover from ambiguous confirmation by inspecting protocol state. If processed_burn exists and recipient token balance increased by the expected minted amount, the relayer can classify the mint as completed and avoid blind resubmission.
+
+
+## Stage 2.12 inconsistent recovery state evidence
+
+Stage 2.12 adds inconsistent recovery state handling evidence for the X1 direct mint gateway relayer prototype.
+
+Runtime repo:
+
+- ~/xenchanted-x1-lab/hello-x1
+
+Runtime branch:
+
+- stage-2-12-inconsistent-recovery-state-handling
+
+Runtime commit:
+
+- cc07651 Add Stage 2.12 inconsistent recovery state handling test
+
+Base runtime commit:
+
+- 3a0e1e0 Add Stage 2.11 ambiguous confirmation recovery prototype
+
+Scope:
+
+- TypeScript relayer inconsistent recovery state test
+- no on-chain runtime change
+- verifies inconsistent_after_ambiguous_result branch
+
+Runtime change:
+
+- tests/stage2_relayer_inconsistent_recovery.test.ts added
+
+Confirmed behavior:
+
+- successful mint creates processed_burn and increases token balance
+- recovery called with a wrong expected minted amount detects mismatch
+- recovery returns inconsistent_after_ambiguous_result
+- relayer does not retry blindly
+
+Checks passed:
+
+- Stage 2.12 inconsistent recovery live test: 1 passing
+- Stage 2.11 ambiguous recovery live test: 1 passing
+- Stage 2.10 idempotency / retry live test: 1 passing
+- Stage 2.9 relayer prototype live test: 1 passing
+- Stage 2.6 rollback matrix: 6 passing
+- cargo test -p hello-x1 binding_
+- cargo test -p hello-x1 parser_
+- anchor build
+
+Document added:
+
+- docs/gateway/evidence/stage-2-12-inconsistent-recovery-state-evidence.md
+
+Current conclusion:
+
+Stage 2.12 confirms that the relayer can classify inconsistent recovery state and avoid blind retry. If processed_burn exists but recipient token balance delta does not match the expected minted amount, the relayer must stop for manual/operator review.
