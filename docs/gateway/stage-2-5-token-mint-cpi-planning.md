@@ -81,9 +81,12 @@ Preferred direction for Stage 2.5 prototype:
 - keep submit_mint_approval focused on approval + replay mark + mint CPI
 - avoid mixing gateway configuration with token setup until the mint authority model is confirmed
 
-Open decision:
+Decision:
 
-- define whether the XXXL mint is pre-created or created by a dedicated setup instruction
+- pre-create the XXXL SPL Token mint outside the gateway program for the first Stage 2.5 CPI prototype
+- do not add initialize_xxxl_mint to the gateway program in the first CPI prototype
+- GatewayConfig must store expected xxxl_mint
+- submit_mint_approval must reject any mint account that does not match GatewayConfig.xxxl_mint
 
 ### 3. Prototype-only gateway PDA mint authority
 
@@ -281,7 +284,7 @@ The next implementation boundary is token mint CPI planning and then prototype i
 Before writing CPI code, the following decisions must be made:
 
 1. SPL Token or Token-2022: closed, use standard SPL Token for first prototype
-2. XXXL mint creation path
+2. XXXL mint creation path: closed for prototype, pre-create outside gateway program
 3. gateway PDA mint authority seed model: prototype-only, final authority remains open until Stake/Forge architecture
 4. recipient token account creation/provision policy
 5. compute budget strategy
