@@ -22047,3 +22047,30 @@ Current conclusion:
 Stage 2.5 can proceed with gateway PDA as prototype-only mint authority.
 
 A later milestone must decide the final XXXL authority model before production-like design.
+
+
+## Stage 2.5 XXXL mint creation decision
+
+Stage 2.5 prerequisite 2 is closed for the prototype.
+
+Decision:
+
+- pre-create the XXXL SPL Token mint outside the gateway program
+- do not add initialize_xxxl_mint to the gateway program in the first CPI prototype
+- GatewayConfig must store expected xxxl_mint
+- submit_mint_approval must reject any mint account that does not match GatewayConfig.xxxl_mint
+
+Reason:
+
+- Stage 2.5 proves gateway verification + replay protection + SPL Token mint CPI atomicity
+- Stage 2.5 does not prove final production token setup
+- mint creation should not be mixed into the first CPI atomicity proof
+- final XXXL authority/setup model remains open until Stake and Forge architecture are defined
+
+Document added:
+
+- docs/gateway/stage-2-5-xxxl-mint-creation-decision.md
+
+Current conclusion:
+
+The Stage 2.5 CPI prototype should create the test XXXL mint in setup/deploy code and keep submit_mint_approval focused on validation, replay marking, and mint_to CPI.
