@@ -22528,3 +22528,66 @@ Document added:
 Current conclusion:
 
 Stage 2.10 confirms the first safe relayer retry behavior. A repeated relayer run for an already processed event stops at processed_burn detection and does not mint twice.
+
+
+## Stage 2.11 ambiguous confirmation recovery evidence
+
+Stage 2.11 adds ambiguous confirmation recovery behavior to the X1 direct mint gateway relayer prototype.
+
+Runtime repo:
+
+- ~/xenchanted-x1-lab/hello-x1
+
+Runtime branch:
+
+- stage-2-11-ambiguous-confirmation-recovery
+
+Runtime commit:
+
+- 3a0e1e0 Add Stage 2.11 ambiguous confirmation recovery prototype
+
+Base runtime commit:
+
+- 5db96ed Add Stage 2.10 relayer idempotency retry prototype
+
+Scope:
+
+- TypeScript relayer ambiguous confirmation recovery prototype
+- no on-chain runtime change
+- relayer inspects protocol state after uncertain send / confirmation result
+
+Runtime changes:
+
+- tests/helpers/stage2RelayerPrototype.ts updated
+- tests/stage2_relayer_ambiguous_recovery.test.ts added
+
+Recovery checks:
+
+- processed_burn exists
+- recipient token balance delta
+- expected minted amount
+
+Confirmed behavior:
+
+- before execution, recovery returns not_processed_after_ambiguous_result
+- after execution, recovery returns confirmed_after_ambiguous_result
+- completed mint is recognized by processed_burn plus expected balance delta
+- relayer can avoid blind resubmission after ambiguous confirmation
+
+Checks passed:
+
+- Stage 2.11 ambiguous recovery live test: 1 passing
+- Stage 2.10 idempotency / retry live test: 1 passing
+- Stage 2.9 relayer prototype live test: 1 passing
+- Stage 2.6 rollback matrix: 6 passing
+- cargo test -p hello-x1 binding_
+- cargo test -p hello-x1 parser_
+- anchor build
+
+Document added:
+
+- docs/gateway/evidence/stage-2-11-ambiguous-confirmation-recovery-evidence.md
+
+Current conclusion:
+
+Stage 2.11 confirms that the relayer can recover from ambiguous confirmation by inspecting protocol state. If processed_burn exists and recipient token balance increased by the expected minted amount, the relayer can classify the mint as completed and avoid blind resubmission.
