@@ -25062,3 +25062,136 @@ Document added:
 Current conclusion:
 
 Stage 2.34 creates a compact checkpoint summary boundary above Stage 2.33 audit log digest artifacts. The relayer can now create a schema-versioned checkpoint artifact for a validated audit log and matching digest, serialize and deserialize that checkpoint, validate checkpoint shape, and verify that the checkpoint still matches the source audit log and digest artifact. The same runtime commit also improves test architecture by moving upper artifact, planner, digest, and checkpoint layers mostly offline while retaining live X1 testnet coverage where deployed-runtime proof is valuable.
+
+
+## Stage 2.35 operator audit export bundle boundary evidence
+
+Stage 2.35 adds an operator audit export bundle boundary above the Stage 2.31 through Stage 2.34 artifact chain.
+
+Runtime repo:
+
+- ~/xenchanted-x1-lab/hello-x1
+
+Runtime branch:
+
+- stage-2-35-operator-audit-export-bundle-boundary
+
+Runtime commit:
+
+- dc47baf Add Stage 2.35 operator audit export bundle boundary
+
+Base runtime commit:
+
+- 702573b Add Stage 2.34 audit log checkpoint boundary
+
+Scope:
+
+- portable operator audit export bundle
+- no on-chain runtime change
+- offline / zero-SOL artifact boundary
+- packages audit log, digest, checkpoint, and metadata
+- validates nested audit log artifact
+- validates nested digest artifact
+- validates nested checkpoint artifact
+- verifies digest against audit log
+- verifies checkpoint against audit log and digest
+- validates createdAtIso as exact ISO timestamp
+- validates non-empty runtimeCommit
+- validates stageRange and nested artifact type bindings
+
+New export bundle artifact type:
+
+- Stage2RelayerOperatorAuditExportBundleArtifact
+
+Export bundle artifact fields:
+
+- artifactType: stage2_relayer_operator_audit_export_bundle
+- schemaVersion: 1
+- createdAtIso
+- stageRange: 2.31-2.35
+- runtimeCommit
+- sourceArtifactType: stage2_relayer_operator_audit_log
+- digestArtifactType: stage2_relayer_operator_audit_log_digest
+- checkpointArtifactType: stage2_relayer_operator_audit_log_checkpoint
+- auditLog
+- digest
+- checkpoint
+
+New export bundle creation helper:
+
+- createStage2RelayerOperatorAuditExportBundlePrototype
+
+New export bundle validation helper:
+
+- validateStage2RelayerOperatorAuditExportBundlePrototype
+
+New export bundle serialization helper:
+
+- serializeStage2RelayerOperatorAuditExportBundlePrototype
+
+New export bundle deserialization helper:
+
+- deserializeStage2RelayerOperatorAuditExportBundlePrototype
+
+New export bundle verification helper:
+
+- verifyStage2RelayerOperatorAuditExportBundlePrototype
+
+Confirmed stable export bundle behavior:
+
+- export bundle created from audit log, digest, checkpoint, and metadata
+- artifactType equals stage2_relayer_operator_audit_export_bundle
+- schemaVersion equals 1
+- createdAtIso equals 2026-01-01T00:36:00.000Z
+- stageRange equals 2.31-2.35
+- runtimeCommit equals 702573b
+- sourceArtifactType equals stage2_relayer_operator_audit_log
+- digestArtifactType equals stage2_relayer_operator_audit_log_digest
+- checkpointArtifactType equals stage2_relayer_operator_audit_log_checkpoint
+- nested auditLog equals the source audit log
+- nested digest equals the computed digest
+- nested checkpoint equals the created checkpoint
+- export bundle validation returns ok: true
+- export bundle verification returns true
+- export bundle serializes and deserializes
+- deserialized export bundle verifies as true
+
+Confirmed mismatch / tamper-evidence boundary behavior:
+
+- changed audit log returns digest_mismatch
+- changed digest digestHex returns digest_mismatch
+- changed checkpoint digestHex returns checkpoint_mismatch
+- changed stageRange returns invalid_stage_range
+- empty runtimeCommit returns invalid_runtime_commit
+- wrong sourceArtifactType returns invalid_source_artifact_type
+- wrong digestArtifactType returns invalid_digest_artifact_type
+- wrong checkpointArtifactType returns invalid_checkpoint_artifact_type
+- invalid createdAtIso returns invalid_created_at_iso
+- changed checkpoint reportCount makes bundle verification return false
+
+Confirmed malformed export bundle artifact rejection:
+
+- invalid JSON rejected
+- wrong artifactType rejected
+- wrong schemaVersion rejected
+- invalid nested auditLog rejected
+- invalid nested digest rejected
+- invalid nested checkpoint rejected
+- digest mismatch rejected during creation
+- checkpoint mismatch rejected during creation
+- invalid createdAtIso rejected during creation
+- empty runtimeCommit rejected during creation
+
+Checks passed:
+
+- Stage 2.35 operator audit export bundle boundary: 3 passing
+- Stage 2.31 through Stage 2.35 artifact chain: 15 passing
+- Stage 2.22 through Stage 2.35 full optimized regression: 45 passing (14s)
+
+Document added:
+
+- docs/gateway/evidence/stage-2-35-operator-audit-export-bundle-boundary-evidence.md
+
+Current conclusion:
+
+Stage 2.35 creates an operator audit export bundle boundary above the Stage 2.31 through Stage 2.34 artifact chain. The relayer can now package a validated audit log, matching digest, matching checkpoint, and bundle metadata into one schema-versioned export artifact. The bundle can be serialized, deserialized, validated, and verified offline, giving the operator a complete portable evidence package while preserving minimal live X1 runtime smoke coverage.
