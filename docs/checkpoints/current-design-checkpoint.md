@@ -23182,3 +23182,84 @@ Document added:
 Current conclusion:
 
 Stage 2.19 adds the first high-level watcher-event submit API for the relayer prototype. The relayer can now accept a watcher-style event, parse it, normalize it, and submit it through the existing protected path. Malformed watcher events and parsed preflight failures are rejected before submit.
+
+
+## Stage 2.20 watcher event submit idempotency retry evidence
+
+Stage 2.20 proves that the high-level watcher-event submit API from Stage 2.19 preserves idempotency / retry safety.
+
+Runtime repo:
+
+- ~/xenchanted-x1-lab/hello-x1
+
+Runtime branch:
+
+- stage-2-20-watcher-event-submit-idempotency-retry
+
+Runtime commit:
+
+- 5832233 Add Stage 2.20 watcher event submit idempotency retry
+
+Base runtime commit:
+
+- d1dbe96 Add Stage 2.19 watcher event full submit pipeline
+
+Scope:
+
+- live idempotency / retry regression test for watcher-event submit API
+- no on-chain runtime change
+- no runtime helper change required
+- same watcher event submitted twice through submitStage2WatcherMintEventPrototype
+
+Runtime changes:
+
+- tests/stage2_watcher_event_submit_idempotency_retry.test.ts added
+
+Tested path:
+
+- watcher event
+- submitStage2WatcherMintEventPrototype
+- adaptStage2WatcherMintEventToNormalizedTask
+- submitStage2RelayerNormalizedMintTask
+- submitStage2RelayerMintPrototype
+- processed_burn idempotency check
+- protected submit path
+
+Confirmed behavior:
+
+- first submit returns submitted
+- first submit returns signature
+- first submit creates processed_burn
+- first submit increases recipient token balance by expected minted amount
+- second submit of same watcher event returns already_processed
+- second submit returns signature = null
+- second submit does not mint again
+- second submit does not change recipient token balance
+- processed_burn remains present
+
+Checks passed:
+
+- Stage 2.20 watcher event submit idempotency / retry: 1 passing
+- Stage 2.19 watcher event full submit pipeline: 3 passing
+- Stage 2.18 watcher event adapter: 5 passing
+- Stage 2.17 normalized task submit wrapper: 2 passing
+- Stage 2.16 task normalization: 3 passing
+- Stage 2.15 preflight-integrated submit path: 2 passing
+- Stage 2.14 preflight validation: 9 passing
+- Stage 2.13 operational state machine live test: 1 passing
+- Stage 2.12 inconsistent recovery live test: 1 passing
+- Stage 2.11 ambiguous recovery live test: 1 passing
+- Stage 2.10 idempotency / retry live test: 1 passing
+- Stage 2.9 relayer prototype live test: 1 passing
+- Stage 2.6 rollback matrix: 6 passing
+- cargo test -p hello-x1 binding_
+- cargo test -p hello-x1 parser_
+- anchor build
+
+Document added:
+
+- docs/gateway/evidence/stage-2-20-watcher-event-submit-idempotency-retry-evidence.md
+
+Current conclusion:
+
+Stage 2.20 proves that the high-level watcher-event submit API is idempotent for repeated watcher events. A repeated watcher event does not mint twice. The second submit stops safely with already_processed, no signature, unchanged balance, and the processed_burn marker remains present.
