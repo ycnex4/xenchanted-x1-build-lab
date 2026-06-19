@@ -23100,3 +23100,85 @@ Document added:
 Current conclusion:
 
 Stage 2.18 adds a watcher-event adapter in front of the normalized relayer task pipeline. The relayer can now accept watcher-style event fields, parse and validate them, produce a normalized task, and keep malformed watcher output away from the submit path.
+
+
+## Stage 2.19 watcher event full submit pipeline evidence
+
+Stage 2.19 adds a high-level watcher event submit helper.
+
+Runtime repo:
+
+- ~/xenchanted-x1-lab/hello-x1
+
+Runtime branch:
+
+- stage-2-19-watcher-event-full-submit-pipeline
+
+Runtime commit:
+
+- d1dbe96 Add Stage 2.19 watcher event full submit pipeline
+
+Base runtime commit:
+
+- ed52794 Add Stage 2.18 watcher event normalized task adapter
+
+Scope:
+
+- TypeScript watcher event full submit helper
+- no on-chain runtime change
+- watcher-style input is parsed, normalized, and submitted through the protected submit path
+- malformed watcher output and parsed preflight failures are rejected before submit
+
+Runtime changes:
+
+- tests/helpers/stage2RelayerPrototype.ts updated
+- tests/stage2_watcher_event_full_submit_pipeline.test.ts added
+
+Full submit path:
+
+- watcher event
+- adaptStage2WatcherMintEventToNormalizedTask
+- submitStage2RelayerNormalizedMintTask
+- submitStage2RelayerMintPrototype
+- preflight / idempotency / transaction build / submit
+
+New helper:
+
+- submitStage2WatcherMintEventPrototype
+
+Confirmed behavior:
+
+- valid watcher event submits through adapter, normalization, and protected submit path
+- submit result is submitted
+- signature is produced
+- processed_burn is created
+- recipient token balance increases by expected minted amount
+- malformed watcher event is rejected before submit
+- parsed watcher event with preflight failure is rejected before submit
+- rejected watcher events return signature = null
+
+Checks passed:
+
+- Stage 2.19 watcher event full submit pipeline: 3 passing
+- Stage 2.18 watcher event adapter: 5 passing
+- Stage 2.17 normalized task submit wrapper: 2 passing
+- Stage 2.16 task normalization: 3 passing
+- Stage 2.15 preflight-integrated submit path: 2 passing
+- Stage 2.14 preflight validation: 9 passing
+- Stage 2.13 operational state machine live test: 1 passing
+- Stage 2.12 inconsistent recovery live test: 1 passing
+- Stage 2.11 ambiguous recovery live test: 1 passing
+- Stage 2.10 idempotency / retry live test: 1 passing
+- Stage 2.9 relayer prototype live test: 1 passing
+- Stage 2.6 rollback matrix: 6 passing
+- cargo test -p hello-x1 binding_
+- cargo test -p hello-x1 parser_
+- anchor build
+
+Document added:
+
+- docs/gateway/evidence/stage-2-19-watcher-event-full-submit-pipeline-evidence.md
+
+Current conclusion:
+
+Stage 2.19 adds the first high-level watcher-event submit API for the relayer prototype. The relayer can now accept a watcher-style event, parse it, normalize it, and submit it through the existing protected path. Malformed watcher events and parsed preflight failures are rejected before submit.
