@@ -24323,3 +24323,166 @@ Document added:
 Current conclusion:
 
 Stage 2.29 creates a safe resume plan execution model. The relayer can now take a Stage 2.28 durable resume plan and execute only ready_to_import contracts through the Stage 2.27 import pipeline. Completed contracts are skipped. Duplicates are skipped. Retry candidates are queued and not blindly submitted. Manual-review plans are queued and not submitted. Invalid contracts are rejected and not submitted. Duplicate-in-plan entries are not submitted twice. The balance delta equals only the sum of actually submitted contracts.
+
+
+## Stage 2.30 relayer operator report / run summary evidence
+
+Stage 2.30 adds an operator-facing report layer above Stage 2.29 resume plan execution.
+
+Runtime repo:
+
+- ~/xenchanted-x1-lab/hello-x1
+
+Runtime branch:
+
+- stage-2-30-relayer-operator-report-run-summary
+
+Runtime commit:
+
+- f3ea200 Add Stage 2.30 relayer operator report run summary
+
+Base runtime commit:
+
+- c029ff3 Add Stage 2.29 resume plan execution model
+
+Scope:
+
+- operator-facing report layer
+- no on-chain runtime change
+- builds on Stage 2.29 resume plan execution
+- builds on Stage 2.28 resume plan
+- builds on Stage 2.27 import pipeline
+- reports run id and timestamps
+- reports contracts received
+- reports journal record deltas
+- reports dedupe contract record deltas
+- reports balance before / after / delta
+- reports execution summary
+- reports per-contract decisions
+
+New helper:
+
+- executeStage2WatcherContractResumePlanWithOperatorReportPrototype
+
+Report fields:
+
+- runId
+- startedAtIso
+- completedAtIso
+- contractsReceived
+- journalRecordsBefore
+- journalRecordsAfter
+- contractRecordsBefore
+- contractRecordsAfter
+- balanceBefore
+- balanceAfter
+- balanceDelta
+- executionSummary
+- decisions
+
+Confirmed mixed run report:
+
+- contractsReceived: 4
+- journalRecordsBefore: 3
+- journalRecordsAfter: 6
+- contractRecordsBefore: 1
+- contractRecordsAfter: 2
+- balanceDelta: 22222
+
+Confirmed mixed execution summary:
+
+- readyToImport: 1
+- submitted: 1
+- alreadyProcessed: 0
+- watcherEventRejected: 0
+- retryCandidates: 0
+- completedNoRetry: 0
+- manualReview: 1
+- rejectedInvalid: 1
+- skippedCompleted: 1
+- skippedDuplicate: 0
+
+Confirmed decision statuses:
+
+- skipped_completed
+- submitted
+- manual_review_queued
+- rejected_invalid
+
+Confirmed plan actions:
+
+- skip_completed
+- ready_to_import
+- manual_review_required
+- rejected_invalid
+
+Confirmed submitted ready contract decision:
+
+- index: 1
+- planAction: ready_to_import
+- status: submitted
+- reason: new_contract
+- importResultStatus: accepted
+- batchResultStatus: submitted
+
+Confirmed retry report behavior:
+
+- retry_queued
+- importResult is undefined
+- balanceDelta: 0
+- journalRecordsBefore: 1
+- journalRecordsAfter: 1
+- contractRecordsBefore: 1
+- contractRecordsAfter: 1
+
+Confirmed manual review report behavior:
+
+- manual_review_queued
+- importResult is undefined
+- balanceDelta: 0
+- journalRecordsBefore: 1
+- journalRecordsAfter: 1
+- contractRecordsBefore: 1
+- contractRecordsAfter: 1
+
+Confirmed run id validation:
+
+- empty run id rejected
+- error message: runId must not be empty
+
+Checks passed:
+
+- Stage 2.30 relayer operator report / run summary: 3 passing
+- Stage 2.29 resume plan execution model: 3 passing
+- Stage 2.28 import pipeline durable resume plan: 3 passing
+- Stage 2.27 relayer import pipeline: 2 passing
+- Stage 2.26 relayer dedupe journal replay guard: 6 passing
+- Stage 2.25 watcher-to-relayer contract boundary: 4 passing
+- Stage 2.24 durable relayer journal model: 2 passing
+- Stage 2.23 watcher event batch / queue processing: 1 passing
+- Stage 2.22 watcher event operational submit wrapper: 6 passing
+- Stage 2.21 watcher event ambiguous recovery: 1 passing
+- Stage 2.20 watcher event submit idempotency / retry: 1 passing
+- Stage 2.19 watcher event full submit pipeline: 3 passing
+- Stage 2.18 watcher event adapter: 5 passing
+- Stage 2.17 normalized task submit wrapper: 2 passing
+- Stage 2.16 task normalization: 3 passing
+- Stage 2.15 preflight-integrated submit path: 2 passing
+- Stage 2.14 preflight validation: 9 passing
+- Stage 2.13 operational state machine live test: 1 passing
+- Stage 2.12 inconsistent recovery live test: 1 passing
+- Stage 2.11 ambiguous recovery live test: 1 passing
+- Stage 2.10 idempotency / retry live test: 1 passing
+- Stage 2.9 relayer prototype live test: 1 passing
+- Stage 2.6 rollback matrix: 6 passing
+- cargo test -p hello-x1 binding_
+- cargo test -p hello-x1 parser_
+- anchor build
+
+Document added:
+
+- docs/gateway/evidence/stage-2-30-relayer-operator-report-run-summary-evidence.md
+
+Current conclusion:
+
+Stage 2.30 creates an operator-facing report layer above Stage 2.29 resume plan execution. The relayer can now produce a run report containing run id, timestamps, received contract count, journal record deltas, dedupe contract record deltas, token balance delta, execution summary, and per-contract decisions. Retry/manual-review queued runs produce zero balance delta and no import result. Empty run ids are rejected.
