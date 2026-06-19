@@ -429,6 +429,7 @@ A controlled read-only mainnet RPC smoke for XC protocol params has completed su
 - [Stage 2.24 Durable relayer journal model evidence](docs/gateway/evidence/stage-2-24-durable-relayer-journal-model-evidence.md)
 - [Stage 2.25 Watcher-to-relayer contract boundary evidence](docs/gateway/evidence/stage-2-25-watcher-to-relayer-contract-boundary-evidence.md)
 - [Stage 2.26 Relayer dedupe journal replay guard evidence](docs/gateway/evidence/stage-2-26-relayer-dedupe-journal-replay-guard-evidence.md)
+- [Stage 2.27 Relayer import pipeline evidence](docs/gateway/evidence/stage-2-27-relayer-import-pipeline-evidence.md)
 - [Stage 2.0 Gateway runtime planning outline](docs/gateway/stage-2-0-gateway-runtime-planning-outline.md)
 - [Stage 2.1 Runtime assumption dependency table](docs/gateway/stage-2-1-runtime-assumption-dependency-table.md)
 - [Stage 2.2 Direct mint candidate runtime design](docs/gateway/stage-2-2-direct-mint-candidate-runtime-design.md)
