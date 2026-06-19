@@ -23854,3 +23854,162 @@ Document added:
 Current conclusion:
 
 Stage 2.26 creates a relayer-side dedupe / replay guard for watcher-to-relayer contracts. The relayer can now record accepted watcher contracts in a durable journal-side contractRecords list. A repeated identical watcher contract is classified as duplicate_existing. A repeated dedupeKey with different payload is routed to manual review. A repeated canonicalEventKey with a different dedupeKey is routed to manual review. Malformed contracts are rejected before dedupe records are created. An accepted dedupe-guard result can still flow into the Stage 2.24 journaled relayer path. Duplicate import after journal reload does not mint again.
+
+
+## Stage 2.27 relayer import pipeline evidence
+
+Stage 2.27 adds a high-level watcher contract import pipeline.
+
+Runtime repo:
+
+- ~/xenchanted-x1-lab/hello-x1
+
+Runtime branch:
+
+- stage-2-27-relayer-import-pipeline
+
+Runtime commit:
+
+- 9e028ec Add Stage 2.27 relayer import pipeline
+
+Base runtime commit:
+
+- 1bd9743 Add Stage 2.26 relayer dedupe journal replay guard
+
+Scope:
+
+- high-level relayer import pipeline prototype
+- no on-chain runtime change
+- combines Stage 2.25 watcher-to-relayer boundary validation
+- combines Stage 2.26 dedupe / replay guard
+- combines Stage 2.24 durable journaled relayer processing
+- accepts watcher contract batches
+- processes only accepted contracts
+- skips duplicates
+- routes conflicts to manual review
+- rejects invalid input before submit
+
+Runtime changes:
+
+- tests/helpers/stage2RelayerPrototype.ts updated
+- tests/stage2_relayer_import_pipeline.test.ts added
+
+New helper:
+
+- importStage2WatcherContractsWithJournalPrototype
+
+New summary type:
+
+- Stage2WatcherContractImportSummary
+
+Summary fields:
+
+- accepted
+- duplicates
+- manualReview
+- invalid
+- processed
+- submitted
+- alreadyProcessed
+- watcherEventRejected
+- retryCandidates
+- completedNoRetry
+- manualReviewOutcomes
+
+Pipeline result fields:
+
+- journal
+- importResults
+- acceptedBatchItems
+- batchResults
+- summary
+
+Confirmed mixed import statuses:
+
+- accepted
+- duplicate_existing
+- manual_review_required
+- manual_review_required
+- invalid_contract
+- invalid_contract
+- accepted
+
+Confirmed mixed import summary:
+
+- accepted: 2
+- duplicates: 1
+- manualReview: 2
+- invalid: 2
+- processed: 2
+- submitted: 2
+- alreadyProcessed: 0
+- watcherEventRejected: 0
+- retryCandidates: 0
+- completedNoRetry: 0
+- manualReviewOutcomes: 0
+
+Confirmed submit behavior:
+
+- only accepted contractA and contractB are submitted
+- confirmed balance delta is 33333
+- 33333 equals 11111 + 22222
+
+Confirmed conflict behavior:
+
+- dedupe_key_payload_mismatch
+- canonical_event_key_dedupe_mismatch
+
+Confirmed invalid behavior:
+
+- invalid_contract
+- invalid_watcher_event
+- propagated watcherEventReason invalid_canonical_event_key_hex
+
+Confirmed reload behavior:
+
+- reloaded journal classifies contractA and contractB as duplicate_existing
+- duplicate import creates no acceptedBatchItems
+- duplicate import creates no batchResults
+- duplicate import does not mint again
+
+Confirmed invalid-only behavior:
+
+- invalid-only import produces invalid_contract
+- no acceptedBatchItems
+- no batchResults
+- no journal records
+- no contractRecords
+
+Checks passed:
+
+- Stage 2.27 relayer import pipeline: 2 passing
+- Stage 2.26 relayer dedupe journal replay guard: 6 passing
+- Stage 2.25 watcher-to-relayer contract boundary: 4 passing
+- Stage 2.24 durable relayer journal model: 2 passing
+- Stage 2.23 watcher event batch / queue processing: 1 passing
+- Stage 2.22 watcher event operational submit wrapper: 6 passing
+- Stage 2.21 watcher event ambiguous recovery: 1 passing
+- Stage 2.20 watcher event submit idempotency / retry: 1 passing
+- Stage 2.19 watcher event full submit pipeline: 3 passing
+- Stage 2.18 watcher event adapter: 5 passing
+- Stage 2.17 normalized task submit wrapper: 2 passing
+- Stage 2.16 task normalization: 3 passing
+- Stage 2.15 preflight-integrated submit path: 2 passing
+- Stage 2.14 preflight validation: 9 passing
+- Stage 2.13 operational state machine live test: 1 passing
+- Stage 2.12 inconsistent recovery live test: 1 passing
+- Stage 2.11 ambiguous recovery live test: 1 passing
+- Stage 2.10 idempotency / retry live test: 1 passing
+- Stage 2.9 relayer prototype live test: 1 passing
+- Stage 2.6 rollback matrix: 6 passing
+- cargo test -p hello-x1 binding_
+- cargo test -p hello-x1 parser_
+- anchor build
+
+Document added:
+
+- docs/gateway/evidence/stage-2-27-relayer-import-pipeline-evidence.md
+
+Current conclusion:
+
+Stage 2.27 creates a high-level relayer import pipeline for watcher contracts. The relayer can now import a batch of watcher-provided contracts, validate each contract, apply dedupe / replay guard, convert accepted contracts into operational batch items, and process accepted items through the durable journaled relayer path. Duplicates are skipped. Conflicts are routed to manual review. Invalid input is rejected before relayer submit. Duplicate import after journal reload does not mint again. Invalid-only imports do not create journal records or dedupe records.
