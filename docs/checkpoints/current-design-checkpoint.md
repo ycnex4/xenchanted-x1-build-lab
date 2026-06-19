@@ -25195,3 +25195,114 @@ Document added:
 Current conclusion:
 
 Stage 2.35 creates an operator audit export bundle boundary above the Stage 2.31 through Stage 2.34 artifact chain. The relayer can now package a validated audit log, matching digest, matching checkpoint, and bundle metadata into one schema-versioned export artifact. The bundle can be serialized, deserialized, validated, and verified offline, giving the operator a complete portable evidence package while preserving minimal live X1 runtime smoke coverage.
+
+
+## Stage 2.36 audit bundle verifier boundary evidence
+
+Stage 2.36 adds a consumer-side verifier boundary for serialized operator audit export bundles.
+
+Runtime repo:
+
+- ~/xenchanted-x1-lab/hello-x1
+
+Runtime branch:
+
+- stage-2-36-operator-audit-bundle-verifier-boundary
+
+Runtime commit:
+
+- b4a5b00 Add Stage 2.36 audit bundle verifier boundary
+
+Base runtime commit:
+
+- dc47baf Add Stage 2.35 operator audit export bundle boundary
+
+Scope:
+
+- external serialized bundle verifier
+- offline / zero-SOL verifier boundary
+- consumer-side verification result
+- does not create bundle
+- does not mutate audit log
+- does not change on-chain runtime
+- does not introduce new live X1 behavior
+- validates verifiedAtIso before parsing bundle input
+- returns invalid_json for malformed JSON
+- validates parsed bundle through Stage 2.35 export bundle validation
+- returns Stage 2.35 validation reasons for invalid or tampered bundles
+- returns compact success summary for valid bundles
+
+New verifier reason type:
+
+- Stage2RelayerOperatorAuditBundleVerificationReason
+
+New verifier result type:
+
+- Stage2RelayerOperatorAuditBundleVerificationResult
+
+New verifier helper:
+
+- verifySerializedStage2RelayerOperatorAuditBundlePrototype
+
+Success result fields:
+
+- ok: true
+- artifactType: stage2_relayer_operator_audit_bundle_verification_result
+- schemaVersion: 1
+- verifiedAtIso
+- bundleArtifactType
+- stageRange
+- runtimeCommit
+- digestHex
+- reportCount
+- firstRunId
+- lastRunId
+- checkpointCreatedAtIso
+- bundleCreatedAtIso
+
+Failure result fields:
+
+- ok: false
+- artifactType: stage2_relayer_operator_audit_bundle_verification_result
+- schemaVersion: 1
+- verifiedAtIso
+- reason
+
+Confirmed success behavior:
+
+- serialized Stage 2.35 export bundle verifies as ok
+- compact verifier result contains bundleArtifactType
+- compact verifier result contains stageRange
+- compact verifier result contains runtimeCommit
+- compact verifier result contains digestHex
+- compact verifier result contains reportCount
+- compact verifier result contains firstRunId and lastRunId
+- compact verifier result contains checkpointCreatedAtIso
+- compact verifier result contains bundleCreatedAtIso
+
+Confirmed failure behavior:
+
+- malformed JSON returns invalid_json
+- wrong bundle artifactType returns invalid_artifact_type
+- tampered digest returns digest_mismatch
+- tampered checkpoint digest returns checkpoint_mismatch
+- invalid verifier timestamp throws invalid_verified_at_iso before parsing bundle input
+
+Runtime stability fix:
+
+- Stage 2.30 live smoke suite now uses this.timeout(30000)
+- reason: live X1 RPC can occasionally exceed Mocha default 2000ms timeout even when behavior is correct
+
+Checks passed:
+
+- Stage 2.36 audit bundle verifier boundary: 3 passing
+- Stage 2.31 through Stage 2.36 artifact / verifier chain: 18 passing
+- Stage 2.22 through Stage 2.36 full optimized regression: 48 passing (13s)
+
+Document added:
+
+- docs/gateway/evidence/stage-2-36-audit-bundle-verifier-boundary-evidence.md
+
+Current conclusion:
+
+Stage 2.36 separates evidence production from evidence consumption. Stage 2.35 creates the portable export bundle, while Stage 2.36 verifies the serialized bundle as an external consumer and returns a compact verification result. This preserves the full tamper-evidence chain while keeping high-level verifier checks offline and limiting live X1 RPC usage to minimal runtime smoke coverage.
