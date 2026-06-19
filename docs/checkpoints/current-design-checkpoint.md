@@ -25306,3 +25306,138 @@ Document added:
 Current conclusion:
 
 Stage 2.36 separates evidence production from evidence consumption. Stage 2.35 creates the portable export bundle, while Stage 2.36 verifies the serialized bundle as an external consumer and returns a compact verification result. This preserves the full tamper-evidence chain while keeping high-level verifier checks offline and limiting live X1 RPC usage to minimal runtime smoke coverage.
+
+
+## Stage 2.37 audit bundle verification receipt evidence
+
+Stage 2.37 adds a durable verification receipt artifact above the Stage 2.36 external bundle verifier.
+
+Runtime repo:
+
+- ~/xenchanted-x1-lab/hello-x1
+
+Runtime branch:
+
+- stage-2-37-audit-bundle-verification-receipt-boundary
+
+Runtime commit:
+
+- fac1a1d Add Stage 2.37 audit bundle verification receipt boundary
+
+Base runtime commit:
+
+- b4a5b00 Add Stage 2.36 audit bundle verifier boundary
+
+Scope:
+
+- stable verification receipt artifact
+- offline / zero-SOL receipt boundary
+- created only from successful verifier result
+- rejects failed verification results
+- does not verify bundle directly
+- does not create bundle
+- does not mutate audit log
+- does not change on-chain runtime
+- does not introduce new live X1 behavior
+- validates createdAtIso
+- validates non-empty verifierId
+- serializes, deserializes, validates, and verifies receipt artifact
+
+New receipt artifact type:
+
+- Stage2RelayerOperatorAuditBundleVerificationReceiptArtifact
+
+New receipt validation reason type:
+
+- Stage2RelayerOperatorAuditBundleVerificationReceiptValidationReason
+
+New receipt validation result type:
+
+- Stage2RelayerOperatorAuditBundleVerificationReceiptValidationResult
+
+New receipt creation helper:
+
+- createStage2RelayerOperatorAuditBundleVerificationReceiptPrototype
+
+New receipt validation helper:
+
+- validateStage2RelayerOperatorAuditBundleVerificationReceiptPrototype
+
+New receipt serialization helper:
+
+- serializeStage2RelayerOperatorAuditBundleVerificationReceiptPrototype
+
+New receipt deserialization helper:
+
+- deserializeStage2RelayerOperatorAuditBundleVerificationReceiptPrototype
+
+New receipt verification helper:
+
+- verifyStage2RelayerOperatorAuditBundleVerificationReceiptPrototype
+
+Receipt artifact fields:
+
+- artifactType: stage2_relayer_operator_audit_bundle_verification_receipt
+- schemaVersion: 1
+- createdAtIso
+- verifierId
+- verificationResultArtifactType
+- verificationResultSchemaVersion
+- bundleArtifactType
+- stageRange
+- runtimeCommit
+- digestHex
+- reportCount
+- firstRunId
+- lastRunId
+- checkpointCreatedAtIso
+- bundleCreatedAtIso
+- verifiedAtIso
+
+Confirmed success behavior:
+
+- successful Stage 2.36 verifier result converts into receipt
+- receipt artifactType equals stage2_relayer_operator_audit_bundle_verification_receipt
+- receipt schemaVersion equals 1
+- receipt createdAtIso equals 2026-01-01T00:40:00.000Z
+- receipt verifierId equals stage-2-37-verifier-001
+- receipt runtimeCommit equals b4a5b00
+- receipt digestHex is a 64-character lowercase hex digest
+- receipt reportCount equals 2
+- receipt firstRunId equals stage-2-37-run-001
+- receipt lastRunId equals stage-2-37-run-002
+- receipt checkpointCreatedAtIso equals 2026-01-01T00:37:00.000Z
+- receipt bundleCreatedAtIso equals 2026-01-01T00:38:00.000Z
+- receipt verifiedAtIso equals 2026-01-01T00:39:00.000Z
+- receipt validation returns ok: true
+- receipt verification returns true
+- receipt serializes and deserializes
+- deserialized receipt verifies as true
+
+Confirmed rejection behavior:
+
+- failed verification result rejected
+- invalid receipt createdAtIso rejected
+- empty verifierId rejected
+- wrong artifactType rejected
+- wrong schemaVersion rejected
+- invalid digestHex rejected
+- negative reportCount rejected
+- wrong verificationResultArtifactType rejected
+- invalid verifiedAtIso rejected
+- invalid JSON rejected during deserialization
+- wrong bundleArtifactType rejected during deserialization
+
+Checks passed:
+
+- Stage 2.37 audit bundle verification receipt boundary: 3 passing
+- Stage 2.31 through Stage 2.37 artifact / verifier / receipt chain: 21 passing
+- Stage 2.22 through Stage 2.37 full optimized regression: 51 passing (18s)
+
+Document added:
+
+- docs/gateway/evidence/stage-2-37-audit-bundle-verification-receipt-evidence.md
+
+Current conclusion:
+
+Stage 2.37 adds a durable receipt artifact for successful external bundle verification. This completes the transition from operator-side evidence production to consumer-side verification and receipt creation while preserving the offline / zero-SOL artifact boundary.
