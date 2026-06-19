@@ -25441,3 +25441,165 @@ Document added:
 Current conclusion:
 
 Stage 2.37 adds a durable receipt artifact for successful external bundle verification. This completes the transition from operator-side evidence production to consumer-side verification and receipt creation while preserving the offline / zero-SOL artifact boundary.
+
+
+## Stage 2.38 final evidence index closure evidence
+
+Stage 2.38 adds the final Stage 2 evidence index closure boundary.
+
+Runtime repo:
+
+- ~/xenchanted-x1-lab/hello-x1
+
+Runtime branch:
+
+- stage-2-38-final-evidence-index-closure-boundary
+
+Runtime commit:
+
+- 7cbbeb3 Add Stage 2.38 final evidence index closure boundary
+
+Base runtime commit:
+
+- fac1a1d Add Stage 2.37 audit bundle verification receipt boundary
+
+Scope:
+
+- final Stage 2 evidence index
+- closure boundary
+- covers Stage 2.22 through Stage 2.38
+- records live X1 runtime boundary
+- records offline artifact / verifier / receipt boundary
+- does not change on-chain runtime
+- does not introduce new live X1 behavior
+- offline / zero-SOL closure artifact
+- serializes, deserializes, validates, and verifies final evidence index
+
+New final evidence index entry type:
+
+- Stage2RelayerFinalEvidenceIndexEntry
+
+New final evidence index artifact type:
+
+- Stage2RelayerFinalEvidenceIndexArtifact
+
+New final evidence index validation reason type:
+
+- Stage2RelayerFinalEvidenceIndexValidationReason
+
+New final evidence index validation result type:
+
+- Stage2RelayerFinalEvidenceIndexValidationResult
+
+New final evidence index creation helper:
+
+- createStage2RelayerFinalEvidenceIndexPrototype
+
+New final evidence index validation helper:
+
+- validateStage2RelayerFinalEvidenceIndexPrototype
+
+New final evidence index serialization helper:
+
+- serializeStage2RelayerFinalEvidenceIndexPrototype
+
+New final evidence index deserialization helper:
+
+- deserializeStage2RelayerFinalEvidenceIndexPrototype
+
+New final evidence index verification helper:
+
+- verifyStage2RelayerFinalEvidenceIndexPrototype
+
+Final evidence index artifact fields:
+
+- artifactType: stage2_relayer_final_evidence_index
+- schemaVersion: 1
+- createdAtIso
+- stageRange: 2.22-2.38
+- closureStage: 2.38
+- runtimeCommit
+- entries
+- liveRuntimeBoundary
+- offlineArtifactBoundary
+- conclusion
+
+Required Stage 2 closure range:
+
+- 2.22
+- 2.23
+- 2.24
+- 2.25
+- 2.26
+- 2.27
+- 2.28
+- 2.29
+- 2.30
+- 2.31
+- 2.32
+- 2.33
+- 2.34
+- 2.35
+- 2.36
+- 2.37
+- 2.38
+
+Confirmed success behavior:
+
+- final evidence index covers Stage 2.22 through Stage 2.38
+- artifactType equals stage2_relayer_final_evidence_index
+- schemaVersion equals 1
+- createdAtIso equals 2026-01-01T00:41:00.000Z
+- stageRange equals 2.22-2.38
+- closureStage equals 2.38
+- runtimeCommit equals fac1a1d
+- entries length equals 17
+- entries cover every required stage in order
+- final entry is Stage 2.38 final evidence index closure boundary
+- validation returns ok: true
+- verification returns true
+- index serializes and deserializes
+- deserialized index verifies as true
+
+Confirmed rejection behavior:
+
+- missing required stage rejected
+- duplicate stage rejected
+- wrong artifactType rejected
+- wrong stageRange rejected
+- wrong closureStage rejected
+- wrong evidenceKind rejected
+- wrong executionMode rejected
+- empty liveRuntimeBoundary rejected
+- empty offlineArtifactBoundary rejected
+- invalid JSON rejected during deserialization
+- empty conclusion rejected during creation
+
+Live X1 runtime boundary:
+
+- Stage 2.22 watcher event operational submit wrapper
+- Stage 2.23 watcher event batch queue processing
+- Stage 2.24 durable relayer journal live continuation path
+- Stage 2.27 relayer import pipeline live submit path
+- Stage 2.30 operator report live balance delta path
+
+Offline artifact / verifier / receipt boundary:
+
+- Stage 2.25 through Stage 2.26 contract and dedupe boundaries
+- Stage 2.28 through Stage 2.29 resume planning and execution model
+- Stage 2.31 through Stage 2.37 artifact, verifier, and receipt chain
+- Stage 2.38 final closure index
+
+Checks passed:
+
+- Stage 2.38 final evidence index closure boundary: 3 passing
+- Stage 2.31 through Stage 2.38 artifact / verifier / receipt / closure chain: 24 passing
+- Stage 2.22 through Stage 2.38 full optimized regression: 54 passing (12s)
+
+Document added:
+
+- docs/gateway/evidence/stage-2-38-final-evidence-index-closure-evidence.md
+
+Current conclusion:
+
+Stage 2.38 closes the Stage 2 relayer/operator/audit/evidence model. Stage 2 now covers the full chain from watcher event operational submission through durable operator reporting, audit log creation, digest, checkpoint, portable export bundle, external bundle verification, durable verification receipt, and final evidence index closure. The Stage 2 model preserves a clean split between minimal live X1 runtime smoke coverage and offline / zero-SOL artifact, verifier, receipt, and closure validation.
