@@ -23621,3 +23621,120 @@ Document added:
 Current conclusion:
 
 Stage 2.24 creates a durable relayer journal prototype for watcher-event processing. The relayer can now record event receipt, operational results, final outcomes, retry candidates, and manual-review cases. The journal can be serialized, reloaded, validated, and reused after restart. After reload, a previously submitted event is safely classified as already_processed and does not mint again.
+
+
+## Stage 2.25 watcher-to-relayer contract boundary evidence
+
+Stage 2.25 adds a prototype watcher-to-relayer contract boundary.
+
+Runtime repo:
+
+- ~/xenchanted-x1-lab/hello-x1
+
+Runtime branch:
+
+- stage-2-25-watcher-to-relayer-contract-boundary
+
+Runtime commit:
+
+- 5a8a2fb Add Stage 2.25 watcher to relayer contract boundary
+
+Base runtime commit:
+
+- 4c8d930 Add Stage 2.24 durable relayer journal model
+
+Scope:
+
+- formal watcher-to-relayer input contract prototype
+- no on-chain runtime change
+- validates watcher metadata before relayer submit
+- validates embedded watcher event payload before submit
+- converts accepted watcher contract into operational batch item
+- integrates accepted contract with durable journaled relayer path
+
+Runtime changes:
+
+- tests/helpers/stage2RelayerPrototype.ts updated
+- tests/stage2_watcher_to_relayer_contract_boundary.test.ts added
+
+New helper:
+
+- acceptStage2WatcherToRelayerContractPrototype
+
+Contract fields:
+
+- eventId
+- journalId
+- dedupeKey
+- sourceChainId
+- sourceTxHash
+- sourceLogIndex
+- sourceBlockNumber
+- sourceFinalityState
+- watcherEvent
+- optional mode
+- optional expectedMintedAmountOverride
+
+Supported source finality states:
+
+- finalized
+- safe
+- confirmed
+
+Metadata failure reasons:
+
+- invalid_event_id
+- invalid_journal_id
+- invalid_dedupe_key
+- invalid_source_chain_id
+- invalid_source_tx_hash
+- invalid_source_log_index
+- invalid_source_block_number
+- invalid_source_finality_state
+
+Watcher event failure:
+
+- invalid_watcher_event
+
+Confirmed integration behavior:
+
+- accepted contract maps to a batch item
+- batch item id equals contract.eventId
+- malformed watcher event is rejected before submit
+- watcher event adapter reason is propagated
+- accepted contract processes through Stage 2.24 journaled relayer path
+- journal records event_received, operational_result, final_outcome
+- journal itemId equals contract.eventId
+- confirmed balance delta is 24680
+
+Checks passed:
+
+- Stage 2.25 watcher-to-relayer contract boundary: 4 passing
+- Stage 2.24 durable relayer journal model: 2 passing
+- Stage 2.23 watcher event batch / queue processing: 1 passing
+- Stage 2.22 watcher event operational submit wrapper: 6 passing
+- Stage 2.21 watcher event ambiguous recovery: 1 passing
+- Stage 2.20 watcher event submit idempotency / retry: 1 passing
+- Stage 2.19 watcher event full submit pipeline: 3 passing
+- Stage 2.18 watcher event adapter: 5 passing
+- Stage 2.17 normalized task submit wrapper: 2 passing
+- Stage 2.16 task normalization: 3 passing
+- Stage 2.15 preflight-integrated submit path: 2 passing
+- Stage 2.14 preflight validation: 9 passing
+- Stage 2.13 operational state machine live test: 1 passing
+- Stage 2.12 inconsistent recovery live test: 1 passing
+- Stage 2.11 ambiguous recovery live test: 1 passing
+- Stage 2.10 idempotency / retry live test: 1 passing
+- Stage 2.9 relayer prototype live test: 1 passing
+- Stage 2.6 rollback matrix: 6 passing
+- cargo test -p hello-x1 binding_
+- cargo test -p hello-x1 parser_
+- anchor build
+
+Document added:
+
+- docs/gateway/evidence/stage-2-25-watcher-to-relayer-contract-boundary-evidence.md
+
+Current conclusion:
+
+Stage 2.25 creates a formal watcher-to-relayer contract boundary. The relayer now has a prototype acceptance layer for watcher-provided objects before submit. Metadata errors are rejected before relayer execution. Malformed watcher event payloads are rejected at the boundary and propagate watcher-event adapter reasons. Accepted contracts can be converted into operational batch items and processed through the durable journaled relayer path.
