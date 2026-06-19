@@ -23519,3 +23519,105 @@ Document added:
 Current conclusion:
 
 Stage 2.23 creates a prototype batch / queue processing model for watcher events. The relayer can now process a sequence of watcher-event operational items and receive ordered per-item outcomes. The queue can contain successful submits, malformed watcher events, retries, ambiguous recovery candidates, completed recoveries, and manual-review cases without collapsing the whole batch.
+
+
+## Stage 2.24 durable relayer journal model evidence
+
+Stage 2.24 adds a prototype durable journal model for watcher-event relayer processing.
+
+Runtime repo:
+
+- ~/xenchanted-x1-lab/hello-x1
+
+Runtime branch:
+
+- stage-2-24-durable-relayer-journal-model
+
+Runtime commit:
+
+- 4c8d930 Add Stage 2.24 durable relayer journal model
+
+Base runtime commit:
+
+- d763177 Add Stage 2.23 watcher event batch queue processing
+
+Scope:
+
+- durable relayer journal prototype
+- no on-chain runtime change
+- records event receipt, operational result, final outcome, retry candidate, and manual review
+- supports serialization and deserialization
+- validates journal sequence ordering
+- supports continuing processing after reload
+
+Runtime changes:
+
+- tests/helpers/stage2RelayerPrototype.ts updated
+- tests/stage2_durable_relayer_journal_model.test.ts added
+
+New journal record kinds:
+
+- event_received
+- operational_result
+- final_outcome
+- retry_candidate
+- manual_review_required
+
+New helpers:
+
+- createStage2RelayerJournalPrototype
+- serializeStage2RelayerJournalPrototype
+- deserializeStage2RelayerJournalPrototype
+- processStage2WatcherEventOperationalBatchWithJournalPrototype
+
+Confirmed first-pass outcomes:
+
+- submitted
+- watcher_event_rejected
+- safe_retry_candidate
+- completed_no_retry
+- stop_manual_review
+
+Confirmed reload behavior:
+
+- journal serializes and deserializes without changing content
+- reloaded journal can be reused
+- repeated previously submitted event returns already_processed
+- second pass appends sequence 15, 16, 17
+- second pass does not mint again
+
+Malformed journal checks:
+
+- rejects records that are not an array
+- rejects sequence mismatch
+
+Checks passed:
+
+- Stage 2.24 durable relayer journal model: 2 passing
+- Stage 2.23 watcher event batch / queue processing: 1 passing
+- Stage 2.22 watcher event operational submit wrapper: 6 passing
+- Stage 2.21 watcher event ambiguous recovery: 1 passing
+- Stage 2.20 watcher event submit idempotency / retry: 1 passing
+- Stage 2.19 watcher event full submit pipeline: 3 passing
+- Stage 2.18 watcher event adapter: 5 passing
+- Stage 2.17 normalized task submit wrapper: 2 passing
+- Stage 2.16 task normalization: 3 passing
+- Stage 2.15 preflight-integrated submit path: 2 passing
+- Stage 2.14 preflight validation: 9 passing
+- Stage 2.13 operational state machine live test: 1 passing
+- Stage 2.12 inconsistent recovery live test: 1 passing
+- Stage 2.11 ambiguous recovery live test: 1 passing
+- Stage 2.10 idempotency / retry live test: 1 passing
+- Stage 2.9 relayer prototype live test: 1 passing
+- Stage 2.6 rollback matrix: 6 passing
+- cargo test -p hello-x1 binding_
+- cargo test -p hello-x1 parser_
+- anchor build
+
+Document added:
+
+- docs/gateway/evidence/stage-2-24-durable-relayer-journal-model-evidence.md
+
+Current conclusion:
+
+Stage 2.24 creates a durable relayer journal prototype for watcher-event processing. The relayer can now record event receipt, operational results, final outcomes, retry candidates, and manual-review cases. The journal can be serialized, reloaded, validated, and reused after restart. After reload, a previously submitted event is safely classified as already_processed and does not mint again.
