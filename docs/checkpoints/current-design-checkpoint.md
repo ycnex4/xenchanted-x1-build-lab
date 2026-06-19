@@ -24611,3 +24611,152 @@ Document added:
 Current conclusion:
 
 Stage 2.31 creates a stable JSON log artifact layer for Stage 2.30 operator reports. Operator reports can now be validated, serialized, deserialized, schema-versioned, and checked for secret-bearing field leakage. The artifact has deterministic JSON output for the same report, rejects malformed input, rejects unsupported schema versions, and preserves only JSON-compatible persisted fields.
+
+
+## Stage 2.32 operator report audit log append model evidence
+
+Stage 2.32 adds an append-only audit log model above Stage 2.31 report artifacts.
+
+Runtime repo:
+
+- ~/xenchanted-x1-lab/hello-x1
+
+Runtime branch:
+
+- stage-2-32-operator-report-audit-log-append-model
+
+Runtime commit:
+
+- 9daa74f Add Stage 2.32 operator report audit log append model
+
+Base runtime commit:
+
+- b711f62 Add Stage 2.31 operator report serialization log artifact
+
+Scope:
+
+- append-only audit log model
+- no on-chain runtime change
+- builds on Stage 2.31 stable report artifacts
+- schema-versioned audit log artifact
+- append stable report artifacts
+- reject duplicate run ids without mutation
+- preserve report order after serialization and reload
+- reject malformed persisted logs
+- validate embedded report artifacts
+
+New audit log artifact type:
+
+- Stage2RelayerOperatorAuditLogArtifact
+
+Audit log artifact fields:
+
+- artifactType: stage2_relayer_operator_audit_log
+- schemaVersion: 1
+- reports
+
+New append result type:
+
+- Stage2RelayerOperatorAuditLogAppendResult
+
+Append statuses:
+
+- appended
+- duplicate_run_id
+
+New validation helper:
+
+- validateStage2RelayerOperatorAuditLogPrototype
+
+New creation helper:
+
+- createStage2RelayerOperatorAuditLogPrototype
+
+New append helper:
+
+- appendStage2RelayerOperatorAuditLogPrototype
+
+New serialization helper:
+
+- serializeStage2RelayerOperatorAuditLogPrototype
+
+New deserialization helper:
+
+- deserializeStage2RelayerOperatorAuditLogPrototype
+
+Confirmed audit log creation:
+
+- artifactType: stage2_relayer_operator_audit_log
+- schemaVersion: 1
+- reports: []
+
+Confirmed ordered append behavior:
+
+- first runId: stage-2-32-run-001
+- first balanceDelta: 10101
+- second runId: stage-2-32-run-002
+- second balanceDelta: 20202
+- first append status: appended
+- first reportCount: 1
+- second append status: appended
+- second reportCount: 2
+- order preserved after reload
+- balance deltas preserved after reload
+- validation returns ok: true
+
+Confirmed duplicate run id behavior:
+
+- duplicate runId: stage-2-32-duplicate-run
+- first balanceDelta: 30303
+- duplicate balanceDelta: 40404
+- duplicate append status: duplicate_run_id
+- reportCount remains 1
+- audit log remains length 1
+- preserved balanceDelta remains 30303
+
+Confirmed malformed persisted log rejection:
+
+- invalid JSON rejected
+- wrong artifactType rejected
+- wrong schemaVersion rejected
+- reports is not an array rejected
+- invalid embedded report artifact rejected
+
+Checks passed:
+
+- Stage 2.32 operator report audit log append model: 3 passing
+- Stage 2.31 operator report serialization / stable log artifact: 3 passing
+- Stage 2.30 relayer operator report / run summary: 3 passing
+- Stage 2.29 resume plan execution model: 3 passing
+- Stage 2.28 import pipeline durable resume plan: 3 passing
+- Stage 2.27 relayer import pipeline: 2 passing
+- Stage 2.26 relayer dedupe journal replay guard: 6 passing
+- Stage 2.25 watcher-to-relayer contract boundary: 4 passing
+- Stage 2.24 durable relayer journal model: 2 passing
+- Stage 2.23 watcher event batch / queue processing: 1 passing
+- Stage 2.22 watcher event operational submit wrapper: 6 passing
+- Stage 2.21 watcher event ambiguous recovery: 1 passing
+- Stage 2.20 watcher event submit idempotency / retry: 1 passing
+- Stage 2.19 watcher event full submit pipeline: 3 passing
+- Stage 2.18 watcher event adapter: 5 passing
+- Stage 2.17 normalized task submit wrapper: 2 passing
+- Stage 2.16 task normalization: 3 passing
+- Stage 2.15 preflight-integrated submit path: 2 passing
+- Stage 2.14 preflight validation: 9 passing
+- Stage 2.13 operational state machine live test: 1 passing
+- Stage 2.12 inconsistent recovery live test: 1 passing
+- Stage 2.11 ambiguous recovery live test: 1 passing
+- Stage 2.10 idempotency / retry live test: 1 passing
+- Stage 2.9 relayer prototype live test: 1 passing
+- Stage 2.6 rollback matrix: 6 passing
+- cargo test -p hello-x1 binding_
+- cargo test -p hello-x1 parser_
+- anchor build
+
+Document added:
+
+- docs/gateway/evidence/stage-2-32-operator-report-audit-log-append-model-evidence.md
+
+Current conclusion:
+
+Stage 2.32 creates an append-only audit log model above Stage 2.31 operator report artifacts. The relayer can now create a schema-versioned operator audit log, append stable report artifacts, preserve report order across serialization and reload, reject duplicate run ids without mutation, and reject malformed persisted logs.
