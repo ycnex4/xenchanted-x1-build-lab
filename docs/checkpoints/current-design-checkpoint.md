@@ -23738,3 +23738,119 @@ Document added:
 Current conclusion:
 
 Stage 2.25 creates a formal watcher-to-relayer contract boundary. The relayer now has a prototype acceptance layer for watcher-provided objects before submit. Metadata errors are rejected before relayer execution. Malformed watcher event payloads are rejected at the boundary and propagate watcher-event adapter reasons. Accepted contracts can be converted into operational batch items and processed through the durable journaled relayer path.
+
+
+## Stage 2.26 relayer dedupe journal replay guard evidence
+
+Stage 2.26 adds a prototype dedupe / replay guard for watcher-to-relayer contracts.
+
+Runtime repo:
+
+- ~/xenchanted-x1-lab/hello-x1
+
+Runtime branch:
+
+- stage-2-26-relayer-dedupe-journal-replay-guard
+
+Runtime commit:
+
+- 1bd9743 Add Stage 2.26 relayer dedupe journal replay guard
+
+Base runtime commit:
+
+- 5a8a2fb Add Stage 2.25 watcher to relayer contract boundary
+
+Scope:
+
+- relayer-side dedupe / replay guard prototype
+- no on-chain runtime change
+- builds on Stage 2.25 watcher-to-relayer contract boundary
+- builds on Stage 2.24 durable journal model
+- records accepted watcher contracts in journal-side contractRecords
+- blocks replay import after journal reload
+- routes conflicting duplicate material to manual review
+
+Runtime changes:
+
+- tests/helpers/stage2RelayerPrototype.ts updated
+- tests/stage2_relayer_dedupe_journal_replay_guard.test.ts added
+
+New dedupe record:
+
+- Stage2WatcherToRelayerDedupeRecord
+
+Dedupe record fields:
+
+- sequence
+- eventId
+- journalId
+- dedupeKey
+- canonicalEventKeyHex
+- watcherPayloadFingerprint
+
+New helper:
+
+- acceptStage2WatcherToRelayerContractWithDedupeGuardPrototype
+
+Outcomes:
+
+- accepted
+- duplicate_existing
+- manual_review_required
+- invalid_contract
+
+Manual review reasons:
+
+- dedupe_key_payload_mismatch
+- canonical_event_key_dedupe_mismatch
+
+Confirmed behavior:
+
+- new watcher contract is accepted and records a dedupe entry
+- same watcher contract after journal reload returns duplicate_existing
+- same dedupeKey with different payload returns manual_review_required
+- same canonicalEventKey with different dedupeKey returns manual_review_required
+- malformed watcher-to-relayer metadata returns invalid_contract
+- malformed watcher event payload returns invalid_contract
+- watcher event adapter reason is propagated
+- accepted dedupe-guard output flows into Stage 2.24 journaled relayer path
+- duplicate import after reload does not mint again
+
+Fingerprint policy:
+
+- uses public watcher contract fields
+- uses guardian public keys
+- does not serialize guardian secret keys
+
+Checks passed:
+
+- Stage 2.26 relayer dedupe journal replay guard: 6 passing
+- Stage 2.25 watcher-to-relayer contract boundary: 4 passing
+- Stage 2.24 durable relayer journal model: 2 passing
+- Stage 2.23 watcher event batch / queue processing: 1 passing
+- Stage 2.22 watcher event operational submit wrapper: 6 passing
+- Stage 2.21 watcher event ambiguous recovery: 1 passing
+- Stage 2.20 watcher event submit idempotency / retry: 1 passing
+- Stage 2.19 watcher event full submit pipeline: 3 passing
+- Stage 2.18 watcher event adapter: 5 passing
+- Stage 2.17 normalized task submit wrapper: 2 passing
+- Stage 2.16 task normalization: 3 passing
+- Stage 2.15 preflight-integrated submit path: 2 passing
+- Stage 2.14 preflight validation: 9 passing
+- Stage 2.13 operational state machine live test: 1 passing
+- Stage 2.12 inconsistent recovery live test: 1 passing
+- Stage 2.11 ambiguous recovery live test: 1 passing
+- Stage 2.10 idempotency / retry live test: 1 passing
+- Stage 2.9 relayer prototype live test: 1 passing
+- Stage 2.6 rollback matrix: 6 passing
+- cargo test -p hello-x1 binding_
+- cargo test -p hello-x1 parser_
+- anchor build
+
+Document added:
+
+- docs/gateway/evidence/stage-2-26-relayer-dedupe-journal-replay-guard-evidence.md
+
+Current conclusion:
+
+Stage 2.26 creates a relayer-side dedupe / replay guard for watcher-to-relayer contracts. The relayer can now record accepted watcher contracts in a durable journal-side contractRecords list. A repeated identical watcher contract is classified as duplicate_existing. A repeated dedupeKey with different payload is routed to manual review. A repeated canonicalEventKey with a different dedupeKey is routed to manual review. Malformed contracts are rejected before dedupe records are created. An accepted dedupe-guard result can still flow into the Stage 2.24 journaled relayer path. Duplicate import after journal reload does not mint again.
