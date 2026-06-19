@@ -426,6 +426,7 @@ A controlled read-only mainnet RPC smoke for XC protocol params has completed su
 - [Stage 2.21 Watcher event ambiguous recovery evidence](docs/gateway/evidence/stage-2-21-watcher-event-ambiguous-recovery-evidence.md)
 - [Stage 2.22 Watcher event operational submit wrapper evidence](docs/gateway/evidence/stage-2-22-watcher-event-operational-submit-wrapper-evidence.md)
 - [Stage 2.23 Watcher event batch queue processing evidence](docs/gateway/evidence/stage-2-23-watcher-event-batch-queue-processing-evidence.md)
+- [Stage 2.24 Durable relayer journal model evidence](docs/gateway/evidence/stage-2-24-durable-relayer-journal-model-evidence.md)
 - [Stage 2.0 Gateway runtime planning outline](docs/gateway/stage-2-0-gateway-runtime-planning-outline.md)
 - [Stage 2.1 Runtime assumption dependency table](docs/gateway/stage-2-1-runtime-assumption-dependency-table.md)
 - [Stage 2.2 Direct mint candidate runtime design](docs/gateway/stage-2-2-direct-mint-candidate-runtime-design.md)
