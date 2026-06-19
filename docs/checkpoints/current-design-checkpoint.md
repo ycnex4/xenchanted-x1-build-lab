@@ -23346,3 +23346,84 @@ Document added:
 Current conclusion:
 
 Stage 2.21 proves that ambiguous recovery works at the high-level watcher-event API boundary. The relayer can inspect processed_burn and recipient token balance after an ambiguous watcher-event submit result and choose between completed_no_retry, safe_retry_candidate, or stop_manual_review. This avoids blind retry behavior.
+
+
+## Stage 2.22 watcher event operational submit wrapper evidence
+
+Stage 2.22 adds a high-level operational submit wrapper for a single watcher event.
+
+Runtime repo:
+
+- ~/xenchanted-x1-lab/hello-x1
+
+Runtime branch:
+
+- stage-2-22-watcher-event-operational-submit-wrapper
+
+Runtime commit:
+
+- 1a75653 Add Stage 2.22 watcher event operational submit wrapper
+
+Base runtime commit:
+
+- 2dc3ad1 Add Stage 2.21 watcher event ambiguous recovery
+
+Scope:
+
+- production-shaped prototype boundary for one watcher event
+- no on-chain runtime change
+- combines watcher parsing, normalization, submit, idempotency, and ambiguous recovery decision
+- returns an operational outcome for the relayer loop
+
+Runtime changes:
+
+- tests/helpers/stage2RelayerPrototype.ts updated
+- tests/stage2_watcher_event_operational_submit_wrapper.test.ts added
+
+New helper:
+
+- submitStage2WatcherMintEventOperationalPrototype
+
+Operational modes:
+
+- submit
+- recover_ambiguous
+- submit_then_recover_ambiguous
+
+Confirmed outcomes:
+
+- submitted
+- already_processed
+- safe_retry_candidate
+- completed_no_retry
+- stop_manual_review
+- watcher_event_rejected
+
+Checks passed:
+
+- Stage 2.22 watcher event operational submit wrapper: 6 passing
+- Stage 2.21 watcher event ambiguous recovery: 1 passing
+- Stage 2.20 watcher event submit idempotency / retry: 1 passing
+- Stage 2.19 watcher event full submit pipeline: 3 passing
+- Stage 2.18 watcher event adapter: 5 passing
+- Stage 2.17 normalized task submit wrapper: 2 passing
+- Stage 2.16 task normalization: 3 passing
+- Stage 2.15 preflight-integrated submit path: 2 passing
+- Stage 2.14 preflight validation: 9 passing
+- Stage 2.13 operational state machine live test: 1 passing
+- Stage 2.12 inconsistent recovery live test: 1 passing
+- Stage 2.11 ambiguous recovery live test: 1 passing
+- Stage 2.10 idempotency / retry live test: 1 passing
+- Stage 2.9 relayer prototype live test: 1 passing
+- Stage 2.6 rollback matrix: 6 passing
+- cargo test -p hello-x1 binding_
+- cargo test -p hello-x1 parser_
+- anchor build
+
+Document added:
+
+- docs/gateway/evidence/stage-2-22-watcher-event-operational-submit-wrapper-evidence.md
+
+Current conclusion:
+
+Stage 2.22 creates a production-shaped prototype boundary for processing one watcher event. The relayer can now call one high-level helper and receive an operational outcome instead of manually stitching together watcher parsing, submit, idempotency, and ambiguous recovery.
