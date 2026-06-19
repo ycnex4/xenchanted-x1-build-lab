@@ -421,6 +421,7 @@ A controlled read-only mainnet RPC smoke for XC protocol params has completed su
 - [Stage 2.16 Relayer task normalization evidence](docs/gateway/evidence/stage-2-16-relayer-task-normalization-evidence.md)
 - [Stage 2.17 Normalized task submit wrapper evidence](docs/gateway/evidence/stage-2-17-normalized-task-submit-wrapper-evidence.md)
 - [Stage 2.18 Watcher event normalized task adapter evidence](docs/gateway/evidence/stage-2-18-watcher-event-normalized-task-adapter-evidence.md)
+- [Stage 2.19 Watcher event full submit pipeline evidence](docs/gateway/evidence/stage-2-19-watcher-event-full-submit-pipeline-evidence.md)
 - [Stage 2.0 Gateway runtime planning outline](docs/gateway/stage-2-0-gateway-runtime-planning-outline.md)
 - [Stage 2.1 Runtime assumption dependency table](docs/gateway/stage-2-1-runtime-assumption-dependency-table.md)
 - [Stage 2.2 Direct mint candidate runtime design](docs/gateway/stage-2-2-direct-mint-candidate-runtime-design.md)
