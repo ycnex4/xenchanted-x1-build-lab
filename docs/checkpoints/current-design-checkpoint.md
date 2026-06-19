@@ -23427,3 +23427,95 @@ Document added:
 Current conclusion:
 
 Stage 2.22 creates a production-shaped prototype boundary for processing one watcher event. The relayer can now call one high-level helper and receive an operational outcome instead of manually stitching together watcher parsing, submit, idempotency, and ambiguous recovery.
+
+
+## Stage 2.23 watcher event batch queue processing evidence
+
+Stage 2.23 adds a prototype batch / queue processing helper for watcher events.
+
+Runtime repo:
+
+- ~/xenchanted-x1-lab/hello-x1
+
+Runtime branch:
+
+- stage-2-23-watcher-event-batch-queue-processing
+
+Runtime commit:
+
+- d763177 Add Stage 2.23 watcher event batch queue processing
+
+Base runtime commit:
+
+- 1a75653 Add Stage 2.22 watcher event operational submit wrapper
+
+Scope:
+
+- prototype batch / queue processing model for watcher events
+- no on-chain runtime change
+- sequentially processes watcher-event operational items
+- preserves id and index for each result
+- returns ordered per-item operational outcomes
+
+Runtime changes:
+
+- tests/helpers/stage2RelayerPrototype.ts updated
+- tests/stage2_watcher_event_batch_queue_processing.test.ts added
+- tests/stage2_watcher_event_operational_submit_wrapper.test.ts updated for live-test canonicalEventKey hygiene
+
+New helper:
+
+- processStage2WatcherEventOperationalBatchPrototype
+
+Confirmed outcomes in one queue:
+
+- submitted
+- watcher_event_rejected
+- submitted
+- already_processed
+- safe_retry_candidate
+- completed_no_retry
+- stop_manual_review
+
+Confirmed behavior:
+
+- item ids are preserved
+- item indexes are preserved
+- result order matches processing order
+- malformed watcher event does not stop the queue
+- repeated event becomes already_processed on second occurrence
+- safe_retry_candidate can appear in a batch without submit
+- completed_no_retry can appear after submit-then-recover
+- stop_manual_review can appear for inconsistent recovery
+- total balance delta equals only actually minted amounts
+- expected balance delta 121212 was confirmed
+
+Checks passed:
+
+- Stage 2.23 watcher event batch / queue processing: 1 passing
+- Stage 2.22 watcher event operational submit wrapper: 6 passing
+- Stage 2.21 watcher event ambiguous recovery: 1 passing
+- Stage 2.20 watcher event submit idempotency / retry: 1 passing
+- Stage 2.19 watcher event full submit pipeline: 3 passing
+- Stage 2.18 watcher event adapter: 5 passing
+- Stage 2.17 normalized task submit wrapper: 2 passing
+- Stage 2.16 task normalization: 3 passing
+- Stage 2.15 preflight-integrated submit path: 2 passing
+- Stage 2.14 preflight validation: 9 passing
+- Stage 2.13 operational state machine live test: 1 passing
+- Stage 2.12 inconsistent recovery live test: 1 passing
+- Stage 2.11 ambiguous recovery live test: 1 passing
+- Stage 2.10 idempotency / retry live test: 1 passing
+- Stage 2.9 relayer prototype live test: 1 passing
+- Stage 2.6 rollback matrix: 6 passing
+- cargo test -p hello-x1 binding_
+- cargo test -p hello-x1 parser_
+- anchor build
+
+Document added:
+
+- docs/gateway/evidence/stage-2-23-watcher-event-batch-queue-processing-evidence.md
+
+Current conclusion:
+
+Stage 2.23 creates a prototype batch / queue processing model for watcher events. The relayer can now process a sequence of watcher-event operational items and receive ordered per-item outcomes. The queue can contain successful submits, malformed watcher events, retries, ambiguous recovery candidates, completed recoveries, and manual-review cases without collapsing the whole batch.
