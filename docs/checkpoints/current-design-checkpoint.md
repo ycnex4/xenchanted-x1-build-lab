@@ -24760,3 +24760,153 @@ Document added:
 Current conclusion:
 
 Stage 2.32 creates an append-only audit log model above Stage 2.31 operator report artifacts. The relayer can now create a schema-versioned operator audit log, append stable report artifacts, preserve report order across serialization and reload, reject duplicate run ids without mutation, and reject malformed persisted logs.
+
+
+## Stage 2.33 audit log integrity digest / tamper-evidence model evidence
+
+Stage 2.33 adds an integrity digest layer above Stage 2.32 operator audit logs.
+
+Runtime repo:
+
+- ~/xenchanted-x1-lab/hello-x1
+
+Runtime branch:
+
+- stage-2-33-audit-log-integrity-digest-model
+
+Runtime commit:
+
+- 0878885 Add Stage 2.33 audit log integrity digest model
+
+Base runtime commit:
+
+- 9daa74f Add Stage 2.32 operator report audit log append model
+
+Scope:
+
+- tamper-evidence digest layer
+- no on-chain runtime change
+- builds on Stage 2.32 audit log artifact
+- validates audit log before digesting
+- deterministic digest input
+- sha256 digest artifact
+- digest verification helper
+- digest changes when order changes
+- digest changes when content changes
+- malformed digest artifacts rejected
+- invalid audit logs rejected before digesting
+
+New digest artifact type:
+
+- Stage2RelayerOperatorAuditLogDigestArtifact
+
+Digest artifact fields:
+
+- artifactType: stage2_relayer_operator_audit_log_digest
+- schemaVersion: 1
+- algorithm: sha256
+- digestHex
+- reportCount
+- firstRunId
+- lastRunId
+
+New digest validation helper:
+
+- validateStage2RelayerOperatorAuditLogDigestPrototype
+
+New digest computation helper:
+
+- computeStage2RelayerOperatorAuditLogDigestPrototype
+
+New digest serialization helper:
+
+- serializeStage2RelayerOperatorAuditLogDigestPrototype
+
+New digest deserialization helper:
+
+- deserializeStage2RelayerOperatorAuditLogDigestPrototype
+
+New digest verification helper:
+
+- verifyStage2RelayerOperatorAuditLogDigestPrototype
+
+Confirmed stable digest behavior:
+
+- same audit log produces same digest artifact
+- artifactType equals stage2_relayer_operator_audit_log_digest
+- schemaVersion equals 1
+- algorithm equals sha256
+- digestHex is 64 lowercase hex characters
+- reportCount equals 2
+- firstRunId equals stage-2-33-run-001
+- lastRunId equals stage-2-33-run-002
+- digest serializes and deserializes
+- digest validation returns ok: true
+- digest verification returns true for matching audit log and digest
+
+Confirmed tamper-evidence behavior:
+
+- reversed report order changes digestHex
+- changed report balanceDelta changes digestHex
+- verifying ordered digest against reversed audit log returns false
+- verifying ordered digest against changed-content audit log returns false
+
+Confirmed empty audit log digest behavior:
+
+- reportCount: 0
+- firstRunId: undefined
+- lastRunId: undefined
+- digest validation returns ok: true
+
+Confirmed malformed digest artifact rejection:
+
+- invalid JSON rejected
+- wrong artifactType rejected
+- wrong schemaVersion rejected
+- wrong algorithm rejected
+- invalid digestHex rejected
+
+Confirmed invalid audit log digest input rejection:
+
+- duplicate run id audit log rejected before digesting
+- error: invalid operator audit log digest input: duplicate_run_id
+
+Checks passed:
+
+- Stage 2.33 operator audit log integrity digest model: 3 passing
+- Stage 2.32 operator report audit log append model: 3 passing
+- Stage 2.31 operator report serialization / stable log artifact: 3 passing
+- Stage 2.30 relayer operator report / run summary: 3 passing
+- Stage 2.29 resume plan execution model: 3 passing
+- Stage 2.28 import pipeline durable resume plan: 3 passing
+- Stage 2.27 relayer import pipeline: 2 passing
+- Stage 2.26 relayer dedupe journal replay guard: 6 passing
+- Stage 2.25 watcher-to-relayer contract boundary: 4 passing
+- Stage 2.24 durable relayer journal model: 2 passing
+- Stage 2.23 watcher event batch / queue processing: 1 passing
+- Stage 2.22 watcher event operational submit wrapper: 6 passing
+- Stage 2.21 watcher event ambiguous recovery: 1 passing
+- Stage 2.20 watcher event submit idempotency / retry: 1 passing
+- Stage 2.19 watcher event full submit pipeline: 3 passing
+- Stage 2.18 watcher event adapter: 5 passing
+- Stage 2.17 normalized task submit wrapper: 2 passing
+- Stage 2.16 task normalization: 3 passing
+- Stage 2.15 preflight-integrated submit path: 2 passing
+- Stage 2.14 preflight validation: 9 passing
+- Stage 2.13 operational state machine live test: 1 passing
+- Stage 2.12 inconsistent recovery live test: 1 passing
+- Stage 2.11 ambiguous recovery live test: 1 passing
+- Stage 2.10 idempotency / retry live test: 1 passing
+- Stage 2.9 relayer prototype live test: 1 passing
+- Stage 2.6 rollback matrix: 6 passing
+- cargo test -p hello-x1 binding_
+- cargo test -p hello-x1 parser_
+- anchor build
+
+Document added:
+
+- docs/gateway/evidence/stage-2-33-audit-log-integrity-digest-model-evidence.md
+
+Current conclusion:
+
+Stage 2.33 creates a tamper-evidence digest layer above Stage 2.32 operator audit logs. The relayer can now compute a schema-versioned sha256 digest artifact for a validated audit log, verify that a digest matches a log, detect order/content changes, reject malformed digest artifacts, and reject invalid audit logs before digesting.
