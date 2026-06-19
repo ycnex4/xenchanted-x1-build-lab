@@ -24156,3 +24156,170 @@ Document added:
 Current conclusion:
 
 Stage 2.28 creates a durable resume planning layer for the Stage 2.27 relayer import pipeline. The relayer can now inspect watcher contracts against a durable journal and produce a plan before submit. Completed contracts are skipped. New contracts are marked ready_to_import. Conflicts are routed to manual_review_required. Invalid contracts are marked rejected_invalid. Retry candidate journal states are surfaced as retry_candidate. Manual-review journal states are surfaced as manual_review_required. The planner uses a shadow journal and does not mutate the original journal during planning.
+
+
+## Stage 2.29 resume plan execution model evidence
+
+Stage 2.29 adds a safe execution model for the Stage 2.28 durable resume plan.
+
+Runtime repo:
+
+- ~/xenchanted-x1-lab/hello-x1
+
+Runtime branch:
+
+- stage-2-29-resume-plan-execution-model
+
+Runtime commit:
+
+- c029ff3 Add Stage 2.29 resume plan execution model
+
+Base runtime commit:
+
+- 52e984e Add Stage 2.28 import pipeline durable resume plan
+
+Scope:
+
+- safe resume plan execution model
+- no on-chain runtime change
+- builds on Stage 2.28 resume plan
+- builds on Stage 2.27 import pipeline
+- executes only ready_to_import contracts
+- skips completed contracts
+- skips duplicate contracts
+- queues retry candidates without blind submit
+- queues manual-review plans without submit
+- rejects invalid contracts without submit
+
+New helper:
+
+- executeStage2WatcherContractResumePlanPrototype
+
+Execution statuses:
+
+- submitted
+- already_processed
+- watcher_event_rejected
+- safe_retry_candidate
+- completed_no_retry
+- stop_manual_review
+- skipped_completed
+- skipped_duplicate
+- retry_queued
+- manual_review_queued
+- rejected_invalid
+
+Confirmed mixed execution behavior:
+
+- skip_completed -> skipped_completed
+- ready_to_import -> submitted
+- manual_review_required -> manual_review_queued
+- rejected_invalid -> rejected_invalid
+- skip_completed -> skipped_completed
+
+Confirmed mixed execution summary:
+
+- readyToImport: 1
+- submitted: 1
+- alreadyProcessed: 0
+- watcherEventRejected: 0
+- retryCandidates: 0
+- completedNoRetry: 0
+- manualReview: 1
+- rejectedInvalid: 1
+- skippedCompleted: 2
+- skippedDuplicate: 0
+
+Confirmed submitted item:
+
+- ready.eventId
+
+Confirmed balance delta:
+
+- 33333
+
+Confirmed retry behavior:
+
+- retry_candidate -> retry_queued
+- importResult is undefined
+- no balance change
+
+Confirmed manual review behavior:
+
+- manual_review_required -> manual_review_queued
+- importResult is undefined
+- no balance change
+
+Confirmed duplicate-in-plan behavior:
+
+- ready_to_import
+- ready_to_import
+- skip_duplicate
+
+Execution statuses:
+
+- submitted
+- submitted
+- skipped_duplicate
+
+Confirmed duplicate-in-plan summary:
+
+- readyToImport: 2
+- submitted: 2
+- alreadyProcessed: 0
+- watcherEventRejected: 0
+- retryCandidates: 0
+- completedNoRetry: 0
+- manualReview: 0
+- rejectedInvalid: 0
+- skippedCompleted: 0
+- skippedDuplicate: 1
+
+Confirmed duplicate-in-plan balance delta:
+
+- 188887
+
+Confirmed accepted batch items:
+
+- readyA.eventId
+- readyB.eventId
+
+Confirmed dedupe records:
+
+- contractRecords.length = 2
+
+Checks passed:
+
+- Stage 2.29 resume plan execution model: 3 passing
+- Stage 2.28 import pipeline durable resume plan: 3 passing
+- Stage 2.27 relayer import pipeline: 2 passing
+- Stage 2.26 relayer dedupe journal replay guard: 6 passing
+- Stage 2.25 watcher-to-relayer contract boundary: 4 passing
+- Stage 2.24 durable relayer journal model: 2 passing
+- Stage 2.23 watcher event batch / queue processing: 1 passing
+- Stage 2.22 watcher event operational submit wrapper: 6 passing
+- Stage 2.21 watcher event ambiguous recovery: 1 passing
+- Stage 2.20 watcher event submit idempotency / retry: 1 passing
+- Stage 2.19 watcher event full submit pipeline: 3 passing
+- Stage 2.18 watcher event adapter: 5 passing
+- Stage 2.17 normalized task submit wrapper: 2 passing
+- Stage 2.16 task normalization: 3 passing
+- Stage 2.15 preflight-integrated submit path: 2 passing
+- Stage 2.14 preflight validation: 9 passing
+- Stage 2.13 operational state machine live test: 1 passing
+- Stage 2.12 inconsistent recovery live test: 1 passing
+- Stage 2.11 ambiguous recovery live test: 1 passing
+- Stage 2.10 idempotency / retry live test: 1 passing
+- Stage 2.9 relayer prototype live test: 1 passing
+- Stage 2.6 rollback matrix: 6 passing
+- cargo test -p hello-x1 binding_
+- cargo test -p hello-x1 parser_
+- anchor build
+
+Document added:
+
+- docs/gateway/evidence/stage-2-29-resume-plan-execution-model-evidence.md
+
+Current conclusion:
+
+Stage 2.29 creates a safe resume plan execution model. The relayer can now take a Stage 2.28 durable resume plan and execute only ready_to_import contracts through the Stage 2.27 import pipeline. Completed contracts are skipped. Duplicates are skipped. Retry candidates are queued and not blindly submitted. Manual-review plans are queued and not submitted. Invalid contracts are rejected and not submitted. Duplicate-in-plan entries are not submitted twice. The balance delta equals only the sum of actually submitted contracts.
