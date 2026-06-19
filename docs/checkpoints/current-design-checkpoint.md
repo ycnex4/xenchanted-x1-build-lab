@@ -22937,3 +22937,81 @@ Document added:
 Current conclusion:
 
 Stage 2.16 creates a stable normalization boundary between watcher-style input and relayer submit logic. The relayer can now normalize an incoming task into deterministic PDAs, copied byte arrays, and a derived message hash before submit. Invalid input is rejected through the existing preflight model before a normalized task is produced.
+
+
+## Stage 2.17 normalized task submit wrapper evidence
+
+Stage 2.17 connects the normalized relayer task object from Stage 2.16 to the integrated submit path from Stage 2.15.
+
+Runtime repo:
+
+- ~/xenchanted-x1-lab/hello-x1
+
+Runtime branch:
+
+- stage-2-17-normalized-task-submit-wrapper
+
+Runtime commit:
+
+- 4d6ecd7 Add Stage 2.17 normalized task submit wrapper
+
+Base runtime commit:
+
+- 31560c9 Add Stage 2.16 relayer task normalization
+
+Scope:
+
+- TypeScript normalized task submit wrapper
+- no on-chain runtime change
+- normalized task object is forwarded into the existing protected submit path
+
+Runtime changes:
+
+- tests/helpers/stage2RelayerPrototype.ts updated
+- tests/stage2_relayer_normalized_task_submit.test.ts added
+
+New wrapper:
+
+- submitStage2RelayerNormalizedMintTask
+
+Submit path:
+
+- watcher-style input
+- normalizeStage2RelayerMintTask
+- submitStage2RelayerNormalizedMintTask
+- submitStage2RelayerMintPrototype
+- preflight / idempotency / transaction build / submit
+
+Confirmed behavior:
+
+- valid normalized task submits successfully
+- submit result is submitted
+- signature is produced
+- processed_burn is created
+- recipient token balance increases by expected minted amount
+- invalid watcher input remains rejected during normalization
+- invalid watcher input does not reach normalized submit wrapper
+
+Checks passed:
+
+- Stage 2.17 normalized task submit wrapper: 2 passing
+- Stage 2.16 task normalization: 3 passing
+- Stage 2.15 preflight-integrated submit path: 2 passing
+- Stage 2.14 preflight validation: 9 passing
+- Stage 2.13 operational state machine live test: 1 passing
+- Stage 2.12 inconsistent recovery live test: 1 passing
+- Stage 2.11 ambiguous recovery live test: 1 passing
+- Stage 2.10 idempotency / retry live test: 1 passing
+- Stage 2.9 relayer prototype live test: 1 passing
+- Stage 2.6 rollback matrix: 6 passing
+- cargo test -p hello-x1 binding_
+- cargo test -p hello-x1 parser_
+- anchor build
+
+Document added:
+
+- docs/gateway/evidence/stage-2-17-normalized-task-submit-wrapper-evidence.md
+
+Current conclusion:
+
+Stage 2.17 connects normalized relayer tasks to the integrated submit path. The relayer can now accept a normalized task object and submit it through the same protected path that already includes preflight, idempotency, transaction construction, and send/confirm behavior. Invalid watcher-style input remains rejected before a normalized task is produced.
