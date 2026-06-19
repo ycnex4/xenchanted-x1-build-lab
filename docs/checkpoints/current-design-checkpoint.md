@@ -24486,3 +24486,128 @@ Document added:
 Current conclusion:
 
 Stage 2.30 creates an operator-facing report layer above Stage 2.29 resume plan execution. The relayer can now produce a run report containing run id, timestamps, received contract count, journal record deltas, dedupe contract record deltas, token balance delta, execution summary, and per-contract decisions. Retry/manual-review queued runs produce zero balance delta and no import result. Empty run ids are rejected.
+
+
+## Stage 2.31 operator report serialization / stable log artifact evidence
+
+Stage 2.31 adds stable serialization and validation for the Stage 2.30 operator report.
+
+Runtime repo:
+
+- ~/xenchanted-x1-lab/hello-x1
+
+Runtime branch:
+
+- stage-2-31-operator-report-serialization-log-artifact
+
+Runtime commit:
+
+- b711f62 Add Stage 2.31 operator report serialization log artifact
+
+Base runtime commit:
+
+- f3ea200 Add Stage 2.30 relayer operator report run summary
+
+Scope:
+
+- stable JSON log artifact layer
+- no on-chain runtime change
+- builds on Stage 2.30 operator report
+- schema-versioned artifact
+- deterministic JSON serialization
+- deserialize / validate support
+- malformed artifact rejection
+- secret-bearing field leakage checks
+- JSON-compatible persisted report shape
+
+New artifact type:
+
+- Stage2RelayerOperatorRunReportLogArtifact
+
+Artifact fields:
+
+- artifactType: stage2_relayer_operator_run_report
+- schemaVersion: 1
+- report
+
+New validation helper:
+
+- validateStage2RelayerOperatorRunReportPrototype
+
+New serialization helper:
+
+- serializeStage2RelayerOperatorRunReportPrototype
+
+New deserialization helper:
+
+- deserializeStage2RelayerOperatorRunReportPrototype
+
+Confirmed serialization behavior:
+
+- serializing the same report twice produces the same string
+- serialized artifact contains artifactType
+- serialized artifact contains schemaVersion
+- parsed artifactType equals stage2_relayer_operator_run_report
+- parsed schemaVersion equals 1
+- parsed report balanceDelta equals 12345
+- parsed report executionSummary.submitted equals 1
+- parsed decision status equals submitted
+
+Confirmed JSON roundtrip behavior:
+
+- undefined fields are omitted by JSON.stringify / JSON.parse
+- persisted artifact is compared against a JSON-roundtrippable report shape
+
+Confirmed secret-safety checks:
+
+- serialized report does not contain secretKey
+- serialized report does not contain guardianSigners
+- serialized report does not contain privateKey
+- serialized report does not contain ANCHOR_WALLET
+- serialized report does not contain wallet.json
+
+Confirmed malformed artifact rejection:
+
+- invalid JSON rejected
+- wrong artifactType rejected
+- wrong schemaVersion rejected
+- empty runId rejected
+- invalid balanceDelta rejected
+
+Checks passed:
+
+- Stage 2.31 operator report serialization / stable log artifact: 3 passing
+- Stage 2.30 relayer operator report / run summary: 3 passing
+- Stage 2.29 resume plan execution model: 3 passing
+- Stage 2.28 import pipeline durable resume plan: 3 passing
+- Stage 2.27 relayer import pipeline: 2 passing
+- Stage 2.26 relayer dedupe journal replay guard: 6 passing
+- Stage 2.25 watcher-to-relayer contract boundary: 4 passing
+- Stage 2.24 durable relayer journal model: 2 passing
+- Stage 2.23 watcher event batch / queue processing: 1 passing
+- Stage 2.22 watcher event operational submit wrapper: 6 passing
+- Stage 2.21 watcher event ambiguous recovery: 1 passing
+- Stage 2.20 watcher event submit idempotency / retry: 1 passing
+- Stage 2.19 watcher event full submit pipeline: 3 passing
+- Stage 2.18 watcher event adapter: 5 passing
+- Stage 2.17 normalized task submit wrapper: 2 passing
+- Stage 2.16 task normalization: 3 passing
+- Stage 2.15 preflight-integrated submit path: 2 passing
+- Stage 2.14 preflight validation: 9 passing
+- Stage 2.13 operational state machine live test: 1 passing
+- Stage 2.12 inconsistent recovery live test: 1 passing
+- Stage 2.11 ambiguous recovery live test: 1 passing
+- Stage 2.10 idempotency / retry live test: 1 passing
+- Stage 2.9 relayer prototype live test: 1 passing
+- Stage 2.6 rollback matrix: 6 passing
+- cargo test -p hello-x1 binding_
+- cargo test -p hello-x1 parser_
+- anchor build
+
+Document added:
+
+- docs/gateway/evidence/stage-2-31-operator-report-serialization-log-artifact-evidence.md
+
+Current conclusion:
+
+Stage 2.31 creates a stable JSON log artifact layer for Stage 2.30 operator reports. Operator reports can now be validated, serialized, deserialized, schema-versioned, and checked for secret-bearing field leakage. The artifact has deterministic JSON output for the same report, rejects malformed input, rejects unsupported schema versions, and preserves only JSON-compatible persisted fields.
