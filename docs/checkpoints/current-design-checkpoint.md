@@ -24013,3 +24013,146 @@ Document added:
 Current conclusion:
 
 Stage 2.27 creates a high-level relayer import pipeline for watcher contracts. The relayer can now import a batch of watcher-provided contracts, validate each contract, apply dedupe / replay guard, convert accepted contracts into operational batch items, and process accepted items through the durable journaled relayer path. Duplicates are skipped. Conflicts are routed to manual review. Invalid input is rejected before relayer submit. Duplicate import after journal reload does not mint again. Invalid-only imports do not create journal records or dedupe records.
+
+
+## Stage 2.28 import pipeline durable resume plan evidence
+
+Stage 2.28 adds a durable resume planning layer for watcher contract import.
+
+Runtime repo:
+
+- ~/xenchanted-x1-lab/hello-x1
+
+Runtime branch:
+
+- stage-2-28-import-pipeline-durable-resume-plan
+
+Runtime commit:
+
+- 52e984e Add Stage 2.28 import pipeline durable resume plan
+
+Base runtime commit:
+
+- 9e028ec Add Stage 2.27 relayer import pipeline
+
+Scope:
+
+- durable resume planning layer
+- no on-chain runtime change
+- builds on Stage 2.27 import pipeline
+- builds on Stage 2.26 dedupe / replay guard
+- builds on Stage 2.24 durable journal model
+- classifies watcher contracts before submit
+- uses a shadow journal
+- does not mutate the original journal during planning
+
+New helper:
+
+- planStage2WatcherContractImportResumePrototype
+
+Resume actions:
+
+- ready_to_import
+- skip_duplicate
+- skip_completed
+- retry_candidate
+- manual_review_required
+- rejected_invalid
+
+Resume reasons:
+
+- new_contract
+- duplicate_without_final_outcome
+- already_completed
+- retry_candidate_recorded
+- manual_review_recorded
+- dedupe_key_payload_mismatch
+- canonical_event_key_dedupe_mismatch
+- existing watcher-to-relayer contract failure reasons
+
+Confirmed completed/new/conflict/invalid plan:
+
+- skip_completed
+- skip_completed
+- ready_to_import
+- manual_review_required
+- manual_review_required
+- rejected_invalid
+
+Confirmed reasons:
+
+- already_completed
+- already_completed
+- new_contract
+- dedupe_key_payload_mismatch
+- canonical_event_key_dedupe_mismatch
+- invalid_event_id
+
+Confirmed summary:
+
+- readyToImport: 1
+- skipDuplicate: 0
+- skipCompleted: 2
+- retryCandidates: 0
+- manualReview: 2
+- rejectedInvalid: 1
+
+Confirmed retry candidate behavior:
+
+- retry_candidate journal state maps to retry_candidate action
+- reason is retry_candidate_recorded
+- importResultStatus is duplicate_existing
+- latestJournalKind is retry_candidate
+
+Confirmed manual review journal behavior:
+
+- manual_review_required journal state maps to manual_review_required action
+- reason is manual_review_recorded
+- importResultStatus is duplicate_existing
+- latestJournalKind is manual_review_required
+
+Confirmed non-mutating planning behavior:
+
+- planning new contracts uses shadow journal
+- original journal contractRecords remains undefined
+- original journal records remains empty
+
+Checks passed:
+
+- Stage 2.28 import pipeline durable resume plan: 3 passing after rerun
+- Stage 2.27 relayer import pipeline: 2 passing
+- Stage 2.26 relayer dedupe journal replay guard: 6 passing
+- Stage 2.25 watcher-to-relayer contract boundary: 4 passing
+- Stage 2.24 durable relayer journal model: 2 passing
+- Stage 2.23 watcher event batch / queue processing: 1 passing
+- Stage 2.22 watcher event operational submit wrapper: 6 passing
+- Stage 2.21 watcher event ambiguous recovery: 1 passing
+- Stage 2.20 watcher event submit idempotency / retry: 1 passing
+- Stage 2.19 watcher event full submit pipeline: 3 passing
+- Stage 2.18 watcher event adapter: 5 passing
+- Stage 2.17 normalized task submit wrapper: 2 passing
+- Stage 2.16 task normalization: 3 passing
+- Stage 2.15 preflight-integrated submit path: 2 passing
+- Stage 2.14 preflight validation: 9 passing
+- Stage 2.13 operational state machine live test: 1 passing
+- Stage 2.12 inconsistent recovery live test: 1 passing
+- Stage 2.11 ambiguous recovery live test: 1 passing
+- Stage 2.10 idempotency / retry live test: 1 passing
+- Stage 2.9 relayer prototype live test: 1 passing
+- Stage 2.6 rollback matrix: 6 passing
+- cargo test -p hello-x1 binding_
+- cargo test -p hello-x1 parser_
+- anchor build
+
+Note:
+
+- Initial full Stage 2.28 run had one network/RPC fetch failure.
+- Stage 2.28 was rerun alone and passed with 3 passing.
+
+Document added:
+
+- docs/gateway/evidence/stage-2-28-import-pipeline-durable-resume-plan-evidence.md
+
+Current conclusion:
+
+Stage 2.28 creates a durable resume planning layer for the Stage 2.27 relayer import pipeline. The relayer can now inspect watcher contracts against a durable journal and produce a plan before submit. Completed contracts are skipped. New contracts are marked ready_to_import. Conflicts are routed to manual_review_required. Invalid contracts are marked rejected_invalid. Retry candidate journal states are surfaced as retry_candidate. Manual-review journal states are surfaced as manual_review_required. The planner uses a shadow journal and does not mutate the original journal during planning.
