@@ -23263,3 +23263,86 @@ Document added:
 Current conclusion:
 
 Stage 2.20 proves that the high-level watcher-event submit API is idempotent for repeated watcher events. A repeated watcher event does not mint twice. The second submit stops safely with already_processed, no signature, unchanged balance, and the processed_burn marker remains present.
+
+
+## Stage 2.21 watcher event ambiguous recovery evidence
+
+Stage 2.21 proves ambiguous recovery behavior at the high-level watcher-event API boundary.
+
+Runtime repo:
+
+- ~/xenchanted-x1-lab/hello-x1
+
+Runtime branch:
+
+- stage-2-21-watcher-event-ambiguous-recovery
+
+Runtime commit:
+
+- 2dc3ad1 Add Stage 2.21 watcher event ambiguous recovery
+
+Base runtime commit:
+
+- 5832233 Add Stage 2.20 watcher event submit idempotency retry
+
+Scope:
+
+- live ambiguous recovery regression test for watcher-event submit API
+- no on-chain runtime change
+- no runtime helper change required
+- recovery uses processed_burn and recipient token balance instead of blind retry
+
+Runtime changes:
+
+- tests/stage2_watcher_event_ambiguous_recovery.test.ts added
+
+Tested path:
+
+- watcher event
+- submitStage2WatcherMintEventPrototype
+- adaptStage2WatcherMintEventToNormalizedTask
+- submitStage2RelayerNormalizedMintTask
+- submitStage2RelayerMintPrototype
+- inspectStage2RelayerAmbiguousResult
+- decideStage2RelayerOperationalAction
+
+Confirmed behavior:
+
+- before submit, recovery maps to safe_retry_candidate
+- before submit, reason is not_processed_after_ambiguous_result
+- before submit, processed_burn is false and balance delta is zero
+- after successful watcher-event submit, recovery maps to completed_no_retry
+- after successful watcher-event submit, reason is confirmed_after_ambiguous_result
+- after successful watcher-event submit, processed_burn is true and balance delta equals minted amount
+- with wrong expected minted amount, recovery maps to stop_manual_review
+- with wrong expected minted amount, reason is inconsistent_after_ambiguous_result
+- final balance delta remains the actual minted amount
+- no blind retry is performed
+
+Checks passed:
+
+- Stage 2.21 watcher event ambiguous recovery: 1 passing
+- Stage 2.20 watcher event submit idempotency / retry: 1 passing
+- Stage 2.19 watcher event full submit pipeline: 3 passing
+- Stage 2.18 watcher event adapter: 5 passing
+- Stage 2.17 normalized task submit wrapper: 2 passing
+- Stage 2.16 task normalization: 3 passing
+- Stage 2.15 preflight-integrated submit path: 2 passing
+- Stage 2.14 preflight validation: 9 passing
+- Stage 2.13 operational state machine live test: 1 passing
+- Stage 2.12 inconsistent recovery live test: 1 passing
+- Stage 2.11 ambiguous recovery live test: 1 passing
+- Stage 2.10 idempotency / retry live test: 1 passing
+- Stage 2.9 relayer prototype live test: 1 passing
+- Stage 2.6 rollback matrix: 6 passing
+- cargo test -p hello-x1 binding_
+- cargo test -p hello-x1 parser_
+- anchor build
+
+Document added:
+
+- docs/gateway/evidence/stage-2-21-watcher-event-ambiguous-recovery-evidence.md
+
+Current conclusion:
+
+Stage 2.21 proves that ambiguous recovery works at the high-level watcher-event API boundary. The relayer can inspect processed_burn and recipient token balance after an ambiguous watcher-event submit result and choose between completed_no_retry, safe_retry_candidate, or stop_manual_review. This avoids blind retry behavior.
