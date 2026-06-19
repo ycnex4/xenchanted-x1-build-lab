@@ -415,6 +415,7 @@ A controlled read-only mainnet RPC smoke for XC protocol params has completed su
 - [Stage 2.10 Relayer idempotency / retry evidence](docs/gateway/evidence/stage-2-10-relayer-idempotency-retry-evidence.md)
 - [Stage 2.11 Ambiguous confirmation recovery evidence](docs/gateway/evidence/stage-2-11-ambiguous-confirmation-recovery-evidence.md)
 - [Stage 2.12 Inconsistent recovery state evidence](docs/gateway/evidence/stage-2-12-inconsistent-recovery-state-evidence.md)
+- [Stage 2.13 Relayer operational state machine evidence](docs/gateway/evidence/stage-2-13-relayer-operational-state-machine-evidence.md)
 - [Stage 2.0 Gateway runtime planning outline](docs/gateway/stage-2-0-gateway-runtime-planning-outline.md)
 - [Stage 2.1 Runtime assumption dependency table](docs/gateway/stage-2-1-runtime-assumption-dependency-table.md)
 - [Stage 2.2 Direct mint candidate runtime design](docs/gateway/stage-2-2-direct-mint-candidate-runtime-design.md)
