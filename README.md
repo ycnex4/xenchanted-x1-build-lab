@@ -418,6 +418,7 @@ A controlled read-only mainnet RPC smoke for XC protocol params has completed su
 - [Stage 2.13 Relayer operational state machine evidence](docs/gateway/evidence/stage-2-13-relayer-operational-state-machine-evidence.md)
 - [Stage 2.14 Relayer input preflight guard evidence](docs/gateway/evidence/stage-2-14-relayer-input-preflight-guard-evidence.md)
 - [Stage 2.15 Preflight integrated submit path evidence](docs/gateway/evidence/stage-2-15-preflight-integrated-submit-path-evidence.md)
+- [Stage 2.16 Relayer task normalization evidence](docs/gateway/evidence/stage-2-16-relayer-task-normalization-evidence.md)
 - [Stage 2.0 Gateway runtime planning outline](docs/gateway/stage-2-0-gateway-runtime-planning-outline.md)
 - [Stage 2.1 Runtime assumption dependency table](docs/gateway/stage-2-1-runtime-assumption-dependency-table.md)
 - [Stage 2.2 Direct mint candidate runtime design](docs/gateway/stage-2-2-direct-mint-candidate-runtime-design.md)
