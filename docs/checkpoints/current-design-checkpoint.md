@@ -23015,3 +23015,88 @@ Document added:
 Current conclusion:
 
 Stage 2.17 connects normalized relayer tasks to the integrated submit path. The relayer can now accept a normalized task object and submit it through the same protected path that already includes preflight, idempotency, transaction construction, and send/confirm behavior. Invalid watcher-style input remains rejected before a normalized task is produced.
+
+
+## Stage 2.18 watcher event normalized task adapter evidence
+
+Stage 2.18 adds an adapter from watcher-style event input to a normalized relayer mint task.
+
+Runtime repo:
+
+- ~/xenchanted-x1-lab/hello-x1
+
+Runtime branch:
+
+- stage-2-18-watcher-event-normalized-task-adapter
+
+Runtime commit:
+
+- ed52794 Add Stage 2.18 watcher event normalized task adapter
+
+Base runtime commit:
+
+- 4d6ecd7 Add Stage 2.17 normalized task submit wrapper
+
+Scope:
+
+- TypeScript watcher-event adapter
+- no on-chain runtime change
+- watcher-style input is parsed and normalized before submit
+- malformed watcher output is rejected before normalization or submit
+
+Runtime changes:
+
+- tests/helpers/stage2RelayerPrototype.ts updated
+- tests/stage2_watcher_event_normalized_task_adapter.test.ts added
+
+Adapter path:
+
+- watcher event / candidate
+- adaptStage2WatcherMintEventToNormalizedTask
+- normalizeStage2RelayerMintTask
+- submitStage2RelayerNormalizedMintTask
+- submitStage2RelayerMintPrototype
+- preflight / idempotency / transaction build / submit
+
+Parsed watcher fields:
+
+- canonicalEventKeyHex
+- recipientBase58
+- mintedAmount
+- guardianSetVersion
+- deadlineOrFinalityBlock
+- messageNonceHex
+- currentFinalityBlock
+
+Confirmed behavior:
+
+- valid watcher event adapts into deterministic normalized relayer task
+- malformed canonical event key hex is rejected
+- malformed recipient public key is rejected
+- malformed decimal fields are rejected before normalization
+- parsed invalid economic input propagates preflight rejection
+
+Checks passed:
+
+- Stage 2.18 watcher event adapter: 5 passing
+- Stage 2.17 normalized task submit wrapper: 2 passing
+- Stage 2.16 task normalization: 3 passing
+- Stage 2.15 preflight-integrated submit path: 2 passing
+- Stage 2.14 preflight validation: 9 passing
+- Stage 2.13 operational state machine live test: 1 passing
+- Stage 2.12 inconsistent recovery live test: 1 passing
+- Stage 2.11 ambiguous recovery live test: 1 passing
+- Stage 2.10 idempotency / retry live test: 1 passing
+- Stage 2.9 relayer prototype live test: 1 passing
+- Stage 2.6 rollback matrix: 6 passing
+- cargo test -p hello-x1 binding_
+- cargo test -p hello-x1 parser_
+- anchor build
+
+Document added:
+
+- docs/gateway/evidence/stage-2-18-watcher-event-normalized-task-adapter-evidence.md
+
+Current conclusion:
+
+Stage 2.18 adds a watcher-event adapter in front of the normalized relayer task pipeline. The relayer can now accept watcher-style event fields, parse and validate them, produce a normalized task, and keep malformed watcher output away from the submit path.
