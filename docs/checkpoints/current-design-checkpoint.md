@@ -22713,3 +22713,78 @@ Document added:
 Current conclusion:
 
 Stage 2.13 connects Stage 2.10 through Stage 2.12 relayer behaviors into a clear operational state machine: completed_no_retry, safe_retry_candidate, and stop_manual_review.
+
+
+## Stage 2.14 relayer input preflight guard evidence
+
+Stage 2.14 adds local relayer input preflight validation for the X1 direct mint gateway prototype.
+
+Runtime repo:
+
+- ~/xenchanted-x1-lab/hello-x1
+
+Runtime branch:
+
+- stage-2-14-relayer-event-input-preflight-guard
+
+Runtime commit:
+
+- 3480662 Add Stage 2.14 relayer input preflight guard
+
+Base runtime commit:
+
+- b338be3 Add Stage 2.13 relayer operational state machine
+
+Scope:
+
+- TypeScript relayer input preflight guard
+- no on-chain runtime change
+- local rejection before transaction construction/submission
+
+Runtime changes:
+
+- tests/helpers/stage2RelayerPrototype.ts updated
+- tests/stage2_relayer_preflight_validation.test.ts added
+
+Preflight validations:
+
+- canonical event key
+- message nonce
+- recipient
+- minted amount
+- deadline / finality block
+- minimum quorum
+- guardian signer count
+- duplicate guardian signers
+
+Failure reasons:
+
+- invalid_canonical_event_key
+- invalid_message_nonce
+- invalid_recipient
+- invalid_minted_amount
+- invalid_deadline_or_finality_block
+- invalid_min_quorum
+- insufficient_guardian_signers
+- duplicate_guardian_signer
+
+Checks passed:
+
+- Stage 2.14 preflight validation: 9 passing
+- Stage 2.13 operational state machine live test: 1 passing
+- Stage 2.12 inconsistent recovery live test: 1 passing
+- Stage 2.11 ambiguous recovery live test: 1 passing
+- Stage 2.10 idempotency / retry live test: 1 passing
+- Stage 2.9 relayer prototype live test: 1 passing
+- Stage 2.6 rollback matrix: 6 passing
+- cargo test -p hello-x1 binding_
+- cargo test -p hello-x1 parser_
+- anchor build
+
+Document added:
+
+- docs/gateway/evidence/stage-2-14-relayer-input-preflight-guard-evidence.md
+
+Current conclusion:
+
+Stage 2.14 adds relayer-side preflight validation before transaction construction and submission. The relayer can now reject malformed or unsafe input tasks before attempting to build a transaction.
