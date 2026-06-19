@@ -22857,3 +22857,83 @@ Document added:
 Current conclusion:
 
 Stage 2.15 confirms that relayer preflight is now part of the submit path. Invalid relayer input can be rejected before transaction construction/submission, with no processed_burn entry and no token balance change. The valid submit path remains functional.
+
+
+## Stage 2.16 relayer task normalization evidence
+
+Stage 2.16 adds a normalized relayer mint task object.
+
+Runtime repo:
+
+- ~/xenchanted-x1-lab/hello-x1
+
+Runtime branch:
+
+- stage-2-16-relayer-task-normalization
+
+Runtime commit:
+
+- 31560c9 Add Stage 2.16 relayer task normalization
+
+Base runtime commit:
+
+- a1bed6d Add Stage 2.15 preflight integrated submit path
+
+Scope:
+
+- TypeScript relayer task normalization
+- watcher-style input boundary
+- no on-chain runtime change
+- deterministic conversion into submit-ready relayer fields
+
+Runtime changes:
+
+- tests/helpers/stage2RelayerPrototype.ts updated
+- tests/stage2_relayer_task_normalization.test.ts added
+
+Normalized fields:
+
+- gatewayConfig PDA
+- guardianSet PDA
+- processedBurn PDA
+- mintAuthority PDA
+- canonicalEventKey byte array
+- recipient
+- mintedAmount
+- guardianSetVersion
+- deadlineOrFinalityBlock
+- messageNonce byte array
+- messageHash
+- guardianSigners
+- minQuorum
+- currentFinalityBlock
+
+Confirmed behavior:
+
+- valid watcher task normalizes into deterministic relayer submit fields
+- invalid watcher task is rejected before normalization
+- source byte arrays are copied
+- normalized task remains stable after source mutation
+
+Checks passed:
+
+- Stage 2.16 task normalization: 3 passing
+- Stage 2.15 preflight-integrated submit path: 2 passing
+- Stage 2.14 preflight validation: 9 passing
+- Stage 2.13 operational state machine live test: 1 passing
+- Stage 2.12 inconsistent recovery live test: 1 passing
+- Stage 2.11 ambiguous recovery live test: 1 passing
+- Stage 2.10 idempotency / retry live test: 1 passing
+- Stage 2.9 relayer prototype live test: 1 passing
+- Stage 2.6 rollback matrix: 6 passing
+- cargo test -p hello-x1 binding_
+- cargo test -p hello-x1 parser_
+- anchor build
+
+Document added:
+
+- docs/gateway/evidence/stage-2-16-relayer-task-normalization-evidence.md
+
+Current conclusion:
+
+Stage 2.16 creates a stable normalization boundary between watcher-style input and relayer submit logic. The relayer can now normalize an incoming task into deterministic PDAs, copied byte arrays, and a derived message hash before submit. Invalid input is rejected through the existing preflight model before a normalized task is produced.
