@@ -22788,3 +22788,72 @@ Document added:
 Current conclusion:
 
 Stage 2.14 adds relayer-side preflight validation before transaction construction and submission. The relayer can now reject malformed or unsafe input tasks before attempting to build a transaction.
+
+
+## Stage 2.15 preflight integrated submit path evidence
+
+Stage 2.15 integrates the Stage 2.14 relayer preflight guard into the relayer submit path.
+
+Runtime repo:
+
+- ~/xenchanted-x1-lab/hello-x1
+
+Runtime branch:
+
+- stage-2-15-preflight-integrated-submit-path
+
+Runtime commit:
+
+- a1bed6d Add Stage 2.15 preflight integrated submit path
+
+Base runtime commit:
+
+- 3480662 Add Stage 2.14 relayer input preflight guard
+
+Scope:
+
+- TypeScript relayer preflight-integrated submit path
+- no on-chain runtime change
+- local rejection before processed_burn lookup, transaction construction, and transaction submission
+
+Runtime changes:
+
+- tests/helpers/stage2RelayerPrototype.ts updated
+- tests/stage2_relayer_preflight_integrated_submit.test.ts added
+
+Submit result model:
+
+- submitted
+- already_processed
+- preflight_rejected
+
+Confirmed behavior:
+
+- invalid minted amount returns preflight_rejected
+- rejected input produces signature = null
+- rejected input leaves processed_burn absent
+- rejected input leaves recipient token balance unchanged
+- valid input still submits through integrated submit path
+- valid input creates processed_burn and mints the expected amount
+
+Checks passed:
+
+- Stage 2.15 preflight-integrated submit path: 2 passing
+- Stage 2.14 preflight validation: 9 passing
+- Stage 2.13 operational state machine live test: 1 passing
+- Stage 2.12 inconsistent recovery live test: 1 passing
+- Stage 2.11 ambiguous recovery live test: 1 passing
+- Stage 2.10 idempotency / retry live test: 1 passing
+- Stage 2.9 relayer prototype live test: 1 passing
+- Stage 2.6 rollback matrix: 6 passing
+- cargo test -p hello-x1 binding_
+- cargo test -p hello-x1 parser_
+- anchor build
+
+Document added:
+
+- docs/gateway/evidence/stage-2-15-preflight-integrated-submit-path-evidence.md
+
+Current conclusion:
+
+Stage 2.15 confirms that relayer preflight is now part of the submit path. Invalid relayer input can be rejected before transaction construction/submission, with no processed_burn entry and no token balance change. The valid submit path remains functional.
