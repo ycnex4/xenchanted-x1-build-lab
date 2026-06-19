@@ -434,6 +434,7 @@ A controlled read-only mainnet RPC smoke for XC protocol params has completed su
 - [Stage 2.29 Resume plan execution model evidence](docs/gateway/evidence/stage-2-29-resume-plan-execution-model-evidence.md)
 - [Stage 2.30 Relayer operator report run summary evidence](docs/gateway/evidence/stage-2-30-relayer-operator-report-run-summary-evidence.md)
 - [Stage 2.31 Operator report serialization log artifact evidence](docs/gateway/evidence/stage-2-31-operator-report-serialization-log-artifact-evidence.md)
+- [Stage 2.32 Operator report audit log append model evidence](docs/gateway/evidence/stage-2-32-operator-report-audit-log-append-model-evidence.md)
 - [Stage 2.0 Gateway runtime planning outline](docs/gateway/stage-2-0-gateway-runtime-planning-outline.md)
 - [Stage 2.1 Runtime assumption dependency table](docs/gateway/stage-2-1-runtime-assumption-dependency-table.md)
 - [Stage 2.2 Direct mint candidate runtime design](docs/gateway/stage-2-2-direct-mint-candidate-runtime-design.md)
