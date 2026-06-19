@@ -24910,3 +24910,155 @@ Document added:
 Current conclusion:
 
 Stage 2.33 creates a tamper-evidence digest layer above Stage 2.32 operator audit logs. The relayer can now compute a schema-versioned sha256 digest artifact for a validated audit log, verify that a digest matches a log, detect order/content changes, reject malformed digest artifacts, and reject invalid audit logs before digesting.
+
+
+## Stage 2.34 audit log checkpoint / summary boundary evidence
+
+Stage 2.34 adds a compact checkpoint summary boundary above Stage 2.33 audit log digest artifacts.
+
+Runtime repo:
+
+- ~/xenchanted-x1-lab/hello-x1
+
+Runtime branch:
+
+- stage-2-34-audit-log-checkpoint-summary-boundary
+
+Runtime commit:
+
+- 702573b Add Stage 2.34 audit log checkpoint boundary
+
+Base runtime commit:
+
+- 0878885 Add Stage 2.33 audit log integrity digest model
+
+Scope:
+
+- compact checkpoint artifact above audit log digest
+- no on-chain runtime change
+- builds on Stage 2.33 digest artifacts
+- validates audit log before checkpointing
+- validates digest artifact before checkpointing
+- verifies digest matches audit log before checkpointing
+- binds checkpoint to digest metadata
+- validates createdAtIso as exact ISO timestamp
+- verifies checkpoint against source log and digest
+- rejects malformed checkpoint artifacts
+- rejects mismatched audit log, digest, or checkpoint fields
+
+New checkpoint artifact type:
+
+- Stage2RelayerOperatorAuditLogCheckpointArtifact
+
+Checkpoint artifact fields:
+
+- artifactType: stage2_relayer_operator_audit_log_checkpoint
+- schemaVersion: 1
+- digestAlgorithm: sha256
+- digestHex
+- reportCount
+- firstRunId
+- lastRunId
+- createdAtIso
+- sourceArtifactType: stage2_relayer_operator_audit_log
+- digestArtifactType: stage2_relayer_operator_audit_log_digest
+
+New checkpoint creation helper:
+
+- createStage2RelayerOperatorAuditLogCheckpointPrototype
+
+New checkpoint validation helper:
+
+- validateStage2RelayerOperatorAuditLogCheckpointPrototype
+
+New checkpoint serialization helper:
+
+- serializeStage2RelayerOperatorAuditLogCheckpointPrototype
+
+New checkpoint deserialization helper:
+
+- deserializeStage2RelayerOperatorAuditLogCheckpointPrototype
+
+New checkpoint verification helper:
+
+- verifyStage2RelayerOperatorAuditLogCheckpointPrototype
+
+Confirmed stable checkpoint behavior:
+
+- checkpoint created from validated audit log and matching digest
+- artifactType equals stage2_relayer_operator_audit_log_checkpoint
+- schemaVersion equals 1
+- digestAlgorithm equals sha256
+- digestHex equals digest.digestHex
+- reportCount equals 2
+- firstRunId equals stage-2-34-run-001
+- lastRunId equals stage-2-34-run-002
+- createdAtIso equals 2026-01-01T00:10:00.000Z
+- checkpoint validation returns ok: true
+- checkpoint serializes and deserializes
+- checkpoint verification returns true for matching audit log, digest, and checkpoint
+
+Confirmed mismatch / tamper-evidence boundary behavior:
+
+- changed audit log makes checkpoint verification return false
+- changed digest artifact makes checkpoint verification return false
+- changed checkpoint digestHex makes checkpoint verification return false
+- changed checkpoint reportCount makes checkpoint verification return false
+- changed checkpoint firstRunId makes checkpoint verification return false
+- changed checkpoint lastRunId makes checkpoint verification return false
+- changed checkpoint sourceArtifactType makes checkpoint verification return false
+- changed checkpoint digestArtifactType makes checkpoint verification return false
+
+Confirmed malformed checkpoint artifact rejection:
+
+- invalid JSON rejected
+- wrong artifactType rejected
+- wrong schemaVersion rejected
+- wrong digestAlgorithm rejected
+- invalid digestHex rejected
+- invalid reportCount rejected
+- invalid firstRunId rejected
+- invalid lastRunId rejected
+- invalid createdAtIso rejected
+- wrong sourceArtifactType rejected
+- wrong digestArtifactType rejected
+
+Confirmed invalid checkpoint input rejection:
+
+- invalid source audit log rejected before checkpoint creation
+- invalid digest artifact rejected before checkpoint creation
+- digest mismatch rejected before checkpoint creation
+- invalid createdAtIso rejected before checkpoint creation
+
+Test-cost optimization included in runtime commit:
+
+- Stage 2.25 moved offline
+- Stage 2.26 moved offline
+- Stage 2.28 moved offline
+- Stage 2.29 moved offline
+- Stage 2.30 partially moved offline, one live operator report smoke retained
+- Stage 2.31 through Stage 2.34 run offline
+- live X1 coverage retained for Stage 2.22, Stage 2.23, Stage 2.24, Stage 2.27, and Stage 2.30 first smoke test
+
+Checks passed:
+
+- Stage 2.34 operator audit log checkpoint summary boundary: 3 passing
+- Stage 2.25 through Stage 2.34 mixed check: 33 passing
+- Stage 2.22 through Stage 2.34 full optimized regression: 42 passing (12s)
+
+Earlier comparable full regression results before optimization:
+
+- 42 passing (41s)
+- 42 passing (26s)
+
+Optimized full regression result:
+
+- 42 passing (12s)
+
+Document added:
+
+- docs/gateway/evidence/stage-2-34-audit-log-checkpoint-boundary-evidence.md
+
+Current conclusion:
+
+Stage 2.34 creates a compact checkpoint summary boundary above Stage 2.33 audit log digest artifacts. The relayer can now create a schema-versioned checkpoint artifact for a validated audit log and matching digest, serialize and deserialize that checkpoint, validate checkpoint shape, and verify that the checkpoint still matches the source audit log and digest artifact. The same runtime commit also improves test architecture by moving upper artifact, planner, digest, and checkpoint layers mostly offline while retaining live X1 testnet coverage where deployed-runtime proof is valuable.
