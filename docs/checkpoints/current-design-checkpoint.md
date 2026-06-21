@@ -25871,3 +25871,129 @@ Document added:
 Current conclusion:
 
 Stage 3.2 proves that a Stage 2 operator report artifact can be exported to disk, read back, validated by the Stage 2 artifact deserializer, and verified as a stable Stage 3 file IO round trip. This becomes the foundation for later operator export commands and production workflow packaging.
+
+
+## Stage 3.3 audit bundle export boundary evidence
+
+Stage 3.3 adds the audit bundle export boundary for the Stage 3 tooling / production surface.
+
+Runtime repo:
+
+- ~/xenchanted-x1-lab/hello-x1
+
+Runtime branch:
+
+- stage-3-3-audit-bundle-export-boundary
+
+Runtime commit:
+
+- e2f0fd6 Add Stage 3.3 audit bundle export boundary
+
+Base runtime commit:
+
+- a3d021d Add Stage 3.2 operator report export boundary
+
+Scope:
+
+- audit bundle export boundary
+- offline / zero-SOL
+- no live RPC
+- no ANCHOR_WALLET
+- no transaction submission
+- no gas / SOL spend
+- no CLI command yet
+- uses Stage 2.35 audit export bundle artifact model
+- uses Stage 3.1 artifact file IO model
+- exports audit bundle JSON to disk
+- reads audit bundle JSON back from disk
+- validates through Stage 2 deserializer
+- verifies through Stage 2 bundle verifier
+- verifies stable export round trip
+
+New helper:
+
+- tests/helpers/stage3AuditBundleExportPrototype.ts
+
+New test:
+
+- tests/stage3_audit_bundle_export_boundary.test.ts
+
+Stage 2 dependency:
+
+- deserializeStage2RelayerOperatorAuditExportBundlePrototype
+- verifyStage2RelayerOperatorAuditExportBundlePrototype
+- createStage2RelayerOperatorAuditExportBundlePrototype
+- createStage2RelayerOperatorAuditLogPrototype
+- appendStage2RelayerOperatorAuditLogPrototype
+- computeStage2RelayerOperatorAuditLogDigestPrototype
+- createStage2RelayerOperatorAuditLogCheckpointPrototype
+- createStage2RelayerOperatorRunReportFixturePrototype
+- stage2_relayer_operator_audit_export_bundle artifact type
+
+Stage 3.1 dependency:
+
+- writeStage3ArtifactFilePrototype
+- readStage3ArtifactFilePrototype
+- serializeStage3ArtifactFileJsonPrototype
+
+New result types:
+
+- Stage3AuditBundleExportResult
+- Stage3AuditBundleReadResult
+
+New helpers:
+
+- exportStage3AuditBundleArtifactPrototype
+- readStage3AuditBundleArtifactPrototype
+- verifyStage3AuditBundleArtifactExportPrototype
+
+Confirmed export/read behavior:
+
+- valid Stage 2.35 audit export bundle exported through Stage 3.1 file IO
+- stable pretty JSON written to disk
+- bytesWritten recorded
+- JSON artifact read back from disk
+- bytesRead recorded
+- artifactType preserved
+- stageRange preserved
+- runtimeCommit preserved
+- reportCount preserved
+- parsed artifact equals original artifact
+- Stage 2 deserializer accepts exported JSON
+- Stage 2 verifier accepts reloaded bundle
+- stable export round-trip verification returns true
+- exported stableJson does not contain secret-bearing fields
+
+Confirmed overwrite behavior:
+
+- accidental overwrite rejected by default
+- explicit overwrite allowed with overwrite: true
+- overwritten audit bundle reads back correctly
+- overwritten run data is preserved
+
+Confirmed rejection behavior:
+
+- non-.json export path rejected
+- wrong artifactType rejected
+- malformed audit bundle rejected
+- blank runtimeCommit rejected
+- digest mismatch rejected
+- invalid JSON rejected during read
+- invalid JSON verification returns false
+
+Checks passed:
+
+- Stage 3.3 audit bundle export boundary: 3 passing
+- Stage 3.1 plus Stage 3.2 plus Stage 3.3 smoke: 9 passing
+- Stage 2.35 plus Stage 3.1 plus Stage 3.3 smoke: 9 passing
+- Prettier check passed
+- git diff --check clean
+- pasted terminal fragments check clean
+
+Document added:
+
+- docs/gateway/evidence/stage-3-3-audit-bundle-export-boundary-evidence.md
+
+Current conclusion:
+
+Stage 3.3 proves that a Stage 2.35 audit export bundle can be exported to disk, read back, validated by the Stage 2 artifact deserializer, verified by the Stage 2 bundle verifier, and verified as a stable Stage 3 file IO round trip. This becomes the foundation for later audit bundle export commands, verifier commands, verification receipts, and production workflow packaging.
