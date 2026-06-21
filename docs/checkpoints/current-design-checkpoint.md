@@ -29405,3 +29405,215 @@ It binds the future signature verification target to:
 It does not yet verify real ed25519 signatures.
 
 The next valid stage is Stage 4.13 offline cryptographic signature verification boundary.
+
+
+## Stage 4.13 offline cryptographic signature verification boundary evidence
+
+Stage 4.13 adds the offline cryptographic signature verification boundary.
+
+Runtime repo:
+
+- ~/xenchanted-x1-lab/hello-x1
+
+Runtime branch:
+
+- stage-4-13-offline-cryptographic-signature-verification-boundary
+
+Runtime commit:
+
+- c256bba Add Stage 4.13 offline cryptographic signature verification boundary
+
+Base runtime commit:
+
+- 2c84294 Add Stage 4.12 production signature verification design boundary
+
+Scope:
+
+- offline cryptographic signature verification boundary
+- real ed25519 verification boundary
+- @noble/curves/ed25519 verification
+- 3-of-5 guardian signature quorum boundary
+- duplicate signature rejection boundary
+- unknown guardian rejection boundary
+- invalid signature rejection boundary
+- fee-bound digest and amount conversion binding boundary
+- offline model boundary
+- no live RPC
+- no wallet loading
+- no production private keys
+- no private key export
+- no production signing path
+- no transaction submission
+- no SOL spend
+
+Important test fixture note:
+
+- tests use deterministic test-only fixture seeds to create local test signatures
+- those fixture seeds are not production guardian keys
+- those fixture seeds are not wallet keys
+- those fixture seeds are not exported from any wallet
+- they are only local test material used to prove that the verifier accepts valid ed25519 signatures and rejects invalid signatures
+
+Required Stage 4.12 source:
+
+- stage4_production_signature_verification_design_result
+
+Payload binding:
+
+- feeBoundMessageDigest
+- guardianSetVersion
+- guardianPublicKey
+- xntdRawPerXxxlRaw
+- burnedXntdRaw
+- xxxlMintRaw
+- messageBinding
+
+New helper:
+
+- tests/helpers/stage4OfflineCryptographicSignatureVerificationPrototype.ts
+
+New test:
+
+- tests/stage4_offline_cryptographic_signature_verification_boundary.test.ts
+
+New result type:
+
+- Stage4OfflineCryptographicSignatureVerificationResult
+
+Result artifact:
+
+- stage4_offline_cryptographic_signature_verification_result
+
+Execution mode:
+
+- offline_cryptographic_signature_verification
+
+New error class:
+
+- Stage4OfflineCryptographicSignatureVerificationError
+
+New helpers:
+
+- buildStage4OfflineCryptographicSignaturePayloadPrototype
+- assertStage4OfflineCryptographicSignatureVerificationOperationPrototype
+- runStage4OfflineCryptographicSignatureVerificationPrototype
+- checkStage4OfflineCryptographicSignatureVerificationResultPrototype
+
+Stage 4.13 policy object:
+
+- offlineCryptographicVerificationOnly: true
+- signatureSchemeRequired: ed25519
+- publicKeyEncodingRequired: base58_x1_guardian_public_key
+- signatureEncodingRequired: base64_ed25519_signature
+- messageBindingRequired: stage4_9_fee_bound_digest_and_stage4_11_amount_conversion_policy
+- exactFeeDigestMatchRequired: true
+- exactAmountConversionRequired: true
+- fixedGuardianCount: 5
+- fixedQuorumThreshold: 3
+- duplicateSignatureHandling: reject
+- unknownGuardianHandling: reject
+- invalidSignatureHandling: reject
+- guardianSetVersionBound: 1
+- signing: not_performed
+- privateKeyAccess: not_allowed
+- walletLoading: not_allowed
+- liveRpc: not_used
+- transactionSubmission: not_allowed
+- solSpendAllowed: false
+
+Stage 4.13 invariants:
+
+- offlineOnly: true
+- realEd25519Verification: true
+- noSigning: true
+- noPrivateKeys: true
+- noWalletLoaded: true
+- noLiveRpc: true
+- noTransactionsSubmitted: true
+- noSolSpend: true
+- feeBoundMessageDigestBound: true
+- amountConversionPolicyBound: true
+- exactFeeDigestMatch: true
+- exactAmountConversion: true
+- boundToGuardianSetVersion: true
+- exactlyFiveGuardians: true
+- threeOfFiveQuorum: true
+- duplicateSignaturesRejected: true
+- unknownGuardiansRejected: true
+- invalidSignaturesRejected: true
+
+Confirmed successful behavior:
+
+- verifies a real offline ed25519 3-of-5 guardian signature quorum
+- accepts valid ed25519 signatures over the deterministic Stage 4.13 payload
+- verifiedSignatureCount is 3
+- quorumReached is true
+- signatureScheme is ed25519
+- publicKeyEncoding is base58_x1_guardian_public_key
+- signatureEncoding is base64_ed25519_signature
+- messageBinding is stage4_9_fee_bound_digest_and_stage4_11_amount_conversion_policy
+- verifiedFeeBoundMessageDigest is bound
+- xntdRawPerXxxlRaw is 100000000000000000
+- burnedXntdRaw is 100000000000000000000000000
+- xxxlMintRaw is 1000000000
+- checkStage4OfflineCryptographicSignatureVerificationResultPrototype returns true
+
+Confirmed quorum behavior:
+
+- accepts 3-of-5
+- accepts 4-of-5
+- accepts 5-of-5
+- rejects 2-of-5 as quorum_not_reached
+
+Confirmed safe output behavior:
+
+- offline crypto result JSON does not contain wallet path
+- offline crypto result JSON does not contain private key markers
+- offline crypto result JSON does not contain signing methods
+- offline crypto result JSON does not contain serialized transaction marker
+- offline crypto result JSON does not contain transaction submission methods
+- offline crypto result JSON does not contain live_rpc marker
+
+Confirmed rejection behavior:
+
+- malformed verifiedAtIso rejected as invalid_verified_at_iso
+- failed Stage 4.12 design rejected as production_signature_verification_design_not_ok
+- guardian set with fewer than 5 guardians rejected as invalid_guardian_set
+- duplicate guardian in guardian set rejected as duplicate_guardian_public_key
+- duplicate signature from the same guardian rejected as duplicate_signature
+- unknown guardian signature rejected as unknown_guardian
+- invalid ed25519 signature rejected as invalid_signature
+- forbidden signature marker rejected as forbidden_value
+- sendTransaction operation rejected as invalid_offline_cryptographic_signature_verification_operation
+- signMessage operation rejected as invalid_offline_cryptographic_signature_verification_operation
+
+Checks passed:
+
+- Stage 4.13 offline cryptographic signature verification boundary: 4 passing
+- Stage 4.1 through Stage 4.13 smoke: 44 passing
+- Stage 3.10 plus Stage 4.1 through Stage 4.13 smoke: 47 passing
+- Prettier check passed
+- git diff --check clean
+- exact safety marker verification passed
+- pasted terminal fragments check clean
+
+Document added:
+
+- docs/gateway/evidence/stage-4-13-offline-cryptographic-signature-verification-boundary-evidence.md
+
+Current conclusion:
+
+Stage 4.13 introduces real offline ed25519 verification.
+
+It verifies guardian signatures over a deterministic payload bound to:
+
+- Stage 4.9 fee-bound message digest
+- Stage 4.11 exact XNTD -> XXXL amount conversion policy
+- guardianSetVersion
+- guardianPublicKey
+
+It accepts 3-of-5, 4-of-5, and 5-of-5 valid guardian signatures.
+
+It rejects 2-of-5, duplicate signatures, unknown guardians, and invalid signatures.
+
+The next valid stage is Stage 4.14 cryptographic verification receipt boundary.
