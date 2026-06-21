@@ -30029,3 +30029,96 @@ It does not introduce transaction submission.
 It does not spend SOL.
 
 The next valid stage is Stage 4.16 receipt-bound transaction assembly design boundary.
+
+---
+
+## Stage 4.16 — Receipt-Bound Transaction Assembly Design Boundary
+
+Runtime reference:
+
+- 1195de0 Add Stage 4.16 receipt-bound transaction assembly design boundary
+
+Evidence:
+
+- docs/gateway/evidence/stage-4-16-receipt-bound-transaction-assembly-design-boundary-evidence.md
+
+Stage 4.16 adds the receipt-bound transaction assembly design boundary.
+
+This stage consumes the Stage 4.15 receipt-bound transaction preflight artifact and defines the offline design contract for future transaction assembly.
+
+Stage 4.16 binds the future assembly design to:
+
+- Stage 4.15 preflight artifact type.
+- Stage 4.15 source preflight stage.
+- Source receipt digest.
+- Source verification result digest.
+- Receipt-bound instruction data digest.
+- Exact instruction name.
+- Account roles.
+- Instruction layout fields.
+- No-wallet / no-sign / no-send safety contract.
+
+The exact instruction name is:
+
+    mint_xxxl_from_receipt_bound_gateway_message
+
+The Stage 4.16 artifact is:
+
+    stage4_receipt_bound_transaction_assembly_design_result
+
+The Stage 4.16 execution mode is:
+
+    receipt_bound_transaction_assembly_design_offline
+
+The assembly contract remains design-only:
+
+    transactionObjectStatus: not_created_design_only
+    compiledMessageStatus: not_created_design_only
+    signerResolutionStatus: not_performed
+    signatureStatus: not_performed
+    walletLoading: not_allowed
+    privateKeyAccess: not_allowed
+    liveRpc: not_used
+    simulation: not_performed
+    transactionSubmission: not_allowed
+    solSpendAllowed: false
+
+Stage 4.16 preserves these invariants:
+
+    offlineOnly: true
+    assemblyDesignOnly: true
+    sourcePreflightStage415Bound: true
+    sourceReceiptDigestBound: true
+    sourceResultDigestBound: true
+    instructionDataDigestBound: true
+    assemblyDesignDigestBound: true
+    instructionNameBound: true
+    accountRolesBound: true
+    instructionLayoutBound: true
+    noWalletLoaded: true
+    noPrivateKeys: true
+    noSigning: true
+    noSignerResolution: true
+    noTransactionObjectCreated: true
+    noCompiledMessageCreated: true
+    noSimulation: true
+    noLiveRpc: true
+    noTransactionsSubmitted: true
+    noSolSpend: true
+
+Runtime checks passed:
+
+    Stage 4.16 test: 4 passing
+    Stage 4.15 + Stage 4.16 smoke: 8 passing
+    Stage 3.10 + Stage 4.1 through Stage 4.16 smoke: 59 passing
+    Prettier check: passed
+    git diff --check: clean
+
+Boundary decision:
+
+Stage 4.16 does not create a transaction object, compiled message, serialized transaction, signature, simulation, live RPC call, transaction submission, or SOL spend.
+
+Next valid stage:
+
+    Stage 4.17 — receipt-bound transaction assembly no-sign boundary
+
