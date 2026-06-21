@@ -30259,6 +30259,11 @@ Stage 4.18 binds the message plan to:
 - Account mapping digest.
 - Instruction message plan digest.
 
+Raw plan-kind markers:
+
+    receipt_bound_runtime_account_mapping_plan
+    receipt_bound_instruction_message_plan
+
 The exact instruction name remains:
 
     mint_xxxl_from_receipt_bound_gateway_message

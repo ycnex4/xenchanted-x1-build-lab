@@ -71,6 +71,11 @@ Stage 4.18 models two planning layers:
     Stage4ReceiptBoundAccountMappingPlan
     Stage4ReceiptBoundInstructionMessagePlan
 
+Raw plan-kind markers:
+
+    receipt_bound_runtime_account_mapping_plan
+    receipt_bound_instruction_message_plan
+
 The account mapping plan binds:
 
     requiredRoles
