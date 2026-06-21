@@ -29831,3 +29831,201 @@ It does not introduce signing.
 It does not introduce live RPC or transaction submission.
 
 The next valid stage is Stage 4.15 receipt-bound transaction preflight boundary.
+
+
+## Stage 4.15 receipt-bound transaction preflight boundary evidence
+
+Stage 4.15 adds the receipt-bound transaction preflight boundary.
+
+Runtime repo:
+
+- ~/xenchanted-x1-lab/hello-x1
+
+Runtime branch:
+
+- stage-4-15-receipt-bound-transaction-preflight-boundary
+
+Runtime commit:
+
+- 8f64b72 Add Stage 4.15 receipt-bound transaction preflight boundary
+
+Base runtime commit:
+
+- 7624afa Add Stage 4.14 cryptographic verification receipt boundary
+
+Scope:
+
+- receipt-bound transaction preflight boundary
+- Stage 4.14 source receipt digest boundary
+- Stage 4.13 source result digest boundary
+- receipt-bound instruction data digest boundary
+- fee-bound digest and amount conversion preflight boundary
+- unsigned no-send preflight envelope boundary
+- offline model boundary
+- no live RPC
+- no wallet loading
+- no private keys
+- no private key export
+- no signing
+- no transaction serialization
+- no transaction submission
+- no SOL spend
+
+Required Stage 4.14 source:
+
+- stage4_cryptographic_verification_receipt_result
+
+Receipt-bound preflight binds:
+
+- sourceReceiptDigest
+- sourceResultDigest
+- instructionDataDigest
+- verifiedFeeBoundMessageDigest
+- guardianSetVersion
+- verifiedSignatureCount
+- xntdRawPerXxxlRaw
+- burnedXntdRaw
+- xxxlMintRaw
+- messageBinding
+
+New helper:
+
+- tests/helpers/stage4ReceiptBoundTransactionPreflightPrototype.ts
+
+New test:
+
+- tests/stage4_receipt_bound_transaction_preflight_boundary.test.ts
+
+New result type:
+
+- Stage4ReceiptBoundTransactionPreflightResult
+
+Result artifact:
+
+- stage4_receipt_bound_transaction_preflight_result
+
+Execution mode:
+
+- receipt_bound_transaction_preflight_no_send
+
+New instruction name:
+
+- mint_xxxl_from_receipt_bound_gateway_message
+
+New safe serialization status field:
+
+- transactionSerializationStatus = not_created_no_wallet_no_signing
+
+Important safety improvement:
+
+- Stage 4.15 public result does not expose a JSON key named serializedTransaction.
+
+New policy object:
+
+- receiptBoundPreflightOnly: true
+- sourceReceiptRequired: stage4_cryptographic_verification_receipt_result
+- sourceReceiptDigestRequired: true
+- sourceResultDigestRequired: true
+- instructionDataDigestRequired: true
+- exactFeeDigestMatchRequired: true
+- exactAmountConversionRequired: true
+- walletLoading: not_allowed
+- signing: not_performed
+- transactionSubmission: not_allowed
+- simulation: not_performed
+- liveRpc: not_used
+- solSpendAllowed: false
+
+Stage 4.15 invariants:
+
+- offlineOnly: true
+- receiptBoundPreflightOnly: true
+- sourceReceiptStage414Bound: true
+- sourceReceiptDigestBound: true
+- sourceResultDigestBound: true
+- instructionDataDigestBound: true
+- feeBoundMessageDigestBound: true
+- amountConversionPolicyBound: true
+- exactFeeDigestMatch: true
+- exactAmountConversion: true
+- boundToGuardianSetVersion: true
+- exactlyFiveGuardians: true
+- threeOfFiveQuorum: true
+- noWalletLoaded: true
+- noSigning: true
+- noTransactionsSubmitted: true
+- noSolSpend: true
+- noLiveSend: true
+- noLiveRpc: true
+- noSerializedTransaction: true
+- preflightOnly: true
+
+Confirmed successful behavior:
+
+- builds a receipt-bound no-send transaction preflight envelope
+- binds sourceReceiptDigest from Stage 4.14
+- binds sourceResultDigest from Stage 4.14
+- derives instructionDataDigest
+- keeps signerCount = 0
+- keeps requiredSignatureCount = 0
+- keeps transactionSerializationStatus = not_created_no_wallet_no_signing
+- keeps transactionSubmission = not_allowed
+- keeps simulation = not_performed
+- keeps account metas non-signing
+- checkStage4ReceiptBoundTransactionPreflightResultPrototype returns true
+
+Confirmed digest behavior:
+
+- same Stage 4.14 receipt produces same instructionDataDigest
+- changed Stage 4.14 receipt changes instructionDataDigest
+
+Confirmed safe output behavior:
+
+- result JSON does not contain wallet path
+- result JSON does not contain private key markers
+- result JSON does not contain signing methods
+- result JSON does not contain live RPC marker
+- result JSON does not contain serialized transaction key
+- result JSON does not contain transaction submission methods
+
+Confirmed rejection behavior:
+
+- malformed preflightAtIso rejected as invalid_preflight_at_iso
+- malformed networkName rejected as invalid_network_name
+- malformed public key rejected as invalid_public_key
+- invalid Stage 4.14 receipt rejected as invalid_cryptographic_verification_receipt
+- wrong source receipt stage rejected as invalid_cryptographic_verification_receipt
+- wrong expectedReceiptDigest rejected as invalid_digest
+- wrong expectedSourceResultDigest rejected as invalid_digest
+- wrong expectedInstructionDataDigest rejected as invalid_digest
+- forbidden value in receipt amount rejected as forbidden_value
+- planner response without receiptBound rejected as planner_returned_unbound_signed_or_sendable_preflight
+- failed planner rejected as planner_failed
+- sendTransaction operation rejected as invalid_receipt_bound_preflight_operation
+- signMessage operation rejected as invalid_receipt_bound_preflight_operation
+
+Checks passed:
+
+- Stage 4.15 receipt-bound transaction preflight boundary: 4 passing
+- Stage 4.1 through Stage 4.15 smoke: 52 passing
+- Stage 3.10 plus Stage 4.1 through Stage 4.15 smoke: 55 passing
+- Prettier check passed
+- git diff --check clean
+- exact bad marker check passed
+- final amend committed
+
+Current conclusion:
+
+Stage 4.15 moves the gateway pipeline from a Stage 4.14 cryptographic verification receipt into a receipt-bound no-send transaction preflight artifact.
+
+It does not introduce signing.
+
+It does not introduce transaction serialization.
+
+It does not introduce live RPC.
+
+It does not introduce transaction submission.
+
+It does not spend SOL.
+
+The next valid stage is Stage 4.16 receipt-bound transaction assembly design boundary.
