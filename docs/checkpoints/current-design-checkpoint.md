@@ -26675,3 +26675,174 @@ Document added:
 Current conclusion:
 
 Stage 3.8 proves that an offline workflow result can be converted into a deterministic ok / warning / critical monitoring draft without live RPC, notification transport, transaction submission, or secret-bearing material. This becomes the foundation for later production runbooks, monitoring adapters, and alert delivery layers.
+
+
+## Stage 3.9 production runbook boundary evidence
+
+Stage 3.9 adds the production runbook draft boundary for the Stage 3 tooling / production surface.
+
+Runtime repo:
+
+- ~/xenchanted-x1-lab/hello-x1
+
+Runtime branch:
+
+- stage-3-9-production-runbook-boundary
+
+Runtime commit:
+
+- 66484dd Add Stage 3.9 production runbook boundary
+
+Base runtime commit:
+
+- 8129896 Add Stage 3.8 monitoring alert draft boundary
+
+Scope:
+
+- production runbook draft boundary
+- offline / zero-SOL
+- no live RPC
+- no ANCHOR_WALLET
+- no transaction submission
+- no gas / SOL spend
+- no live production execution
+- no notification delivery
+- no automatic operator execution
+- consumes Stage 3.8 monitoring alert draft
+- converts ok / warning / critical status into deterministic manual actions
+- preserves source alert draft summary
+- rejects malformed runbook config
+- rejects malformed alert draft
+- rejects forbidden secret-bearing config values
+- rejects forbidden secret-bearing alert draft values
+
+New helper:
+
+- tests/helpers/stage3ProductionRunbookPrototype.ts
+
+New test:
+
+- tests/stage3_production_runbook_boundary.test.ts
+
+New artifact type:
+
+- stage3_production_runbook_draft
+
+New action severity type:
+
+- Stage3ProductionRunbookActionSeverity
+
+Severities:
+
+- info
+- warning
+- critical
+
+New action code type:
+
+- Stage3ProductionRunbookActionCode
+
+Action codes:
+
+- archive_evidence
+- continue_next_cycle
+- review_warning_alerts
+- verify_runtime_commit
+- increase_report_coverage
+- pause_submission
+- investigate_critical_alerts
+- rebuild_evidence_bundle
+- escalate_to_operator
+
+New action type:
+
+- Stage3ProductionRunbookAction
+
+New config type:
+
+- Stage3ProductionRunbookConfig
+
+New error class:
+
+- Stage3ProductionRunbookError
+
+New error reason type:
+
+- Stage3ProductionRunbookErrorReason
+
+New helpers:
+
+- createStage3ProductionRunbookDraftPrototype
+- checkStage3ProductionRunbookDraftPrototype
+
+Confirmed ok behavior:
+
+- creates ok runbook draft from ok alert draft
+- artifactType is stage3_production_runbook_draft
+- schemaVersion is 1
+- stage is 3.9
+- executionMode is offline_zero_sol
+- sourceArtifactType is stage3_monitoring_alert_draft
+- sourceSchemaVersion is 1
+- sourceStatus is ok
+- sourceObservedAtIso preserved
+- operatorId preserved
+- action archive_evidence generated
+- action continue_next_cycle generated
+- all ok actions are manual
+- all ok actions are info severity
+- sourceAlerts is empty
+- sourceSummary preserved
+- runtimeCommit preserved
+- reportCount preserved
+- firstRunId preserved
+- lastRunId preserved
+- verifierId preserved
+- verificationOk is true
+- receiptValid is true
+- checkStage3ProductionRunbookDraftPrototype returns true
+
+Confirmed warning behavior:
+
+- warning alert draft creates review_warning_alerts
+- runtime_commit_mismatch creates verify_runtime_commit
+- minimum_report_count_not_met creates increase_report_coverage
+- archive_evidence is included
+- non-archive warning actions are warning severity
+- sourceStatus is warning
+
+Confirmed critical behavior:
+
+- critical alert draft creates pause_submission
+- critical alert draft creates investigate_critical_alerts
+- critical alert draft creates rebuild_evidence_bundle
+- critical alert draft creates escalate_to_operator
+- archive_evidence is included
+- non-archive critical actions are critical severity
+- sourceStatus is critical
+
+Confirmed rejection behavior:
+
+- bad generatedAtIso rejected as invalid_generated_at_iso
+- blank operatorId rejected as invalid_operator_id
+- operatorId containing privateKey marker rejected as forbidden_config_value
+- malformed alert draft artifactType rejected as invalid_alert_draft
+- alert draft sourceSummary verifierId containing privateKey marker rejected as forbidden_alert_draft_value
+- successful runbook stable JSON does not contain secret-bearing fields
+
+Checks passed:
+
+- Stage 3.9 production runbook boundary: 3 passing
+- Stage 3.8 plus Stage 3.9 smoke: 6 passing
+- Stage 3.1 through Stage 3.9 smoke: 27 passing
+- Prettier check passed
+- git diff --check clean
+- pasted terminal fragments check clean
+
+Document added:
+
+- docs/gateway/evidence/stage-3-9-production-runbook-boundary-evidence.md
+
+Current conclusion:
+
+Stage 3.9 proves that an offline monitoring alert draft can be converted into deterministic manual operator actions for ok / warning / critical states without live RPC, notification transport, transaction submission, automatic execution, or secret-bearing material. This becomes the final production-facing draft layer before Stage 3 closure.
