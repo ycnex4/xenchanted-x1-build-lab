@@ -25656,3 +25656,103 @@ Document added:
 Current conclusion:
 
 Stage 2.22 through Stage 2.38 should be treated as closed. Future work should move to Stage 3 unless a real architectural gap is discovered.
+
+
+## Stage 3.1 artifact file IO boundary evidence
+
+Stage 3.1 begins the tooling / production surface after Stage 2 closure.
+
+Runtime repo:
+
+- ~/xenchanted-x1-lab/hello-x1
+
+Runtime branch:
+
+- stage-3-1-artifact-file-io-boundary
+
+Runtime commit:
+
+- c307ffd Add Stage 3.1 artifact file IO boundary
+
+Base runtime commit:
+
+- 7cbbeb3 Add Stage 2.38 final evidence index closure boundary
+
+Scope:
+
+- artifact file IO boundary
+- safe deterministic JSON write/read layer
+- offline / zero-SOL
+- no live RPC
+- no ANCHOR_WALLET
+- no transaction submission
+- no gas / SOL spend
+- no CLI command yet
+- foundation for later Stage 3 tooling
+
+New helper:
+
+- tests/helpers/stage3ArtifactFileIoPrototype.ts
+
+New test:
+
+- tests/stage3_artifact_file_io_boundary.test.ts
+
+New types:
+
+- Stage3JsonObject
+- Stage3JsonValue
+- Stage3ArtifactFileIoErrorReason
+- Stage3ArtifactFilePathResolution
+- Stage3ArtifactFileWriteResult
+- Stage3ArtifactFileReadResult
+
+New error class:
+
+- Stage3ArtifactFileIoError
+
+New helpers:
+
+- resolveStage3ArtifactFilePathPrototype
+- serializeStage3ArtifactFileJsonPrototype
+- writeStage3ArtifactFilePrototype
+- readStage3ArtifactFilePrototype
+- verifyStage3ArtifactFileRoundTripPrototype
+
+Confirmed write/read behavior:
+
+- writes stable pretty JSON
+- appends trailing newline
+- creates parent directories recursively
+- records bytesWritten
+- reads artifact back from disk
+- records bytesRead
+- parsed artifact equals original artifact
+- round-trip verification returns true
+
+Confirmed rejection behavior:
+
+- accidental overwrite rejected by default
+- explicit overwrite allowed only with overwrite: true
+- path escape rejected
+- absolute path rejected
+- non-.json artifact path rejected
+- invalid artifact rejected
+- invalid JSON rejected
+- invalid JSON round-trip verification returns false
+
+Checks passed:
+
+- Prettier check passed
+- Stage 3.1 artifact file IO boundary: 3 passing
+- Stage 2.38 plus Stage 3.1 boundary smoke: 6 passing
+- git diff --check clean
+- suspicious pasted terminal fragment check clean
+
+Document added:
+
+- docs/gateway/evidence/stage-3-1-artifact-file-io-boundary-evidence.md
+
+Current conclusion:
+
+Stage 3.1 establishes the first Stage 3 production/tooling boundary. It provides the local deterministic file IO foundation for future export, verify, receipt, and operator workflow commands.
