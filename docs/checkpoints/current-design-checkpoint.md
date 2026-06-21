@@ -26509,3 +26509,169 @@ Document added:
 Current conclusion:
 
 Stage 3.7 proves that offline operator workflow configuration can be parsed, normalized, validated, rejected safely when malformed or secret-bearing, and then used to run the already-proven Stage 3.6 workflow. This becomes the foundation for later CLI command boundaries, monitoring, and production runbooks.
+
+
+## Stage 3.8 monitoring alert draft boundary evidence
+
+Stage 3.8 adds the monitoring alert draft boundary for the Stage 3 tooling / production surface.
+
+Runtime repo:
+
+- ~/xenchanted-x1-lab/hello-x1
+
+Runtime branch:
+
+- stage-3-8-monitoring-alert-draft-boundary
+
+Runtime commit:
+
+- 8129896 Add Stage 3.8 monitoring alert draft boundary
+
+Base runtime commit:
+
+- fd62222 Add Stage 3.7 operator workflow config boundary
+
+Scope:
+
+- monitoring alert draft boundary
+- offline / zero-SOL
+- no live RPC
+- no ANCHOR_WALLET
+- no transaction submission
+- no gas / SOL spend
+- no live monitoring
+- no production alert transport
+- no notification delivery
+- consumes Stage 3.6 workflow result
+- tests build workflow result through Stage 3.7 config/env boundary
+- produces deterministic ok / warning / critical draft
+- rejects malformed monitoring config
+- rejects malformed workflow result
+- rejects forbidden secret-bearing config values
+- rejects forbidden secret-bearing workflow values
+- preserves source workflow summary
+
+New helper:
+
+- tests/helpers/stage3MonitoringAlertDraftPrototype.ts
+
+New test:
+
+- tests/stage3_monitoring_alert_draft_boundary.test.ts
+
+New artifact type:
+
+- stage3_monitoring_alert_draft
+
+New status type:
+
+- Stage3MonitoringAlertStatus
+
+Statuses:
+
+- ok
+- warning
+- critical
+
+New severity type:
+
+- Stage3MonitoringAlertSeverity
+
+Severities:
+
+- warning
+- critical
+
+New alert code type:
+
+- Stage3MonitoringAlertCode
+
+Alert codes:
+
+- verification_failed
+- workflow_receipt_invalid
+- digest_invalid
+- runtime_commit_mismatch
+- minimum_report_count_not_met
+
+New source summary type:
+
+- Stage3MonitoringAlertDraftSourceSummary
+
+New config type:
+
+- Stage3MonitoringAlertDraftConfig
+
+New error class:
+
+- Stage3MonitoringAlertDraftError
+
+New error reason type:
+
+- Stage3MonitoringAlertDraftErrorReason
+
+New helpers:
+
+- createStage3MonitoringAlertDraftPrototype
+- checkStage3MonitoringAlertDraftPrototype
+
+Confirmed ok draft behavior:
+
+- creates ok draft from successful workflow result
+- artifactType is stage3_monitoring_alert_draft
+- schemaVersion is 1
+- stage is 3.8
+- executionMode is offline_zero_sol
+- sourceArtifactType is stage3_operator_workflow_script_result
+- sourceSchemaVersion is 1
+- status is ok
+- alerts array is empty
+- runtimeCommit preserved
+- reportCount preserved
+- firstRunId preserved
+- lastRunId preserved
+- verifierId preserved
+- verifiedAtIso preserved
+- receiptCreatedAtIso preserved
+- verificationOk is true
+- receiptValid is true
+- digestHex is 64 lowercase hex characters
+- checkStage3MonitoringAlertDraftPrototype returns true
+
+Confirmed warning behavior:
+
+- expected runtime commit mismatch creates runtime_commit_mismatch warning
+- minimum report count not met creates minimum_report_count_not_met warning
+- status becomes warning
+
+Confirmed critical behavior:
+
+- receiptValid false creates workflow_receipt_invalid critical alert
+- malformed digestHex creates digest_invalid critical alert
+- status becomes critical
+
+Confirmed rejection behavior:
+
+- bad observedAtIso rejected as invalid_observed_at_iso
+- minimumReportCount 0 rejected as invalid_minimum_report_count
+- expectedRuntimeCommit containing privateKey marker rejected as forbidden_config_value
+- malformed workflow artifactType rejected as invalid_workflow_result
+- workflow verifierId containing privateKey marker rejected as forbidden_workflow_value
+- successful draft stable JSON does not contain secret-bearing fields
+
+Checks passed:
+
+- Stage 3.8 monitoring alert draft boundary: 3 passing
+- Stage 3.7 plus Stage 3.8 smoke: 6 passing
+- Stage 3.1 through Stage 3.8 smoke: 24 passing
+- Prettier check passed
+- git diff --check clean
+- pasted terminal fragments check clean
+
+Document added:
+
+- docs/gateway/evidence/stage-3-8-monitoring-alert-draft-boundary-evidence.md
+
+Current conclusion:
+
+Stage 3.8 proves that an offline workflow result can be converted into a deterministic ok / warning / critical monitoring draft without live RPC, notification transport, transaction submission, or secret-bearing material. This becomes the foundation for later production runbooks, monitoring adapters, and alert delivery layers.
