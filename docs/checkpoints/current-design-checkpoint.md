@@ -28048,3 +28048,218 @@ Current conclusion:
 Stage 4.5 proves that guardian operational rules can be modeled as public-keys-only policy with quorum validation and explicit no-secret/no-wallet/no-signing/no-send invariants, before any signing, wallet access, transaction preflight, or live-send boundary is introduced.
 
 The next valid stage is Stage 4.6 transaction preflight / no-send boundary.
+
+
+## Stage 4.6 transaction preflight no-send boundary evidence
+
+Stage 4.6 adds the transaction preflight / no-send boundary for the Stage 4 live runtime / operations layer.
+
+Runtime repo:
+
+- ~/xenchanted-x1-lab/hello-x1
+
+Runtime branch:
+
+- stage-4-6-transaction-preflight-no-send-boundary
+
+Runtime commit:
+
+- 5c967c0 Add Stage 4.6 transaction preflight no-send boundary
+
+Base runtime commit:
+
+- 93665db Add Stage 4.5 guardian operation policy boundary
+
+Scope:
+
+- transaction preflight no-send boundary
+- unsigned transaction envelope boundary
+- no serialized transaction boundary
+- no wallet loading
+- no signing
+- no simulation
+- no transaction submission
+- no SOL spend
+- no live-send
+- no deployment
+- preflight operation allowlist
+- safe preflight output
+- forbidden secret-bearing value rejection
+- live-send operation rejection
+- signed/sendable planner output rejection
+- planner failure rejection
+
+Allowed transaction preflight operations:
+
+- validateGuardianPolicy
+- buildNoSendPreflightEnvelope
+- runNoSendPreflightChecks
+
+Rejected example operation:
+
+- sendTransaction
+
+New helper:
+
+- tests/helpers/stage4TransactionPreflightNoSendPrototype.ts
+
+New test:
+
+- tests/stage4_transaction_preflight_no_send_boundary.test.ts
+
+New transaction preflight operation type:
+
+- Stage4TransactionPreflightOperation
+
+New transaction preflight step code type:
+
+- Stage4TransactionPreflightStepCode
+
+New account meta type:
+
+- Stage4TransactionAccountMeta
+
+New unsigned transaction envelope type:
+
+- Stage4UnsignedTransactionEnvelope
+
+New transaction preflight planner request type:
+
+- Stage4TransactionPreflightPlannerRequest
+
+New transaction preflight planner response type:
+
+- Stage4TransactionPreflightPlannerResponse
+
+New transaction preflight planner type:
+
+- Stage4TransactionPreflightPlanner
+
+New transaction preflight step type:
+
+- Stage4TransactionPreflightStep
+
+New result type:
+
+- Stage4TransactionPreflightNoSendResult
+
+New error class:
+
+- Stage4TransactionPreflightNoSendError
+
+New error reason type:
+
+- Stage4TransactionPreflightNoSendErrorReason
+
+New helpers:
+
+- assertStage4TransactionPreflightOperationPrototype
+- runStage4TransactionPreflightNoSendPrototype
+- checkStage4TransactionPreflightNoSendResultPrototype
+
+Result artifact:
+
+- stage4_transaction_preflight_no_send_result
+
+Execution mode:
+
+- transaction_preflight_no_send
+
+Unsigned envelope:
+
+- instructionName: mint_xxxl_from_gateway_message
+- signerCount: 0
+- requiredSignatureCount: 0
+- serializedTransaction: <not_created:no_wallet_no_signing>
+- transactionSubmission: not_allowed
+- simulation: not_performed
+
+Policy object:
+
+- preflightOnly: true
+- walletLoading: not_allowed
+- signing: not_performed
+- transactionSubmission: not_allowed
+- simulation: not_performed
+- solSpendAllowed: false
+
+Stage 4.6 invariants:
+
+- noWalletLoaded: true
+- noSigning: true
+- noTransactionsSubmitted: true
+- noSolSpend: true
+- noLiveSend: true
+- noSerializedTransaction: true
+- preflightOnly: true
+
+False-positive safety note:
+
+- Earlier operation name buildUnsignedTransactionEnvelope contained the forbidden substring signedTransaction inside UnsignedTransaction.
+- The JSON safety test correctly flagged this.
+- The operation was renamed to buildNoSendPreflightEnvelope to preserve the safety check without weakening it.
+
+Confirmed successful behavior:
+
+- builds a no-send unsigned transaction preflight envelope
+- consumes Stage 4.5 guardian operation policy evidence
+- uses injected preflight planner
+- does not load wallet
+- does not sign
+- does not simulate
+- does not submit transactions
+- does not spend SOL
+- does not perform live-send
+- does not create serialized transaction material
+- calls only validateGuardianPolicy, buildNoSendPreflightEnvelope, and runNoSendPreflightChecks
+- preserves networkName
+- preserves programId
+- preserves payerPublicKey
+- sourceGuardianPolicyStage is 4.5
+- sourceGuardianPolicyOk is true
+- guardianPublicKeyCount is 2
+- quorumThreshold is 2
+- unsignedEnvelope signerCount is 0
+- unsignedEnvelope requiredSignatureCount is 0
+- unsignedEnvelope serializedTransaction is <not_created:no_wallet_no_signing>
+- unsignedEnvelope transactionSubmission is not_allowed
+- unsignedEnvelope simulation is not_performed
+- every account meta has isSigner false
+- all preflight steps are unsignedOnly and noSend
+- all invariants are true
+- checkStage4TransactionPreflightNoSendResultPrototype returns true
+
+Confirmed safe output behavior:
+
+- transaction preflight result JSON does not contain wallet path
+- transaction preflight result JSON does not contain secret-bearing markers
+- transaction preflight result JSON does not contain serialized transaction material
+- transaction preflight result JSON does not contain send/sign methods
+
+Confirmed rejection behavior:
+
+- bad preflightAtIso rejected as invalid_preflight_at_iso
+- failed guardian policy result rejected as guardian_policy_not_ok
+- guardian policy value containing privateKey marker rejected as forbidden_value
+- sendTransaction preflight operation rejected as invalid_preflight_operation
+- planner returning unsignedOnly false rejected as planner_returned_signed_or_sendable_preflight
+- planner throw rejected as planner_failed
+
+Checks passed:
+
+- Stage 4.6 transaction preflight no-send boundary: 3 passing
+- Stage 4.1 through Stage 4.6 smoke: 18 passing
+- Stage 3.10 plus Stage 4.1 through Stage 4.6 smoke: 21 passing
+- Prettier check passed
+- git diff --check clean
+- pasted terminal fragments check clean
+
+Document added:
+
+- docs/gateway/evidence/stage-4-6-transaction-preflight-no-send-boundary-evidence.md
+
+Current conclusion:
+
+Stage 4.6 proves that the future transaction path can be modeled as an unsigned, non-sendable, non-simulated preflight envelope using Stage 4.5 guardian policy evidence and an injected preflight planner, while preserving the no-wallet, no-signing, no-simulation, no-transaction-submission, no-SOL-spend, no-live-send, and no-serialized-transaction invariants.
+
+The next valid stage is Stage 4.7 wallet access boundary.
