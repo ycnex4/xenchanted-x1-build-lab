@@ -30453,3 +30453,109 @@ Stage 4.19 is a handoff planning boundary for future integration with an existin
 Next valid stage:
 
     Stage 4.20 — Stage 4 final no-send closure boundary
+
+---
+
+## Stage 4.20 — Stage 4 Final No-Send Closure Boundary
+
+Runtime reference:
+
+- 69f3c5b Add Stage 4.20 final no-send closure boundary
+
+Evidence:
+
+- docs/gateway/evidence/stage-4-20-final-no-send-closure-boundary-evidence.md
+
+Stage 4.20 closes Stage 4 as a complete no-send and no-SOL readiness chain.
+
+The Stage 4.20 artifact is:
+
+    stage4_final_no_send_closure_result
+
+The Stage 4.20 execution mode is:
+
+    stage4_final_no_send_closure_offline
+
+Raw closure marker:
+
+    stage4_final_no_send_closure
+
+Closed stage range:
+
+    4.1-4.19
+
+Stage 4.20 validates 19 ordered Stage 4 evidence entries from Stage 4.1 through Stage 4.19.
+
+Final pre-closure runtime source:
+
+    0e877f9 Add Stage 4.19 receipt-bound external signer handoff planning boundary
+
+Final pre-closure artifact:
+
+    stage4_receipt_bound_external_signer_handoff_planning_result
+
+Stage 4.20 binds the closure digest to:
+
+- Ordered Stage 4.1 through Stage 4.19 evidence chain.
+- Evidence chain digest.
+- Final runtime commit.
+- Final Stage 4.19 artifact.
+- No-send readiness policy.
+- No-SOL policy.
+- External signer integration boundary.
+- Custody wallet out-of-scope decision.
+
+Stage 4.20 policy:
+
+    closureOnly: true
+    noSendReadinessOnly: true
+    custodyWalletProduct: out_of_scope
+    externalSignerLayer: existing_x1_wallet_or_external_signer
+    localSignerLoading: not_allowed
+    keypairAccess: not_allowed
+    privateKeyAccess: not_allowed
+    runtimeSigning: not_performed
+    runtimeTransactionSubmission: not_allowed
+    runtimeSolSpendAllowed: false
+    liveSendStageRequiredLater: true
+
+Stage 4.20 preserves these invariants:
+
+    stage4Closed: true
+    offlineOrReadOnlyOnly: true
+    noSendChainComplete: true
+    noSolSpendChainComplete: true
+    noLocalCustody: true
+    noLocalSignerLoaded: true
+    noPrivateKeys: true
+    noRuntimeSigning: true
+    noRuntimeSubmission: true
+    noRuntimeSolSpend: true
+    noSerializedTransaction: true
+    noSimulationRequiredForClosure: true
+    noLiveRpcRequiredForClosure: true
+    externalSignerIntegrationOnly: true
+    custodyWalletOutOfScope: true
+    liveSendNotAuthorized: true
+    nextStageRequiresExplicitLiveSendOpening: true
+
+Runtime checks passed:
+
+    Strict Stage 4.20 final marker check: passed
+    Stage 4.20 test: 4 passing
+    Stage 4.19 + Stage 4.20 smoke: 8 passing
+    Stage 3.10 + Stage 4.1 through Stage 4.20 full closure smoke: 75 passing
+    Prettier check: passed
+    git diff --check: clean
+
+Boundary decision:
+
+Stage 4 is closed as a no-send/no-SOL readiness chain.
+
+Stage 4 does not authorize live transaction submission.
+
+Any future live-send work must be opened explicitly in a later stage.
+
+Next valid stage:
+
+    Stage 5.1 — explicit live-send readiness opening boundary
