@@ -26846,3 +26846,156 @@ Document added:
 Current conclusion:
 
 Stage 3.9 proves that an offline monitoring alert draft can be converted into deterministic manual operator actions for ok / warning / critical states without live RPC, notification transport, transaction submission, automatic execution, or secret-bearing material. This becomes the final production-facing draft layer before Stage 3 closure.
+
+
+## Stage 3.10 final closure boundary evidence
+
+Stage 3.10 adds the final Stage 3 closure boundary for the Stage 3 tooling / production surface.
+
+Runtime repo:
+
+- ~/xenchanted-x1-lab/hello-x1
+
+Runtime branch:
+
+- stage-3-10-final-closure-boundary
+
+Runtime commit:
+
+- 76478a7 Add Stage 3.10 final closure boundary
+
+Base runtime commit:
+
+- 66484dd Add Stage 3.9 production runbook boundary
+
+Scope:
+
+- final Stage 3 closure boundary
+- offline / zero-SOL
+- no live RPC
+- no ANCHOR_WALLET
+- no transaction submission
+- no gas / SOL spend
+- no live production execution
+- no notification delivery
+- no automatic operator execution
+- closes Stage 3.1 through Stage 3.9
+- validates evidence presence
+- validates evidence order
+- validates evidence uniqueness
+- validates all entries closed
+- validates all entries offline / zero-SOL
+- validates global Stage 3 invariants
+- rejects forbidden secret-bearing values
+
+New helper:
+
+- tests/helpers/stage3FinalClosurePrototype.ts
+
+New test:
+
+- tests/stage3_final_closure_boundary.test.ts
+
+New artifact type:
+
+- stage3_final_closure_boundary
+
+New evidence entry type:
+
+- Stage3FinalClosureEvidenceEntry
+
+New evidence kind type:
+
+- Stage3FinalClosureEvidenceKind
+
+New closure type:
+
+- Stage3FinalClosureBoundary
+
+New error class:
+
+- Stage3FinalClosureError
+
+New error reason type:
+
+- Stage3FinalClosureErrorReason
+
+New helpers:
+
+- createStage3FinalClosureEvidenceEntriesPrototype
+- createStage3FinalClosureBoundaryPrototype
+- checkStage3FinalClosureBoundaryPrototype
+
+Closed Stage 3 runtime commits:
+
+- Stage 3.1: c307ffd Add Stage 3.1 artifact file IO boundary
+- Stage 3.2: a3d021d Add Stage 3.2 operator report export boundary
+- Stage 3.3: e2f0fd6 Add Stage 3.3 audit bundle export boundary
+- Stage 3.4: e624a43 Add Stage 3.4 audit bundle verifier boundary
+- Stage 3.5: c926ffe Add Stage 3.5 verification receipt boundary
+- Stage 3.6: 97cc765 Add Stage 3.6 operator workflow script boundary
+- Stage 3.7: fd62222 Add Stage 3.7 operator workflow config boundary
+- Stage 3.8: 8129896 Add Stage 3.8 monitoring alert draft boundary
+- Stage 3.9: 66484dd Add Stage 3.9 production runbook boundary
+- Stage 3.10: 76478a7 Add Stage 3.10 final closure boundary
+
+Stage 3.10 invariants:
+
+- noLiveRpc
+- noWallet
+- noTransactions
+- noGasOrSolSpend
+- noSecretBearingMaterial
+- deterministicOfflineArtifacts
+- productionSurfaceOnly
+
+Confirmed successful closure behavior:
+
+- creates final Stage 3 closure boundary from Stage 3.1 through Stage 3.9 evidence
+- artifactType is stage3_final_closure_boundary
+- schemaVersion is 1
+- stage is 3.10
+- executionMode is offline_zero_sol
+- stageRange is 3.1-3.10
+- previousClosedStage is 3.9
+- stage2Closed is true
+- stage3Closed is true
+- evidence entries ordered from 3.1 through 3.9
+- evidence runtime commits preserved
+- evidenceEntryCount is 9
+- closedEntryCount is 9
+- offlineZeroSolEntryCount is 9
+- firstStageId is 3.1
+- lastStageId is 3.9
+- all invariants are true
+- checkStage3FinalClosureBoundaryPrototype returns true
+
+Confirmed rejection behavior:
+
+- missing evidence entry count rejected as invalid_evidence_entries
+- unordered stage entries rejected as invalid_stage_order
+- unclosed stage rejected as unclosed_stage
+- non-offline stage rejected as non_offline_stage
+- bad closedAtIso rejected as invalid_closed_at_iso
+- blank runtimeCommit rejected as invalid_runtime_commit
+- failed invariant rejected as failed_invariant
+- runtimeCommit containing privateKey marker rejected as forbidden_value
+- successful closure stable JSON does not contain secret-bearing fields
+
+Checks passed:
+
+- Stage 3.10 final closure boundary: 3 passing
+- Stage 3.1 through Stage 3.10 smoke: 30 passing
+- Prettier check passed
+- git diff --check clean
+- pasted terminal fragments check clean
+
+Document added:
+
+- docs/gateway/evidence/stage-3-10-final-closure-boundary-evidence.md
+
+Current conclusion:
+
+Stage 3.10 proves that Stage 3.1 through Stage 3.9 form a complete closed tooling / production surface evidence chain, with all entries present, ordered, closed, offline / zero-SOL, invariant-preserving, and free of secret-bearing material.
+
+Stage 3 is closed.
