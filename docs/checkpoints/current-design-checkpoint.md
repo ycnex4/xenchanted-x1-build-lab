@@ -27176,3 +27176,165 @@ Document added:
 Current conclusion:
 
 Stage 4 is open only as a charter / boundary. No live runtime code should be added before Stage 4.1 defines config and redaction rules.
+
+
+## Stage 4.1 redacted live config boundary evidence
+
+Stage 4.1 adds the redacted live config boundary for the Stage 4 live runtime / operations layer.
+
+Runtime repo:
+
+- ~/xenchanted-x1-lab/hello-x1
+
+Runtime branch:
+
+- stage-4-1-redacted-live-config-boundary
+
+Runtime commit:
+
+- 24e0246 Add Stage 4.1 redacted live config boundary
+
+Base runtime commit:
+
+- 76478a7 Add Stage 3.10 final closure boundary
+
+Scope:
+
+- config-only
+- no RPC calls
+- no wallet loading
+- no transaction submission
+- no signing
+- no SOL spend
+- no watcher loops
+- no relayer loops
+- no deployment
+- live config schema
+- live config validation
+- live config redaction
+- live-send rejection
+- forbidden secret-bearing value rejection
+
+New helper:
+
+- tests/helpers/stage4RedactedLiveConfigPrototype.ts
+
+New test:
+
+- tests/stage4_redacted_live_config_boundary.test.ts
+
+New mode type:
+
+- Stage4LiveConfigMode
+
+Modes:
+
+- read_only
+- dry_run
+- live_send
+
+Stage 4.1 accepts:
+
+- read_only
+- dry_run
+
+Stage 4.1 rejects:
+
+- live_send
+
+New config type:
+
+- Stage4RedactedLiveConfig
+
+New public redacted view type:
+
+- Stage4RedactedLiveConfigPublicView
+
+New env shape:
+
+- Stage4RedactedLiveConfigEnv
+
+Supported env keys:
+
+- STAGE4_NETWORK_NAME
+- STAGE4_RPC_URL
+- STAGE4_PROGRAM_ID
+- STAGE4_PAYER_PUBLIC_KEY
+- STAGE4_MODE
+- STAGE4_WALLET_PATH
+- STAGE4_GUARDIAN_PUBLIC_KEYS
+
+New error class:
+
+- Stage4RedactedLiveConfigError
+
+New error reason type:
+
+- Stage4RedactedLiveConfigErrorReason
+
+New helpers:
+
+- parseStage4RedactedLiveConfigEnvPrototype
+- redactStage4LiveConfigPrototype
+- checkStage4RedactedLiveConfigPrototype
+
+Confirmed successful behavior:
+
+- parses read-only live config shape
+- executionMode is config_only_no_rpc
+- no RPC call is made
+- no wallet is loaded
+- networkName is preserved
+- rpcUrl is preserved internally
+- programId is preserved
+- payerPublicKey is preserved
+- mode is read_only
+- walletPath is preserved internally
+- guardianPublicKeys are parsed
+- checkStage4RedactedLiveConfigPrototype returns true
+
+Confirmed redaction behavior:
+
+- creates public redacted config view
+- rpcUrl is replaced by <redacted:rpc_url>
+- walletPath is replaced by <redacted:wallet_path>
+- guardian keys are represented only by guardianPublicKeyCount
+- stable public JSON does not contain wallet path
+- stable public JSON does not contain secret-bearing markers
+
+Confirmed rejection behavior:
+
+- missing STAGE4_RPC_URL rejected as missing_env_key
+- malformed networkName rejected as invalid_network_name
+- non-HTTPS RPC URL rejected as invalid_rpc_url
+- malformed programId rejected as invalid_program_id
+- malformed payerPublicKey rejected as invalid_payer_public_key
+- malformed mode rejected as invalid_mode
+- live_send mode rejected as live_send_not_allowed
+- wallet path traversal rejected as invalid_wallet_path
+- RPC URL containing RPC_API_KEY marker rejected as forbidden_secret_value
+- wallet path containing privateKey marker rejected as forbidden_secret_value
+- malformed guardian public key list rejected as invalid_guardian_public_keys
+
+Implementation fix:
+
+- forbidden marker matching is now case-insensitive
+- this fixed the contains-privateKey-marker rejection path
+
+Checks passed:
+
+- Stage 4.1 redacted live config boundary: 3 passing
+- Stage 3.10 plus Stage 4.1 smoke: 6 passing
+- Prettier check passed
+- git diff --check clean
+- pasted terminal fragments check clean
+
+Document added:
+
+- docs/gateway/evidence/stage-4-1-redacted-live-config-boundary-evidence.md
+
+Current conclusion:
+
+Stage 4.1 proves that live configuration can be parsed, validated, classified, and redacted before any RPC call, wallet loading, signing, transaction submission, or SOL-spending path is introduced.
+
+The next valid stage is Stage 4.2 read-only RPC connectivity boundary.
