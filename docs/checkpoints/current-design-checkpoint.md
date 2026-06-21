@@ -28601,3 +28601,206 @@ Current conclusion:
 Stage 4.8 proves that gateway fee policy can be represented offline as a fixed manually configured service fee with fee recipient, gross amount, fee amount, net amount, fee quote deadline, and guardian set version binding.
 
 The next valid stage is Stage 4.9 guardian approval message with fee bound into message.
+
+
+## Stage 4.9 guardian fee-bound approval message boundary evidence
+
+Stage 4.9 adds the guardian approval message with gateway fee bound into the message digest.
+
+Runtime repo:
+
+- ~/xenchanted-x1-lab/hello-x1
+
+Runtime branch:
+
+- stage-4-9-guardian-fee-bound-message-boundary
+
+Runtime commit:
+
+- d4a7060 Add Stage 4.9 guardian fee-bound approval message boundary
+
+Base runtime commit:
+
+- a960c16 Add Stage 4.8 gateway fee policy boundary
+
+Scope:
+
+- guardian fee-bound approval message boundary
+- fee-bound message digest boundary
+- canonical field order boundary
+- fee binding boundary
+- guardianSetVersion-bound message boundary
+- offline model boundary
+- no live RPC
+- no wallet loading
+- no private keys
+- no signing
+- no signature verification
+- no transaction submission
+- no SOL spend
+
+Message type:
+
+- STAGE4_GUARDIAN_FEE_BOUND_APPROVAL_MESSAGE
+
+Result artifact:
+
+- stage4_guardian_fee_bound_approval_message_result
+
+Execution mode:
+
+- guardian_approval_message_fee_bound_offline
+
+Digest algorithm:
+
+- sha256_model_hash
+
+Canonical field order:
+
+- messageType
+- schemaVersion
+- stage
+- guardianSetVersion
+- routeId
+- feeQuoteId
+- feeMode
+- feeAsset
+- feeRecipient
+- grossAmount
+- feeAmount
+- netAmount
+- feeQuoteExpiresAtIso
+
+Fee binding:
+
+- routeId
+- feeQuoteId
+- feeMode
+- feeAsset
+- feeRecipient
+- grossAmount
+- feeAmount
+- netAmount
+- feeQuoteExpiresAtIso
+
+New helper:
+
+- tests/helpers/stage4GuardianFeeBoundApprovalMessagePrototype.ts
+
+New test:
+
+- tests/stage4_guardian_fee_bound_approval_message_boundary.test.ts
+
+New result type:
+
+- Stage4GuardianFeeBoundApprovalMessageResult
+
+New error class:
+
+- Stage4GuardianFeeBoundApprovalMessageError
+
+New helpers:
+
+- buildStage4GuardianFeeBoundApprovalMessagePreimagePrototype
+- computeStage4GuardianFeeBoundApprovalMessageDigestPrototype
+- assertStage4GuardianFeeBoundApprovalMessageOperationPrototype
+- runStage4GuardianFeeBoundApprovalMessagePrototype
+- checkStage4GuardianFeeBoundApprovalMessageResultPrototype
+
+Stage 4.9 policy object:
+
+- approvalMessageOnly: true
+- feeFieldsRequired: true
+- grossAmountBound: true
+- feeAmountBound: true
+- netAmountBound: true
+- feeRecipientBound: true
+- feeQuoteDeadlineBound: true
+- guardianSetVersionBound: 1
+- signing: not_performed
+- signatureVerification: not_performed
+- walletLoading: not_allowed
+- transactionSubmission: not_allowed
+- solSpendAllowed: false
+
+Stage 4.9 invariants:
+
+- offlineOnly: true
+- feeBoundIntoMessage: true
+- digestDependsOnFeeAmount: true
+- digestDependsOnNetAmount: true
+- digestDependsOnFeeRecipient: true
+- digestDependsOnDeadline: true
+- boundToGuardianSetVersion: true
+- noWalletLoaded: true
+- noSigning: true
+- noSignatureVerification: true
+- noTransactionsSubmitted: true
+- noSolSpend: true
+
+Confirmed successful behavior:
+
+- builds an offline guardian approval message from a valid Stage 4.8 gateway fee policy result
+- sourceFeePolicyStage is 4.8
+- sourceFeePolicyOk is true
+- guardianSetVersion is 1
+- canonical field order is fixed
+- feeBoundMessageDigestAlgorithm is sha256_model_hash
+- feeBoundMessageDigest is produced
+- fee binding includes routeId
+- fee binding includes feeQuoteId
+- fee binding includes feeMode
+- fee binding includes feeAsset
+- fee binding includes feeRecipient
+- fee binding includes grossAmount
+- fee binding includes feeAmount
+- fee binding includes netAmount
+- fee binding includes feeQuoteExpiresAtIso
+- checkStage4GuardianFeeBoundApprovalMessageResultPrototype returns true
+
+Confirmed digest mutation behavior:
+
+- changing fee amount changes the digest
+- changing net amount changes the digest
+- changing fee asset changes the digest
+- changing fee quote id changes the digest
+- changing fee quote deadline changes the digest
+
+Confirmed safe output behavior:
+
+- fee-bound approval message result JSON does not contain wallet path
+- fee-bound approval message result JSON does not contain private key markers
+- fee-bound approval message result JSON does not contain signing methods
+- fee-bound approval message result JSON does not contain transaction submission methods
+- fee-bound approval message result JSON does not contain serialized transaction marker
+
+Confirmed rejection behavior:
+
+- bad builtAtIso rejected as invalid_built_at_iso
+- expired fee quote rejected as fee_quote_expired_at_build_time
+- failed fee policy rejected as fee_policy_not_ok
+- wrong expected digest rejected as invalid_expected_digest
+- feeQuoteId containing privateKey marker rejected as forbidden_value
+- signMessage operation rejected as invalid_approval_message_operation
+
+Checks passed:
+
+- Stage 4.9 guardian fee-bound approval message boundary: 4 passing
+- Stage 4.1 through Stage 4.9 smoke: 29 passing
+- Stage 3.10 plus Stage 4.1 through Stage 4.9 smoke: 32 passing
+- Prettier check passed
+- git diff --check clean
+- pasted terminal fragments check clean
+- exact safety marker verification passed
+
+Document added:
+
+- docs/gateway/evidence/stage-4-9-guardian-fee-bound-message-boundary-evidence.md
+
+Current conclusion:
+
+Stage 4.9 proves that gateway fee fields are bound into the guardian approval message digest.
+
+This prevents applying a different fee recipient, fee amount, net amount, fee quote id, fee asset, route id, guardian set version, or deadline after guardian approval.
+
+The next valid stage is Stage 4.10 guardian fee-bound approval verification boundary.
