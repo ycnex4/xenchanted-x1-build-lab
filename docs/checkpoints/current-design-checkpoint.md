@@ -26116,3 +26116,130 @@ Document added:
 Current conclusion:
 
 Stage 3.4 proves that an exported audit bundle JSON file can be read through Stage 3.1 file IO and verified through the already-proven Stage 2.36 serialized audit bundle verifier model. This becomes the foundation for later verifier CLI commands, verification receipt generation, and production workflow packaging.
+
+
+## Stage 3.5 verification receipt boundary evidence
+
+Stage 3.5 adds the verification receipt boundary for the Stage 3 tooling / production surface.
+
+Runtime repo:
+
+- ~/xenchanted-x1-lab/hello-x1
+
+Runtime branch:
+
+- stage-3-5-verification-receipt-boundary
+
+Runtime commit:
+
+- c926ffe Add Stage 3.5 verification receipt boundary
+
+Base runtime commit:
+
+- e624a43 Add Stage 3.4 audit bundle verifier boundary
+
+Scope:
+
+- verification receipt boundary
+- offline / zero-SOL
+- no live RPC
+- no ANCHOR_WALLET
+- no transaction submission
+- no gas / SOL spend
+- no CLI command yet
+- uses Stage 3.3 audit bundle export helper for flow setup
+- uses Stage 3.4 audit bundle verifier helper
+- uses Stage 2.37 verification receipt model
+- uses Stage 3.1 artifact file IO model
+- creates receipt only from successful verification result
+- exports receipt JSON to disk
+- reads receipt JSON back from disk
+- validates through Stage 2 receipt deserializer
+- verifies through Stage 2 receipt verifier
+- verifies stable receipt round trip
+
+Exact Stage 2.37 test file:
+
+- tests/stage2_operator_audit_bundle_verification_receipt_boundary.test.ts
+
+New helper:
+
+- tests/helpers/stage3VerificationReceiptPrototype.ts
+
+New test:
+
+- tests/stage3_verification_receipt_boundary.test.ts
+
+Stage 2 dependency:
+
+- createStage2RelayerOperatorAuditBundleVerificationReceiptPrototype
+- deserializeStage2RelayerOperatorAuditBundleVerificationReceiptPrototype
+- verifyStage2RelayerOperatorAuditBundleVerificationReceiptPrototype
+- stage2_relayer_operator_audit_bundle_verification_receipt artifact type
+
+Stage 3.1 dependency:
+
+- writeStage3ArtifactFilePrototype
+- readStage3ArtifactFilePrototype
+- serializeStage3ArtifactFileJsonPrototype
+
+Stage 3.4 dependency:
+
+- verifyStage3AuditBundleFilePrototype
+
+New result types:
+
+- Stage3VerificationReceiptExportResult
+- Stage3VerificationReceiptReadResult
+
+New helpers:
+
+- createStage3VerificationReceiptArtifactPrototype
+- exportStage3VerificationReceiptArtifactPrototype
+- readStage3VerificationReceiptArtifactPrototype
+- verifyStage3VerificationReceiptArtifactPrototype
+
+Confirmed successful receipt behavior:
+
+- valid Stage 2.35 audit export bundle exported through Stage 3.3
+- bundle verified through Stage 3.4
+- receipt created from successful verification result
+- receipt exported through Stage 3.1 file IO
+- stable pretty JSON written to disk
+- receipt JSON read back from disk
+- parsed receipt equals original receipt
+- Stage 2 receipt deserializer accepts exported JSON
+- Stage 2 receipt verifier accepts reloaded receipt
+- stable receipt round-trip verification returns true
+- stableJson does not contain secret-bearing fields
+
+Confirmed rejection behavior:
+
+- failed verification result rejected
+- invalid receipt createdAtIso rejected
+- blank verifierId rejected
+- accidental overwrite rejected by default
+- explicit overwrite allowed with overwrite: true
+- wrong receipt artifactType rejected
+- malformed digestHex rejected
+- invalid JSON rejected during read
+- invalid JSON verification returns false
+- path escape rejected
+
+Checks passed:
+
+- Stage 3.5 verification receipt boundary: 3 passing
+- Stage 2.37 plus Stage 3.5 smoke: 6 passing
+- Stage 3.3 plus Stage 3.4 plus Stage 3.5 smoke: 9 passing
+- Stage 3.1 plus Stage 3.2 plus Stage 3.3 plus Stage 3.4 plus Stage 3.5 smoke: 15 passing
+- Prettier check passed
+- git diff --check clean
+- pasted terminal fragments check clean
+
+Document added:
+
+- docs/gateway/evidence/stage-3-5-verification-receipt-boundary-evidence.md
+
+Current conclusion:
+
+Stage 3.5 proves that a successful Stage 3.4 audit bundle verification result can be converted into a Stage 2.37 verification receipt, exported to disk, read back, validated, and verified as a stable Stage 3 file IO round trip. This becomes the foundation for later receipt CLI commands and production workflow packaging.
