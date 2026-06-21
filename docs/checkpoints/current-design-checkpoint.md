@@ -30334,3 +30334,122 @@ The project is not building a standalone custody wallet here. The message plan i
 Next valid stage:
 
     Stage 4.19 — receipt-bound external signer handoff planning boundary
+
+---
+
+## Stage 4.19 — Receipt-Bound External Signer Handoff Planning Boundary
+
+Runtime reference:
+
+- 0e877f9 Add Stage 4.19 receipt-bound external signer handoff planning boundary
+
+Evidence:
+
+- docs/gateway/evidence/stage-4-19-receipt-bound-external-signer-handoff-planning-boundary-evidence.md
+
+Stage 4.19 adds the receipt-bound external signer handoff planning boundary.
+
+Stage 4.18 planned the runtime message and account mapping. Stage 4.19 models the handoff contract for a future existing X1 wallet or external signer interface.
+
+The project is not building a standalone custody wallet product here. The protocol runtime remains non-custodial and does not access local signing material.
+
+The Stage 4.19 artifact is:
+
+    stage4_receipt_bound_external_signer_handoff_planning_result
+
+The Stage 4.19 execution mode is:
+
+    receipt_bound_external_signer_handoff_planning_offline
+
+Stage 4.19 consumes the Stage 4.18 artifact:
+
+    stage4_receipt_bound_transaction_message_planning_result
+
+Raw handoff plan markers:
+
+    receipt_bound_external_signer_payload_plan
+    receipt_bound_external_signer_interface_plan
+    x1_external_wallet_receipt_bound_message_plan
+    existing_x1_wallet_or_external_signer
+    out_of_scope
+
+Stage 4.19 binds the handoff plan to:
+
+- Source message planning digest.
+- Source no-sign assembly digest.
+- Source assembly design digest.
+- Source receipt digest.
+- Source verification result digest.
+- Instruction data digest.
+- Exact instruction name.
+- Program id.
+- Payer public key.
+- Network name.
+- Payload digest.
+- External signer interface plan digest.
+
+The exact instruction name remains:
+
+    mint_xxxl_from_receipt_bound_gateway_message
+
+External signer must verify:
+
+    networkName
+    programId
+    payerPublicKey
+    instructionName
+    sourceReceiptDigest
+    sourceResultDigest
+    instructionDataDigest
+    accountMappingDigest
+    instructionMessagePlanDigest
+    messagePlanningDigest
+
+Stage 4.19 preserves these invariants:
+
+    offlineOnly: true
+    handoffPlanningOnly: true
+    sourceMessagePlanningStage418Bound: true
+    sourceMessagePlanningDigestBound: true
+    sourceNoSignAssemblyDigestBound: true
+    sourceAssemblyDesignDigestBound: true
+    sourceReceiptDigestBound: true
+    sourceResultDigestBound: true
+    instructionDataDigestBound: true
+    instructionNameBound: true
+    accountMappingDigestBound: true
+    instructionMessagePlanDigestBound: true
+    externalSignerPayloadDigestBound: true
+    externalSignerInterfacePlanDigestBound: true
+    externalSignerHandoffDigestBound: true
+    externalSignerOnly: true
+    noCustodyWalletProduct: true
+    noRuntimeCustody: true
+    noLocalSignerLoaded: true
+    noKeypairAccess: true
+    noPrivateKeys: true
+    noRuntimeSigning: true
+    noRuntimeSubmission: true
+    noRuntimeSolSpend: true
+    noSerializedTransaction: true
+    noSimulation: true
+    noLiveRpc: true
+
+Runtime checks passed:
+
+    Strict Stage 4.19 marker check: passed
+    Stage 4.19 test: 4 passing
+    Stage 4.18 + Stage 4.19 smoke: 8 passing
+    Stage 3.10 + Stage 4.1 through Stage 4.19 smoke: 71 passing
+    Prettier check: passed
+    git diff --check: clean
+
+Boundary decision:
+
+Stage 4.19 does not load a local signer, access keypairs, access private keys, sign inside the runtime model, submit transactions, spend SOL, output serialized transactions, simulate, or call live RPC.
+
+Stage 4.19 is a handoff planning boundary for future integration with an existing X1 wallet or external signer layer.
+
+Next valid stage:
+
+    Stage 4.20 — Stage 4 final no-send closure boundary
