@@ -27338,3 +27338,171 @@ Current conclusion:
 Stage 4.1 proves that live configuration can be parsed, validated, classified, and redacted before any RPC call, wallet loading, signing, transaction submission, or SOL-spending path is introduced.
 
 The next valid stage is Stage 4.2 read-only RPC connectivity boundary.
+
+
+## Stage 4.2 read-only RPC connectivity boundary evidence
+
+Stage 4.2 adds the read-only RPC connectivity boundary for the Stage 4 live runtime / operations layer.
+
+Runtime repo:
+
+- ~/xenchanted-x1-lab/hello-x1
+
+Runtime branch:
+
+- stage-4-2-read-only-rpc-connectivity-boundary
+
+Runtime commit:
+
+- eb6ef26 Add Stage 4.2 read-only RPC connectivity boundary
+
+Base runtime commit:
+
+- 24e0246 Add Stage 4.1 redacted live config boundary
+
+Scope:
+
+- read-only RPC boundary
+- injected transport
+- no wallet loading
+- no signing
+- no transaction submission
+- no SOL spend
+- no watcher loops
+- no relayer loops
+- no deployment
+- read-only method allowlist
+- redacted output
+- forbidden secret-bearing value rejection
+- non-read-only method rejection
+
+Allowed read-only methods:
+
+- getHealth
+- getVersion
+- getAccountInfo
+- getBalance
+
+Rejected example method:
+
+- sendTransaction
+
+New helper:
+
+- tests/helpers/stage4ReadOnlyRpcConnectivityPrototype.ts
+
+New test:
+
+- tests/stage4_read_only_rpc_connectivity_boundary.test.ts
+
+New method type:
+
+- Stage4ReadOnlyRpcMethod
+
+New check code type:
+
+- Stage4ReadOnlyRpcCheckCode
+
+New transport request type:
+
+- Stage4ReadOnlyRpcTransportRequest
+
+New transport response type:
+
+- Stage4ReadOnlyRpcTransportResponse
+
+New transport type:
+
+- Stage4ReadOnlyRpcTransport
+
+New check type:
+
+- Stage4ReadOnlyRpcCheck
+
+New result type:
+
+- Stage4ReadOnlyRpcConnectivityResult
+
+New error class:
+
+- Stage4ReadOnlyRpcConnectivityError
+
+New error reason type:
+
+- Stage4ReadOnlyRpcConnectivityErrorReason
+
+New helpers:
+
+- assertStage4ReadOnlyRpcMethodPrototype
+- runStage4ReadOnlyRpcConnectivityPrototype
+- createStage4FetchReadOnlyRpcTransportPrototype
+- checkStage4ReadOnlyRpcConnectivityResultPrototype
+
+Result artifact:
+
+- stage4_read_only_rpc_connectivity_result
+
+Execution mode:
+
+- read_only_rpc_no_wallet
+
+Stage 4.2 invariants:
+
+- noWalletLoaded: true
+- noSigning: true
+- noTransactions: true
+- noSolSpend: true
+- readOnlyRpcOnly: true
+
+Confirmed successful behavior:
+
+- runs only read-only RPC checks
+- uses injected transport
+- does not load wallet
+- does not sign
+- does not submit transactions
+- does not spend SOL
+- calls only getHealth, getVersion, getAccountInfo, and getBalance
+- preserves networkName
+- preserves programId
+- preserves payerPublicKey
+- redacts rpcUrl in result
+- redacts walletPath in public config view
+- stores guardian keys only as guardianPublicKeyCount
+- all checks are ok
+- all invariants are true
+- checkStage4ReadOnlyRpcConnectivityResultPrototype returns true
+
+Confirmed redacted output behavior:
+
+- public result JSON does not contain wallet path
+- public result JSON does not contain secret-bearing markers
+- public result JSON does not contain sendTransaction
+
+Confirmed rejection behavior:
+
+- bad checkedAtIso rejected as invalid_checked_at_iso
+- live_send config rejected as live_send_not_allowed
+- dry_run config rejected as invalid_config
+- RPC URL containing RPC API key marker rejected as forbidden_config_value
+- sendTransaction method rejected as invalid_rpc_method
+- transport throw rejected as rpc_transport_failed
+
+Checks passed:
+
+- Stage 4.2 read-only RPC connectivity boundary: 3 passing
+- Stage 4.1 plus Stage 4.2 smoke: 6 passing
+- Stage 3.10 plus Stage 4.1 plus Stage 4.2 smoke: 9 passing
+- Prettier check passed
+- git diff --check clean
+- pasted terminal fragments check clean
+
+Document added:
+
+- docs/gateway/evidence/stage-4-2-read-only-rpc-connectivity-boundary-evidence.md
+
+Current conclusion:
+
+Stage 4.2 proves that read-only RPC connectivity can be modeled through an explicit allowlist of safe methods, an injected transport boundary, redacted output, and invariant checks that prevent wallet loading, signing, transaction submission, or SOL-spending paths.
+
+The next valid stage is Stage 4.3 watcher runtime read-only observation boundary.
