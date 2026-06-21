@@ -27051,3 +27051,128 @@ Stage 4 warning:
 Conclusion:
 
 Stage 3 is closed. The next valid stage is Stage 4, a live runtime / operations layer.
+
+
+## Stage 4 live runtime charter
+
+Stage 4 begins after Stage 3 closure and Theo review.
+
+Theo confirmed that Stage 4 is not Stage 3.11.
+
+Stage 4 is a different class of work.
+
+Stage 3 was:
+
+- offline tooling / production surface
+
+Stage 4 is:
+
+- live runtime / operations layer
+
+Stage 4 expected domain:
+
+- watcher runtime
+- relayer runtime
+- guardian operations
+- deploy pipeline
+- live configuration handling
+- live RPC access
+- transaction submission boundaries
+- operator safety procedures
+- incident / rollback procedures
+- evidence capture for live runs
+
+Stage 4 introduces risk classes intentionally excluded from Stage 3:
+
+- live RPC
+- wallet access
+- signer / guardian key handling
+- SOL balance requirements
+- transaction submission
+- deployment actions
+- live watcher loops
+- live relayer loops
+- operational monitoring
+- production incident response
+
+Hard Stage 4 safety rule:
+
+- no private key, seed phrase, wallet JSON, RPC API key, guardian secret, deployer secret, or signer material may be pasted into chat
+- real values must not be printed
+- real values must not be committed
+- real values must not be copied into docs, logs, issue text, terminal transcripts, or chat
+
+Stage 4 logging policy:
+
+Allowed logging:
+
+- config key names
+- redacted values
+- public addresses
+- public program IDs
+- public transaction signatures
+- non-sensitive status
+- non-sensitive balances
+- non-sensitive error summaries
+
+Disallowed logging:
+
+- private keys
+- mnemonic phrases
+- seed phrases
+- full wallet JSON
+- RPC API keys
+- bearer tokens
+- guardian signing secrets
+- deployer secrets
+- raw environment dumps
+- unredacted .env files
+
+Stage 4 layering rule:
+
+- proceed from least dangerous to most dangerous
+- classify every live-capable stage as read-only, dry-run, live-send capable, or deployment capable
+- no live-send command should be run unless its boundary is documented first
+
+Recommended Stage 4 ordering:
+
+1. charter / boundary
+2. redacted live config schema
+3. read-only RPC connectivity
+4. watcher runtime read-only observation
+5. relayer dry-run / no-send path
+6. guardian operation policy
+7. transaction preflight boundary
+8. controlled live testnet submission
+9. deployment pipeline rehearsal
+10. production readiness review
+
+Stage 4.0:
+
+- charter boundary
+- documentation only
+- no RPC calls
+- no wallet loading
+- no transaction submission
+- no signer usage
+- no SOL spending
+- no deployment scripts
+- no watcher loops
+- no relayer loops
+
+Known public X1 testnet context:
+
+- RPC: https://rpc.testnet.x1.xyz
+- Program id: 9tCJe4M1MJQtE1gDxNYNE75fNUGpSAKiX56rgUMR8984
+
+Next concrete work:
+
+- Stage 4.1 redacted live config boundary
+
+Document added:
+
+- docs/gateway/stage-4-live-runtime-charter.md
+
+Current conclusion:
+
+Stage 4 is open only as a charter / boundary. No live runtime code should be added before Stage 4.1 defines config and redaction rules.
