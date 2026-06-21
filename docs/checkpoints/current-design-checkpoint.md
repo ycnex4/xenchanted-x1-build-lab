@@ -28263,3 +28263,166 @@ Current conclusion:
 Stage 4.6 proves that the future transaction path can be modeled as an unsigned, non-sendable, non-simulated preflight envelope using Stage 4.5 guardian policy evidence and an injected preflight planner, while preserving the no-wallet, no-signing, no-simulation, no-transaction-submission, no-SOL-spend, no-live-send, and no-serialized-transaction invariants.
 
 The next valid stage is Stage 4.7 wallet access boundary.
+
+
+## Stage 4.7 fixed guardian set quorum boundary evidence
+
+Stage 4.7 adds the fixed guardian set quorum boundary for the Stage 4 live runtime / operations layer.
+
+Runtime repo:
+
+- ~/xenchanted-x1-lab/hello-x1
+
+Runtime branch:
+
+- stage-4-7-fixed-guardian-set-quorum-boundary
+
+Runtime commit:
+
+- f63397f Add Stage 4.7 fixed guardian set quorum boundary
+
+Base runtime commit:
+
+- 5c967c0 Add Stage 4.6 transaction preflight no-send boundary
+
+Scope:
+
+- fixed guardian set quorum boundary
+- 5 guardian boundary
+- 3-of-5 quorum boundary
+- guardian set version boundary
+- duplicate approval rejection boundary
+- unknown guardian rejection boundary
+- public-keys-only boundary
+- offline model boundary
+- no live RPC
+- no wallet loading
+- no private keys
+- no signing
+- no transaction submission
+- no SOL spend
+
+Fixed guardian model:
+
+- guardianCount: 5
+- quorumThreshold: 3
+- guardianSetVersion: 1
+
+Confirmed quorum behavior:
+
+- 2-of-5 does not reach quorum
+- 3-of-5 reaches quorum
+- 4-of-5 reaches quorum
+- 5-of-5 reaches quorum
+
+New helper:
+
+- tests/helpers/stage4FixedGuardianSetQuorumPrototype.ts
+
+New test:
+
+- tests/stage4_fixed_guardian_set_quorum_boundary.test.ts
+
+New approval type:
+
+- Stage4FixedGuardianApproval
+
+New result type:
+
+- Stage4FixedGuardianSetQuorumResult
+
+New error class:
+
+- Stage4FixedGuardianSetQuorumError
+
+New helpers:
+
+- assertStage4FixedGuardianQuorumOperationPrototype
+- runStage4FixedGuardianSetQuorumPrototype
+- checkStage4FixedGuardianSetQuorumResultPrototype
+
+Result artifact:
+
+- stage4_fixed_guardian_set_quorum_result
+
+Execution mode:
+
+- fixed_guardian_set_quorum_policy
+
+Stage 4.7 policy object:
+
+- fixedGuardianCount: 5
+- fixedQuorumThreshold: 3
+- approvalIdentityMode: guardian_public_key
+- duplicateApprovalHandling: count_once
+- unknownGuardianHandling: reject
+- guardianSetVersionRequired: 1
+- privateKeyAccess: not_allowed
+- signing: not_performed
+- transactionSubmission: not_allowed
+
+Stage 4.7 invariants:
+
+- exactlyFiveGuardians: true
+- threeOfFiveQuorum: true
+- publicKeysOnly: true
+- noDuplicateApprovalCounting: true
+- noUnknownGuardianAccepted: true
+- noPrivateKeys: true
+- noSigning: true
+- noTransactionsSubmitted: true
+
+Confirmed successful behavior:
+
+- accepts exactly 5 guardians
+- requires 3-of-5 quorum
+- uses public keys only
+- fixes guardianSetVersion to 1
+- confirms guardianCount is 5
+- confirms quorumThreshold is 3
+- confirms 3 unique known approvals reach quorum
+- confirms result is ok when quorum is reached
+- preserves policy-only behavior
+- does not perform signature verification
+- does not access private keys
+- does not sign
+- does not submit transactions
+- checkStage4FixedGuardianSetQuorumResultPrototype returns true
+
+Confirmed safe output behavior:
+
+- fixed guardian quorum result JSON does not contain wallet path
+- fixed guardian quorum result JSON does not contain private key markers
+- fixed guardian quorum result JSON does not contain signing methods
+- fixed guardian quorum result JSON does not contain transaction submission methods
+
+Confirmed rejection behavior:
+
+- malformed evaluatedAtIso rejected as invalid_evaluated_at_iso
+- failed guardian policy rejected as guardian_policy_not_ok
+- guardian set with 4 keys rejected as invalid_guardian_set
+- quorum threshold 2 rejected as invalid_quorum_threshold
+- guardian set version 2 rejected as invalid_guardian_set_version
+- duplicate approval rejected as duplicate_approval
+- unknown guardian rejected as unknown_guardian
+- approval value containing privateKey marker rejected as forbidden_value
+- signTransaction operation rejected as invalid_quorum_operation
+
+Checks passed:
+
+- Stage 4.7 fixed guardian set quorum boundary: 4 passing
+- Stage 4.1 through Stage 4.7 smoke: 22 passing
+- Stage 3.10 plus Stage 4.1 through Stage 4.7 smoke: 25 passing
+- Prettier check passed
+- git diff --check clean
+- pasted terminal fragments check clean
+
+Document added:
+
+- docs/gateway/evidence/stage-4-7-fixed-guardian-set-quorum-boundary-evidence.md
+
+Current conclusion:
+
+Stage 4.7 proves that a fixed 5 guardian / 3-of-5 quorum model can be represented offline with guardian set versioning, duplicate approval rejection, unknown guardian rejection, public-keys-only policy, and no-secret/no-signing/no-transaction invariants.
+
+The next valid stage is Stage 4.8 gateway fee policy boundary.
