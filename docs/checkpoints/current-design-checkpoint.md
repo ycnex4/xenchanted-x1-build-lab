@@ -25997,3 +25997,122 @@ Document added:
 Current conclusion:
 
 Stage 3.3 proves that a Stage 2.35 audit export bundle can be exported to disk, read back, validated by the Stage 2 artifact deserializer, verified by the Stage 2 bundle verifier, and verified as a stable Stage 3 file IO round trip. This becomes the foundation for later audit bundle export commands, verifier commands, verification receipts, and production workflow packaging.
+
+
+## Stage 3.4 audit bundle verifier boundary evidence
+
+Stage 3.4 adds the audit bundle verifier boundary for the Stage 3 tooling / production surface.
+
+Runtime repo:
+
+- ~/xenchanted-x1-lab/hello-x1
+
+Runtime branch:
+
+- stage-3-4-audit-bundle-verifier-boundary
+
+Runtime commit:
+
+- e624a43 Add Stage 3.4 audit bundle verifier boundary
+
+Base runtime commit:
+
+- e2f0fd6 Add Stage 3.3 audit bundle export boundary
+
+Scope:
+
+- audit bundle verifier boundary
+- offline / zero-SOL
+- no live RPC
+- no ANCHOR_WALLET
+- no transaction submission
+- no gas / SOL spend
+- no CLI command yet
+- uses Stage 3.1 artifact file IO read model
+- uses Stage 3.3 audit bundle export model for flow continuity
+- uses Stage 2.36 serialized audit bundle verifier model
+- reads exported audit bundle JSON from disk
+- passes stable JSON into Stage 2.36 verifier
+- returns Stage 2.36 compact verification result
+- does not redefine the verifier result schema
+
+New helper:
+
+- tests/helpers/stage3AuditBundleVerifierPrototype.ts
+
+New test:
+
+- tests/stage3_audit_bundle_verifier_boundary.test.ts
+
+Stage 2 dependency:
+
+- verifySerializedStage2RelayerOperatorAuditBundlePrototype
+- stage2_relayer_operator_audit_bundle_verification_result artifact type
+
+Stage 3.1 dependency:
+
+- readStage3ArtifactFilePrototype
+
+Stage 3.3 dependency:
+
+- exportStage3AuditBundleArtifactPrototype
+
+New result type:
+
+- Stage3AuditBundleFileVerificationResult
+
+New helpers:
+
+- verifyStage3AuditBundleFilePrototype
+- checkStage3AuditBundleFileVerificationPrototype
+
+Confirmed successful verification behavior:
+
+- valid Stage 2.35 audit export bundle exported through Stage 3.3
+- exported bundle file read through Stage 3.1 file IO
+- stable JSON passed into Stage 2.36 verifier
+- verification result equals direct Stage 2.36 verifier output
+- ok: true result returned
+- bundleArtifactType preserved
+- stageRange preserved
+- runtimeCommit preserved
+- digestHex preserved
+- reportCount preserved
+- firstRunId preserved
+- lastRunId preserved
+- checkpointCreatedAtIso preserved
+- bundleCreatedAtIso preserved
+- boolean verification check returns true
+- stableJson does not contain secret-bearing fields
+
+Confirmed tampered bundle behavior:
+
+- wrong artifactType returns invalid_artifact_type
+- digest mismatch returns digest_mismatch
+- checkpoint mismatch returns checkpoint_mismatch
+- boolean verification check returns false for failed verifier result
+
+Confirmed invalid file / verifier input behavior:
+
+- invalid verifiedAtIso rejected
+- invalid JSON rejected during Stage 3.1 file IO read
+- invalid JSON verification returns false
+- path escape rejected
+
+Checks passed:
+
+- Stage 3.4 audit bundle verifier boundary: 3 passing
+- Stage 3.1 plus Stage 3.3 plus Stage 3.4 smoke: 9 passing
+- Stage 2.36 plus Stage 3.3 plus Stage 3.4 smoke: 9 passing
+- Stage 3.1 plus Stage 3.2 plus Stage 3.3 plus Stage 3.4 smoke: 12 passing
+- Prettier check passed
+- git diff --check clean
+- pasted terminal fragments check clean
+
+Document added:
+
+- docs/gateway/evidence/stage-3-4-audit-bundle-verifier-boundary-evidence.md
+
+Current conclusion:
+
+Stage 3.4 proves that an exported audit bundle JSON file can be read through Stage 3.1 file IO and verified through the already-proven Stage 2.36 serialized audit bundle verifier model. This becomes the foundation for later verifier CLI commands, verification receipt generation, and production workflow packaging.
