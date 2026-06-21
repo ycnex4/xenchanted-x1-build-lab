@@ -25756,3 +25756,118 @@ Document added:
 Current conclusion:
 
 Stage 3.1 establishes the first Stage 3 production/tooling boundary. It provides the local deterministic file IO foundation for future export, verify, receipt, and operator workflow commands.
+
+
+## Stage 3.2 operator report export boundary evidence
+
+Stage 3.2 adds the operator report export boundary for the Stage 3 tooling / production surface.
+
+Runtime repo:
+
+- ~/xenchanted-x1-lab/hello-x1
+
+Runtime branch:
+
+- stage-3-2-operator-report-export-boundary
+
+Runtime commit:
+
+- a3d021d Add Stage 3.2 operator report export boundary
+
+Base runtime commit:
+
+- c307ffd Add Stage 3.1 artifact file IO boundary
+
+Scope:
+
+- operator report export boundary
+- offline / zero-SOL
+- no live RPC
+- no ANCHOR_WALLET
+- no transaction submission
+- no gas / SOL spend
+- no CLI command yet
+- uses Stage 2.31 operator report artifact model
+- uses Stage 3.1 artifact file IO model
+- exports operator report JSON to disk
+- reads operator report JSON back from disk
+- validates through Stage 2 deserializer
+- verifies stable export round trip
+
+New helper:
+
+- tests/helpers/stage3OperatorReportExportPrototype.ts
+
+New test:
+
+- tests/stage3_operator_report_export_boundary.test.ts
+
+Stage 2 dependency:
+
+- deserializeStage2RelayerOperatorRunReportPrototype
+- createStage2RelayerOperatorRunReportFixturePrototype
+- stage2_relayer_operator_run_report artifact type
+
+Stage 3.1 dependency:
+
+- writeStage3ArtifactFilePrototype
+- readStage3ArtifactFilePrototype
+- serializeStage3ArtifactFileJsonPrototype
+
+New result types:
+
+- Stage3OperatorReportExportResult
+- Stage3OperatorReportReadResult
+
+New helpers:
+
+- exportStage3OperatorReportArtifactPrototype
+- readStage3OperatorReportArtifactPrototype
+- verifyStage3OperatorReportArtifactExportPrototype
+
+Confirmed export/read behavior:
+
+- valid Stage 2 operator report artifact exported through Stage 3.1 file IO
+- stable pretty JSON written to disk
+- bytesWritten recorded
+- JSON artifact read back from disk
+- bytesRead recorded
+- artifactType preserved
+- runId preserved
+- parsed artifact equals original artifact
+- Stage 2 deserializer accepts exported JSON
+- stable export round-trip verification returns true
+- exported stableJson does not contain secret-bearing fields
+
+Confirmed overwrite behavior:
+
+- accidental overwrite rejected by default
+- explicit overwrite allowed with overwrite: true
+- overwritten operator report reads back correctly
+- overwritten runId is preserved
+
+Confirmed rejection behavior:
+
+- non-.json export path rejected
+- wrong artifactType rejected
+- malformed operator report rejected
+- empty runId rejected
+- invalid JSON rejected during read
+- invalid JSON verification returns false
+
+Checks passed:
+
+- Stage 3.2 operator report export boundary: 3 passing
+- Stage 3.1 plus Stage 3.2 smoke: 6 passing
+- Stage 2.31 plus Stage 3.1 plus Stage 3.2 smoke: 9 passing
+- Prettier check passed
+- git diff --check clean
+- pasted terminal fragments check clean
+
+Document added:
+
+- docs/gateway/evidence/stage-3-2-operator-report-export-boundary-evidence.md
+
+Current conclusion:
+
+Stage 3.2 proves that a Stage 2 operator report artifact can be exported to disk, read back, validated by the Stage 2 artifact deserializer, and verified as a stable Stage 3 file IO round trip. This becomes the foundation for later operator export commands and production workflow packaging.
