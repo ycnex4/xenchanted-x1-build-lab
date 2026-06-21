@@ -28804,3 +28804,189 @@ Stage 4.9 proves that gateway fee fields are bound into the guardian approval me
 This prevents applying a different fee recipient, fee amount, net amount, fee quote id, fee asset, route id, guardian set version, or deadline after guardian approval.
 
 The next valid stage is Stage 4.10 guardian fee-bound approval verification boundary.
+
+
+## Stage 4.10 guardian fee-bound approval verification boundary evidence
+
+Stage 4.10 adds the guardian fee-bound approval verification boundary.
+
+Runtime repo:
+
+- ~/xenchanted-x1-lab/hello-x1
+
+Runtime branch:
+
+- stage-4-10-guardian-fee-bound-approval-verification-boundary
+
+Runtime commit:
+
+- fdbc3b8 Add Stage 4.10 guardian fee-bound approval verification boundary
+
+Base runtime commit:
+
+- d4a7060 Add Stage 4.9 guardian fee-bound approval message boundary
+
+Scope:
+
+- guardian fee-bound approval verification boundary
+- exact digest-bound approval boundary
+- fixed 5 guardian / 3-of-5 quorum preservation boundary
+- duplicate guardian rejection boundary
+- unknown guardian rejection boundary
+- offline model boundary
+- no live RPC
+- no wallet loading
+- no private keys
+- no signing
+- no production cryptographic signature verification
+- no transaction submission
+- no SOL spend
+
+Source artifact:
+
+- stage4_guardian_fee_bound_approval_message_result
+
+Source stage:
+
+- 4.9
+
+Source execution mode:
+
+- guardian_approval_message_fee_bound_offline
+
+New approval type:
+
+- Stage4GuardianFeeBoundApproval
+
+Required approval kind:
+
+- fee_bound_message_digest_approval
+
+Result artifact:
+
+- stage4_guardian_fee_bound_approval_verification_result
+
+Execution mode:
+
+- guardian_fee_bound_approval_verification_offline
+
+New helper:
+
+- tests/helpers/stage4GuardianFeeBoundApprovalVerificationPrototype.ts
+
+New test:
+
+- tests/stage4_guardian_fee_bound_approval_verification_boundary.test.ts
+
+New result type:
+
+- Stage4GuardianFeeBoundApprovalVerificationResult
+
+New error class:
+
+- Stage4GuardianFeeBoundApprovalVerificationError
+
+New helpers:
+
+- assertStage4GuardianFeeBoundApprovalVerificationOperationPrototype
+- runStage4GuardianFeeBoundApprovalVerificationPrototype
+- checkStage4GuardianFeeBoundApprovalVerificationResultPrototype
+
+Stage 4.10 policy object:
+
+- approvalVerificationOnly: true
+- feeBoundMessageRequired: true
+- digestBindingRequired: true
+- exactDigestMatchRequired: true
+- fixedGuardianCount: 5
+- fixedQuorumThreshold: 3
+- duplicateApprovalHandling: reject
+- unknownGuardianHandling: reject
+- guardianSetVersionBound: 1
+- signing: not_performed
+- cryptographicSignatureVerification: not_performed
+- walletLoading: not_allowed
+- transactionSubmission: not_allowed
+- solSpendAllowed: false
+
+Stage 4.10 invariants:
+
+- offlineOnly: true
+- feeBoundMessageRequired: true
+- approvalsBoundToFeeDigest: true
+- exactDigestMatch: true
+- exactlyFiveGuardians: true
+- threeOfFiveQuorum: true
+- noDuplicateApprovalCounting: true
+- noUnknownGuardianAccepted: true
+- noPrivateKeys: true
+- noSigning: true
+- noCryptographicSignatureVerification: true
+- noTransactionsSubmitted: true
+- noSolSpend: true
+
+Confirmed successful behavior:
+
+- verifies 3-of-5 guardian approvals
+- approvals are bound to the exact fee-bound message digest
+- sourceApprovalMessageStage is 4.9
+- sourceApprovalMessageOk is true
+- guardianSetVersion is 1
+- guardianCount is 5
+- quorumThreshold is 3
+- approvalCount is 3
+- quorumReached is true
+- verifiedMessageDigest equals the Stage 4.9 feeBoundMessageDigest
+- messageType is STAGE4_GUARDIAN_FEE_BOUND_APPROVAL_MESSAGE
+- verifiedGuardianPublicKeys match the accepted guardian approvals
+- verifiedApprovals are preserved as public approval records
+- feeBinding is preserved from the Stage 4.9 approval message
+- checkStage4GuardianFeeBoundApprovalVerificationResultPrototype returns true
+
+Confirmed quorum behavior:
+
+- 2-of-5 digest-bound approvals are rejected as insufficient_quorum
+- 3-of-5 digest-bound approvals are accepted
+- 4-of-5 digest-bound approvals are accepted
+- 5-of-5 digest-bound approvals are accepted
+
+Confirmed safe output behavior:
+
+- fee-bound approval verification result JSON does not contain wallet path
+- fee-bound approval verification result JSON does not contain private key markers
+- fee-bound approval verification result JSON does not contain signing methods
+- fee-bound approval verification result JSON does not contain serialized transaction marker
+- fee-bound approval verification result JSON does not contain transaction submission methods
+
+Confirmed rejection behavior:
+
+- malformed verifiedAtIso rejected as invalid_verified_at_iso
+- failed Stage 4.9 approval message rejected as fee_bound_approval_message_not_ok
+- wrong message digest rejected as approval_digest_mismatch
+- duplicate guardian approval rejected as duplicate_guardian_approval
+- unknown guardian approval rejected as unknown_guardian_approval
+- approvalId containing privateKey marker rejected as forbidden_value
+- sendTransaction operation rejected as invalid_approval_verification_operation
+- signMessage operation rejected as invalid_approval_verification_operation
+
+Checks passed:
+
+- Stage 4.10 guardian fee-bound approval verification boundary: 4 passing
+- Stage 4.1 through Stage 4.10 smoke: 33 passing
+- Stage 3.10 plus Stage 4.1 through Stage 4.10 smoke: 36 passing
+- Prettier check passed
+- git diff --check clean
+- exact safety marker verification passed
+- pasted terminal fragments check clean
+
+Document added:
+
+- docs/gateway/evidence/stage-4-10-guardian-fee-bound-approval-verification-boundary-evidence.md
+
+Current conclusion:
+
+Stage 4.10 proves that guardian approvals are accepted only when they reference the exact Stage 4.9 fee-bound message digest.
+
+This prevents approvals from being reused across different fee amounts, fee recipients, net amounts, fee quote ids, deadlines, or message digests.
+
+The next valid stage is Stage 4.11 production signature verification design boundary, or a deliberate Stage 4 checkpoint if we want to pause before cryptographic signature verification.
