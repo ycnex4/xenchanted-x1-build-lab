@@ -28426,3 +28426,178 @@ Current conclusion:
 Stage 4.7 proves that a fixed 5 guardian / 3-of-5 quorum model can be represented offline with guardian set versioning, duplicate approval rejection, unknown guardian rejection, public-keys-only policy, and no-secret/no-signing/no-transaction invariants.
 
 The next valid stage is Stage 4.8 gateway fee policy boundary.
+
+
+## Stage 4.8 gateway fee policy boundary evidence
+
+Stage 4.8 adds the gateway fee policy boundary for the Stage 4 live runtime / operations layer.
+
+Runtime repo:
+
+- ~/xenchanted-x1-lab/hello-x1
+
+Runtime branch:
+
+- stage-4-8-gateway-fee-policy-boundary
+
+Runtime commit:
+
+- a960c16 Add Stage 4.8 gateway fee policy boundary
+
+Base runtime commit:
+
+- f63397f Add Stage 4.7 fixed guardian set quorum boundary
+
+Scope:
+
+- gateway fee policy boundary
+- fixed service fee boundary
+- manual fee configuration boundary
+- gross/net fee calculation boundary
+- fee quote deadline boundary
+- guardianSetVersion-bound fee policy boundary
+- no-oracle boundary
+- offline model boundary
+- no live RPC
+- no wallet loading
+- no private keys
+- no signing
+- no transaction submission
+- no SOL spend
+
+Gateway fee meaning:
+
+- gateway fee is not xEnchanted Core protocol economics
+- gateway fee is an infrastructure/service fee
+- gateway fee covers gateway operation, relayer coordination, watcher operation, guardian coordination, and operational support
+
+New helper:
+
+- tests/helpers/stage4GatewayFeePolicyPrototype.ts
+
+New test:
+
+- tests/stage4_gateway_fee_policy_boundary.test.ts
+
+New result type:
+
+- Stage4GatewayFeePolicyResult
+
+New error class:
+
+- Stage4GatewayFeePolicyError
+
+New helpers:
+
+- assertStage4GatewayFeePolicyOperationPrototype
+- runStage4GatewayFeePolicyPrototype
+- checkStage4GatewayFeePolicyResultPrototype
+
+Result artifact:
+
+- stage4_gateway_fee_policy_result
+
+Execution mode:
+
+- gateway_fee_policy_offline
+
+Fee model:
+
+- feeMode: fixed_service_fee
+- pricingSource: manual_config_only
+- feeRecipientSource: configured_public_address
+- netAmountRule: gross_amount_minus_fee_amount
+- deadlineRequired: true
+- boundToGuardianSetVersion: 1
+
+Supported fee assets:
+
+- X1_NATIVE
+- CONFIGURED_TOKEN
+
+Stage 4.8 policy object:
+
+- feeMode: fixed_service_fee
+- pricingSource: manual_config_only
+- feeRecipientSource: configured_public_address
+- feeMustBeLessThanGrossAmount: true
+- netAmountRule: gross_amount_minus_fee_amount
+- deadlineRequired: true
+- boundToGuardianSetVersion: 1
+- oracleLookup: not_performed
+- walletLoading: not_allowed
+- signing: not_performed
+- transactionSubmission: not_allowed
+- solSpendAllowed: false
+
+Stage 4.8 invariants:
+
+- offlineOnly: true
+- fixedServiceFee: true
+- manualConfigOnly: true
+- feeLessThanGrossAmount: true
+- netAmountMatchesGrossMinusFee: true
+- deadlineAfterQuoteTime: true
+- boundToGuardianSetVersion: true
+- noOracleLookup: true
+- noWalletLoaded: true
+- noSigning: true
+- noTransactionsSubmitted: true
+- noSolSpend: true
+
+Confirmed successful behavior:
+
+- creates offline fixed service gateway fee quote from valid 3-of-5 guardian quorum
+- uses feeMode fixed_service_fee
+- supports feeAsset X1_NATIVE
+- supports feeAsset CONFIGURED_TOKEN
+- requires configured public fee recipient
+- validates grossAmount
+- validates feeAmount
+- calculates netAmount as grossAmount minus feeAmount
+- validates expectedNetAmount when supplied
+- requires feeQuoteExpiresAtIso after quotedAtIso
+- binds fee policy to guardianSetVersion 1
+- does not perform oracle lookup
+- does not load wallet
+- does not sign
+- does not submit transactions
+- does not spend SOL
+- checkStage4GatewayFeePolicyResultPrototype returns true
+
+Confirmed safe output behavior:
+
+- gateway fee policy result JSON does not contain wallet path
+- gateway fee policy result JSON does not contain private key markers
+- gateway fee policy result JSON does not contain signing methods
+- gateway fee policy result JSON does not contain transaction submission methods
+- gateway fee policy result JSON does not contain serialized transaction marker
+
+Confirmed rejection behavior:
+
+- failed 2-of-5 guardian quorum rejected as guardian_quorum_not_ok
+- malformed quotedAtIso rejected as invalid_quoted_at_iso
+- non-forward deadline rejected as deadline_not_after_quote_time
+- fee equal to gross amount rejected as fee_not_less_than_gross_amount
+- wrong expected net amount rejected as invalid_expected_net_amount
+- feeQuoteId containing privateKey marker rejected as forbidden_value
+- sendTransaction operation rejected as invalid_fee_policy_operation
+
+Checks passed:
+
+- Stage 4.8 gateway fee policy boundary: 3 passing
+- Stage 4.1 through Stage 4.8 smoke: 25 passing
+- Stage 3.10 plus Stage 4.1 through Stage 4.8 smoke: 28 passing
+- Prettier check passed
+- git diff --check clean
+- pasted terminal fragments check clean
+
+Document added:
+
+- docs/gateway/evidence/stage-4-8-gateway-fee-policy-boundary-evidence.md
+
+Current conclusion:
+
+Stage 4.8 proves that gateway fee policy can be represented offline as a fixed manually configured service fee with fee recipient, gross amount, fee amount, net amount, fee quote deadline, and guardian set version binding.
+
+The next valid stage is Stage 4.9 guardian approval message with fee bound into message.
