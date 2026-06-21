@@ -27506,3 +27506,173 @@ Current conclusion:
 Stage 4.2 proves that read-only RPC connectivity can be modeled through an explicit allowlist of safe methods, an injected transport boundary, redacted output, and invariant checks that prevent wallet loading, signing, transaction submission, or SOL-spending paths.
 
 The next valid stage is Stage 4.3 watcher runtime read-only observation boundary.
+
+
+## Stage 4.3 watcher read-only observation boundary evidence
+
+Stage 4.3 adds the watcher read-only observation boundary for the Stage 4 live runtime / operations layer.
+
+Runtime repo:
+
+- ~/xenchanted-x1-lab/hello-x1
+
+Runtime branch:
+
+- stage-4-3-watcher-read-only-observation-boundary
+
+Runtime commit:
+
+- c5b77cf Add Stage 4.3 watcher read-only observation boundary
+
+Base runtime commit:
+
+- eb6ef26 Add Stage 4.2 read-only RPC connectivity boundary
+
+Scope:
+
+- watcher read-only observation boundary
+- single observation cycle
+- injected observation source
+- no wallet loading
+- no signing
+- no transaction submission
+- no SOL spend
+- no continuous watcher loop
+- no relayer loop
+- no deployment
+- read-only watcher method allowlist
+- safe checkpoint output
+- forbidden secret-bearing value rejection
+- transaction method rejection
+
+Allowed watcher read-only methods:
+
+- getSlot
+- getBlockHeight
+- getAccountInfo
+- getBalance
+
+Rejected example method:
+
+- sendTransaction
+
+New helper:
+
+- tests/helpers/stage4WatcherReadOnlyObservationPrototype.ts
+
+New test:
+
+- tests/stage4_watcher_read_only_observation_boundary.test.ts
+
+New watcher method type:
+
+- Stage4WatcherReadOnlyMethod
+
+New observation code type:
+
+- Stage4WatcherObservationCode
+
+New observation source request type:
+
+- Stage4WatcherObservationSourceRequest
+
+New observation source response type:
+
+- Stage4WatcherObservationSourceResponse
+
+New observation source type:
+
+- Stage4WatcherObservationSource
+
+New observation type:
+
+- Stage4WatcherObservation
+
+New result type:
+
+- Stage4WatcherReadOnlyObservationResult
+
+New error class:
+
+- Stage4WatcherReadOnlyObservationError
+
+New error reason type:
+
+- Stage4WatcherReadOnlyObservationErrorReason
+
+New helpers:
+
+- assertStage4WatcherReadOnlyMethodPrototype
+- runStage4WatcherReadOnlyObservationPrototype
+- checkStage4WatcherReadOnlyObservationResultPrototype
+
+Result artifact:
+
+- stage4_watcher_read_only_observation_result
+
+Execution mode:
+
+- watcher_read_only_no_wallet
+
+Stage 4.3 invariants:
+
+- noWalletLoaded: true
+- noSigning: true
+- noTransactions: true
+- noSolSpend: true
+- readOnlyObservationOnly: true
+- noContinuousLoop: true
+
+Confirmed successful behavior:
+
+- runs one watcher read-only observation cycle
+- consumes Stage 4.2 connectivity evidence
+- uses injected observation source
+- does not load wallet
+- does not sign
+- does not submit transactions
+- does not spend SOL
+- does not run a continuous watcher loop
+- calls only getSlot, getBlockHeight, getAccountInfo, and getBalance
+- preserves networkName
+- preserves programId
+- preserves payerPublicKey
+- sourceConnectivityStage is 4.2
+- sourceConnectivityOk is true
+- checkpoint has four observations
+- all observations are successful
+- all invariants are true
+- checkStage4WatcherReadOnlyObservationResultPrototype returns true
+
+Confirmed safe output behavior:
+
+- watcher observation result JSON does not contain wallet path
+- watcher observation result JSON does not contain secret-bearing markers
+- watcher observation result JSON does not contain sendTransaction
+
+Confirmed rejection behavior:
+
+- bad observedAtIso rejected as invalid_observed_at_iso
+- failed connectivity result rejected as connectivity_not_ok
+- connectivity value containing privateKey marker rejected as forbidden_connectivity_value
+- sendTransaction watcher method rejected as invalid_watcher_method
+- observation source throw rejected as observation_source_failed
+
+Checks passed:
+
+- Stage 4.3 watcher read-only observation boundary: 3 passing
+- Stage 4.1 plus Stage 4.2 plus Stage 4.3 smoke: 9 passing
+- Stage 3.10 plus Stage 4.1 plus Stage 4.2 plus Stage 4.3 smoke: 12 passing
+- Prettier check passed
+- git diff --check clean
+- pasted terminal fragments check clean
+
+Document added:
+
+- docs/gateway/evidence/stage-4-3-watcher-read-only-observation-boundary-evidence.md
+
+Current conclusion:
+
+Stage 4.3 proves that watcher-style observation can be modeled as a single read-only observation cycle using Stage 4.2 connectivity evidence and an injected source, while preserving the no-wallet, no-signing, no-transaction, no-SOL-spend, and no-continuous-loop invariants.
+
+The next valid stage is Stage 4.4 relayer dry-run / no-send boundary.
