@@ -30121,3 +30121,99 @@ Stage 4.16 does not create a transaction object, compiled message, serialized tr
 Next valid stage:
 
     Stage 4.17 — receipt-bound transaction assembly no-sign boundary
+
+---
+
+## Stage 4.17 — Receipt-Bound Transaction Assembly No-Sign Boundary
+
+Runtime reference:
+
+- 7dd202b Add Stage 4.17 receipt-bound transaction assembly no-sign boundary
+
+Evidence:
+
+- docs/gateway/evidence/stage-4-17-receipt-bound-transaction-assembly-no-sign-boundary-evidence.md
+
+Stage 4.17 adds the receipt-bound transaction assembly no-sign boundary.
+
+Stage 4.16 defined the design contract. Stage 4.17 models a no-sign assembly structure while still preserving the no-wallet, no-private-key, no-sign, no-send, no-SOL boundary.
+
+The Stage 4.17 artifact is:
+
+    stage4_receipt_bound_transaction_assembly_no_sign_result
+
+The Stage 4.17 execution mode is:
+
+    receipt_bound_transaction_assembly_no_sign_offline
+
+Stage 4.17 consumes the Stage 4.16 artifact:
+
+    stage4_receipt_bound_transaction_assembly_design_result
+
+Stage 4.17 binds the no-sign assembly to:
+
+- Source assembly design digest.
+- Source receipt digest.
+- Source verification result digest.
+- Instruction data digest.
+- Exact instruction name.
+- Program id.
+- Payer public key.
+- Instruction assembly digest.
+- Unsigned message assembly digest.
+
+The exact instruction name remains:
+
+    mint_xxxl_from_receipt_bound_gateway_message
+
+Important no-sign statuses:
+
+    runtimeInstructionObjectStatus: not_created_no_sign_boundary
+    recentBlockhashStatus: not_fetched_no_live_network
+    compiledMessageStatus: not_created_no_wallet_no_blockhash
+    signerResolutionStatus: not_performed
+    requiredSignatureCount: 0
+    runtimeTransactionObjectStatus: not_created_no_sign_boundary
+
+Stage 4.17 preserves these invariants:
+
+    offlineOnly: true
+    assemblyNoSignOnly: true
+    sourceAssemblyDesignStage416Bound: true
+    sourceAssemblyDesignDigestBound: true
+    sourceReceiptDigestBound: true
+    sourceResultDigestBound: true
+    instructionDataDigestBound: true
+    noSignAssemblyDigestBound: true
+    instructionNameBound: true
+    accountRolesBound: true
+    instructionLayoutBound: true
+    noWalletLoaded: true
+    noPrivateKeys: true
+    noSigning: true
+    noSignerResolution: true
+    noRecentBlockhashFetched: true
+    noRuntimeInstructionObjectCreated: true
+    noRuntimeTransactionObjectCreated: true
+    noCompiledMessageCreated: true
+    noSerializedTransaction: true
+    noSimulation: true
+    noLiveRpc: true
+    noTransactionsSubmitted: true
+    noSolSpend: true
+
+Runtime checks passed:
+
+    Stage 4.17 test: 4 passing
+    Stage 4.16 + Stage 4.17 smoke: 8 passing
+    Stage 3.10 + Stage 4.1 through Stage 4.17 smoke: 63 passing
+    Prettier check: passed
+    git diff --check: clean
+
+Boundary decision:
+
+Stage 4.17 does not load a wallet, access private keys, sign, fetch a recent blockhash, create a runtime instruction object, create a runtime transaction object, create a compiled message, serialize a transaction, simulate, call live RPC, submit a transaction, or spend SOL.
+
+Next valid stage:
+
+    Stage 4.18 — receipt-bound transaction message planning boundary
