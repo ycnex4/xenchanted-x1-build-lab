@@ -28989,7 +28989,7 @@ Stage 4.10 proves that guardian approvals are accepted only when they reference 
 
 This prevents approvals from being reused across different fee amounts, fee recipients, net amounts, fee quote ids, deadlines, or message digests.
 
-The next valid stage is Stage 4.11 production signature verification design boundary, or a deliberate Stage 4 checkpoint if we want to pause before cryptographic signature verification.
+The next valid stage is Stage 4.12 production signature verification design boundary.
 
 
 ## Stage 4.10 pre-signature checkpoint
@@ -29050,4 +29050,160 @@ Purpose of checkpoint:
 
 Next valid stage:
 
-- Stage 4.11 production signature verification design boundary
+- Stage 4.12 production signature verification design boundary
+
+Revision:
+
+- Stage 4.11 was reassigned to XNTD -> XXXL amount conversion after the missing conversion boundary was identified.
+- Production signature verification design moved to Stage 4.12.
+
+
+## Stage 4.11 XNTD -> XXXL amount conversion boundary evidence
+
+Stage 4.11 adds the XNTD -> XXXL amount conversion boundary.
+
+Runtime repo:
+
+- ~/xenchanted-x1-lab/hello-x1
+
+Runtime branch:
+
+- stage-4-11-xntd-xxxl-amount-conversion-boundary
+
+Runtime commit:
+
+- 0be7dd4 Add Stage 4.11 XNTD XXXL amount conversion boundary
+
+Base runtime commit:
+
+- fdbc3b8 Add Stage 4.10 guardian fee-bound approval verification boundary
+
+Reason for Stage 4.11:
+
+- before production signature verification, the amount conversion policy needed to be fixed explicitly
+- earlier runtime examples used placeholder raw amounts
+- the correct bridge conversion is not raw 1:1
+- production signature verification is moved to Stage 4.12
+
+Fixed conversion policy:
+
+- 1 XXXL = 100,000,000 XNTD
+- XNTD ERC-20 decimals = 18
+- XXXL X1 decimals = 9
+- 100,000,000 XNTD raw = 100000000000000000000000000
+- 1 XXXL raw = 1000000000
+- XNTD raw per 1 XXXL raw = 100000000000000000
+
+New helper:
+
+- tests/helpers/stage4XntdXxxlAmountConversionPolicyPrototype.ts
+
+New test:
+
+- tests/stage4_xntd_xxxl_amount_conversion_boundary.test.ts
+
+New result type:
+
+- Stage4XntdXxxlAmountConversionPolicyResult
+
+Result artifact:
+
+- stage4_xntd_xxxl_amount_conversion_policy_result
+
+Execution mode:
+
+- xntd_xxxl_amount_conversion_policy_offline
+
+New error class:
+
+- Stage4XntdXxxlAmountConversionPolicyError
+
+New helpers:
+
+- assertStage4XntdXxxlAmountConversionOperationPrototype
+- deriveStage4XxxlMintRawFromXntdBurnedRawPrototype
+- runStage4XntdXxxlAmountConversionPolicyPrototype
+- checkStage4XntdXxxlAmountConversionPolicyResultPrototype
+
+Stage 4.11 policy object:
+
+- exactRawConversionRequired: true
+- noRoundingAllowed: true
+- noFlooringAllowed: true
+- noCeilingAllowed: true
+- xntdDecimalsFixed: 18
+- xxxlDecimalsFixed: 9
+- xntdPerXxxlFixed: 100000000
+- signing: not_performed
+- walletLoading: not_allowed
+- transactionSubmission: not_allowed
+- solSpendAllowed: false
+
+Stage 4.11 invariants:
+
+- offlineOnly: true
+- amountConversionOnly: true
+- xntdDecimalsAre18: true
+- xxxlDecimalsAre9: true
+- oneXxxlEqualsOneHundredMillionXntd: true
+- exactRawConversion: true
+- noRounding: true
+- noWalletLoaded: true
+- noSigning: true
+- noTransactionsSubmitted: true
+- noSolSpend: true
+
+Confirmed successful conversion:
+
+- burnedAmount: 100000000000000000000000000
+- xxxlMintAmount: 1000000000
+- xntdRawPerXxxlRaw: 100000000000000000
+- expectedXxxlMintRaw: 1000000000
+- conversionRemainderRaw: 0
+
+Confirmed old placeholder rejection:
+
+- burnedAmount: 1000000000000000000
+- xxxlMintAmount: 1000000000000000000
+- rejected as xxxl_mint_amount_mismatch
+- derived expectedXxxlMintRaw for burnedAmount 1000000000000000000 is 10
+
+Confirmed non-exact conversion rejection:
+
+- burnedAmount: 1
+- xxxlMintAmount: 1
+- rejected as non_exact_conversion
+
+Confirmed safe output behavior:
+
+- amount conversion result JSON does not contain wallet path
+- amount conversion result JSON does not contain private key markers
+- amount conversion result JSON does not contain signing methods
+- amount conversion result JSON does not contain serialized transaction marker
+- amount conversion result JSON does not contain transaction submission methods
+
+Checks passed:
+
+- Stage 4.11 XNTD -> XXXL amount conversion boundary: 4 passing
+- Stage 4.1 through Stage 4.11 smoke: 37 passing
+- Stage 3.10 plus Stage 4.1 through Stage 4.11 smoke: 40 passing
+- Prettier check passed
+- git diff --check clean
+- exact safety marker verification passed
+- pasted terminal fragments check clean
+
+Documents added/updated:
+
+- docs/gateway/evidence/stage-4-11-xntd-xxxl-amount-conversion-boundary-evidence.md
+- docs/gateway/stage-4-10-pre-signature-checkpoint.md
+- docs/checkpoints/current-design-checkpoint.md
+
+Current conclusion:
+
+Stage 4.11 fixes the XNTD -> XXXL conversion policy.
+
+It proves that a relayer mint intent must contain the exact derived xxxlMintAmount.
+
+It rejects the old raw 1:1 placeholder amount pattern.
+
+The next valid stage is Stage 4.12 production signature verification design boundary.

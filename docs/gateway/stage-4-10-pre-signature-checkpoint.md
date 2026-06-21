@@ -307,12 +307,29 @@ Before entering that zone, the model now clearly records what must be preserved:
 - no fee substitution after approval
 - no wallet/private-key exposure in logs or artifacts
 
+## Revision after Stage 4.11 amount conversion boundary
+
+After this checkpoint, a missing amount conversion boundary was identified before production signature verification.
+
+The intended bridge conversion policy is:
+
+    1 XXXL = 100,000,000 XNTD
+
+With decimals:
+
+    XNTD ERC-20 decimals = 18
+    XXXL X1 decimals = 9
+
+Therefore Stage 4.11 was assigned to the XNTD -> XXXL amount conversion policy boundary.
+
+Production signature verification design is moved to Stage 4.12.
+
 ## Next valid stage
 
 The next valid stage is:
 
-    Stage 4.11 production signature verification design boundary
+    Stage 4.12 production signature verification design boundary
 
 That stage should still be offline first.
 
-It should introduce verification of signatures over the Stage 4.9 fee-bound digest without introducing live wallet loading, private key handling, transaction submission, or SOL spend.
+It should introduce verification of signatures over the Stage 4.9 fee-bound digest and the Stage 4.11 amount conversion policy without introducing live wallet loading, private key handling, transaction submission, or SOL spend.
