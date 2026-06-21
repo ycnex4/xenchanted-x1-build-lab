@@ -28170,7 +28170,7 @@ Unsigned envelope:
 - instructionName: mint_xxxl_from_gateway_message
 - signerCount: 0
 - requiredSignatureCount: 0
-- serializedTransaction: <not_created:no_wallet_no_signing>
+- serialized transaction status: <not_created:no_wallet_no_signing>
 - transactionSubmission: not_allowed
 - simulation: not_performed
 
@@ -30121,4 +30121,3 @@ Stage 4.16 does not create a transaction object, compiled message, serialized tr
 Next valid stage:
 
     Stage 4.17 — receipt-bound transaction assembly no-sign boundary
-
