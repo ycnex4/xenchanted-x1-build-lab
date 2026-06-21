@@ -27867,3 +27867,184 @@ Current conclusion:
 Stage 4.4 proves that relayer-style planning can be modeled as an unsigned, non-sendable dry-run plan using Stage 4.3 watcher observation evidence and an injected planner, while preserving the no-wallet, no-signing, no-transaction-submission, no-SOL-spend, and no-live-send invariants.
 
 The next valid stage is Stage 4.5 guardian operation policy boundary.
+
+
+## Stage 4.5 guardian operation policy boundary evidence
+
+Stage 4.5 adds the guardian operation policy boundary for the Stage 4 live runtime / operations layer.
+
+Runtime repo:
+
+- ~/xenchanted-x1-lab/hello-x1
+
+Runtime branch:
+
+- stage-4-5-guardian-operation-policy-boundary
+
+Runtime commit:
+
+- 93665db Add Stage 4.5 guardian operation policy boundary
+
+Base runtime commit:
+
+- 5b3be68 Add Stage 4.4 relayer dry-run no-send boundary
+
+Scope:
+
+- guardian operation policy boundary
+- public-keys-only policy boundary
+- quorum policy boundary
+- no-secret-handling boundary
+- no guardian private keys
+- no wallet loading
+- no signing
+- no transaction submission
+- no SOL spend
+- no live-send
+- no deployment
+- policy-only guardian action allowlist
+- safe policy output
+- forbidden secret-bearing value rejection
+- signing action rejection
+- private-key export action rejection
+
+Allowed guardian policy actions:
+
+- reviewUnsignedPlan
+- verifyQuorumPolicy
+- recordNoSecretHandlingPolicy
+
+Rejected example actions:
+
+- signTransaction
+- exportPrivateKey
+
+New helper:
+
+- tests/helpers/stage4GuardianOperationPolicyPrototype.ts
+
+New test:
+
+- tests/stage4_guardian_operation_policy_boundary.test.ts
+
+New guardian policy action type:
+
+- Stage4GuardianPolicyAction
+
+New guardian policy step code type:
+
+- Stage4GuardianPolicyStepCode
+
+New guardian policy step type:
+
+- Stage4GuardianPolicyStep
+
+New result type:
+
+- Stage4GuardianOperationPolicyResult
+
+New error class:
+
+- Stage4GuardianOperationPolicyError
+
+New error reason type:
+
+- Stage4GuardianOperationPolicyErrorReason
+
+New helpers:
+
+- assertStage4GuardianPolicyActionPrototype
+- runStage4GuardianOperationPolicyPrototype
+- checkStage4GuardianOperationPolicyResultPrototype
+
+Result artifact:
+
+- stage4_guardian_operation_policy_result
+
+Execution mode:
+
+- guardian_policy_no_key_material
+
+Policy object:
+
+- keyMaterialHandling: public_keys_only
+- privateKeyAccess: not_allowed
+- walletLoading: not_allowed
+- signingAuthorization: policy_only_not_signature
+- transactionSubmission: not_allowed
+- solSpendAllowed: false
+
+Stage 4.5 invariants:
+
+- noGuardianPrivateKeys: true
+- noSecretMaterial: true
+- noWalletLoaded: true
+- noSigning: true
+- noTransactionsSubmitted: true
+- noSolSpend: true
+- policyOnly: true
+
+Confirmed successful behavior:
+
+- creates a guardian policy-only result
+- consumes Stage 4.4 dry-run no-send evidence
+- uses guardian public keys only
+- validates quorum threshold
+- does not access private keys
+- does not load wallet
+- does not sign
+- does not submit transactions
+- does not spend SOL
+- does not perform live-send
+- preserves networkName
+- preserves programId
+- preserves payerPublicKey
+- sourceDryRunStage is 4.4
+- sourceDryRunOk is true
+- guardianPublicKeyCount is 2
+- quorumThreshold is 2
+- policy marks privateKeyAccess as not_allowed
+- policy marks walletLoading as not_allowed
+- policy marks signingAuthorization as policy_only_not_signature
+- policy marks transactionSubmission as not_allowed
+- policy marks solSpendAllowed as false
+- all steps are policyOnly
+- all steps have signing not_performed
+- all invariants are true
+- checkStage4GuardianOperationPolicyResultPrototype returns true
+
+Confirmed safe output behavior:
+
+- guardian policy result JSON does not contain wallet path
+- guardian policy result JSON does not contain secret-bearing markers
+- guardian policy result JSON does not contain private key material
+- guardian policy result JSON does not contain send/sign methods
+
+Confirmed rejection behavior:
+
+- bad policyAtIso rejected as invalid_policy_at_iso
+- failed dry-run result rejected as dry_run_not_ok
+- malformed guardian public key rejected as invalid_guardian_public_keys
+- quorum threshold greater than guardian count rejected as invalid_quorum_threshold
+- dry-run value containing privateKey marker rejected as forbidden_policy_value
+- signTransaction guardian policy action rejected as invalid_policy_action
+- exportPrivateKey guardian policy action rejected as invalid_policy_action
+
+Checks passed:
+
+- Stage 4.5 guardian operation policy boundary: 3 passing
+- Stage 4.1 plus Stage 4.2 plus Stage 4.3 plus Stage 4.4 plus Stage 4.5 smoke: 15 passing
+- Stage 3.10 plus Stage 4.1 plus Stage 4.2 plus Stage 4.3 plus Stage 4.4 plus Stage 4.5 smoke: 18 passing
+- Prettier check passed
+- git diff --check clean
+- pasted terminal fragments check clean
+
+Document added:
+
+- docs/gateway/evidence/stage-4-5-guardian-operation-policy-boundary-evidence.md
+
+Current conclusion:
+
+Stage 4.5 proves that guardian operational rules can be modeled as public-keys-only policy with quorum validation and explicit no-secret/no-wallet/no-signing/no-send invariants, before any signing, wallet access, transaction preflight, or live-send boundary is introduced.
+
+The next valid stage is Stage 4.6 transaction preflight / no-send boundary.
