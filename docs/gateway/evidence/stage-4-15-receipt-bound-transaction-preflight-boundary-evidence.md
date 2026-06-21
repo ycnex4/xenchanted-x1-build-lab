@@ -14,7 +14,7 @@ Runtime branch:
 
 Runtime commit:
 
-    8f64b72 Add Stage 4.15 receipt-bound transaction preflight boundary
+    723a21d Add Stage 4.15 receipt-bound transaction preflight boundary
 
 Base runtime commit:
 
