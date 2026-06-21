@@ -27676,3 +27676,194 @@ Current conclusion:
 Stage 4.3 proves that watcher-style observation can be modeled as a single read-only observation cycle using Stage 4.2 connectivity evidence and an injected source, while preserving the no-wallet, no-signing, no-transaction, no-SOL-spend, and no-continuous-loop invariants.
 
 The next valid stage is Stage 4.4 relayer dry-run / no-send boundary.
+
+
+## Stage 4.4 relayer dry-run no-send boundary evidence
+
+Stage 4.4 adds the relayer dry-run / no-send boundary for the Stage 4 live runtime / operations layer.
+
+Runtime repo:
+
+- ~/xenchanted-x1-lab/hello-x1
+
+Runtime branch:
+
+- stage-4-4-relayer-dry-run-no-send-boundary
+
+Runtime commit:
+
+- 5b3be68 Add Stage 4.4 relayer dry-run no-send boundary
+
+Base runtime commit:
+
+- c5b77cf Add Stage 4.3 watcher read-only observation boundary
+
+Scope:
+
+- relayer dry-run no-send boundary
+- unsigned plan boundary
+- injected planner
+- no wallet loading
+- no signing
+- no transaction submission
+- no SOL spend
+- no live-send
+- no deployment
+- dry-run relayer operation allowlist
+- safe unsigned plan output
+- forbidden secret-bearing value rejection
+- signing method rejection
+- transaction send method rejection
+- signed/sendable planner output rejection
+
+Allowed relayer dry-run operations:
+
+- validateMintIntent
+- deriveInstructionPlan
+- estimateUnsignedMessage
+
+Rejected example operation:
+
+- sendTransaction
+
+New helper:
+
+- tests/helpers/stage4RelayerDryRunNoSendPrototype.ts
+
+New test:
+
+- tests/stage4_relayer_dry_run_no_send_boundary.test.ts
+
+New relayer operation type:
+
+- Stage4RelayerDryRunOperation
+
+New dry-run step code type:
+
+- Stage4RelayerDryRunStepCode
+
+New mint intent type:
+
+- Stage4RelayerMintIntent
+
+New planner request type:
+
+- Stage4RelayerDryRunPlannerRequest
+
+New planner response type:
+
+- Stage4RelayerDryRunPlannerResponse
+
+New planner type:
+
+- Stage4RelayerDryRunPlanner
+
+New dry-run step type:
+
+- Stage4RelayerDryRunStep
+
+New result type:
+
+- Stage4RelayerDryRunNoSendResult
+
+New error class:
+
+- Stage4RelayerDryRunNoSendError
+
+New error reason type:
+
+- Stage4RelayerDryRunNoSendErrorReason
+
+New helpers:
+
+- assertStage4RelayerDryRunOperationPrototype
+- runStage4RelayerDryRunNoSendPrototype
+- checkStage4RelayerDryRunNoSendResultPrototype
+
+Result artifact:
+
+- stage4_relayer_dry_run_no_send_result
+
+Execution mode:
+
+- relayer_dry_run_no_send
+
+Unsigned plan:
+
+- instructionName: mint_xxxl_from_gateway_message
+- signerCount: 0
+- transactionSubmission: not_allowed
+- walletRequired: false
+- signatureRequired: false
+- solSpendAllowed: false
+
+Stage 4.4 invariants:
+
+- noWalletLoaded: true
+- noSigning: true
+- noTransactionsSubmitted: true
+- noSolSpend: true
+- noLiveSend: true
+- dryRunOnly: true
+
+Confirmed successful behavior:
+
+- builds an unsigned relayer dry-run plan
+- consumes Stage 4.3 watcher observation evidence
+- uses injected planner
+- does not load wallet
+- does not sign
+- does not submit transactions
+- does not spend SOL
+- does not perform live-send
+- calls only validateMintIntent, deriveInstructionPlan, and estimateUnsignedMessage
+- preserves networkName
+- preserves programId
+- preserves payerPublicKey
+- sourceObservationStage is 4.3
+- sourceObservationOk is true
+- unsignedPlan has signerCount 0
+- unsignedPlan has transactionSubmission not_allowed
+- unsignedPlan has walletRequired false
+- unsignedPlan has signatureRequired false
+- unsignedPlan has solSpendAllowed false
+- all dry-run steps are unsignedOnly
+- all invariants are true
+- checkStage4RelayerDryRunNoSendResultPrototype returns true
+
+Confirmed safe output behavior:
+
+- relayer dry-run result JSON does not contain wallet path
+- relayer dry-run result JSON does not contain secret-bearing markers
+- relayer dry-run result JSON does not contain sendTransaction
+- relayer dry-run result JSON does not contain signTransaction
+- relayer dry-run result JSON does not contain signedTransaction
+
+Confirmed rejection behavior:
+
+- bad plannedAtIso rejected as invalid_planned_at_iso
+- failed observation result rejected as observation_not_ok
+- zero xxxlMintAmount rejected as invalid_mint_intent
+- mint intent value containing privateKey marker rejected as forbidden_value
+- sendTransaction relayer operation rejected as invalid_relayer_operation
+- planner returning unsignedOnly false rejected as planner_returned_signed_or_sendable_plan
+- planner throw rejected as planner_failed
+
+Checks passed:
+
+- Stage 4.4 relayer dry-run no-send boundary: 3 passing
+- Stage 4.1 plus Stage 4.2 plus Stage 4.3 plus Stage 4.4 smoke: 12 passing
+- Stage 3.10 plus Stage 4.1 plus Stage 4.2 plus Stage 4.3 plus Stage 4.4 smoke: 15 passing
+- Prettier check passed
+- git diff --check clean
+- pasted terminal fragments check clean
+
+Document added:
+
+- docs/gateway/evidence/stage-4-4-relayer-dry-run-no-send-boundary-evidence.md
+
+Current conclusion:
+
+Stage 4.4 proves that relayer-style planning can be modeled as an unsigned, non-sendable dry-run plan using Stage 4.3 watcher observation evidence and an injected planner, while preserving the no-wallet, no-signing, no-transaction-submission, no-SOL-spend, and no-live-send invariants.
+
+The next valid stage is Stage 4.5 guardian operation policy boundary.
