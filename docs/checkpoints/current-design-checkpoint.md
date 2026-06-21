@@ -26375,3 +26375,137 @@ Document added:
 Current conclusion:
 
 Stage 3.6 proves that the existing Stage 3.2 through Stage 3.5 tooling layers can be composed into one deterministic offline operator workflow: reports -> audit bundle -> verification -> receipt. This becomes the foundation for later real CLI commands, config/env boundaries, monitoring, and production runbooks.
+
+
+## Stage 3.7 operator workflow config/env boundary evidence
+
+Stage 3.7 adds the operator workflow config/env boundary for the Stage 3 tooling / production surface.
+
+Runtime repo:
+
+- ~/xenchanted-x1-lab/hello-x1
+
+Runtime branch:
+
+- stage-3-7-operator-workflow-config-boundary
+
+Runtime commit:
+
+- fd62222 Add Stage 3.7 operator workflow config boundary
+
+Base runtime commit:
+
+- 97cc765 Add Stage 3.6 operator workflow script boundary
+
+Scope:
+
+- operator workflow config/env boundary
+- offline / zero-SOL
+- no live RPC
+- no ANCHOR_WALLET
+- no transaction submission
+- no gas / SOL spend
+- no CLI command yet
+- parses env-style workflow config
+- validates direct config objects
+- rejects malformed config before workflow execution
+- rejects forbidden live / secret-bearing env keys
+- rejects forbidden secret-bearing config values
+- passes normalized config into Stage 3.6 workflow
+- preserves Stage 3.6 workflow semantics
+
+New helper:
+
+- tests/helpers/stage3OperatorWorkflowConfigPrototype.ts
+
+New test:
+
+- tests/stage3_operator_workflow_config_boundary.test.ts
+
+New types:
+
+- Stage3OperatorWorkflowConfig
+- Stage3OperatorWorkflowConfigEnv
+- Stage3OperatorWorkflowConfigErrorReason
+
+New class:
+
+- Stage3OperatorWorkflowConfigError
+
+New helpers:
+
+- createStage3OperatorWorkflowConfigPrototype
+- parseStage3OperatorWorkflowConfigEnvPrototype
+- runStage3OperatorWorkflowFromConfigPrototype
+
+Required env keys:
+
+- STAGE3_OPERATOR_WORKFLOW_ROOT_DIR
+- STAGE3_OPERATOR_WORKFLOW_REPORT_PATHS
+- STAGE3_OPERATOR_WORKFLOW_AUDIT_BUNDLE_PATH
+- STAGE3_OPERATOR_WORKFLOW_RECEIPT_PATH
+- STAGE3_OPERATOR_WORKFLOW_CHECKPOINT_CREATED_AT_ISO
+- STAGE3_OPERATOR_WORKFLOW_BUNDLE_CREATED_AT_ISO
+- STAGE3_OPERATOR_WORKFLOW_VERIFIED_AT_ISO
+- STAGE3_OPERATOR_WORKFLOW_RECEIPT_CREATED_AT_ISO
+- STAGE3_OPERATOR_WORKFLOW_RUNTIME_COMMIT
+- STAGE3_OPERATOR_WORKFLOW_VERIFIER_ID
+
+Optional env key:
+
+- STAGE3_OPERATOR_WORKFLOW_OVERWRITE
+
+Confirmed successful config behavior:
+
+- env-style config parsed
+- values trimmed and normalized
+- comma-separated report paths parsed
+- overwrite false parsed
+- Stage 3.6 workflow run from config
+- result artifactType is stage3_operator_workflow_script_result
+- executionMode is offline_zero_sol
+- receiptValid is true
+- reportCount preserved
+- runtimeCommit preserved
+- firstRunId preserved
+- lastRunId preserved
+- verifierId preserved
+- auditBundleRelativePath preserved
+- receiptRelativePath preserved
+- verifiedAtIso preserved
+- receiptCreatedAtIso preserved
+- digestHex returned as 64 lowercase hex characters
+
+Confirmed malformed config behavior:
+
+- missing rootDir env value rejected as missing_env_key
+- blank report paths env value rejected as missing_env_key
+- direct config with reportRelativePaths: [] rejected as invalid_report_paths
+- report path escape rejected as invalid_relative_path
+- bad verifiedAtIso rejected as invalid_iso_timestamp
+- invalid overwrite rejected as invalid_overwrite
+- blank verifierId rejected as invalid_verifier_id
+
+Confirmed forbidden material behavior:
+
+- ANCHOR_WALLET env key rejected as forbidden_env_key
+- PRIVATE_KEY env key rejected as forbidden_env_key
+- verifierId containing privateKey marker rejected as forbidden_config_value
+- workflow stable JSON does not contain secret-bearing fields
+
+Checks passed:
+
+- Stage 3.7 operator workflow config/env boundary: 3 passing
+- Stage 3.6 plus Stage 3.7 smoke: 6 passing
+- Stage 3.1 through Stage 3.7 smoke: 21 passing
+- Prettier check passed
+- git diff --check clean
+- pasted terminal fragments check clean
+
+Document added:
+
+- docs/gateway/evidence/stage-3-7-operator-workflow-config-boundary-evidence.md
+
+Current conclusion:
+
+Stage 3.7 proves that offline operator workflow configuration can be parsed, normalized, validated, rejected safely when malformed or secret-bearing, and then used to run the already-proven Stage 3.6 workflow. This becomes the foundation for later CLI command boundaries, monitoring, and production runbooks.
