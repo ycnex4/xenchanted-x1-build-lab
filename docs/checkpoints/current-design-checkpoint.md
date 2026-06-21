@@ -26243,3 +26243,135 @@ Document added:
 Current conclusion:
 
 Stage 3.5 proves that a successful Stage 3.4 audit bundle verification result can be converted into a Stage 2.37 verification receipt, exported to disk, read back, validated, and verified as a stable Stage 3 file IO round trip. This becomes the foundation for later receipt CLI commands and production workflow packaging.
+
+
+## Stage 3.6 operator workflow script boundary evidence
+
+Stage 3.6 adds the offline operator workflow script boundary for the Stage 3 tooling / production surface.
+
+Runtime repo:
+
+- ~/xenchanted-x1-lab/hello-x1
+
+Runtime branch:
+
+- stage-3-6-operator-workflow-script-boundary
+
+Runtime commit:
+
+- 97cc765 Add Stage 3.6 operator workflow script boundary
+
+Base runtime commit:
+
+- c926ffe Add Stage 3.5 verification receipt boundary
+
+Scope:
+
+- offline operator workflow script boundary
+- offline / zero-SOL
+- no live RPC
+- no ANCHOR_WALLET
+- no transaction submission
+- no gas / SOL spend
+- no CLI command yet
+- uses Stage 2 report / audit / digest / checkpoint / bundle models
+- uses Stage 3.1 artifact file IO model
+- uses Stage 3.2 operator report export helper
+- uses Stage 3.3 audit bundle export helper
+- uses Stage 3.4 audit bundle verifier helper
+- uses Stage 3.5 verification receipt helper
+- composes operator reports into audit bundle
+- verifies audit bundle
+- creates verification receipt
+- verifies receipt
+- returns compact workflow summary
+
+New helper:
+
+- tests/helpers/stage3OperatorWorkflowScriptPrototype.ts
+
+New test:
+
+- tests/stage3_operator_workflow_script_boundary.test.ts
+
+New result type:
+
+- Stage3OperatorWorkflowScriptResult
+
+New helper:
+
+- runStage3OperatorWorkflowScriptPrototype
+
+Workflow chain:
+
+- operator reports
+- report artifact exports
+- audit log construction
+- digest
+- checkpoint
+- audit bundle export
+- audit bundle verification
+- verification receipt creation
+- verification receipt export
+- receipt verification
+- compact workflow summary
+
+Confirmed successful workflow behavior:
+
+- exports two operator report artifacts
+- constructs audit log from exported reports
+- computes digest
+- creates checkpoint
+- creates audit export bundle
+- exports audit bundle
+- verifies audit bundle
+- creates verification receipt
+- exports verification receipt
+- verifies receipt
+- returns receiptValid: true
+- returns executionMode: offline_zero_sol
+- preserves reportCount
+- preserves runtimeCommit
+- preserves digestHex
+- preserves firstRunId
+- preserves lastRunId
+- preserves verifierId
+- preserves auditBundleRelativePath
+- preserves receiptRelativePath
+- preserves verifiedAtIso
+- preserves receiptCreatedAtIso
+- written report artifact can be read back
+- written audit bundle can be read back
+- written receipt can be read back
+- stableJson does not contain secret-bearing fields
+
+Confirmed invalid workflow behavior:
+
+- empty report list rejected
+- report path count mismatch rejected
+- blank verifierId rejected through receipt validation
+
+Confirmed file IO safety behavior:
+
+- accidental overwrite rejected by default
+- explicit overwrite allowed with overwrite: true
+- report path escape rejected
+- audit bundle path escape rejected
+- receipt path escape rejected
+
+Checks passed:
+
+- Stage 3.6 operator workflow script boundary: 3 passing
+- Stage 3.2 plus Stage 3.3 plus Stage 3.4 plus Stage 3.5 plus Stage 3.6 smoke: 15 passing
+- Stage 3.1 through Stage 3.6 smoke: 18 passing
+- Prettier check passed
+- git diff --check clean
+- pasted terminal fragments check clean
+
+Document added:
+
+- docs/gateway/evidence/stage-3-6-operator-workflow-script-boundary-evidence.md
+
+Current conclusion:
+
+Stage 3.6 proves that the existing Stage 3.2 through Stage 3.5 tooling layers can be composed into one deterministic offline operator workflow: reports -> audit bundle -> verification -> receipt. This becomes the foundation for later real CLI commands, config/env boundaries, monitoring, and production runbooks.
