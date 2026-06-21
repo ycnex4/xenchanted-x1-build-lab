@@ -29617,3 +29617,217 @@ It accepts 3-of-5, 4-of-5, and 5-of-5 valid guardian signatures.
 It rejects 2-of-5, duplicate signatures, unknown guardians, and invalid signatures.
 
 The next valid stage is Stage 4.14 cryptographic verification receipt boundary.
+
+
+## Stage 4.14 cryptographic verification receipt boundary evidence
+
+Stage 4.14 adds the cryptographic verification receipt boundary.
+
+Runtime repo:
+
+- ~/xenchanted-x1-lab/hello-x1
+
+Runtime branch:
+
+- stage-4-14-cryptographic-verification-receipt-boundary
+
+Runtime commit:
+
+- 7624afa Add Stage 4.14 cryptographic verification receipt boundaryy
+
+Base runtime commit:
+
+- c256bba Add Stage 4.13 offline cryptographic signature verification boundary
+
+Scope:
+
+- cryptographic verification receipt boundary
+- Stage 4.13 source result digest boundary
+- receipt digest boundary
+- deterministic receipt payload boundary
+- guardian quorum receipt boundary
+- fee-bound digest and amount conversion receipt boundary
+- offline model boundary
+- no new cryptographic verification
+- no live RPC
+- no wallet loading
+- no private keys
+- no private key export
+- no signing
+- no transaction submission
+- no SOL spend
+
+Required Stage 4.13 source:
+
+- stage4_offline_cryptographic_signature_verification_result
+
+Receipt binds:
+
+- sourceResultDigest
+- receiptDigest
+- guardianSetVersion
+- verifiedFeeBoundMessageDigest
+- verifiedSignatureCount
+- verifiedGuardianPublicKeysDigest
+- xntdRawPerXxxlRaw
+- burnedXntdRaw
+- xxxlMintRaw
+- messageBinding
+
+New helper:
+
+- tests/helpers/stage4CryptographicVerificationReceiptPrototype.ts
+
+New test:
+
+- tests/stage4_cryptographic_verification_receipt_boundary.test.ts
+
+New result type:
+
+- Stage4CryptographicVerificationReceiptResult
+
+Result artifact:
+
+- stage4_cryptographic_verification_receipt_result
+
+Execution mode:
+
+- cryptographic_verification_receipt_offline
+
+New error class:
+
+- Stage4CryptographicVerificationReceiptError
+
+New helpers:
+
+- deriveStage4SourceVerificationDigestPrototype
+- buildStage4CryptographicVerificationReceiptPayloadPrototype
+- assertStage4CryptographicVerificationReceiptOperationPrototype
+- runStage4CryptographicVerificationReceiptPrototype
+- checkStage4CryptographicVerificationReceiptResultPrototype
+
+Stage 4.14 policy object:
+
+- receiptOnly: true
+- sourceVerificationRequired: stage4_offline_cryptographic_signature_verification_result
+- sourceResultDigestRequired: true
+- receiptDigestRequired: true
+- exactFeeDigestMatchRequired: true
+- exactAmountConversionRequired: true
+- fixedGuardianCount: 5
+- fixedQuorumThreshold: 3
+- minimumVerifiedSignatureCount: 3
+- signing: not_performed
+- privateKeyAccess: not_allowed
+- walletLoading: not_allowed
+- liveRpc: not_used
+- transactionSubmission: not_allowed
+- solSpendAllowed: false
+
+Stage 4.14 invariants:
+
+- offlineOnly: true
+- receiptOnly: true
+- sourceStage413Bound: true
+- sourceResultDigestBound: true
+- receiptDigestBound: true
+- feeBoundMessageDigestBound: true
+- amountConversionPolicyBound: true
+- exactFeeDigestMatch: true
+- exactAmountConversion: true
+- boundToGuardianSetVersion: true
+- exactlyFiveGuardians: true
+- threeOfFiveQuorum: true
+- noSigning: true
+- noPrivateKeys: true
+- noWalletLoaded: true
+- noLiveRpc: true
+- noTransactionsSubmitted: true
+- noSolSpend: true
+
+Confirmed successful behavior:
+
+- builds a deterministic receipt over a valid Stage 4.13 offline cryptographic verification result
+- derives sourceResultDigest as a 64-char hex digest
+- derives receiptDigest as a 64-char hex digest
+- sourceVerificationStage is 4.13
+- sourceVerificationOk is true
+- sourceArtifactType is stage4_offline_cryptographic_signature_verification_result
+- guardianSetVersion is 1
+- guardianCount is 5
+- quorumThreshold is 3
+- verifiedSignatureCount is 3
+- quorumReached is true
+- signatureScheme is ed25519
+- publicKeyEncoding is base58_x1_guardian_public_key
+- signatureEncoding is base64_ed25519_signature
+- messageBinding is stage4_9_fee_bound_digest_and_stage4_11_amount_conversion_policy
+- xntdRawPerXxxlRaw is 100000000000000000
+- burnedXntdRaw is 100000000000000000000000000
+- xxxlMintRaw is 1000000000
+- receiptPayload.sourceResultDigest equals sourceResultDigest
+- checkStage4CryptographicVerificationReceiptResultPrototype returns true
+
+Confirmed digest stability behavior:
+
+- the same Stage 4.13 source result produces the same sourceResultDigest
+- the same Stage 4.13 source result produces the same receiptDigest
+- a changed Stage 4.13 source result changes sourceResultDigest
+- a changed Stage 4.13 source result changes receiptDigest
+
+Confirmed safe output behavior:
+
+- receipt JSON does not contain wallet path
+- receipt JSON does not contain private key markers
+- receipt JSON does not contain signing methods
+- receipt JSON does not contain serialized transaction marker
+- receipt JSON does not contain transaction submission methods
+- receipt JSON does not contain live_rpc marker
+
+Confirmed rejection behavior:
+
+- malformed receiptedAtIso rejected as invalid_receipted_at_iso
+- failed Stage 4.13 source rejected as invalid_offline_cryptographic_verification_result
+- wrong source stage rejected as invalid_offline_cryptographic_verification_result
+- wrong expectedSourceResultDigest rejected as invalid_digest
+- wrong expectedReceiptDigest rejected as invalid_digest
+- forbidden value in source amount rejected as forbidden_value
+- sendTransaction operation rejected as invalid_cryptographic_verification_receipt_operation
+- signMessage operation rejected as invalid_cryptographic_verification_receipt_operation
+
+Checks passed:
+
+- Stage 4.14 cryptographic verification receipt boundary: 4 passing
+- Stage 4.1 through Stage 4.14 smoke: 48 passing
+- Stage 3.10 plus Stage 4.1 through Stage 4.14 smoke: 51 passing
+- Prettier check passed
+- git diff --check clean
+- strict sourceResultDigest typo check passed
+- exact safety marker verification passed
+- pasted terminal fragments check clean
+
+Document added:
+
+- docs/gateway/evidence/stage-4-14-cryptographic-verification-receipt-boundary-evidence.md
+
+Current conclusion:
+
+Stage 4.14 creates a deterministic receipt over the already verified Stage 4.13 offline cryptographic signature verification result.
+
+The receipt binds:
+
+- Stage 4.13 source result digest
+- receipt digest
+- Stage 4.9 fee-bound message digest
+- Stage 4.11 exact XNTD -> XXXL amount conversion policy
+- guardianSetVersion
+- verified guardian quorum
+- verified guardian public keys digest
+
+It does not introduce new cryptographic verification.
+
+It does not introduce signing.
+
+It does not introduce live RPC or transaction submission.
+
+The next valid stage is Stage 4.15 receipt-bound transaction preflight boundary.
