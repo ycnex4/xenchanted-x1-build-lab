@@ -190,7 +190,7 @@ Required envelope values:
     instructionName: mint_xxxl_from_gateway_message
     signerCount: 0
     requiredSignatureCount: 0
-    serializedTransaction: <not_created:no_wallet_no_signing>
+    serialized transaction status: <not_created:no_wallet_no_signing>
     transactionSubmission: not_allowed
     simulation: not_performed
 
