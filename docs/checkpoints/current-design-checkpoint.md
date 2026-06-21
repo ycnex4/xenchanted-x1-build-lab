@@ -30217,3 +30217,115 @@ Stage 4.17 does not load a wallet, access private keys, sign, fetch a recent blo
 Next valid stage:
 
     Stage 4.18 — receipt-bound transaction message planning boundary
+
+---
+
+## Stage 4.18 — Receipt-Bound Transaction Message Planning Boundary
+
+Runtime reference:
+
+- 854ae6e Add Stage 4.18 receipt-bound transaction message planning boundary
+
+Evidence:
+
+- docs/gateway/evidence/stage-4-18-receipt-bound-transaction-message-planning-boundary-evidence.md
+
+Stage 4.18 adds the receipt-bound transaction message planning boundary.
+
+Stage 4.17 modeled a receipt-bound no-sign assembly structure. Stage 4.18 plans the runtime message and account mapping for a future external signer integration, while preserving the no-local-custody safety boundary.
+
+The Stage 4.18 artifact is:
+
+    stage4_receipt_bound_transaction_message_planning_result
+
+The Stage 4.18 execution mode is:
+
+    receipt_bound_transaction_message_planning_offline
+
+Stage 4.18 consumes the Stage 4.17 artifact:
+
+    stage4_receipt_bound_transaction_assembly_no_sign_result
+
+Stage 4.18 binds the message plan to:
+
+- Source no-sign assembly digest.
+- Source assembly design digest.
+- Source receipt digest.
+- Source verification result digest.
+- Instruction data digest.
+- Exact instruction name.
+- Program id.
+- Payer public key.
+- Account mapping digest.
+- Instruction message plan digest.
+
+The exact instruction name remains:
+
+    mint_xxxl_from_receipt_bound_gateway_message
+
+Required runtime account roles:
+
+    program
+    payer
+    mint
+    recipient
+    processed_burn_registry
+    guardian_quorum
+    cryptographic_verification_receipt
+
+Important message-planning statuses:
+
+    blockhashPlanningStatus: not_requested_no_live_network
+    feePayerPlanningStatus: payer_public_key_only
+    signerPlanningStatus: not_performed
+    compiledMessagePlanningStatus: not_created_message_plan_only
+    transactionPlanningStatus: not_created_message_plan_only
+
+Stage 4.18 preserves these invariants:
+
+    offlineOnly: true
+    messagePlanningOnly: true
+    sourceNoSignAssemblyStage417Bound: true
+    sourceNoSignAssemblyDigestBound: true
+    sourceAssemblyDesignDigestBound: true
+    sourceReceiptDigestBound: true
+    sourceResultDigestBound: true
+    instructionDataDigestBound: true
+    instructionNameBound: true
+    accountMappingDigestBound: true
+    instructionMessagePlanDigestBound: true
+    messagePlanningDigestBound: true
+    accountRolesBound: true
+    allAccountsNonSigners: true
+    noWalletLoaded: true
+    noPrivateKeys: true
+    noSigning: true
+    noSignerResolution: true
+    noRecentBlockhashFetched: true
+    noRuntimeInstructionObjectCreated: true
+    noRuntimeTransactionObjectCreated: true
+    noCompiledMessageCreated: true
+    noSerializedTransaction: true
+    noSimulation: true
+    noLiveRpc: true
+    noTransactionsSubmitted: true
+    noSolSpend: true
+
+Runtime checks passed:
+
+    Corrected Stage 4.18 marker check: passed
+    Stage 4.18 test: 4 passing
+    Stage 4.17 + Stage 4.18 smoke: 8 passing
+    Stage 3.10 + Stage 4.1 through Stage 4.18 smoke: 67 passing
+    Prettier check: passed
+    git diff --check: clean
+
+Boundary decision:
+
+Stage 4.18 does not load a local signer, access keypairs, access private keys, sign, fetch a recent blockhash, create a runtime instruction object, create a runtime transaction object, create a compiled message, serialize a transaction, simulate, call live RPC, submit a transaction, or spend SOL.
+
+The project is not building a standalone custody wallet here. The message plan is for future integration with an existing external X1 wallet or signer interface.
+
+Next valid stage:
+
+    Stage 4.19 — receipt-bound external signer handoff planning boundary
