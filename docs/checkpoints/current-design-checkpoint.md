@@ -29207,3 +29207,201 @@ It proves that a relayer mint intent must contain the exact derived xxxlMintAmou
 It rejects the old raw 1:1 placeholder amount pattern.
 
 The next valid stage is Stage 4.12 production signature verification design boundary.
+
+
+## Stage 4.12 production signature verification design boundary evidence
+
+Stage 4.12 adds the production signature verification design boundary.
+
+Runtime repo:
+
+- ~/xenchanted-x1-lab/hello-x1
+
+Runtime branch:
+
+- stage-4-12-production-signature-verification-design-boundary
+
+Runtime commit:
+
+- 2c84294 Add Stage 4.12 production signature verification design boundary
+
+Base runtime commit:
+
+- 0be7dd4 Add Stage 4.11 XNTD XXXL amount conversion boundary
+
+Scope:
+
+- production signature verification design boundary
+- ed25519 signature scheme design boundary
+- base58 guardian public key encoding design boundary
+- base64 signature encoding design boundary
+- Stage 4.9 fee-bound digest binding
+- Stage 4.10 guardian approval verification binding
+- Stage 4.11 amount conversion policy binding
+- offline model boundary
+- no real cryptographic signature verification
+- no wallet loading
+- no private keys
+- no signing
+- no transaction submission
+- no SOL spend
+
+Required Stage 4.10 source:
+
+- stage4_guardian_fee_bound_approval_verification_result
+
+Required Stage 4.11 source:
+
+- stage4_xntd_xxxl_amount_conversion_policy_result
+
+Signature design contract:
+
+- signatureScheme: ed25519
+- publicKeyEncoding: base58_x1_guardian_public_key
+- signatureEncoding: base64_ed25519_signature
+- messageBinding: stage4_9_fee_bound_digest_and_stage4_11_amount_conversion_policy
+- feeBoundDigestAlgorithm: sha256_model_hash
+
+New helper:
+
+- tests/helpers/stage4ProductionSignatureVerificationDesignPrototype.ts
+
+New test:
+
+- tests/stage4_production_signature_verification_design_boundary.test.ts
+
+New result type:
+
+- Stage4ProductionSignatureVerificationDesignResult
+
+Result artifact:
+
+- stage4_production_signature_verification_design_result
+
+Execution mode:
+
+- production_signature_verification_design_offline
+
+New error class:
+
+- Stage4ProductionSignatureVerificationDesignError
+
+New helpers:
+
+- assertStage4ProductionSignatureVerificationDesignOperationPrototype
+- runStage4ProductionSignatureVerificationDesignPrototype
+- checkStage4ProductionSignatureVerificationDesignResultPrototype
+
+Stage 4.12 policy object:
+
+- designOnly: true
+- productionSignatureSchemeRequired: ed25519
+- publicKeyEncodingRequired: base58_x1_guardian_public_key
+- signatureEncodingRequired: base64_ed25519_signature
+- messageBindingRequired: stage4_9_fee_bound_digest_and_stage4_11_amount_conversion_policy
+- exactFeeDigestMatchRequired: true
+- exactAmountConversionRequired: true
+- fixedGuardianCount: 5
+- fixedQuorumThreshold: 3
+- duplicateApprovalHandling: reject
+- unknownGuardianHandling: reject
+- guardianSetVersionBound: 1
+- signing: not_performed
+- cryptographicSignatureVerification: not_performed
+- privateKeyAccess: not_allowed
+- walletLoading: not_allowed
+- transactionSubmission: not_allowed
+- solSpendAllowed: false
+
+Stage 4.12 invariants:
+
+- offlineOnly: true
+- designOnly: true
+- ed25519Required: true
+- publicKeyEncodingDefined: true
+- signatureEncodingDefined: true
+- feeBoundMessageDigestBound: true
+- amountConversionPolicyBound: true
+- exactFeeDigestMatch: true
+- exactAmountConversion: true
+- boundToGuardianSetVersion: true
+- exactlyFiveGuardians: true
+- threeOfFiveQuorum: true
+- noPrivateKeys: true
+- noSigning: true
+- noCryptographicSignatureVerification: true
+- noWalletLoaded: true
+- noTransactionsSubmitted: true
+- noSolSpend: true
+
+Confirmed successful behavior:
+
+- Stage 4.12 result binds to Stage 4.10 approval verification result
+- Stage 4.12 result binds to Stage 4.11 amount conversion policy result
+- signatureScheme is ed25519
+- publicKeyEncoding is base58_x1_guardian_public_key
+- signatureEncoding is base64_ed25519_signature
+- messageBinding is stage4_9_fee_bound_digest_and_stage4_11_amount_conversion_policy
+- feeBoundDigestAlgorithm is sha256_model_hash
+- guardianSetVersion is 1
+- guardianCount is 5
+- quorumThreshold is 3
+- xntdErc20Decimals is 18
+- xxxlX1Decimals is 9
+- xntdPerXxxl is 100000000
+- xntdRawPerXxxlRaw is 100000000000000000
+- burnedXntdRaw is 100000000000000000000000000
+- xxxlMintRaw is 1000000000
+- checkStage4ProductionSignatureVerificationDesignResultPrototype returns true
+
+Confirmed safe output behavior:
+
+- signature verification design result JSON does not contain wallet path
+- signature verification design result JSON does not contain private key markers
+- signature verification design result JSON does not contain signing methods
+- signature verification design result JSON does not contain serialized transaction marker
+- signature verification design result JSON does not contain transaction submission methods
+
+Confirmed rejection behavior:
+
+- malformed designedAtIso rejected as invalid_designed_at_iso
+- failed Stage 4.10 approval verification rejected as fee_bound_approval_verification_not_ok
+- failed Stage 4.11 amount conversion rejected as amount_conversion_policy_not_ok
+- route mismatch rejected as route_mismatch
+- unsupported signature scheme rejected as invalid_signature_scheme
+- unsupported public key encoding rejected as invalid_public_key_encoding
+- unsupported signature encoding rejected as invalid_signature_encoding
+- unsupported message binding rejected as invalid_message_binding
+- wrong expected fee-bound digest rejected as invalid_expected_fee_bound_digest
+- forbidden expected digest value rejected as forbidden_value
+- sendTransaction operation rejected as invalid_signature_verification_design_operation
+- signMessage operation rejected as invalid_signature_verification_design_operation
+
+Checks passed:
+
+- Stage 4.12 production signature verification design boundary: 3 passing
+- Stage 4.1 through Stage 4.12 smoke: 40 passing
+- Stage 3.10 plus Stage 4.1 through Stage 4.12 smoke: 43 passing
+- Prettier check passed
+- git diff --check clean
+- exact safety marker verification passed
+- suspicious typo check clean
+- pasted terminal fragments check clean
+
+Document added:
+
+- docs/gateway/evidence/stage-4-12-production-signature-verification-design-boundary-evidence.md
+
+Current conclusion:
+
+Stage 4.12 defines the future production signature verification contract.
+
+It binds the future signature verification target to:
+
+- Stage 4.9 fee-bound message digest
+- Stage 4.10 guardian approval verification
+- Stage 4.11 exact XNTD -> XXXL amount conversion policy
+
+It does not yet verify real ed25519 signatures.
+
+The next valid stage is Stage 4.13 offline cryptographic signature verification boundary.
