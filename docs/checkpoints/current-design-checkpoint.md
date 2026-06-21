@@ -28990,3 +28990,64 @@ Stage 4.10 proves that guardian approvals are accepted only when they reference 
 This prevents approvals from being reused across different fee amounts, fee recipients, net amounts, fee quote ids, deadlines, or message digests.
 
 The next valid stage is Stage 4.11 production signature verification design boundary, or a deliberate Stage 4 checkpoint if we want to pause before cryptographic signature verification.
+
+
+## Stage 4.10 pre-signature checkpoint
+
+A Stage 4.10 pre-signature checkpoint was added after closing Stage 4.1 through Stage 4.10.
+
+Checkpoint document:
+
+- docs/gateway/stage-4-10-pre-signature-checkpoint.md
+
+Closed pre-signature Stage 4 boundaries:
+
+- Stage 4.1 redacted live config boundary
+- Stage 4.2 read-only RPC connectivity boundary
+- Stage 4.3 watcher read-only observation boundary
+- Stage 4.4 relayer dry-run no-send boundary
+- Stage 4.5 guardian operation policy boundary
+- Stage 4.6 transaction preflight no-send boundary
+- Stage 4.7 fixed guardian set quorum boundary
+- Stage 4.8 gateway fee policy boundary
+- Stage 4.9 guardian fee-bound approval message boundary
+- Stage 4.10 guardian fee-bound approval verification boundary
+
+Current pre-signature proof chain:
+
+- redacted live config
+- read-only RPC boundary
+- watcher read-only observation
+- relayer dry-run no-send
+- guardian operation policy
+- transaction preflight no-send
+- fixed 5 guardian / 3-of-5 quorum
+- gateway fee policy
+- guardian approval message with fee bound into digest
+- guardian approval verification against exact fee-bound digest
+
+Current safety status:
+
+- no wallet-loading path introduced
+- no private key path introduced
+- no guardian private key material introduced
+- no signing path introduced
+- no production cryptographic signature verification introduced
+- no live-send path introduced
+- no transaction submission path introduced
+- no SOL spend path introduced
+
+Purpose of checkpoint:
+
+- pause before entering production signature verification design
+- record that fee-bound approval verification is complete at model level
+- separate offline public-identity approval modeling from future cryptographic signature verification
+- preserve the invariant that approvals must match the exact fee-bound digest
+- preserve the 5 guardian / 3-of-5 quorum model
+- preserve duplicate guardian rejection
+- preserve unknown guardian rejection
+- preserve no fee substitution after approval
+
+Next valid stage:
+
+- Stage 4.11 production signature verification design boundary
