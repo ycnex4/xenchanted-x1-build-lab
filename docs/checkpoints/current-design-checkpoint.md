@@ -30853,3 +30853,163 @@ Stage 5.2 does not authorize SOL spend.
 Next valid stage:
 
     Stage 5.3 — unsigned payload export package boundary
+
+---
+
+## Stage 5.3 — Unsigned Payload Export Package Boundary
+
+Runtime reference:
+
+- 00a71a1 Add Stage 5.3 unsigned payload export package boundary
+
+Evidence:
+
+- docs/gateway/evidence/stage-5-3-unsigned-payload-export-package-boundary-evidence.md
+
+Stage 5.3 defines the offline unsigned payload export package for later review by an existing X1 wallet or external signer.
+
+The Stage 5.3 artifact is:
+
+    stage5_unsigned_payload_export_package_result
+
+The Stage 5.3 execution mode is:
+
+    unsigned_payload_export_package_offline
+
+Raw package marker:
+
+    stage5_unsigned_payload_export_package
+
+Raw package format marker:
+
+    x1_external_wallet_unsigned_payload_package
+
+Raw signer summary marker:
+
+    stage5_human_readable_signer_summary
+
+Raw verification checklist marker:
+
+    stage5_unsigned_payload_verification_checklist
+
+Stage 5.3 consumes:
+
+    stage5_external_signer_x1_wallet_handoff_contract_result
+
+Required Stage 5.2 runtime commit:
+
+    6a1df6e
+
+Required prior runtime lineage:
+
+    422d261
+    69f3c5b
+
+Unsigned payload package:
+
+    packageKind: stage5_unsigned_payload_export_package
+    packageFormat: x1_external_wallet_unsigned_payload_package
+    packageVersion: 1
+    handoffLayer: existing_x1_wallet_or_external_signer
+    payloadPurpose: receipt_bound_gateway_mint_for_external_wallet_review_later
+    packageStatus: format_defined_offline_only
+    payloadExportStatus: not_exported_to_wallet_in_stage5_3
+    transactionObjectStatus: not_created_in_stage5_3
+    transactionSerializationStatus: not_produced_in_stage5_3
+    signatureStatus: not_signed_in_stage5_3
+    liveRpcStatus: not_used_in_stage5_3
+    simulationStatus: not_performed_in_stage5_3
+    transactionSubmissionStatus: not_allowed_in_stage5_3
+    solSpendStatus: not_allowed_in_stage5_3
+    userWalletApprovalStatus: not_requested_in_stage5_3
+
+Payload verification checklist:
+
+    externalSignerMustVerifyNetworkLater: true
+    externalSignerMustVerifyProgramIdLater: true
+    externalSignerMustVerifyPayerPublicKeyLater: true
+    externalSignerMustVerifyRecipientLater: true
+    externalSignerMustVerifyInstructionNameLater: true
+    externalSignerMustVerifyAmountLater: true
+    externalSignerMustVerifyFeeLater: true
+    externalSignerMustVerifyStage4ClosureDigestLater: true
+    externalSignerMustVerifyStage5OpeningDigestLater: true
+    externalSignerMustVerifyStage5HandoffDigestLater: true
+    externalSignerMustVerifyPackageDigestLater: true
+    runtimeMustNotMutatePackageAfterDigest: true
+    walletApprovalRequiredLater: true
+    signedPayloadIntakeRequiredLater: true
+    liveRpcSimulationRequiredLater: true
+    liveSubmitRequiresSeparateStageLater: true
+
+Stage 5.3 policy:
+
+    unsignedPayloadExportPackageOnly: true
+    sourceStage5HandoffRequired: stage5_external_signer_x1_wallet_handoff_contract_result
+    sourceStage5RuntimeCommitRequired: 6a1df6e
+    sourceStage4RuntimeCommitRequired: 69f3c5b
+    handoffLayer: existing_x1_wallet_or_external_signer
+    packageFormat: x1_external_wallet_unsigned_payload_package
+    runtimeCustody: none
+    custodyWalletProduct: out_of_scope
+    localSignerLoading: not_allowed
+    keypairAccess: not_allowed
+    privateKeyAccess: not_allowed
+    seedPhraseAccess: not_allowed
+    walletFileAccess: not_allowed
+    runtimeSigning: not_performed
+    runtimeTransactionSubmission: not_allowed
+    runtimeSolSpendAllowed: false
+    transactionObjectCreation: not_performed
+    transactionSerialization: not_performed
+    liveRpc: not_used
+    simulation: not_performed
+    userWalletApproval: not_requested_in_stage5_3
+    liveSubmitRequiresSeparateStageLater: true
+
+Stage 5.3 preserves these invariants:
+
+    sourceStage5HandoffBound: true
+    sourceStage5OpeningBound: true
+    sourceStage4ClosureBound: true
+    unsignedPayloadPackageBound: true
+    humanReadableSignerSummaryBound: true
+    payloadVerificationChecklistBound: true
+    externalSignerIntegrationOnly: true
+    custodyWalletOutOfScope: true
+    noRuntimeCustody: true
+    noLocalSignerLoaded: true
+    noKeypairAccess: true
+    noPrivateKeys: true
+    noSeedPhraseAccess: true
+    noWalletFileAccess: true
+    noRuntimeSigning: true
+    noRuntimeSubmission: true
+    noRuntimeSolSpend: true
+    noTransactionObjectCreated: true
+    noTransactionSerialization: true
+    noLiveRpc: true
+    noSimulation: true
+    liveSendNotAuthorized: true
+    liveSubmitRequiresSeparateStageLater: true
+
+Runtime checks passed:
+
+    Stage 5.3 strict final marker check: passed
+    Stage 5.3 test: 4 passing
+    Stage 5.2 + Stage 5.3 smoke: 8 passing
+    Stage 3.10 + Stage 4.1 through Stage 5.3 full smoke: 87 passing
+    Prettier check: passed
+    git diff --check: clean
+
+Boundary decision:
+
+Stage 5.3 closes the unsigned payload export package boundary.
+
+Stage 5.3 does not authorize live transaction submission.
+
+Stage 5.3 does not authorize SOL spend.
+
+Next valid stage:
+
+    Stage 5.4 — external wallet user-approval preflight boundary
