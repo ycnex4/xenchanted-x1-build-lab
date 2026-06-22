@@ -30658,6 +30658,7 @@ Stage 5.1 policy:
     unsignedPayloadExportStageRequiredLater: true
     liveRpcSimulationStageRequiredLater: true
     liveTransactionSubmissionStageRequiredLater: true
+    liveSubmitRequiresSeparateStageLater: true
 
 Stage 5.1 preserves these invariants:
 
