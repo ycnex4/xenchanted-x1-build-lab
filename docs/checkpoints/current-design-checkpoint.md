@@ -31013,3 +31013,179 @@ Stage 5.3 does not authorize SOL spend.
 Next valid stage:
 
     Stage 5.4 — external wallet user-approval preflight boundary
+
+---
+
+## Stage 5.4 — External Wallet User-Approval Preflight Boundary
+
+Runtime reference:
+
+- 165deb7 Add Stage 5.4 external wallet user approval preflight boundary
+
+Evidence:
+
+- docs/gateway/evidence/stage-5-4-external-wallet-user-approval-preflight-boundary-evidence.md
+
+Stage 5.4 defines the offline external wallet user-approval preflight boundary.
+
+The Stage 5.4 artifact is:
+
+    stage5_external_wallet_user_approval_preflight_result
+
+The Stage 5.4 execution mode is:
+
+    external_wallet_user_approval_preflight_offline
+
+Raw preflight marker:
+
+    stage5_external_wallet_user_approval_preflight
+
+Raw wallet review checklist marker:
+
+    stage5_wallet_review_checklist
+
+Raw user approval policy marker:
+
+    stage5_user_approval_decision_policy
+
+Stage 5.4 consumes:
+
+    stage5_unsigned_payload_export_package_result
+
+Required Stage 5.3 runtime commit:
+
+    00a71a1
+
+Required prior runtime lineage:
+
+    6a1df6e
+    69f3c5b
+
+External wallet user-approval preflight:
+
+    preflightKind: stage5_external_wallet_user_approval_preflight
+    walletLayer: existing_x1_wallet_or_external_signer
+    packageFormat: x1_external_wallet_unsigned_payload_package
+    reviewMode: wallet_review_preflight_only
+    approvalRequestStatus: not_requested_in_stage5_4
+    approvalDecisionStatus: not_collected_in_stage5_4
+    walletSignatureStatus: not_requested_in_stage5_4
+    signedPayloadStatus: not_available_in_stage5_4
+    transactionSubmissionStatus: not_allowed_in_stage5_4
+    solSpendStatus: not_allowed_in_stage5_4
+    liveRpcStatus: not_used_in_stage5_4
+    simulationStatus: not_performed_in_stage5_4
+    liveSubmitRequiresSeparateStageLater: true
+
+Wallet review checklist:
+
+    walletMustDisplayNetworkLater: true
+    walletMustDisplayProgramIdLater: true
+    walletMustDisplayPayerPublicKeyLater: true
+    walletMustDisplayRecipientLater: true
+    walletMustDisplayInstructionNameLater: true
+    walletMustDisplayAmountLater: true
+    walletMustDisplayFeeLater: true
+    walletMustDisplaySourceStage4ClosureDigestLater: true
+    walletMustDisplaySourceStage5OpeningDigestLater: true
+    walletMustDisplaySourceStage5HandoffDigestLater: true
+    walletMustDisplayUnsignedPackageDigestLater: true
+    walletMustDisplayApprovalWarningLater: true
+    walletMustRejectUnexpectedNetworkLater: true
+    walletMustRejectUnexpectedProgramIdLater: true
+    walletMustRejectUnexpectedRecipientLater: true
+    walletMustRejectUnexpectedAmountLater: true
+    walletReviewStatus: defined_not_displayed_in_stage5_4
+
+User approval decision policy:
+
+    approvalDecisionSource: external_wallet_user_only
+    runtimeCannotApprove: true
+    runtimeCannotSignForUser: true
+    runtimeCannotSubmitAfterApprovalInStage54: true
+    userMayApproveLater: true
+    userMayRejectLater: true
+    approvalCollectionStatus: not_collected_in_stage5_4
+    approvalResultStatus: not_available_in_stage5_4
+    signedPayloadIntakeRequiredLater: true
+    liveRpcSimulationRequiredLater: true
+    liveSubmitRequiresSeparateStageLater: true
+
+Stage 5.4 policy:
+
+    approvalPreflightOnly: true
+    sourceStage5ExportPackageRequired: stage5_unsigned_payload_export_package_result
+    sourceStage5RuntimeCommitRequired: 00a71a1
+    sourceStage4RuntimeCommitRequired: 69f3c5b
+    walletLayer: existing_x1_wallet_or_external_signer
+    packageFormat: x1_external_wallet_unsigned_payload_package
+    reviewMode: wallet_review_preflight_only
+    runtimeCustody: none
+    custodyWalletProduct: out_of_scope
+    localSignerLoading: not_allowed
+    keypairAccess: not_allowed
+    privateKeyAccess: not_allowed
+    seedPhraseAccess: not_allowed
+    walletFileAccess: not_allowed
+    runtimeSigning: not_performed
+    walletSignatureRequest: not_requested_in_stage5_4
+    signedPayloadIntake: not_performed
+    runtimeTransactionSubmission: not_allowed
+    runtimeSolSpendAllowed: false
+    transactionObjectCreation: not_performed
+    transactionSerialization: not_performed
+    liveRpc: not_used
+    simulation: not_performed
+    approvalCollectionStatus: not_collected_in_stage5_4
+    liveSubmitRequiresSeparateStageLater: true
+
+Stage 5.4 preserves these invariants:
+
+    sourceStage5ExportPackageBound: true
+    sourceStage5HandoffBound: true
+    sourceStage5OpeningBound: true
+    sourceStage4ClosureBound: true
+    approvalPreflightBound: true
+    walletReviewChecklistBound: true
+    userApprovalDecisionPolicyBound: true
+    externalSignerIntegrationOnly: true
+    custodyWalletOutOfScope: true
+    noRuntimeCustody: true
+    noLocalSignerLoaded: true
+    noKeypairAccess: true
+    noPrivateKeys: true
+    noSeedPhraseAccess: true
+    noWalletFileAccess: true
+    noRuntimeSigning: true
+    noWalletSignature: true
+    noSignedPayload: true
+    noRuntimeSubmission: true
+    noRuntimeSolSpend: true
+    noTransactionObjectCreated: true
+    noTransactionSerialization: true
+    noLiveRpc: true
+    noSimulation: true
+    approvalNotCollected: true
+    liveSendNotAuthorized: true
+    liveSubmitRequiresSeparateStageLater: true
+
+Runtime checks passed:
+
+    Stage 5.4 strict final marker check: passed
+    Stage 5.4 test: 4 passing
+    Stage 5.3 + Stage 5.4 smoke: 8 passing
+    Stage 3.10 + Stage 4.1 through Stage 5.4 full smoke: 91 passing
+    Prettier check: passed
+    git diff --check: clean
+
+Boundary decision:
+
+Stage 5.4 closes the external wallet user-approval preflight boundary.
+
+Stage 5.4 does not authorize live transaction submission.
+
+Stage 5.4 does not authorize SOL spend.
+
+Next valid stage:
+
+    Stage 5.5 — external wallet approval decision receipt boundary
