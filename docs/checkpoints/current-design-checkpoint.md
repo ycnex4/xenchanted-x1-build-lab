@@ -30703,3 +30703,153 @@ Stage 5.1 does not authorize SOL spend.
 Next valid stage:
 
     Stage 5.2 — external signer / X1 wallet handoff contract boundary
+
+---
+
+## Stage 5.2 — External Signer / X1 Wallet Handoff Contract Boundary
+
+Runtime reference:
+
+- 6a1df6e Add Stage 5.2 external signer X1 wallet handoff contract boundary
+
+Evidence:
+
+- docs/gateway/evidence/stage-5-2-external-signer-x1-wallet-handoff-contract-boundary-evidence.md
+
+Stage 5.2 defines the offline handoff contract between runtime payload preparation and an existing X1 wallet or external signer.
+
+The Stage 5.2 artifact is:
+
+    stage5_external_signer_x1_wallet_handoff_contract_result
+
+The Stage 5.2 execution mode is:
+
+    external_signer_x1_wallet_handoff_contract_offline
+
+Raw contract marker:
+
+    stage5_external_signer_x1_wallet_handoff_contract
+
+Raw verification requirements marker:
+
+    stage5_external_signer_verification_requirements
+
+Raw runtime limits marker:
+
+    stage5_runtime_handoff_limits
+
+Stage 5.2 consumes:
+
+    stage5_explicit_live_send_readiness_opening_result
+
+Required Stage 5.1 runtime commit:
+
+    422d261
+
+Required Stage 4.20 runtime lineage:
+
+    69f3c5b
+
+Handoff contract:
+
+    handoffLayer: existing_x1_wallet_or_external_signer
+    payloadFormat: x1_external_wallet_receipt_bound_message_plan
+    runtimeRole: payload_preparation_only
+    externalSignerRole: payer_signature_after_user_approval_later
+    runtimeCustody: none
+    custodyWalletProduct: out_of_scope
+    walletPrivateKeyBoundary: must_remain_external_to_runtime
+    operatorConfirmationRequiredLater: true
+    userApprovalRequiredLater: true
+    unsignedPayloadExportRequiredLater: true
+    signedPayloadIntakeRequiredLater: true
+    liveRpcSimulationRequiredLater: true
+    liveSubmitRequiresSeparateStageLater: true
+    transactionSubmissionStatus: not_allowed_in_stage5_2
+    solSpendStatus: not_allowed_in_stage5_2
+
+Runtime handoff limits:
+
+    localSignerLoading: not_allowed
+    keypairAccess: not_allowed
+    privateKeyAccess: not_allowed
+    seedPhraseAccess: not_allowed
+    walletFileAccess: not_allowed
+    runtimeSigning: not_performed
+    runtimeTransactionSubmission: not_allowed
+    runtimeSolSpendAllowed: false
+    transactionSerializationOutput: not_allowed_in_stage5_2
+    liveRpc: not_used
+    simulation: not_performed
+    operatorConfirmationCollection: not_collected_in_stage5_2
+    userWalletApproval: not_requested_in_stage5_2
+
+Stage 5.2 policy:
+
+    handoffContractOnly: true
+    sourceStage5OpeningRequired: stage5_explicit_live_send_readiness_opening_result
+    sourceStage5RuntimeCommitRequired: 422d261
+    sourceStage4RuntimeCommitRequired: 69f3c5b
+    externalSignerLayer: existing_x1_wallet_or_external_signer
+    payloadFormat: x1_external_wallet_receipt_bound_message_plan
+    custodyWalletProduct: out_of_scope
+    runtimeCustody: none
+    localSignerLoading: not_allowed
+    keypairAccess: not_allowed
+    privateKeyAccess: not_allowed
+    seedPhraseAccess: not_allowed
+    walletFileAccess: not_allowed
+    runtimeSigning: not_performed
+    runtimeTransactionSubmission: not_allowed
+    runtimeSolSpendAllowed: false
+    transactionSerializationOutput: not_allowed_in_stage5_2
+    liveRpc: not_used
+    simulation: not_performed
+    operatorConfirmationCollection: not_collected_in_stage5_2
+    userWalletApproval: not_requested_in_stage5_2
+    liveSubmitRequiresSeparateStageLater: true
+
+Stage 5.2 preserves these invariants:
+
+    sourceStage5OpeningBound: true
+    sourceStage4ClosureBound: true
+    handoffContractBound: true
+    verificationRequirementsBound: true
+    runtimeHandoffLimitsBound: true
+    externalSignerIntegrationOnly: true
+    custodyWalletOutOfScope: true
+    noRuntimeCustody: true
+    noLocalSignerLoaded: true
+    noKeypairAccess: true
+    noPrivateKeys: true
+    noSeedPhraseAccess: true
+    noWalletFileAccess: true
+    noRuntimeSigning: true
+    noRuntimeSubmission: true
+    noRuntimeSolSpend: true
+    noTransactionSerialization: true
+    noLiveRpc: true
+    noSimulation: true
+    liveSendNotAuthorized: true
+    liveSubmitRequiresSeparateStageLater: true
+
+Runtime checks passed:
+
+    Stage 5.2 strict final marker check: passed
+    Stage 5.2 test: 4 passing
+    Stage 5.1 + Stage 5.2 smoke: 8 passing
+    Stage 3.10 + Stage 4.1 through Stage 5.2 full smoke: 83 passing
+    Prettier check: passed
+    git diff --check: clean
+
+Boundary decision:
+
+Stage 5.2 closes the external signer / X1 wallet handoff contract boundary.
+
+Stage 5.2 does not authorize live transaction submission.
+
+Stage 5.2 does not authorize SOL spend.
+
+Next valid stage:
+
+    Stage 5.3 — unsigned payload export package boundary
