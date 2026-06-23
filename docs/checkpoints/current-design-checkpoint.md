@@ -31563,3 +31563,186 @@ Stage 5.6 does not authorize SOL spend.
 Next valid stage:
 
     Stage 5.7 — signed payload quarantine validation boundary
+
+---
+
+## Stage 5.7 — Signed Payload Quarantine Validation Boundary
+
+Runtime reference:
+
+- d32b11a Add Stage 5.7 signed payload quarantine validation boundary
+
+Evidence:
+
+- docs/gateway/evidence/stage-5-7-signed-payload-quarantine-validation-boundary-evidence.md
+
+Stage 5.7 defines validation of the quarantined signed payload reference created in Stage 5.6.
+
+The Stage 5.7 artifact is:
+
+    stage5_signed_payload_quarantine_validation_result
+
+The Stage 5.7 execution mode is:
+
+    signed_payload_quarantine_validation_offline
+
+Raw validation marker:
+
+    stage5_signed_payload_quarantine_validation
+
+Raw reference checklist marker:
+
+    stage5_signed_payload_reference_validation_checklist
+
+Raw quarantine release block marker:
+
+    stage5_signed_payload_quarantine_release_block
+
+Stage 5.7 consumes:
+
+    stage5_signed_payload_intake_quarantine_result
+
+Required Stage 5.6 runtime commit:
+
+    f34cba3
+
+Required prior runtime lineage:
+
+    db6c1b6
+    69f3c5b
+
+Quarantine validation:
+
+    validationKind: stage5_signed_payload_quarantine_validation
+    walletLayer: existing_x1_wallet_or_external_signer
+    payloadReferenceMode: digest_reference_only
+    validationScope: digest_reference_validation_only
+    quarantineSourceStatus: quarantined_not_released_stage5_6
+    validationStatus: validated_quarantine_reference_stage5_7
+    rawPayloadBytesStatus: not_required_not_stored_stage5_7
+    rawSignatureStatus: not_required_not_stored_stage5_7
+    walletSignatureMaterialStatus: external_to_runtime_stage5_7
+    transactionSubmissionStatus: not_allowed_in_stage5_7
+    solSpendStatus: not_allowed_in_stage5_7
+    liveRpcStatus: not_used_in_stage5_7
+    simulationStatus: not_performed_in_stage5_7
+    quarantineReleaseStatus: not_released_in_stage5_7
+    liveSubmitRequiresSeparateStageLater: true
+
+Reference validation checklist:
+
+    sourceQuarantineDigestMustMatch: true
+    sourceApprovalDecisionReceiptDigestMustMatch: true
+    sourceApprovalPreflightDigestMustMatch: true
+    sourceExportPackageDigestMustMatch: true
+    sourceHandoffDigestMustMatch: true
+    sourceOpeningDigestMustMatch: true
+    sourceStage4ClosureDigestMustMatch: true
+    signedPayloadReferenceDigestMustMatch: true
+    externallySignedPayloadDigestMustBeDigest: true
+    externallySignedPayloadByteLengthMustBePositiveSafeInteger: true
+    payloadReferenceModeMustRemainDigestReferenceOnly: true
+    rawPayloadBytesMustNotBeStored: true
+    rawSignatureMustNotBeStored: true
+    quarantineMustNotBeReleasedInStage57: true
+    liveRpcSimulationRequiredLater: true
+    liveSubmitRequiresSeparateStageLater: true
+
+Quarantine release block:
+
+    blockKind: stage5_signed_payload_quarantine_release_block
+    signedPayloadReferenceValidated: true
+    quarantineReleaseStatus: not_released_in_stage5_7
+    rawPayloadBytesMustRemainExternal: true
+    rawSignatureMustRemainExternal: true
+    mayProceedToLiveRpcSimulationLater: true
+    maySubmitLiveTransactionInStage57: false
+    maySpendSolInStage57: false
+    liveRpcSimulationStageRequiredLater: true
+    liveSubmitRequiresSeparateStageLater: true
+
+Stage 5.7 policy:
+
+    signedPayloadQuarantineValidationOnly: true
+    sourceStage5QuarantineRequired: stage5_signed_payload_intake_quarantine_result
+    sourceStage5RuntimeCommitRequired: f34cba3
+    sourceStage4RuntimeCommitRequired: 69f3c5b
+    payloadReferenceMode: digest_reference_only
+    validationScope: digest_reference_validation_only
+    runtimeCustody: none
+    custodyWalletProduct: out_of_scope
+    localSignerLoading: not_allowed
+    keypairAccess: not_allowed
+    privateKeyAccess: not_allowed
+    seedPhraseAccess: not_allowed
+    walletFileAccess: not_allowed
+    runtimeSigning: not_performed
+    walletSignatureCreation: not_performed
+    rawPayloadBytesStorage: not_allowed
+    rawSignatureStorage: not_allowed
+    quarantineRelease: not_allowed
+    runtimeTransactionSubmission: not_allowed
+    runtimeSolSpendAllowed: false
+    transactionObjectCreation: not_performed
+    transactionSerialization: not_performed
+    liveRpc: not_used
+    simulation: not_performed
+    liveRpcSimulationRequiredLater: true
+    liveSubmitRequiresSeparateStageLater: true
+
+Stage 5.7 preserves these invariants:
+
+    sourceStage5QuarantineBound: true
+    sourceStage5ApprovalDecisionReceiptBound: true
+    sourceStage5ApprovalPreflightBound: true
+    sourceStage5ExportPackageBound: true
+    sourceStage5HandoffBound: true
+    sourceStage5OpeningBound: true
+    sourceStage4ClosureBound: true
+    quarantineValidationBound: true
+    referenceValidationChecklistBound: true
+    quarantineReleaseBlockBound: true
+    externalSignerIntegrationOnly: true
+    custodyWalletOutOfScope: true
+    payloadReferenceOnly: true
+    referenceValidationOnly: true
+    noRuntimeCustody: true
+    noLocalSignerLoaded: true
+    noKeypairAccess: true
+    noPrivateKeys: true
+    noSeedPhraseAccess: true
+    noWalletFileAccess: true
+    noRuntimeSigning: true
+    noWalletSignatureCreation: true
+    noRawPayloadBytesStored: true
+    noRawSignatureStored: true
+    noRuntimeSubmission: true
+    noRuntimeSolSpend: true
+    noTransactionObjectCreated: true
+    noTransactionSerialization: true
+    noLiveRpc: true
+    noSimulation: true
+    quarantineReleaseBlocked: true
+    liveSendNotAuthorized: true
+    liveSubmitRequiresSeparateStageLater: true
+
+Runtime checks passed:
+
+    Stage 5.7 source check after patch: passed
+    Stage 5.7 test after patch: 4 passing
+    Stage 5.6 + Stage 5.7 smoke after patch: 9 passing
+    Stage 3.10 + Stage 4.1 through Stage 5.7 full smoke: 105 passing
+    Prettier check: passed
+    git diff --check: clean
+
+Boundary decision:
+
+Stage 5.7 closes the signed payload quarantine validation boundary.
+
+Stage 5.7 does not authorize live transaction submission.
+
+Stage 5.7 does not authorize SOL spend.
+
+Next valid stage:
+
+    Stage 5.8 — live RPC simulation preflight boundary
