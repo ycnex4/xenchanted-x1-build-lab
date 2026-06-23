@@ -31726,6 +31726,10 @@ Stage 5.7 preserves these invariants:
     liveSendNotAuthorized: true
     liveSubmitRequiresSeparateStageLater: true
 
+Negative validation marker:
+
+    invalid_stage5_quarantine
+
 Runtime checks passed:
 
     Stage 5.7 source check after patch: passed
