@@ -32788,3 +32788,222 @@ Stage 5.12 does not authorize runtime SOL spend.
 Next valid stage:
 
     Stage 5.13 — external wallet live completion closure boundary
+
+---
+
+## Stage 5.13 — External Wallet Live Completion Closure Boundary
+
+Runtime reference:
+
+- a099fd8 Add Stage 5.13 external wallet live completion closure boundary
+
+Final runtime commit:
+
+    a099fd8
+
+Evidence:
+
+- docs/gateway/evidence/stage-5-13-external-wallet-live-completion-closure-boundary-evidence.md
+
+Stage 5.13 defines the completion closure for the externally executed live-send path.
+
+The Stage 5.13 artifact is:
+
+    stage5_external_wallet_live_completion_closure_result
+
+The Stage 5.13 execution mode is:
+
+    external_wallet_live_completion_closure_offline
+
+Raw closure marker:
+
+    stage5_external_wallet_live_completion_closure
+
+Raw policy marker:
+
+    stage5_external_wallet_live_completion_closure_policy
+
+Raw gate marker:
+
+    stage5_external_wallet_live_completion_closure_gate
+
+Stage 5.13 consumes:
+
+    stage5_external_wallet_live_confirmation_observation_result
+
+Required Stage 5.12 final runtime commit:
+
+    443168d
+
+Required prior runtime lineage:
+
+    a7a833d
+    69f3c5b
+
+External wallet live completion closure:
+
+    closureKind: stage5_external_wallet_live_completion_closure
+    completionClosureSource: external_wallet_or_external_signer_only
+    completionClosureMode: external_completion_closure_digest_summary_only
+    externalLiveSendPathClosed: true
+    runtimeRpcCallStatus: not_performed_in_stage5_13
+    runtimeConfirmationObservationStatus: not_performed_in_stage5_13
+    runtimeSimulationStatus: not_performed_in_stage5_13
+    runtimeSubmissionStatus: not_performed_in_stage5_13
+    runtimeSolSpendStatus: not_performed_in_stage5_13
+    runtimeSignerStatus: not_loaded_stage5_13
+    rawPayloadBytesStatus: not_required_not_stored_stage5_13
+    rawSignatureStatus: not_required_not_stored_stage5_13
+    walletSignatureMaterialStatus: external_to_runtime_stage5_13
+    quarantineReleaseStatus: not_released_in_stage5_13
+    runtimeCompletionExecutionStatus: not_allowed_in_stage5_13
+    liveCompletionClosureStatus: external_wallet_live_send_path_closed
+    stage5LivePathClosureFinal: true
+
+External completion closure summary:
+
+    externalCompletionClosureDigest
+    externalCompletionSlot
+
+External wallet live completion closure policy:
+
+    policyKind: stage5_external_wallet_live_completion_closure_policy
+    completionClosureSource: external_wallet_or_external_signer_only
+    completionClosureMode: external_completion_closure_digest_summary_only
+    sourceStage5ConfirmationObservationRequired: stage5_external_wallet_live_confirmation_observation_result
+    sourceStage5RuntimeCommitRequired: 443168d
+    sourceStage4RuntimeCommitRequired: 69f3c5b
+    runtimeCannotPerformRpcInStage513: true
+    runtimeCannotObserveConfirmationInStage513: true
+    runtimeCannotSubmitInStage513: true
+    runtimeCannotSpendSolInStage513: true
+    runtimeCannotSignForUser: true
+    runtimeCannotCreateWalletSignature: true
+    rawPayloadBytesStorage: not_allowed
+    rawSignatureStorage: not_allowed
+    quarantineRelease: not_allowed
+    externalCompletionClosureOnly: true
+    stage5LivePathClosureFinal: true
+
+External wallet live completion closure gate:
+
+    gateKind: stage5_external_wallet_live_completion_closure_gate
+    completionClosureRecorded: true
+    sourceConfirmationObservationRequired: true
+    runtimeMayPerformRpcInStage513: false
+    runtimeMayObserveConfirmationInStage513: false
+    runtimeMaySubmitLiveTransactionInStage513: false
+    runtimeMaySpendSolInStage513: false
+    runtimeMayLoadSignerInStage513: false
+    rawPayloadBytesMustRemainExternal: true
+    rawSignatureMustRemainExternal: true
+    quarantineReleaseStatus: not_released_in_stage5_13
+    externalLiveSendPathClosed: true
+    stage5LivePathClosureFinal: true
+
+Stage 5.13 policy:
+
+    externalWalletLiveCompletionClosureOnly: true
+    sourceStage5ConfirmationObservationRequired: stage5_external_wallet_live_confirmation_observation_result
+    sourceStage5RuntimeCommitRequired: 443168d
+    sourceStage4RuntimeCommitRequired: 69f3c5b
+    completionClosureSource: external_wallet_or_external_signer_only
+    completionClosureMode: external_completion_closure_digest_summary_only
+    runtimeRpcCall: not_performed
+    runtimeConfirmationObservation: not_performed
+    runtimeSimulationExecution: not_performed
+    runtimeCustody: none
+    custodyWalletProduct: out_of_scope
+    localSignerLoading: not_allowed
+    keypairAccess: not_allowed
+    privateKeyAccess: not_allowed
+    seedPhraseAccess: not_allowed
+    walletFileAccess: not_allowed
+    runtimeSigning: not_performed
+    walletSignatureCreation: not_performed
+    rawPayloadBytesStorage: not_allowed
+    rawSignatureStorage: not_allowed
+    quarantineRelease: not_allowed
+    runtimeTransactionSubmission: not_allowed
+    runtimeSolSpendAllowed: false
+    transactionObjectCreation: not_performed
+    transactionSerialization: not_performed
+    stage5LivePathClosureFinal: true
+
+Stage 5.13 preserves these invariants:
+
+    sourceStage5ConfirmationObservationBound: true
+    sourceStage5SubmitReceiptBound: true
+    sourceStage5SubmitAuthorizationBound: true
+    sourceStage5SimulationReceiptBound: true
+    sourceStage5LiveRpcSimulationPreflightBound: true
+    sourceStage5QuarantineValidationBound: true
+    sourceStage5QuarantineBound: true
+    sourceStage5ApprovalDecisionReceiptBound: true
+    sourceStage5ApprovalPreflightBound: true
+    sourceStage5ExportPackageBound: true
+    sourceStage5HandoffBound: true
+    sourceStage5OpeningBound: true
+    sourceStage4ClosureBound: true
+    externalWalletLiveCompletionClosureBound: true
+    externalWalletLiveCompletionClosurePolicyBound: true
+    externalWalletLiveCompletionClosureGateBound: true
+    externalSignerIntegrationOnly: true
+    custodyWalletOutOfScope: true
+    externalCompletionClosureOnly: true
+    externalLiveSendPathClosed: true
+    noRuntimeRpcCall: true
+    noRuntimeConfirmationObservation: true
+    noRuntimeCustody: true
+    noLocalSignerLoaded: true
+    noKeypairAccess: true
+    noPrivateKeys: true
+    noSeedPhraseAccess: true
+    noWalletFileAccess: true
+    noRuntimeSigning: true
+    noWalletSignatureCreation: true
+    noRawPayloadBytesStored: true
+    noRawSignatureStored: true
+    noRuntimeSubmission: true
+    noRuntimeSolSpend: true
+    noTransactionObjectCreated: true
+    noTransactionSerialization: true
+    noRuntimeSimulationExecution: true
+    quarantineReleaseBlocked: true
+    liveCompletionWasExternalOnly: true
+    runtimeLiveExecutionNotPerformed: true
+    stage5LivePathClosureFinal: true
+
+Negative validation markers:
+
+    invalid_stage5_external_wallet_confirmation_observation
+    invalid_external_completion_closure
+
+Runtime checks passed:
+
+    Stage 5.13 source check before full smoke: passed
+    Stage 5.13 test: 5 passing
+    Stage 5.12 + Stage 5.13 smoke: 10 passing
+    Stage 3.10 + Stage 4.1 through Stage 5.13 full smoke: 136 passing
+    Prettier check: passed
+    git diff --check: clean
+
+Boundary decision:
+
+Stage 5.13 closes the external wallet live completion closure boundary.
+
+Stage 5.13 also closes the Stage 5 external wallet live-send path.
+
+Stage 5.13 does not perform runtime RPC.
+
+Stage 5.13 does not perform runtime confirmation observation.
+
+Stage 5.13 does not perform runtime simulation.
+
+Stage 5.13 does not perform live transaction submission.
+
+Stage 5.13 does not authorize runtime SOL spend.
+
+The Stage 5 external wallet live-send path is complete as an externally executed, runtime-noncustodial path.
+
+Any later live-mainnet execution stage must be opened explicitly as a new boundary and must not be implied by Stage 5.13.
