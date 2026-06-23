@@ -33007,3 +33007,154 @@ Stage 5.13 does not authorize runtime SOL spend.
 The Stage 5 external wallet live-send path is complete as an externally executed, runtime-noncustodial path.
 
 Any later live-mainnet execution stage must be opened explicitly as a new boundary and must not be implied by Stage 5.13.
+
+---
+
+## Stage 5 Completion Summary — External Wallet Live-Send Path
+
+Evidence:
+
+- docs/gateway/evidence/stage-5-completion-summary.md
+
+Final Stage 5 runtime commit:
+
+    a099fd8
+
+Final Stage 5 evidence commit:
+
+    5ff8c81
+
+Final Stage 5 build-lab merge:
+
+    943d760
+
+Stage 5 is complete as an externally executed, runtime-noncustodial live-send path.
+
+Final Stage 5 artifact:
+
+    stage5_external_wallet_live_completion_closure_result
+
+Final Stage 5 execution mode:
+
+    external_wallet_live_completion_closure_offline
+
+Final Stage 5 closure marker:
+
+    stage5_external_wallet_live_completion_closure
+
+Final Stage 5 policy marker:
+
+    stage5_external_wallet_live_completion_closure_policy
+
+Final Stage 5 gate marker:
+
+    stage5_external_wallet_live_completion_closure_gate
+
+Final Stage 5 closure status:
+
+    external_wallet_live_send_path_closed
+
+Final Stage 5 invariant marker:
+
+    stage5LivePathClosureFinal: true
+
+Stage 5 runtime sequence:
+
+    422d261 Stage 5.1 explicit live-send readiness opening boundary
+    6a1df6e Stage 5.2 external signer X1 wallet handoff contract boundary
+    00a71a1 Stage 5.3 unsigned payload export package boundary
+    165deb7 Stage 5.4 external wallet user approval preflight boundary
+    db6c1b6 Stage 5.5 external wallet approval decision receipt boundary
+    f34cba3 Stage 5.6 signed payload intake quarantine boundary
+    d32b11a Stage 5.7 signed payload quarantine validation boundary
+    012ea0b Stage 5.8 live RPC simulation preflight boundary
+    3775577 Stage 5.9 external wallet live RPC simulation receipt boundary
+    1093c5a Stage 5.10 external wallet live submit authorization boundary
+    a7a833d Stage 5.11 external wallet live submit receipt boundary
+    443168d Stage 5.12 external wallet live confirmation observation boundary
+    a099fd8 Stage 5.13 external wallet live completion closure boundary
+
+Final Stage 5 artifact chain:
+
+    stage5_live_send_readiness_opening_result
+    stage5_external_signer_x1_wallet_handoff_contract_result
+    stage5_unsigned_payload_export_package_result
+    stage5_external_wallet_user_approval_preflight_result
+    stage5_external_wallet_approval_decision_receipt_result
+    stage5_signed_payload_intake_quarantine_result
+    stage5_signed_payload_quarantine_validation_result
+    stage5_live_rpc_simulation_preflight_result
+    stage5_external_wallet_live_rpc_simulation_receipt_result
+    stage5_external_wallet_live_submit_authorization_result
+    stage5_external_wallet_live_submit_receipt_result
+    stage5_external_wallet_live_confirmation_observation_result
+    stage5_external_wallet_live_completion_closure_result
+
+Final Stage 5 invariants:
+
+    externalSignerIntegrationOnly: true
+    custodyWalletOutOfScope: true
+    externalCompletionClosureOnly: true
+    externalLiveSendPathClosed: true
+    noRuntimeRpcCall: true
+    noRuntimeConfirmationObservation: true
+    noRuntimeCustody: true
+    noLocalSignerLoaded: true
+    noKeypairAccess: true
+    noPrivateKeys: true
+    noSeedPhraseAccess: true
+    noWalletFileAccess: true
+    noRuntimeSigning: true
+    noWalletSignatureCreation: true
+    noRawPayloadBytesStored: true
+    noRawSignatureStored: true
+    noRuntimeSubmission: true
+    noRuntimeSolSpend: true
+    noTransactionObjectCreated: true
+    noTransactionSerialization: true
+    noRuntimeSimulationExecution: true
+    quarantineReleaseBlocked: true
+    liveCompletionWasExternalOnly: true
+    runtimeLiveExecutionNotPerformed: true
+    stage5LivePathClosureFinal: true
+
+Final Stage 5 runtime checks:
+
+    Stage 5.13 source check before full smoke: passed
+    Stage 5.13 test: 5 passing
+    Stage 5.12 + Stage 5.13 smoke: 10 passing
+    Stage 3.10 + Stage 4.1 through Stage 5.13 full smoke: 136 passing
+    Prettier check: passed
+    git diff --check: clean
+
+Final Stage 5 build-lab checks:
+
+    Stage 5.13 evidence marker check: passed
+    npm run typecheck: passed
+    npm test: 56 files / 398 tests passed
+    npm run build: passed
+    git diff --check: clean
+
+Completion decision:
+
+Stage 5 is complete only as:
+
+    external wallet live-send path
+    externally executed path
+    runtime-noncustodial path
+    digest-bound path
+    evidence-backed path
+    no-runtime-submit path
+    no-runtime-SOL-spend path
+    no-runtime-signing path
+    no-runtime-RPC-confirmation path
+
+Stage 5 must not be interpreted as permission for the runtime to submit transactions or spend SOL.
+
+Any later live-mainnet execution stage must be opened explicitly as a new boundary and must not be implied by this Stage 5 completion summary.
+
+
+Stage 5 completion explicit marker recap:
+
+    Stage 5 Completion Summary
+    69f3c5b
