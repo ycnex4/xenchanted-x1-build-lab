@@ -254,6 +254,11 @@ Stage 5.7 rejects:
 
 - Malformed creation timestamps.
 - Invalid Stage 5.6 quarantine artifacts.
+
+  Error marker:
+
+      invalid_stage5_quarantine
+
 - Wrong Stage 5.6 runtime commit references.
 - Signed payload quarantine validation digest mismatches.
 - Forbidden secret-bearing values.
