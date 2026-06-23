@@ -31365,3 +31365,201 @@ Stage 5.5 does not authorize SOL spend.
 Next valid stage:
 
     Stage 5.6 — signed payload intake quarantine boundary
+
+---
+
+## Stage 5.6 — Signed Payload Intake Quarantine Boundary
+
+Runtime reference:
+
+- f34cba3 Add Stage 5.6 signed payload intake quarantine boundary
+
+Evidence:
+
+- docs/gateway/evidence/stage-5-6-signed-payload-intake-quarantine-boundary-evidence.md
+
+Stage 5.6 defines a quarantine boundary for an externally signed payload reference on the approved path only.
+
+The Stage 5.6 artifact is:
+
+    stage5_signed_payload_intake_quarantine_result
+
+The Stage 5.6 execution mode is:
+
+    signed_payload_intake_quarantine_offline
+
+Raw quarantine marker:
+
+    stage5_signed_payload_intake_quarantine
+
+Raw external signed payload reference marker:
+
+    stage5_external_wallet_signed_payload_reference
+
+Raw quarantine policy marker:
+
+    stage5_signed_payload_quarantine_policy
+
+Raw quarantine release gate marker:
+
+    stage5_signed_payload_quarantine_release_gate
+
+Stage 5.6 consumes:
+
+    stage5_external_wallet_approval_decision_receipt_result
+
+Required Stage 5.5 runtime commit:
+
+    db6c1b6
+
+Required prior runtime lineage:
+
+    165deb7
+    69f3c5b
+
+Approved path only:
+
+    external_wallet_user_approved
+
+Rejected path blocked:
+
+    external_wallet_user_rejected
+    rejected_decision_not_allowed
+
+External signed payload reference:
+
+    referenceKind: stage5_external_wallet_signed_payload_reference
+    walletLayer: existing_x1_wallet_or_external_signer
+    decision: external_wallet_user_approved
+    payloadReferenceMode: digest_reference_only
+    payloadBytesStatus: not_stored_in_runtime_stage5_6
+    rawSignatureStatus: not_stored_in_runtime_stage5_6
+    signatureMaterialStatus: external_to_runtime_stage5_6
+    walletSignatureStatus: externally_collected_not_imported_stage5_6
+    signedPayloadStatus: reference_quarantined_stage5_6
+    transactionSubmissionStatus: not_allowed_in_stage5_6
+    solSpendStatus: not_allowed_in_stage5_6
+    liveRpcStatus: not_used_in_stage5_6
+    simulationStatus: not_performed_in_stage5_6
+    quarantineStatus: quarantined_not_released_stage5_6
+    releaseToLiveSubmitStatus: not_allowed_in_stage5_6
+    liveSubmitRequiresSeparateStageLater: true
+
+Signed payload quarantine policy:
+
+    approvedDecisionRequired: external_wallet_user_approved
+    rejectedDecisionBlocked: external_wallet_user_rejected
+    payloadReferenceMode: digest_reference_only
+    rawPayloadBytesStorage: not_allowed
+    rawSignatureStorage: not_allowed
+    signatureMaterialStorage: not_allowed
+    runtimeCannotSignForUser: true
+    runtimeCannotCreateWalletSignature: true
+    runtimeCannotSubmitQuarantinedPayloadInStage56: true
+    runtimeCannotSpendSolInStage56: true
+    quarantineReleaseRequiresSeparateStageLater: true
+    liveRpcSimulationRequiredLater: true
+    liveSubmitRequiresSeparateStageLater: true
+
+Quarantine release gate:
+
+    gateKind: stage5_signed_payload_quarantine_release_gate
+    approvedDecisionRequired: true
+    signedPayloadReferenceDigestRequired: true
+    rawPayloadBytesMustRemainExternal: true
+    rawSignatureMustRemainExternal: true
+    mayProceedToQuarantineValidationLater: true
+    maySubmitLiveTransactionInStage56: false
+    maySpendSolInStage56: false
+    quarantineReleaseRequiresSeparateStageLater: true
+    liveRpcSimulationStageRequiredLater: true
+    liveSubmitRequiresSeparateStageLater: true
+    gateStatus: defined_offline_only
+
+Stage 5.6 policy:
+
+    signedPayloadIntakeQuarantineOnly: true
+    sourceStage5ApprovalDecisionReceiptRequired: stage5_external_wallet_approval_decision_receipt_result
+    sourceStage5RuntimeCommitRequired: db6c1b6
+    sourceStage4RuntimeCommitRequired: 69f3c5b
+    approvedPathOnly: true
+    rejectedPathBlocked: true
+    walletLayer: existing_x1_wallet_or_external_signer
+    payloadReferenceMode: digest_reference_only
+    runtimeCustody: none
+    custodyWalletProduct: out_of_scope
+    localSignerLoading: not_allowed
+    keypairAccess: not_allowed
+    privateKeyAccess: not_allowed
+    seedPhraseAccess: not_allowed
+    walletFileAccess: not_allowed
+    runtimeSigning: not_performed
+    walletSignatureCreation: not_performed
+    rawPayloadBytesStorage: not_allowed
+    rawSignatureStorage: not_allowed
+    signedPayloadReferenceStatus: quarantined_not_released_stage5_6
+    runtimeTransactionSubmission: not_allowed
+    runtimeSolSpendAllowed: false
+    transactionObjectCreation: not_performed
+    transactionSerialization: not_performed
+    liveRpc: not_used
+    simulation: not_performed
+    quarantineReleaseRequiresSeparateStageLater: true
+    liveSubmitRequiresSeparateStageLater: true
+
+Stage 5.6 preserves these invariants:
+
+    sourceStage5ApprovalDecisionReceiptBound: true
+    sourceStage5ApprovalPreflightBound: true
+    sourceStage5ExportPackageBound: true
+    sourceStage5HandoffBound: true
+    sourceStage5OpeningBound: true
+    sourceStage4ClosureBound: true
+    signedPayloadReferenceBound: true
+    quarantinePolicyBound: true
+    quarantineReleaseGateBound: true
+    externalSignerIntegrationOnly: true
+    custodyWalletOutOfScope: true
+    approvedPathOnly: true
+    rejectedPathBlocked: true
+    payloadReferenceOnly: true
+    noRuntimeCustody: true
+    noLocalSignerLoaded: true
+    noKeypairAccess: true
+    noPrivateKeys: true
+    noSeedPhraseAccess: true
+    noWalletFileAccess: true
+    noRuntimeSigning: true
+    noWalletSignatureCreation: true
+    noRawPayloadBytesStored: true
+    noRawSignatureStored: true
+    noRuntimeSubmission: true
+    noRuntimeSolSpend: true
+    noTransactionObjectCreated: true
+    noTransactionSerialization: true
+    noLiveRpc: true
+    noSimulation: true
+    liveSendNotAuthorized: true
+    quarantineNotReleased: true
+    liveSubmitRequiresSeparateStageLater: true
+
+Runtime checks passed:
+
+    Stage 5.6 strict final marker check: passed
+    Stage 5.6 test: 5 passing
+    Stage 5.5 + Stage 5.6 smoke: 10 passing
+    Stage 3.10 + Stage 4.1 through Stage 5.6 full smoke: 101 passing
+    Prettier check: passed
+    git diff --check: clean
+
+Boundary decision:
+
+Stage 5.6 closes the signed payload intake quarantine boundary.
+
+Stage 5.6 does not authorize live transaction submission.
+
+Stage 5.6 does not authorize SOL spend.
+
+Next valid stage:
+
+    Stage 5.7 — signed payload quarantine validation boundary
