@@ -31945,3 +31945,212 @@ Stage 5.8 does not authorize SOL spend.
 Next valid stage:
 
     Stage 5.9 — external wallet live RPC simulation receipt boundary
+
+---
+
+## Stage 5.9 — External Wallet Live RPC Simulation Receipt Boundary
+
+Runtime reference:
+
+- d079737 Add Stage 5.9 external wallet live RPC simulation receipt boundary
+- 3775577 Fix Stage 5.9 simulation receipt test markers
+
+Final runtime commit:
+
+    3775577
+
+Evidence:
+
+- docs/gateway/evidence/stage-5-9-external-wallet-live-rpc-simulation-receipt-boundary-evidence.md
+
+Stage 5.9 defines receipt intake for a live RPC simulation performed by the external wallet or external signer layer.
+
+The Stage 5.9 artifact is:
+
+    stage5_external_wallet_live_rpc_simulation_receipt_result
+
+The Stage 5.9 execution mode is:
+
+    external_wallet_live_rpc_simulation_receipt_offline
+
+Raw receipt marker:
+
+    stage5_external_wallet_live_rpc_simulation_receipt
+
+Raw policy marker:
+
+    stage5_external_wallet_live_rpc_simulation_receipt_policy
+
+Raw next gate marker:
+
+    stage5_external_wallet_live_rpc_simulation_receipt_next_gate
+
+Stage 5.9 consumes:
+
+    stage5_live_rpc_simulation_preflight_result
+
+Required Stage 5.8 runtime commit:
+
+    012ea0b
+
+Required prior runtime lineage:
+
+    d32b11a
+    69f3c5b
+
+Supported simulation outcomes:
+
+    external_wallet_simulation_succeeded
+    external_wallet_simulation_failed
+
+External wallet simulation receipt:
+
+    receiptKind: stage5_external_wallet_live_rpc_simulation_receipt
+    walletLayer: existing_x1_wallet_or_external_signer
+    simulationReceiptSource: external_wallet_or_external_signer_only
+    simulationReceiptMode: external_receipt_digest_summary_only
+    runtimeRpcCallStatus: not_performed_in_stage5_9
+    runtimeSimulationStatus: not_performed_in_stage5_9
+    rawPayloadBytesStatus: not_required_not_stored_stage5_9
+    rawSignatureStatus: not_required_not_stored_stage5_9
+    walletSignatureMaterialStatus: external_to_runtime_stage5_9
+    transactionSubmissionStatus: not_allowed_in_stage5_9
+    solSpendStatus: not_allowed_in_stage5_9
+    quarantineReleaseStatus: not_released_in_stage5_9
+    liveSubmitStatus: not_allowed_in_stage5_9
+    successfulSimulationRequiredBeforeFutureSubmit: true
+    liveSubmitRequiresSeparateStageLater: true
+
+External simulation receipt policy:
+
+    policyKind: stage5_external_wallet_live_rpc_simulation_receipt_policy
+    simulationReceiptSource: external_wallet_or_external_signer_only
+    simulationReceiptMode: external_receipt_digest_summary_only
+    runtimeCannotPerformRpcSimulationInStage59: true
+    runtimeCannotSubmitAfterSimulationReceiptInStage59: true
+    runtimeCannotSpendSolInStage59: true
+    runtimeCannotSignForUser: true
+    runtimeCannotCreateWalletSignature: true
+    rawPayloadBytesStorage: not_allowed
+    rawSignatureStorage: not_allowed
+    failedSimulationMustBlockFutureSubmitPath: true
+    successfulSimulationStillRequiresSeparateSubmitStageLater: true
+    liveSubmitRequiresSeparateStageLater: true
+
+External simulation receipt next gate:
+
+    gateKind: stage5_external_wallet_live_rpc_simulation_receipt_next_gate
+    simulationReceiptRecorded: true
+    runtimeMaySubmitLiveTransactionInStage59: false
+    runtimeMaySpendSolInStage59: false
+    rawPayloadBytesMustRemainExternal: true
+    rawSignatureMustRemainExternal: true
+    quarantineReleaseStatus: not_released_in_stage5_9
+    liveSubmitRequiresSeparateStageLater: true
+
+Successful external simulation gate:
+
+    successfulOutcomeMayProceedToSubmitAuthorizationLater: true
+    failedOutcomeMustStopSubmitPath: false
+
+Failed external simulation gate:
+
+    successfulOutcomeMayProceedToSubmitAuthorizationLater: false
+    failedOutcomeMustStopSubmitPath: true
+
+Stage 5.9 policy:
+
+    externalWalletLiveRpcSimulationReceiptOnly: true
+    sourceStage5LiveRpcSimulationPreflightRequired: stage5_live_rpc_simulation_preflight_result
+    sourceStage5RuntimeCommitRequired: 012ea0b
+    sourceStage4RuntimeCommitRequired: 69f3c5b
+    simulationReceiptSource: external_wallet_or_external_signer_only
+    simulationReceiptMode: external_receipt_digest_summary_only
+    runtimeRpcCall: not_performed
+    runtimeSimulationExecution: not_performed
+    runtimeCustody: none
+    custodyWalletProduct: out_of_scope
+    localSignerLoading: not_allowed
+    keypairAccess: not_allowed
+    privateKeyAccess: not_allowed
+    seedPhraseAccess: not_allowed
+    walletFileAccess: not_allowed
+    runtimeSigning: not_performed
+    walletSignatureCreation: not_performed
+    rawPayloadBytesStorage: not_allowed
+    rawSignatureStorage: not_allowed
+    quarantineRelease: not_allowed
+    runtimeTransactionSubmission: not_allowed
+    runtimeSolSpendAllowed: false
+    transactionObjectCreation: not_performed
+    transactionSerialization: not_performed
+    failedSimulationMustBlockFutureSubmitPath: true
+    successfulSimulationStillRequiresSeparateSubmitStageLater: true
+    liveSubmitRequiresSeparateStageLater: true
+
+Stage 5.9 preserves these invariants:
+
+    sourceStage5LiveRpcSimulationPreflightBound: true
+    sourceStage5QuarantineValidationBound: true
+    sourceStage5QuarantineBound: true
+    sourceStage5ApprovalDecisionReceiptBound: true
+    sourceStage5ApprovalPreflightBound: true
+    sourceStage5ExportPackageBound: true
+    sourceStage5HandoffBound: true
+    sourceStage5OpeningBound: true
+    sourceStage4ClosureBound: true
+    externalWalletSimulationReceiptBound: true
+    externalSimulationReceiptPolicyBound: true
+    externalSimulationReceiptNextGateBound: true
+    externalSignerIntegrationOnly: true
+    custodyWalletOutOfScope: true
+    externalReceiptOnly: true
+    noRuntimeRpcCall: true
+    noRuntimeCustody: true
+    noLocalSignerLoaded: true
+    noKeypairAccess: true
+    noPrivateKeys: true
+    noSeedPhraseAccess: true
+    noWalletFileAccess: true
+    noRuntimeSigning: true
+    noWalletSignatureCreation: true
+    noRawPayloadBytesStored: true
+    noRawSignatureStored: true
+    noRuntimeSubmission: true
+    noRuntimeSolSpend: true
+    noTransactionObjectCreated: true
+    noTransactionSerialization: true
+    noRuntimeSimulationExecution: true
+    quarantineReleaseBlocked: true
+    liveSendNotAuthorized: true
+    liveSubmitRequiresSeparateStageLater: true
+
+Negative validation markers:
+
+    invalid_stage5_live_rpc_simulation_preflight
+    invalid_external_simulation_receipt
+
+Runtime checks passed:
+
+    Stage 5.9 source check after marker fix: passed
+    Stage 5.9 test after marker fix: 6 passing
+    Stage 5.8 + Stage 5.9 smoke after marker fix: 10 passing
+    Stage 3.10 + Stage 4.1 through Stage 5.9 full smoke after marker fix: 115 passing
+    Prettier check: passed
+    git diff --check: clean
+
+Boundary decision:
+
+Stage 5.9 closes the external wallet live RPC simulation receipt boundary.
+
+Stage 5.9 does not perform runtime RPC.
+
+Stage 5.9 does not perform runtime simulation.
+
+Stage 5.9 does not authorize live transaction submission.
+
+Stage 5.9 does not authorize SOL spend.
+
+Next valid stage:
+
+    Stage 5.10 — external wallet live submit authorization boundary
