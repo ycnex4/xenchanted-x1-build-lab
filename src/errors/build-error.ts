@@ -22,7 +22,8 @@ export enum BuildErrorCode {
   InsufficientAvailableBldForRelock = "INSUFFICIENT_AVAILABLE_BLD_FOR_RELOCK",
   InvalidFeeContributionAmount = "INVALID_FEE_CONTRIBUTION_AMOUNT",
   InvalidFeeContributionTxCount = "INVALID_FEE_CONTRIBUTION_TX_COUNT",
-  NonIncreasingFeeCheckpointSlot = "NON_INCREASING_FEE_CHECKPOINT_SLOT"
+  NonIncreasingFeeCheckpointSlot = "NON_INCREASING_FEE_CHECKPOINT_SLOT",
+  UnauthorizedBuildIdentityUpdate = "UNAUTHORIZED_BUILD_IDENTITY_UPDATE",
 }
 
 export class BuildError extends Error {

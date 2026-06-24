@@ -2,7 +2,7 @@ import { describe, expect, it } from "vitest";
 import {
   createEmptyBuildState,
   getBuildCommitmentStatus,
-  lockXntd
+  lockXntd,
 } from "../src/index.js";
 
 describe("Build commitment status", () => {
@@ -10,7 +10,7 @@ describe("Build commitment status", () => {
     const build = createEmptyBuildState({
       buildId: "build-1",
       owner: "owner-1",
-      createdAt: 1n
+      createdAt: 1n,
     });
 
     const status = getBuildCommitmentStatus({ build });
@@ -19,7 +19,6 @@ describe("Build commitment status", () => {
     expect(status.status).toBe("UNCOMMITTED");
     expect(status.reason).toBe("NO_HISTORY");
     expect(status.historyBld).toBe(0n);
-    expect(status.availableBld).toBe(0n);
     expect(status.needsRelock).toBe(false);
   });
 
@@ -27,11 +26,10 @@ describe("Build commitment status", () => {
     const build = createEmptyBuildState({
       buildId: "build-1",
       owner: "owner-1",
-      createdAt: 1n
+      createdAt: 1n,
     });
 
     build.historyBld = 121n;
-    build.availableBld = 121n;
 
     const status = getBuildCommitmentStatus({ build });
 
@@ -39,28 +37,26 @@ describe("Build commitment status", () => {
     expect(status.status).toBe("UNCOMMITTED");
     expect(status.reason).toBe("NO_COMMITMENT");
     expect(status.historyBld).toBe(121n);
-    expect(status.availableBld).toBe(121n);
     expect(status.lockedXntd).toBe(0n);
     expect(status.requiredXntdLock).toBe(0n);
     expect(status.lockEpoch).toBe(null);
   });
 
-  it("returns COMMITMENT_CURRENT when history and sufficient lock exist", () => {
+  it("returns COMMITTED when history and sufficient stored lock facts exist", () => {
     const build = createEmptyBuildState({
       buildId: "build-1",
       owner: "owner-1",
-      createdAt: 1n
+      createdAt: 1n,
     });
 
     build.historyBld = 121n;
-    build.availableBld = 121n;
 
     lockXntd({
       build,
       amountXntd: 100n,
       observedRequiredXntdLock: 100n,
       lockEpoch: 0,
-      lockedAt: 10n
+      lockedAt: 10n,
     });
 
     const status = getBuildCommitmentStatus({ build });
@@ -68,119 +64,90 @@ describe("Build commitment status", () => {
     expect(status.isActive).toBe(true);
     expect(status.status).toBe("COMMITTED");
     expect(status.reason).toBe("COMMITMENT_CURRENT");
-    expect(status.historyBld).toBe(121n);
-    expect(status.availableBld).toBe(121n);
     expect(status.lockedXntd).toBe(100n);
     expect(status.requiredXntdLock).toBe(100n);
     expect(status.lockEpoch).toBe(0);
     expect(status.needsRelock).toBe(false);
   });
 
-  it("returns COMMITMENT_BELOW_REQUIRED when current requirement exceeds locked XNTD", () => {
+  it("returns COMMITMENT_BELOW_REQUIRED when stored lock facts are insufficient", () => {
     const build = createEmptyBuildState({
       buildId: "build-1",
       owner: "owner-1",
-      createdAt: 1n
+      createdAt: 1n,
     });
 
     build.historyBld = 121n;
-    build.availableBld = 121n;
+    build.lockedXntd = 100n;
+    build.requiredXntdLock = 200n;
+    build.lockEpoch = 0;
+    build.xcCommitmentActive = true;
 
-    lockXntd({
-      build,
-      amountXntd: 100n,
-      observedRequiredXntdLock: 100n,
-      lockEpoch: 0,
-      lockedAt: 10n
-    });
-
-    const status = getBuildCommitmentStatus({
-      build,
-      currentEpoch: 1n,
-      currentRequiredXntdLock: 200n
-    });
+    const status = getBuildCommitmentStatus({ build });
 
     expect(status.isActive).toBe(false);
     expect(status.status).toBe("UNCOMMITTED");
     expect(status.reason).toBe("COMMITMENT_BELOW_REQUIRED");
-    expect(status.lockedXntd).toBe(100n);
-    expect(status.requiredXntdLock).toBe(200n);
-    expect(status.currentEpoch).toBe(1n);
     expect(status.needsRelock).toBe(true);
   });
 
-  it("returns UNKNOWN_NO_CURRENT_CONTEXT when strict current context is required but missing", () => {
+  it("does not expose UNKNOWN as a public Build status", () => {
     const build = createEmptyBuildState({
       buildId: "build-1",
       owner: "owner-1",
-      createdAt: 1n
+      createdAt: 1n,
     });
 
     build.historyBld = 121n;
-    build.availableBld = 121n;
 
     lockXntd({
       build,
       amountXntd: 100n,
       observedRequiredXntdLock: 100n,
       lockEpoch: 0,
-      lockedAt: 10n
+      lockedAt: 10n,
     });
 
-    const status = getBuildCommitmentStatus({
-      build,
-      requireCurrentEpoch: true
-    });
+    const status = getBuildCommitmentStatus({ build });
 
-    expect(status.isActive).toBe(false);
-    expect(status.status).toBe("UNKNOWN");
-    expect(status.reason).toBe("UNKNOWN_NO_CURRENT_CONTEXT");
-    expect(status.lockedXntd).toBe(100n);
-    expect(status.requiredXntdLock).toBe(100n);
-    expect(status.currentEpoch).toBe(null);
-    expect(status.needsRelock).toBe(false);
+    expect(status.status).not.toBe("UNKNOWN");
+    expect(status.reason).toBe("COMMITMENT_CURRENT");
+    expect("currentEpoch" in status).toBe(false);
   });
 
   it("does not mutate Build state", () => {
     const build = createEmptyBuildState({
       buildId: "build-1",
       owner: "owner-1",
-      createdAt: 1n
+      createdAt: 1n,
     });
 
     build.historyBld = 121n;
-    build.availableBld = 121n;
 
     lockXntd({
       build,
       amountXntd: 100n,
       observedRequiredXntdLock: 100n,
       lockEpoch: 0,
-      lockedAt: 10n
+      lockedAt: 10n,
     });
 
     const before = {
       historyBld: build.historyBld,
-      availableBld: build.availableBld,
       originBld: build.originBld,
       lockedXntd: build.lockedXntd,
       requiredXntdLock: build.requiredXntdLock,
-      lockEpoch: build.lockEpoch
+      lockEpoch: build.lockEpoch,
     };
 
-    getBuildCommitmentStatus({
-      build,
-      currentEpoch: 1n,
-      currentRequiredXntdLock: 200n
-    });
+    getBuildCommitmentStatus({ build });
 
     expect({
       historyBld: build.historyBld,
-      availableBld: build.availableBld,
       originBld: build.originBld,
       lockedXntd: build.lockedXntd,
       requiredXntdLock: build.requiredXntdLock,
-      lockEpoch: build.lockEpoch
+      lockEpoch: build.lockEpoch,
     }).toEqual(before);
   });
 });

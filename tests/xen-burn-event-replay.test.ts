@@ -4,7 +4,7 @@ import {
   BuildErrorCode,
   acceptXenBurnEvent,
   createBuild,
-  createXenBurnEventState
+  createXenBurnEventState,
 } from "../src/index.js";
 
 describe("XEN burn event replay protection", () => {
@@ -13,19 +13,18 @@ describe("XEN burn event replay protection", () => {
     const build = createBuild({
       owner: "x1-user-1",
       buildId: "build-1",
-      createdAt: 1000n
+      createdAt: 1000n,
     });
 
     acceptXenBurnEvent(xenBurnEvents, {
       xenBurnKey: "xen-burn-1",
       build,
       amountXbp: 100n,
-      burnedAt: 1100n
+      burnedAt: 1100n,
     });
 
     expect(xenBurnEvents.usedXenBurnEvents.has("xen-burn-1")).toBe(true);
-    expect(build.earnedXbp).toBe(100n);
-    expect(build.availableXbp).toBe(100n);
+    expect(build.historyXbp).toBe(100n);
     expect(build.updatedAt).toBe(1100n);
   });
 
@@ -34,14 +33,14 @@ describe("XEN burn event replay protection", () => {
     const build = createBuild({
       owner: "x1-user-1",
       buildId: "build-1",
-      createdAt: 1000n
+      createdAt: 1000n,
     });
 
     acceptXenBurnEvent(xenBurnEvents, {
       xenBurnKey: "xen-burn-1",
       build,
       amountXbp: 100n,
-      burnedAt: 1100n
+      burnedAt: 1100n,
     });
 
     expect(() =>
@@ -49,8 +48,8 @@ describe("XEN burn event replay protection", () => {
         xenBurnKey: "xen-burn-1",
         build,
         amountXbp: 250n,
-        burnedAt: 1200n
-      })
+        burnedAt: 1200n,
+      }),
     ).toThrow(BuildError);
 
     try {
@@ -58,18 +57,17 @@ describe("XEN burn event replay protection", () => {
         xenBurnKey: "xen-burn-1",
         build,
         amountXbp: 250n,
-        burnedAt: 1200n
+        burnedAt: 1200n,
       });
     } catch (error) {
       expect(error).toBeInstanceOf(BuildError);
       expect((error as BuildError).code).toBe(
-        BuildErrorCode.DuplicateXenBurnEvent
+        BuildErrorCode.DuplicateXenBurnEvent,
       );
     }
 
     expect(xenBurnEvents.usedXenBurnEvents.size).toBe(1);
-    expect(build.earnedXbp).toBe(100n);
-    expect(build.availableXbp).toBe(100n);
+    expect(build.historyXbp).toBe(100n);
     expect(build.updatedAt).toBe(1100n);
   });
 
@@ -78,26 +76,25 @@ describe("XEN burn event replay protection", () => {
     const build = createBuild({
       owner: "x1-user-1",
       buildId: "build-1",
-      createdAt: 1000n
+      createdAt: 1000n,
     });
 
     acceptXenBurnEvent(xenBurnEvents, {
       xenBurnKey: "xen-burn-1",
       build,
       amountXbp: 100n,
-      burnedAt: 1100n
+      burnedAt: 1100n,
     });
 
     acceptXenBurnEvent(xenBurnEvents, {
       xenBurnKey: "xen-burn-2",
       build,
       amountXbp: 250n,
-      burnedAt: 1200n
+      burnedAt: 1200n,
     });
 
     expect(xenBurnEvents.usedXenBurnEvents.size).toBe(2);
-    expect(build.earnedXbp).toBe(350n);
-    expect(build.availableXbp).toBe(350n);
+    expect(build.historyXbp).toBe(350n);
     expect(build.updatedAt).toBe(1200n);
   });
 
@@ -106,7 +103,7 @@ describe("XEN burn event replay protection", () => {
     const build = createBuild({
       owner: "x1-user-1",
       buildId: "build-1",
-      createdAt: 1000n
+      createdAt: 1000n,
     });
 
     expect(() =>
@@ -114,14 +111,13 @@ describe("XEN burn event replay protection", () => {
         xenBurnKey: "xen-burn-1",
         build,
         amountXbp: 0n,
-        burnedAt: 1100n
-      })
+        burnedAt: 1100n,
+      }),
     ).toThrow(BuildError);
 
     expect(xenBurnEvents.usedXenBurnEvents.has("xen-burn-1")).toBe(false);
     expect(xenBurnEvents.usedXenBurnEvents.size).toBe(0);
-    expect(build.earnedXbp).toBe(0n);
-    expect(build.availableXbp).toBe(0n);
+    expect(build.historyXbp).toBe(0n);
     expect(build.updatedAt).toBe(1000n);
   });
 
@@ -130,18 +126,17 @@ describe("XEN burn event replay protection", () => {
     const build = createBuild({
       owner: "x1-user-1",
       buildId: "build-1",
-      createdAt: 1000n
+      createdAt: 1000n,
     });
 
     acceptXenBurnEvent(xenBurnEvents, {
       xenBurnKey: "xen-burn-1",
       build,
       amountXbp: 100n,
-      burnedAt: 1100n
+      burnedAt: 1100n,
     });
 
     expect(build.historyBld).toBe(0n);
-    expect(build.availableBld).toBe(0n);
     expect(build.originBld).toBe(0n);
     expect(build.lockedXntd).toBe(0n);
     expect(build.requiredXntdLock).toBe(0n);

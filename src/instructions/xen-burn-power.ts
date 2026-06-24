@@ -11,12 +11,11 @@ export function applyXenBurnPower(input: ApplyXenBurnPowerInput): BuildState {
   if (input.amountXbp <= 0n) {
     throw new BuildError(
       BuildErrorCode.InvalidXbpAmount,
-      `XEN Burn Power amount must be positive: ${input.amountXbp.toString()}`
+      `XEN Burn Power amount must be positive: ${input.amountXbp.toString()}`,
     );
   }
 
-  input.build.earnedXbp += input.amountXbp;
-  input.build.availableXbp += input.amountXbp;
+  input.build.historyXbp += input.amountXbp;
   input.build.updatedAt = input.burnedAt;
 
   return input.build;

@@ -1,6 +1,11 @@
 import { BuildError, BuildErrorCode } from "../errors/build-error.js";
 import { type BuildState } from "../model/build-state.js";
 
+export interface UpgradeGenesisOriginBldInput {
+  build: BuildState;
+  upgradedAt: bigint;
+}
+
 export interface ClaimGenesisOriginBldInput {
   build: BuildState;
   claimedAt: bigint;
@@ -26,28 +31,46 @@ export function calculateGenesisOriginBld(historyBld: bigint): bigint {
   return 0n;
 }
 
-export function claimGenesisOriginBld(
-  input: ClaimGenesisOriginBldInput
-): BuildState {
-  if (input.build.originBld > 0n) {
-    throw new BuildError(
-      BuildErrorCode.GenesisOriginAlreadyClaimed,
-      "Genesis Origin BLD has already been claimed for this Build"
-    );
+export function calculateGenesisOriginBldDelta(
+  currentOriginBld: bigint,
+  historyBld: bigint,
+): bigint {
+  const eligibleOriginBld = calculateGenesisOriginBld(historyBld);
+
+  if (eligibleOriginBld <= currentOriginBld) {
+    return 0n;
   }
 
-  const originBld = calculateGenesisOriginBld(input.build.historyBld);
+  return eligibleOriginBld - currentOriginBld;
+}
 
-  if (originBld <= 0n) {
+export function upgradeGenesisOriginBld(
+  input: UpgradeGenesisOriginBldInput,
+): BuildState {
+  const eligibleOriginBld = calculateGenesisOriginBld(input.build.historyBld);
+  const deltaOriginBld = calculateGenesisOriginBldDelta(
+    input.build.originBld,
+    input.build.historyBld,
+  );
+
+  if (eligibleOriginBld <= 0n || deltaOriginBld <= 0n) {
     throw new BuildError(
       BuildErrorCode.GenesisOriginNotEligible,
-      `Build is not eligible for Genesis Origin BLD with historyBld: ${input.build.historyBld.toString()}`
+      `Build is not eligible for a Genesis Origin BLD upgrade: historyBld=${input.build.historyBld.toString()}, currentOriginBld=${input.build.originBld.toString()}`,
     );
   }
 
-  input.build.originBld = originBld;
-  input.build.availableBld += originBld;
-  input.build.updatedAt = input.claimedAt;
+  input.build.originBld = eligibleOriginBld;
+  input.build.updatedAt = input.upgradedAt;
 
   return input.build;
+}
+
+export function claimGenesisOriginBld(
+  input: ClaimGenesisOriginBldInput,
+): BuildState {
+  return upgradeGenesisOriginBld({
+    build: input.build,
+    upgradedAt: input.claimedAt,
+  });
 }

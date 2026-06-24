@@ -4,8 +4,10 @@ import {
   BuildErrorCode,
   applyCoreRedeemBld,
   calculateGenesisOriginBld,
+  calculateGenesisOriginBldDelta,
   claimGenesisOriginBld,
-  createBuild
+  createBuild,
+  upgradeGenesisOriginBld,
 } from "../src/index.js";
 
 describe("Genesis Origin BLD", () => {
@@ -20,200 +22,132 @@ describe("Genesis Origin BLD", () => {
     expect(calculateGenesisOriginBld(1111n)).toBe(121n);
   });
 
-  it("claims 11 originBld for historyBld >= 1", () => {
-    const build = createBuild({
-      owner: "x1-user-1",
-      buildId: "build-1",
-      createdAt: 1000n
-    });
-
-    applyCoreRedeemBld({
-      build,
-      amountBld: 1n,
-      redeemedAt: 1100n
-    });
-
-    claimGenesisOriginBld({
-      build,
-      claimedAt: 1200n
-    });
-
-    expect(build.historyBld).toBe(1n);
-    expect(build.originBld).toBe(11n);
-    expect(build.availableBld).toBe(12n);
-    expect(build.updatedAt).toBe(1200n);
+  it("calculates only the upgrade delta from the current origin tier", () => {
+    expect(calculateGenesisOriginBldDelta(0n, 1n)).toBe(11n);
+    expect(calculateGenesisOriginBldDelta(11n, 11n)).toBe(11n);
+    expect(calculateGenesisOriginBldDelta(22n, 121n)).toBe(33n);
+    expect(calculateGenesisOriginBldDelta(55n, 1111n)).toBe(66n);
+    expect(calculateGenesisOriginBldDelta(121n, 1111n)).toBe(0n);
   });
 
-  it("claims 22 originBld for historyBld >= 11", () => {
+  it("upgrades to the eligible tier without minting a public spendable balance", () => {
     const build = createBuild({
       owner: "x1-user-1",
       buildId: "build-1",
-      createdAt: 1000n
+      createdAt: 1000n,
     });
 
     applyCoreRedeemBld({
       build,
       amountBld: 11n,
-      redeemedAt: 1100n
+      redeemedAt: 1100n,
     });
 
-    claimGenesisOriginBld({
+    upgradeGenesisOriginBld({
       build,
-      claimedAt: 1200n
+      upgradedAt: 1200n,
     });
 
     expect(build.historyBld).toBe(11n);
     expect(build.originBld).toBe(22n);
-    expect(build.availableBld).toBe(33n);
+    expect("availableBld" in build).toBe(false);
     expect(build.updatedAt).toBe(1200n);
   });
 
-  it("claims 55 originBld for historyBld >= 121", () => {
+  it("allows later tier upgrades by delta instead of one-time static claim", () => {
     const build = createBuild({
       owner: "x1-user-1",
       buildId: "build-1",
-      createdAt: 1000n
+      createdAt: 1000n,
     });
 
-    applyCoreRedeemBld({
-      build,
-      amountBld: 121n,
-      redeemedAt: 1100n
-    });
+    applyCoreRedeemBld({ build, amountBld: 1n, redeemedAt: 1100n });
+    upgradeGenesisOriginBld({ build, upgradedAt: 1200n });
+    expect(build.originBld).toBe(11n);
 
-    claimGenesisOriginBld({
-      build,
-      claimedAt: 1200n
-    });
+    applyCoreRedeemBld({ build, amountBld: 10n, redeemedAt: 1300n });
+    upgradeGenesisOriginBld({ build, upgradedAt: 1400n });
+    expect(build.originBld).toBe(22n);
 
-    expect(build.historyBld).toBe(121n);
+    applyCoreRedeemBld({ build, amountBld: 110n, redeemedAt: 1500n });
+    upgradeGenesisOriginBld({ build, upgradedAt: 1600n });
     expect(build.originBld).toBe(55n);
-    expect(build.availableBld).toBe(176n);
-    expect(build.updatedAt).toBe(1200n);
-  });
 
-  it("claims 121 originBld for historyBld >= 1111", () => {
-    const build = createBuild({
-      owner: "x1-user-1",
-      buildId: "build-1",
-      createdAt: 1000n
-    });
-
-    applyCoreRedeemBld({
-      build,
-      amountBld: 1111n,
-      redeemedAt: 1100n
-    });
-
-    claimGenesisOriginBld({
-      build,
-      claimedAt: 1200n
-    });
+    applyCoreRedeemBld({ build, amountBld: 990n, redeemedAt: 1700n });
+    upgradeGenesisOriginBld({ build, upgradedAt: 1800n });
 
     expect(build.historyBld).toBe(1111n);
     expect(build.originBld).toBe(121n);
-    expect(build.availableBld).toBe(1232n);
-    expect(build.updatedAt).toBe(1200n);
+    expect(build.updatedAt).toBe(1800n);
   });
 
-  it("rejects claim when historyBld is zero", () => {
+  it("keeps claimGenesisOriginBld as a compatibility alias for upgrade", () => {
     const build = createBuild({
       owner: "x1-user-1",
       buildId: "build-1",
-      createdAt: 1000n
+      createdAt: 1000n,
+    });
+
+    applyCoreRedeemBld({ build, amountBld: 121n, redeemedAt: 1100n });
+
+    claimGenesisOriginBld({
+      build,
+      claimedAt: 1200n,
+    });
+
+    expect(build.originBld).toBe(55n);
+    expect(build.updatedAt).toBe(1200n);
+  });
+
+  it("rejects upgrade when historyBld is zero", () => {
+    const build = createBuild({
+      owner: "x1-user-1",
+      buildId: "build-1",
+      createdAt: 1000n,
     });
 
     expect(() =>
-      claimGenesisOriginBld({
+      upgradeGenesisOriginBld({
         build,
-        claimedAt: 1200n
-      })
+        upgradedAt: 1200n,
+      }),
     ).toThrow(BuildError);
 
     try {
-      claimGenesisOriginBld({
+      upgradeGenesisOriginBld({
         build,
-        claimedAt: 1200n
+        upgradedAt: 1200n,
       });
     } catch (error) {
       expect(error).toBeInstanceOf(BuildError);
       expect((error as BuildError).code).toBe(
-        BuildErrorCode.GenesisOriginNotEligible
+        BuildErrorCode.GenesisOriginNotEligible,
       );
     }
 
     expect(build.originBld).toBe(0n);
-    expect(build.availableBld).toBe(0n);
     expect(build.updatedAt).toBe(1000n);
   });
 
-  it("rejects duplicate Genesis Origin claim", () => {
+  it("rejects upgrade when the Build is already at the eligible tier", () => {
     const build = createBuild({
       owner: "x1-user-1",
       buildId: "build-1",
-      createdAt: 1000n
+      createdAt: 1000n,
     });
 
-    applyCoreRedeemBld({
-      build,
-      amountBld: 11n,
-      redeemedAt: 1100n
-    });
-
-    claimGenesisOriginBld({
-      build,
-      claimedAt: 1200n
-    });
+    applyCoreRedeemBld({ build, amountBld: 11n, redeemedAt: 1100n });
+    upgradeGenesisOriginBld({ build, upgradedAt: 1200n });
 
     expect(() =>
-      claimGenesisOriginBld({
+      upgradeGenesisOriginBld({
         build,
-        claimedAt: 1300n
-      })
+        upgradedAt: 1300n,
+      }),
     ).toThrow(BuildError);
-
-    try {
-      claimGenesisOriginBld({
-        build,
-        claimedAt: 1300n
-      });
-    } catch (error) {
-      expect(error).toBeInstanceOf(BuildError);
-      expect((error as BuildError).code).toBe(
-        BuildErrorCode.GenesisOriginAlreadyClaimed
-      );
-    }
 
     expect(build.historyBld).toBe(11n);
     expect(build.originBld).toBe(22n);
-    expect(build.availableBld).toBe(33n);
     expect(build.updatedAt).toBe(1200n);
-  });
-
-  it("does not create XBP or unrelated accounting values", () => {
-    const build = createBuild({
-      owner: "x1-user-1",
-      buildId: "build-1",
-      createdAt: 1000n
-    });
-
-    applyCoreRedeemBld({
-      build,
-      amountBld: 11n,
-      redeemedAt: 1100n
-    });
-
-    claimGenesisOriginBld({
-      build,
-      claimedAt: 1200n
-    });
-
-    expect(build.earnedXbp).toBe(0n);
-    expect(build.availableXbp).toBe(0n);
-    expect(build.lockedXntd).toBe(0n);
-    expect(build.requiredXntdLock).toBe(0n);
-    expect(build.xcCommitmentActive).toBe(false);
-    expect(build.x1FeeContribution).toBe(0n);
-    expect(build.x1TxCount).toBe(0n);
   });
 });

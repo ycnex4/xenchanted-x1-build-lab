@@ -14,7 +14,7 @@ import {
   createStaticXcEpochMinimumSource,
   createXntdLockCandidate,
   createXntdRelockCandidate,
-  convertWatcherCandidateToProof
+  convertWatcherCandidateToProof,
 } from "../src/index.js";
 
 function createRegisteredApp() {
@@ -24,7 +24,7 @@ function createRegisteredApp() {
     owner: "x1-owner",
     buildId: "build-1",
     ethereumIdentity: "0x0000000000000000000000000000000000000001",
-    createdAt: 100n
+    createdAt: 100n,
   });
 
   expect(created.ok).toBe(true);
@@ -35,7 +35,7 @@ function createRegisteredApp() {
 
   return {
     app,
-    build: created.value
+    build: created.value,
   };
 }
 
@@ -43,7 +43,7 @@ function submitInput(messageId?: string) {
   return {
     submittedBy: "registrar-1",
     createdAt: 1200n,
-    ...(messageId === undefined ? {} : { messageId })
+    ...(messageId === undefined ? {} : { messageId }),
   };
 }
 
@@ -62,7 +62,7 @@ const protocolParams = {
   baseAprBpsNow: 1000,
   bpsDenom: 10000n,
   earlyPenaltyBps: 100n,
-  maxWalletNfts: 60n
+  maxWalletNfts: 60n,
 };
 
 describe("application proof submission", () => {
@@ -81,29 +81,28 @@ describe("application proof submission", () => {
       owner: build.owner,
       amountBld: 121n,
       redeemedAt: 1000n,
-      coreTokenId: "1"
+      coreTokenId: "1",
     });
 
     const proof = convertWatcherCandidateToProof(candidate, {
-      validatedAt: 1100n
+      validatedAt: 1100n,
     });
 
     const result = appSubmitProof(app, proof, submitInput());
 
     expect(result.ok).toBe(true);
     expect(build.historyBld).toBe(121n);
-    expect(build.availableBld).toBe(121n);
     expect(app.registrar.processedMessages.size).toBe(1);
-    expect(app.redeemEvents.usedRedeemEvents.has(candidate.canonicalEventKey)).toBe(
-      true
-    );
+    expect(
+      app.redeemEvents.usedRedeemEvents.has(candidate.canonicalEventKey),
+    ).toBe(true);
   });
 
   it("accepts XC Build validation context without changing Core redeem behavior", () => {
     const { app, build } = createRegisteredApp();
     const xcBuildValidationContext =
       createXcBuildValidationContextFromProtocolParams({
-        protocolParams
+        protocolParams,
       });
 
     const candidate = createCoreRedeemCandidate({
@@ -118,25 +117,24 @@ describe("application proof submission", () => {
       owner: build.owner,
       amountBld: 121n,
       redeemedAt: 1000n,
-      coreTokenId: "1"
+      coreTokenId: "1",
     });
 
     const proof = convertWatcherCandidateToProof(candidate, {
-      validatedAt: 1100n
+      validatedAt: 1100n,
     });
 
     const result = appSubmitProof(app, proof, {
       ...submitInput(),
-      xcBuildValidationContext
+      xcBuildValidationContext,
     });
 
     expect(result.ok).toBe(true);
     expect(build.historyBld).toBe(121n);
-    expect(build.availableBld).toBe(121n);
     expect(xcBuildValidationContext.protocolParams).toBe(protocolParams);
-    expect(
-      xcBuildValidationContext.requirements.requiredXntdLockMinimum
-    ).toBe(protocolParams.currentBaseNominal);
+    expect(xcBuildValidationContext.requirements.requiredXntdLockMinimum).toBe(
+      protocolParams.currentBaseNominal,
+    );
     expect(app.registrar.processedMessages.size).toBe(1);
   });
 
@@ -155,22 +153,21 @@ describe("application proof submission", () => {
       owner: build.owner,
       amountXbp: 1000n,
       burnedAt: 1000n,
-      xenAmountBurned: 100000000n
+      xenAmountBurned: 100000000n,
     });
 
     const proof = convertWatcherCandidateToProof(candidate, {
-      validatedAt: 1100n
+      validatedAt: 1100n,
     });
 
     const result = appSubmitProof(app, proof, submitInput());
 
     expect(result.ok).toBe(true);
-    expect(build.earnedXbp).toBe(1000n);
-    expect(build.availableXbp).toBe(1000n);
+    expect(build.historyXbp).toBe(1000n);
     expect(app.registrar.processedMessages.size).toBe(1);
-    expect(app.xenBurnEvents.usedXenBurnEvents.has(candidate.canonicalEventKey)).toBe(
-      true
-    );
+    expect(
+      app.xenBurnEvents.usedXenBurnEvents.has(candidate.canonicalEventKey),
+    ).toBe(true);
   });
 
   it("submits XNTD lock and relock proofs through registrar application service", () => {
@@ -189,11 +186,11 @@ describe("application proof submission", () => {
       amountXntd: 750n,
       observedRequiredXntdLock: 500n,
       lockEpoch: 1,
-      lockedAt: 1000n
+      lockedAt: 1000n,
     });
 
     const lockProof = convertWatcherCandidateToProof(lockCandidate, {
-      validatedAt: 1100n
+      validatedAt: 1100n,
     });
 
     const lock = appSubmitProof(app, lockProof, submitInput());
@@ -201,8 +198,8 @@ describe("application proof submission", () => {
     expect(lock.ok).toBe(true);
     expect(
       app.xntdCommitmentEvents.usedXntdCommitmentEvents.has(
-        lockCandidate.canonicalEventKey
-      )
+        lockCandidate.canonicalEventKey,
+      ),
     ).toBe(true);
     expect(build.lockedXntd).toBe(750n);
     expect(build.requiredXntdLock).toBe(500n);
@@ -222,11 +219,11 @@ describe("application proof submission", () => {
       amountXntd: 400n,
       observedRequiredXntdLock: 250n,
       lockEpoch: 2,
-      relockedAt: 1200n
+      relockedAt: 1200n,
     });
 
     const relockProof = convertWatcherCandidateToProof(relockCandidate, {
-      validatedAt: 1300n
+      validatedAt: 1300n,
     });
 
     const relock = appSubmitProof(app, relockProof, submitInput());
@@ -234,8 +231,8 @@ describe("application proof submission", () => {
     expect(relock.ok).toBe(true);
     expect(
       app.xntdCommitmentEvents.usedXntdCommitmentEvents.has(
-        relockCandidate.canonicalEventKey
-      )
+        relockCandidate.canonicalEventKey,
+      ),
     ).toBe(true);
     expect(build.lockedXntd).toBe(400n);
     expect(build.requiredXntdLock).toBe(250n);
@@ -247,7 +244,7 @@ describe("application proof submission", () => {
   it("passes authoritative XC epoch minimum source through proof submission XNTD flow", () => {
     const { app, build } = createRegisteredApp();
     const xcEpochMinimumSource = createStaticXcEpochMinimumSource(
-      new Map<number, bigint>([[1, 500n]])
+      new Map<number, bigint>([[1, 500n]]),
     );
 
     const lockCandidate = createXntdLockCandidate({
@@ -263,16 +260,16 @@ describe("application proof submission", () => {
       amountXntd: 750n,
       observedRequiredXntdLock: 500n,
       lockEpoch: 1,
-      lockedAt: 1000n
+      lockedAt: 1000n,
     });
 
     const lockProof = convertWatcherCandidateToProof(lockCandidate, {
-      validatedAt: 1100n
+      validatedAt: 1100n,
     });
 
     const lock = appSubmitProof(app, lockProof, {
       ...submitInput(),
-      xcEpochMinimumSource
+      xcEpochMinimumSource,
     });
 
     expect(lock.ok).toBe(true);
@@ -293,16 +290,16 @@ describe("application proof submission", () => {
       amountXntd: 400n,
       observedRequiredXntdLock: 250n,
       lockEpoch: 2,
-      relockedAt: 1200n
+      relockedAt: 1200n,
     });
 
     const relockProof = convertWatcherCandidateToProof(relockCandidate, {
-      validatedAt: 1300n
+      validatedAt: 1300n,
     });
 
     const relock = appSubmitProof(app, relockProof, {
       ...submitInput(),
-      xcEpochMinimumSource
+      xcEpochMinimumSource,
     });
 
     expect(relock.ok).toBe(false);
@@ -312,13 +309,13 @@ describe("application proof submission", () => {
 
     expect(
       app.registrar.processedMessages.has(
-        `proof:${relockProof.kind}:${relockProof.canonicalEventKey}`
-      )
+        `proof:${relockProof.kind}:${relockProof.canonicalEventKey}`,
+      ),
     ).toBe(false);
     expect(
       app.xntdCommitmentEvents.usedXntdCommitmentEvents.has(
-        relockCandidate.canonicalEventKey
-      )
+        relockCandidate.canonicalEventKey,
+      ),
     ).toBe(false);
     expect(build.lockedXntd).toBe(750n);
     expect(build.requiredXntdLock).toBe(500n);
@@ -341,11 +338,11 @@ describe("application proof submission", () => {
       feeAmount: 777n,
       txCount: 11n,
       countedUntilSlot: 9000n,
-      updatedAt: 1000n
+      updatedAt: 1000n,
     });
 
     const proof = convertWatcherCandidateToProof(candidate, {
-      validatedAt: 1100n
+      validatedAt: 1100n,
     });
 
     const result = appSubmitProof(app, proof, submitInput());
@@ -365,7 +362,7 @@ describe("application proof submission", () => {
       sourceAddress: "0xcore",
       eventKind: "CORE_REDEEM",
       transactionHash: "0xtx-candidate",
-      eventIndex: 0
+      eventIndex: 0,
     });
 
     const proof: CoreRedeemProof = {
@@ -378,7 +375,7 @@ describe("application proof submission", () => {
         transactionHash: "0xtx-candidate",
         eventIndex: 0,
         observedAt: 1000n,
-        finalized: true
+        finalized: true,
       }),
       canonicalEventKey,
       validatedAt: null,
@@ -389,8 +386,8 @@ describe("application proof submission", () => {
         redeemKey: canonicalEventKey,
         amountBld: 121n,
         redeemedAt: 1000n,
-        coreTokenId: "1"
-      }
+        coreTokenId: "1",
+      },
     };
 
     const result = appSubmitProof(app, proof, submitInput());
@@ -399,7 +396,9 @@ describe("application proof submission", () => {
 
     if (!result.ok) {
       expect(result.error.code).toBe("PROOF_SUBMISSION_ERROR");
-      expect(result.error.message).toBe("Proof is not validated: CORE_REDEEM_PROOF");
+      expect(result.error.message).toBe(
+        "Proof is not validated: CORE_REDEEM_PROOF",
+      );
     }
 
     expect(build.historyBld).toBe(0n);
@@ -422,11 +421,11 @@ describe("application proof submission", () => {
       owner: "x1-owner",
       amountXbp: 1000n,
       burnedAt: 1000n,
-      xenAmountBurned: 100000000n
+      xenAmountBurned: 100000000n,
     });
 
     const proof = convertWatcherCandidateToProof(candidate, {
-      validatedAt: 1100n
+      validatedAt: 1100n,
     });
 
     const result = appSubmitProof(app, proof, submitInput());
@@ -450,7 +449,7 @@ describe("application proof submission", () => {
       sourceAddress: "genesis-origin",
       eventKind: "GENESIS_ORIGIN",
       transactionHash: "snapshot-1",
-      eventIndex: 0
+      eventIndex: 0,
     });
 
     const proof: GenesisOriginEligibilityProof = {
@@ -463,7 +462,7 @@ describe("application proof submission", () => {
         transactionHash: "snapshot-1",
         eventIndex: 0,
         observedAt: 1000n,
-        finalized: true
+        finalized: true,
       }),
       canonicalEventKey,
       validatedAt: 1100n,
@@ -474,8 +473,8 @@ describe("application proof submission", () => {
         historyBld: 121n,
         eligibleOriginBld: 55n,
         snapshotId: "snapshot-1",
-        claimedAt: 1000n
-      }
+        claimedAt: 1000n,
+      },
     };
 
     const result = appSubmitProof(app, proof, submitInput());
@@ -485,7 +484,7 @@ describe("application proof submission", () => {
     if (!result.ok) {
       expect(result.error.code).toBe("PROOF_SUBMISSION_ERROR");
       expect(result.error.message).toBe(
-        "Genesis Origin proof does not map to a registrar payload"
+        "Genesis Origin proof does not map to a registrar payload",
       );
     }
 
@@ -508,11 +507,11 @@ describe("application proof submission", () => {
       owner: build.owner,
       amountBld: 121n,
       redeemedAt: 1000n,
-      coreTokenId: "1"
+      coreTokenId: "1",
     });
 
     const proof = convertWatcherCandidateToProof(candidate, {
-      validatedAt: 1100n
+      validatedAt: 1100n,
     });
 
     const first = appSubmitProof(app, proof, submitInput());

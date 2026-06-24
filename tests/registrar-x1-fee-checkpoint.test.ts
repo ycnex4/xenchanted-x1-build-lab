@@ -7,7 +7,7 @@ import {
   applyXenBurnPower,
   createBuild,
   createRegistrarState,
-  lockXntd
+  lockXntd,
 } from "../src/index.js";
 
 describe("Registrar X1_FEE_CHECKPOINT integration", () => {
@@ -16,7 +16,7 @@ describe("Registrar X1_FEE_CHECKPOINT integration", () => {
     const build = createBuild({
       owner: "x1-user-1",
       buildId: "build-1",
-      createdAt: 1000n
+      createdAt: 1000n,
     });
 
     applyRegistrarX1FeeCheckpoint({
@@ -25,13 +25,13 @@ describe("Registrar X1_FEE_CHECKPOINT integration", () => {
         messageId: "message-1",
         kind: "X1_FEE_CHECKPOINT",
         submittedBy: "registrar-1",
-        createdAt: 1100n
+        createdAt: 1100n,
       },
       build,
       feeAmount: 1000n,
       txCount: 3n,
       countedUntilSlot: 5000n,
-      updatedAt: 1100n
+      updatedAt: 1100n,
     });
 
     expect(registrar.processedMessages.has("message-1")).toBe(true);
@@ -47,7 +47,7 @@ describe("Registrar X1_FEE_CHECKPOINT integration", () => {
     const build = createBuild({
       owner: "x1-user-1",
       buildId: "build-1",
-      createdAt: 1000n
+      createdAt: 1000n,
     });
 
     applyRegistrarX1FeeCheckpoint({
@@ -56,13 +56,13 @@ describe("Registrar X1_FEE_CHECKPOINT integration", () => {
         messageId: "message-1",
         kind: "X1_FEE_CHECKPOINT",
         submittedBy: "registrar-1",
-        createdAt: 1100n
+        createdAt: 1100n,
       },
       build,
       feeAmount: 1000n,
       txCount: 3n,
       countedUntilSlot: 5000n,
-      updatedAt: 1100n
+      updatedAt: 1100n,
     });
 
     applyRegistrarX1FeeCheckpoint({
@@ -71,13 +71,13 @@ describe("Registrar X1_FEE_CHECKPOINT integration", () => {
         messageId: "message-2",
         kind: "X1_FEE_CHECKPOINT",
         submittedBy: "registrar-1",
-        createdAt: 1200n
+        createdAt: 1200n,
       },
       build,
       feeAmount: 2500n,
       txCount: 7n,
       countedUntilSlot: 6000n,
-      updatedAt: 1200n
+      updatedAt: 1200n,
     });
 
     expect(registrar.processedMessages.size).toBe(2);
@@ -93,7 +93,7 @@ describe("Registrar X1_FEE_CHECKPOINT integration", () => {
     const build = createBuild({
       owner: "x1-user-1",
       buildId: "build-1",
-      createdAt: 1000n
+      createdAt: 1000n,
     });
 
     expect(() =>
@@ -103,14 +103,14 @@ describe("Registrar X1_FEE_CHECKPOINT integration", () => {
           messageId: "message-1",
           kind: "XEN_BURN",
           submittedBy: "registrar-1",
-          createdAt: 1100n
+          createdAt: 1100n,
         },
         build,
         feeAmount: 1000n,
         txCount: 3n,
         countedUntilSlot: 5000n,
-        updatedAt: 1100n
-      })
+        updatedAt: 1100n,
+      }),
     ).toThrow(BuildError);
 
     try {
@@ -120,18 +120,18 @@ describe("Registrar X1_FEE_CHECKPOINT integration", () => {
           messageId: "message-1",
           kind: "XEN_BURN",
           submittedBy: "registrar-1",
-          createdAt: 1100n
+          createdAt: 1100n,
         },
         build,
         feeAmount: 1000n,
         txCount: 3n,
         countedUntilSlot: 5000n,
-        updatedAt: 1100n
+        updatedAt: 1100n,
       });
     } catch (error) {
       expect(error).toBeInstanceOf(BuildError);
       expect((error as BuildError).code).toBe(
-        BuildErrorCode.InvalidRegistrarMessageKind
+        BuildErrorCode.InvalidRegistrarMessageKind,
       );
     }
 
@@ -148,7 +148,7 @@ describe("Registrar X1_FEE_CHECKPOINT integration", () => {
     const build = createBuild({
       owner: "x1-user-1",
       buildId: "build-1",
-      createdAt: 1000n
+      createdAt: 1000n,
     });
 
     expect(() =>
@@ -158,14 +158,14 @@ describe("Registrar X1_FEE_CHECKPOINT integration", () => {
           messageId: "message-1",
           kind: "X1_FEE_CHECKPOINT",
           submittedBy: "bad-registrar",
-          createdAt: 1100n
+          createdAt: 1100n,
         },
         build,
         feeAmount: 1000n,
         txCount: 3n,
         countedUntilSlot: 5000n,
-        updatedAt: 1100n
-      })
+        updatedAt: 1100n,
+      }),
     ).toThrow(BuildError);
 
     expect(registrar.processedMessages.size).toBe(0);
@@ -181,7 +181,7 @@ describe("Registrar X1_FEE_CHECKPOINT integration", () => {
     const build = createBuild({
       owner: "x1-user-1",
       buildId: "build-1",
-      createdAt: 1000n
+      createdAt: 1000n,
     });
 
     applyRegistrarX1FeeCheckpoint({
@@ -190,13 +190,13 @@ describe("Registrar X1_FEE_CHECKPOINT integration", () => {
         messageId: "message-1",
         kind: "X1_FEE_CHECKPOINT",
         submittedBy: "registrar-1",
-        createdAt: 1100n
+        createdAt: 1100n,
       },
       build,
       feeAmount: 1000n,
       txCount: 3n,
       countedUntilSlot: 5000n,
-      updatedAt: 1100n
+      updatedAt: 1100n,
     });
 
     expect(() =>
@@ -206,14 +206,14 @@ describe("Registrar X1_FEE_CHECKPOINT integration", () => {
           messageId: "message-1",
           kind: "X1_FEE_CHECKPOINT",
           submittedBy: "registrar-1",
-          createdAt: 1200n
+          createdAt: 1200n,
         },
         build,
         feeAmount: 2500n,
         txCount: 7n,
         countedUntilSlot: 6000n,
-        updatedAt: 1200n
-      })
+        updatedAt: 1200n,
+      }),
     ).toThrow(BuildError);
 
     expect(registrar.processedMessages.size).toBe(1);
@@ -229,7 +229,7 @@ describe("Registrar X1_FEE_CHECKPOINT integration", () => {
     const build = createBuild({
       owner: "x1-user-1",
       buildId: "build-1",
-      createdAt: 1000n
+      createdAt: 1000n,
     });
 
     expect(() =>
@@ -239,14 +239,14 @@ describe("Registrar X1_FEE_CHECKPOINT integration", () => {
           messageId: "message-1",
           kind: "X1_FEE_CHECKPOINT",
           submittedBy: "registrar-1",
-          createdAt: 1100n
+          createdAt: 1100n,
         },
         build,
         feeAmount: 0n,
         txCount: 3n,
         countedUntilSlot: 5000n,
-        updatedAt: 1100n
-      })
+        updatedAt: 1100n,
+      }),
     ).toThrow(BuildError);
 
     expect(registrar.processedMessages.size).toBe(0);
@@ -262,7 +262,7 @@ describe("Registrar X1_FEE_CHECKPOINT integration", () => {
     const build = createBuild({
       owner: "x1-user-1",
       buildId: "build-1",
-      createdAt: 1000n
+      createdAt: 1000n,
     });
 
     applyRegistrarX1FeeCheckpoint({
@@ -271,13 +271,13 @@ describe("Registrar X1_FEE_CHECKPOINT integration", () => {
         messageId: "message-1",
         kind: "X1_FEE_CHECKPOINT",
         submittedBy: "registrar-1",
-        createdAt: 1100n
+        createdAt: 1100n,
       },
       build,
       feeAmount: 1000n,
       txCount: 3n,
       countedUntilSlot: 5000n,
-      updatedAt: 1100n
+      updatedAt: 1100n,
     });
 
     expect(() =>
@@ -287,14 +287,14 @@ describe("Registrar X1_FEE_CHECKPOINT integration", () => {
           messageId: "message-2",
           kind: "X1_FEE_CHECKPOINT",
           submittedBy: "registrar-1",
-          createdAt: 1200n
+          createdAt: 1200n,
         },
         build,
         feeAmount: 2500n,
         txCount: 7n,
         countedUntilSlot: 5000n,
-        updatedAt: 1200n
-      })
+        updatedAt: 1200n,
+      }),
     ).toThrow(BuildError);
 
     expect(registrar.processedMessages.has("message-2")).toBe(false);
@@ -311,19 +311,19 @@ describe("Registrar X1_FEE_CHECKPOINT integration", () => {
     const build = createBuild({
       owner: "x1-user-1",
       buildId: "build-1",
-      createdAt: 1000n
+      createdAt: 1000n,
     });
 
     applyCoreRedeemBld({
       build,
       amountBld: 11n,
-      redeemedAt: 1050n
+      redeemedAt: 1050n,
     });
 
     applyXenBurnPower({
       build,
       amountXbp: 100n,
-      burnedAt: 1060n
+      burnedAt: 1060n,
     });
 
     lockXntd({
@@ -331,7 +331,7 @@ describe("Registrar X1_FEE_CHECKPOINT integration", () => {
       amountXntd: 500n,
       observedRequiredXntdLock: 500n,
       lockEpoch: 1,
-      lockedAt: 1070n
+      lockedAt: 1070n,
     });
 
     applyRegistrarX1FeeCheckpoint({
@@ -340,20 +340,18 @@ describe("Registrar X1_FEE_CHECKPOINT integration", () => {
         messageId: "message-1",
         kind: "X1_FEE_CHECKPOINT",
         submittedBy: "registrar-1",
-        createdAt: 1100n
+        createdAt: 1100n,
       },
       build,
       feeAmount: 1000n,
       txCount: 3n,
       countedUntilSlot: 5000n,
-      updatedAt: 1100n
+      updatedAt: 1100n,
     });
 
     expect(build.historyBld).toBe(11n);
-    expect(build.availableBld).toBe(11n);
     expect(build.originBld).toBe(0n);
-    expect(build.earnedXbp).toBe(100n);
-    expect(build.availableXbp).toBe(100n);
+    expect(build.historyXbp).toBe(100n);
     expect(build.lockedXntd).toBe(500n);
     expect(build.requiredXntdLock).toBe(500n);
     expect(build.lockEpoch).toBe(1);

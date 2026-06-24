@@ -5,7 +5,7 @@ import {
   applyRegistrarXenBurn,
   createBuild,
   createRegistrarState,
-  createXenBurnEventState
+  createXenBurnEventState,
 } from "../src/index.js";
 
 describe("applyRegistrarXenBurn", () => {
@@ -15,7 +15,7 @@ describe("applyRegistrarXenBurn", () => {
     const build = createBuild({
       owner: "x1-user-1",
       buildId: "build-1",
-      createdAt: 1000n
+      createdAt: 1000n,
     });
 
     applyRegistrarXenBurn({
@@ -25,18 +25,17 @@ describe("applyRegistrarXenBurn", () => {
         messageId: "message-1",
         kind: "XEN_BURN",
         submittedBy: "registrar-1",
-        createdAt: 1100n
+        createdAt: 1100n,
       },
       build,
       xenBurnKey: "xen-burn-1",
       amountXbp: 100n,
-      burnedAt: 1100n
+      burnedAt: 1100n,
     });
 
     expect(registrar.processedMessages.has("message-1")).toBe(true);
     expect(xenBurnEvents.usedXenBurnEvents.has("xen-burn-1")).toBe(true);
-    expect(build.earnedXbp).toBe(100n);
-    expect(build.availableXbp).toBe(100n);
+    expect(build.historyXbp).toBe(100n);
     expect(build.updatedAt).toBe(1100n);
   });
 
@@ -46,7 +45,7 @@ describe("applyRegistrarXenBurn", () => {
     const build = createBuild({
       owner: "x1-user-1",
       buildId: "build-1",
-      createdAt: 1000n
+      createdAt: 1000n,
     });
 
     expect(() =>
@@ -57,13 +56,13 @@ describe("applyRegistrarXenBurn", () => {
           messageId: "message-1",
           kind: "CORE_REDEEM",
           submittedBy: "registrar-1",
-          createdAt: 1100n
+          createdAt: 1100n,
         },
         build,
         xenBurnKey: "xen-burn-1",
         amountXbp: 100n,
-        burnedAt: 1100n
-      })
+        burnedAt: 1100n,
+      }),
     ).toThrow(BuildError);
 
     try {
@@ -74,24 +73,23 @@ describe("applyRegistrarXenBurn", () => {
           messageId: "message-1",
           kind: "CORE_REDEEM",
           submittedBy: "registrar-1",
-          createdAt: 1100n
+          createdAt: 1100n,
         },
         build,
         xenBurnKey: "xen-burn-1",
         amountXbp: 100n,
-        burnedAt: 1100n
+        burnedAt: 1100n,
       });
     } catch (error) {
       expect(error).toBeInstanceOf(BuildError);
       expect((error as BuildError).code).toBe(
-        BuildErrorCode.InvalidRegistrarMessageKind
+        BuildErrorCode.InvalidRegistrarMessageKind,
       );
     }
 
     expect(registrar.processedMessages.size).toBe(0);
     expect(xenBurnEvents.usedXenBurnEvents.size).toBe(0);
-    expect(build.earnedXbp).toBe(0n);
-    expect(build.availableXbp).toBe(0n);
+    expect(build.historyXbp).toBe(0n);
     expect(build.updatedAt).toBe(1000n);
   });
 
@@ -101,7 +99,7 @@ describe("applyRegistrarXenBurn", () => {
     const build = createBuild({
       owner: "x1-user-1",
       buildId: "build-1",
-      createdAt: 1000n
+      createdAt: 1000n,
     });
 
     applyRegistrarXenBurn({
@@ -111,12 +109,12 @@ describe("applyRegistrarXenBurn", () => {
         messageId: "message-1",
         kind: "XEN_BURN",
         submittedBy: "registrar-1",
-        createdAt: 1100n
+        createdAt: 1100n,
       },
       build,
       xenBurnKey: "xen-burn-1",
       amountXbp: 100n,
-      burnedAt: 1100n
+      burnedAt: 1100n,
     });
 
     expect(() =>
@@ -127,20 +125,19 @@ describe("applyRegistrarXenBurn", () => {
           messageId: "message-1",
           kind: "XEN_BURN",
           submittedBy: "registrar-1",
-          createdAt: 1200n
+          createdAt: 1200n,
         },
         build,
         xenBurnKey: "xen-burn-2",
         amountXbp: 250n,
-        burnedAt: 1200n
-      })
+        burnedAt: 1200n,
+      }),
     ).toThrow(BuildError);
 
     expect(registrar.processedMessages.size).toBe(1);
     expect(xenBurnEvents.usedXenBurnEvents.size).toBe(1);
     expect(xenBurnEvents.usedXenBurnEvents.has("xen-burn-2")).toBe(false);
-    expect(build.earnedXbp).toBe(100n);
-    expect(build.availableXbp).toBe(100n);
+    expect(build.historyXbp).toBe(100n);
     expect(build.updatedAt).toBe(1100n);
   });
 
@@ -150,7 +147,7 @@ describe("applyRegistrarXenBurn", () => {
     const build = createBuild({
       owner: "x1-user-1",
       buildId: "build-1",
-      createdAt: 1000n
+      createdAt: 1000n,
     });
 
     applyRegistrarXenBurn({
@@ -160,12 +157,12 @@ describe("applyRegistrarXenBurn", () => {
         messageId: "message-1",
         kind: "XEN_BURN",
         submittedBy: "registrar-1",
-        createdAt: 1100n
+        createdAt: 1100n,
       },
       build,
       xenBurnKey: "xen-burn-1",
       amountXbp: 100n,
-      burnedAt: 1100n
+      burnedAt: 1100n,
     });
 
     expect(() =>
@@ -176,20 +173,19 @@ describe("applyRegistrarXenBurn", () => {
           messageId: "message-2",
           kind: "XEN_BURN",
           submittedBy: "registrar-1",
-          createdAt: 1200n
+          createdAt: 1200n,
         },
         build,
         xenBurnKey: "xen-burn-1",
         amountXbp: 250n,
-        burnedAt: 1200n
-      })
+        burnedAt: 1200n,
+      }),
     ).toThrow(BuildError);
 
     expect(registrar.processedMessages.has("message-2")).toBe(false);
     expect(registrar.processedMessages.size).toBe(1);
     expect(xenBurnEvents.usedXenBurnEvents.size).toBe(1);
-    expect(build.earnedXbp).toBe(100n);
-    expect(build.availableXbp).toBe(100n);
+    expect(build.historyXbp).toBe(100n);
     expect(build.updatedAt).toBe(1100n);
   });
 
@@ -199,7 +195,7 @@ describe("applyRegistrarXenBurn", () => {
     const build = createBuild({
       owner: "x1-user-1",
       buildId: "build-1",
-      createdAt: 1000n
+      createdAt: 1000n,
     });
 
     expect(() =>
@@ -210,19 +206,18 @@ describe("applyRegistrarXenBurn", () => {
           messageId: "message-1",
           kind: "XEN_BURN",
           submittedBy: "registrar-1",
-          createdAt: 1100n
+          createdAt: 1100n,
         },
         build,
         xenBurnKey: "xen-burn-1",
         amountXbp: 0n,
-        burnedAt: 1100n
-      })
+        burnedAt: 1100n,
+      }),
     ).toThrow(BuildError);
 
     expect(registrar.processedMessages.size).toBe(0);
     expect(xenBurnEvents.usedXenBurnEvents.size).toBe(0);
-    expect(build.earnedXbp).toBe(0n);
-    expect(build.availableXbp).toBe(0n);
+    expect(build.historyXbp).toBe(0n);
     expect(build.updatedAt).toBe(1000n);
   });
 
@@ -232,7 +227,7 @@ describe("applyRegistrarXenBurn", () => {
     const build = createBuild({
       owner: "x1-user-1",
       buildId: "build-1",
-      createdAt: 1000n
+      createdAt: 1000n,
     });
 
     applyRegistrarXenBurn({
@@ -242,16 +237,15 @@ describe("applyRegistrarXenBurn", () => {
         messageId: "message-1",
         kind: "XEN_BURN",
         submittedBy: "registrar-1",
-        createdAt: 1100n
+        createdAt: 1100n,
       },
       build,
       xenBurnKey: "xen-burn-1",
       amountXbp: 100n,
-      burnedAt: 1100n
+      burnedAt: 1100n,
     });
 
     expect(build.historyBld).toBe(0n);
-    expect(build.availableBld).toBe(0n);
     expect(build.originBld).toBe(0n);
     expect(build.lockedXntd).toBe(0n);
     expect(build.requiredXntdLock).toBe(0n);

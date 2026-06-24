@@ -3,7 +3,7 @@ import {
   type BuildState,
   type EthereumAddress,
   type X1Address,
-  createEmptyBuildState
+  createEmptyBuildState,
 } from "../model/build-state.js";
 
 export interface CreateBuildInput {
@@ -11,6 +11,8 @@ export interface CreateBuildInput {
   buildId: BuildId;
   createdAt: bigint;
   ethereumIdentity?: EthereumAddress | null;
+  buildName?: string | null;
+  logoUri?: string | null;
 }
 
 export function createBuild(input: CreateBuildInput): BuildState {
@@ -18,6 +20,8 @@ export function createBuild(input: CreateBuildInput): BuildState {
     owner: input.owner,
     buildId: input.buildId,
     createdAt: input.createdAt,
-    ethereumIdentity: input.ethereumIdentity ?? null
+    ethereumIdentity: input.ethereumIdentity ?? null,
+    buildName: input.buildName ?? null,
+    logoUri: input.logoUri ?? null,
   });
 }

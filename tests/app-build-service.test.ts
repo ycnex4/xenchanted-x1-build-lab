@@ -9,7 +9,7 @@ import {
   appCreateBuild,
   appGetBuildById,
   createBuildApplicationState,
-  createStaticXcEpochMinimumSource
+  createStaticXcEpochMinimumSource,
 } from "../src/index.js";
 
 describe("Build application service", () => {
@@ -20,7 +20,7 @@ describe("Build application service", () => {
       owner: "x1-owner",
       buildId: "build-1",
       ethereumIdentity: "0x0000000000000000000000000000000000000001",
-      createdAt: 100n
+      createdAt: 100n,
     });
 
     expect(created.ok).toBe(true);
@@ -41,13 +41,13 @@ describe("Build application service", () => {
     appCreateBuild(app, {
       owner: "x1-owner",
       buildId: "build-1",
-      createdAt: 100n
+      createdAt: 100n,
     });
 
     const duplicate = appCreateBuild(app, {
       owner: "x1-owner-2",
       buildId: "build-1",
-      createdAt: 101n
+      createdAt: 101n,
     });
 
     expect(duplicate.ok).toBe(false);
@@ -64,7 +64,7 @@ describe("Build application service", () => {
       owner: "x1-owner",
       buildId: "build-1",
       ethereumIdentity: "0x0000000000000000000000000000000000000001",
-      createdAt: 100n
+      createdAt: 100n,
     });
 
     expect(created.ok).toBe(true);
@@ -81,12 +81,12 @@ describe("Build application service", () => {
         messageId: "message-core-redeem-1",
         kind: "CORE_REDEEM",
         submittedBy: "registrar-1",
-        createdAt: 110n
+        createdAt: 110n,
       },
       build,
       redeemKey: "redeem-1",
       amountBld: 121n,
-      redeemedAt: 110n
+      redeemedAt: 110n,
     });
 
     expect(coreRedeem.ok).toBe(true);
@@ -97,19 +97,19 @@ describe("Build application service", () => {
         messageId: "message-xen-burn-1",
         kind: "XEN_BURN",
         submittedBy: "registrar-1",
-        createdAt: 120n
+        createdAt: 120n,
       },
       build,
       xenBurnKey: "xen-burn-1",
       amountXbp: 1000n,
-      burnedAt: 120n
+      burnedAt: 120n,
     });
 
     expect(xenBurn.ok).toBe(true);
 
     const origin = appClaimGenesisOriginBld({
       build,
-      claimedAt: 130n
+      claimedAt: 130n,
     });
 
     expect(origin.ok).toBe(true);
@@ -120,14 +120,14 @@ describe("Build application service", () => {
         messageId: "message-lock-1",
         kind: "LOCK_XNTD",
         submittedBy: "registrar-1",
-        createdAt: 140n
+        createdAt: 140n,
       },
       build,
       xntdCommitmentEventKey: "app-xntd-commitment-1",
       amountXntd: 500n,
       observedRequiredXntdLock: 500n,
       lockEpoch: 1,
-      lockedAt: 140n
+      lockedAt: 140n,
     });
 
     expect(lock.ok).toBe(true);
@@ -138,14 +138,14 @@ describe("Build application service", () => {
         messageId: "message-relock-1",
         kind: "RELOCK_XNTD",
         submittedBy: "registrar-1",
-        createdAt: 150n
+        createdAt: 150n,
       },
       build,
       xntdCommitmentEventKey: "app-xntd-commitment-2",
       amountXntd: 250n,
       observedRequiredXntdLock: 250n,
       lockEpoch: 2,
-      relockedAt: 150n
+      relockedAt: 150n,
     });
 
     expect(relock.ok).toBe(true);
@@ -156,22 +156,20 @@ describe("Build application service", () => {
         messageId: "message-fee-1",
         kind: "X1_FEE_CHECKPOINT",
         submittedBy: "registrar-1",
-        createdAt: 160n
+        createdAt: 160n,
       },
       build,
       feeAmount: 777n,
       txCount: 11n,
       countedUntilSlot: 9000n,
-      updatedAt: 160n
+      updatedAt: 160n,
     });
 
     expect(fee.ok).toBe(true);
 
     expect(build.historyBld).toBe(121n);
-    expect(build.availableBld).toBe(176n);
     expect(build.originBld).toBe(55n);
-    expect(build.earnedXbp).toBe(1000n);
-    expect(build.availableXbp).toBe(1000n);
+    expect(build.historyXbp).toBe(1000n);
     expect(build.lockedXntd).toBe(250n);
     expect(build.requiredXntdLock).toBe(250n);
     expect(build.lockEpoch).toBe(2);
@@ -186,7 +184,7 @@ describe("Build application service", () => {
     const created = appCreateBuild(app, {
       owner: "x1-owner",
       buildId: "build-1",
-      createdAt: 100n
+      createdAt: 100n,
     });
 
     expect(created.ok).toBe(true);
@@ -201,12 +199,12 @@ describe("Build application service", () => {
         messageId: "message-core-redeem-1",
         kind: "CORE_REDEEM",
         submittedBy: "wrong-registrar",
-        createdAt: 110n
+        createdAt: 110n,
       },
       build: created.value,
       redeemKey: "redeem-1",
       amountBld: 121n,
-      redeemedAt: 110n
+      redeemedAt: 110n,
     });
 
     expect(result.ok).toBe(false);
@@ -227,7 +225,7 @@ describe("Build application service", () => {
       owner: "x1-owner-authoritative",
       buildId: "build-authoritative",
       ethereumIdentity: "0x00000000000000000000000000000000000000aa",
-      createdAt: 100n
+      createdAt: 100n,
     });
 
     expect(created.ok).toBe(true);
@@ -237,7 +235,7 @@ describe("Build application service", () => {
 
     const build = created.value;
     const xcEpochMinimumSource = createStaticXcEpochMinimumSource(
-      new Map<number, bigint>([[1, 500n]])
+      new Map<number, bigint>([[1, 500n]]),
     );
 
     const lock = appApplyRegistrarXntdLock({
@@ -246,7 +244,7 @@ describe("Build application service", () => {
         messageId: "message-lock-authoritative-1",
         kind: "LOCK_XNTD",
         submittedBy: "registrar-1",
-        createdAt: 140n
+        createdAt: 140n,
       },
       build,
       xntdCommitmentEventKey: "app-xntd-commitment-authoritative-1",
@@ -254,7 +252,7 @@ describe("Build application service", () => {
       observedRequiredXntdLock: 500n,
       xcEpochMinimumSource,
       lockEpoch: 1,
-      lockedAt: 140n
+      lockedAt: 140n,
     });
 
     expect(lock.ok).toBe(true);
@@ -268,7 +266,7 @@ describe("Build application service", () => {
         messageId: "message-relock-authoritative-1",
         kind: "RELOCK_XNTD",
         submittedBy: "registrar-1",
-        createdAt: 150n
+        createdAt: 150n,
       },
       build,
       xntdCommitmentEventKey: "app-xntd-commitment-authoritative-2",
@@ -276,27 +274,26 @@ describe("Build application service", () => {
       observedRequiredXntdLock: 250n,
       xcEpochMinimumSource,
       lockEpoch: 2,
-      relockedAt: 150n
+      relockedAt: 150n,
     });
 
     expect(missingEpochRelock.ok).toBe(false);
     if (!missingEpochRelock.ok) {
       expect(missingEpochRelock.error.code).toBe(
-        "MISSING_AUTHORITATIVE_XC_EPOCH_MINIMUM"
+        "MISSING_AUTHORITATIVE_XC_EPOCH_MINIMUM",
       );
     }
 
     expect(
-      app.registrar.processedMessages.has("message-relock-authoritative-1")
+      app.registrar.processedMessages.has("message-relock-authoritative-1"),
     ).toBe(false);
     expect(
       app.xntdCommitmentEvents.usedXntdCommitmentEvents.has(
-        "app-xntd-commitment-authoritative-2"
-      )
+        "app-xntd-commitment-authoritative-2",
+      ),
     ).toBe(false);
     expect(build.lockedXntd).toBe(750n);
     expect(build.requiredXntdLock).toBe(500n);
     expect(build.lockEpoch).toBe(1);
   });
-
 });

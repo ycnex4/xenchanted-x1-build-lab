@@ -14,6 +14,7 @@ export * from "./instructions/registrar-xntd-lock.js";
 export * from "./instructions/x1-fee-contribution.js";
 export * from "./instructions/xen-burn-power.js";
 export * from "./instructions/xntd-lock.js";
+export * from "./instructions/build-identity.js";
 export * from "./storage/serialization.js";
 export * from "./app/build-service.js";
 export * from "./proofs/proof-types.js";

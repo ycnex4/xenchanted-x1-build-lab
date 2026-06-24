@@ -9,23 +9,23 @@ import {
   createStaticXcEpochMinimumSource,
   createXntdLockCandidate,
   createXntdRelockCandidate,
-  convertWatcherCandidateToProof
+  convertWatcherCandidateToProof,
 } from "../src/index.js";
 
 function submitProofFromWatcherCandidate(
   app: ReturnType<typeof createBuildApplicationState>,
   candidate: Parameters<typeof convertWatcherCandidateToProof>[0],
   createdAt: bigint,
-  extraInput: Partial<Parameters<typeof appSubmitProof>[2]> = {}
+  extraInput: Partial<Parameters<typeof appSubmitProof>[2]> = {},
 ) {
   const proof = convertWatcherCandidateToProof(candidate, {
-    validatedAt: createdAt - 1n
+    validatedAt: createdAt - 1n,
   });
 
   return appSubmitProof(app, proof, {
     submittedBy: "registrar-1",
     createdAt,
-    ...extraInput
+    ...extraInput,
   });
 }
 
@@ -37,7 +37,7 @@ describe("end-to-end watcher proof registrar scenario", () => {
       owner: "x1-user-1",
       buildId: "build-1",
       ethereumIdentity: "0x0000000000000000000000000000000000000001",
-      createdAt: 1000n
+      createdAt: 1000n,
     });
 
     expect(created.ok).toBe(true);
@@ -50,8 +50,8 @@ describe("end-to-end watcher proof registrar scenario", () => {
     const xcEpochMinimumSource = createStaticXcEpochMinimumSource(
       new Map<number, bigint>([
         [1, 500n],
-        [2, 250n]
-      ])
+        [2, 250n],
+      ]),
     );
 
     const coreRedeemCandidate = createCoreRedeemCandidate({
@@ -67,13 +67,13 @@ describe("end-to-end watcher proof registrar scenario", () => {
       owner: build.owner,
       amountBld: 121n,
       redeemedAt: 1100n,
-      coreTokenId: "1"
+      coreTokenId: "1",
     });
 
     const coreRedeem = submitProofFromWatcherCandidate(
       app,
       coreRedeemCandidate,
-      1110n
+      1110n,
     );
 
     expect(coreRedeem.ok).toBe(true);
@@ -91,13 +91,13 @@ describe("end-to-end watcher proof registrar scenario", () => {
       owner: build.owner,
       amountXbp: 1000n,
       burnedAt: 1200n,
-      xenAmountBurned: 100000000n
+      xenAmountBurned: 100000000n,
     });
 
     const xenBurn = submitProofFromWatcherCandidate(
       app,
       xenBurnCandidate,
-      1210n
+      1210n,
     );
 
     expect(xenBurn.ok).toBe(true);
@@ -116,11 +116,11 @@ describe("end-to-end watcher proof registrar scenario", () => {
       amountXntd: 500n,
       observedRequiredXntdLock: 500n,
       lockEpoch: 1,
-      lockedAt: 1300n
+      lockedAt: 1300n,
     });
 
     const lock = submitProofFromWatcherCandidate(app, lockCandidate, 1310n, {
-      xcEpochMinimumSource
+      xcEpochMinimumSource,
     });
 
     expect(lock.ok).toBe(true);
@@ -139,14 +139,14 @@ describe("end-to-end watcher proof registrar scenario", () => {
       amountXntd: 250n,
       observedRequiredXntdLock: 250n,
       lockEpoch: 2,
-      relockedAt: 1400n
+      relockedAt: 1400n,
     });
 
     const relock = submitProofFromWatcherCandidate(
       app,
       relockCandidate,
       1410n,
-      { xcEpochMinimumSource }
+      { xcEpochMinimumSource },
     );
 
     expect(relock.ok).toBe(true);
@@ -164,7 +164,7 @@ describe("end-to-end watcher proof registrar scenario", () => {
       feeAmount: 777n,
       txCount: 11n,
       countedUntilSlot: 9000n,
-      updatedAt: 1500n
+      updatedAt: 1500n,
     });
 
     const fee = submitProofFromWatcherCandidate(app, feeCandidate, 1510n);
@@ -172,10 +172,8 @@ describe("end-to-end watcher proof registrar scenario", () => {
     expect(fee.ok).toBe(true);
 
     expect(build.historyBld).toBe(121n);
-    expect(build.availableBld).toBe(121n);
 
-    expect(build.earnedXbp).toBe(1000n);
-    expect(build.availableXbp).toBe(1000n);
+    expect(build.historyXbp).toBe(1000n);
 
     expect(build.lockedXntd).toBe(250n);
     expect(build.requiredXntdLock).toBe(250n);
@@ -188,24 +186,28 @@ describe("end-to-end watcher proof registrar scenario", () => {
     expect(build.lastFeeUpdateAt).toBe(1500n);
 
     expect(app.registrar.processedMessages.size).toBe(5);
-    expect(app.redeemEvents.usedRedeemEvents.has(
-      coreRedeemCandidate.canonicalEventKey
-    )).toBe(true);
-    expect(app.xenBurnEvents.usedXenBurnEvents.has(
-      xenBurnCandidate.canonicalEventKey
-    )).toBe(true);
+    expect(
+      app.redeemEvents.usedRedeemEvents.has(
+        coreRedeemCandidate.canonicalEventKey,
+      ),
+    ).toBe(true);
+    expect(
+      app.xenBurnEvents.usedXenBurnEvents.has(
+        xenBurnCandidate.canonicalEventKey,
+      ),
+    ).toBe(true);
 
     const duplicateCoreRedeem = submitProofFromWatcherCandidate(
       app,
       coreRedeemCandidate,
-      1600n
+      1600n,
     );
 
     expect(duplicateCoreRedeem.ok).toBe(false);
 
     if (!duplicateCoreRedeem.ok) {
       expect(duplicateCoreRedeem.error.code).toBe(
-        "DUPLICATE_REGISTRAR_MESSAGE"
+        "DUPLICATE_REGISTRAR_MESSAGE",
       );
     }
 

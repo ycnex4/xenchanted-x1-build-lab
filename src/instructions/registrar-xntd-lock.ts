@@ -3,16 +3,16 @@ import { type BuildState } from "../model/build-state.js";
 import {
   type RegistrarMessage,
   type RegistrarState,
-  acceptRegistrarMessage
+  acceptRegistrarMessage,
 } from "../model/registrar.js";
 import {
   type XntdCommitmentEventKey,
   type XntdCommitmentEventState,
-  acceptXntdCommitmentEvent
+  acceptXntdCommitmentEvent,
 } from "../model/xntd-commitment-events.js";
 import {
   type XcEpochMinimumSource,
-  assertAuthoritativeXcEpochMinimum
+  assertAuthoritativeXcEpochMinimum,
 } from "../model/xc-epoch-minimum-source.js";
 import { lockXntd, relockXntd } from "./xntd-lock.js";
 
@@ -47,81 +47,79 @@ function assertRegistrarPrechecks(
   xntdCommitmentEvents: XntdCommitmentEventState,
   message: RegistrarMessage,
   expectedKind: "LOCK_XNTD" | "RELOCK_XNTD",
-  xntdCommitmentEventKey: XntdCommitmentEventKey
+  xntdCommitmentEventKey: XntdCommitmentEventKey,
 ): void {
   if (message.kind !== expectedKind) {
     throw new BuildError(
       BuildErrorCode.InvalidRegistrarMessageKind,
-      `Expected ${expectedKind} message, got: ${message.kind}`
+      `Expected ${expectedKind} message, got: ${message.kind}`,
     );
   }
 
   if (message.submittedBy !== registrar.registrarAuthority) {
     throw new BuildError(
       BuildErrorCode.UnauthorizedRegistrar,
-      `Unauthorized registrar: ${message.submittedBy}`
+      `Unauthorized registrar: ${message.submittedBy}`,
     );
   }
 
   if (registrar.processedMessages.has(message.messageId)) {
     throw new BuildError(
       BuildErrorCode.DuplicateRegistrarMessage,
-      `Registrar message already processed: ${message.messageId}`
+      `Registrar message already processed: ${message.messageId}`,
     );
   }
 
   if (
-    xntdCommitmentEvents.usedXntdCommitmentEvents.has(
-      xntdCommitmentEventKey
-    )
+    xntdCommitmentEvents.usedXntdCommitmentEvents.has(xntdCommitmentEventKey)
   ) {
     throw new BuildError(
       BuildErrorCode.DuplicateXntdCommitmentEvent,
-      `XNTD commitment event already used: ${xntdCommitmentEventKey}`
+      `XNTD commitment event already used: ${xntdCommitmentEventKey}`,
     );
   }
 }
 
 function assertIncreasingLockEpoch(
   build: BuildState,
-  incomingLockEpoch: number
+  incomingLockEpoch: number,
 ): void {
   if (build.lockEpoch !== null && incomingLockEpoch <= build.lockEpoch) {
     throw new BuildError(
       BuildErrorCode.NonIncreasingXntdLockEpoch,
-      `XNTD lock epoch must increase: current=${build.lockEpoch.toString()}, incoming=${incomingLockEpoch.toString()}`
+      `XNTD lock epoch must increase: current=${build.lockEpoch.toString()}, incoming=${incomingLockEpoch.toString()}`,
     );
   }
 }
 
 function assertValidObservedRequiredXntdLock(
   amountXntd: bigint,
-  observedRequiredXntdLock: bigint
+  observedRequiredXntdLock: bigint,
 ): void {
   if (observedRequiredXntdLock <= 0n) {
     throw new BuildError(
       BuildErrorCode.InvalidXntdLockAmount,
-      `Observed required XNTD lock amount must be positive: ${observedRequiredXntdLock.toString()}`
+      `Observed required XNTD lock amount must be positive: ${observedRequiredXntdLock.toString()}`,
     );
   }
 
   if (amountXntd < observedRequiredXntdLock) {
     throw new BuildError(
       BuildErrorCode.InvalidXntdLockAmount,
-      `XNTD lock amount must cover observed required lock: amount=${amountXntd.toString()}, required=${observedRequiredXntdLock.toString()}`
+      `XNTD lock amount must cover observed required lock: amount=${amountXntd.toString()}, required=${observedRequiredXntdLock.toString()}`,
     );
   }
 }
 
 export function applyRegistrarXntdLock(
-  input: ApplyRegistrarXntdLockInput
+  input: ApplyRegistrarXntdLockInput,
 ): BuildState {
   assertRegistrarPrechecks(
     input.registrar,
     input.xntdCommitmentEvents,
     input.message,
     "LOCK_XNTD",
-    input.xntdCommitmentEventKey
+    input.xntdCommitmentEventKey,
   );
 
   assertIncreasingLockEpoch(input.build, input.lockEpoch);
@@ -129,27 +127,27 @@ export function applyRegistrarXntdLock(
   if (input.amountXntd <= 0n) {
     throw new BuildError(
       BuildErrorCode.InvalidXntdLockAmount,
-      `XNTD lock amount must be positive: ${input.amountXntd.toString()}`
+      `XNTD lock amount must be positive: ${input.amountXntd.toString()}`,
     );
   }
 
   assertValidObservedRequiredXntdLock(
     input.amountXntd,
-    input.observedRequiredXntdLock
+    input.observedRequiredXntdLock,
   );
 
   if (input.xcEpochMinimumSource !== undefined) {
     assertAuthoritativeXcEpochMinimum(
       input.xcEpochMinimumSource,
       input.lockEpoch,
-      input.observedRequiredXntdLock
+      input.observedRequiredXntdLock,
     );
   }
 
   acceptRegistrarMessage(input.registrar, input.message);
   acceptXntdCommitmentEvent(
     input.xntdCommitmentEvents,
-    input.xntdCommitmentEventKey
+    input.xntdCommitmentEventKey,
   );
 
   return lockXntd({
@@ -157,19 +155,19 @@ export function applyRegistrarXntdLock(
     amountXntd: input.amountXntd,
     observedRequiredXntdLock: input.observedRequiredXntdLock,
     lockEpoch: input.lockEpoch,
-    lockedAt: input.lockedAt
+    lockedAt: input.lockedAt,
   });
 }
 
 export function applyRegistrarXntdRelock(
-  input: ApplyRegistrarXntdRelockInput
+  input: ApplyRegistrarXntdRelockInput,
 ): BuildState {
   assertRegistrarPrechecks(
     input.registrar,
     input.xntdCommitmentEvents,
     input.message,
     "RELOCK_XNTD",
-    input.xntdCommitmentEventKey
+    input.xntdCommitmentEventKey,
   );
 
   assertIncreasingLockEpoch(input.build, input.lockEpoch);
@@ -177,41 +175,33 @@ export function applyRegistrarXntdRelock(
   if (input.amountXntd <= 0n) {
     throw new BuildError(
       BuildErrorCode.InvalidXntdLockAmount,
-      `XNTD lock amount must be positive: ${input.amountXntd.toString()}`
+      `XNTD lock amount must be positive: ${input.amountXntd.toString()}`,
     );
   }
 
   assertValidObservedRequiredXntdLock(
     input.amountXntd,
-    input.observedRequiredXntdLock
+    input.observedRequiredXntdLock,
   );
 
   if (input.xcEpochMinimumSource !== undefined) {
     assertAuthoritativeXcEpochMinimum(
       input.xcEpochMinimumSource,
       input.lockEpoch,
-      input.observedRequiredXntdLock
+      input.observedRequiredXntdLock,
     );
   }
 
   if (!input.build.xcCommitmentActive) {
     throw new BuildError(
       BuildErrorCode.XntdCommitmentNotActive,
-      "Cannot relock XNTD when XC commitment is not active"
+      "Cannot relock XNTD when XC commitment is not active",
     );
   }
-
-  if (input.build.availableBld < input.build.historyBld) {
-    throw new BuildError(
-      BuildErrorCode.InsufficientAvailableBldForRelock,
-      `Relock requires availableBld >= historyBld: available=${input.build.availableBld.toString()}, history=${input.build.historyBld.toString()}`
-    );
-  }
-
   acceptRegistrarMessage(input.registrar, input.message);
   acceptXntdCommitmentEvent(
     input.xntdCommitmentEvents,
-    input.xntdCommitmentEventKey
+    input.xntdCommitmentEventKey,
   );
 
   return relockXntd({
@@ -219,6 +209,6 @@ export function applyRegistrarXntdRelock(
     amountXntd: input.amountXntd,
     observedRequiredXntdLock: input.observedRequiredXntdLock,
     lockEpoch: input.lockEpoch,
-    relockedAt: input.relockedAt
+    relockedAt: input.relockedAt,
   });
 }

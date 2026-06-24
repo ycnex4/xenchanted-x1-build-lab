@@ -5,7 +5,7 @@ import {
   applyRegistrarCoreRedeem,
   createBuild,
   createRedeemEventState,
-  createRegistrarState
+  createRegistrarState,
 } from "../src/index.js";
 
 describe("applyRegistrarCoreRedeem", () => {
@@ -15,7 +15,7 @@ describe("applyRegistrarCoreRedeem", () => {
     const build = createBuild({
       owner: "x1-user-1",
       buildId: "build-1",
-      createdAt: 1000n
+      createdAt: 1000n,
     });
 
     applyRegistrarCoreRedeem({
@@ -25,18 +25,17 @@ describe("applyRegistrarCoreRedeem", () => {
         messageId: "message-1",
         kind: "CORE_REDEEM",
         submittedBy: "registrar-1",
-        createdAt: 1100n
+        createdAt: 1100n,
       },
       build,
       redeemKey: "redeem-1",
       amountBld: 11n,
-      redeemedAt: 1100n
+      redeemedAt: 1100n,
     });
 
     expect(registrar.processedMessages.has("message-1")).toBe(true);
     expect(redeemEvents.usedRedeemEvents.has("redeem-1")).toBe(true);
     expect(build.historyBld).toBe(11n);
-    expect(build.availableBld).toBe(11n);
     expect(build.updatedAt).toBe(1100n);
   });
 
@@ -46,7 +45,7 @@ describe("applyRegistrarCoreRedeem", () => {
     const build = createBuild({
       owner: "x1-user-1",
       buildId: "build-1",
-      createdAt: 1000n
+      createdAt: 1000n,
     });
 
     expect(() =>
@@ -57,13 +56,13 @@ describe("applyRegistrarCoreRedeem", () => {
           messageId: "message-1",
           kind: "XEN_BURN",
           submittedBy: "registrar-1",
-          createdAt: 1100n
+          createdAt: 1100n,
         },
         build,
         redeemKey: "redeem-1",
         amountBld: 11n,
-        redeemedAt: 1100n
-      })
+        redeemedAt: 1100n,
+      }),
     ).toThrow(BuildError);
 
     try {
@@ -74,24 +73,23 @@ describe("applyRegistrarCoreRedeem", () => {
           messageId: "message-1",
           kind: "XEN_BURN",
           submittedBy: "registrar-1",
-          createdAt: 1100n
+          createdAt: 1100n,
         },
         build,
         redeemKey: "redeem-1",
         amountBld: 11n,
-        redeemedAt: 1100n
+        redeemedAt: 1100n,
       });
     } catch (error) {
       expect(error).toBeInstanceOf(BuildError);
       expect((error as BuildError).code).toBe(
-        BuildErrorCode.InvalidRegistrarMessageKind
+        BuildErrorCode.InvalidRegistrarMessageKind,
       );
     }
 
     expect(registrar.processedMessages.size).toBe(0);
     expect(redeemEvents.usedRedeemEvents.size).toBe(0);
     expect(build.historyBld).toBe(0n);
-    expect(build.availableBld).toBe(0n);
     expect(build.updatedAt).toBe(1000n);
   });
 
@@ -101,7 +99,7 @@ describe("applyRegistrarCoreRedeem", () => {
     const build = createBuild({
       owner: "x1-user-1",
       buildId: "build-1",
-      createdAt: 1000n
+      createdAt: 1000n,
     });
 
     applyRegistrarCoreRedeem({
@@ -111,12 +109,12 @@ describe("applyRegistrarCoreRedeem", () => {
         messageId: "message-1",
         kind: "CORE_REDEEM",
         submittedBy: "registrar-1",
-        createdAt: 1100n
+        createdAt: 1100n,
       },
       build,
       redeemKey: "redeem-1",
       amountBld: 11n,
-      redeemedAt: 1100n
+      redeemedAt: 1100n,
     });
 
     expect(() =>
@@ -127,20 +125,19 @@ describe("applyRegistrarCoreRedeem", () => {
           messageId: "message-1",
           kind: "CORE_REDEEM",
           submittedBy: "registrar-1",
-          createdAt: 1200n
+          createdAt: 1200n,
         },
         build,
         redeemKey: "redeem-2",
         amountBld: 22n,
-        redeemedAt: 1200n
-      })
+        redeemedAt: 1200n,
+      }),
     ).toThrow(BuildError);
 
     expect(registrar.processedMessages.size).toBe(1);
     expect(redeemEvents.usedRedeemEvents.size).toBe(1);
     expect(redeemEvents.usedRedeemEvents.has("redeem-2")).toBe(false);
     expect(build.historyBld).toBe(11n);
-    expect(build.availableBld).toBe(11n);
     expect(build.updatedAt).toBe(1100n);
   });
 
@@ -150,7 +147,7 @@ describe("applyRegistrarCoreRedeem", () => {
     const build = createBuild({
       owner: "x1-user-1",
       buildId: "build-1",
-      createdAt: 1000n
+      createdAt: 1000n,
     });
 
     applyRegistrarCoreRedeem({
@@ -160,12 +157,12 @@ describe("applyRegistrarCoreRedeem", () => {
         messageId: "message-1",
         kind: "CORE_REDEEM",
         submittedBy: "registrar-1",
-        createdAt: 1100n
+        createdAt: 1100n,
       },
       build,
       redeemKey: "redeem-1",
       amountBld: 11n,
-      redeemedAt: 1100n
+      redeemedAt: 1100n,
     });
 
     expect(() =>
@@ -176,20 +173,19 @@ describe("applyRegistrarCoreRedeem", () => {
           messageId: "message-2",
           kind: "CORE_REDEEM",
           submittedBy: "registrar-1",
-          createdAt: 1200n
+          createdAt: 1200n,
         },
         build,
         redeemKey: "redeem-1",
         amountBld: 22n,
-        redeemedAt: 1200n
-      })
+        redeemedAt: 1200n,
+      }),
     ).toThrow(BuildError);
 
     expect(registrar.processedMessages.has("message-2")).toBe(false);
     expect(registrar.processedMessages.size).toBe(1);
     expect(redeemEvents.usedRedeemEvents.size).toBe(1);
     expect(build.historyBld).toBe(11n);
-    expect(build.availableBld).toBe(11n);
     expect(build.updatedAt).toBe(1100n);
   });
 
@@ -199,7 +195,7 @@ describe("applyRegistrarCoreRedeem", () => {
     const build = createBuild({
       owner: "x1-user-1",
       buildId: "build-1",
-      createdAt: 1000n
+      createdAt: 1000n,
     });
 
     expect(() =>
@@ -210,19 +206,18 @@ describe("applyRegistrarCoreRedeem", () => {
           messageId: "message-1",
           kind: "CORE_REDEEM",
           submittedBy: "registrar-1",
-          createdAt: 1100n
+          createdAt: 1100n,
         },
         build,
         redeemKey: "redeem-1",
         amountBld: 0n,
-        redeemedAt: 1100n
-      })
+        redeemedAt: 1100n,
+      }),
     ).toThrow(BuildError);
 
     expect(registrar.processedMessages.size).toBe(0);
     expect(redeemEvents.usedRedeemEvents.size).toBe(0);
     expect(build.historyBld).toBe(0n);
-    expect(build.availableBld).toBe(0n);
     expect(build.updatedAt).toBe(1000n);
   });
 });

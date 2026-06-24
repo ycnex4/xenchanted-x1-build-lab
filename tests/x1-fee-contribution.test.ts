@@ -6,7 +6,7 @@ import {
   applyX1FeeContributionCheckpoint,
   applyXenBurnPower,
   createBuild,
-  lockXntd
+  lockXntd,
 } from "../src/index.js";
 
 describe("X1 Fee Contribution checkpoint", () => {
@@ -14,7 +14,7 @@ describe("X1 Fee Contribution checkpoint", () => {
     const build = createBuild({
       owner: "x1-user-1",
       buildId: "build-1",
-      createdAt: 1000n
+      createdAt: 1000n,
     });
 
     applyX1FeeContributionCheckpoint({
@@ -22,7 +22,7 @@ describe("X1 Fee Contribution checkpoint", () => {
       feeAmount: 1000n,
       txCount: 3n,
       countedUntilSlot: 5000n,
-      updatedAt: 1100n
+      updatedAt: 1100n,
     });
 
     expect(build.x1FeeContribution).toBe(1000n);
@@ -36,7 +36,7 @@ describe("X1 Fee Contribution checkpoint", () => {
     const build = createBuild({
       owner: "x1-user-1",
       buildId: "build-1",
-      createdAt: 1000n
+      createdAt: 1000n,
     });
 
     applyX1FeeContributionCheckpoint({
@@ -44,7 +44,7 @@ describe("X1 Fee Contribution checkpoint", () => {
       feeAmount: 1000n,
       txCount: 3n,
       countedUntilSlot: 5000n,
-      updatedAt: 1100n
+      updatedAt: 1100n,
     });
 
     applyX1FeeContributionCheckpoint({
@@ -52,7 +52,7 @@ describe("X1 Fee Contribution checkpoint", () => {
       feeAmount: 2500n,
       txCount: 7n,
       countedUntilSlot: 6000n,
-      updatedAt: 1200n
+      updatedAt: 1200n,
     });
 
     expect(build.x1FeeContribution).toBe(3500n);
@@ -66,7 +66,7 @@ describe("X1 Fee Contribution checkpoint", () => {
     const build = createBuild({
       owner: "x1-user-1",
       buildId: "build-1",
-      createdAt: 1000n
+      createdAt: 1000n,
     });
 
     expect(() =>
@@ -75,8 +75,8 @@ describe("X1 Fee Contribution checkpoint", () => {
         feeAmount: 0n,
         txCount: 3n,
         countedUntilSlot: 5000n,
-        updatedAt: 1100n
-      })
+        updatedAt: 1100n,
+      }),
     ).toThrow(BuildError);
 
     try {
@@ -85,12 +85,12 @@ describe("X1 Fee Contribution checkpoint", () => {
         feeAmount: 0n,
         txCount: 3n,
         countedUntilSlot: 5000n,
-        updatedAt: 1100n
+        updatedAt: 1100n,
       });
     } catch (error) {
       expect(error).toBeInstanceOf(BuildError);
       expect((error as BuildError).code).toBe(
-        BuildErrorCode.InvalidFeeContributionAmount
+        BuildErrorCode.InvalidFeeContributionAmount,
       );
     }
 
@@ -105,7 +105,7 @@ describe("X1 Fee Contribution checkpoint", () => {
     const build = createBuild({
       owner: "x1-user-1",
       buildId: "build-1",
-      createdAt: 1000n
+      createdAt: 1000n,
     });
 
     expect(() =>
@@ -114,8 +114,8 @@ describe("X1 Fee Contribution checkpoint", () => {
         feeAmount: 1000n,
         txCount: 0n,
         countedUntilSlot: 5000n,
-        updatedAt: 1100n
-      })
+        updatedAt: 1100n,
+      }),
     ).toThrow(BuildError);
 
     try {
@@ -124,12 +124,12 @@ describe("X1 Fee Contribution checkpoint", () => {
         feeAmount: 1000n,
         txCount: 0n,
         countedUntilSlot: 5000n,
-        updatedAt: 1100n
+        updatedAt: 1100n,
       });
     } catch (error) {
       expect(error).toBeInstanceOf(BuildError);
       expect((error as BuildError).code).toBe(
-        BuildErrorCode.InvalidFeeContributionTxCount
+        BuildErrorCode.InvalidFeeContributionTxCount,
       );
     }
 
@@ -144,7 +144,7 @@ describe("X1 Fee Contribution checkpoint", () => {
     const build = createBuild({
       owner: "x1-user-1",
       buildId: "build-1",
-      createdAt: 1000n
+      createdAt: 1000n,
     });
 
     applyX1FeeContributionCheckpoint({
@@ -152,7 +152,7 @@ describe("X1 Fee Contribution checkpoint", () => {
       feeAmount: 1000n,
       txCount: 3n,
       countedUntilSlot: 5000n,
-      updatedAt: 1100n
+      updatedAt: 1100n,
     });
 
     expect(() =>
@@ -161,8 +161,8 @@ describe("X1 Fee Contribution checkpoint", () => {
         feeAmount: 2500n,
         txCount: 7n,
         countedUntilSlot: 5000n,
-        updatedAt: 1200n
-      })
+        updatedAt: 1200n,
+      }),
     ).toThrow(BuildError);
 
     try {
@@ -171,12 +171,12 @@ describe("X1 Fee Contribution checkpoint", () => {
         feeAmount: 2500n,
         txCount: 7n,
         countedUntilSlot: 5000n,
-        updatedAt: 1200n
+        updatedAt: 1200n,
       });
     } catch (error) {
       expect(error).toBeInstanceOf(BuildError);
       expect((error as BuildError).code).toBe(
-        BuildErrorCode.NonIncreasingFeeCheckpointSlot
+        BuildErrorCode.NonIncreasingFeeCheckpointSlot,
       );
     }
 
@@ -191,7 +191,7 @@ describe("X1 Fee Contribution checkpoint", () => {
     const build = createBuild({
       owner: "x1-user-1",
       buildId: "build-1",
-      createdAt: 1000n
+      createdAt: 1000n,
     });
 
     applyX1FeeContributionCheckpoint({
@@ -199,7 +199,7 @@ describe("X1 Fee Contribution checkpoint", () => {
       feeAmount: 1000n,
       txCount: 3n,
       countedUntilSlot: 5000n,
-      updatedAt: 1100n
+      updatedAt: 1100n,
     });
 
     expect(() =>
@@ -208,8 +208,8 @@ describe("X1 Fee Contribution checkpoint", () => {
         feeAmount: 2500n,
         txCount: 7n,
         countedUntilSlot: 4999n,
-        updatedAt: 1200n
-      })
+        updatedAt: 1200n,
+      }),
     ).toThrow(BuildError);
 
     expect(build.x1FeeContribution).toBe(1000n);
@@ -222,19 +222,19 @@ describe("X1 Fee Contribution checkpoint", () => {
     const build = createBuild({
       owner: "x1-user-1",
       buildId: "build-1",
-      createdAt: 1000n
+      createdAt: 1000n,
     });
 
     applyCoreRedeemBld({
       build,
       amountBld: 11n,
-      redeemedAt: 1050n
+      redeemedAt: 1050n,
     });
 
     applyXenBurnPower({
       build,
       amountXbp: 100n,
-      burnedAt: 1060n
+      burnedAt: 1060n,
     });
 
     lockXntd({
@@ -242,7 +242,7 @@ describe("X1 Fee Contribution checkpoint", () => {
       amountXntd: 500n,
       observedRequiredXntdLock: 500n,
       lockEpoch: 1,
-      lockedAt: 1070n
+      lockedAt: 1070n,
     });
 
     applyX1FeeContributionCheckpoint({
@@ -250,14 +250,12 @@ describe("X1 Fee Contribution checkpoint", () => {
       feeAmount: 1000n,
       txCount: 3n,
       countedUntilSlot: 5000n,
-      updatedAt: 1100n
+      updatedAt: 1100n,
     });
 
     expect(build.historyBld).toBe(11n);
-    expect(build.availableBld).toBe(11n);
     expect(build.originBld).toBe(0n);
-    expect(build.earnedXbp).toBe(100n);
-    expect(build.availableXbp).toBe(100n);
+    expect(build.historyXbp).toBe(100n);
     expect(build.lockedXntd).toBe(500n);
     expect(build.requiredXntdLock).toBe(500n);
     expect(build.lockEpoch).toBe(1);

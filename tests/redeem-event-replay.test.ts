@@ -4,7 +4,7 @@ import {
   BuildErrorCode,
   acceptCoreRedeemEvent,
   createBuild,
-  createRedeemEventState
+  createRedeemEventState,
 } from "../src/index.js";
 
 describe("redeem event replay protection", () => {
@@ -13,19 +13,18 @@ describe("redeem event replay protection", () => {
     const build = createBuild({
       owner: "x1-user-1",
       buildId: "build-1",
-      createdAt: 1000n
+      createdAt: 1000n,
     });
 
     acceptCoreRedeemEvent(redeemEvents, {
       redeemKey: "redeem-1",
       build,
       amountBld: 11n,
-      redeemedAt: 1100n
+      redeemedAt: 1100n,
     });
 
     expect(redeemEvents.usedRedeemEvents.has("redeem-1")).toBe(true);
     expect(build.historyBld).toBe(11n);
-    expect(build.availableBld).toBe(11n);
     expect(build.updatedAt).toBe(1100n);
   });
 
@@ -34,14 +33,14 @@ describe("redeem event replay protection", () => {
     const build = createBuild({
       owner: "x1-user-1",
       buildId: "build-1",
-      createdAt: 1000n
+      createdAt: 1000n,
     });
 
     acceptCoreRedeemEvent(redeemEvents, {
       redeemKey: "redeem-1",
       build,
       amountBld: 11n,
-      redeemedAt: 1100n
+      redeemedAt: 1100n,
     });
 
     expect(() =>
@@ -49,8 +48,8 @@ describe("redeem event replay protection", () => {
         redeemKey: "redeem-1",
         build,
         amountBld: 22n,
-        redeemedAt: 1200n
-      })
+        redeemedAt: 1200n,
+      }),
     ).toThrow(BuildError);
 
     try {
@@ -58,18 +57,17 @@ describe("redeem event replay protection", () => {
         redeemKey: "redeem-1",
         build,
         amountBld: 22n,
-        redeemedAt: 1200n
+        redeemedAt: 1200n,
       });
     } catch (error) {
       expect(error).toBeInstanceOf(BuildError);
       expect((error as BuildError).code).toBe(
-        BuildErrorCode.DuplicateRedeemEvent
+        BuildErrorCode.DuplicateRedeemEvent,
       );
     }
 
     expect(redeemEvents.usedRedeemEvents.size).toBe(1);
     expect(build.historyBld).toBe(11n);
-    expect(build.availableBld).toBe(11n);
     expect(build.updatedAt).toBe(1100n);
   });
 
@@ -78,26 +76,25 @@ describe("redeem event replay protection", () => {
     const build = createBuild({
       owner: "x1-user-1",
       buildId: "build-1",
-      createdAt: 1000n
+      createdAt: 1000n,
     });
 
     acceptCoreRedeemEvent(redeemEvents, {
       redeemKey: "redeem-1",
       build,
       amountBld: 11n,
-      redeemedAt: 1100n
+      redeemedAt: 1100n,
     });
 
     acceptCoreRedeemEvent(redeemEvents, {
       redeemKey: "redeem-2",
       build,
       amountBld: 22n,
-      redeemedAt: 1200n
+      redeemedAt: 1200n,
     });
 
     expect(redeemEvents.usedRedeemEvents.size).toBe(2);
     expect(build.historyBld).toBe(33n);
-    expect(build.availableBld).toBe(33n);
     expect(build.updatedAt).toBe(1200n);
   });
 
@@ -106,7 +103,7 @@ describe("redeem event replay protection", () => {
     const build = createBuild({
       owner: "x1-user-1",
       buildId: "build-1",
-      createdAt: 1000n
+      createdAt: 1000n,
     });
 
     expect(() =>
@@ -114,14 +111,13 @@ describe("redeem event replay protection", () => {
         redeemKey: "redeem-1",
         build,
         amountBld: 0n,
-        redeemedAt: 1100n
-      })
+        redeemedAt: 1100n,
+      }),
     ).toThrow(BuildError);
 
     expect(redeemEvents.usedRedeemEvents.has("redeem-1")).toBe(false);
     expect(redeemEvents.usedRedeemEvents.size).toBe(0);
     expect(build.historyBld).toBe(0n);
-    expect(build.availableBld).toBe(0n);
     expect(build.updatedAt).toBe(1000n);
   });
 
@@ -130,19 +126,18 @@ describe("redeem event replay protection", () => {
     const build = createBuild({
       owner: "x1-user-1",
       buildId: "build-1",
-      createdAt: 1000n
+      createdAt: 1000n,
     });
 
     acceptCoreRedeemEvent(redeemEvents, {
       redeemKey: "redeem-1",
       build,
       amountBld: 11n,
-      redeemedAt: 1100n
+      redeemedAt: 1100n,
     });
 
     expect(build.originBld).toBe(0n);
-    expect(build.earnedXbp).toBe(0n);
-    expect(build.availableXbp).toBe(0n);
+    expect(build.historyXbp).toBe(0n);
     expect(build.lockedXntd).toBe(0n);
     expect(build.requiredXntdLock).toBe(0n);
     expect(build.xcCommitmentActive).toBe(false);

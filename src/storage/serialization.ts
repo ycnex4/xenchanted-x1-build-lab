@@ -5,7 +5,7 @@ import { type RegistrarState } from "../model/registrar.js";
 import { type XenBurnEventState } from "../model/xen-burn-events.js";
 import { type XntdCommitmentEventState } from "../model/xntd-commitment-events.js";
 
-export const STORAGE_SCHEMA_VERSION = 2 as const;
+export const STORAGE_SCHEMA_VERSION = 3 as const;
 
 export interface SerializedBuildState {
   schemaVersion: typeof STORAGE_SCHEMA_VERSION;
@@ -16,11 +16,12 @@ export interface SerializedBuildState {
   createdAt: string;
   updatedAt: string;
   ethereumIdentity: string | null;
+  buildName: string | null;
+  logoUri: string | null;
+  metadataUpdatedAt: string | null;
   historyBld: string;
-  availableBld: string;
   originBld: string;
-  earnedXbp: string;
-  availableXbp: string;
+  historyXbp: string;
   lockedXntd: string;
   requiredXntdLock: string;
   lockEpoch: number | null;
@@ -74,7 +75,7 @@ function requireRecord(value: unknown, field: string): Record<string, unknown> {
 
 function requireKind(
   value: Record<string, unknown>,
-  expectedKind: string
+  expectedKind: string,
 ): void {
   if (value.schemaVersion !== STORAGE_SCHEMA_VERSION) {
     throw new Error(`Unsupported schema version for ${expectedKind}`);
@@ -141,7 +142,7 @@ function deserializeBigint(value: unknown, field: string): bigint {
 
 function deserializeNullableBigint(
   value: unknown,
-  field: string
+  field: string,
 ): bigint | null {
   if (value === null) {
     return null;
@@ -174,13 +175,15 @@ function deserializeStringSet(value: unknown, field: string): Set<string> {
   return result;
 }
 
-function serializeStringMap(value: Map<string, string>): Array<[string, string]> {
+function serializeStringMap(
+  value: Map<string, string>,
+): Array<[string, string]> {
   return [...value.entries()].sort(([a], [b]) => a.localeCompare(b));
 }
 
 function deserializeStringMap(
   value: unknown,
-  field: string
+  field: string,
 ): Map<string, string> {
   if (!Array.isArray(value)) {
     throw new Error(`${field} must be an array`);
@@ -206,9 +209,7 @@ function deserializeStringMap(
   return result;
 }
 
-export function serializeBuildState(
-  build: BuildState
-): SerializedBuildState {
+export function serializeBuildState(build: BuildState): SerializedBuildState {
   return {
     schemaVersion: STORAGE_SCHEMA_VERSION,
     kind: "BuildState",
@@ -218,11 +219,15 @@ export function serializeBuildState(
     createdAt: serializeBigint(build.createdAt),
     updatedAt: serializeBigint(build.updatedAt),
     ethereumIdentity: build.ethereumIdentity,
+    buildName: build.buildName,
+    logoUri: build.logoUri,
+    metadataUpdatedAt:
+      build.metadataUpdatedAt === null
+        ? null
+        : serializeBigint(build.metadataUpdatedAt),
     historyBld: serializeBigint(build.historyBld),
-    availableBld: serializeBigint(build.availableBld),
     originBld: serializeBigint(build.originBld),
-    earnedXbp: serializeBigint(build.earnedXbp),
-    availableXbp: serializeBigint(build.availableXbp),
+    historyXbp: serializeBigint(build.historyXbp),
     lockedXntd: serializeBigint(build.lockedXntd),
     requiredXntdLock: serializeBigint(build.requiredXntdLock),
     lockEpoch: build.lockEpoch,
@@ -236,7 +241,7 @@ export function serializeBuildState(
     lastFeeUpdateAt:
       build.lastFeeUpdateAt === null
         ? null
-        : serializeBigint(build.lastFeeUpdateAt)
+        : serializeBigint(build.lastFeeUpdateAt),
   };
 }
 
@@ -252,47 +257,51 @@ export function deserializeBuildState(input: unknown): BuildState {
     updatedAt: deserializeBigint(value.updatedAt, "updatedAt"),
     ethereumIdentity: requireNullableString(
       value.ethereumIdentity,
-      "ethereumIdentity"
+      "ethereumIdentity",
+    ),
+    buildName: requireNullableString(value.buildName, "buildName"),
+    logoUri: requireNullableString(value.logoUri, "logoUri"),
+    metadataUpdatedAt: deserializeNullableBigint(
+      value.metadataUpdatedAt,
+      "metadataUpdatedAt",
     ),
     historyBld: deserializeBigint(value.historyBld, "historyBld"),
-    availableBld: deserializeBigint(value.availableBld, "availableBld"),
     originBld: deserializeBigint(value.originBld, "originBld"),
-    earnedXbp: deserializeBigint(value.earnedXbp, "earnedXbp"),
-    availableXbp: deserializeBigint(value.availableXbp, "availableXbp"),
+    historyXbp: deserializeBigint(value.historyXbp, "historyXbp"),
     lockedXntd: deserializeBigint(value.lockedXntd, "lockedXntd"),
     requiredXntdLock: deserializeBigint(
       value.requiredXntdLock,
-      "requiredXntdLock"
+      "requiredXntdLock",
     ),
     lockEpoch: requireNullableNumber(value.lockEpoch, "lockEpoch"),
     xcCommitmentActive: requireBoolean(
       value.xcCommitmentActive,
-      "xcCommitmentActive"
+      "xcCommitmentActive",
     ),
     x1FeeContribution: deserializeBigint(
       value.x1FeeContribution,
-      "x1FeeContribution"
+      "x1FeeContribution",
     ),
     x1TxCount: deserializeBigint(value.x1TxCount, "x1TxCount"),
     x1FeeCountedUntilSlot: deserializeNullableBigint(
       value.x1FeeCountedUntilSlot,
-      "x1FeeCountedUntilSlot"
+      "x1FeeCountedUntilSlot",
     ),
     lastFeeUpdateAt: deserializeNullableBigint(
       value.lastFeeUpdateAt,
-      "lastFeeUpdateAt"
-    )
+      "lastFeeUpdateAt",
+    ),
   };
 }
 
 export function serializeRegistrarState(
-  state: RegistrarState
+  state: RegistrarState,
 ): SerializedRegistrarState {
   return {
     schemaVersion: STORAGE_SCHEMA_VERSION,
     kind: "RegistrarState",
     registrarAuthority: state.registrarAuthority,
-    processedMessages: serializeStringSet(state.processedMessages)
+    processedMessages: serializeStringSet(state.processedMessages),
   };
 }
 
@@ -303,51 +312,49 @@ export function deserializeRegistrarState(input: unknown): RegistrarState {
   return {
     registrarAuthority: requireString(
       value.registrarAuthority,
-      "registrarAuthority"
+      "registrarAuthority",
     ),
     processedMessages: deserializeStringSet(
       value.processedMessages,
-      "processedMessages"
-    )
+      "processedMessages",
+    ),
   };
 }
 
 export function serializeRedeemEventState(
-  state: RedeemEventState
+  state: RedeemEventState,
 ): SerializedRedeemEventState {
   return {
     schemaVersion: STORAGE_SCHEMA_VERSION,
     kind: "RedeemEventState",
-    usedRedeemEvents: serializeStringSet(state.usedRedeemEvents)
+    usedRedeemEvents: serializeStringSet(state.usedRedeemEvents),
   };
 }
 
-export function deserializeRedeemEventState(
-  input: unknown
-): RedeemEventState {
+export function deserializeRedeemEventState(input: unknown): RedeemEventState {
   const value = requireRecord(input, "RedeemEventState");
   requireKind(value, "RedeemEventState");
 
   return {
     usedRedeemEvents: deserializeStringSet(
       value.usedRedeemEvents,
-      "usedRedeemEvents"
-    )
+      "usedRedeemEvents",
+    ),
   };
 }
 
 export function serializeXenBurnEventState(
-  state: XenBurnEventState
+  state: XenBurnEventState,
 ): SerializedXenBurnEventState {
   return {
     schemaVersion: STORAGE_SCHEMA_VERSION,
     kind: "XenBurnEventState",
-    usedXenBurnEvents: serializeStringSet(state.usedXenBurnEvents)
+    usedXenBurnEvents: serializeStringSet(state.usedXenBurnEvents),
   };
 }
 
 export function deserializeXenBurnEventState(
-  input: unknown
+  input: unknown,
 ): XenBurnEventState {
   const value = requireRecord(input, "XenBurnEventState");
   requireKind(value, "XenBurnEventState");
@@ -355,25 +362,25 @@ export function deserializeXenBurnEventState(
   return {
     usedXenBurnEvents: deserializeStringSet(
       value.usedXenBurnEvents,
-      "usedXenBurnEvents"
-    )
+      "usedXenBurnEvents",
+    ),
   };
 }
 
 export function serializeXntdCommitmentEventState(
-  state: XntdCommitmentEventState
+  state: XntdCommitmentEventState,
 ): SerializedXntdCommitmentEventState {
   return {
     schemaVersion: STORAGE_SCHEMA_VERSION,
     kind: "XntdCommitmentEventState",
     usedXntdCommitmentEvents: serializeStringSet(
-      state.usedXntdCommitmentEvents
-    )
+      state.usedXntdCommitmentEvents,
+    ),
   };
 }
 
 export function deserializeXntdCommitmentEventState(
-  input: unknown
+  input: unknown,
 ): XntdCommitmentEventState {
   const value = requireRecord(input, "XntdCommitmentEventState");
   requireKind(value, "XntdCommitmentEventState");
@@ -381,13 +388,13 @@ export function deserializeXntdCommitmentEventState(
   return {
     usedXntdCommitmentEvents: deserializeStringSet(
       value.usedXntdCommitmentEvents,
-      "usedXntdCommitmentEvents"
-    )
+      "usedXntdCommitmentEvents",
+    ),
   };
 }
 
 export function serializeBuildRegistry(
-  registry: BuildRegistry
+  registry: BuildRegistry,
 ): SerializedBuildRegistry {
   return {
     schemaVersion: STORAGE_SCHEMA_VERSION,
@@ -397,8 +404,8 @@ export function serializeBuildRegistry(
       .map(serializeBuildState),
     canonicalBuildByOwner: serializeStringMap(registry.canonicalBuildByOwner),
     canonicalBuildByEthereumIdentity: serializeStringMap(
-      registry.canonicalBuildByEthereumIdentity
-    )
+      registry.canonicalBuildByEthereumIdentity,
+    ),
   };
 }
 
@@ -426,11 +433,11 @@ export function deserializeBuildRegistry(input: unknown): BuildRegistry {
     buildsById,
     canonicalBuildByOwner: deserializeStringMap(
       value.canonicalBuildByOwner,
-      "canonicalBuildByOwner"
+      "canonicalBuildByOwner",
     ),
     canonicalBuildByEthereumIdentity: deserializeStringMap(
       value.canonicalBuildByEthereumIdentity,
-      "canonicalBuildByEthereumIdentity"
-    )
+      "canonicalBuildByEthereumIdentity",
+    ),
   };
 }

@@ -21,39 +21,30 @@ function assertPositiveXntdLockAmount(amountXntd: bigint): void {
   if (amountXntd <= 0n) {
     throw new BuildError(
       BuildErrorCode.InvalidXntdLockAmount,
-      `XNTD lock amount must be positive: ${amountXntd.toString()}`
+      `XNTD lock amount must be positive: ${amountXntd.toString()}`,
     );
   }
 }
 
 function assertPositiveObservedRequiredXntdLock(
-  observedRequiredXntdLock: bigint
+  observedRequiredXntdLock: bigint,
 ): void {
   if (observedRequiredXntdLock <= 0n) {
     throw new BuildError(
       BuildErrorCode.InvalidXntdLockAmount,
-      `Observed required XNTD lock amount must be positive: ${observedRequiredXntdLock.toString()}`
+      `Observed required XNTD lock amount must be positive: ${observedRequiredXntdLock.toString()}`,
     );
   }
 }
 
 function assertSufficientXntdLockAmount(
   amountXntd: bigint,
-  observedRequiredXntdLock: bigint
+  observedRequiredXntdLock: bigint,
 ): void {
   if (amountXntd < observedRequiredXntdLock) {
     throw new BuildError(
       BuildErrorCode.InvalidXntdLockAmount,
-      `XNTD lock amount must cover observed required lock: amount=${amountXntd.toString()}, required=${observedRequiredXntdLock.toString()}`
-    );
-  }
-}
-
-function assertRelockBldIntegrity(build: BuildState): void {
-  if (build.availableBld < build.historyBld) {
-    throw new BuildError(
-      BuildErrorCode.InsufficientAvailableBldForRelock,
-      `Relock requires availableBld >= historyBld: available=${build.availableBld.toString()}, history=${build.historyBld.toString()}`
+      `XNTD lock amount must cover observed required lock: amount=${amountXntd.toString()}, required=${observedRequiredXntdLock.toString()}`,
     );
   }
 }
@@ -63,7 +54,7 @@ export function lockXntd(input: LockXntdInput): BuildState {
   assertPositiveObservedRequiredXntdLock(input.observedRequiredXntdLock);
   assertSufficientXntdLockAmount(
     input.amountXntd,
-    input.observedRequiredXntdLock
+    input.observedRequiredXntdLock,
   );
 
   input.build.lockedXntd = input.amountXntd;
@@ -80,17 +71,15 @@ export function relockXntd(input: RelockXntdInput): BuildState {
   assertPositiveObservedRequiredXntdLock(input.observedRequiredXntdLock);
   assertSufficientXntdLockAmount(
     input.amountXntd,
-    input.observedRequiredXntdLock
+    input.observedRequiredXntdLock,
   );
 
   if (!input.build.xcCommitmentActive) {
     throw new BuildError(
       BuildErrorCode.XntdCommitmentNotActive,
-      "Cannot relock XNTD when XC commitment is not active"
+      "Cannot relock XNTD when XC commitment is not active",
     );
   }
-
-  assertRelockBldIntegrity(input.build);
 
   input.build.lockedXntd = input.amountXntd;
   input.build.requiredXntdLock = input.observedRequiredXntdLock;
