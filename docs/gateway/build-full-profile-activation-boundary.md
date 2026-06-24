@@ -130,3 +130,5 @@ Only gateway activation stores verified contribution facts, and activation must 
 A frontend-facing preview view may shape the read-only preview into user-visible metrics, requirements, summary text, and the next action (`CREATE_BUILD`, `ACTIVATE_BUILD`, or `UNAVAILABLE`).
 
 The preview view is still display-only and must not be treated as protocol state.
+
+A JSON-safe preview DTO may be used for API/UI transport. It must encode bigint values as decimal strings so the preview can be serialized with standard JSON.
