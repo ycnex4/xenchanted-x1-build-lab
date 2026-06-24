@@ -8,17 +8,25 @@ X1 Build is a voluntary NFT-like user object in X1 that records independent veri
 2. Global XEN Burn Power.
 3. XNTD commitment.
 4. X1 network fee contribution.
-5. Build creation in X1 through BLD burn.
+5. Owner-controlled Build Identity metadata.
 
 The goal is not to merge all values into one universal score.
 
 The goal is to expose separate, readable, verifiable fields that other X1 projects may interpret independently.
 
----
-
 ## 2. Core principles
 
-### 2.1 One Build, multiple verified layers
+### 2.1 Build State stores history, not live balances
+
+Build State stores durable protocol facts.
+
+It must not store a public live spendable BLD balance.
+
+It must not store a public live spendable XBP balance.
+
+Spendable / transferable BLD belongs to a separate future BLD asset or ledger layer.
+
+### 2.2 One Build, multiple verified layers
 
 A user should have one canonical Build.
 
@@ -26,43 +34,99 @@ The Build may receive new verified data from different sources over time.
 
 Build is one object with appendable verified layers.
 
-### 2.2 No arbitrary totals
+### 2.3 No arbitrary totals
 
 The Build must not accept arbitrary totals such as:
 
-user has 100 BLD
-user has 500 XBP
+    user has 100 BLD
+    user has 500 XBP
 
 It should accept only verified source events, valid state transitions, or trusted checkpoints.
 
-### 2.3 Independent accounting
+### 2.4 Independent accounting
 
 The main fields must not be mixed:
 
-BLD != XEN Burn Power != X1 Fee Contribution != XNTD Lock
+    BLD history != XEN Burn Power != X1 Fee Contribution != XNTD Lock != Build Identity
 
 Each field has its own source, meaning, and update rules.
 
----
+## 3. Build State
 
-## 3. BLD
+### 3.1 Minimal BuildState v1 fields
 
-### 3.1 Meaning
+Identity / ownership:
 
-BLD is the normalized Build unit derived from redeemed Core NFT history.
+- owner
+- build_mint / build_id
+- ethereum_identity
+- created_at
+- updated_at
+- version
 
-It represents contribution through xEnchanted Crypto.
+Build Identity display metadata:
 
-### 3.2 Source
+- build_name
+- logo_uri
+- metadata_updated_at
 
-Only redeemed Core NFT history creates earned BLD.
+Historical contribution facts:
 
-Core redeem
--> read Core.xenBurned
--> normalize
--> history_bld
+- history_bld
+- origin_bld
+- history_xbp
 
-Actions that do not create earned BLD:
+Stable XNTD commitment facts:
+
+- locked_xntd
+- required_xntd_lock
+- lock_epoch
+- xc_commitment_active
+
+X1 fee checkpoint facts:
+
+- x1_fee_contribution
+- x1_tx_count
+- x1_fee_counted_until_slot
+- last_fee_update_at
+
+### 3.2 Fields intentionally not in BuildState
+
+BuildState v1 does not contain:
+
+- public spendable BLD balance
+- public spendable XBP balance
+- live wallet balance
+- live token escrow balance
+- external runtime RPC status
+- public UNKNOWN commitment status
+
+These values belong outside BuildState.
+
+## 4. BLD history
+
+### 4.1 Meaning
+
+`history_bld` is the normalized Build unit derived from redeemed Core NFT history.
+
+It represents historical contribution through xEnchanted Crypto.
+
+It is non-decreasing.
+
+It must not decrease when a user sells, spends, burns, transfers, or otherwise uses any future spendable BLD asset.
+
+### 4.2 Source
+
+Only redeemed Core NFT history creates `history_bld`.
+
+Canonical flow:
+
+    Core redeem
+      -> read Core.xenBurned
+      -> normalize
+      -> history_bld
+
+Actions that do not create `history_bld`:
 
 - Forge mint
 - Stake redeem
@@ -72,126 +136,83 @@ Actions that do not create earned BLD:
 - XNTD burn
 - Global XEN burn outside XC
 - X1 fee contribution
+- Build Identity update
+- future spendable BLD transfer
 
-### 3.3 Normalization
-
-BLD should not be equal 1:1 to raw XEN amount.
+### 4.3 Normalization
 
 Display unit:
 
-1 BLD = 100,000,000 XEN burned through redeemed Core history
+    1 BLD = 100,000,000 XEN burned through redeemed Core history
 
-Internal storage should support fractional values for future epochs.
+Internal storage should support future precision decisions.
 
-Examples:
+## 5. Genesis Origin BLD
 
-100,000,000 XEN burn -> 1 BLD
-50,000,000 XEN burn  -> 0.5 BLD
-25,000,000 XEN burn  -> 0.25 BLD
+### 5.1 Meaning
 
-### 3.4 Fields
-
-- history_bld
-- available_bld
-- origin_bld
-
-### 3.5 history_bld
-
-history_bld is the historical BLD earned through redeemed Core NFT history.
-
-It does not decrease when the user sells, spends, or burns available BLD.
-
-### 3.6 available_bld
-
-available_bld is the currently available BLD.
-
-It may change through allowed mechanics such as sale, transfer, purchase, burn, or other future actions.
-
-### 3.7 origin_bld
-
-origin_bld is the Genesis Origin allocation.
+`origin_bld` is Genesis Origin BLD.
 
 It is not earned BLD.
 
-It exists to seed Build creation in X1 through BLD burn.
+It is not history.
 
----
+It exists to record the Genesis Origin tier reached by the Build.
 
-## 4. Genesis Origin BLD
+### 5.2 Tier caps
 
-### 4.1 Tiered allocation
+Genesis Origin BLD is tiered by `history_bld`.
 
-Genesis Origin BLD is a one-time tiered allocation.
+Eligible cap:
 
-It is based on history_bld at the first valid xEnchanted Crypto history connection during the Build Genesis Epoch.
-
-Allocation tiers:
-
-- history_bld >= 1     -> origin_bld = 11
-- history_bld >= 11    -> origin_bld = 22
-- history_bld >= 121   -> origin_bld = 55
-- history_bld >= 1111  -> origin_bld = 121
+- history_bld >= 1 -> origin_bld cap = 11
+- history_bld >= 11 -> origin_bld cap = 22
+- history_bld >= 121 -> origin_bld cap = 55
+- history_bld >= 1111 -> origin_bld cap = 121
 
 121 BLD is the maximum Genesis Origin cap, not the default allocation.
 
-### 4.2 Symbolism
+### 5.3 Upgrade-by-delta rule
 
-Since Build creation in X1 requires burning 11 BLD, the tiers can theoretically support:
+Genesis Origin is not a one-time static claim.
 
-- 11 BLD  -> 1 new Build
-- 22 BLD  -> 2 new Builds
-- 55 BLD  -> 5 new Builds
-- 121 BLD -> 11 new Builds
+It is an upgrade-to-cap model.
 
-### 4.3 Eligibility
+If the current origin tier is lower than the eligible tier, the Build may upgrade `origin_bld` to the eligible cap.
 
-Genesis Origin BLD is granted only once when a Build first connects valid xEnchanted Crypto history during the Build Genesis Epoch.
+Examples:
 
-It does not matter whether the Build already existed in X1 before or is created together with this connection.
+    origin_bld = 0,  history_bld = 1     -> origin_bld becomes 11
+    origin_bld = 11, history_bld = 11    -> origin_bld becomes 22
+    origin_bld = 22, history_bld = 121   -> origin_bld becomes 55
+    origin_bld = 55, history_bld = 1111  -> origin_bld becomes 121
 
-### 4.4 Restrictions
+The conceptual delta is:
 
-Genesis Origin BLD is not granted:
+    delta_origin_bld = eligible_origin_bld - current_origin_bld
 
-- on update
-- on relock
-- outside Build Genesis Epoch
-- more than once per canonical Ethereum/XC identity
+The stored field is the cap reached:
 
-### 4.5 Accounting
+    origin_bld = eligible_origin_bld
 
-When Genesis Origin BLD is granted:
+### 5.4 Accounting
 
-origin_bld += tiered_origin_bld
-available_bld += tiered_origin_bld
+Genesis Origin upgrade changes:
 
-It must not increase:
+    origin_bld
+    updated_at
 
-history_bld
+It must not change:
 
----
+    history_bld
+    history_xbp
+    locked_xntd
+    required_xntd_lock
+    lock_epoch
+    x1_fee_contribution
+    Build Identity
 
-## 5. Build creation in X1 through BLD burn
-
-A user without XEN/XC history may create an active Build in X1 through BLD burn.
-
-### 5.1 Requirement
-
-burn 11 BLD
-
-### 5.2 Result
-
-The Build is created and becomes active.
-
-The user does not receive fake earned BLD or fake XEN burn history.
-
-### 5.3 No relock
-
-Build creation through BLD burn does not require XNTD lock or relock, because this path does not create the risk:
-
-Core redeem -> XNTD dump
-
----
+It does not mint or expose a public spendable BLD balance inside BuildState.
 
 ## 6. XEN Burn Power
 
@@ -200,16 +221,18 @@ Core redeem -> XNTD dump
 XEN Burn Power represents verified global XEN burn participation.
 
 It is not compensation.
+
 It is not a debt.
+
 It is not a guaranteed reward.
 
-It is historical participation power that may be used by X1 mechanics.
+It is historical participation power that may be interpreted by X1 mechanics.
 
 ### 6.2 Source
 
 Canonical source:
 
-successful XEN.burn(user, amount)
+    successful XEN.burn(user, amount)
 
 This includes:
 
@@ -222,62 +245,78 @@ It does not mean arbitrary transfers to the zero address.
 
 Use the same denominator:
 
-1 XBP = 100,000,000 XEN burned through XEN.burn(user, amount)
+    1 XBP = 100,000,000 XEN burned through XEN.burn(user, amount)
 
-### 6.4 Fields
+### 6.4 Field
 
-- earned_xbp
-- available_xbp
+BuildState stores:
 
-### 6.5 earned_xbp
+    history_xbp
 
-earned_xbp is the historical XEN Burn Power derived from verified XEN burn calls.
+`history_xbp` is historical and non-decreasing.
 
-### 6.6 available_xbp
-
-available_xbp is the currently available XEN Burn Power.
-
-The exact mechanics for transfer, use, or burn can be defined separately.
-
----
+BuildState v1 does not store a public spendable XBP balance.
 
 ## 7. XNTD lock
 
 ### 7.1 Purpose
 
-XNTD lock is an activation / commitment requirement for Build records that received earned BLD through Core redeem.
+XNTD lock is an activation / commitment requirement for Build records that received BLD history through Core redeem.
 
 It exists to reduce the simple path:
 
-mint Core L1
--> redeem Core L1
--> receive XNTD
--> get Build
--> sell all XNTD
+    mint Core L1
+      -> redeem Core L1
+      -> receive XNTD
+      -> get Build history
+      -> sell all XNTD
 
 ### 7.2 Required lock amount
 
-The required lock amount is tied to the minimum Core L1 nominal of the current XC epoch.
+The required lock amount is tied to the minimum Core L1 nominal of the relevant XC epoch.
 
-required_xntd_lock = current epoch Core L1 nominal
+Conceptual rule:
 
-### 7.3 XC commitment activation
+    required_xntd_lock = observed epoch Core L1 minimum nominal
 
-xc_commitment_active =
-  history_bld > 0
-  AND locked_xntd >= required_xntd_lock
+### 7.3 Stored lock facts
 
-### 7.4 Relock
+BuildState stores stable lock facts:
 
-When a new epoch begins, the user may relock under the new requirement.
+- locked_xntd
+- required_xntd_lock
+- lock_epoch
+- xc_commitment_active
 
-Relock is allowed only if:
+These are historical/state facts from accepted operations.
 
-available_bld >= history_bld
+### 7.4 Public commitment status
 
-This means the user must preserve or restore the earned BLD amount before reducing or updating XNTD commitment.
+Public Build view derives commitment status from stored facts only.
 
----
+Allowed public status values:
+
+- COMMITTED
+- UNCOMMITTED
+
+Allowed public reasons:
+
+- NO_HISTORY
+- NO_COMMITMENT
+- COMMITMENT_BELOW_REQUIRED
+- COMMITMENT_CURRENT
+
+BuildState does not expose UNKNOWN as public state.
+
+If current live epoch / RPC / external context is unavailable, that is an operation-level validation or infrastructure concern, not public Build state.
+
+### 7.5 Relock boundary
+
+Relock must not read a public BuildState spendable balance.
+
+Future relock rules that require actual BLD availability must check the external BLD asset / ledger / escrow layer at operation time.
+
+BuildState itself records only stable Build facts.
 
 ## 8. X1 Fee Contribution
 
@@ -291,7 +330,7 @@ It tracks fee payment activity, not necessarily user activity.
 
 All confirmed X1 transactions where:
 
-fee_payer = user address
+    fee_payer = user address
 
 ### 8.3 Accounting
 
@@ -321,14 +360,14 @@ The Build Program should not try to calculate finalized fee inside the same tran
 
 Checkpoint example:
 
-address: user
-total_fee_paid: 123456789
-total_tx_count: 842
-counted_until_slot: 10000000
+    address: user
+    total_fee_paid: 123456789
+    total_tx_count: 842
+    counted_until_slot: 10000000
 
 Accept only newer checkpoints:
 
-new_counted_until_slot > previous_counted_until_slot
+    new_counted_until_slot > previous_counted_until_slot
 
 ### 8.7 Known characteristic
 
@@ -336,75 +375,72 @@ This metric tracks fee payment activity, not user activity.
 
 If a sponsored transaction uses a relayer or dApp as fee payer, the X1 Fee Contribution belongs to the relayer or dApp, not necessarily to the user who signed or initiated the action.
 
-### 8.8 Reader interface
+## 9. Build Identity
 
-Other X1 projects should be able to read:
+### 9.1 Meaning
 
-- total_fee_paid
-- tx_count
-- counted_until_slot
-- last_updated
+Build Identity is owner-controlled display metadata for a Build.
 
----
+It is separate from protocol accounting.
 
-## 9. Source event protection
+### 9.2 Fields
 
-### 9.1 Core redeem key
+- build_name
+- logo_uri
+- metadata_updated_at
 
-redeem_key = hash(
-  chain_id,
-  core_contract,
-  token_id,
-  tx_hash,
-  log_index
-)
+### 9.3 Rules
 
-### 9.2 XEN burn key
+Build Identity:
 
-xen_burn_key = hash(
-  chain_id,
-  xen_contract,
-  tx_hash,
-  trace_index,
-  user,
-  amount
-)
+- may be empty
+- may be updated by the Build owner
+- does not require globally unique names
+- stores logo as URI, not raw file
+- does not change contribution accounting
+- does not change lock accounting
+- does not change fee contribution
+- does not change replay protection
 
-### 9.3 Fee checkpoint protection
+### 9.4 Non-goals
 
-new_counted_until_slot > previous_counted_until_slot
+Build Identity is not Build Actor.
 
-### 9.4 Main rule
+Build Identity is not permission to act on behalf of the Build.
 
-one source event -> one accounting action -> one Build
+Build Actor remains a future active layer.
 
----
+## 10. Source event protection
 
-## 10. Minimal BuildState v1 fields
+### 10.1 Core redeem key
 
-- owner
-- build_mint / build_id
-- history_bld
-- available_bld
-- origin_bld
-- earned_xbp
-- available_xbp
-- locked_xntd
-- required_xntd_lock
-- lock_epoch
-- xc_commitment_active
-- x1_fee_contribution
-- x1_tx_count
-- x1_fee_counted_until_slot
-- last_fee_update_at
-- created_at
-- updated_at
-- version
+    redeem_key = hash(
+      chain_id,
+      core_contract,
+      token_id,
+      tx_hash,
+      log_index
+    )
 
----
+### 10.2 XEN burn key
+
+    xen_burn_key = hash(
+      chain_id,
+      xen_contract,
+      tx_hash,
+      trace_index,
+      user,
+      amount
+    )
+
+### 10.3 Fee checkpoint protection
+
+    new_counted_until_slot > previous_counted_until_slot
+
+### 10.4 Main rule
+
+    one source event -> one accounting action -> one Build
 
 ## 11. Short definition
 
-X1 Build is a voluntary NFT-like user object that records independent verified contribution layers: Core redeem contribution, global XEN Burn Power, XNTD commitment, and X1 fee contribution.
-
-
+X1 Build is a voluntary NFT-like user object that records independent verified contribution layers: Core redeem contribution history, global XEN Burn Power history, XNTD commitment facts, X1 fee contribution checkpoints, and owner-controlled Build Identity metadata.

@@ -1,5 +1,37 @@
 # Current Design Checkpoint
 
+# Latest Build State history and identity cleanup checkpoint
+
+The Build State history and identity cleanup was completed on branch `build-state-history-identity-cleanup`.
+
+Code checkpoint:
+
+- `d5f9123 Refine Build state history and identity model`
+
+Current model:
+
+- Build State stores durable public history, not live spendable balances.
+- `availableBld` was removed from Build State.
+- `earnedXbp` / `availableXbp` were replaced by `historyXbp`.
+- Genesis Origin BLD is now upgrade-to-cap by `historyBld`, not a one-time static claim.
+- Relock no longer reads `Build.availableBld`; future BLD availability checks belong to an external BLD asset / ledger / escrow layer.
+- Public Build commitment status no longer exposes `UNKNOWN`; live external context problems are operation-level validation or infrastructure concerns.
+- Build Identity was added as owner-controlled display metadata: `buildName`, `logoUri`, `metadataUpdatedAt`.
+
+Validation:
+
+- `npm run typecheck`
+- `npm test`
+- 57 test files passed.
+- 394 tests passed.
+
+Authoritative docs:
+
+- `docs/build/build-v1-spec.md`
+- `docs/build/build-state-history-identity-model.md`
+- `docs/checkpoints/build-state-history-identity-cleanup.md`
+
+
 Status: draft / design phase.
 
 This repository tracks the current X1 Build design before implementation.

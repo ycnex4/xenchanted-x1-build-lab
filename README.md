@@ -224,19 +224,28 @@ The project separates:
 
 ## Core accounting concepts
 
-The current Build model distinguishes:
+The current Build model stores durable public contribution history, not live spendable balances.
 
-- `history_bld` — historical BLD, non-decreasing
-- `available_bld` — usable / spendable / transferable BLD
-- `origin_bld` — Genesis allocation, not history
+Build State distinguishes:
 
-The model also tracks:
-
-- XEN Burn Power
-- XNTD lock / relock state
-- X1 fee contribution checkpoints
+- `history_bld` — historical BLD from verified redeemed Core history; non-decreasing
+- `origin_bld` — Genesis Origin BLD tier cap reached by history; not earned history
+- `history_xbp` — historical XEN Burn Power from verified global XEN burns; non-decreasing
+- stable XNTD commitment facts: `locked_xntd`, `required_xntd_lock`, `lock_epoch`, `xc_commitment_active`
+- X1 fee contribution checkpoint facts
 - replay protection state
-- commitmentStatus as current XNTD commitment signal
+
+Build State does not store public spendable balances such as `available_bld` or `available_xbp`.
+
+Spendable / transferable BLD belongs to a separate future BLD asset or ledger layer. Relock must not depend on a public `Build.available_bld` field.
+
+Build Identity is separate from protocol accounting:
+
+- `buildName`
+- `logoUri`
+- `metadataUpdatedAt`
+
+Build Identity is owner-controlled display metadata and has no effect on BLD, XBP, XNTD lock, Genesis Origin, fee contribution, or replay protection.
 
 The current app/service view helper is:
 
@@ -249,9 +258,9 @@ It returns:
       commitmentStatus
     }
 
-`commitmentStatus` does not mean Build validity and does not erase historical contribution.
+`commitmentStatus` is derived from stored lock facts only. It does not mean Build validity and does not erase historical contribution.
 
-`appGetBuildView()` may return `UNKNOWN` when context-dependent epoch information is required but unavailable. `UNKNOWN` is a status signal, not an error.
+Public Build commitment status does not expose `UNKNOWN`. Missing live external context should be handled by operation-level validation or infrastructure errors, not as public Build state.
 
 ## Snapshot safety
 
@@ -447,7 +456,7 @@ A controlled read-only mainnet RPC smoke for XC protocol params has completed su
 - [Stage 2.8 Gateway planning baseline checkpoint](docs/gateway/stage-2-8-gateway-planning-baseline-checkpoint.md)
 - [EV-01 / EV-02 Atomic rollback prototype evidence plan](docs/gateway/evidence/ev-01-ev-02-atomic-rollback-prototype.md)
 - [EV-01 / EV-02 X1 testnet atomic rollback evidence](docs/gateway/evidence/ev-01-ev-02-x1-testnet-atomic-rollback-evidence.md)
-The XNTD-to-XXXL burn-to-mint gateway is documented as a design-only future layer. Stage 1 gateway architecture, implementation planning, and Ethereum burn event schema are also documented, but the gateway is not implemented, deployed, or approved for production by the current repository.
+  The XNTD-to-XXXL burn-to-mint gateway is documented as a design-only future layer. Stage 1 gateway architecture, implementation planning, and Ethereum burn event schema are also documented, but the gateway is not implemented, deployed, or approved for production by the current repository.
 
 The X1-native Forge / Stake dual nominal model is also documented as a design-only future layer. It is not implemented, deployed, or approved for production by the current repository.
 
