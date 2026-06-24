@@ -51,3 +51,4 @@ export * from "./gateway/stage-1-gateway-state.js";
 export * from "./app/gateway-profile-activation.js";
 export * from "./app/gateway-profile-preview-view.js";
 export * from "./app/gateway-profile-preview-dto.js";
+export * from "./app/gateway-profile-scan.js";
