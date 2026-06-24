@@ -33218,3 +33218,15 @@ For a new gateway-created Build, accepted XNTD lock according to the epoch minim
 A verified zero Core redeem or `XEN.burn` history is a valid scan result, but gateway Build activation requires minimum Core redeem history. An unchecked scan is not allowed.
 
 A clean `UNCOMMITTED` Build shell is an X1-native creation path, not an ETH/XC gateway activation result.
+
+## Gateway preview is display-only
+
+Gateway profile preview is a read-only UX helper.
+
+Preview data is used only to show the participant the currently observed ETH/XC profile before Build creation or activation.
+
+Preview data must not be persisted into Build state, registry state, registrar replay sets, or contribution replay sets.
+
+Preview does not reserve eligibility and does not create any protocol commitment.
+
+Only gateway activation stores verified contribution facts, and activation must validate the submitted full-profile bundle again before mutating state.

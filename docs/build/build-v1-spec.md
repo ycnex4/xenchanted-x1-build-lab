@@ -456,3 +456,15 @@ A new Build created through the ETH/XC gateway must not be empty. It requires ac
 A gateway transition must not silently skip Core redeem or `XEN.burn` history scans. A verified zero is a valid scan result, but gateway Build activation requires minimum Core redeem history: existing `history_bld > 0` or at least one validated incoming Core redeem proof. An unchecked source is not allowed.
 
 X1-native Build creation remains separate and may create a clean `UNCOMMITTED` Build shell.
+
+## Gateway preview is display-only
+
+Gateway profile preview is a read-only UX helper.
+
+Preview data is used only to show the participant the currently observed ETH/XC profile before Build creation or activation.
+
+Preview data must not be persisted into Build state, registry state, registrar replay sets, or contribution replay sets.
+
+Preview does not reserve eligibility and does not create any protocol commitment.
+
+Only gateway activation stores verified contribution facts, and activation must validate the submitted full-profile bundle again before mutating state.

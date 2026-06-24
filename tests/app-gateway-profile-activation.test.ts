@@ -14,6 +14,7 @@ import {
   createXenBurnCandidate,
   createXntdLockCandidate,
   convertWatcherCandidateToProof,
+  previewGatewayFullProfileBuildActivation,
   validateGatewayFullProfileBuildActivationBoundary,
 } from "../src/index.js";
 
@@ -103,6 +104,107 @@ function xenBurnProof(buildId = "build-1", owner = "x1-owner"): XenBurnProof {
 }
 
 describe("gateway full-profile Build activation boundary", () => {
+  it("previews gateway profile metrics without mutating application state", () => {
+    const app = createBuildApplicationState("registrar-1");
+
+    const preview = previewGatewayFullProfileBuildActivation(app, {
+      buildId: "build-1",
+      owner: "x1-owner",
+      ethereumIdentity: "0x0000000000000000000000000000000000000001",
+      coreRedeemScanCompleted: true,
+      xenBurnScanCompleted: true,
+      xntdLockScanCompleted: true,
+      coreRedeemProofs: [coreRedeemProof()],
+      xenBurnProofs: [xenBurnProof()],
+      xntdLockProof: lockProof(),
+    });
+
+    expect(preview.buildExists).toBe(false);
+    expect(preview.coreRedeemProofCount).toBe(1);
+    expect(preview.xenBurnProofCount).toBe(1);
+    expect(preview.hasXntdLockProof).toBe(true);
+    expect(preview.existingHistoryBld).toBe(0n);
+    expect(preview.incomingHistoryBld).toBe(121n);
+    expect(preview.totalPreviewHistoryBld).toBe(121n);
+    expect(preview.existingHistoryXbp).toBe(0n);
+    expect(preview.incomingHistoryXbp).toBe(1000n);
+    expect(preview.totalPreviewHistoryXbp).toBe(1000n);
+    expect(preview.previewLockedXntd).toBe(100000000n);
+    expect(preview.previewRequiredXntdLock).toBe(100000000n);
+    expect(preview.previewLockEpoch).toBe(0);
+    expect(preview.hasMinimumCoreRedeemHistory).toBe(true);
+    expect(preview.hasMinimumXntdLock).toBe(true);
+    expect(preview.eligible).toBe(true);
+    expect(preview.missingRequirements).toEqual([]);
+
+    expect(app.registry.buildsById.size).toBe(0);
+    expect(app.registrar.processedMessages.size).toBe(0);
+    expect(app.redeemEvents.usedRedeemEvents.size).toBe(0);
+    expect(app.xenBurnEvents.usedXenBurnEvents.size).toBe(0);
+    expect(app.xntdCommitmentEvents.usedXntdCommitmentEvents.size).toBe(0);
+  });
+
+  it("previews missing gateway requirements without mutating application state", () => {
+    const app = createBuildApplicationState("registrar-1");
+
+    const preview = previewGatewayFullProfileBuildActivation(app, {
+      buildId: "build-1",
+      owner: "x1-owner",
+      ethereumIdentity: "0x0000000000000000000000000000000000000001",
+      coreRedeemScanCompleted: true,
+      xenBurnScanCompleted: true,
+      xntdLockScanCompleted: true,
+      coreRedeemProofs: [],
+      xenBurnProofs: [],
+      xntdLockProof: null,
+    });
+
+    expect(preview.eligible).toBe(false);
+    expect(preview.hasMinimumCoreRedeemHistory).toBe(false);
+    expect(preview.hasMinimumXntdLock).toBe(false);
+    expect(preview.missingRequirements).toEqual([
+      "MINIMUM_CORE_REDEEM_HISTORY",
+      "MINIMUM_XNTD_LOCK",
+    ]);
+
+    expect(app.registry.buildsById.size).toBe(0);
+    expect(app.registrar.processedMessages.size).toBe(0);
+    expect(app.redeemEvents.usedRedeemEvents.size).toBe(0);
+    expect(app.xenBurnEvents.usedXenBurnEvents.size).toBe(0);
+    expect(app.xntdCommitmentEvents.usedXntdCommitmentEvents.size).toBe(0);
+  });
+
+  it("previews unchecked scans as missing requirements without mutating application state", () => {
+    const app = createBuildApplicationState("registrar-1");
+
+    const preview = previewGatewayFullProfileBuildActivation(app, {
+      buildId: "build-1",
+      owner: "x1-owner",
+      ethereumIdentity: "0x0000000000000000000000000000000000000001",
+      coreRedeemScanCompleted: false,
+      xenBurnScanCompleted: false,
+      xntdLockScanCompleted: false,
+      coreRedeemProofs: [coreRedeemProof()],
+      xenBurnProofs: [xenBurnProof()],
+      xntdLockProof: lockProof(),
+    });
+
+    expect(preview.eligible).toBe(false);
+    expect(preview.hasMinimumCoreRedeemHistory).toBe(true);
+    expect(preview.hasMinimumXntdLock).toBe(true);
+    expect(preview.missingRequirements).toEqual([
+      "CORE_REDEEM_SCAN",
+      "XEN_BURN_SCAN",
+      "XNTD_LOCK_SCAN",
+    ]);
+
+    expect(app.registry.buildsById.size).toBe(0);
+    expect(app.registrar.processedMessages.size).toBe(0);
+    expect(app.redeemEvents.usedRedeemEvents.size).toBe(0);
+    expect(app.xenBurnEvents.usedXenBurnEvents.size).toBe(0);
+    expect(app.xntdCommitmentEvents.usedXntdCommitmentEvents.size).toBe(0);
+  });
+
   it("allows new gateway Build activation only with completed scans and XNTD lock proof", () => {
     const app = createBuildApplicationState("registrar-1");
 
