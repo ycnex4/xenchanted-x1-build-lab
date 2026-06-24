@@ -53,6 +53,7 @@ export interface GatewayFullProfileBuildActivationBoundary {
   readonly coreRedeemProofCount: number;
   readonly xenBurnProofCount: number;
   readonly hasXntdLockProof: boolean;
+  readonly hasMinimumCoreRedeemHistory: boolean;
 }
 
 function reject(message: string): never {
@@ -169,6 +170,14 @@ export function validateGatewayFullProfileBuildActivationBoundary(
     );
   }
 
+  const hasMinimumCoreRedeemHistory =
+    (existingBuild?.historyBld ?? 0n) > 0n ||
+    bundle.coreRedeemProofs.some((proof) => proof.payload.amountBld > 0n);
+
+  if (!hasMinimumCoreRedeemHistory) {
+    reject("Gateway Build activation requires minimum Core redeem history");
+  }
+
   const requiresAcceptedXntdLock =
     existingBuild === undefined || !existingBuild.xntdCommitmentAccepted;
 
@@ -184,6 +193,7 @@ export function validateGatewayFullProfileBuildActivationBoundary(
     coreRedeemProofCount: bundle.coreRedeemProofs.length,
     xenBurnProofCount: bundle.xenBurnProofs.length,
     hasXntdLockProof: bundle.xntdLockProof !== null,
+    hasMinimumCoreRedeemHistory,
   };
 }
 

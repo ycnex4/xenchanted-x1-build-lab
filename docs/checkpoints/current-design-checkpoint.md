@@ -33215,6 +33215,6 @@ For gateway create/update, the gateway must evaluate Core redeem history, global
 
 For a new gateway-created Build, accepted XNTD lock according to the epoch minimum is mandatory. For epoch `0`, the required XNTD lock minimum is `100000000`.
 
-A verified zero Core redeem or `XEN.burn` history is allowed. An unchecked scan is not allowed.
+A verified zero Core redeem or `XEN.burn` history is a valid scan result, but gateway Build activation requires minimum Core redeem history. An unchecked scan is not allowed.
 
 A clean `UNCOMMITTED` Build shell is an X1-native creation path, not an ETH/XC gateway activation result.

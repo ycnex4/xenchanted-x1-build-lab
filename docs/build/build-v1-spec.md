@@ -453,6 +453,6 @@ The gateway must evaluate Core redeem history, global `XEN.burn` history, and XN
 
 A new Build created through the ETH/XC gateway must not be empty. It requires accepted XNTD lock according to the epoch minimum. For epoch `0`, the required XNTD lock minimum is `100000000`.
 
-A gateway transition must not silently skip Core redeem or `XEN.burn` history scans. A verified zero is allowed. An unchecked source is not allowed.
+A gateway transition must not silently skip Core redeem or `XEN.burn` history scans. A verified zero is a valid scan result, but gateway Build activation requires minimum Core redeem history: existing `history_bld > 0` or at least one validated incoming Core redeem proof. An unchecked source is not allowed.
 
 X1-native Build creation remains separate and may create a clean `UNCOMMITTED` Build shell.

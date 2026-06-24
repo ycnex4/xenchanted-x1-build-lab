@@ -145,4 +145,4 @@ The gateway must not create an empty Build.
 
 The gateway must not apply XNTD lock while silently skipping Core redeem or `XEN.burn` scans.
 
-A verified zero history is valid. An unchecked history source is not valid for a gateway state transition.
+A verified zero history is a valid scan result, but gateway Build activation requires minimum Core redeem history. An unchecked history source is not valid for a gateway state transition.

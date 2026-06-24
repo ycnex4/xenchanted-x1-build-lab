@@ -123,6 +123,7 @@ describe("gateway full-profile Build activation boundary", () => {
     expect(boundary.coreRedeemProofCount).toBe(1);
     expect(boundary.xenBurnProofCount).toBe(1);
     expect(boundary.hasXntdLockProof).toBe(true);
+    expect(boundary.hasMinimumCoreRedeemHistory).toBe(true);
   });
 
   it("rejects a new gateway Build without XNTD lock proof", () => {
@@ -136,7 +137,7 @@ describe("gateway full-profile Build activation boundary", () => {
         coreRedeemScanCompleted: true,
         xenBurnScanCompleted: true,
         xntdLockScanCompleted: true,
-        coreRedeemProofs: [],
+        coreRedeemProofs: [coreRedeemProof()],
         xenBurnProofs: [],
         xntdLockProof: null,
       }),
@@ -175,24 +176,22 @@ describe("gateway full-profile Build activation boundary", () => {
     ).toThrow("XEN.burn scan must be completed");
   });
 
-  it("allows verified zero history when scans completed and XNTD lock proof exists", () => {
+  it("rejects verified zero Core redeem history even when scans and XNTD lock proof exist", () => {
     const app = createBuildApplicationState("registrar-1");
 
-    const boundary = validateGatewayFullProfileBuildActivationBoundary(app, {
-      buildId: "build-1",
-      owner: "x1-owner",
-      ethereumIdentity: "0x0000000000000000000000000000000000000001",
-      coreRedeemScanCompleted: true,
-      xenBurnScanCompleted: true,
-      xntdLockScanCompleted: true,
-      coreRedeemProofs: [],
-      xenBurnProofs: [],
-      xntdLockProof: lockProof(),
-    });
-
-    expect(boundary.coreRedeemProofCount).toBe(0);
-    expect(boundary.xenBurnProofCount).toBe(0);
-    expect(boundary.hasXntdLockProof).toBe(true);
+    expect(() =>
+      validateGatewayFullProfileBuildActivationBoundary(app, {
+        buildId: "build-1",
+        owner: "x1-owner",
+        ethereumIdentity: "0x0000000000000000000000000000000000000001",
+        coreRedeemScanCompleted: true,
+        xenBurnScanCompleted: true,
+        xntdLockScanCompleted: true,
+        coreRedeemProofs: [],
+        xenBurnProofs: [],
+        xntdLockProof: lockProof(),
+      }),
+    ).toThrow("requires minimum Core redeem history");
   });
 
   it("does not require new lock proof for an already committed existing Build", () => {
@@ -306,6 +305,39 @@ describe("gateway full-profile Build activation boundary", () => {
     expect(build?.lockEpoch).toBe(0);
     expect(build?.historyBld).toBe(121n);
     expect(build?.historyXbp).toBe(1000n);
+  });
+
+  it("does not create a new gateway Build when minimum Core redeem history is missing", () => {
+    const app = createBuildApplicationState("registrar-1");
+
+    const result = appGatewayActivateBuild(
+      app,
+      {
+        buildId: "build-1",
+        owner: "x1-owner",
+        ethereumIdentity: "0x0000000000000000000000000000000000000001",
+        coreRedeemScanCompleted: true,
+        xenBurnScanCompleted: true,
+        xntdLockScanCompleted: true,
+        coreRedeemProofs: [],
+        xenBurnProofs: [xenBurnProof()],
+        xntdLockProof: lockProof(),
+      },
+      {
+        submittedBy: "registrar-1",
+        createdAt: 1200n,
+        xcEpochMinimumSource: createStaticXcEpochMinimumSource(
+          new Map<number, bigint>([[0, 100000000n]]),
+        ),
+      },
+    );
+
+    expect(result.ok).toBe(false);
+    expect(app.registry.buildsById.has("build-1")).toBe(false);
+    expect(app.registrar.processedMessages.size).toBe(0);
+    expect(app.redeemEvents.usedRedeemEvents.size).toBe(0);
+    expect(app.xenBurnEvents.usedXenBurnEvents.size).toBe(0);
+    expect(app.xntdCommitmentEvents.usedXntdCommitmentEvents.size).toBe(0);
   });
 
   it("does not create a new gateway Build when required XNTD lock is missing", () => {

@@ -30,13 +30,15 @@ The gateway must not apply only one part of the profile while silently skipping 
 
 ## Zero history vs unchecked history
 
-A verified zero is allowed.
+A verified zero is a valid scan result.
+
+A verified zero Core redeem history is not sufficient for gateway Build activation.
 
 An unchecked source is not allowed.
 
 Examples:
 
-- Core redeem scan completed and found zero history: valid result.
+- Core redeem scan completed and found zero history: valid scan result, but gateway Build activation is rejected because minimum Core redeem history is missing.
 - XEN.burn scan completed and found zero history: valid result.
 - Core redeem scan failed or was not performed: no gateway state transition.
 - XEN.burn scan failed or was not performed: no gateway state transition.
@@ -53,9 +55,12 @@ For a new gateway-created Build, the gateway must:
 3. scan global `XEN.burn` history;
 4. verify accepted XNTD lock commitment;
 5. require XNTD lock amount to satisfy the epoch minimum;
-6. create the Build only with the verified profile facts applied.
+6. require minimum Core redeem history;
+7. create the Build only with the verified profile facts applied.
 
 For epoch `0`, the required XNTD lock minimum is `100000000`.
+
+Minimum Core redeem history means existing `history_bld > 0` or at least one validated incoming Core redeem proof.
 
 If the XNTD lock requirement is not satisfied, the gateway must not create the Build.
 
