@@ -49,3 +49,4 @@ export * from "./gateway/stage-1-mint-authorization.js";
 export * from "./gateway/stage-1-mint-core.js";
 export * from "./gateway/stage-1-gateway-state.js";
 export * from "./app/gateway-profile-activation.js";
+export * from "./app/gateway-profile-preview-view.js";

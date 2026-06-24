@@ -126,3 +126,7 @@ Preview data must not be persisted into Build state, registry state, registrar r
 Preview does not reserve eligibility and does not create any protocol commitment.
 
 Only gateway activation stores verified contribution facts, and activation must validate the submitted full-profile bundle again before mutating state.
+
+A frontend-facing preview view may shape the read-only preview into user-visible metrics, requirements, summary text, and the next action (`CREATE_BUILD`, `ACTIVATE_BUILD`, or `UNAVAILABLE`).
+
+The preview view is still display-only and must not be treated as protocol state.
