@@ -22,6 +22,7 @@ export enum BuildErrorCode {
   InvalidFeeContributionTxCount = "INVALID_FEE_CONTRIBUTION_TX_COUNT",
   NonIncreasingFeeCheckpointSlot = "NON_INCREASING_FEE_CHECKPOINT_SLOT",
   UnauthorizedBuildIdentityUpdate = "UNAUTHORIZED_BUILD_IDENTITY_UPDATE",
+  InvalidGatewayFullProfileActivation = "INVALID_GATEWAY_FULL_PROFILE_ACTIVATION",
 }
 
 export class BuildError extends Error {
