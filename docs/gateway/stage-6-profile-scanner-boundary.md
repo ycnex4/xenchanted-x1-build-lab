@@ -61,3 +61,18 @@ Stage 6.1 is a deterministic boundary layer.
 Real Ethereum/XC adapters are a later Stage 6/7 step.
 
 This keeps scanner shape, bundle building, preview, and activation separated.
+
+## App-level scan-to-preview flow
+
+Stage 6.2 adds an app-level read-only flow:
+
+- scanner scans the gateway profile
+- scan result is converted into a full-profile activation bundle
+- preview DTO is built from that bundle
+- DTO can be returned to UI/API as JSON-safe preview data
+
+This flow is still display-only.
+
+It does not create a Build, does not mutate registry state, does not touch replay sets, and does not reserve eligibility.
+
+The same flow can use a deterministic static scanner in tests or a real Ethereum/XC scanner later.
