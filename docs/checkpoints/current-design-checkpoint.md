@@ -1,5 +1,21 @@
 # Current Design Checkpoint
 
+<!--
+Append-only checkpoint note:
+This file contains historical checkpoint sections. Older sections may mention
+pre-cleanup Build balance terminology such as available_bld, earned_xbp,
+available_xbp, one-time Genesis Origin claim, or relock-by-available_bld.
+
+The current authoritative Build State model is recorded in the latest
+Build State history and identity cleanup checkpoint near the top of this file,
+and in:
+
+- docs/build/build-state-history-identity-model.md
+- docs/build/build-v1-spec.md
+- docs/checkpoints/build-state-history-identity-cleanup.md
+-->
+
+
 # Latest Build State history and identity cleanup checkpoint
 
 The Build State history and identity cleanup was completed on branch `build-state-history-identity-cleanup`.

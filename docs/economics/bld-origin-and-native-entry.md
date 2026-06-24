@@ -1,3 +1,19 @@
+<!--
+Superseded note:
+This document contains pre-cleanup Build balance terminology such as available_bld,
+earned_xbp, available_xbp, one-time Genesis Origin claim, or relock-by-available_bld.
+For the current authoritative Build State model, use:
+
+- docs/build/build-state-history-identity-model.md
+- docs/build/build-v1-spec.md
+- docs/checkpoints/build-state-history-identity-cleanup.md
+
+Current model:
+Build State stores durable public history, not live spendable balances.
+Build Identity stores owner-controlled name/logo metadata.
+Future spendable BLD belongs to a separate BLD asset / ledger / escrow layer.
+-->
+
 # BLD Origin and Native Build Entry
 
 ## 1. Purpose
