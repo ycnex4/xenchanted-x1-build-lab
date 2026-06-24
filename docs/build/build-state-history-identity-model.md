@@ -38,7 +38,7 @@ Build State does not store live spendable balances:
 - no live wallet balance
 - no live token escrow balance
 
-Spendable or transferable BLD belongs to a separate future BLD asset / ledger / escrow layer.
+Spendable or transferable BLD is a separate token. Build State and Build view do not display, mirror, or cache BLD token balance.
 
 ## history_bld
 

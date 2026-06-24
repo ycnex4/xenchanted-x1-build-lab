@@ -237,7 +237,7 @@ Build State distinguishes:
 
 Build State does not store public spendable balances such as `available_bld` or `available_xbp`.
 
-Spendable / transferable BLD belongs to a separate future BLD asset or ledger layer. Relock must not depend on a public `Build.available_bld` field.
+Spendable / transferable BLD is a separate token. Build State and Build view do not display, mirror, or cache BLD token balance. Relock must not depend on a public `Build.available_bld` field because that field does not exist.
 
 Build Identity is separate from protocol accounting:
 

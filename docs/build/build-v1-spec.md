@@ -24,7 +24,7 @@ It must not store a public live spendable BLD balance.
 
 It must not store a public live spendable XBP balance.
 
-Spendable / transferable BLD belongs to a separate future BLD asset or ledger layer.
+Spendable / transferable BLD is a separate token. Build State and Build view do not display, mirror, or cache BLD token balance.
 
 ### 2.2 One Build, multiple verified layers
 

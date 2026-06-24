@@ -129,3 +129,13 @@ The current active model is documented in:
 - `docs/build/build-state-history-identity-model.md`
 
 Older design notes may still contain historical terms and should be read as superseded unless updated to reference this checkpoint.
+
+## Follow-up boundary clarification
+
+Spendable / transferable BLD is a separate token.
+
+Build State and Build view do not display, mirror, or cache BLD token balance.
+
+A UI may show wallet token balances elsewhere, but that is outside Build State and outside Build Identity.
+
+Relock must not read `Build.availableBld` because that field does not exist. Any future operation requiring spendable BLD availability must check the BLD token layer directly at operation time.
