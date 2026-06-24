@@ -28,7 +28,7 @@ describe("XNTD lock / relock", () => {
     expect(build.lockedXntd).toBe(500n);
     expect(build.requiredXntdLock).toBe(500n);
     expect(build.lockEpoch).toBe(1);
-    expect(build.xcCommitmentActive).toBe(true);
+    expect(build.xntdCommitmentAccepted).toBe(true);
     expect(build.updatedAt).toBe(1100n);
   });
 
@@ -50,7 +50,7 @@ describe("XNTD lock / relock", () => {
     expect(build.lockedXntd).toBe(750n);
     expect(build.requiredXntdLock).toBe(500n);
     expect(build.lockEpoch).toBe(1);
-    expect(build.xcCommitmentActive).toBe(true);
+    expect(build.xntdCommitmentAccepted).toBe(true);
   });
 
   it("relocks active commitment without reading a public Build spendable balance", () => {
@@ -87,7 +87,7 @@ describe("XNTD lock / relock", () => {
     expect(build.lockedXntd).toBe(250n);
     expect(build.requiredXntdLock).toBe(250n);
     expect(build.lockEpoch).toBe(2);
-    expect(build.xcCommitmentActive).toBe(true);
+    expect(build.xntdCommitmentAccepted).toBe(true);
     expect(build.updatedAt).toBe(1200n);
   });
 
@@ -132,7 +132,7 @@ describe("XNTD lock / relock", () => {
     expect(build.lockEpoch).toBe(2);
   });
 
-  it("rejects relock when commitment is not active", () => {
+  it("rejects relock when commitment is not accepted", () => {
     const build = createBuild({
       owner: "x1-user-1",
       buildId: "build-1",
@@ -160,7 +160,7 @@ describe("XNTD lock / relock", () => {
     } catch (error) {
       expect(error).toBeInstanceOf(BuildError);
       expect((error as BuildError).code).toBe(
-        BuildErrorCode.XntdCommitmentNotActive,
+        BuildErrorCode.XntdCommitmentNotAccepted,
       );
     }
 

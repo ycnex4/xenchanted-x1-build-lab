@@ -25,7 +25,7 @@ export interface BuildState {
   lockedXntd: bigint;
   requiredXntdLock: bigint;
   lockEpoch: number | null;
-  xcCommitmentActive: boolean;
+  xntdCommitmentAccepted: boolean;
 
   x1FeeContribution: bigint;
   x1TxCount: bigint;
@@ -68,7 +68,7 @@ export function createEmptyBuildState(
     lockedXntd: 0n,
     requiredXntdLock: 0n,
     lockEpoch: null,
-    xcCommitmentActive: false,
+    xntdCommitmentAccepted: false,
 
     x1FeeContribution: 0n,
     x1TxCount: 0n,

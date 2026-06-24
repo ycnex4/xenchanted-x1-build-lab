@@ -27,7 +27,7 @@ describe("app Build view", () => {
 
     expect(view.build).toBe(build);
     expect(view.commitmentStatus.status).toBe("COMMITTED");
-    expect(view.commitmentStatus.reason).toBe("COMMITMENT_CURRENT");
+    expect(view.commitmentStatus.reason).toBe("COMMITMENT_ACCEPTED");
   });
 
   it("returns Build state with UNCOMMITTED commitment status", () => {
@@ -66,11 +66,11 @@ describe("app Build view", () => {
     const view = appGetBuildView({ build });
 
     expect(view.commitmentStatus.status).not.toBe("UNKNOWN");
-    expect(view.commitmentStatus.reason).toBe("COMMITMENT_CURRENT");
+    expect(view.commitmentStatus.reason).toBe("COMMITMENT_ACCEPTED");
     expect("currentEpoch" in view.commitmentStatus).toBe(false);
   });
 
-  it("uses stable stored lock facts for commitment status", () => {
+  it("uses stable accepted XNTD commitment facts for commitment status", () => {
     const build = createEmptyBuildState({
       buildId: "build-1",
       owner: "owner-1",
@@ -81,13 +81,12 @@ describe("app Build view", () => {
     build.lockedXntd = 100n;
     build.requiredXntdLock = 200n;
     build.lockEpoch = 0;
-    build.xcCommitmentActive = true;
+    build.xntdCommitmentAccepted = true;
 
     const view = appGetBuildView({ build });
 
     expect(view.commitmentStatus.status).toBe("UNCOMMITTED");
-    expect(view.commitmentStatus.reason).toBe("COMMITMENT_BELOW_REQUIRED");
+    expect(view.commitmentStatus.reason).toBe("COMMITMENT_INSUFFICIENT");
     expect(view.commitmentStatus.requiredXntdLock).toBe(200n);
-    expect(view.commitmentStatus.needsRelock).toBe(true);
   });
 });

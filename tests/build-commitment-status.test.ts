@@ -15,11 +15,10 @@ describe("Build commitment status", () => {
 
     const status = getBuildCommitmentStatus({ build });
 
-    expect(status.isActive).toBe(false);
+    expect(status.isCommitted).toBe(false);
     expect(status.status).toBe("UNCOMMITTED");
     expect(status.reason).toBe("NO_HISTORY");
     expect(status.historyBld).toBe(0n);
-    expect(status.needsRelock).toBe(false);
   });
 
   it("returns NO_COMMITMENT when history exists but no XNTD is locked", () => {
@@ -33,7 +32,7 @@ describe("Build commitment status", () => {
 
     const status = getBuildCommitmentStatus({ build });
 
-    expect(status.isActive).toBe(false);
+    expect(status.isCommitted).toBe(false);
     expect(status.status).toBe("UNCOMMITTED");
     expect(status.reason).toBe("NO_COMMITMENT");
     expect(status.historyBld).toBe(121n);
@@ -42,7 +41,7 @@ describe("Build commitment status", () => {
     expect(status.lockEpoch).toBe(null);
   });
 
-  it("returns COMMITTED when history and sufficient stored lock facts exist", () => {
+  it("returns COMMITTED when history and sufficient accepted XNTD commitment facts exist", () => {
     const build = createEmptyBuildState({
       buildId: "build-1",
       owner: "owner-1",
@@ -61,16 +60,15 @@ describe("Build commitment status", () => {
 
     const status = getBuildCommitmentStatus({ build });
 
-    expect(status.isActive).toBe(true);
+    expect(status.isCommitted).toBe(true);
     expect(status.status).toBe("COMMITTED");
-    expect(status.reason).toBe("COMMITMENT_CURRENT");
+    expect(status.reason).toBe("COMMITMENT_ACCEPTED");
     expect(status.lockedXntd).toBe(100n);
     expect(status.requiredXntdLock).toBe(100n);
     expect(status.lockEpoch).toBe(0);
-    expect(status.needsRelock).toBe(false);
   });
 
-  it("returns COMMITMENT_BELOW_REQUIRED when stored lock facts are insufficient", () => {
+  it("returns COMMITMENT_INSUFFICIENT when accepted XNTD commitment facts are insufficient", () => {
     const build = createEmptyBuildState({
       buildId: "build-1",
       owner: "owner-1",
@@ -81,14 +79,13 @@ describe("Build commitment status", () => {
     build.lockedXntd = 100n;
     build.requiredXntdLock = 200n;
     build.lockEpoch = 0;
-    build.xcCommitmentActive = true;
+    build.xntdCommitmentAccepted = true;
 
     const status = getBuildCommitmentStatus({ build });
 
-    expect(status.isActive).toBe(false);
+    expect(status.isCommitted).toBe(false);
     expect(status.status).toBe("UNCOMMITTED");
-    expect(status.reason).toBe("COMMITMENT_BELOW_REQUIRED");
-    expect(status.needsRelock).toBe(true);
+    expect(status.reason).toBe("COMMITMENT_INSUFFICIENT");
   });
 
   it("does not expose UNKNOWN as a public Build status", () => {
@@ -111,7 +108,7 @@ describe("Build commitment status", () => {
     const status = getBuildCommitmentStatus({ build });
 
     expect(status.status).not.toBe("UNKNOWN");
-    expect(status.reason).toBe("COMMITMENT_CURRENT");
+    expect(status.reason).toBe("COMMITMENT_ACCEPTED");
     expect("currentEpoch" in status).toBe(false);
   });
 

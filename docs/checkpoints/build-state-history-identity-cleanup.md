@@ -71,7 +71,7 @@ Future actual BLD availability checks belong to an external BLD asset / ledger /
 
 ### 5. Public Build commitment status no longer exposes UNKNOWN
 
-Public commitment status is now derived from stored lock facts only.
+Public commitment status is now derived from accepted XNTD commitment facts only.
 
 Allowed statuses:
 
@@ -82,8 +82,8 @@ Allowed reasons:
 
 - `NO_HISTORY`
 - `NO_COMMITMENT`
-- `COMMITMENT_BELOW_REQUIRED`
-- `COMMITMENT_CURRENT`
+- `COMMITMENT_INSUFFICIENT`
+- `COMMITMENT_ACCEPTED`
 
 Live external context issues are operation-level validation or infrastructure concerns, not public Build state.
 

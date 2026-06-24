@@ -154,7 +154,7 @@ describe("BuildRegistry", () => {
     expect(state.historyXbp).toBe(0n);
     expect(state.lockedXntd).toBe(0n);
     expect(state.requiredXntdLock).toBe(0n);
-    expect(state.xcCommitmentActive).toBe(false);
+    expect(state.xntdCommitmentAccepted).toBe(false);
     expect(state.x1FeeContribution).toBe(0n);
     expect(state.x1TxCount).toBe(0n);
   });

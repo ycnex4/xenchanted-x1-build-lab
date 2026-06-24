@@ -81,7 +81,7 @@ Stable XNTD commitment facts:
 - locked_xntd
 - required_xntd_lock
 - lock_epoch
-- xc_commitment_active
+- xntd_commitment_accepted
 
 X1 fee checkpoint facts:
 
@@ -286,7 +286,7 @@ BuildState stores stable lock facts:
 - locked_xntd
 - required_xntd_lock
 - lock_epoch
-- xc_commitment_active
+- xntd_commitment_accepted
 
 These are historical/state facts from accepted operations.
 
@@ -303,8 +303,8 @@ Allowed public reasons:
 
 - NO_HISTORY
 - NO_COMMITMENT
-- COMMITMENT_BELOW_REQUIRED
-- COMMITMENT_CURRENT
+- COMMITMENT_INSUFFICIENT
+- COMMITMENT_ACCEPTED
 
 BuildState does not expose UNKNOWN as public state.
 

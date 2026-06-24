@@ -60,7 +60,7 @@ export function lockXntd(input: LockXntdInput): BuildState {
   input.build.lockedXntd = input.amountXntd;
   input.build.requiredXntdLock = input.observedRequiredXntdLock;
   input.build.lockEpoch = input.lockEpoch;
-  input.build.xcCommitmentActive = true;
+  input.build.xntdCommitmentAccepted = true;
   input.build.updatedAt = input.lockedAt;
 
   return input.build;
@@ -74,17 +74,17 @@ export function relockXntd(input: RelockXntdInput): BuildState {
     input.observedRequiredXntdLock,
   );
 
-  if (!input.build.xcCommitmentActive) {
+  if (!input.build.xntdCommitmentAccepted) {
     throw new BuildError(
-      BuildErrorCode.XntdCommitmentNotActive,
-      "Cannot relock XNTD when XC commitment is not active",
+      BuildErrorCode.XntdCommitmentNotAccepted,
+      "Cannot relock XNTD when XNTD commitment is not accepted",
     );
   }
 
   input.build.lockedXntd = input.amountXntd;
   input.build.requiredXntdLock = input.observedRequiredXntdLock;
   input.build.lockEpoch = input.lockEpoch;
-  input.build.xcCommitmentActive = true;
+  input.build.xntdCommitmentAccepted = true;
   input.build.updatedAt = input.relockedAt;
 
   return input.build;

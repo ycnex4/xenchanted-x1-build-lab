@@ -355,6 +355,6 @@ describe("Registrar X1_FEE_CHECKPOINT integration", () => {
     expect(build.lockedXntd).toBe(500n);
     expect(build.requiredXntdLock).toBe(500n);
     expect(build.lockEpoch).toBe(1);
-    expect(build.xcCommitmentActive).toBe(true);
+    expect(build.xntdCommitmentAccepted).toBe(true);
   });
 });

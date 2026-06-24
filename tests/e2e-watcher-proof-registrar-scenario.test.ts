@@ -178,7 +178,7 @@ describe("end-to-end watcher proof registrar scenario", () => {
     expect(build.lockedXntd).toBe(250n);
     expect(build.requiredXntdLock).toBe(250n);
     expect(build.lockEpoch).toBe(2);
-    expect(build.xcCommitmentActive).toBe(true);
+    expect(build.xntdCommitmentAccepted).toBe(true);
 
     expect(build.x1FeeContribution).toBe(777n);
     expect(build.x1TxCount).toBe(11n);

@@ -80,7 +80,7 @@ describe("BuildState", () => {
     expect(state.lockedXntd).toBe(0n);
     expect(state.requiredXntdLock).toBe(0n);
     expect(state.lockEpoch).toBeNull();
-    expect(state.xcCommitmentActive).toBe(false);
+    expect(state.xntdCommitmentAccepted).toBe(false);
   });
 
   it("initializes X1 fee fields to zero or null", () => {

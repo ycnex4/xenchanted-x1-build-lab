@@ -204,7 +204,7 @@ describe("application proof submission", () => {
     expect(build.lockedXntd).toBe(750n);
     expect(build.requiredXntdLock).toBe(500n);
     expect(build.lockEpoch).toBe(1);
-    expect(build.xcCommitmentActive).toBe(true);
+    expect(build.xntdCommitmentAccepted).toBe(true);
 
     const relockCandidate = createXntdRelockCandidate({
       sourceChainId: "x1",

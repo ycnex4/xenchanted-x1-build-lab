@@ -17,7 +17,7 @@ export enum BuildErrorCode {
   MissingAuthoritativeXcEpochMinimum = "MISSING_AUTHORITATIVE_XC_EPOCH_MINIMUM",
   MismatchedAuthoritativeXcEpochMinimum = "MISMATCHED_AUTHORITATIVE_XC_EPOCH_MINIMUM",
   InvalidXcEpochMinimumRecord = "INVALID_XC_EPOCH_MINIMUM_RECORD",
-  XntdCommitmentNotActive = "XNTD_COMMITMENT_NOT_ACTIVE",
+  XntdCommitmentNotAccepted = "XNTD_COMMITMENT_NOT_ACCEPTED",
   InvalidFeeContributionAmount = "INVALID_FEE_CONTRIBUTION_AMOUNT",
   InvalidFeeContributionTxCount = "INVALID_FEE_CONTRIBUTION_TX_COUNT",
   NonIncreasingFeeCheckpointSlot = "NON_INCREASING_FEE_CHECKPOINT_SLOT",

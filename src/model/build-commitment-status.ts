@@ -3,20 +3,19 @@ import type { BuildState } from "./build-state.js";
 export type BuildCommitmentStatusValue = "COMMITTED" | "UNCOMMITTED";
 
 export type BuildCommitmentStatusReason =
-  | "COMMITMENT_CURRENT"
+  | "COMMITMENT_ACCEPTED"
   | "NO_HISTORY"
   | "NO_COMMITMENT"
-  | "COMMITMENT_BELOW_REQUIRED";
+  | "COMMITMENT_INSUFFICIENT";
 
 export interface BuildCommitmentStatus {
-  readonly isActive: boolean;
+  readonly isCommitted: boolean;
   readonly status: BuildCommitmentStatusValue;
   readonly reason: BuildCommitmentStatusReason;
   readonly historyBld: bigint;
   readonly lockedXntd: bigint;
   readonly requiredXntdLock: bigint;
   readonly lockEpoch: number | null;
-  readonly needsRelock: boolean;
 }
 
 export interface GetBuildCommitmentStatusInput {
@@ -35,51 +34,51 @@ export function getBuildCommitmentStatus(
 
   if (historyBld === 0n) {
     return {
-      isActive: false,
+      isCommitted: false,
       status: "UNCOMMITTED",
       reason: "NO_HISTORY",
       historyBld,
       lockedXntd,
       requiredXntdLock,
       lockEpoch,
-      needsRelock: false,
     };
   }
 
-  if (!build.xcCommitmentActive || lockedXntd === 0n || lockEpoch === null) {
+  if (
+    !build.xntdCommitmentAccepted ||
+    lockedXntd === 0n ||
+    lockEpoch === null
+  ) {
     return {
-      isActive: false,
+      isCommitted: false,
       status: "UNCOMMITTED",
       reason: "NO_COMMITMENT",
       historyBld,
       lockedXntd,
       requiredXntdLock,
       lockEpoch,
-      needsRelock: false,
     };
   }
 
   if (requiredXntdLock > 0n && lockedXntd < requiredXntdLock) {
     return {
-      isActive: false,
+      isCommitted: false,
       status: "UNCOMMITTED",
-      reason: "COMMITMENT_BELOW_REQUIRED",
+      reason: "COMMITMENT_INSUFFICIENT",
       historyBld,
       lockedXntd,
       requiredXntdLock,
       lockEpoch,
-      needsRelock: true,
     };
   }
 
   return {
-    isActive: true,
+    isCommitted: true,
     status: "COMMITTED",
-    reason: "COMMITMENT_CURRENT",
+    reason: "COMMITMENT_ACCEPTED",
     historyBld,
     lockedXntd,
     requiredXntdLock,
     lockEpoch,
-    needsRelock: false,
   };
 }

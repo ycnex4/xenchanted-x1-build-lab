@@ -231,7 +231,7 @@ Build State distinguishes:
 - `history_bld` — historical BLD from verified redeemed Core history; non-decreasing
 - `origin_bld` — Genesis Origin BLD tier cap reached by history; not earned history
 - `history_xbp` — historical XEN Burn Power from verified global XEN burns; non-decreasing
-- stable XNTD commitment facts: `locked_xntd`, `required_xntd_lock`, `lock_epoch`, `xc_commitment_active`
+- stable XNTD commitment facts: `locked_xntd`, `required_xntd_lock`, `lock_epoch`, `xntd_commitment_accepted`
 - X1 fee contribution checkpoint facts
 - replay protection state
 
@@ -258,7 +258,7 @@ It returns:
       commitmentStatus
     }
 
-`commitmentStatus` is derived from stored lock facts only. It does not mean Build validity and does not erase historical contribution.
+`commitmentStatus` is derived from accepted XNTD commitment facts only. It does not mean Build validity and does not erase historical contribution.
 
 Public Build commitment status does not expose `UNKNOWN`. Missing live external context should be handled by operation-level validation or infrastructure errors, not as public Build state.
 

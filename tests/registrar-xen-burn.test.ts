@@ -249,7 +249,7 @@ describe("applyRegistrarXenBurn", () => {
     expect(build.originBld).toBe(0n);
     expect(build.lockedXntd).toBe(0n);
     expect(build.requiredXntdLock).toBe(0n);
-    expect(build.xcCommitmentActive).toBe(false);
+    expect(build.xntdCommitmentAccepted).toBe(false);
     expect(build.x1FeeContribution).toBe(0n);
     expect(build.x1TxCount).toBe(0n);
   });

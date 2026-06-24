@@ -5,7 +5,7 @@ import { type RegistrarState } from "../model/registrar.js";
 import { type XenBurnEventState } from "../model/xen-burn-events.js";
 import { type XntdCommitmentEventState } from "../model/xntd-commitment-events.js";
 
-export const STORAGE_SCHEMA_VERSION = 3 as const;
+export const STORAGE_SCHEMA_VERSION = 4 as const;
 
 export interface SerializedBuildState {
   schemaVersion: typeof STORAGE_SCHEMA_VERSION;
@@ -25,7 +25,7 @@ export interface SerializedBuildState {
   lockedXntd: string;
   requiredXntdLock: string;
   lockEpoch: number | null;
-  xcCommitmentActive: boolean;
+  xntdCommitmentAccepted: boolean;
   x1FeeContribution: string;
   x1TxCount: string;
   x1FeeCountedUntilSlot: string | null;
@@ -231,7 +231,7 @@ export function serializeBuildState(build: BuildState): SerializedBuildState {
     lockedXntd: serializeBigint(build.lockedXntd),
     requiredXntdLock: serializeBigint(build.requiredXntdLock),
     lockEpoch: build.lockEpoch,
-    xcCommitmentActive: build.xcCommitmentActive,
+    xntdCommitmentAccepted: build.xntdCommitmentAccepted,
     x1FeeContribution: serializeBigint(build.x1FeeContribution),
     x1TxCount: serializeBigint(build.x1TxCount),
     x1FeeCountedUntilSlot:
@@ -274,9 +274,9 @@ export function deserializeBuildState(input: unknown): BuildState {
       "requiredXntdLock",
     ),
     lockEpoch: requireNullableNumber(value.lockEpoch, "lockEpoch"),
-    xcCommitmentActive: requireBoolean(
-      value.xcCommitmentActive,
-      "xcCommitmentActive",
+    xntdCommitmentAccepted: requireBoolean(
+      value.xntdCommitmentAccepted,
+      "xntdCommitmentAccepted",
     ),
     x1FeeContribution: deserializeBigint(
       value.x1FeeContribution,

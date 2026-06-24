@@ -47,7 +47,7 @@ describe("Registrar XNTD lock / relock integration", () => {
     expect(build.lockedXntd).toBe(500n);
     expect(build.requiredXntdLock).toBe(500n);
     expect(build.lockEpoch).toBe(1);
-    expect(build.xcCommitmentActive).toBe(true);
+    expect(build.xntdCommitmentAccepted).toBe(true);
     expect(build.updatedAt).toBe(1100n);
   });
 
@@ -114,7 +114,7 @@ describe("Registrar XNTD lock / relock integration", () => {
     expect(build.lockedXntd).toBe(250n);
     expect(build.requiredXntdLock).toBe(250n);
     expect(build.lockEpoch).toBe(2);
-    expect(build.xcCommitmentActive).toBe(true);
+    expect(build.xntdCommitmentAccepted).toBe(true);
     expect(build.updatedAt).toBe(1200n);
   });
 
@@ -220,7 +220,7 @@ describe("Registrar XNTD lock / relock integration", () => {
     expect(build.lockedXntd).toBe(0n);
     expect(build.requiredXntdLock).toBe(0n);
     expect(build.lockEpoch).toBeNull();
-    expect(build.xcCommitmentActive).toBe(false);
+    expect(build.xntdCommitmentAccepted).toBe(false);
     expect(build.updatedAt).toBe(1000n);
   });
 
@@ -347,7 +347,7 @@ describe("Registrar XNTD lock / relock integration", () => {
     expect(build.lockedXntd).toBe(0n);
     expect(build.requiredXntdLock).toBe(0n);
     expect(build.lockEpoch).toBeNull();
-    expect(build.xcCommitmentActive).toBe(false);
+    expect(build.xntdCommitmentAccepted).toBe(false);
     expect(build.updatedAt).toBe(1000n);
   });
 
@@ -383,7 +383,7 @@ describe("Registrar XNTD lock / relock integration", () => {
     expect(build.lockedXntd).toBe(0n);
     expect(build.requiredXntdLock).toBe(0n);
     expect(build.lockEpoch).toBeNull();
-    expect(build.xcCommitmentActive).toBe(false);
+    expect(build.xntdCommitmentAccepted).toBe(false);
     expect(build.updatedAt).toBe(1000n);
   });
 
@@ -833,7 +833,7 @@ describe("Registrar XNTD lock / relock integration", () => {
     expect(build.lockedXntd).toBe(0n);
     expect(build.requiredXntdLock).toBe(0n);
     expect(build.lockEpoch).toBeNull();
-    expect(build.xcCommitmentActive).toBe(false);
+    expect(build.xntdCommitmentAccepted).toBe(false);
     expect(build.updatedAt).toBe(1000n);
   });
 
@@ -966,7 +966,7 @@ describe("Registrar XNTD lock / relock integration", () => {
     expect(build.lockedXntd).toBe(0n);
     expect(build.requiredXntdLock).toBe(0n);
     expect(build.lockEpoch).toBeNull();
-    expect(build.xcCommitmentActive).toBe(false);
+    expect(build.xntdCommitmentAccepted).toBe(false);
     expect(build.updatedAt).toBe(1000n);
   });
 
@@ -1002,7 +1002,7 @@ describe("Registrar XNTD lock / relock integration", () => {
     expect(build.lockedXntd).toBe(0n);
     expect(build.requiredXntdLock).toBe(0n);
     expect(build.lockEpoch).toBeNull();
-    expect(build.xcCommitmentActive).toBe(false);
+    expect(build.xntdCommitmentAccepted).toBe(false);
     expect(build.updatedAt).toBe(1000n);
   });
 

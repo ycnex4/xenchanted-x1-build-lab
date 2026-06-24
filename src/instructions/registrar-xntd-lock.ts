@@ -192,10 +192,10 @@ export function applyRegistrarXntdRelock(
     );
   }
 
-  if (!input.build.xcCommitmentActive) {
+  if (!input.build.xntdCommitmentAccepted) {
     throw new BuildError(
-      BuildErrorCode.XntdCommitmentNotActive,
-      "Cannot relock XNTD when XC commitment is not active",
+      BuildErrorCode.XntdCommitmentNotAccepted,
+      "Cannot relock XNTD when XNTD commitment is not accepted",
     );
   }
   acceptRegistrarMessage(input.registrar, input.message);

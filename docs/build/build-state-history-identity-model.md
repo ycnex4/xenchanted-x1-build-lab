@@ -22,7 +22,7 @@ Build State stores durable facts:
 - `locked_xntd`
 - `required_xntd_lock`
 - `lock_epoch`
-- `xc_commitment_active`
+- `xntd_commitment_accepted`
 - `x1_fee_contribution`
 - `x1_tx_count`
 - `x1_fee_counted_until_slot`
@@ -94,8 +94,8 @@ Allowed public reasons:
 
 - `NO_HISTORY`
 - `NO_COMMITMENT`
-- `COMMITMENT_BELOW_REQUIRED`
-- `COMMITMENT_CURRENT`
+- `COMMITMENT_INSUFFICIENT`
+- `COMMITMENT_ACCEPTED`
 
 `UNKNOWN` is not public Build state.
 
