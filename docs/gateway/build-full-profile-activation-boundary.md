@@ -132,3 +132,4 @@ A frontend-facing preview view may shape the read-only preview into user-visible
 The preview view is still display-only and must not be treated as protocol state.
 
 A JSON-safe preview DTO may be used for API/UI transport. It must encode bigint values as decimal strings so the preview can be serialized with standard JSON.
+See also: [Gateway Profile Preview DTO Example](./gateway-profile-preview-dto-example.md).
