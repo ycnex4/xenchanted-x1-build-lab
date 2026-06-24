@@ -444,3 +444,15 @@ Build Actor remains a future active layer.
 ## 11. Short definition
 
 X1 Build is a voluntary NFT-like user object that records independent verified contribution layers: Core redeem contribution history, global XEN Burn Power history, XNTD commitment facts, X1 fee contribution checkpoints, and owner-controlled Build Identity metadata.
+
+## Gateway full-profile activation boundary
+
+ETH/XC gateway Build activation is full-profile based.
+
+The gateway must evaluate Core redeem history, global `XEN.burn` history, and XNTD lock commitment together as one verified Ethereum/XC contribution profile.
+
+A new Build created through the ETH/XC gateway must not be empty. It requires accepted XNTD lock according to the epoch minimum. For epoch `0`, the required XNTD lock minimum is `100000000`.
+
+A gateway transition must not silently skip Core redeem or `XEN.burn` history scans. A verified zero is allowed. An unchecked source is not allowed.
+
+X1-native Build creation remains separate and may create a clean `UNCOMMITTED` Build shell.

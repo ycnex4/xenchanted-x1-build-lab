@@ -130,3 +130,19 @@ Rules:
 Build Identity is not Build Actor.
 
 Build Actor remains a future layer.
+
+## Gateway full-profile import boundary
+
+Build is meant to preserve the participant's verified contribution history.
+
+For ETH/XC gateway activation or update, the gateway must evaluate the full Ethereum/XC contribution profile:
+
+- Core redeem history for `history_bld`
+- global `XEN.burn` history for `history_xbp`
+- XNTD lock facts for accepted commitment status
+
+The gateway must not create an empty Build.
+
+The gateway must not apply XNTD lock while silently skipping Core redeem or `XEN.burn` scans.
+
+A verified zero history is valid. An unchecked history source is not valid for a gateway state transition.

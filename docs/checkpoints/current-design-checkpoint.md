@@ -33206,3 +33206,15 @@ Stage 5 completion explicit marker recap:
 
     Stage 5 Completion Summary
     69f3c5b
+
+## Gateway full-profile Build activation boundary
+
+The ETH/XC gateway is a full-profile import path, not an empty Build creation path.
+
+For gateway create/update, the gateway must evaluate Core redeem history, global `XEN.burn` history, and XNTD lock commitment together.
+
+For a new gateway-created Build, accepted XNTD lock according to the epoch minimum is mandatory. For epoch `0`, the required XNTD lock minimum is `100000000`.
+
+A verified zero Core redeem or `XEN.burn` history is allowed. An unchecked scan is not allowed.
+
+A clean `UNCOMMITTED` Build shell is an X1-native creation path, not an ETH/XC gateway activation result.

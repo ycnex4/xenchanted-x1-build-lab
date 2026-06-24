@@ -461,3 +461,7 @@ A controlled read-only mainnet RPC smoke for XC protocol params has completed su
 The X1-native Forge / Stake dual nominal model is also documented as a design-only future layer. It is not implemented, deployed, or approved for production by the current repository.
 
 The next recommended step is the first prototype-only evidence branch for EV-01 transaction-level atomicity and EV-02 account write rollback, or collecting official X1 runtime documentation if available.
+
+## Gateway Build activation boundary
+
+- [Gateway full-profile Build activation boundary](docs/gateway/build-full-profile-activation-boundary.md)
