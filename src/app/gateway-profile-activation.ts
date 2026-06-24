@@ -10,7 +10,28 @@ import type {
   XenBurnProof,
   XntdLockProof,
 } from "../proofs/proof-types.js";
-import type { BuildApplicationState } from "./build-service.js";
+import {
+  type AppErrorResult,
+  type AppResult,
+  type BuildApplicationState,
+  appCreateBuild,
+} from "./build-service.js";
+import {
+  appSubmitProof,
+  type AppSubmitProofInput,
+} from "./proof-submission.js";
+import {
+  deserializeBuildRegistry,
+  deserializeRedeemEventState,
+  deserializeRegistrarState,
+  deserializeXenBurnEventState,
+  deserializeXntdCommitmentEventState,
+  serializeBuildRegistry,
+  serializeRedeemEventState,
+  serializeRegistrarState,
+  serializeXenBurnEventState,
+  serializeXntdCommitmentEventState,
+} from "../storage/serialization.js";
 
 export interface GatewayFullProfileBuildActivationBundle {
   readonly buildId: BuildId;
@@ -164,4 +185,149 @@ export function validateGatewayFullProfileBuildActivationBoundary(
     xenBurnProofCount: bundle.xenBurnProofs.length,
     hasXntdLockProof: bundle.xntdLockProof !== null,
   };
+}
+
+export interface GatewayFullProfileBuildActivationInput extends AppSubmitProofInput {}
+
+export interface GatewayFullProfileBuildActivationResult {
+  readonly build: import("../model/build-state.js").BuildState;
+  readonly boundary: GatewayFullProfileBuildActivationBoundary;
+  readonly appliedCoreRedeemProofs: number;
+  readonly appliedXenBurnProofs: number;
+  readonly appliedXntdLockProof: boolean;
+}
+
+function toGatewayAppError(error: unknown): AppErrorResult {
+  if (error instanceof BuildError) {
+    return {
+      code: error.code,
+      message: error.message,
+    };
+  }
+
+  if (error instanceof Error) {
+    return {
+      code: BuildErrorCode.InvalidGatewayFullProfileActivation,
+      message: error.message,
+    };
+  }
+
+  return {
+    code: BuildErrorCode.InvalidGatewayFullProfileActivation,
+    message: "Unknown gateway full-profile activation error",
+  };
+}
+
+function cloneBuildApplicationState(
+  app: BuildApplicationState,
+): BuildApplicationState {
+  return {
+    registry: deserializeBuildRegistry(serializeBuildRegistry(app.registry)),
+    registrar: deserializeRegistrarState(
+      serializeRegistrarState(app.registrar),
+    ),
+    redeemEvents: deserializeRedeemEventState(
+      serializeRedeemEventState(app.redeemEvents),
+    ),
+    xenBurnEvents: deserializeXenBurnEventState(
+      serializeXenBurnEventState(app.xenBurnEvents),
+    ),
+    xntdCommitmentEvents: deserializeXntdCommitmentEventState(
+      serializeXntdCommitmentEventState(app.xntdCommitmentEvents),
+    ),
+  };
+}
+
+function commitBuildApplicationState(
+  target: BuildApplicationState,
+  source: BuildApplicationState,
+): void {
+  target.registry = source.registry;
+  target.registrar = source.registrar;
+  target.redeemEvents = source.redeemEvents;
+  target.xenBurnEvents = source.xenBurnEvents;
+  target.xntdCommitmentEvents = source.xntdCommitmentEvents;
+}
+
+function rejectAppResult(error: AppErrorResult): never {
+  throw new BuildError(
+    BuildErrorCode.InvalidGatewayFullProfileActivation,
+    error.message,
+  );
+}
+
+export function appGatewayActivateBuild(
+  app: BuildApplicationState,
+  bundle: GatewayFullProfileBuildActivationBundle,
+  input: GatewayFullProfileBuildActivationInput,
+): AppResult<GatewayFullProfileBuildActivationResult> {
+  try {
+    const boundary = validateGatewayFullProfileBuildActivationBoundary(
+      app,
+      bundle,
+    );
+
+    const sandbox = cloneBuildApplicationState(app);
+
+    if (!boundary.buildExists) {
+      const created = appCreateBuild(sandbox, {
+        owner: bundle.owner,
+        buildId: bundle.buildId,
+        ethereumIdentity: bundle.ethereumIdentity,
+        createdAt: input.createdAt,
+      });
+
+      if (!created.ok) {
+        rejectAppResult(created.error);
+      }
+    }
+
+    if (bundle.xntdLockProof !== null) {
+      const lockResult = appSubmitProof(sandbox, bundle.xntdLockProof, input);
+
+      if (!lockResult.ok) {
+        rejectAppResult(lockResult.error);
+      }
+    }
+
+    for (const proof of bundle.coreRedeemProofs) {
+      const result = appSubmitProof(sandbox, proof, input);
+
+      if (!result.ok) {
+        rejectAppResult(result.error);
+      }
+    }
+
+    for (const proof of bundle.xenBurnProofs) {
+      const result = appSubmitProof(sandbox, proof, input);
+
+      if (!result.ok) {
+        rejectAppResult(result.error);
+      }
+    }
+
+    const build = sandbox.registry.buildsById.get(bundle.buildId);
+
+    if (build === undefined) {
+      reject(`Gateway activation did not produce Build: ${bundle.buildId}`);
+    }
+
+    commitBuildApplicationState(app, sandbox);
+
+    return {
+      ok: true,
+      value: {
+        build,
+        boundary,
+        appliedCoreRedeemProofs: bundle.coreRedeemProofs.length,
+        appliedXenBurnProofs: bundle.xenBurnProofs.length,
+        appliedXntdLockProof: bundle.xntdLockProof !== null,
+      },
+    };
+  } catch (error) {
+    return {
+      ok: false,
+      error: toGatewayAppError(error),
+    };
+  }
 }

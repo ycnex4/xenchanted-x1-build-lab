@@ -6,6 +6,7 @@ import type {
 } from "../src/proofs/proof-types.js";
 import {
   appCreateBuild,
+  appGatewayActivateBuild,
   appSubmitProof,
   createBuildApplicationState,
   createCoreRedeemCandidate,
@@ -263,5 +264,229 @@ describe("gateway full-profile Build activation boundary", () => {
         xntdLockProof: lockProof(),
       }),
     ).toThrow("XEN.burn proof owner mismatch");
+  });
+
+  it("atomically creates a new gateway Build and imports the full profile bundle", () => {
+    const app = createBuildApplicationState("registrar-1");
+
+    const result = appGatewayActivateBuild(
+      app,
+      {
+        buildId: "build-1",
+        owner: "x1-owner",
+        ethereumIdentity: "0x0000000000000000000000000000000000000001",
+        coreRedeemScanCompleted: true,
+        xenBurnScanCompleted: true,
+        xntdLockScanCompleted: true,
+        coreRedeemProofs: [coreRedeemProof()],
+        xenBurnProofs: [xenBurnProof()],
+        xntdLockProof: lockProof(),
+      },
+      {
+        submittedBy: "registrar-1",
+        createdAt: 1200n,
+        xcEpochMinimumSource: createStaticXcEpochMinimumSource(
+          new Map<number, bigint>([[0, 100000000n]]),
+        ),
+      },
+    );
+
+    expect(result.ok).toBe(true);
+
+    const build = app.registry.buildsById.get("build-1");
+
+    expect(build).toBeDefined();
+    expect(build?.owner).toBe("x1-owner");
+    expect(build?.ethereumIdentity).toBe(
+      "0x0000000000000000000000000000000000000001",
+    );
+    expect(build?.xntdCommitmentAccepted).toBe(true);
+    expect(build?.lockedXntd).toBe(100000000n);
+    expect(build?.requiredXntdLock).toBe(100000000n);
+    expect(build?.lockEpoch).toBe(0);
+    expect(build?.historyBld).toBe(121n);
+    expect(build?.historyXbp).toBe(1000n);
+  });
+
+  it("does not create a new gateway Build when required XNTD lock is missing", () => {
+    const app = createBuildApplicationState("registrar-1");
+
+    const result = appGatewayActivateBuild(
+      app,
+      {
+        buildId: "build-1",
+        owner: "x1-owner",
+        ethereumIdentity: "0x0000000000000000000000000000000000000001",
+        coreRedeemScanCompleted: true,
+        xenBurnScanCompleted: true,
+        xntdLockScanCompleted: true,
+        coreRedeemProofs: [coreRedeemProof()],
+        xenBurnProofs: [xenBurnProof()],
+        xntdLockProof: null,
+      },
+      {
+        submittedBy: "registrar-1",
+        createdAt: 1200n,
+      },
+    );
+
+    expect(result.ok).toBe(false);
+    expect(app.registry.buildsById.has("build-1")).toBe(false);
+    expect(app.registrar.processedMessages.size).toBe(0);
+    expect(app.redeemEvents.usedRedeemEvents.size).toBe(0);
+    expect(app.xenBurnEvents.usedXenBurnEvents.size).toBe(0);
+    expect(app.xntdCommitmentEvents.usedXntdCommitmentEvents.size).toBe(0);
+  });
+
+  it("atomically rejects a partial gateway update when proof application fails", () => {
+    const app = createBuildApplicationState("registrar-1");
+
+    const created = appCreateBuild(app, {
+      owner: "x1-owner",
+      buildId: "build-1",
+      ethereumIdentity: "0x0000000000000000000000000000000000000001",
+      createdAt: 100n,
+    });
+
+    expect(created.ok).toBe(true);
+
+    const lock = appSubmitProof(app, lockProof(), {
+      submittedBy: "registrar-1",
+      createdAt: 1200n,
+      xcEpochMinimumSource: createStaticXcEpochMinimumSource(
+        new Map<number, bigint>([[0, 100000000n]]),
+      ),
+    });
+
+    expect(lock.ok).toBe(true);
+
+    const firstCore = appSubmitProof(app, coreRedeemProof(), {
+      submittedBy: "registrar-1",
+      createdAt: 1300n,
+    });
+
+    expect(firstCore.ok).toBe(true);
+
+    const before = app.registry.buildsById.get("build-1");
+
+    expect(before?.historyBld).toBe(121n);
+    expect(before?.historyXbp).toBe(0n);
+
+    const result = appGatewayActivateBuild(
+      app,
+      {
+        buildId: "build-1",
+        owner: "x1-owner",
+        ethereumIdentity: "0x0000000000000000000000000000000000000001",
+        coreRedeemScanCompleted: true,
+        xenBurnScanCompleted: true,
+        xntdLockScanCompleted: true,
+        coreRedeemProofs: [coreRedeemProof()],
+        xenBurnProofs: [xenBurnProof()],
+        xntdLockProof: null,
+      },
+      {
+        submittedBy: "registrar-1",
+        createdAt: 1400n,
+      },
+    );
+
+    expect(result.ok).toBe(false);
+
+    const after = app.registry.buildsById.get("build-1");
+
+    expect(after?.historyBld).toBe(121n);
+    expect(after?.historyXbp).toBe(0n);
+    expect(app.xenBurnEvents.usedXenBurnEvents.size).toBe(0);
+  });
+
+  it("updates an already committed Build without requiring a new lock proof", () => {
+    const app = createBuildApplicationState("registrar-1");
+
+    const created = appCreateBuild(app, {
+      owner: "x1-owner",
+      buildId: "build-1",
+      ethereumIdentity: "0x0000000000000000000000000000000000000001",
+      createdAt: 100n,
+    });
+
+    expect(created.ok).toBe(true);
+
+    const lock = appSubmitProof(app, lockProof(), {
+      submittedBy: "registrar-1",
+      createdAt: 1200n,
+      xcEpochMinimumSource: createStaticXcEpochMinimumSource(
+        new Map<number, bigint>([[0, 100000000n]]),
+      ),
+    });
+
+    expect(lock.ok).toBe(true);
+
+    const result = appGatewayActivateBuild(
+      app,
+      {
+        buildId: "build-1",
+        owner: "x1-owner",
+        ethereumIdentity: "0x0000000000000000000000000000000000000001",
+        coreRedeemScanCompleted: true,
+        xenBurnScanCompleted: true,
+        xntdLockScanCompleted: true,
+        coreRedeemProofs: [coreRedeemProof()],
+        xenBurnProofs: [xenBurnProof()],
+        xntdLockProof: null,
+      },
+      {
+        submittedBy: "registrar-1",
+        createdAt: 1300n,
+      },
+    );
+
+    expect(result.ok).toBe(true);
+
+    const build = app.registry.buildsById.get("build-1");
+
+    expect(build?.xntdCommitmentAccepted).toBe(true);
+    expect(build?.historyBld).toBe(121n);
+    expect(build?.historyXbp).toBe(1000n);
+  });
+
+  it("rejects an existing uncommitted gateway Build update without lock proof", () => {
+    const app = createBuildApplicationState("registrar-1");
+
+    const created = appCreateBuild(app, {
+      owner: "x1-owner",
+      buildId: "build-1",
+      ethereumIdentity: "0x0000000000000000000000000000000000000001",
+      createdAt: 100n,
+    });
+
+    expect(created.ok).toBe(true);
+
+    const result = appGatewayActivateBuild(
+      app,
+      {
+        buildId: "build-1",
+        owner: "x1-owner",
+        ethereumIdentity: "0x0000000000000000000000000000000000000001",
+        coreRedeemScanCompleted: true,
+        xenBurnScanCompleted: true,
+        xntdLockScanCompleted: true,
+        coreRedeemProofs: [coreRedeemProof()],
+        xenBurnProofs: [xenBurnProof()],
+        xntdLockProof: null,
+      },
+      {
+        submittedBy: "registrar-1",
+        createdAt: 1300n,
+      },
+    );
+
+    expect(result.ok).toBe(false);
+
+    const build = app.registry.buildsById.get("build-1");
+
+    expect(build?.xntdCommitmentAccepted).toBe(false);
+    expect(build?.historyBld).toBe(0n);
+    expect(build?.historyXbp).toBe(0n);
   });
 });
