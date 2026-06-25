@@ -53,3 +53,4 @@ export * from "./app/gateway-profile-preview-view.js";
 export * from "./app/gateway-profile-preview-dto.js";
 export * from "./app/gateway-profile-scan.js";
 export * from "./app/gateway-profile-scan-preview.js";
+export * from "./app/gateway-profile-scan-fixture.js";

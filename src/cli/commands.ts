@@ -1,5 +1,6 @@
 import { createBuildApplicationState } from "../app/build-service.js";
 import { appGetGatewayProfilePreviewDtoFromScan } from "../app/gateway-profile-scan-preview.js";
+import { loadGatewayProfilePreviewFixtureFile } from "../app/gateway-profile-scan-fixture.js";
 import { createStaticGatewayProfileScanner } from "../app/gateway-profile-scan.js";
 import {
   loadSnapshotFile,
@@ -95,6 +96,7 @@ export function renderCliHelp(): string {
       "  snapshot:verify --file <path>",
       "  snapshot:recover --file <path> [--backup <path>]",
       "  gateway:preview:static --build-id <id> --owner <x1-owner> --ethereum <address> [--core-bld <amount>] [--xbp <amount>] [--xntd-lock <amount>] [--required-xntd-lock <amount>] [--lock-epoch <number>]",
+      "  gateway:preview:fixture --file <path>",
       "",
       "Notes:",
       "  This CLI layer is intentionally minimal.",
@@ -113,6 +115,22 @@ export async function runCliCommand(args: string[]): Promise<CliCommandResult> {
 
     if (parsed.command === "version") {
       return ok(`${CLI_VERSION}\n`);
+    }
+
+    if (parsed.command === "gateway:preview:fixture") {
+      const file = requireStringFlag(parsed, "file");
+      const fixture = await loadGatewayProfilePreviewFixtureFile(file);
+
+      const result = appGetGatewayProfilePreviewDtoFromScan({
+        app: createBuildApplicationState("cli-fixture-registrar"),
+        scanner: fixture.scanner,
+        buildId: fixture.buildId,
+        owner: fixture.owner,
+        ethereumIdentity: fixture.ethereumIdentity,
+        validatedAt: fixture.validatedAt,
+      });
+
+      return ok(JSON.stringify(result.dto, null, 2) + "\n");
     }
 
     if (parsed.command === "gateway:preview:static") {

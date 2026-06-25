@@ -91,3 +91,19 @@ This is still display-only.
 It does not create a Build, does not mutate registry state, does not touch replay sets, and does not reserve eligibility.
 
 The static command is a temporary surface for testing the future checker/API shape before real Ethereum/XC adapters are attached.
+
+## CLI fixture preview surface
+
+Stage 6.4 adds a fixture-based preview surface:
+
+- command reads a gateway profile scan fixture from JSON
+- fixture uses decimal strings for bigint values
+- fixture is converted into the same static scanner boundary
+- scanner output follows the same scan-to-preview DTO path
+- command returns JSON-safe preview output to stdout
+
+This lets the project test complex profiles before real Ethereum/XC adapters are attached.
+
+Example fixture:
+
+- docs/gateway/gateway-profile-scan-fixture-example.json
