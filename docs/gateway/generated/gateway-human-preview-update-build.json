@@ -1,0 +1,53 @@
+{
+  "status": "READY_TO_UPDATE",
+  "tone": "success",
+  "title": "Ready to update Build",
+  "summary": "Build can be updated with this profile.",
+  "primaryActionLabel": "Update Build",
+  "canProceed": true,
+  "cards": [
+    {
+      "key": "build_status",
+      "title": "Build status",
+      "value": "Existing Build",
+      "detail": "The profile can update an existing Build.",
+      "tone": "neutral"
+    },
+    {
+      "key": "core_redeem_history",
+      "title": "Core redeem history",
+      "value": "121 BLD",
+      "detail": "1 Core redeem proof found.",
+      "tone": "success"
+    },
+    {
+      "key": "xen_burn_power",
+      "title": "XEN burn power",
+      "value": "1000 XBP",
+      "detail": "1 XEN.burn proof found.",
+      "tone": "neutral"
+    },
+    {
+      "key": "xntd_lock",
+      "title": "XNTD lock",
+      "value": "100000000 XNTD",
+      "detail": "Required lock: 100000000 XNTD.",
+      "tone": "success"
+    },
+    {
+      "key": "requirements",
+      "title": "Requirements",
+      "value": "5/5 satisfied",
+      "detail": "All requirements are satisfied.",
+      "tone": "success"
+    }
+  ],
+  "nextSteps": [
+    {
+      "code": "UPDATE_BUILD",
+      "label": "Update Build",
+      "detail": "The scanned profile can update the existing Build state.",
+      "completed": false
+    }
+  ]
+}

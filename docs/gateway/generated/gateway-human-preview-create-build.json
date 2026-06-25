@@ -1,0 +1,53 @@
+{
+  "status": "READY_TO_CREATE",
+  "tone": "success",
+  "title": "Ready to create Build",
+  "summary": "Eligible to create Build.",
+  "primaryActionLabel": "Create Build",
+  "canProceed": true,
+  "cards": [
+    {
+      "key": "build_status",
+      "title": "Build status",
+      "value": "No Build yet",
+      "detail": "The profile can create a new Build if requirements are satisfied.",
+      "tone": "neutral"
+    },
+    {
+      "key": "core_redeem_history",
+      "title": "Core redeem history",
+      "value": "121 BLD",
+      "detail": "1 Core redeem proof found.",
+      "tone": "success"
+    },
+    {
+      "key": "xen_burn_power",
+      "title": "XEN burn power",
+      "value": "1000 XBP",
+      "detail": "1 XEN.burn proof found.",
+      "tone": "neutral"
+    },
+    {
+      "key": "xntd_lock",
+      "title": "XNTD lock",
+      "value": "100000000 XNTD",
+      "detail": "Required lock: 100000000 XNTD.",
+      "tone": "success"
+    },
+    {
+      "key": "requirements",
+      "title": "Requirements",
+      "value": "5/5 satisfied",
+      "detail": "All requirements are satisfied.",
+      "tone": "success"
+    }
+  ],
+  "nextSteps": [
+    {
+      "code": "CREATE_BUILD",
+      "label": "Create Build",
+      "detail": "The scanned profile satisfies the requirements for Build creation.",
+      "completed": false
+    }
+  ]
+}

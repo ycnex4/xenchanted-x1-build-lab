@@ -1,0 +1,59 @@
+{
+  "status": "NEEDS_REQUIREMENTS",
+  "tone": "warning",
+  "title": "Requirements needed",
+  "summary": "Missing requirements: MINIMUM_CORE_REDEEM_HISTORY, MINIMUM_XNTD_LOCK",
+  "primaryActionLabel": null,
+  "canProceed": false,
+  "cards": [
+    {
+      "key": "build_status",
+      "title": "Build status",
+      "value": "No Build yet",
+      "detail": "The profile can create a new Build if requirements are satisfied.",
+      "tone": "neutral"
+    },
+    {
+      "key": "core_redeem_history",
+      "title": "Core redeem history",
+      "value": "Missing",
+      "detail": "0 Core redeem proofs found.",
+      "tone": "warning"
+    },
+    {
+      "key": "xen_burn_power",
+      "title": "XEN burn power",
+      "value": "0 XBP",
+      "detail": "0 XEN.burn proofs found.",
+      "tone": "neutral"
+    },
+    {
+      "key": "xntd_lock",
+      "title": "XNTD lock",
+      "value": "Missing",
+      "detail": "Required lock: 0 XNTD.",
+      "tone": "warning"
+    },
+    {
+      "key": "requirements",
+      "title": "Requirements",
+      "value": "3/5 satisfied",
+      "detail": "Missing: Minimum Core redeem history, Minimum XNTD lock.",
+      "tone": "warning"
+    }
+  ],
+  "nextSteps": [
+    {
+      "code": "MINIMUM_CORE_REDEEM_HISTORY",
+      "label": "Minimum Core redeem history",
+      "detail": "Build requires at least one Core redeem history unit.",
+      "completed": false
+    },
+    {
+      "code": "MINIMUM_XNTD_LOCK",
+      "label": "Minimum XNTD lock",
+      "detail": "Build requires XNTD lock at or above the current XC epoch minimum.",
+      "completed": false
+    }
+  ]
+}

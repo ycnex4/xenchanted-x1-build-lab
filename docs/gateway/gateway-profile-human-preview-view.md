@@ -78,3 +78,15 @@ The command returns the UI-ready human preview structure:
 - canProceed
 - cards
 - nextSteps
+
+## Generated examples
+
+Stage 6.9 adds generated JSON examples for the three human preview states.
+
+Generated files:
+
+- docs/gateway/generated/gateway-human-preview-create-build.json
+- docs/gateway/generated/gateway-human-preview-update-build.json
+- docs/gateway/generated/gateway-human-preview-unavailable.json
+
+These files are produced from the fixture CLI command and can be used as stable UI examples for the future XC site gateway preview page.
