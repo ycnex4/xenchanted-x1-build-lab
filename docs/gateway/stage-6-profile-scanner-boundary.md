@@ -121,3 +121,21 @@ The examples are documented in:
 - docs/gateway/gateway-profile-preview-status-examples.md
 
 These examples are intended as the basis for a future user-facing preview screen.
+
+## Human-readable preview view model
+
+Stage 6.7 adds a user-facing view model on top of the JSON-safe preview DTO.
+
+The human preview maps machine fields into:
+
+- status
+- tone
+- title
+- summary
+- primary action label
+- UI-ready cards
+- next steps
+
+This is still read-only.
+
+It does not scan, does not create a Build, does not update a Build, and does not mutate replay registries.
