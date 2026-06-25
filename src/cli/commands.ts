@@ -2,6 +2,7 @@ import {
   appCreateBuild,
   createBuildApplicationState,
 } from "../app/build-service.js";
+import { appGetGatewayProfileHumanPreview } from "../app/gateway-profile-human-preview.js";
 import { appGetGatewayProfilePreviewDtoFromScan } from "../app/gateway-profile-scan-preview.js";
 import { loadGatewayProfilePreviewFixtureFile } from "../app/gateway-profile-scan-fixture.js";
 import { createStaticGatewayProfileScanner } from "../app/gateway-profile-scan.js";
@@ -100,6 +101,7 @@ export function renderCliHelp(): string {
       "  snapshot:recover --file <path> [--backup <path>]",
       "  gateway:preview:static --build-id <id> --owner <x1-owner> --ethereum <address> [--core-bld <amount>] [--xbp <amount>] [--xntd-lock <amount>] [--required-xntd-lock <amount>] [--lock-epoch <number>]",
       "  gateway:preview:fixture --file <path>",
+      "  gateway:preview:fixture:human --file <path>",
       "",
       "Notes:",
       "  This CLI layer is intentionally minimal.",
@@ -148,6 +150,38 @@ export async function runCliCommand(args: string[]): Promise<CliCommandResult> {
       });
 
       return ok(JSON.stringify(result.dto, null, 2) + "\n");
+    }
+
+    if (parsed.command === "gateway:preview:fixture:human") {
+      const file = requireStringFlag(parsed, "file");
+      const fixture = await loadGatewayProfilePreviewFixtureFile(file);
+
+      const app = createBuildApplicationState("cli-fixture-registrar");
+
+      if (fixture.buildExists) {
+        const created = appCreateBuild(app, {
+          buildId: fixture.buildId,
+          owner: fixture.owner,
+          createdAt: fixture.existingBuildCreatedAt,
+        });
+
+        if (!created.ok) {
+          return fail(created.error.message);
+        }
+      }
+
+      const result = appGetGatewayProfilePreviewDtoFromScan({
+        app,
+        scanner: fixture.scanner,
+        buildId: fixture.buildId,
+        owner: fixture.owner,
+        ethereumIdentity: fixture.ethereumIdentity,
+        validatedAt: fixture.validatedAt,
+      });
+
+      const human = appGetGatewayProfileHumanPreview(result.dto);
+
+      return ok(JSON.stringify(human, null, 2) + "\n");
     }
 
     if (parsed.command === "gateway:preview:static") {

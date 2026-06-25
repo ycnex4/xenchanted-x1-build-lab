@@ -59,3 +59,22 @@ The human preview exposes UI-ready cards:
 For ready states, nextSteps contains the available action.
 
 For missing-requirement states, nextSteps contains the unsatisfied requirements.
+
+## CLI output
+
+Stage 6.8 adds a CLI command that returns the human preview directly from a fixture file.
+
+Command:
+
+    npm run cli -- gateway:preview:fixture:human --file docs/gateway/gateway-profile-scan-fixture-update-build-example.json
+
+The command returns the UI-ready human preview structure:
+
+- status
+- tone
+- title
+- summary
+- primaryActionLabel
+- canProceed
+- cards
+- nextSteps

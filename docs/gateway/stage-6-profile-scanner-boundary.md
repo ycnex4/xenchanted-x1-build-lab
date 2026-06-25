@@ -139,3 +139,13 @@ The human preview maps machine fields into:
 This is still read-only.
 
 It does not scan, does not create a Build, does not update a Build, and does not mutate replay registries.
+
+## Human preview CLI output
+
+Stage 6.8 adds a fixture-based CLI command for the human-readable preview view model:
+
+    gateway:preview:fixture:human --file <path>
+
+This command uses the same fixture scanner path as the JSON-safe DTO command, then maps the DTO into the human preview structure.
+
+It is intended for testing the future XC site gateway preview page before live RPC scanners are connected.

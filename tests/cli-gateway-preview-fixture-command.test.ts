@@ -19,6 +19,9 @@ describe("CLI gateway fixture preview command", () => {
 
     expect(result.exitCode).toBe(0);
     expect(result.stdout).toContain("gateway:preview:fixture --file <path>");
+    expect(result.stdout).toContain(
+      "gateway:preview:fixture:human --file <path>",
+    );
   });
 
   it("returns an eligible JSON-safe preview DTO from a fixture file", async () => {
@@ -177,6 +180,89 @@ describe("CLI gateway fixture preview command", () => {
     expect(parsed.preview.totalPreviewHistoryBld).toBe("121");
     expect(parsed.preview.previewLockedXntd).toBe("100000000");
     expect(parsed.preview.missingRequirements).toEqual([]);
+  });
+
+  it("returns a human preview from a fixture file", async () => {
+    const filePath = await writeFixtureFile({
+      buildId: "build-1",
+      owner: "x1-owner",
+      ethereumIdentity: "0x0000000000000000000000000000000000000001",
+      buildExists: true,
+      existingBuildCreatedAt: "1000",
+      scannedAt: "1200",
+      validatedAt: "1300",
+      coreRedeemCandidates: [
+        {
+          transactionHash: "tx-core-1",
+          eventIndex: 0,
+          amountBld: "121",
+          coreTokenId: "1",
+        },
+      ],
+      xenBurnCandidates: [
+        {
+          transactionHash: "tx-xen-1",
+          eventIndex: 0,
+          amountXbp: "1000",
+          xenAmountBurned: "100000000",
+        },
+      ],
+      xntdLockCandidate: {
+        transactionHash: "tx-lock-1",
+        eventIndex: 0,
+        amountXntd: "100000000",
+        observedRequiredXntdLock: "100000000",
+        lockEpoch: 0,
+      },
+    });
+
+    const result = await runCliCommand([
+      "gateway:preview:fixture:human",
+      "--file",
+      filePath,
+    ]);
+
+    expect(result.exitCode).toBe(0);
+    expect(result.stderr).toBe("");
+
+    const parsed = JSON.parse(result.stdout) as {
+      status: string;
+      tone: string;
+      title: string;
+      primaryActionLabel: string | null;
+      canProceed: boolean;
+      cards: readonly {
+        key: string;
+        title: string;
+        value: string;
+        tone: string;
+      }[];
+      nextSteps: readonly {
+        code: string;
+        label: string;
+      }[];
+    };
+
+    expect(parsed.status).toBe("READY_TO_UPDATE");
+    expect(parsed.tone).toBe("success");
+    expect(parsed.title).toBe("Ready to update Build");
+    expect(parsed.primaryActionLabel).toBe("Update Build");
+    expect(parsed.canProceed).toBe(true);
+    expect(parsed.cards[0]).toEqual({
+      key: "build_status",
+      title: "Build status",
+      value: "Existing Build",
+      detail: "The profile can update an existing Build.",
+      tone: "neutral",
+    });
+    expect(parsed.nextSteps).toEqual([
+      {
+        code: "UPDATE_BUILD",
+        label: "Update Build",
+        detail: "The scanned profile can update the existing Build state.",
+        completed: false,
+      },
+    ]);
   });
 
   it("returns structured failure for missing fixture file flag", async () => {
