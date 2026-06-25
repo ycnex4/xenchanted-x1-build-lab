@@ -149,3 +149,13 @@ Stage 6.8 adds a fixture-based CLI command for the human-readable preview view m
 This command uses the same fixture scanner path as the JSON-safe DTO command, then maps the DTO into the human preview structure.
 
 It is intended for testing the future XC site gateway preview page before live RPC scanners are connected.
+
+## Frontend handoff
+
+Stage 6.10 adds a frontend handoff note for the future XC site gateway preview page.
+
+The handoff document is:
+
+- docs/gateway/gateway-preview-frontend-handoff.md
+
+It defines the generated JSON examples, proposed UI sections, status mapping, and preview-only boundaries for the first site integration.
