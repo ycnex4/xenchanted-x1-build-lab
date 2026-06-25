@@ -76,3 +76,18 @@ This flow is still display-only.
 It does not create a Build, does not mutate registry state, does not touch replay sets, and does not reserve eligibility.
 
 The same flow can use a deterministic static scanner in tests or a real Ethereum/XC scanner later.
+
+## CLI/static preview surface
+
+Stage 6.3 adds a command-level static preview surface:
+
+- command receives Build id, X1 owner, Ethereum identity, and optional contribution amounts
+- command builds a deterministic static scanner
+- scanner result is converted into a full-profile activation bundle
+- JSON-safe preview DTO is returned to stdout
+
+This is still display-only.
+
+It does not create a Build, does not mutate registry state, does not touch replay sets, and does not reserve eligibility.
+
+The static command is a temporary surface for testing the future checker/API shape before real Ethereum/XC adapters are attached.
