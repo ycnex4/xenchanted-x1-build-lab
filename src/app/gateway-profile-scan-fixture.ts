@@ -21,6 +21,8 @@ export interface GatewayProfilePreviewFixture {
   readonly owner: X1Address;
   readonly ethereumIdentity: EthereumAddress;
   readonly validatedAt: bigint;
+  readonly buildExists: boolean;
+  readonly existingBuildCreatedAt: bigint;
   readonly scanner: GatewayProfileScanner;
 }
 
@@ -382,6 +384,19 @@ export async function loadGatewayProfilePreviewFixtureFile(
     "fixture",
   );
 
+  const buildExists = readOptionalBoolean(
+    fixture,
+    "buildExists",
+    false,
+    "fixture",
+  );
+  const existingBuildCreatedAt = readOptionalDecimalBigInt(
+    fixture,
+    "existingBuildCreatedAt",
+    validatedAt,
+    "fixture",
+  );
+
   const scanner = createStaticGatewayProfileScanner({
     coreRedeemScanCompleted: readOptionalBoolean(
       fixture,
@@ -427,6 +442,8 @@ export async function loadGatewayProfilePreviewFixtureFile(
     owner,
     ethereumIdentity,
     validatedAt,
+    buildExists,
+    existingBuildCreatedAt,
     scanner,
   };
 }

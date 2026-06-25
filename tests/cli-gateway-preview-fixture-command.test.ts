@@ -121,6 +121,64 @@ describe("CLI gateway fixture preview command", () => {
     ]);
   });
 
+  it("returns an update preview DTO when fixture declares an existing Build", async () => {
+    const filePath = await writeFixtureFile({
+      buildId: "build-1",
+      owner: "x1-owner",
+      ethereumIdentity: "0x0000000000000000000000000000000000000001",
+      buildExists: true,
+      existingBuildCreatedAt: "1000",
+      scannedAt: "1200",
+      validatedAt: "1300",
+      coreRedeemCandidates: [
+        {
+          transactionHash: "tx-core-1",
+          eventIndex: 0,
+          amountBld: "121",
+          coreTokenId: "1",
+        },
+      ],
+      xntdLockCandidate: {
+        transactionHash: "tx-lock-1",
+        eventIndex: 0,
+        amountXntd: "100000000",
+        observedRequiredXntdLock: "100000000",
+        lockEpoch: 0,
+      },
+    });
+
+    const result = await runCliCommand([
+      "gateway:preview:fixture",
+      "--file",
+      filePath,
+    ]);
+
+    expect(result.exitCode).toBe(0);
+    expect(result.stderr).toBe("");
+
+    const parsed = JSON.parse(result.stdout) as {
+      action: string;
+      canCreateOrUpdateBuild: boolean;
+      title: string;
+      summary: string;
+      preview: {
+        buildExists: boolean;
+        totalPreviewHistoryBld: string;
+        previewLockedXntd: string;
+        missingRequirements: string[];
+      };
+    };
+
+    expect(parsed.action).toBe("UPDATE_BUILD");
+    expect(parsed.canCreateOrUpdateBuild).toBe(true);
+    expect(parsed.title).toBe("Build update preview");
+    expect(parsed.summary).toBe("Build can be updated with this profile.");
+    expect(parsed.preview.buildExists).toBe(true);
+    expect(parsed.preview.totalPreviewHistoryBld).toBe("121");
+    expect(parsed.preview.previewLockedXntd).toBe("100000000");
+    expect(parsed.preview.missingRequirements).toEqual([]);
+  });
+
   it("returns structured failure for missing fixture file flag", async () => {
     const result = await runCliCommand(["gateway:preview:fixture"]);
 

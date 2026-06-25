@@ -1,0 +1,14 @@
+{
+  "buildId": "build-1",
+  "owner": "x1-owner",
+  "ethereumIdentity": "0x0000000000000000000000000000000000000001",
+  "buildExists": false,
+  "scannedAt": "1200",
+  "validatedAt": "1300",
+  "coreRedeemScanCompleted": true,
+  "xenBurnScanCompleted": true,
+  "xntdLockScanCompleted": true,
+  "coreRedeemCandidates": [],
+  "xenBurnCandidates": [],
+  "xntdLockCandidate": null
+}

@@ -1,0 +1,34 @@
+{
+  "buildId": "build-1",
+  "owner": "x1-owner",
+  "ethereumIdentity": "0x0000000000000000000000000000000000000001",
+  "buildExists": false,
+  "scannedAt": "1200",
+  "validatedAt": "1300",
+  "coreRedeemScanCompleted": true,
+  "xenBurnScanCompleted": true,
+  "xntdLockScanCompleted": true,
+  "coreRedeemCandidates": [
+    {
+      "transactionHash": "tx-core-1",
+      "eventIndex": 0,
+      "amountBld": "121",
+      "coreTokenId": "1"
+    }
+  ],
+  "xenBurnCandidates": [
+    {
+      "transactionHash": "tx-xen-1",
+      "eventIndex": 0,
+      "amountXbp": "1000",
+      "xenAmountBurned": "100000000"
+    }
+  ],
+  "xntdLockCandidate": {
+    "transactionHash": "tx-lock-1",
+    "eventIndex": 0,
+    "amountXntd": "100000000",
+    "observedRequiredXntdLock": "100000000",
+    "lockEpoch": 0
+  }
+}

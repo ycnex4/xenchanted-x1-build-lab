@@ -1,4 +1,7 @@
-import { createBuildApplicationState } from "../app/build-service.js";
+import {
+  appCreateBuild,
+  createBuildApplicationState,
+} from "../app/build-service.js";
 import { appGetGatewayProfilePreviewDtoFromScan } from "../app/gateway-profile-scan-preview.js";
 import { loadGatewayProfilePreviewFixtureFile } from "../app/gateway-profile-scan-fixture.js";
 import { createStaticGatewayProfileScanner } from "../app/gateway-profile-scan.js";
@@ -121,8 +124,22 @@ export async function runCliCommand(args: string[]): Promise<CliCommandResult> {
       const file = requireStringFlag(parsed, "file");
       const fixture = await loadGatewayProfilePreviewFixtureFile(file);
 
+      const app = createBuildApplicationState("cli-fixture-registrar");
+
+      if (fixture.buildExists) {
+        const created = appCreateBuild(app, {
+          buildId: fixture.buildId,
+          owner: fixture.owner,
+          createdAt: fixture.existingBuildCreatedAt,
+        });
+
+        if (!created.ok) {
+          return fail(created.error.message);
+        }
+      }
+
       const result = appGetGatewayProfilePreviewDtoFromScan({
-        app: createBuildApplicationState("cli-fixture-registrar"),
+        app,
         scanner: fixture.scanner,
         buildId: fixture.buildId,
         owner: fixture.owner,

@@ -107,3 +107,17 @@ This lets the project test complex profiles before real Ethereum/XC adapters are
 Example fixture:
 
 - docs/gateway/gateway-profile-scan-fixture-example.json
+
+## Public preview status examples
+
+Stage 6.6 adds public fixture examples for the three user-facing preview actions:
+
+- CREATE_BUILD
+- UPDATE_BUILD
+- UNAVAILABLE
+
+The examples are documented in:
+
+- docs/gateway/gateway-profile-preview-status-examples.md
+
+These examples are intended as the basis for a future user-facing preview screen.
