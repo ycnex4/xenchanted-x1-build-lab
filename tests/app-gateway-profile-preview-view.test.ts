@@ -135,7 +135,7 @@ describe("gateway profile preview view", () => {
 
     expect(view.title).toBe("Build creation preview");
     expect(view.action).toBe("CREATE_BUILD");
-    expect(view.canCreateOrActivateBuild).toBe(true);
+    expect(view.canCreateOrUpdateBuild).toBe(true);
     expect(view.summary).toBe("Eligible to create Build.");
     expect(view.preview.eligible).toBe(true);
 
@@ -176,7 +176,7 @@ describe("gateway profile preview view", () => {
     });
 
     expect(view.action).toBe("UNAVAILABLE");
-    expect(view.canCreateOrActivateBuild).toBe(false);
+    expect(view.canCreateOrUpdateBuild).toBe(false);
     expect(view.summary).toBe(
       "Missing requirements: MINIMUM_CORE_REDEEM_HISTORY, MINIMUM_XNTD_LOCK",
     );
@@ -223,10 +223,10 @@ describe("gateway profile preview view", () => {
       },
     });
 
-    expect(view.title).toBe("Build activation preview");
-    expect(view.action).toBe("ACTIVATE_BUILD");
-    expect(view.canCreateOrActivateBuild).toBe(true);
-    expect(view.summary).toBe("Eligible to activate Build.");
+    expect(view.title).toBe("Build update preview");
+    expect(view.action).toBe("UPDATE_BUILD");
+    expect(view.canCreateOrUpdateBuild).toBe(true);
+    expect(view.summary).toBe("Build can be updated with this profile.");
     expect(metricValue(view, "build_exists")).toBe(true);
 
     expect(app.registry.buildsById.size).toBe(1);

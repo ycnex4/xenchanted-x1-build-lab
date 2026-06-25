@@ -7,7 +7,7 @@ import {
 
 export type GatewayProfilePreviewAction =
   | "CREATE_BUILD"
-  | "ACTIVATE_BUILD"
+  | "UPDATE_BUILD"
   | "UNAVAILABLE";
 
 export type GatewayProfilePreviewRequirementCode =
@@ -41,7 +41,7 @@ export interface GatewayProfilePreviewRequirementView {
 export interface AppGatewayProfilePreviewView {
   readonly preview: GatewayFullProfileBuildPreview;
   readonly action: GatewayProfilePreviewAction;
-  readonly canCreateOrActivateBuild: boolean;
+  readonly canCreateOrUpdateBuild: boolean;
   readonly title: string;
   readonly summary: string;
   readonly requirements: readonly GatewayProfilePreviewRequirementView[];
@@ -60,7 +60,7 @@ function buildAction(
     return "UNAVAILABLE";
   }
 
-  return preview.buildExists ? "ACTIVATE_BUILD" : "CREATE_BUILD";
+  return preview.buildExists ? "UPDATE_BUILD" : "CREATE_BUILD";
 }
 
 function buildSummary(
@@ -71,8 +71,8 @@ function buildSummary(
     return "Eligible to create Build.";
   }
 
-  if (action === "ACTIVATE_BUILD") {
-    return "Eligible to activate Build.";
+  if (action === "UPDATE_BUILD") {
+    return "Build can be updated with this profile.";
   }
 
   return `Missing requirements: ${missingRequirements.join(", ")}`;
@@ -108,13 +108,13 @@ export function appGetGatewayProfilePreviewView(
       missing,
       "CORE_REDEEM_SCAN",
       "Core redeem scan completed",
-      "Gateway must scan Core redeem history before Build creation or activation.",
+      "Gateway must scan Core redeem history before Build creation or update.",
     ),
     requirement(
       missing,
       "XEN_BURN_SCAN",
       "XEN.burn scan completed",
-      "Gateway must scan global XEN.burn history before Build creation or activation.",
+      "Gateway must scan global XEN.burn history before Build creation or update.",
     ),
     requirement(
       missing,
@@ -190,9 +190,9 @@ export function appGetGatewayProfilePreviewView(
   return {
     preview,
     action,
-    canCreateOrActivateBuild: preview.eligible,
+    canCreateOrUpdateBuild: preview.eligible,
     title: preview.buildExists
-      ? "Build activation preview"
+      ? "Build update preview"
       : "Build creation preview",
     summary: buildSummary(action, preview.missingRequirements),
     requirements,

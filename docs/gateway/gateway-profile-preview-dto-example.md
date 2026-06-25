@@ -1,6 +1,6 @@
 # Gateway Profile Preview DTO Example
 
-This document shows the JSON-safe gateway profile preview DTO shape used by UI/API layers before Build creation or activation.
+This document shows the JSON-safe gateway profile preview DTO shape used by UI/API layers before Build creation or update.
 
 The preview DTO is display-only.
 
@@ -60,7 +60,7 @@ Eligible preview JSON:
 "missingRequirements": []
 },
 "action": "CREATE_BUILD",
-"canCreateOrActivateBuild": true,
+"canCreateOrUpdateBuild": true,
 "title": "Build creation preview",
 "summary": "Eligible to create Build."
 }
@@ -101,7 +101,7 @@ Ineligible preview JSON:
 ]
 },
 "action": "UNAVAILABLE",
-"canCreateOrActivateBuild": false,
+"canCreateOrUpdateBuild": false,
 "title": "Build creation preview",
 "summary": "Missing requirements: MINIMUM_CORE_REDEEM_HISTORY, MINIMUM_XNTD_LOCK"
 }
@@ -111,7 +111,7 @@ Ineligible preview JSON:
 The UI may render:
 
 - action = CREATE_BUILD -> show Create Build button
-- action = ACTIVATE_BUILD -> show Activate Build button
+- action = UPDATE_BUILD -> show Update Build button
 - action = UNAVAILABLE -> disable action and show missing requirements
 
 The UI must not treat preview eligibility as final protocol authorization.

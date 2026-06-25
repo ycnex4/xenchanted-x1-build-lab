@@ -63,7 +63,7 @@ export interface GatewayProfilePreviewMetricDto {
 export interface AppGatewayProfilePreviewDto {
   readonly preview: GatewayFullProfileBuildPreviewDto;
   readonly action: GatewayProfilePreviewAction;
-  readonly canCreateOrActivateBuild: boolean;
+  readonly canCreateOrUpdateBuild: boolean;
   readonly title: string;
   readonly summary: string;
   readonly requirements: readonly GatewayProfilePreviewRequirementDto[];
@@ -124,7 +124,7 @@ export function appGetGatewayProfilePreviewDto(
       missingRequirements: preview.missingRequirements,
     },
     action: view.action,
-    canCreateOrActivateBuild: view.canCreateOrActivateBuild,
+    canCreateOrUpdateBuild: view.canCreateOrUpdateBuild,
     title: view.title,
     summary: view.summary,
     requirements: view.requirements.map((requirement) => ({

@@ -89,7 +89,7 @@ describe("gateway profile scan-to-preview app flow", () => {
     expect(result.scanResult.xntdLockCandidate).not.toBeNull();
 
     expect(result.dto.action).toBe("CREATE_BUILD");
-    expect(result.dto.canCreateOrActivateBuild).toBe(true);
+    expect(result.dto.canCreateOrUpdateBuild).toBe(true);
     expect(result.dto.preview.totalPreviewHistoryBld).toBe("121");
     expect(result.dto.preview.totalPreviewHistoryXbp).toBe("1000");
     expect(result.dto.preview.previewLockedXntd).toBe("100000000");
@@ -123,7 +123,7 @@ describe("gateway profile scan-to-preview app flow", () => {
     });
 
     expect(result.dto.action).toBe("UNAVAILABLE");
-    expect(result.dto.canCreateOrActivateBuild).toBe(false);
+    expect(result.dto.canCreateOrUpdateBuild).toBe(false);
     expect(result.dto.preview.missingRequirements).toEqual([
       "MINIMUM_CORE_REDEEM_HISTORY",
       "MINIMUM_XNTD_LOCK",

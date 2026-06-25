@@ -461,7 +461,7 @@ X1-native Build creation remains separate and may create a clean `UNCOMMITTED` B
 
 Gateway profile preview is a read-only UX helper.
 
-Preview data is used only to show the participant the currently observed ETH/XC profile before Build creation or activation.
+Preview data is used only to show the participant the currently observed ETH/XC profile before Build creation or update.
 
 Preview data must not be persisted into Build state, registry state, registrar replay sets, or contribution replay sets.
 

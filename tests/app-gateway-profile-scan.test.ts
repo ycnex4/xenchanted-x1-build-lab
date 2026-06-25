@@ -103,7 +103,7 @@ describe("gateway profile scan boundary", () => {
     });
 
     expect(dto.action).toBe("CREATE_BUILD");
-    expect(dto.canCreateOrActivateBuild).toBe(true);
+    expect(dto.canCreateOrUpdateBuild).toBe(true);
     expect(dto.preview.totalPreviewHistoryBld).toBe("121");
     expect(dto.preview.totalPreviewHistoryXbp).toBe("1000");
     expect(dto.preview.previewLockedXntd).toBe("100000000");
@@ -135,7 +135,7 @@ describe("gateway profile scan boundary", () => {
     });
 
     expect(dto.action).toBe("UNAVAILABLE");
-    expect(dto.canCreateOrActivateBuild).toBe(false);
+    expect(dto.canCreateOrUpdateBuild).toBe(false);
     expect(dto.preview.missingRequirements).toEqual([
       "MINIMUM_CORE_REDEEM_HISTORY",
       "MINIMUM_XNTD_LOCK",

@@ -35,7 +35,7 @@ describe("CLI gateway preview command", () => {
 
     const parsed = JSON.parse(result.stdout) as {
       action: string;
-      canCreateOrActivateBuild: boolean;
+      canCreateOrUpdateBuild: boolean;
       preview: {
         totalPreviewHistoryBld: string;
         totalPreviewHistoryXbp: string;
@@ -46,7 +46,7 @@ describe("CLI gateway preview command", () => {
     };
 
     expect(parsed.action).toBe("CREATE_BUILD");
-    expect(parsed.canCreateOrActivateBuild).toBe(true);
+    expect(parsed.canCreateOrUpdateBuild).toBe(true);
     expect(parsed.preview.totalPreviewHistoryBld).toBe("121");
     expect(parsed.preview.totalPreviewHistoryXbp).toBe("1000");
     expect(parsed.preview.previewLockedXntd).toBe("100000000");
@@ -70,7 +70,7 @@ describe("CLI gateway preview command", () => {
 
     const parsed = JSON.parse(result.stdout) as {
       action: string;
-      canCreateOrActivateBuild: boolean;
+      canCreateOrUpdateBuild: boolean;
       preview: {
         totalPreviewHistoryBld: string;
         previewLockedXntd: string;
@@ -79,7 +79,7 @@ describe("CLI gateway preview command", () => {
     };
 
     expect(parsed.action).toBe("UNAVAILABLE");
-    expect(parsed.canCreateOrActivateBuild).toBe(false);
+    expect(parsed.canCreateOrUpdateBuild).toBe(false);
     expect(parsed.preview.totalPreviewHistoryBld).toBe("0");
     expect(parsed.preview.previewLockedXntd).toBe("0");
     expect(parsed.preview.missingRequirements).toEqual([
