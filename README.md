@@ -30,6 +30,7 @@ Important supporting documents:
 - [XXXL Program v1 review request](docs/xxxl/xxxl-program-v1-review-request.md)
 - [XXXL Program v1 Theo review refinements](docs/xxxl/xxxl-program-v1-theo-review-refinements.md)
 - [XXXL runtime candidate account and instruction schema](docs/xxxl/xxxl-runtime-candidate-account-instruction-schema.md)
+- [XXXL runtime candidate transition semantics](docs/xxxl/xxxl-runtime-candidate-transition-semantics.md)
 - [XXXL Program v1 deployment readiness](docs/xxxl/xxxl-program-v1-deployment-readiness.md)
 
 The review summary explains:
@@ -57,7 +58,7 @@ The assumptions document explicitly records MVP trust boundaries and known limit
 Current main baseline:
 
 - TypeScript typecheck: passing
-- Tests: 69 files / 468 tests passing
+- Tests: 70 files / 477 tests passing
 - Build: passing
 - npm audit: 0 vulnerabilities
 
@@ -137,6 +138,7 @@ Latest reviewed main includes:
 - XXXL Program v1 review request
 - XXXL Program v1 Theo review refinements
 - XXXL runtime candidate account and instruction schema
+- XXXL runtime candidate transition semantics
 - XXXL Program v1 deployment readiness
 
 ## Validation commands
@@ -150,8 +152,8 @@ Run:
 
 Expected current result:
 
-    69 test files passed
-    468 tests passed
+    70 test files passed
+    477 tests passed
     found 0 vulnerabilities
 
 ## CLI
