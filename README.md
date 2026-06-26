@@ -35,6 +35,7 @@ Important supporting documents:
 - [XXXL incident response and emergency freeze policy](docs/xxxl/xxxl-incident-response-emergency-freeze-policy.md)
 - [XXXL deployment dry-run model](docs/xxxl/xxxl-deployment-dry-run-model.md)
 - [XXXL authority freeze procedure model](docs/xxxl/xxxl-authority-freeze-procedure-model.md)
+- [XXXL Program v1 production readiness review summary v2](docs/xxxl/xxxl-program-v1-production-readiness-review-v2.md)
 - [XXXL Program v1 deployment readiness](docs/xxxl/xxxl-program-v1-deployment-readiness.md)
 
 The review summary explains:
@@ -147,6 +148,7 @@ Latest reviewed main includes:
 - XXXL incident response and emergency freeze policy
 - XXXL deployment dry-run model
 - XXXL authority freeze procedure model
+- XXXL Program v1 production readiness review summary v2
 - XXXL Program v1 deployment readiness
 
 ## Validation commands
