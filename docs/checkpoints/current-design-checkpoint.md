@@ -16,6 +16,42 @@ and in:
 -->
 
 
+# Latest XXXL Program v1 design boundary checkpoint
+
+Stage XXXL Program v1 was started as a docs-first and model-first boundary stage.
+
+Authoritative design document:
+
+- `docs/xxxl/xxxl-program-v1-design-boundary.md`
+
+Checkpoint document:
+
+- `docs/checkpoints/xxxl-program-v1-design-boundary.md`
+
+Initial deterministic model:
+
+- `src/xxxl/program-v1.ts`
+- `tests/xxxl/program-v1.test.ts`
+
+Main boundary:
+
+- XXXL is the canonical X1-native token.
+- XXXL starts gateway-only.
+- XXXL minting does not require Build.
+- Build activation remains separate profile/history state.
+- There is no manual mint, premine, founder allocation, or hidden emission path.
+- Temporary upgradeability is allowed only for staged protocol finalization.
+- Future upgrades may only add deterministic user-action protocol mechanics.
+- Final X1-native emission must be Core / Forge / Stake-like logic, not admin mint.
+- After the planned X1-native emission mechanics are complete, upgrade authority must be removed / frozen.
+
+Genesis Phase invariant:
+
+    XXXL total supply = sum(valid accepted gateway mint amounts)
+
+Status: design boundary + deterministic model scaffold, no production runtime code yet.
+
+
 # Latest XNTD transfer / Build activation separation checkpoint
 
 The XNTD transfer path and Build activation boundary were explicitly separated on branch `decouple-xntd-transfer-from-build`.
