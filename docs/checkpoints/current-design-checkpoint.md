@@ -16,6 +16,51 @@ and in:
 -->
 
 
+# Latest XXXL deployment dry-run model checkpoint
+
+Stage XXXL Program v1 now has a deployment dry-run model.
+
+Authoritative document:
+
+- `docs/xxxl/xxxl-deployment-dry-run-model.md`
+
+Checkpoint document:
+
+- `docs/checkpoints/xxxl-deployment-dry-run-model.md`
+
+Implementation files:
+
+- `src/xxxl/runtime-deployment-dry-run.ts`
+- `tests/xxxl/runtime-deployment-dry-run.test.ts`
+
+Dry-run mode:
+
+    OFFLINE_ONLY
+
+Mandatory checks:
+
+- route policy validation
+- incident policy validation
+- account schema validation
+- transition simulation
+- Genesis supply invariant validation
+- no manual mint path
+- no premine
+- no founder allocation
+- no RPC usage
+- no secrets
+- authority freeze plan
+- public disclosure readiness
+
+Expected validation baseline:
+
+- TypeScript typecheck: passing
+- Tests: 73 files / 506 tests passing
+- Build: passing
+
+Status: dry-run model only, no live deployment script.
+
+
 # Latest XXXL incident response and emergency freeze policy checkpoint
 
 Stage XXXL Program v1 now has an incident response and emergency freeze policy candidate.
