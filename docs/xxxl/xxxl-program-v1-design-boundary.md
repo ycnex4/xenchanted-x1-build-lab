@@ -154,6 +154,26 @@ This explicitly excludes manual mint, premine, founder allocation, admin mint, h
 
 Rejected transitions must not mutate supply or replay state.
 
+## X1 runtime mapping summary
+
+The future X1 runtime must preserve the deterministic model at the account and instruction level.
+
+Required runtime objects include:
+
+- XXXL mint state
+- gateway configuration state
+- guardian set state
+- processed event state
+- recipient balance state
+
+The canonical Genesis Phase instruction is:
+
+    consume_gateway_mint
+
+This instruction must atomically verify the gateway authorization, mint XXXL, update recipient balance, update total supply, and mark the canonical event key consumed.
+
+If any check fails, supply and replay state must remain unchanged.
+
 ## Runtime mapping direction
 
 The future X1 runtime mapping must preserve these model-level properties:

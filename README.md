@@ -23,6 +23,7 @@ Important supporting documents:
 - [XXXL Program v1 design boundary](docs/xxxl/xxxl-program-v1-design-boundary.md)
 - [XXXL Stage 1 gateway authorization consumer](docs/xxxl/xxxl-stage-1-gateway-authorization-consumer.md)
 - [XXXL Genesis supply invariant](docs/xxxl/xxxl-genesis-supply-invariant.md)
+- [XXXL Program v1 X1 runtime mapping](docs/xxxl/xxxl-program-v1-x1-runtime-mapping.md)
 
 The review summary explains:
 
@@ -122,6 +123,7 @@ Latest reviewed main includes:
 - XXXL Program v1 design boundary
 - XXXL Stage 1 gateway authorization consumer
 - XXXL Genesis supply invariant hardening
+- XXXL Program v1 X1 runtime mapping
 
 ## Validation commands
 
