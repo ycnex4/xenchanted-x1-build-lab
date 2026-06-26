@@ -16,6 +16,40 @@ and in:
 -->
 
 
+# Latest XXXL Genesis supply invariant checkpoint
+
+Stage XXXL Program v1 now has a dedicated Genesis supply invariant hardening layer.
+
+Authoritative design document:
+
+- `docs/xxxl/xxxl-genesis-supply-invariant.md`
+
+Checkpoint document:
+
+- `docs/checkpoints/xxxl-genesis-supply-invariant.md`
+
+Implementation files:
+
+- `src/xxxl/genesis-supply-invariant.ts`
+- `tests/xxxl/genesis-supply-invariant.test.ts`
+
+Main invariant:
+
+    XXXL total supply = sum(Stage 1 authorized gateway mint amounts consumed exactly once)
+
+Main boundary:
+
+- accepted gateway mint must increase supply by exactly the accepted amount
+- accepted gateway mint must add exactly one consumed canonical event key
+- rejected transition must not mutate supply
+- rejected transition must not mutate replay state
+- unauthorized direct supply increase is invalid
+- manual mint remains forbidden
+- Build state is not a supply source
+
+Status: deterministic invariant hardening, no production runtime code yet.
+
+
 # Latest XXXL Stage 1 gateway authorization consumer checkpoint
 
 Stage XXXL Program v1 now has a deterministic consumer for successful Stage 1 gateway mint authorization.
