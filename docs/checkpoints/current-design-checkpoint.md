@@ -16,6 +16,48 @@ and in:
 -->
 
 
+# Latest XXXL Program v1 X1 runtime mapping checkpoint
+
+Stage XXXL Program v1 now has a docs-only X1 runtime mapping.
+
+Authoritative design document:
+
+- `docs/xxxl/xxxl-program-v1-x1-runtime-mapping.md`
+
+Checkpoint document:
+
+- `docs/checkpoints/xxxl-program-v1-x1-runtime-mapping.md`
+
+Main mapping:
+
+- XXXL mint state
+- gateway configuration state
+- guardian set state
+- processed event state
+- recipient balance state
+- canonical `consume_gateway_mint` instruction
+
+Runtime invariant:
+
+    success = balance update + supply update + consumed event mark
+    failure = no balance update + no supply update + no consumed event mark
+
+Main boundary:
+
+- gateway-only Genesis Phase
+- no manual mint
+- no premine
+- no founder allocation
+- no hidden emission
+- no Build dependency for gateway mint
+- Stage 1 authorization required before XXXL mint
+- canonical event key consumed exactly once
+- upgrade authority must not create supply rights
+- final goal remains freeze / removal of upgrade authority after planned X1-native emission mechanics are complete
+
+Status: docs-only runtime mapping, no production runtime code yet.
+
+
 # Latest XXXL Genesis supply invariant checkpoint
 
 Stage XXXL Program v1 now has a dedicated Genesis supply invariant hardening layer.
