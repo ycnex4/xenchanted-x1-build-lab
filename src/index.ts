@@ -60,3 +60,4 @@ export * from "./xxxl/stage-1-gateway-consumer.js";
 export * from "./xxxl/genesis-supply-invariant.js";
 export * from "./xxxl/runtime-candidate.js";
 export * from "./xxxl/runtime-transition.js";
+export * from "./xxxl/runtime-route-policy.js";
