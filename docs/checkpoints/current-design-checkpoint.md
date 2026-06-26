@@ -16,6 +16,32 @@ and in:
 -->
 
 
+# Latest XXXL Program v1 review request checkpoint
+
+Stage XXXL Program v1 now has a focused architecture review request.
+
+Authoritative review request:
+
+- `docs/xxxl/xxxl-program-v1-review-request.md`
+
+Checkpoint document:
+
+- `docs/checkpoints/xxxl-program-v1-review-request.md`
+
+Review focus:
+
+- boundary clarity
+- gateway-only Genesis Phase
+- Stage 1 dependency
+- runtime atomicity
+- upgradeability covenant
+- Build separation
+- xDex timing
+- missing production-readiness items
+
+Status: docs-only review handoff, no production runtime code yet.
+
+
 # Latest XXXL Genesis Phase public explanation checkpoint
 
 Stage XXXL Program v1 now has a public Genesis Phase explanation draft.

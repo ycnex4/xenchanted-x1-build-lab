@@ -27,6 +27,7 @@ Important supporting documents:
 - [XXXL xDex listing plan](docs/xxxl/xxxl-xdex-listing-plan.md)
 - [XXXL Program v1 review summary](docs/xxxl/xxxl-program-v1-review-summary.md)
 - [XXXL Genesis Phase public explanation](docs/xxxl/xxxl-genesis-phase-public-explanation.md)
+- [XXXL Program v1 review request](docs/xxxl/xxxl-program-v1-review-request.md)
 - [XXXL Program v1 deployment readiness](docs/xxxl/xxxl-program-v1-deployment-readiness.md)
 
 The review summary explains:
@@ -131,6 +132,7 @@ Latest reviewed main includes:
 - XXXL xDex listing plan
 - XXXL Program v1 review summary
 - XXXL Genesis Phase public explanation
+- XXXL Program v1 review request
 - XXXL Program v1 deployment readiness
 
 ## Validation commands
