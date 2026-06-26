@@ -37,6 +37,7 @@ Important supporting documents:
 - [XXXL authority freeze procedure model](docs/xxxl/xxxl-authority-freeze-procedure-model.md)
 - [XXXL Program v1 production readiness review summary v2](docs/xxxl/xxxl-program-v1-production-readiness-review-v2.md)
 - [XXXL Program v1 Theo approval and runtime gap notes](docs/xxxl/xxxl-program-v1-theo-approval-runtime-gap-notes.md)
+- [XXXL runtime serialization boundary](docs/xxxl/xxxl-runtime-serialization-boundary.md)
 - [XXXL Program v1 deployment readiness](docs/xxxl/xxxl-program-v1-deployment-readiness.md)
 
 The review summary explains:
@@ -64,7 +65,7 @@ The assumptions document explicitly records MVP trust boundaries and known limit
 Current main baseline:
 
 - TypeScript typecheck: passing
-- Tests: 74 files / 516 tests passing
+- Tests: 75 files / 526 tests passing
 - Build: passing
 - npm audit: 0 vulnerabilities
 
@@ -151,6 +152,7 @@ Latest reviewed main includes:
 - XXXL authority freeze procedure model
 - XXXL Program v1 production readiness review summary v2
 - XXXL Program v1 Theo approval and runtime gap notes
+- XXXL runtime serialization boundary
 - XXXL Program v1 deployment readiness
 
 ## Validation commands
@@ -164,8 +166,8 @@ Run:
 
 Expected current result:
 
-    74 test files passed
-    516 tests passed
+    75 test files passed
+    526 tests passed
     found 0 vulnerabilities
 
 ## CLI
