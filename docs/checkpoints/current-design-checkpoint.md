@@ -16,6 +16,40 @@ and in:
 -->
 
 
+# Latest XXXL Program v1 review summary checkpoint
+
+Stage XXXL Program v1 now has a review summary entrypoint.
+
+Authoritative review document:
+
+- `docs/xxxl/xxxl-program-v1-review-summary.md`
+
+Checkpoint document:
+
+- `docs/checkpoints/xxxl-program-v1-review-summary.md`
+
+Current completed layers:
+
+- Program v1 design boundary
+- Stage 1 gateway authorization consumer
+- Genesis supply invariant hardening
+- X1 runtime mapping
+- deployment readiness planning
+- xDex listing planning
+
+Validation baseline:
+
+- TypeScript typecheck: passing
+- Tests: 68 files / 458 tests passing
+- Build: passing
+
+Main invariant:
+
+    XXXL total supply = sum(Stage 1 authorized gateway mint amounts consumed exactly once)
+
+Status: review summary added, no production runtime code yet.
+
+
 # Latest XXXL deployment readiness and xDex listing plan checkpoint
 
 Stage XXXL Program v1 now has docs-only deployment readiness and xDex listing planning.
