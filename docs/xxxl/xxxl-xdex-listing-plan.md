@@ -67,6 +67,20 @@ Participants must understand:
 - final X1-native emission mechanics are not live yet
 - upgradeability is temporary staged protocol finalization, not admin supply control
 
+## Explicit Genesis Phase disclosure
+
+Before any xDex listing, the public listing text must include this disclosure:
+
+    XXXL is in Genesis Phase.
+    Supply increases only through verified Ethereum XNTD gateway events.
+    Future X1-native emission mechanics are not yet active.
+    Build layer is not yet launched.
+    Build does not confer rights to XXXL holders during Genesis Phase.
+    Trading XXXL does not activate Build.
+    Listing does not guarantee price, liquidity, rewards, Build allocation, or final emission schedule.
+
+This disclosure must be visible before or alongside any listing announcement.
+
 ## Market risk notes
 
 Initial xDex listing must not imply:

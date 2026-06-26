@@ -103,6 +103,36 @@ Allowed future upgrades may only add deterministic user-action protocol mechanic
 
 After planned X1-native emission mechanics are complete, upgrade authority must be removed / frozen.
 
+## Freeze trigger specification
+
+The freeze trigger is not based on an arbitrary supply milestone during Genesis Phase.
+
+The freeze trigger becomes eligible only after all of the following are complete:
+
+- final deterministic X1-native emission mechanics are documented
+- model tests for those mechanics are passing
+- runtime mapping for those mechanics is documented
+- production runtime implementation is reviewed
+- public explanation is published
+- deployment readiness checklist is complete
+- incident response checklist is complete
+- authority removal procedure is rehearsed
+
+Draft procedure:
+
+1. freeze proposal is published publicly
+2. freeze proposal includes final authority-removal transaction plan
+3. freeze proposal has a 7-day public review / timelock window
+4. freeze execution requires the configured guardian multisig threshold
+5. after execution, upgrade authority is removed or permanently frozen
+
+The final guardian threshold is a deployment parameter and must be fixed before live deployment.
+
+Until the freeze is executed, the public covenant remains:
+
+    upgradeability exists only for staged protocol finalization
+    upgrade authority must not create supply rights
+
 ## Public disclosure requirement
 
 Deployment communication must explain upfront:
