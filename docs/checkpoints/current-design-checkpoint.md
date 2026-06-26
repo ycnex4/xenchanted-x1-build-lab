@@ -16,6 +16,33 @@ and in:
 -->
 
 
+# Latest Build v1 X1 runtime boundary checkpoint
+
+The Build v1 X1 runtime boundary planning stage was started on branch `build-v1-x1-runtime-boundary`.
+
+This stage is docs-first and does not add runtime code.
+
+New authoritative runtime-boundary document:
+
+- `docs/build/build-v1-x1-runtime-boundary.md`
+
+Checkpoint document:
+
+- `docs/checkpoints/build-v1-x1-runtime-boundary.md`
+
+Main boundary:
+
+- Build State stores durable verified history, not live spendable balances.
+- ETH/XC gateway Build activation must not create an empty Build.
+- X1-native Build creation remains a separate clean-shell path.
+- Runtime should prefer cumulative full-profile checkpoints over raw per-event lists for large user histories.
+- Raw Ethereum/XC scanning remains off-chain scanner/indexer responsibility.
+- Runtime validates authorized, monotonic, replay-protected state transitions.
+- Build Identity remains owner-controlled metadata and does not affect accounting.
+
+Status: design boundary, no production runtime code yet.
+
+
 # Latest Build State history and identity cleanup checkpoint
 
 The Build State history and identity cleanup was completed on branch `build-state-history-identity-cleanup`.
@@ -14661,7 +14688,7 @@ Implemented helper:
 Validation baseline for review:
 
 - `npm run typecheck` passed
-- `npm test` passed: 42 test files, 328 tests
+- `npm test` passed: 65 test files, 437 tests
 - `npm run build` passed
 - `npm audit --audit-level=moderate` found 0 vulnerabilities
 
@@ -14736,7 +14763,7 @@ The milestone did not change:
 Final validation baseline:
 
 - `npm run typecheck` passed
-- `npm test` passed: 42 test files, 328 tests
+- `npm test` passed: 65 test files, 437 tests
 - `npm run build` passed
 - `npm audit --audit-level=moderate` found 0 vulnerabilities
 
@@ -14763,7 +14790,7 @@ Current main baseline:
 Validation baseline:
 
 - `npm run typecheck` passed
-- `npm test` passed: 42 test files, 328 tests
+- `npm test` passed: 65 test files, 437 tests
 - `npm run build` passed
 - `npm audit --audit-level=moderate` found 0 vulnerabilities
 
@@ -14861,7 +14888,7 @@ Commits / milestones included:
 Current validation baseline remains:
 
 - `npm run typecheck` passed
-- `npm test` passed: 42 test files, 328 tests
+- `npm test` passed: 65 test files, 437 tests
 - `npm run build` passed
 - `npm audit --audit-level=moderate` found 0 vulnerabilities
 
@@ -15220,7 +15247,7 @@ Current main baseline:
 Current validation baseline after merge:
 
 - `npm run typecheck` passed
-- `npm test` passed: 42 test files, 328 tests
+- `npm test` passed: 65 test files, 437 tests
 - `npm run build` passed
 - `npm audit --audit-level=moderate` found 0 vulnerabilities
 
@@ -15431,7 +15458,7 @@ Current main baseline:
 Current validation baseline after merge:
 
 - `npm run typecheck` passed
-- `npm test` passed: 42 test files, 328 tests
+- `npm test` passed: 65 test files, 437 tests
 - `npm run build` passed
 - `npm audit --audit-level=moderate` found 0 vulnerabilities
 

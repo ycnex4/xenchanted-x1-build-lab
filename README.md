@@ -19,6 +19,7 @@ Important supporting documents:
 - [Final MVP readiness checkpoint](docs/final-mvp-readiness-checkpoint.md)
 - [Assumptions](docs/assumptions.md)
 - [Current design checkpoint](docs/checkpoints/current-design-checkpoint.md)
+- [X1 Build v1 runtime boundary](docs/build/build-v1-x1-runtime-boundary.md)
 
 The review summary explains:
 
@@ -45,7 +46,7 @@ The assumptions document explicitly records MVP trust boundaries and known limit
 Current main baseline:
 
 - TypeScript typecheck: passing
-- Tests: 42 files / 328 tests passing
+- Tests: 65 files / 437 tests passing
 - Build: passing
 - npm audit: 0 vulnerabilities
 
@@ -114,6 +115,7 @@ Latest reviewed main includes:
 - Stage 2.7 prototype-only experiment boundaries
 - Stage 2.8 gateway planning baseline checkpoint
 - X1-native Forge / Stake dual nominal model
+- Build v1 X1 runtime boundary design
 
 ## Validation commands
 
@@ -126,8 +128,8 @@ Run:
 
 Expected current result:
 
-    42 test files passed
-    328 tests passed
+    65 test files passed
+    437 tests passed
     found 0 vulnerabilities
 
 ## CLI
