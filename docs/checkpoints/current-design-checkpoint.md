@@ -16,6 +16,53 @@ and in:
 -->
 
 
+# Latest XXXL runtime route, guardian, and finality policy checkpoint
+
+Stage XXXL Program v1 now has a route, guardian, and finality policy candidate.
+
+Authoritative document:
+
+- `docs/xxxl/xxxl-runtime-route-guardian-finality-policy.md`
+
+Checkpoint document:
+
+- `docs/checkpoints/xxxl-runtime-route-guardian-finality-policy.md`
+
+Implementation files:
+
+- `src/xxxl/runtime-route-policy.ts`
+- `tests/xxxl/runtime-route-policy.test.ts`
+
+Policy layers:
+
+- route policy
+- guardian policy
+- finality policy
+
+Candidate requirements:
+
+- Ethereum mainnet source chain
+- canonical XXXL gateway route
+- target token XXXL
+- active route
+- active guardian set
+- active finality rule
+- non-empty guardian set
+- valid quorum threshold
+- no duplicate guardian public keys
+- rotation timelock of at least 7 days
+- emergency freeze threshold at least equal to quorum
+- finalized or safe-with-confirmations finality
+
+Expected validation baseline:
+
+- TypeScript typecheck: passing
+- Tests: 71 files / 486 tests passing
+- Build: passing
+
+Status: candidate policy only, no production runtime code yet.
+
+
 # Latest XXXL runtime candidate transition semantics checkpoint
 
 Stage XXXL Program v1 now has deterministic runtime candidate transition semantics.
