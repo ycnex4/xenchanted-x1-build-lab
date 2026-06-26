@@ -16,6 +16,51 @@ and in:
 -->
 
 
+# Latest XXXL runtime account serialization vectors checkpoint
+
+Stage XXXL Program v1 now has deterministic runtime account serialization vector planning.
+
+Authoritative document:
+
+- `docs/xxxl/xxxl-runtime-account-serialization-vectors.md`
+
+Checkpoint document:
+
+- `docs/checkpoints/xxxl-runtime-account-serialization-vectors.md`
+
+Implementation files:
+
+- `src/xxxl/runtime-account-serialization-vectors.ts`
+- `tests/xxxl/runtime-account-serialization-vectors.test.ts`
+
+Account kinds covered:
+
+- MINT_STATE
+- GATEWAY_CONFIG
+- GUARDIAN_SET
+- PROCESSED_EVENT
+- RECIPIENT_BALANCE
+
+Encoding boundary:
+
+- CANONICAL_BINARY_V1
+
+Layout rules:
+
+- every layout starts with `kind`
+- every layout uses `version` as second field
+- every account kind has an explicit field order
+- bigint values serialize to canonical JSON as decimal strings
+
+Expected validation baseline:
+
+- TypeScript typecheck: passing
+- Tests: 76 files / 538 tests passing
+- Build: passing
+
+Status: account serialization vectors only, no instruction serialization vectors yet.
+
+
 # Latest XXXL runtime serialization boundary checkpoint
 
 Stage XXXL Program v1 has entered runtime implementation planning.

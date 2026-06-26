@@ -65,3 +65,4 @@ export * from "./xxxl/runtime-incident-policy.js";
 export * from "./xxxl/runtime-deployment-dry-run.js";
 export * from "./xxxl/runtime-authority-freeze.js";
 export * from "./xxxl/runtime-serialization-boundary.js";
+export * from "./xxxl/runtime-account-serialization-vectors.js";
