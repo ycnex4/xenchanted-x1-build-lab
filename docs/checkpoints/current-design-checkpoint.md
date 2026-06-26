@@ -16,6 +16,50 @@ and in:
 -->
 
 
+# Latest XXXL runtime candidate account and instruction schema checkpoint
+
+Stage XXXL Program v1 now has a concrete runtime candidate account layout and instruction schema.
+
+Authoritative document:
+
+- `docs/xxxl/xxxl-runtime-candidate-account-instruction-schema.md`
+
+Checkpoint document:
+
+- `docs/checkpoints/xxxl-runtime-candidate-account-instruction-schema.md`
+
+Implementation files:
+
+- `src/xxxl/runtime-candidate.ts`
+- `tests/xxxl/runtime-candidate.test.ts`
+
+Runtime candidate account kinds:
+
+- Mint State
+- Gateway Configuration
+- Guardian Set
+- Processed Event
+- Recipient Balance
+
+Canonical instruction:
+
+    CONSUME_GATEWAY_MINT
+
+Runtime write set:
+
+- Mint State
+- Processed Event
+- Recipient Balance
+
+Expected validation baseline:
+
+- TypeScript typecheck: passing
+- Tests: 69 files / 468 tests passing
+- Build: passing
+
+Status: candidate schema only, no production runtime code yet.
+
+
 # Latest XXXL Program v1 Theo review refinements checkpoint
 
 Theo review result:

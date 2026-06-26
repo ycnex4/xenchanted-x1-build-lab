@@ -58,3 +58,4 @@ export * from "./app/gateway-profile-human-preview.js";
 export * from "./xxxl/program-v1.js";
 export * from "./xxxl/stage-1-gateway-consumer.js";
 export * from "./xxxl/genesis-supply-invariant.js";
+export * from "./xxxl/runtime-candidate.js";
