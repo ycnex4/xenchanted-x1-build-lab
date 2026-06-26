@@ -55,3 +55,5 @@ export * from "./app/gateway-profile-scan.js";
 export * from "./app/gateway-profile-scan-preview.js";
 export * from "./app/gateway-profile-scan-fixture.js";
 export * from "./app/gateway-profile-human-preview.js";
+export * from "./xxxl/program-v1.js";
+export * from "./xxxl/stage-1-gateway-consumer.js";

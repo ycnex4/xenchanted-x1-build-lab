@@ -16,6 +16,38 @@ and in:
 -->
 
 
+# Latest XXXL Stage 1 gateway authorization consumer checkpoint
+
+Stage XXXL Program v1 now has a deterministic consumer for successful Stage 1 gateway mint authorization.
+
+Authoritative design document:
+
+- `docs/xxxl/xxxl-stage-1-gateway-authorization-consumer.md`
+
+Checkpoint document:
+
+- `docs/checkpoints/xxxl-stage-1-gateway-authorization-consumer.md`
+
+Implementation files:
+
+- `src/xxxl/stage-1-gateway-consumer.ts`
+- `tests/xxxl/stage-1-gateway-consumer.test.ts`
+
+Main boundary:
+
+- XXXL does not accept an unrelated local mint object as its canonical gateway entry.
+- XXXL consumes successful Stage 1 mint authorization.
+- Stage 1 remains responsible for gateway verification, guardian quorum, and source replay protection.
+- XXXL adds local consumed-event replay protection and supply update.
+- Future X1 runtime must preserve Stage 1 authorization, XXXL mint, and replay mark atomically.
+
+Genesis Phase invariant:
+
+    XXXL total supply = sum(Stage 1 authorized gateway mint amounts consumed exactly once)
+
+Status: deterministic consumer model, no production runtime code yet.
+
+
 # Latest XXXL Program v1 design boundary checkpoint
 
 Stage XXXL Program v1 was started as a docs-first and model-first boundary stage.

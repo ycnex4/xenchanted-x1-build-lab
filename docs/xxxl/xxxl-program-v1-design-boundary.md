@@ -105,6 +105,22 @@ The exact Stage 1 gateway message schema and guardian approval logic remain the 
 
 The XXXL program boundary consumes only valid gateway mint authorizations.
 
+## Stage 1 authorization consumer boundary
+
+The XXXL Program v1 gateway entry must consume successful Stage 1 gateway mint authorization.
+
+This means the canonical gateway path is not:
+
+    arbitrary local mint request -> XXXL mint
+
+It is:
+
+    verified Stage 1 gateway message -> successful Stage 1 mint authorization -> XXXL mint
+
+Stage 1 remains responsible for message verification, route binding, source binding, guardian quorum, and source replay protection.
+
+XXXL remains responsible for local consumed-event protection and the Genesis Phase supply invariant.
+
 ## Replay protection
 
 Every accepted gateway mint must mark its canonical event key as processed.
