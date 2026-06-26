@@ -16,6 +16,54 @@ and in:
 -->
 
 
+# Latest XXXL runtime serialization boundary checkpoint
+
+Stage XXXL Program v1 has entered runtime implementation planning.
+
+Authoritative document:
+
+- `docs/xxxl/xxxl-runtime-serialization-boundary.md`
+
+Checkpoint document:
+
+- `docs/checkpoints/xxxl-runtime-serialization-boundary.md`
+
+Implementation files:
+
+- `src/xxxl/runtime-serialization-boundary.ts`
+- `tests/xxxl/runtime-serialization-boundary.test.ts`
+
+Purpose:
+
+- start the runtime implementation track
+- define account/instruction serialization boundary
+- capture Theo's five non-blocking runtime-stage gaps
+- prepare for runtime skeleton and deterministic vectors
+
+Boundary decisions:
+
+- account serialization encoding: CANONICAL_BINARY_V1
+- instruction serialization encoding: CANONICAL_BINARY_V1
+- mint authority PDA strategy: GATEWAY_MINT_AUTHORITY_PDA
+- mint authority PDA seeds: xxxl / gateway-mint-authority / v1
+- guardian signature verification boundary: Stage 1 authorization result only
+
+Runtime notes:
+
+- CPI into SPL Token is atomic with the parent SVM transaction.
+- Program upgrade authority and SPL Token mint authority are distinct authority surfaces.
+- Authority freeze must cover both authority surfaces distinctly.
+- Runtime skeleton should include a read-only supply audit function.
+
+Expected validation baseline:
+
+- TypeScript typecheck: passing
+- Tests: 75 files / 526 tests passing
+- Build: passing
+
+Status: runtime serialization boundary only, no final byte layout yet.
+
+
 # Latest XXXL Program v1 Theo approval and runtime gap notes checkpoint
 
 Stage XXXL Program v1 production-readiness review summary v2 has been approved by Theo.
