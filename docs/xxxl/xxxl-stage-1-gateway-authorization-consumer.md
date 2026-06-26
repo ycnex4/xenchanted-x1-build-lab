@@ -15,6 +15,34 @@ The intended flow is:
       -> XXXL program consumer
       -> XXXL supply update and local processed event mark
 
+## Formal interface contract
+
+The boundary between Stage 1 and the XXXL consumer is now represented by an explicit code-level contract:
+
+    XXXLStage1GatewayAuthorizationContract
+
+The contract carries only the values the XXXL consumer is allowed to rely on:
+
+- `authorizationOk`
+- `authorized`
+- `markedProcessed`
+- `canonicalEventKey`
+- `amount`
+
+This preserves the clean separation:
+
+- Stage 1 owns verification and source replay protection.
+- XXXL consumes the successful Stage 1 result and applies local replay / supply rules.
+- XXXL does not duplicate Stage 1 field verification.
+
+The XXXL consumer must reject the contract unless:
+
+- `authorizationOk` is true
+- `authorized` is true
+- `markedProcessed` is true
+- `amount` is greater than zero
+- `canonicalEventKey` has not already been consumed locally
+
 ## Boundary
 
 The XXXL program consumer does not replace Stage 1 verification.

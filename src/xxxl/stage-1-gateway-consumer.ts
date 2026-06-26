@@ -14,6 +14,14 @@ export const XXXL_STAGE1_GATEWAY_CONSUMER_ERROR = {
 export type XXXLStage1GatewayConsumerErrorCode =
   (typeof XXXL_STAGE1_GATEWAY_CONSUMER_ERROR)[keyof typeof XXXL_STAGE1_GATEWAY_CONSUMER_ERROR];
 
+export type XXXLStage1GatewayAuthorizationContract = {
+  readonly authorizationOk: boolean;
+  readonly authorized: boolean;
+  readonly markedProcessed: boolean;
+  readonly canonicalEventKey: Uint8Array;
+  readonly amount: bigint;
+};
+
 export type XXXLStage1GatewayMintConsumerInput = {
   readonly state: XXXLProgramState;
   readonly fields: Pick<
@@ -36,21 +44,34 @@ export type XXXLStage1GatewayMintConsumerResult = {
   readonly authorization: Stage1MintAuthorizationResult;
 };
 
+export function toXXXLStage1GatewayAuthorizationContract(
+  input: Pick<XXXLStage1GatewayMintConsumerInput, "fields" | "authorization">,
+): XXXLStage1GatewayAuthorizationContract {
+  return {
+    authorizationOk: input.authorization.ok,
+    authorized: input.authorization.authorized,
+    markedProcessed: input.authorization.markedProcessed,
+    canonicalEventKey: input.fields.canonicalEventKey,
+    amount: stage1MintAmountFromFields(input.fields),
+  };
+}
+
 export function processXXXLStage1GatewayMintAuthorization(
   input: XXXLStage1GatewayMintConsumerInput,
 ): XXXLStage1GatewayMintConsumerResult {
+  const contract = toXXXLStage1GatewayAuthorizationContract(input);
   const canonicalEventKeyHex = stage1CanonicalEventKeyHex(
-    input.fields.canonicalEventKey,
+    contract.canonicalEventKey,
   );
   const recipientHex = bytesToHex(input.x1RecipientBytes).toLowerCase();
-  const amount = stage1MintAmountFromFields(input.fields);
+  const amount = contract.amount;
   const errors: XXXLStage1GatewayConsumerErrorCode[] = [];
 
-  if (!input.authorization.ok || !input.authorization.authorized) {
+  if (!contract.authorizationOk || !contract.authorized) {
     errors.push(XXXL_STAGE1_GATEWAY_CONSUMER_ERROR.Stage1MintNotAuthorized);
   }
 
-  if (!input.authorization.markedProcessed) {
+  if (!contract.markedProcessed) {
     errors.push(
       XXXL_STAGE1_GATEWAY_CONSUMER_ERROR.Stage1MintNotMarkedProcessed,
     );

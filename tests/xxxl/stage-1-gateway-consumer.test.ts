@@ -10,6 +10,8 @@ import {
   hexToBytes,
   processXXXLStage1GatewayMintAuthorization,
   stage1MintAmountFromFields,
+  toXXXLStage1GatewayAuthorizationContract,
+  uint256Be,
   type Stage1GatewayMintMessageFields,
 } from "../../src/index.js";
 
@@ -311,4 +313,46 @@ describe("XXXL Stage 1 gateway authorization consumer", () => {
     expect(replay.state.totalSupply).toBe(first.state.totalSupply);
     expect(replay.state.processedGatewayEvents.size).toBe(1);
   });
+  it("exposes a formal Stage 1 authorization contract for runtime planning", async () => {
+    const { input, fields } = validAuthorizationInputFromFixture();
+    const authorization = await authorizeStage1Mint(input);
+
+    const contract = toXXXLStage1GatewayAuthorizationContract({
+      fields,
+      authorization,
+    });
+
+    expect(contract.authorizationOk).toBe(true);
+    expect(contract.authorized).toBe(true);
+    expect(contract.markedProcessed).toBe(true);
+    expect(contract.canonicalEventKey).toEqual(fields.canonicalEventKey);
+    expect(contract.amount).toBe(stage1MintAmountFromFields(fields));
+  });
+
+  it("rejects zero amount even if a malformed boundary object claims Stage 1 authorization success", async () => {
+    const { input, fields, x1RecipientBytes } = validAuthorizationInputFromFixture();
+    const authorization = await authorizeStage1Mint(input);
+    const zeroAmountFields = {
+      ...fields,
+      xxxlMintAmount: uint256Be(0n),
+    };
+    const state = createEmptyXXXLProgramState();
+
+    const result = processXXXLStage1GatewayMintAuthorization({
+      state,
+      fields: zeroAmountFields,
+      x1RecipientBytes,
+      authorization,
+    });
+
+    expect(result.ok).toBe(false);
+    expect(result.minted).toBe(false);
+    expect(result.amount).toBe(0n);
+    expect(result.errors).toEqual([
+      XXXL_STAGE1_GATEWAY_CONSUMER_ERROR.InvalidMintAmount,
+    ]);
+    expect(result.state.totalSupply).toBe(0n);
+    expect(result.state.processedGatewayEvents.size).toBe(0);
+  });
+
 });

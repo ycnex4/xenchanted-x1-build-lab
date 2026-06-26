@@ -186,6 +186,26 @@ The runtime must preserve this all-or-nothing rule:
 
 No partial success is allowed.
 
+## Account write order refinement
+
+The runtime correctness requirement is transaction-level atomicity, not a specific low-level account write order.
+
+On SVM-style execution, account writes are committed atomically at transaction success and rolled back on transaction failure.
+
+Therefore, the correctness invariant is:
+
+    success = balance update + supply update + consumed event mark
+    failure = no balance update + no supply update + no consumed event mark
+
+The implementation should still document write order for engineering review because account ordering may affect:
+
+- compute cost
+- account contention
+- instruction layout
+- audit readability
+
+But write order must not be used as the core safety mechanism. Atomicity is the safety mechanism.
+
 ## Check-before-mark rule
 
 The runtime must check replay before marking the event consumed.
