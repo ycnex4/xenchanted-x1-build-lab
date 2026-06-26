@@ -144,6 +144,16 @@ Manual supply changes are forbidden.
 
 Future deterministic X1-native emission may extend the supply invariant, but only by adding explicit user-action mechanics.
 
+## Genesis supply invariant hardening
+
+The Genesis Phase supply invariant is strengthened as:
+
+    XXXL total supply = sum(Stage 1 authorized gateway mint amounts consumed exactly once)
+
+This explicitly excludes manual mint, premine, founder allocation, admin mint, hidden emission, Build-derived supply rights, and current-balance-derived supply rights.
+
+Rejected transitions must not mutate supply or replay state.
+
 ## Runtime mapping direction
 
 The future X1 runtime mapping must preserve these model-level properties:

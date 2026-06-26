@@ -69,7 +69,7 @@ describe("XXXL Program v1 deterministic boundary", () => {
     const nextState = processXXXLGatewayMintAuthorization(state, authorization);
 
     expect(nextState.totalSupply).toBe(authorization.xxxlMintAmount);
-    expect(nextState.processedGatewayEvents.has(authorization.canonicalEventKey))
+    expect(nextState.processedGatewayEvents.has(authorization.canonicalEventKey.toLowerCase()))
       .toBe(true);
     expect(state.totalSupply).toBe(0n);
     expect(state.processedGatewayEvents.size).toBe(0);

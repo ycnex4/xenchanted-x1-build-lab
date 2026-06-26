@@ -97,12 +97,14 @@ export function processXXXLGatewayMintAuthorization(
   assertValidState(state);
   assertValidGatewayMintAuthorization(authorization);
 
-  if (state.processedGatewayEvents.has(authorization.canonicalEventKey)) {
+  const canonicalEventKey = authorization.canonicalEventKey.toLowerCase();
+
+  if (state.processedGatewayEvents.has(canonicalEventKey)) {
     throw new XXXLProgramError(XXXLProgramErrorCode.REPLAYED_GATEWAY_EVENT);
   }
 
   const processedGatewayEvents = new Set(state.processedGatewayEvents);
-  processedGatewayEvents.add(authorization.canonicalEventKey);
+  processedGatewayEvents.add(canonicalEventKey);
 
   return {
     ...state,
@@ -128,7 +130,7 @@ export function assertGatewaySupplyInvariant(
     throw new XXXLProgramError(XXXLProgramErrorCode.INVALID_MINT_AMOUNT);
   }
 
-  if (!after.processedGatewayEvents.has(authorization.canonicalEventKey)) {
+  if (!after.processedGatewayEvents.has(authorization.canonicalEventKey.toLowerCase())) {
     throw new XXXLProgramError(XXXLProgramErrorCode.INVALID_CANONICAL_EVENT_KEY);
   }
 }

@@ -22,6 +22,7 @@ Important supporting documents:
 - [X1 Build v1 runtime boundary](docs/build/build-v1-x1-runtime-boundary.md)
 - [XXXL Program v1 design boundary](docs/xxxl/xxxl-program-v1-design-boundary.md)
 - [XXXL Stage 1 gateway authorization consumer](docs/xxxl/xxxl-stage-1-gateway-authorization-consumer.md)
+- [XXXL Genesis supply invariant](docs/xxxl/xxxl-genesis-supply-invariant.md)
 
 The review summary explains:
 
@@ -48,7 +49,7 @@ The assumptions document explicitly records MVP trust boundaries and known limit
 Current main baseline:
 
 - TypeScript typecheck: passing
-- Tests: 67 files / 452 tests passing
+- Tests: 68 files / 458 tests passing
 - Build: passing
 - npm audit: 0 vulnerabilities
 
@@ -120,6 +121,7 @@ Latest reviewed main includes:
 - Build v1 X1 runtime boundary design
 - XXXL Program v1 design boundary
 - XXXL Stage 1 gateway authorization consumer
+- XXXL Genesis supply invariant hardening
 
 ## Validation commands
 
@@ -132,8 +134,8 @@ Run:
 
 Expected current result:
 
-    67 test files passed
-    452 tests passed
+    68 test files passed
+    458 tests passed
     found 0 vulnerabilities
 
 ## CLI
