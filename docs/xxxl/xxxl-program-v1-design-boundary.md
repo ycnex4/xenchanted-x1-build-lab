@@ -188,6 +188,21 @@ The future X1 runtime mapping must preserve these model-level properties:
 - no Build dependency for gateway mint
 - no manual supply control
 
+## Deployment readiness and xDex planning summary
+
+The first deployment-ready scope is the gateway-only Genesis Phase.
+
+Before deployment, the project must have final route configuration, guardian policy, replay storage design, authority model, upgradeability disclosure, freeze plan, and public Genesis Phase explanation.
+
+xDex listing may happen before full Build launch because XXXL and Build are separate layers:
+
+- XXXL is transferable token state
+- Build is non-transferable history / identity / contribution state
+- Build does not derive rights from current XXXL balance
+- XNTD transfer to X1 does not require Build activation
+
+The listing must not imply guaranteed price, liquidity, rewards, Build allocation, or final emission schedule.
+
 ## Out of scope for this stage
 
 This stage does not implement:
