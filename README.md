@@ -25,6 +25,7 @@ Important supporting documents:
 - [XXXL Genesis supply invariant](docs/xxxl/xxxl-genesis-supply-invariant.md)
 - [XXXL Program v1 X1 runtime mapping](docs/xxxl/xxxl-program-v1-x1-runtime-mapping.md)
 - [XXXL xDex listing plan](docs/xxxl/xxxl-xdex-listing-plan.md)
+- [XXXL Program v1 review summary](docs/xxxl/xxxl-program-v1-review-summary.md)
 - [XXXL Program v1 deployment readiness](docs/xxxl/xxxl-program-v1-deployment-readiness.md)
 
 The review summary explains:
@@ -127,6 +128,7 @@ Latest reviewed main includes:
 - XXXL Genesis supply invariant hardening
 - XXXL Program v1 X1 runtime mapping
 - XXXL xDex listing plan
+- XXXL Program v1 review summary
 - XXXL Program v1 deployment readiness
 
 ## Validation commands
