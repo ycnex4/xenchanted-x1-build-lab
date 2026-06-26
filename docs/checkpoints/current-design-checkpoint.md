@@ -16,6 +16,48 @@ and in:
 -->
 
 
+# Latest XXXL runtime candidate transition semantics checkpoint
+
+Stage XXXL Program v1 now has deterministic runtime candidate transition semantics.
+
+Authoritative document:
+
+- `docs/xxxl/xxxl-runtime-candidate-transition-semantics.md`
+
+Checkpoint document:
+
+- `docs/checkpoints/xxxl-runtime-candidate-transition-semantics.md`
+
+Implementation files:
+
+- `src/xxxl/runtime-transition.ts`
+- `tests/xxxl/runtime-transition.test.ts`
+
+Canonical transition:
+
+    CONSUME_GATEWAY_MINT
+
+Success effect:
+
+- Mint State total supply increases
+- Recipient Balance balance increases
+- Processed Event is marked consumed
+
+Failure effect:
+
+- no supply mutation
+- no balance mutation
+- no processed-event mutation
+
+Expected validation baseline:
+
+- TypeScript typecheck: passing
+- Tests: 70 files / 477 tests passing
+- Build: passing
+
+Status: candidate transition semantics only, no production runtime code yet.
+
+
 # Latest XXXL runtime candidate account and instruction schema checkpoint
 
 Stage XXXL Program v1 now has a concrete runtime candidate account layout and instruction schema.
