@@ -35,8 +35,40 @@ The runtime must not become:
 - a spendable BLD ledger;
 - a spendable XBP ledger;
 - an Ethereum log scanner;
-- a bridge execution engine;
+- an XNTD transfer execution engine;
 - a general reputation score calculator.
+
+## XNTD transfer path vs Build activation
+
+XNTD transfer to X1 and Build activation are separate protocol concerns.
+
+A participant may move XNTD to X1 without creating or owning a Build.
+
+The XNTD transport path is responsible for token movement:
+
+- source chain event;
+- X1 recipient;
+- amount;
+- finality;
+- authorization;
+- replay protection;
+- mint or claim on X1.
+
+The XNTD transport path must not automatically:
+
+- create a Build;
+- update Build history;
+- grant Build Identity;
+- apply Core redeem history;
+- apply XEN burn history;
+- apply X1 fee contribution;
+- change Build eligibility.
+
+Build activation is a separate profile/history operation.
+
+Build activation may require full-profile validation, but that requirement applies only to Build state transitions, not to ordinary XNTD transfer to X1.
+
+A future UI may offer a guided combined flow, but runtime responsibilities must remain separate.
 
 ## Current model being mapped
 
@@ -433,7 +465,7 @@ Must not:
 
 A gateway activation should not require submitting every raw source event to X1 runtime.
 
-The likely production model is cumulative full-profile checkpoint activation.
+The likely production model for Build activation is cumulative full-profile checkpoint activation.
 
 A profile checkpoint should include:
 
@@ -602,7 +634,7 @@ This stage does not implement:
 - production signer keys;
 - live watcher service;
 - trustless Ethereum proof verification;
-- bridge execution;
+- XNTD transfer execution;
 - spendable BLD token;
 - marketplace mechanics;
 - frontend UI;

@@ -16,6 +16,28 @@ and in:
 -->
 
 
+# Latest XNTD transfer / Build activation separation checkpoint
+
+The XNTD transfer path and Build activation boundary were explicitly separated on branch `decouple-xntd-transfer-from-build`.
+
+Main decision:
+
+- XNTD transfer to X1 must not require an existing Build.
+- A participant may move XNTD to X1 without creating or updating Build State.
+- Build activation remains a separate profile/history operation.
+- Build activation may require full Ethereum/XC profile validation.
+- XNTD transport must not automatically mutate Build history, Build Identity, contribution facts, or Build eligibility.
+- A future UI may combine XNTD transfer + Build activation in one guided flow, but runtime responsibilities must remain separate.
+
+Affected docs:
+
+- `docs/build/build-v1-spec.md`
+- `docs/build/build-v1-x1-runtime-boundary.md`
+- `docs/gateway/build-full-profile-activation-boundary.md`
+
+Status: design correction, docs-first.
+
+
 # Latest Build v1 X1 runtime boundary checkpoint
 
 The Build v1 X1 runtime boundary planning stage was started on branch `build-v1-x1-runtime-boundary`.
