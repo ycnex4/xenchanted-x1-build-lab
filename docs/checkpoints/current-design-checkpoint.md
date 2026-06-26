@@ -16,6 +16,50 @@ and in:
 -->
 
 
+# Latest XXXL incident response and emergency freeze policy checkpoint
+
+Stage XXXL Program v1 now has an incident response and emergency freeze policy candidate.
+
+Authoritative document:
+
+- `docs/xxxl/xxxl-incident-response-emergency-freeze-policy.md`
+
+Checkpoint document:
+
+- `docs/checkpoints/xxxl-incident-response-emergency-freeze-policy.md`
+
+Implementation files:
+
+- `src/xxxl/runtime-incident-policy.ts`
+- `tests/xxxl/runtime-incident-policy.test.ts`
+
+Incident coverage:
+
+- guardian compromise
+- route anomaly
+- replay anomaly
+- finality issue
+- supply mismatch
+- unexpected mint
+
+Response actions:
+
+- observe
+- pause route
+- emergency freeze
+- guardian rotation
+- public notice
+- post-mortem
+
+Expected validation baseline:
+
+- TypeScript typecheck: passing
+- Tests: 72 files / 496 tests passing
+- Build: passing
+
+Status: candidate policy only, no production freeze instruction yet.
+
+
 # Latest XXXL runtime route, guardian, and finality policy checkpoint
 
 Stage XXXL Program v1 now has a route, guardian, and finality policy candidate.
