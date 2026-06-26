@@ -16,6 +16,51 @@ and in:
 -->
 
 
+# Latest XXXL authority freeze procedure model checkpoint
+
+Stage XXXL Program v1 now has an authority freeze procedure model.
+
+Authoritative document:
+
+- `docs/xxxl/xxxl-authority-freeze-procedure-model.md`
+
+Checkpoint document:
+
+- `docs/checkpoints/xxxl-authority-freeze-procedure-model.md`
+
+Implementation files:
+
+- `src/xxxl/runtime-authority-freeze.ts`
+- `tests/xxxl/runtime-authority-freeze.test.ts`
+
+Core principle:
+
+    Rules decide eligibility.
+    Public timelock gives review window.
+    Guardians attest and execute.
+    Freeze removes upgrade and supply authority.
+
+Mandatory prerequisites:
+
+- runtime schema complete
+- transition semantics complete
+- route policy complete
+- incident policy complete
+- deployment dry run accepted
+- public disclosure ready
+- freeze plan ready
+- X1-native mechanics complete
+- review completed
+
+Expected validation baseline:
+
+- TypeScript typecheck: passing
+- Tests: 74 files / 516 tests passing
+- Build: passing
+
+Status: authority freeze procedure model only, no live freeze instruction.
+
+
 # Latest XXXL deployment dry-run model checkpoint
 
 Stage XXXL Program v1 now has a deployment dry-run model.
