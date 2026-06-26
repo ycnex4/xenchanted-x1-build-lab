@@ -445,6 +445,16 @@ Build Actor remains a future active layer.
 
 X1 Build is a voluntary NFT-like user object that records independent verified contribution layers: Core redeem contribution history, global XEN Burn Power history, XNTD commitment facts, X1 fee contribution checkpoints, and owner-controlled Build Identity metadata.
 
+## XNTD transfer separation
+
+XNTD transfer to X1 does not require Build.
+
+A user may move XNTD to X1 without creating Build State or passing Build activation requirements.
+
+Build activation requirements apply only when creating or updating Build as a verified contribution/history object.
+
+The XNTD transport path must not automatically mutate Build State.
+
 ## Gateway full-profile activation boundary
 
 ETH/XC gateway Build activation is full-profile based.

@@ -16,6 +16,14 @@ The ETH/XC gateway is therefore not a way to create an empty X1 object.
 
 The ETH/XC gateway imports the participant's verified Ethereum/XC contribution profile into Build.
 
+This document is about Build activation and Build update.
+
+It is not a rule that ordinary XNTD transfer to X1 requires Build.
+
+XNTD transfer to X1 is a separate transport path and should remain available without Build.
+
+Build is required only for Build-specific history, identity, eligibility, or contribution-state transitions.
+
 ## Full-profile rule
 
 Gateway activation or update must evaluate the full Ethereum/XC contribution profile for the Ethereum address.
@@ -111,9 +119,11 @@ The gateway must scan Core redeem history, scan `XEN.burn` history, verify XNTD 
 
 ## Short rule
 
-The ETH/XC gateway does not issue an empty Build.
+The ETH/XC Build activation path does not issue an empty Build.
 
-The ETH/XC gateway imports the participant's verified contribution history.
+The ETH/XC Build activation path imports the participant's verified contribution history.
+
+Ordinary XNTD transfer to X1 remains separate and does not require Build.
 
 ## Gateway preview is display-only
 
