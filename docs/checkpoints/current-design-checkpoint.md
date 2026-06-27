@@ -16,6 +16,48 @@ and in:
 -->
 
 
+# Latest XXXL X1/SVM program skeleton checkpoint
+
+Stage XXXL Program v1 now has the first X1/SVM-facing program skeleton.
+
+Authoritative document:
+
+- `docs/xxxl/xxxl-x1-svm-program-skeleton.md`
+
+Checkpoint document:
+
+- `docs/checkpoints/xxxl-x1-svm-program-skeleton.md`
+
+Implementation files:
+
+- `src/xxxl/x1-svm-program-skeleton.ts`
+- `tests/xxxl/x1-svm-program-skeleton.test.ts`
+
+Key properties:
+
+- model-only, not deployable
+- Program ID placeholder boundary explicit
+- SPL Token Program ID constant fixed
+- gateway mint authority PDA seeds fixed
+- deterministic model PDA derivation
+- `consume_gateway_mint` handler skeleton
+- canonical account meta order fixed
+- writable accounts explicit
+- Mint Authority PDA is CPI signer only
+- guardian signature verification remains outside runtime
+- route activation requests rejected
+- live transaction submission requests rejected
+- production byte layout validation included
+
+Expected validation baseline:
+
+- TypeScript typecheck: passing
+- Tests: 85 files / 664 tests passing
+- Build: passing
+
+Status: X1/SVM-facing skeleton only, before live deployable runtime implementation.
+
+
 # Latest XXXL production runtime byte layout checkpoint
 
 Stage XXXL Program v1 now has production-oriented runtime byte layout definitions.
