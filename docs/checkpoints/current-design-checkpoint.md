@@ -34892,3 +34892,36 @@ Non-goals:
 - no authority freeze execution
 
 Next likely stage: combine CPI preparation and state mutation into an atomic execution-plan fixture, still gated and not live.
+
+## XXXL atomic execution plan fixture
+
+Status: `ATOMIC_EXECUTION_PLAN_FIXTURE_ONLY_NOT_LIVE_ROUTE`.
+
+This stage adds a separate atomic execution-plan fixture while keeping `process_instruction` non-live.
+
+Fixed order:
+
+1. validate and prepare CPI boundary
+2. mark processed event consumed
+3. credit recipient balance
+4. keep live route disabled
+
+What is fixed:
+
+- execution step order is explicit and test-covered
+- prepared CPI amount must match decoded amount
+- replay is rejected before recipient balance credit
+- recipient balance overflow is rejected before processed event is marked consumed
+- wrong recipient balance owner/mint is rejected before mutation
+- live route activation remains disabled
+
+Non-goals:
+
+- no live route activation
+- no mint_to invocation from process_instruction
+- no process_instruction processed-event mutation
+- no process_instruction recipient-balance mutation
+- no deployment
+- no authority freeze execution
+
+Next likely stage: guarded live-handler wiring model, where activation remains explicitly disabled until all authority/freeze/deploy constraints are satisfied.

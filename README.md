@@ -591,3 +591,25 @@ This stage remains fixture-only:
 - no process_instruction state mutation
 - no deployment
 - no authority freeze execution
+
+## XXXL atomic execution plan fixture
+
+The XXXL X1/SVM port now has an atomic execution-plan fixture.
+
+The fixed order is:
+
+1. validate and prepare CPI boundary
+2. mark processed event consumed
+3. credit recipient balance
+4. keep live route disabled
+
+The fixture prechecks replay, recipient balance owner/mint, prepared CPI amount, and recipient balance overflow before applying state mutations.
+
+This stage remains plan-only:
+
+- no live route activation
+- no mint_to invocation from process_instruction
+- no process_instruction processed-event mutation
+- no process_instruction recipient-balance mutation
+- no deployment
+- no authority freeze execution

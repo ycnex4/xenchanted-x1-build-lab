@@ -84,3 +84,4 @@ export * from "./xxxl/runtime-account-instruction-decode-fixture.js";
 export * from "./xxxl/spl-token-mint-to-cpi-fixture.js";
 export * from "./xxxl/handler-integration-fixture.js";
 export * from "./xxxl/runtime-state-mutation-fixture.js";
+export * from "./xxxl/atomic-execution-plan-fixture.js";
