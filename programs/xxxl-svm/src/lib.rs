@@ -18,10 +18,8 @@ pub mod processor;
 pub mod state;
 pub mod validation;
 
-pub const XXXL_PROGRAM_ID_PLACEHOLDER: &str =
-    "XXXLProgram111111111111111111111111111111111";
+pub const XXXL_PROGRAM_ID_PLACEHOLDER: &str = "XXXLProgram111111111111111111111111111111111";
 
-pub const XXXL_TOKEN_PROGRAM_ID: &str =
-    "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA";
+pub const XXXL_TOKEN_PROGRAM_ID: &str = "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA";
 
 pub const XXXL_RUNTIME_STATUS: &str = "SCAFFOLD_ONLY_NOT_DEPLOYABLE";

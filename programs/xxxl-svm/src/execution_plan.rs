@@ -5,8 +5,8 @@ use crate::{
     instruction::ConsumeGatewayMintArgs,
     processor::PreparedConsumeGatewayMintCpi,
     state::{
-        credit_recipient_balance, mark_processed_event_consumed,
-        ProcessedEventAccountView, RecipientBalanceAccountView,
+        credit_recipient_balance, mark_processed_event_consumed, ProcessedEventAccountView,
+        RecipientBalanceAccountView,
     },
 };
 
@@ -361,7 +361,10 @@ mod tests {
         assert!(processed_event.consumed());
         assert_eq!(processed_event.consumed_amount(), 1_000);
         assert_eq!(recipient_balance.balance(), 1_200);
-        assert_eq!(read_fixed_32(&recipient_balance_data, 96), args.canonical_event_key);
+        assert_eq!(
+            read_fixed_32(&recipient_balance_data, 96),
+            args.canonical_event_key
+        );
     }
 
     #[test]
@@ -446,8 +449,10 @@ mod tests {
     }
 
     fn valid_processed_event_data(args: &ConsumeGatewayMintArgs, consumed: bool) -> Vec<u8> {
-        let mut data =
-            account_data(PROCESSED_EVENT_ACCOUNT_LEN, PROCESSED_EVENT_ACCOUNT_DISCRIMINATOR);
+        let mut data = account_data(
+            PROCESSED_EVENT_ACCOUNT_LEN,
+            PROCESSED_EVENT_ACCOUNT_DISCRIMINATOR,
+        );
 
         data[10] = if consumed { 1 } else { 0 };
         data[16..48].copy_from_slice(&args.canonical_event_key);
@@ -458,8 +463,10 @@ mod tests {
     }
 
     fn valid_recipient_balance_data(args: &ConsumeGatewayMintArgs, balance: u128) -> Vec<u8> {
-        let mut data =
-            account_data(RECIPIENT_BALANCE_ACCOUNT_LEN, RECIPIENT_BALANCE_ACCOUNT_DISCRIMINATOR);
+        let mut data = account_data(
+            RECIPIENT_BALANCE_ACCOUNT_LEN,
+            RECIPIENT_BALANCE_ACCOUNT_DISCRIMINATOR,
+        );
 
         data[16..48].copy_from_slice(&args.recipient);
         data[48..80].copy_from_slice(&args.mint_id);

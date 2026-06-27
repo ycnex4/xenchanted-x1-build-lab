@@ -34948,3 +34948,28 @@ Immediate policy:
 - do not add Mollusk/Trident before guarded handler wiring and invariant catalog are mature
 - require a manual account-constraint audit before guarded live-handler wiring
 - require all tools and manual checklists before any real deploy/freeze action
+
+## XXXL Rust quality/security baseline
+
+Status: `BASELINE_CAPTURED_WITH_SOLANA_DEPENDENCY_AUDIT_BLOCKER`.
+
+The Rust quality/security baseline has been captured.
+
+Results:
+
+- `cargo fmt --check` is enforced after applying rustfmt
+- Rust SVM tests pass: 63 passed, 0 failed
+- `cargo audit` identifies unresolved `RUSTSEC-2024-0344` in `curve25519-dalek v3.2.1`
+- the vulnerable dependency is pulled through `solana-program v1.18.26`
+- dry-run upgrade to `curve25519-dalek v4.1.3` is incompatible with current Solana 1.18 dependency requirements
+- dry-run updates for `solana-program` and `spl-token` within the current semver ranges change 0 packages
+- `cargo deny` now has an explicit config at `programs/xxxl-svm/deny.toml`
+- `cargo deny` licenses/bans/sources are green
+- `cargo deny` advisories intentionally surface the same unresolved Solana dependency-chain blocker
+- `cargo geiger` remains report-only and currently has a reporting/tooling limitation in this environment
+
+Policy:
+
+- do not ignore the audit blocker as a fake fix
+- do not upgrade Solana/SPL runtime dependencies inside this baseline stage
+- keep the audit blocker unresolved until a dedicated Solana/SPL dependency upgrade stage

@@ -1,10 +1,6 @@
 use solana_program::{
-    account_info::AccountInfo,
-    program_error::ProgramError,
-    program_option::COption,
-    program_pack::Pack,
-    pubkey::Pubkey,
-    rent::Rent,
+    account_info::AccountInfo, program_error::ProgramError, program_option::COption,
+    program_pack::Pack, pubkey::Pubkey, rent::Rent,
 };
 use spl_token::state::{Account as SplTokenAccount, AccountState, Mint as SplTokenMint};
 
@@ -125,7 +121,9 @@ mod tests {
 
         let result = assert_account_owner(&account, &wrong_owner);
 
-        assert!(matches!(result, Err(ProgramError::Custom(code)) if code == XxxlError::InvalidAccountOwner as u32));
+        assert!(
+            matches!(result, Err(ProgramError::Custom(code)) if code == XxxlError::InvalidAccountOwner as u32)
+        );
     }
 
     #[test]
@@ -169,7 +167,9 @@ mod tests {
 
         let result = assert_rent_exempt(&account, &rent);
 
-        assert!(matches!(result, Err(ProgramError::Custom(code)) if code == XxxlError::InvalidRentExemption as u32));
+        assert!(
+            matches!(result, Err(ProgramError::Custom(code)) if code == XxxlError::InvalidRentExemption as u32)
+        );
     }
 
     #[test]
@@ -218,7 +218,9 @@ mod tests {
 
         let result = assert_initialized_mint_account(&account, &mint_authority);
 
-        assert!(matches!(result, Err(ProgramError::Custom(code)) if code == XxxlError::InvalidAccountOwner as u32));
+        assert!(
+            matches!(result, Err(ProgramError::Custom(code)) if code == XxxlError::InvalidAccountOwner as u32)
+        );
     }
 
     #[test]
@@ -242,7 +244,9 @@ mod tests {
 
         let result = assert_initialized_mint_account(&account, &mint_authority);
 
-        assert!(matches!(result, Err(ProgramError::Custom(code)) if code == XxxlError::InvalidInstruction as u32));
+        assert!(
+            matches!(result, Err(ProgramError::Custom(code)) if code == XxxlError::InvalidInstruction as u32)
+        );
     }
 
     #[test]
@@ -267,7 +271,9 @@ mod tests {
 
         let result = assert_initialized_mint_account(&account, &wrong_authority);
 
-        assert!(matches!(result, Err(ProgramError::Custom(code)) if code == XxxlError::InvalidPda as u32));
+        assert!(
+            matches!(result, Err(ProgramError::Custom(code)) if code == XxxlError::InvalidPda as u32)
+        );
     }
 
     #[test]
@@ -317,7 +323,9 @@ mod tests {
 
         let result = assert_recipient_ata_boundary(&account, &wrong_owner, &mint);
 
-        assert!(matches!(result, Err(ProgramError::Custom(code)) if code == XxxlError::InvalidRecipientAta as u32));
+        assert!(
+            matches!(result, Err(ProgramError::Custom(code)) if code == XxxlError::InvalidRecipientAta as u32)
+        );
     }
 
     #[test]
@@ -343,7 +351,9 @@ mod tests {
 
         let result = assert_recipient_ata_boundary(&account, &recipient_owner, &wrong_mint);
 
-        assert!(matches!(result, Err(ProgramError::Custom(code)) if code == XxxlError::InvalidRecipientAta as u32));
+        assert!(
+            matches!(result, Err(ProgramError::Custom(code)) if code == XxxlError::InvalidRecipientAta as u32)
+        );
     }
 
     #[test]
@@ -368,7 +378,9 @@ mod tests {
 
         let result = assert_recipient_ata_boundary(&account, &recipient_owner, &mint);
 
-        assert!(matches!(result, Err(ProgramError::Custom(code)) if code == XxxlError::InvalidRecipientAta as u32));
+        assert!(
+            matches!(result, Err(ProgramError::Custom(code)) if code == XxxlError::InvalidRecipientAta as u32)
+        );
     }
 
     fn packed_mint(mint_authority: Pubkey, initialized: bool) -> Vec<u8> {
@@ -385,11 +397,7 @@ mod tests {
         data
     }
 
-    fn packed_token_account(
-        mint: Pubkey,
-        owner: Pubkey,
-        state: AccountState,
-    ) -> Vec<u8> {
+    fn packed_token_account(mint: Pubkey, owner: Pubkey, state: AccountState) -> Vec<u8> {
         let mut data = vec![0u8; SplTokenAccount::LEN];
         let account = SplTokenAccount {
             mint,
