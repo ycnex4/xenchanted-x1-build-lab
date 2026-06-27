@@ -35206,3 +35206,50 @@ No runtime code was changed.
 No Mollusk harness was added yet.
 
 No live gateway route was activated.
+
+## XXXL first scaffold-only Mollusk harness
+
+Status: `COMPLETED`.
+
+The first real Mollusk execution harness has been added.
+
+Added integration test:
+
+- `programs/xxxl-svm/tests/mollusk_consume_gateway_mint.rs`
+
+The test is ignored by default because it requires `cargo build-sbf` and `target/deploy/xxxl_svm.so`.
+
+Execution command:
+
+    cargo build-sbf
+    cargo test --test mollusk_consume_gateway_mint -- --ignored --nocapture
+
+Verified behavior:
+
+- Mollusk loads the real SBF artifact.
+- `consume_gateway_mint` executes successfully.
+- Runtime log confirms live route execution is not activated.
+- processed event state remains unchanged.
+- recipient balance state remains unchanged.
+- SPL mint state remains unchanged.
+- recipient token account state remains unchanged.
+
+Added exact pinned direct dev-dependencies for integration test types:
+
+- `solana-account = "=3.4.0"`
+- `solana-instruction = "=3.3.0"`
+- `solana-pubkey = "=4.1.0"`
+
+Hard checks passed:
+
+- `cargo build-sbf`
+- `cargo fmt --check`
+- `cargo test`
+- `cargo test --test mollusk_consume_gateway_mint -- --ignored --nocapture`
+- `cargo clippy --all-targets -- -D warnings`
+- `cargo audit`
+- `cargo deny` licenses/bans/sources
+
+No live route was activated.
+No SPL Token `mint_to` is invoked.
+No XXXL minting is enabled.

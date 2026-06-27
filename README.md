@@ -810,3 +810,32 @@ No runtime code was changed.
 No Mollusk harness was added yet.
 
 No live gateway route was activated.
+
+## XXXL first scaffold-only Mollusk harness
+
+The first real Mollusk execution harness has been added for the XXXL SVM runtime.
+
+The harness:
+
+- builds the SBF program with `cargo build-sbf`
+- loads `target/deploy/xxxl_svm.so` through Mollusk
+- executes a valid `consume_gateway_mint` instruction
+- verifies scaffold-only success
+- verifies target state accounts remain unchanged
+
+The integration test is ignored by default because it requires a local SBF artifact:
+
+    cargo build-sbf
+    cargo test --test mollusk_consume_gateway_mint -- --ignored --nocapture
+
+Verified behavior:
+
+- runtime log confirms `live route execution is not activated`
+- processed event remains unchanged
+- recipient balance remains unchanged
+- SPL mint supply remains unchanged
+- recipient token balance remains unchanged
+
+No live gateway route was activated.
+No SPL Token `mint_to` is invoked.
+No XXXL minting is enabled.
