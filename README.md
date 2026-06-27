@@ -918,3 +918,16 @@ No live route was activated.
 No SPL Token `mint_to` is invoked.
 No XXXL minting is enabled.
 No runtime state mutation is enabled.
+
+## XXXL processed event mutation boundary
+
+The XXXL runtime model now has a separately tested processed-event mutation boundary.
+
+The new boundary accepts an execution plan and processed-event account data, validates the event identity and safety flags, then marks the event as consumed by writing consumed flag, amount, and slot.
+
+This stage does not connect mutation to `process_instruction`.
+
+No live route was activated.
+No SPL Token `mint_to` is invoked.
+No XXXL minting is enabled.
+No recipient balance mutation is enabled.
