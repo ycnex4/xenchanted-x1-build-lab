@@ -35614,3 +35614,54 @@ No XXXL minting is enabled.
 No processed-event mutation is performed.
 No recipient-balance mutation is performed.
 This boundary is not connected to live `process_instruction` execution.
+
+## XXXL runtime local state mutation composition boundary
+
+Status: `COMPLETED`.
+
+A runtime local state mutation composition boundary was added.
+
+The boundary accepts:
+
+- program id
+- account list
+- decoded `ConsumeGatewayMintArgs`
+- rent
+- consumed slot
+
+It composes:
+
+- guarded account validation
+- CPI boundary preparation
+- atomic execution plan construction
+- SPL Token `mint_to` CPI planning
+- local processed-event mutation
+- local recipient-balance mutation
+
+The local mutation uses:
+
+- `apply_atomic_state_mutation_composition_boundary`
+
+Safety properties:
+
+- recipient-balance overflow is rejected before processed-event mark
+- consumed processed event is rejected before recipient-balance credit
+- wrong recipient token account is rejected before local mutation
+- SPL mint supply remains unchanged
+- recipient SPL token account balance remains unchanged
+
+Hard checks passed:
+
+- `cargo build-sbf`
+- `cargo fmt --check`
+- `cargo test`
+- `cargo test --test mollusk_consume_gateway_mint -- --ignored --nocapture`
+- `cargo clippy --all-targets -- -D warnings`
+- `cargo audit`
+- `cargo deny` licenses/bans/sources
+
+No live route was activated.
+No `invoke_signed` is called.
+No SPL Token `mint_to` is invoked.
+No XXXL minting is enabled.
+This boundary is not connected to live `process_instruction` execution.
