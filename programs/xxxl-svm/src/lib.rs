@@ -11,6 +11,7 @@
 pub mod cpi;
 pub mod entrypoint;
 pub mod error;
+pub mod execution_plan;
 pub mod instruction;
 pub mod pda;
 pub mod processor;
