@@ -43,6 +43,7 @@ Important supporting documents:
 - [XXXL multichain low-weight route policy](docs/xxxl/xxxl-multichain-low-weight-route-policy.md)
 - [XXXL runtime program skeleton](docs/xxxl/xxxl-runtime-program-skeleton.md)
 - [XXXL runtime execution vectors](docs/xxxl/xxxl-runtime-execution-vectors.md)
+- [XXXL runtime dry-run fixtures](docs/xxxl/xxxl-runtime-dry-run-fixtures.md)
 - [XXXL Program v1 deployment readiness](docs/xxxl/xxxl-program-v1-deployment-readiness.md)
 
 The review summary explains:
@@ -70,7 +71,7 @@ The assumptions document explicitly records MVP trust boundaries and known limit
 Current main baseline:
 
 - TypeScript typecheck: passing
-- Tests: 80 files / 588 tests passing
+- Tests: 81 files / 601 tests passing
 - Build: passing
 - npm audit: 0 vulnerabilities
 
@@ -163,6 +164,7 @@ Latest reviewed main includes:
 - XXXL multichain low-weight route policy
 - XXXL runtime program skeleton
 - XXXL runtime execution vectors
+- XXXL runtime dry-run fixtures
 - XXXL Program v1 deployment readiness
 
 ## Validation commands
@@ -176,8 +178,8 @@ Run:
 
 Expected current result:
 
-    80 test files passed
-    588 tests passed
+    81 test files passed
+    601 tests passed
     found 0 vulnerabilities
 
 ## CLI

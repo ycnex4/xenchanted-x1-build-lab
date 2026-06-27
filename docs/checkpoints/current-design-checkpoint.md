@@ -16,6 +16,56 @@ and in:
 -->
 
 
+# Latest XXXL runtime dry-run fixtures checkpoint
+
+Stage XXXL Program v1 now has model-layer runtime dry-run fixtures.
+
+Authoritative document:
+
+- `docs/xxxl/xxxl-runtime-dry-run-fixtures.md`
+
+Checkpoint document:
+
+- `docs/checkpoints/xxxl-runtime-dry-run-fixtures.md`
+
+Implementation files:
+
+- `src/xxxl/runtime-dry-run-fixtures.ts`
+- `tests/xxxl/runtime-dry-run-fixtures.test.ts`
+
+Fixture groups:
+
+- all execution vectors
+- successful routes
+- preflight rejections
+- transition rejections
+
+Dry-run behavior:
+
+- validates execution vector set
+- reruns runtime program skeleton
+- compares skeleton output to stored execution vectors
+- reports per-vector result
+- treats expected rejection vectors as successful dry-run outcomes
+- successful reports confirm CPI is not skipped
+- rejection reports confirm CPI is skipped
+
+Route-aware coverage:
+
+- Ethereum primary full-weight success vector
+- Avalanche low-weight route-aware success vector
+- runtime remains non-Ethereum-capable through explicit low-weight route policy
+- no Avalanche route activation
+
+Expected validation baseline:
+
+- TypeScript typecheck: passing
+- Tests: 81 files / 601 tests passing
+- Build: passing
+
+Status: model-layer dry-run fixtures only, before real runtime/deployment fixtures.
+
+
 # Latest XXXL runtime execution vectors checkpoint
 
 Stage XXXL Program v1 now has deterministic runtime execution vectors.

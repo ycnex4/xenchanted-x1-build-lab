@@ -70,3 +70,4 @@ export * from "./xxxl/runtime-instruction-serialization-vectors.js";
 export * from "./xxxl/multichain-low-weight-route-policy.js";
 export * from "./xxxl/runtime-program-skeleton.js";
 export * from "./xxxl/runtime-execution-vectors.js";
+export * from "./xxxl/runtime-dry-run-fixtures.js";
