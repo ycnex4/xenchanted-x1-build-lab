@@ -34836,3 +34836,31 @@ Non-goals:
 - no recipient-balance mutation yet
 
 Next likely stage: connect the decoded handler path to validation and CPI preparation without enabling route activation.
+
+## XXXL handler integration fixture
+
+Status: `HANDLER_INTEGRATION_FIXTURE_PREPARED_NOT_LIVE_ROUTE`.
+
+This stage connects the decoded Rust handler inputs to validation and CPI preparation, while keeping live route execution disabled.
+
+What is fixed:
+
+- decoded `consume_gateway_mint` args can prepare a CPI boundary
+- canonical account indexes are loaded
+- runtime account views are parsed
+- program-owned accounts go through owner and rent checks
+- SPL Mint and recipient token account validation are executed before CPI preparation
+- gateway mint authority PDA and bump are verified before CPI preparation
+- prepared boundary includes token program, mint, recipient token account, mint authority PDA, bump, and amount
+- `process_instruction` remains scaffold-only and does not invoke live `mint_to`
+
+Non-goals:
+
+- no live mint_to invocation from handler
+- no route activation
+- no processed-event mutation
+- no recipient-balance mutation
+- no deployment
+- no authority freeze execution
+
+Next likely stage: processed-event and recipient-balance mutation model/fixture, still keeping route activation controlled.

@@ -563,3 +563,16 @@ This stage fixes:
 - owner and rent helper coverage
 
 This stage does not activate live routes, deployment, authority freeze execution, processed-event mutation, or recipient-balance mutation.
+
+## XXXL handler integration fixture
+
+The XXXL X1/SVM port now has a handler integration fixture that connects decoded `consume_gateway_mint` instruction data, canonical account indexes, runtime account views, owner/rent checks, SPL Mint validation, recipient token account validation, gateway PDA/bump verification, and CPI boundary preparation.
+
+This stage is still not live route execution:
+
+- `process_instruction` does not call `mint_to_cpi_boundary`
+- no route activation
+- no processed-event mutation
+- no recipient-balance mutation
+- no deployment
+- no authority freeze execution
