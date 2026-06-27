@@ -35424,3 +35424,45 @@ No SPL Token `mint_to` is invoked.
 No XXXL minting is enabled.
 No recipient balance mutation is enabled.
 This boundary is not connected to `process_instruction`.
+
+## XXXL recipient balance mutation boundary
+
+Status: `COMPLETED`.
+
+A separately tested recipient-balance mutation boundary was added.
+
+The boundary accepts:
+
+- `AtomicConsumeGatewayMintExecutionPlan`
+- mutable recipient-balance account data
+
+It validates:
+
+- fixed atomic step order
+- live route disabled flag
+- mint_to disabled flag
+- non-zero amount
+- matching recipient owner
+- matching mint
+- no balance overflow
+
+It writes only after validation:
+
+- recipient balance
+- last canonical event key
+
+Hard checks passed:
+
+- `cargo build-sbf`
+- `cargo fmt --check`
+- `cargo test`
+- `cargo test --test mollusk_consume_gateway_mint -- --ignored --nocapture`
+- `cargo clippy --all-targets -- -D warnings`
+- `cargo audit`
+- `cargo deny` licenses/bans/sources
+
+No live route was activated.
+No SPL Token `mint_to` is invoked.
+No XXXL minting is enabled.
+No processed event mutation is enabled by this boundary.
+This boundary is not connected to `process_instruction`.

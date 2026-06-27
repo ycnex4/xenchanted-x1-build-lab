@@ -931,3 +931,16 @@ No live route was activated.
 No SPL Token `mint_to` is invoked.
 No XXXL minting is enabled.
 No recipient balance mutation is enabled.
+
+## XXXL recipient balance mutation boundary
+
+The XXXL runtime model now has a separately tested recipient-balance mutation boundary.
+
+The new boundary accepts an execution plan and recipient-balance account data, validates the account identity and safety flags, then credits recipient balance and records the canonical event key.
+
+This stage does not connect mutation to `process_instruction`.
+
+No live route was activated.
+No SPL Token `mint_to` is invoked.
+No XXXL minting is enabled.
+No processed event mutation is enabled by this boundary.
