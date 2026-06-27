@@ -68,3 +68,4 @@ export * from "./xxxl/runtime-serialization-boundary.js";
 export * from "./xxxl/runtime-account-serialization-vectors.js";
 export * from "./xxxl/runtime-instruction-serialization-vectors.js";
 export * from "./xxxl/multichain-low-weight-route-policy.js";
+export * from "./xxxl/runtime-program-skeleton.js";
