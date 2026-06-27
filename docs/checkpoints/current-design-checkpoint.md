@@ -35167,3 +35167,42 @@ Decision:
 - This stage does not add Mollusk to the repository.
 - This stage does not change runtime code.
 - This stage does not activate live route execution.
+
+## XXXL Mollusk dev-dependency
+
+Status: `COMPLETED`.
+
+`mollusk-svm = "0.13.4"` has been added as a dev-dependency.
+
+Runtime pins remain:
+
+- `solana-program = "2.3.0"`
+- `spl-token = "5.0.2"`
+
+Verification:
+
+- `cargo fmt --check` passes
+- `cargo test` passes with 65 tests
+- `cargo clippy --all-targets -- -D warnings` passes
+- `cargo audit` exits 0
+- `cargo deny` licenses/bans/sources exits 0
+
+Dependency footprint:
+
+- cargo audit scans 404 crate dependencies after adding Mollusk
+- allowed audit warnings increase from 3 to 6
+
+Allowed warnings after adding Mollusk:
+
+- `bincode 1.3.3`
+- `derivative 2.2.0`
+- `libsecp256k1 0.6.0`
+- `paste 1.0.15`
+- `proc-macro-error2 2.0.1`
+- `rand 0.7.3`
+
+No runtime code was changed.
+
+No Mollusk harness was added yet.
+
+No live gateway route was activated.

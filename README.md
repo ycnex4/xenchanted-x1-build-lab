@@ -785,3 +785,28 @@ No repository dependency was changed in this stage.
 No runtime code was changed.
 
 No live gateway route was activated.
+
+## XXXL Mollusk dev-dependency
+
+`mollusk-svm = "0.13.4"` has been added as a dev-dependency for future SVM runtime harness testing.
+
+This stage intentionally adds only the dependency and lockfile changes.
+
+Verification:
+
+- `cargo fmt --check` passes
+- `cargo test` passes with 65 tests
+- `cargo clippy --all-targets -- -D warnings` passes
+- `cargo audit` exits 0
+- `cargo deny` licenses/bans/sources exits 0
+
+Dependency footprint:
+
+- cargo audit scans 404 crate dependencies after adding Mollusk
+- allowed audit warnings increase from 3 to 6
+
+No runtime code was changed.
+
+No Mollusk harness was added yet.
+
+No live gateway route was activated.
