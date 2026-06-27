@@ -1,16 +1,13 @@
 use solana_program::{
-    account_info::AccountInfo,
-    instruction::Instruction,
-    program::invoke_signed,
-    program_error::ProgramError,
-    pubkey::Pubkey,
+    account_info::AccountInfo, instruction::Instruction, program::invoke_signed,
+    program_error::ProgramError, pubkey::Pubkey,
 };
 
 use crate::{
     error::XxxlError,
     pda::{
-        find_gateway_mint_authority, GATEWAY_MINT_AUTHORITY_SEED_0,
-        GATEWAY_MINT_AUTHORITY_SEED_1, GATEWAY_MINT_AUTHORITY_SEED_2,
+        find_gateway_mint_authority, GATEWAY_MINT_AUTHORITY_SEED_0, GATEWAY_MINT_AUTHORITY_SEED_1,
+        GATEWAY_MINT_AUTHORITY_SEED_2,
     },
 };
 
@@ -146,7 +143,9 @@ mod tests {
             0,
         );
 
-        assert!(matches!(result, Err(ProgramError::Custom(code)) if code == XxxlError::InvalidInstruction as u32));
+        assert!(
+            matches!(result, Err(ProgramError::Custom(code)) if code == XxxlError::InvalidInstruction as u32)
+        );
     }
 
     #[test]
@@ -177,7 +176,9 @@ mod tests {
 
         let result = assert_gateway_mint_authority_pda(&program_id, &wrong_pda, bump);
 
-        assert!(matches!(result, Err(ProgramError::Custom(code)) if code == XxxlError::InvalidPda as u32));
+        assert!(
+            matches!(result, Err(ProgramError::Custom(code)) if code == XxxlError::InvalidPda as u32)
+        );
     }
 
     #[test]
@@ -187,7 +188,9 @@ mod tests {
 
         let result = assert_gateway_mint_authority_pda(&program_id, &pda, bump.wrapping_add(1));
 
-        assert!(matches!(result, Err(ProgramError::Custom(code)) if code == XxxlError::InvalidPda as u32));
+        assert!(
+            matches!(result, Err(ProgramError::Custom(code)) if code == XxxlError::InvalidPda as u32)
+        );
     }
 
     #[test]
@@ -265,6 +268,8 @@ mod tests {
 
         let result = mint_to_cpi_boundary(&program_id, boundary);
 
-        assert!(matches!(result, Err(ProgramError::Custom(code)) if code == XxxlError::InvalidPda as u32));
+        assert!(
+            matches!(result, Err(ProgramError::Custom(code)) if code == XxxlError::InvalidPda as u32)
+        );
     }
 }

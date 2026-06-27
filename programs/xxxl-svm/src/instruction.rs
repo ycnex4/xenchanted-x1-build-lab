@@ -67,7 +67,8 @@ impl XxxlInstruction {
             || guardian_set_account_index != CONSUME_GATEWAY_MINT_GUARDIAN_SET_ACCOUNT_INDEX
             || mint_state_account_index != CONSUME_GATEWAY_MINT_MINT_STATE_ACCOUNT_INDEX
             || processed_event_account_index != CONSUME_GATEWAY_MINT_PROCESSED_EVENT_ACCOUNT_INDEX
-            || recipient_balance_account_index != CONSUME_GATEWAY_MINT_RECIPIENT_BALANCE_ACCOUNT_INDEX
+            || recipient_balance_account_index
+                != CONSUME_GATEWAY_MINT_RECIPIENT_BALANCE_ACCOUNT_INDEX
         {
             return Err(XxxlError::InvalidInstruction.into());
         }

@@ -633,3 +633,27 @@ Important decisions:
 - clippy `-D warnings` is not a hard gate until known scaffold warnings are cleaned up
 - `cargo geiger` is report-only until manual unsafe review
 - Mollusk and Trident are not introduced before handler/invariant structure is mature
+
+## XXXL Rust quality/security baseline
+
+The XXXL SVM program now has a Rust quality/security baseline stage.
+
+Current baseline:
+
+- `cargo fmt --check` is enforced after applying rustfmt
+- `cargo test` passes for the Rust SVM package
+- `cargo audit` identifies an unresolved Solana dependency-chain blocker:
+  - `RUSTSEC-2024-0344`
+  - `curve25519-dalek v3.2.1`
+  - required fix: `>=4.1.3`
+  - current blocker path: `solana-program v1.18.26`
+- `cargo deny` is configured with `programs/xxxl-svm/deny.toml`
+- `cargo deny` licenses/bans/sources are green
+- `cargo deny` advisories intentionally surface the same unresolved Solana dependency-chain blocker
+- `cargo geiger` remains report-only and currently has a reporting/tooling limitation in this environment
+
+Policy:
+
+- no fake audit ignore
+- no Solana/SPL runtime dependency upgrade inside the baseline stage
+- no `clippy -D warnings` hard gate until known entrypoint cfg warnings are handled

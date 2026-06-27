@@ -1,28 +1,21 @@
 use solana_program::{
-    account_info::AccountInfo,
-    entrypoint::ProgramResult,
-    msg,
-    program_error::ProgramError,
-    pubkey::Pubkey,
-    rent::Rent,
+    account_info::AccountInfo, entrypoint::ProgramResult, msg, program_error::ProgramError,
+    pubkey::Pubkey, rent::Rent,
 };
 
 use crate::{
-    cpi::{
-        assert_gateway_mint_authority_pda, MintToCpiAccounts, MintToCpiBoundary,
-    },
+    cpi::{assert_gateway_mint_authority_pda, MintToCpiAccounts, MintToCpiBoundary},
     error::XxxlError,
     instruction::{
-        ConsumeGatewayMintArgs, XxxlInstruction,
-        CONSUME_GATEWAY_MINT_ACCOUNT_META_COUNT,
+        ConsumeGatewayMintArgs, XxxlInstruction, CONSUME_GATEWAY_MINT_ACCOUNT_META_COUNT,
     },
     state::{
         GatewayConfigAccountView, GuardianSetAccountView, MintStateAccountView,
         ProcessedEventAccountView, RecipientBalanceAccountView,
     },
     validation::{
-        assert_account_owner, assert_initialized_mint_account,
-        assert_recipient_ata_boundary, assert_rent_exempt,
+        assert_account_owner, assert_initialized_mint_account, assert_recipient_ata_boundary,
+        assert_rent_exempt,
     },
 };
 
@@ -153,9 +146,7 @@ pub fn prepare_consume_gateway_mint_cpi_boundary<'a, 'b>(
         return Err(XxxlError::InvalidInstruction.into());
     }
 
-    if recipient_balance.owner() != args.recipient
-        || recipient_balance.mint() != args.mint_id
-    {
+    if recipient_balance.owner() != args.recipient || recipient_balance.mint() != args.mint_id {
         return Err(XxxlError::InvalidRecipientAta.into());
     }
 
@@ -165,11 +156,7 @@ pub fn prepare_consume_gateway_mint_cpi_boundary<'a, 'b>(
     let mint_decimals =
         assert_initialized_mint_account(spl_token_mint_account, mint_authority_pda.key)?;
 
-    assert_recipient_ata_boundary(
-        recipient_token_account,
-        &recipient_owner,
-        &mint_pubkey,
-    )?;
+    assert_recipient_ata_boundary(recipient_token_account, &recipient_owner, &mint_pubkey)?;
 
     if args.amount == 0 || args.amount > u64::MAX as u128 {
         return Err(XxxlError::InvalidInstruction.into());
@@ -205,8 +192,7 @@ mod tests {
     use super::*;
     use crate::{
         instruction::{
-            CONSUME_GATEWAY_MINT_DISCRIMINATOR,
-            CONSUME_GATEWAY_MINT_INSTRUCTION_LEN,
+            CONSUME_GATEWAY_MINT_DISCRIMINATOR, CONSUME_GATEWAY_MINT_INSTRUCTION_LEN,
             INSTRUCTION_LAYOUT_VERSION,
         },
         pda::find_gateway_mint_authority,
@@ -220,14 +206,9 @@ mod tests {
         },
     };
     use solana_program::{
-        account_info::AccountInfo,
-        program_option::COption,
-        program_pack::Pack,
-        pubkey::Pubkey,
+        account_info::AccountInfo, program_option::COption, program_pack::Pack, pubkey::Pubkey,
     };
-    use spl_token::state::{
-        Account as SplTokenAccount, AccountState, Mint as SplTokenMint,
-    };
+    use spl_token::state::{Account as SplTokenAccount, AccountState, Mint as SplTokenMint};
     use std::str::FromStr;
 
     const FIXTURE_PROGRAM_ID: &str = "11111111111111111111111111111111";
@@ -241,19 +222,18 @@ mod tests {
 
         let accounts = fixture.accounts();
 
-        let prepared = prepare_consume_gateway_mint_cpi_boundary(
-            &program_id,
-            &accounts,
-            &args,
-            &rent,
-        )
-        .expect("prepared CPI boundary");
+        let prepared =
+            prepare_consume_gateway_mint_cpi_boundary(&program_id, &accounts, &args, &rent)
+                .expect("prepared CPI boundary");
 
         assert_eq!(prepared.boundary.amount, 1_000);
         assert_eq!(prepared.boundary.mint_authority_bump, fixture_bump());
         assert_eq!(prepared.mint_decimals, 18);
         assert_eq!(prepared.source_chain_weight_bps, 10_000);
-        assert_eq!(prepared.boundary.accounts.token_program.key, &spl_token::id());
+        assert_eq!(
+            prepared.boundary.accounts.token_program.key,
+            &spl_token::id()
+        );
     }
 
     #[test]
@@ -341,8 +321,11 @@ mod tests {
     #[test]
     fn handler_integration_rejects_wrong_recipient_token_mint() {
         let mut fixture = HandlerFixture::new();
-        fixture.data.recipient_token_account =
-            packed_token_account(Pubkey::new_unique(), fixture.keys.recipient_owner, AccountState::Initialized);
+        fixture.data.recipient_token_account = packed_token_account(
+            Pubkey::new_unique(),
+            fixture.keys.recipient_owner,
+            AccountState::Initialized,
+        );
 
         let program_id = fixture.program_id;
         let args = fixture.args;
@@ -468,12 +451,7 @@ mod tests {
 
             let data = FixtureData {
                 mint_state: mint_state_data(spl_mint, mint_authority_pda, bump),
-                gateway_config: gateway_config_data(
-                    route_id,
-                    guardian_set_id,
-                    spl_mint,
-                    10_000,
-                ),
+                gateway_config: gateway_config_data(route_id, guardian_set_id, spl_mint, 10_000),
                 guardian_set: guardian_set_data(guardian_set_id),
                 processed_event: processed_event_data(
                     false,
@@ -647,8 +625,10 @@ mod tests {
         target_mint: Pubkey,
         weight_bps: u16,
     ) -> Vec<u8> {
-        let mut data =
-            account_data(GATEWAY_CONFIG_ACCOUNT_LEN, GATEWAY_CONFIG_ACCOUNT_DISCRIMINATOR);
+        let mut data = account_data(
+            GATEWAY_CONFIG_ACCOUNT_LEN,
+            GATEWAY_CONFIG_ACCOUNT_DISCRIMINATOR,
+        );
         data[12..14].copy_from_slice(&weight_bps.to_le_bytes());
         data[16..48].copy_from_slice(&route_id);
         data[88..120].copy_from_slice(&target_mint.to_bytes());
@@ -668,8 +648,10 @@ mod tests {
         route_id: [u8; 32],
         recipient: Pubkey,
     ) -> Vec<u8> {
-        let mut data =
-            account_data(PROCESSED_EVENT_ACCOUNT_LEN, PROCESSED_EVENT_ACCOUNT_DISCRIMINATOR);
+        let mut data = account_data(
+            PROCESSED_EVENT_ACCOUNT_LEN,
+            PROCESSED_EVENT_ACCOUNT_DISCRIMINATOR,
+        );
         data[10] = if consumed { 1 } else { 0 };
         data[16..48].copy_from_slice(&canonical_event_key);
         data[48..80].copy_from_slice(&route_id);
@@ -678,8 +660,10 @@ mod tests {
     }
 
     fn recipient_balance_data(owner: Pubkey, mint: Pubkey) -> Vec<u8> {
-        let mut data =
-            account_data(RECIPIENT_BALANCE_ACCOUNT_LEN, RECIPIENT_BALANCE_ACCOUNT_DISCRIMINATOR);
+        let mut data = account_data(
+            RECIPIENT_BALANCE_ACCOUNT_LEN,
+            RECIPIENT_BALANCE_ACCOUNT_DISCRIMINATOR,
+        );
         data[16..48].copy_from_slice(&owner.to_bytes());
         data[48..80].copy_from_slice(&mint.to_bytes());
         data
@@ -706,11 +690,7 @@ mod tests {
         data
     }
 
-    fn packed_token_account(
-        mint: Pubkey,
-        owner: Pubkey,
-        state: AccountState,
-    ) -> Vec<u8> {
+    fn packed_token_account(mint: Pubkey, owner: Pubkey, state: AccountState) -> Vec<u8> {
         let mut data = vec![0u8; SplTokenAccount::LEN];
         let account = SplTokenAccount {
             mint,
@@ -752,16 +732,12 @@ mod tests {
     }
 
     fn fixture_bump() -> u8 {
-        let program_id =
-            Pubkey::from_str(FIXTURE_PROGRAM_ID).expect("valid fixture program id");
+        let program_id = Pubkey::from_str(FIXTURE_PROGRAM_ID).expect("valid fixture program id");
         let (_pda, bump) = find_gateway_mint_authority(&program_id);
         bump
     }
 
-    fn assert_custom_error<T>(
-        result: Result<T, ProgramError>,
-        error: XxxlError,
-    ) {
+    fn assert_custom_error<T>(result: Result<T, ProgramError>, error: XxxlError) {
         assert!(matches!(result, Err(ProgramError::Custom(code)) if code == error as u32));
     }
 }

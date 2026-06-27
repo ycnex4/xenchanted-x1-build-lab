@@ -57,9 +57,8 @@ mod tests {
     fn gateway_mint_authority_changes_with_program_id() {
         let first_program_id =
             Pubkey::from_str("11111111111111111111111111111111").expect("valid fixture program id");
-        let second_program_id =
-            Pubkey::from_str("BPFLoaderUpgradeab1e11111111111111111111111")
-                .expect("valid fixture program id");
+        let second_program_id = Pubkey::from_str("BPFLoaderUpgradeab1e11111111111111111111111")
+            .expect("valid fixture program id");
 
         let first = find_gateway_mint_authority(&first_program_id);
         let second = find_gateway_mint_authority(&second_program_id);
@@ -75,4 +74,3 @@ mod tests {
         assert_ne!(pda, program_id);
     }
 }
-

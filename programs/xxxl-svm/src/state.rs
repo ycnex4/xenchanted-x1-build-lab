@@ -483,14 +483,7 @@ mod tests {
         data[80..112].copy_from_slice(&recipient);
 
         assert_custom_error(
-            mark_processed_event_consumed(
-                &mut data,
-                [0x99; 32],
-                route_id,
-                recipient,
-                1_000,
-                77,
-            ),
+            mark_processed_event_consumed(&mut data, [0x99; 32], route_id, recipient, 1_000, 77),
             XxxlError::InvalidInstruction,
         );
     }
