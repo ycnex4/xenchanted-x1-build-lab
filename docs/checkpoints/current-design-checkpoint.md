@@ -34809,3 +34809,30 @@ Non-goals:
 - no authority freeze execution
 
 Next likely stage after this remains `stage-xxxl-spl-token-mint-to-cpi-fixture`.
+
+## XXXL SPL Token mint_to CPI fixture
+
+Status: `SPL_TOKEN_MINT_TO_CPI_FIXTURE_ONLY_NOT_LIVE_HANDLER`.
+
+This stage introduces the native SPL Token CPI boundary while keeping live route execution disabled.
+
+What is fixed:
+
+- `spl_token::instruction::mint_to` instruction construction exists in Rust.
+- `invoke_signed` boundary exists in Rust.
+- gateway mint authority PDA and bump are checked before CPI.
+- signer seeds remain `["xxxl", "gateway-mint-authority", "v1", bump]`.
+- zero mint amount is rejected.
+- initialized SPL Mint validation exists.
+- recipient token account validation checks SPL Token ownership, initialized state, expected owner, and expected mint.
+- owner and rent helper tests are covered.
+
+Non-goals:
+
+- no live route activation
+- no deployment
+- no authority freeze execution
+- no processed-event mutation yet
+- no recipient-balance mutation yet
+
+Next likely stage: connect the decoded handler path to validation and CPI preparation without enabling route activation.

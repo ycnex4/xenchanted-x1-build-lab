@@ -548,3 +548,18 @@ This stage fixes:
 - TypeScript checkpoint metadata for the decode fixture
 
 This stage does not add SPL Token CPI, deployment, route activation, or authority freeze execution.
+
+## XXXL SPL Token mint_to CPI fixture
+
+The XXXL X1/SVM port now has a native SPL Token `mint_to` CPI fixture boundary.
+
+This stage fixes:
+
+- real `spl_token::instruction::mint_to` instruction construction
+- PDA signer seeds for `invoke_signed`
+- gateway mint authority PDA/bump verification
+- initialized SPL Mint validation
+- recipient token account validation against expected owner and mint
+- owner and rent helper coverage
+
+This stage does not activate live routes, deployment, authority freeze execution, processed-event mutation, or recipient-balance mutation.

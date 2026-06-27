@@ -81,3 +81,4 @@ export * from "./xxxl/svm-runtime-port-readiness-package.js";
 export * from "./xxxl/x1-svm-port-scaffold.js";
 export * from "./xxxl/real-pda-derivation-fixture.js";
 export * from "./xxxl/runtime-account-instruction-decode-fixture.js";
+export * from "./xxxl/spl-token-mint-to-cpi-fixture.js";
