@@ -1,3 +1,5 @@
+#![allow(unexpected_cfgs)] // Solana entrypoint! macro emits custom cfgs under host clippy/rustc check-cfg.
+
 //! XXXL SVM runtime scaffold.
 //!
 //! This is the first real Rust/SVM-facing scaffold after the model-layer

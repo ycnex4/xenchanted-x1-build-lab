@@ -45,7 +45,7 @@ pub fn build_mint_to_instruction(
     )
 }
 
-pub fn gateway_mint_authority_signer_seeds<'a>(bump: &'a u8) -> [&'a [u8]; 4] {
+pub fn gateway_mint_authority_signer_seeds(bump: &u8) -> [&[u8]; 4] {
     [
         GATEWAY_MINT_AUTHORITY_SEED_0,
         GATEWAY_MINT_AUTHORITY_SEED_1,
