@@ -76,3 +76,4 @@ export * from "./xxxl/runtime-predeploy-review-package.js";
 export * from "./xxxl/runtime-production-byte-layout.js";
 export * from "./xxxl/x1-svm-program-skeleton.js";
 export * from "./xxxl/svm-serialized-runtime-vectors.js";
+export * from "./xxxl/svm-runtime-decoder-handler-model.js";
