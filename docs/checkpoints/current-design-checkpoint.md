@@ -35062,3 +35062,37 @@ Recorded:
 - writable/executable constraints required before live activation
 
 No live gateway route was activated in this stage.
+
+## XXXL guarded live-handler wiring fixture
+
+Status: `COMPLETED`.
+
+The SVM runtime now has a guarded live-handler wiring fixture.
+
+Added:
+
+- `LIVE_ROUTE_ACTIVATION_FROM_PROCESS_INSTRUCTION_ENABLED = false`
+- `build_guarded_consume_gateway_mint_live_handler_fixture`
+- guarded positive plan-construction test
+- guarded invalid-boundary rejection test
+
+The guarded fixture connects:
+
+- account validation
+- CPI boundary preparation
+- atomic execution plan construction
+
+The execution plan remains disabled:
+
+- `live_route_activation_enabled = false`
+- `mint_to_invocation_from_process_instruction_enabled = false`
+
+Verification:
+
+- `cargo fmt --check` passes
+- `cargo test` passes with 65 tests
+- `cargo clippy --all-targets -- -D warnings` passes
+- `cargo audit` exits 0
+- `cargo deny` licenses/bans/sources exits 0
+
+No live gateway route was activated in this stage.

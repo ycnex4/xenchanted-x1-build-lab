@@ -6,6 +6,9 @@ use solana_program::{
 use crate::{
     cpi::{assert_gateway_mint_authority_pda, MintToCpiAccounts, MintToCpiBoundary},
     error::XxxlError,
+    execution_plan::{
+        build_atomic_consume_gateway_mint_execution_plan, AtomicConsumeGatewayMintExecutionPlan,
+    },
     instruction::{
         ConsumeGatewayMintArgs, XxxlInstruction, CONSUME_GATEWAY_MINT_ACCOUNT_META_COUNT,
     },
@@ -30,6 +33,8 @@ pub const ACCOUNT_INDEX_SPL_TOKEN_MINT: usize = 5;
 pub const ACCOUNT_INDEX_RECIPIENT_TOKEN_ACCOUNT: usize = 6;
 pub const ACCOUNT_INDEX_MINT_AUTHORITY_PDA: usize = 7;
 pub const ACCOUNT_INDEX_TOKEN_PROGRAM: usize = 8;
+
+pub const LIVE_ROUTE_ACTIVATION_FROM_PROCESS_INSTRUCTION_ENABLED: bool = false;
 
 pub struct PreparedConsumeGatewayMintCpi<'a, 'b> {
     pub boundary: MintToCpiBoundary<'a, 'b>,
@@ -56,8 +61,32 @@ fn process_consume_gateway_mint(
     _accounts: &[AccountInfo],
     _args: &ConsumeGatewayMintArgs,
 ) -> ProgramResult {
+    if LIVE_ROUTE_ACTIVATION_FROM_PROCESS_INSTRUCTION_ENABLED {
+        return Err(XxxlError::CpiBoundaryNotReady.into());
+    }
+
     msg!("XXXL consume_gateway_mint scaffold reached; live route execution is not activated");
     Ok(())
+}
+
+pub fn build_guarded_consume_gateway_mint_live_handler_fixture(
+    program_id: &Pubkey,
+    accounts: &[AccountInfo],
+    args: &ConsumeGatewayMintArgs,
+    rent: &Rent,
+    consumed_slot: u64,
+) -> Result<AtomicConsumeGatewayMintExecutionPlan, ProgramError> {
+    let prepared = prepare_consume_gateway_mint_cpi_boundary(program_id, accounts, args, rent)?;
+    let execution_plan =
+        build_atomic_consume_gateway_mint_execution_plan(args, &prepared, consumed_slot)?;
+
+    if execution_plan.live_route_activation_enabled
+        || execution_plan.mint_to_invocation_from_process_instruction_enabled
+    {
+        return Err(XxxlError::CpiBoundaryNotReady.into());
+    }
+
+    Ok(execution_plan)
 }
 
 pub fn prepare_consume_gateway_mint_cpi_boundary<'a, 'b>(
@@ -350,6 +379,55 @@ mod tests {
 
         let result =
             prepare_consume_gateway_mint_cpi_boundary(&program_id, &accounts, &args, &rent);
+
+        assert_custom_error(result, XxxlError::InvalidInstruction);
+    }
+
+    #[test]
+    fn guarded_live_handler_fixture_builds_disabled_execution_plan_after_validation() {
+        let mut fixture = HandlerFixture::new();
+        let program_id = fixture.program_id;
+        let args = fixture.args;
+        let rent = Rent::default();
+        let accounts = fixture.accounts();
+
+        let plan = build_guarded_consume_gateway_mint_live_handler_fixture(
+            &program_id,
+            &accounts,
+            &args,
+            &rent,
+            77,
+        )
+        .expect("guarded live handler fixture plan");
+
+        assert_eq!(plan.canonical_event_key, args.canonical_event_key);
+        assert_eq!(plan.route_id, args.route_id);
+        assert_eq!(plan.recipient, args.recipient);
+        assert_eq!(plan.mint, args.mint_id);
+        assert_eq!(plan.amount, 1_000);
+        assert_eq!(plan.consumed_slot, 77);
+        assert_eq!(plan.source_chain_weight_bps, 10_000);
+        assert!(!plan.live_route_activation_enabled);
+        assert!(!plan.mint_to_invocation_from_process_instruction_enabled);
+    }
+
+    #[test]
+    fn guarded_live_handler_fixture_rejects_invalid_boundary_before_plan() {
+        let mut fixture = HandlerFixture::new();
+        fixture.data.processed_event[10] = 1;
+
+        let program_id = fixture.program_id;
+        let args = fixture.args;
+        let rent = Rent::default();
+        let accounts = fixture.accounts();
+
+        let result = build_guarded_consume_gateway_mint_live_handler_fixture(
+            &program_id,
+            &accounts,
+            &args,
+            &rent,
+            77,
+        );
 
         assert_custom_error(result, XxxlError::InvalidInstruction);
     }
