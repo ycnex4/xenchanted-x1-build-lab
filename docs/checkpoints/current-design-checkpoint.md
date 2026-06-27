@@ -16,6 +16,60 @@ and in:
 -->
 
 
+# Latest XXXL SVM serialized runtime vectors checkpoint
+
+Stage XXXL Program v1 now has deterministic SVM serialized runtime vectors.
+
+Authoritative document:
+
+- `docs/xxxl/xxxl-svm-serialized-runtime-vectors.md`
+
+Checkpoint document:
+
+- `docs/checkpoints/xxxl-svm-serialized-runtime-vectors.md`
+
+Implementation files:
+
+- `src/xxxl/svm-serialized-runtime-vectors.ts`
+- `tests/xxxl/svm-serialized-runtime-vectors.test.ts`
+
+Defined serialized vectors:
+
+- Mint State account
+- Gateway Config account
+- Guardian Set account
+- Processed Event account
+- Recipient Balance account
+- `consume_gateway_mint` instruction
+
+Each vector includes:
+
+- layout kind
+- byte length
+- canonical hex
+- selected field probes
+- field offsets
+- field sizes
+- field hex slices
+
+Bundle coverage:
+
+- handler: `consume_gateway_mint`
+- SPL Token Program ID
+- gateway mint authority PDA model
+- canonical account meta roles
+- CPI prepared flag
+- CPI atomic-with-parent-transaction flag
+
+Expected validation baseline:
+
+- TypeScript typecheck: passing
+- Tests: 86 files / 680 tests passing
+- Build: passing
+
+Status: deterministic serialized runtime vectors only, before live runtime decode/handler implementation.
+
+
 # Latest XXXL X1/SVM program skeleton checkpoint
 
 Stage XXXL Program v1 now has the first X1/SVM-facing program skeleton.
