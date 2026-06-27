@@ -16,6 +16,72 @@ and in:
 -->
 
 
+# Latest XXXL multichain low-weight route policy checkpoint
+
+Stage XXXL Program v1 now has a multichain low-weight route policy.
+
+Authoritative document:
+
+- `docs/xxxl/xxxl-multichain-low-weight-route-policy.md`
+
+Checkpoint document:
+
+- `docs/checkpoints/xxxl-multichain-low-weight-route-policy.md`
+
+Implementation files:
+
+- `src/xxxl/multichain-low-weight-route-policy.ts`
+- `tests/xxxl/multichain-low-weight-route-policy.test.ts`
+
+Core principle:
+
+    Ethereum route is the primary full-weight route.
+    Non-Ethereum routes are low-weight historical access routes.
+    Their purpose is inclusion, not equal supply power.
+
+Route-weighted mint formula:
+
+    xxxlMintAmount = burnedSourceAmount * sourceChainWeightBps / 10000
+
+Ethereum route:
+
+- 10000 bps
+- full weight
+- primary economic anchor
+
+Avalanche route:
+
+- hard max: 25 bps
+- conservative initial candidate: 5-10 bps
+- 100 bps not allowed under current market conditions
+- 500 bps not allowed under current market conditions
+
+Other non-Ethereum routes:
+
+- must be <= configured Avalanche route weight
+- require explicit route policy approval
+- require route caps
+- should default to candidate/inactive until separately approved
+
+Updated Genesis invariant:
+
+    XXXL total supply = sum(consumed gateway mint amounts across all approved routes)
+
+Runtime implication:
+
+- do not hardcode Ethereum-only assumptions into runtime skeleton
+- initial active deployment may remain Ethereum-only
+- future non-Ethereum routes must be explicit low-weight routes
+
+Expected validation baseline:
+
+- TypeScript typecheck: passing
+- Tests: 78 files / 563 tests passing
+- Build: passing
+
+Status: policy only, no Avalanche route activation.
+
+
 # Latest XXXL runtime instruction serialization vectors checkpoint
 
 Stage XXXL Program v1 now has deterministic runtime instruction serialization vector planning.
