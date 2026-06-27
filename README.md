@@ -576,3 +576,18 @@ This stage is still not live route execution:
 - no recipient-balance mutation
 - no deployment
 - no authority freeze execution
+
+## XXXL runtime state mutation fixture
+
+The XXXL X1/SVM port now has deterministic state mutation helpers for runtime account data:
+
+- `mark_processed_event_consumed` marks a processed event as consumed and writes consumed amount / consumed slot
+- `credit_recipient_balance` credits recipient balance with overflow protection and writes last canonical event key
+
+This stage remains fixture-only:
+
+- no live route activation
+- no mint_to invocation from handler
+- no process_instruction state mutation
+- no deployment
+- no authority freeze execution

@@ -34864,3 +34864,31 @@ Non-goals:
 - no authority freeze execution
 
 Next likely stage: processed-event and recipient-balance mutation model/fixture, still keeping route activation controlled.
+
+## XXXL runtime state mutation fixture
+
+Status: `RUNTIME_STATE_MUTATION_FIXTURE_ONLY_NOT_LIVE_ROUTE`.
+
+This stage adds deterministic state mutation helpers while keeping live route execution disabled.
+
+What is fixed:
+
+- processed event mutation helper marks event consumed
+- processed event mutation writes consumed amount
+- processed event mutation writes consumed slot
+- replay is rejected if event is already consumed
+- canonical event key / route / recipient must match before processed-event mutation
+- recipient balance mutation uses checked addition
+- recipient balance mutation writes new balance
+- recipient balance mutation writes last canonical event key
+- owner and mint must match before recipient-balance mutation
+
+Non-goals:
+
+- no live route activation
+- no mint_to invocation from handler
+- no process_instruction state mutation
+- no deployment
+- no authority freeze execution
+
+Next likely stage: combine CPI preparation and state mutation into an atomic execution-plan fixture, still gated and not live.

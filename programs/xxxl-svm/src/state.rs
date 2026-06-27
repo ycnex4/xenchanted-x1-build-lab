@@ -192,6 +192,61 @@ impl<'a> RecipientBalanceAccountView<'a> {
     }
 }
 
+pub fn mark_processed_event_consumed(
+    data: &mut [u8],
+    expected_canonical_event_key: [u8; 32],
+    expected_route_id: [u8; 32],
+    expected_recipient: [u8; 32],
+    consumed_amount: u128,
+    consumed_slot: u64,
+) -> Result<(), ProgramError> {
+    {
+        let view = ProcessedEventAccountView::new(data)?;
+
+        if view.consumed()
+            || view.canonical_event_key() != expected_canonical_event_key
+            || view.route_id() != expected_route_id
+            || view.recipient() != expected_recipient
+            || consumed_amount == 0
+        {
+            return Err(XxxlError::InvalidInstruction.into());
+        }
+    }
+
+    data[10] = 1;
+    data[112..128].copy_from_slice(&consumed_amount.to_le_bytes());
+    data[128..136].copy_from_slice(&consumed_slot.to_le_bytes());
+
+    Ok(())
+}
+
+pub fn credit_recipient_balance(
+    data: &mut [u8],
+    expected_owner: [u8; 32],
+    expected_mint: [u8; 32],
+    amount: u128,
+    canonical_event_key: [u8; 32],
+) -> Result<u128, ProgramError> {
+    let current_balance = {
+        let view = RecipientBalanceAccountView::new(data)?;
+
+        if view.owner() != expected_owner || view.mint() != expected_mint || amount == 0 {
+            return Err(XxxlError::InvalidRecipientAta.into());
+        }
+
+        view.balance()
+    };
+
+    let next_balance = current_balance
+        .checked_add(amount)
+        .ok_or(XxxlError::InvalidInstruction)?;
+
+    data[80..96].copy_from_slice(&next_balance.to_le_bytes());
+    data[96..128].copy_from_slice(&canonical_event_key);
+
+    Ok(next_balance)
+}
+
 fn assert_account_layout(
     data: &[u8],
     expected_len: usize,
@@ -350,6 +405,156 @@ mod tests {
 
         assert_custom_error(
             MintStateAccountView::new(&data),
+            XxxlError::InvalidInstruction,
+        );
+    }
+
+    #[test]
+    fn processed_event_mutation_marks_event_consumed_and_writes_amount_and_slot() {
+        let canonical_event_key = [0x44; 32];
+        let route_id = [0x11; 32];
+        let recipient = [0x55; 32];
+        let mut data = valid_account(
+            PROCESSED_EVENT_ACCOUNT_LEN,
+            PROCESSED_EVENT_ACCOUNT_DISCRIMINATOR,
+        );
+
+        data[16..48].copy_from_slice(&canonical_event_key);
+        data[48..80].copy_from_slice(&route_id);
+        data[80..112].copy_from_slice(&recipient);
+
+        mark_processed_event_consumed(
+            &mut data,
+            canonical_event_key,
+            route_id,
+            recipient,
+            1_000,
+            77,
+        )
+        .expect("processed event mutation");
+
+        let view = ProcessedEventAccountView::new(&data).expect("valid processed event");
+
+        assert!(view.consumed());
+        assert_eq!(view.consumed_amount(), 1_000);
+        assert_eq!(read_u64_le(&data, 128), 77);
+    }
+
+    #[test]
+    fn processed_event_mutation_rejects_replay() {
+        let canonical_event_key = [0x44; 32];
+        let route_id = [0x11; 32];
+        let recipient = [0x55; 32];
+        let mut data = valid_account(
+            PROCESSED_EVENT_ACCOUNT_LEN,
+            PROCESSED_EVENT_ACCOUNT_DISCRIMINATOR,
+        );
+
+        data[10] = 1;
+        data[16..48].copy_from_slice(&canonical_event_key);
+        data[48..80].copy_from_slice(&route_id);
+        data[80..112].copy_from_slice(&recipient);
+
+        assert_custom_error(
+            mark_processed_event_consumed(
+                &mut data,
+                canonical_event_key,
+                route_id,
+                recipient,
+                1_000,
+                77,
+            ),
+            XxxlError::InvalidInstruction,
+        );
+    }
+
+    #[test]
+    fn processed_event_mutation_rejects_wrong_canonical_event_key() {
+        let canonical_event_key = [0x44; 32];
+        let route_id = [0x11; 32];
+        let recipient = [0x55; 32];
+        let mut data = valid_account(
+            PROCESSED_EVENT_ACCOUNT_LEN,
+            PROCESSED_EVENT_ACCOUNT_DISCRIMINATOR,
+        );
+
+        data[16..48].copy_from_slice(&canonical_event_key);
+        data[48..80].copy_from_slice(&route_id);
+        data[80..112].copy_from_slice(&recipient);
+
+        assert_custom_error(
+            mark_processed_event_consumed(
+                &mut data,
+                [0x99; 32],
+                route_id,
+                recipient,
+                1_000,
+                77,
+            ),
+            XxxlError::InvalidInstruction,
+        );
+    }
+
+    #[test]
+    fn recipient_balance_mutation_credits_balance_and_writes_last_event_key() {
+        let owner = [0x55; 32];
+        let mint = [0x33; 32];
+        let canonical_event_key = [0x44; 32];
+        let mut data = valid_account(
+            RECIPIENT_BALANCE_ACCOUNT_LEN,
+            RECIPIENT_BALANCE_ACCOUNT_DISCRIMINATOR,
+        );
+
+        data[16..48].copy_from_slice(&owner);
+        data[48..80].copy_from_slice(&mint);
+        data[80..96].copy_from_slice(&200u128.to_le_bytes());
+
+        let next_balance =
+            credit_recipient_balance(&mut data, owner, mint, 1_000, canonical_event_key)
+                .expect("credit recipient balance");
+
+        let view = RecipientBalanceAccountView::new(&data).expect("valid recipient balance");
+
+        assert_eq!(next_balance, 1_200);
+        assert_eq!(view.balance(), 1_200);
+        assert_eq!(read_fixed_32(&data, 96), canonical_event_key);
+    }
+
+    #[test]
+    fn recipient_balance_mutation_rejects_wrong_owner() {
+        let owner = [0x55; 32];
+        let mint = [0x33; 32];
+        let canonical_event_key = [0x44; 32];
+        let mut data = valid_account(
+            RECIPIENT_BALANCE_ACCOUNT_LEN,
+            RECIPIENT_BALANCE_ACCOUNT_DISCRIMINATOR,
+        );
+
+        data[16..48].copy_from_slice(&owner);
+        data[48..80].copy_from_slice(&mint);
+
+        assert_custom_error(
+            credit_recipient_balance(&mut data, [0x99; 32], mint, 1_000, canonical_event_key),
+            XxxlError::InvalidRecipientAta,
+        );
+    }
+
+    #[test]
+    fn recipient_balance_mutation_rejects_overflow() {
+        let owner = [0x55; 32];
+        let mint = [0x33; 32];
+        let canonical_event_key = [0x44; 32];
+        let mut data = valid_account(
+            RECIPIENT_BALANCE_ACCOUNT_LEN,
+            RECIPIENT_BALANCE_ACCOUNT_DISCRIMINATOR,
+        );
+
+        data[16..48].copy_from_slice(&owner);
+        data[48..80].copy_from_slice(&mint);
+        data[80..96].copy_from_slice(&u128::MAX.to_le_bytes());
+
+        assert_custom_error(
+            credit_recipient_balance(&mut data, owner, mint, 1, canonical_event_key),
             XxxlError::InvalidInstruction,
         );
     }
