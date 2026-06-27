@@ -35096,3 +35096,38 @@ Verification:
 - `cargo deny` licenses/bans/sources exits 0
 
 No live gateway route was activated in this stage.
+
+## XXXL Mollusk readiness harness plan
+
+Status: `COMPLETED`.
+
+A doc-only Mollusk readiness plan has been recorded.
+
+The plan covers:
+
+- positive scaffold instruction case
+- canonical 9-account harness shape
+- account meta checks
+- invalid instruction cases
+- account boundary failure cases
+- PDA failure cases
+- route and guardian boundary cases
+- replay boundary cases
+- recipient token account cases
+- SPL mint cases
+- future atomicity invariants
+- current scaffold invariants
+- suggested harness structure
+- dependency policy
+
+Verification baseline:
+
+- `cargo fmt --check` passes
+- `cargo test` passes with 65 tests
+- `cargo clippy --all-targets -- -D warnings` passes
+- `cargo audit` exits 0
+- `cargo deny` licenses/bans/sources exits 0
+
+No runtime code was changed.
+
+No live gateway route was activated.

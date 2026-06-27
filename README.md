@@ -736,3 +736,28 @@ Verification:
 - `cargo deny` licenses/bans/sources exit 0
 
 No live gateway route was activated in this stage.
+
+## XXXL Mollusk readiness harness plan
+
+A doc-only readiness plan has been added for a future Mollusk runtime harness.
+
+The plan records:
+
+- why Mollusk should come before live route mutation
+- the canonical 9-account consume_gateway_mint harness shape
+- required positive scaffold case
+- invalid instruction cases
+- account boundary failure cases
+- PDA failure cases
+- route and guardian boundary cases
+- replay boundary cases
+- recipient token account cases
+- SPL mint cases
+- future atomicity invariants
+- current scaffold invariants
+- suggested harness structure
+- dependency policy for a future Mollusk stage
+
+No runtime code was changed.
+
+No live gateway route was activated.
