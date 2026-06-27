@@ -963,3 +963,16 @@ No live route was activated.
 No SPL Token `mint_to` is invoked.
 No XXXL minting is enabled.
 No SPL mint supply mutation is enabled.
+
+## XXXL SPL mint_to CPI planning boundary
+
+The XXXL runtime model now has a planning-only SPL Token `mint_to` CPI boundary.
+
+The new boundary accepts an execution plan and prepared CPI boundary, validates token program, mint mapping, PDA, bump, signer seed layout, and amount, then returns a planning result.
+
+This stage does not call `invoke_signed`.
+
+No live route was activated.
+No SPL Token `mint_to` is invoked.
+No XXXL minting is enabled.
+No state mutation is connected to `process_instruction`.

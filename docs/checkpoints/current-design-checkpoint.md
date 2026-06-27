@@ -35515,3 +35515,56 @@ No SPL Token `mint_to` is invoked.
 No XXXL minting is enabled.
 No SPL mint supply mutation is enabled.
 This boundary is not connected to `process_instruction`.
+
+## XXXL SPL mint_to CPI planning boundary
+
+Status: `COMPLETED`.
+
+A planning-only SPL Token `mint_to` CPI boundary was added.
+
+The boundary accepts:
+
+- program id
+- `AtomicConsumeGatewayMintExecutionPlan`
+- `MintToCpiBoundary`
+
+It validates:
+
+- live route disabled flag
+- mint_to invocation disabled flag
+- non-zero execution-plan amount
+- non-zero CPI-boundary amount
+- matching execution-plan and CPI-boundary amounts
+- SPL Token program id
+- matching mint mapping
+- gateway mint authority PDA
+- gateway mint authority bump
+- signer seed layout
+- SPL `mint_to` instruction construction
+
+It returns only a planning result:
+
+- token program
+- mint
+- recipient token account
+- mint authority PDA
+- mint authority bump
+- amount
+- live route disabled flag
+- invoke_signed disabled flag
+
+Hard checks passed:
+
+- `cargo build-sbf`
+- `cargo fmt --check`
+- `cargo test`
+- `cargo test --test mollusk_consume_gateway_mint -- --ignored --nocapture`
+- `cargo clippy --all-targets -- -D warnings`
+- `cargo audit`
+- `cargo deny` licenses/bans/sources
+
+No live route was activated.
+No `invoke_signed` is called.
+No SPL Token `mint_to` is invoked.
+No XXXL minting is enabled.
+This boundary is not connected to `process_instruction`.

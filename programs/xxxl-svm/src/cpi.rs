@@ -24,6 +24,76 @@ pub struct MintToCpiBoundary<'a, 'b> {
     pub amount: u64,
 }
 
+#[derive(Clone, Copy, Debug, PartialEq, Eq)]
+pub struct MintToCpiPlanningBoundary {
+    pub token_program: Pubkey,
+    pub mint: Pubkey,
+    pub recipient_token_account: Pubkey,
+    pub mint_authority_pda: Pubkey,
+    pub mint_authority_bump: u8,
+    pub amount: u64,
+    pub live_route_activation_enabled: bool,
+    pub invoke_signed_from_process_instruction_enabled: bool,
+}
+
+pub fn plan_mint_to_cpi_boundary(
+    program_id: &Pubkey,
+    execution_plan: &crate::execution_plan::AtomicConsumeGatewayMintExecutionPlan,
+    boundary: &MintToCpiBoundary<'_, '_>,
+) -> Result<MintToCpiPlanningBoundary, ProgramError> {
+    if execution_plan.live_route_activation_enabled
+        || execution_plan.mint_to_invocation_from_process_instruction_enabled
+        || execution_plan.amount == 0
+        || boundary.amount == 0
+        || boundary.amount != execution_plan.amount
+    {
+        return Err(XxxlError::InvalidInstruction.into());
+    }
+
+    if boundary.accounts.token_program.key != &spl_token::id() {
+        return Err(XxxlError::InvalidAccountOwner.into());
+    }
+
+    if boundary.accounts.mint.key.to_bytes() != execution_plan.mint {
+        return Err(XxxlError::InvalidInstruction.into());
+    }
+
+    assert_gateway_mint_authority_pda(
+        program_id,
+        boundary.accounts.mint_authority_pda.key,
+        boundary.mint_authority_bump,
+    )?;
+
+    build_mint_to_instruction(
+        boundary.accounts.token_program.key,
+        boundary.accounts.mint.key,
+        boundary.accounts.recipient_token_account.key,
+        boundary.accounts.mint_authority_pda.key,
+        boundary.amount,
+    )?;
+
+    let signer_seeds = gateway_mint_authority_signer_seeds(&boundary.mint_authority_bump);
+
+    if signer_seeds[0] != GATEWAY_MINT_AUTHORITY_SEED_0
+        || signer_seeds[1] != GATEWAY_MINT_AUTHORITY_SEED_1
+        || signer_seeds[2] != GATEWAY_MINT_AUTHORITY_SEED_2
+        || signer_seeds[3] != core::slice::from_ref(&boundary.mint_authority_bump)
+    {
+        return Err(XxxlError::InvalidPda.into());
+    }
+
+    Ok(MintToCpiPlanningBoundary {
+        token_program: *boundary.accounts.token_program.key,
+        mint: *boundary.accounts.mint.key,
+        recipient_token_account: *boundary.accounts.recipient_token_account.key,
+        mint_authority_pda: *boundary.accounts.mint_authority_pda.key,
+        mint_authority_bump: boundary.mint_authority_bump,
+        amount: boundary.amount,
+        live_route_activation_enabled: false,
+        invoke_signed_from_process_instruction_enabled: false,
+    })
+}
+
 pub fn build_mint_to_instruction(
     token_program_id: &Pubkey,
     mint: &Pubkey,
@@ -107,6 +177,359 @@ mod tests {
     use std::str::FromStr;
 
     const FIXTURE_PROGRAM_ID: &str = "11111111111111111111111111111111";
+
+    struct CpiFixtureParams {
+        program_id: Pubkey,
+        token_program_key: Pubkey,
+        mint_key: Pubkey,
+        recipient_token_account_key: Pubkey,
+        mint_authority_pda_key: Pubkey,
+        mint_authority_bump: u8,
+        boundary_amount: u64,
+    }
+
+    fn with_mint_to_cpi_boundary_fixture<T>(
+        params: CpiFixtureParams,
+        f: impl FnOnce(&MintToCpiBoundary<'_, '_>) -> T,
+    ) -> T {
+        let program_id = params.program_id;
+        let token_program_key = params.token_program_key;
+        let mint_key = params.mint_key;
+        let recipient_token_account_key = params.recipient_token_account_key;
+        let mint_authority_pda_key = params.mint_authority_pda_key;
+        let mint_authority_bump = params.mint_authority_bump;
+        let boundary_amount = params.boundary_amount;
+        let mut token_program_lamports = 0;
+        let mut mint_lamports = 0;
+        let mut recipient_lamports = 0;
+        let mut pda_lamports = 0;
+
+        let mut token_program_data = [];
+        let mut mint_data = [];
+        let mut recipient_data = [];
+        let mut pda_data = [];
+
+        let token_program_owner = Pubkey::new_unique();
+
+        let token_program = AccountInfo::new(
+            &token_program_key,
+            false,
+            false,
+            &mut token_program_lamports,
+            &mut token_program_data,
+            &token_program_owner,
+            true,
+            0,
+        );
+        let mint = AccountInfo::new(
+            &mint_key,
+            false,
+            true,
+            &mut mint_lamports,
+            &mut mint_data,
+            &token_program_key,
+            false,
+            0,
+        );
+        let recipient_token_account = AccountInfo::new(
+            &recipient_token_account_key,
+            false,
+            true,
+            &mut recipient_lamports,
+            &mut recipient_data,
+            &token_program_key,
+            false,
+            0,
+        );
+        let mint_authority_pda = AccountInfo::new(
+            &mint_authority_pda_key,
+            false,
+            false,
+            &mut pda_lamports,
+            &mut pda_data,
+            &program_id,
+            false,
+            0,
+        );
+
+        let boundary = MintToCpiBoundary {
+            accounts: MintToCpiAccounts {
+                token_program: &token_program,
+                mint: &mint,
+                recipient_token_account: &recipient_token_account,
+                mint_authority_pda: &mint_authority_pda,
+            },
+            mint_authority_bump,
+            amount: boundary_amount,
+        };
+
+        f(&boundary)
+    }
+
+    fn execution_plan_for_mint(
+        mint: Pubkey,
+    ) -> crate::execution_plan::AtomicConsumeGatewayMintExecutionPlan {
+        crate::execution_plan::AtomicConsumeGatewayMintExecutionPlan {
+            steps: crate::execution_plan::ATOMIC_CONSUME_GATEWAY_MINT_STEP_ORDER,
+            canonical_event_key: [0x44; 32],
+            route_id: [0x11; 32],
+            recipient: [0x55; 32],
+            mint: mint.to_bytes(),
+            amount: 1_000,
+            consumed_slot: 77,
+            source_chain_weight_bps: 10_000,
+            live_route_activation_enabled: false,
+            mint_to_invocation_from_process_instruction_enabled: false,
+        }
+    }
+
+    fn assert_custom_error<T>(result: Result<T, ProgramError>, error: XxxlError) {
+        assert!(matches!(result, Err(ProgramError::Custom(code)) if code == error as u32));
+    }
+
+    #[test]
+    fn mint_to_cpi_planning_boundary_builds_plan_without_invoke_signed() {
+        let program_id = Pubkey::from_str(FIXTURE_PROGRAM_ID).expect("valid fixture program id");
+        let (pda, bump) = find_gateway_mint_authority(&program_id);
+        let mint_key = Pubkey::new_unique();
+        let recipient_token_account_key = Pubkey::new_unique();
+        let execution_plan = execution_plan_for_mint(mint_key);
+
+        with_mint_to_cpi_boundary_fixture(
+            CpiFixtureParams {
+                program_id,
+                token_program_key: spl_token::id(),
+                mint_key,
+                recipient_token_account_key,
+                mint_authority_pda_key: pda,
+                mint_authority_bump: bump,
+                boundary_amount: 1_000,
+            },
+            |boundary| {
+                let plan = plan_mint_to_cpi_boundary(&program_id, &execution_plan, boundary)
+                    .expect("mint_to CPI planning boundary");
+
+                assert_eq!(plan.token_program, spl_token::id());
+                assert_eq!(plan.mint, mint_key);
+                assert_eq!(plan.recipient_token_account, recipient_token_account_key);
+                assert_eq!(plan.mint_authority_pda, pda);
+                assert_eq!(plan.mint_authority_bump, bump);
+                assert_eq!(plan.amount, 1_000);
+                assert!(!plan.live_route_activation_enabled);
+                assert!(!plan.invoke_signed_from_process_instruction_enabled);
+            },
+        );
+    }
+
+    #[test]
+    fn mint_to_cpi_planning_boundary_rejects_amount_mismatch() {
+        let program_id = Pubkey::from_str(FIXTURE_PROGRAM_ID).expect("valid fixture program id");
+        let (pda, bump) = find_gateway_mint_authority(&program_id);
+        let mint_key = Pubkey::new_unique();
+        let execution_plan = execution_plan_for_mint(mint_key);
+
+        with_mint_to_cpi_boundary_fixture(
+            CpiFixtureParams {
+                program_id,
+                token_program_key: spl_token::id(),
+                mint_key,
+                recipient_token_account_key: Pubkey::new_unique(),
+                mint_authority_pda_key: pda,
+                mint_authority_bump: bump,
+                boundary_amount: 999,
+            },
+            |boundary| {
+                assert_custom_error(
+                    plan_mint_to_cpi_boundary(&program_id, &execution_plan, boundary),
+                    XxxlError::InvalidInstruction,
+                );
+            },
+        );
+    }
+
+    #[test]
+    fn mint_to_cpi_planning_boundary_rejects_zero_boundary_amount() {
+        let program_id = Pubkey::from_str(FIXTURE_PROGRAM_ID).expect("valid fixture program id");
+        let (pda, bump) = find_gateway_mint_authority(&program_id);
+        let mint_key = Pubkey::new_unique();
+        let execution_plan = execution_plan_for_mint(mint_key);
+
+        with_mint_to_cpi_boundary_fixture(
+            CpiFixtureParams {
+                program_id,
+                token_program_key: spl_token::id(),
+                mint_key,
+                recipient_token_account_key: Pubkey::new_unique(),
+                mint_authority_pda_key: pda,
+                mint_authority_bump: bump,
+                boundary_amount: 0,
+            },
+            |boundary| {
+                assert_custom_error(
+                    plan_mint_to_cpi_boundary(&program_id, &execution_plan, boundary),
+                    XxxlError::InvalidInstruction,
+                );
+            },
+        );
+    }
+
+    #[test]
+    fn mint_to_cpi_planning_boundary_rejects_live_route_flag() {
+        let program_id = Pubkey::from_str(FIXTURE_PROGRAM_ID).expect("valid fixture program id");
+        let (pda, bump) = find_gateway_mint_authority(&program_id);
+        let mint_key = Pubkey::new_unique();
+        let mut execution_plan = execution_plan_for_mint(mint_key);
+        execution_plan.live_route_activation_enabled = true;
+
+        with_mint_to_cpi_boundary_fixture(
+            CpiFixtureParams {
+                program_id,
+                token_program_key: spl_token::id(),
+                mint_key,
+                recipient_token_account_key: Pubkey::new_unique(),
+                mint_authority_pda_key: pda,
+                mint_authority_bump: bump,
+                boundary_amount: 1_000,
+            },
+            |boundary| {
+                assert_custom_error(
+                    plan_mint_to_cpi_boundary(&program_id, &execution_plan, boundary),
+                    XxxlError::InvalidInstruction,
+                );
+            },
+        );
+    }
+
+    #[test]
+    fn mint_to_cpi_planning_boundary_rejects_mint_to_flag() {
+        let program_id = Pubkey::from_str(FIXTURE_PROGRAM_ID).expect("valid fixture program id");
+        let (pda, bump) = find_gateway_mint_authority(&program_id);
+        let mint_key = Pubkey::new_unique();
+        let mut execution_plan = execution_plan_for_mint(mint_key);
+        execution_plan.mint_to_invocation_from_process_instruction_enabled = true;
+
+        with_mint_to_cpi_boundary_fixture(
+            CpiFixtureParams {
+                program_id,
+                token_program_key: spl_token::id(),
+                mint_key,
+                recipient_token_account_key: Pubkey::new_unique(),
+                mint_authority_pda_key: pda,
+                mint_authority_bump: bump,
+                boundary_amount: 1_000,
+            },
+            |boundary| {
+                assert_custom_error(
+                    plan_mint_to_cpi_boundary(&program_id, &execution_plan, boundary),
+                    XxxlError::InvalidInstruction,
+                );
+            },
+        );
+    }
+
+    #[test]
+    fn mint_to_cpi_planning_boundary_rejects_wrong_token_program() {
+        let program_id = Pubkey::from_str(FIXTURE_PROGRAM_ID).expect("valid fixture program id");
+        let (pda, bump) = find_gateway_mint_authority(&program_id);
+        let mint_key = Pubkey::new_unique();
+        let execution_plan = execution_plan_for_mint(mint_key);
+
+        with_mint_to_cpi_boundary_fixture(
+            CpiFixtureParams {
+                program_id,
+                token_program_key: Pubkey::new_unique(),
+                mint_key,
+                recipient_token_account_key: Pubkey::new_unique(),
+                mint_authority_pda_key: pda,
+                mint_authority_bump: bump,
+                boundary_amount: 1_000,
+            },
+            |boundary| {
+                assert_custom_error(
+                    plan_mint_to_cpi_boundary(&program_id, &execution_plan, boundary),
+                    XxxlError::InvalidAccountOwner,
+                );
+            },
+        );
+    }
+
+    #[test]
+    fn mint_to_cpi_planning_boundary_rejects_wrong_mint_mapping() {
+        let program_id = Pubkey::from_str(FIXTURE_PROGRAM_ID).expect("valid fixture program id");
+        let (pda, bump) = find_gateway_mint_authority(&program_id);
+        let boundary_mint = Pubkey::new_unique();
+        let execution_plan = execution_plan_for_mint(Pubkey::new_unique());
+
+        with_mint_to_cpi_boundary_fixture(
+            CpiFixtureParams {
+                program_id,
+                token_program_key: spl_token::id(),
+                mint_key: boundary_mint,
+                recipient_token_account_key: Pubkey::new_unique(),
+                mint_authority_pda_key: pda,
+                mint_authority_bump: bump,
+                boundary_amount: 1_000,
+            },
+            |boundary| {
+                assert_custom_error(
+                    plan_mint_to_cpi_boundary(&program_id, &execution_plan, boundary),
+                    XxxlError::InvalidInstruction,
+                );
+            },
+        );
+    }
+
+    #[test]
+    fn mint_to_cpi_planning_boundary_rejects_wrong_pda() {
+        let program_id = Pubkey::from_str(FIXTURE_PROGRAM_ID).expect("valid fixture program id");
+        let (_pda, bump) = find_gateway_mint_authority(&program_id);
+        let mint_key = Pubkey::new_unique();
+        let execution_plan = execution_plan_for_mint(mint_key);
+
+        with_mint_to_cpi_boundary_fixture(
+            CpiFixtureParams {
+                program_id,
+                token_program_key: spl_token::id(),
+                mint_key,
+                recipient_token_account_key: Pubkey::new_unique(),
+                mint_authority_pda_key: Pubkey::new_unique(),
+                mint_authority_bump: bump,
+                boundary_amount: 1_000,
+            },
+            |boundary| {
+                assert_custom_error(
+                    plan_mint_to_cpi_boundary(&program_id, &execution_plan, boundary),
+                    XxxlError::InvalidPda,
+                );
+            },
+        );
+    }
+
+    #[test]
+    fn mint_to_cpi_planning_boundary_rejects_wrong_bump() {
+        let program_id = Pubkey::from_str(FIXTURE_PROGRAM_ID).expect("valid fixture program id");
+        let (pda, bump) = find_gateway_mint_authority(&program_id);
+        let mint_key = Pubkey::new_unique();
+        let execution_plan = execution_plan_for_mint(mint_key);
+
+        with_mint_to_cpi_boundary_fixture(
+            CpiFixtureParams {
+                program_id,
+                token_program_key: spl_token::id(),
+                mint_key,
+                recipient_token_account_key: Pubkey::new_unique(),
+                mint_authority_pda_key: pda,
+                mint_authority_bump: bump.wrapping_add(1),
+                boundary_amount: 1_000,
+            },
+            |boundary| {
+                assert_custom_error(
+                    plan_mint_to_cpi_boundary(&program_id, &execution_plan, boundary),
+                    XxxlError::InvalidPda,
+                );
+            },
+        );
+    }
 
     #[test]
     fn mint_to_instruction_uses_spl_token_program_and_expected_accounts() {
