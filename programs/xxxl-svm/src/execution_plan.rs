@@ -99,6 +99,28 @@ pub fn apply_processed_event_mutation_boundary(
     )
 }
 
+pub fn apply_recipient_balance_mutation_boundary(
+    recipient_balance_data: &mut [u8],
+    execution_plan: &AtomicConsumeGatewayMintExecutionPlan,
+) -> Result<u128, ProgramError> {
+    assert_atomic_consume_gateway_mint_step_order(&execution_plan.steps)?;
+
+    if execution_plan.live_route_activation_enabled
+        || execution_plan.mint_to_invocation_from_process_instruction_enabled
+        || execution_plan.amount == 0
+    {
+        return Err(XxxlError::InvalidInstruction.into());
+    }
+
+    credit_recipient_balance(
+        recipient_balance_data,
+        execution_plan.recipient,
+        execution_plan.mint,
+        execution_plan.amount as u128,
+        execution_plan.canonical_event_key,
+    )
+}
+
 pub fn apply_atomic_state_mutations_fixture(
     processed_event_data: &mut [u8],
     recipient_balance_data: &mut [u8],
@@ -512,6 +534,147 @@ mod tests {
         );
 
         assert_eq!(processed_event_data, before);
+    }
+
+    #[test]
+    fn recipient_balance_mutation_boundary_credits_balance_from_execution_plan() {
+        let args = valid_args();
+        let plan = valid_execution_plan();
+        let mut recipient_balance_data = valid_recipient_balance_data(&args, 200);
+
+        let next_balance =
+            apply_recipient_balance_mutation_boundary(&mut recipient_balance_data, &plan)
+                .expect("recipient balance mutation boundary");
+
+        let recipient_balance =
+            RecipientBalanceAccountView::new(&recipient_balance_data).expect("recipient balance");
+
+        assert_eq!(next_balance, 1_200);
+        assert_eq!(recipient_balance.balance(), 1_200);
+        assert_eq!(
+            read_fixed_32(&recipient_balance_data, 96),
+            args.canonical_event_key
+        );
+    }
+
+    #[test]
+    fn recipient_balance_mutation_boundary_rejects_wrong_owner_without_changes() {
+        let args = valid_args();
+        let plan = valid_execution_plan();
+        let mut recipient_balance_data = valid_recipient_balance_data(&args, 200);
+        recipient_balance_data[16] ^= 0xff;
+        let before = recipient_balance_data.clone();
+
+        assert_custom_error(
+            apply_recipient_balance_mutation_boundary(&mut recipient_balance_data, &plan),
+            XxxlError::InvalidRecipientAta,
+        );
+
+        assert_eq!(recipient_balance_data, before);
+    }
+
+    #[test]
+    fn recipient_balance_mutation_boundary_rejects_wrong_mint_without_changes() {
+        let args = valid_args();
+        let plan = valid_execution_plan();
+        let mut recipient_balance_data = valid_recipient_balance_data(&args, 200);
+        recipient_balance_data[48] ^= 0xff;
+        let before = recipient_balance_data.clone();
+
+        assert_custom_error(
+            apply_recipient_balance_mutation_boundary(&mut recipient_balance_data, &plan),
+            XxxlError::InvalidRecipientAta,
+        );
+
+        assert_eq!(recipient_balance_data, before);
+    }
+
+    #[test]
+    fn recipient_balance_mutation_boundary_rejects_zero_amount_plan_without_changes() {
+        let args = valid_args();
+        let mut plan = valid_execution_plan();
+        plan.amount = 0;
+
+        let mut recipient_balance_data = valid_recipient_balance_data(&args, 200);
+        let before = recipient_balance_data.clone();
+
+        assert_custom_error(
+            apply_recipient_balance_mutation_boundary(&mut recipient_balance_data, &plan),
+            XxxlError::InvalidInstruction,
+        );
+
+        assert_eq!(recipient_balance_data, before);
+    }
+
+    #[test]
+    fn recipient_balance_mutation_boundary_rejects_balance_overflow_without_changes() {
+        let args = valid_args();
+        let plan = valid_execution_plan();
+        let mut recipient_balance_data = valid_recipient_balance_data(&args, u128::MAX);
+        let before = recipient_balance_data.clone();
+
+        assert_custom_error(
+            apply_recipient_balance_mutation_boundary(&mut recipient_balance_data, &plan),
+            XxxlError::InvalidInstruction,
+        );
+
+        assert_eq!(recipient_balance_data, before);
+    }
+
+    #[test]
+    fn recipient_balance_mutation_boundary_rejects_live_route_flag_without_changes() {
+        let args = valid_args();
+        let mut plan = valid_execution_plan();
+        plan.live_route_activation_enabled = true;
+
+        let mut recipient_balance_data = valid_recipient_balance_data(&args, 200);
+        let before = recipient_balance_data.clone();
+
+        assert_custom_error(
+            apply_recipient_balance_mutation_boundary(&mut recipient_balance_data, &plan),
+            XxxlError::InvalidInstruction,
+        );
+
+        assert_eq!(recipient_balance_data, before);
+    }
+
+    #[test]
+    fn recipient_balance_mutation_boundary_rejects_mint_to_flag_without_changes() {
+        let args = valid_args();
+        let mut plan = valid_execution_plan();
+        plan.mint_to_invocation_from_process_instruction_enabled = true;
+
+        let mut recipient_balance_data = valid_recipient_balance_data(&args, 200);
+        let before = recipient_balance_data.clone();
+
+        assert_custom_error(
+            apply_recipient_balance_mutation_boundary(&mut recipient_balance_data, &plan),
+            XxxlError::InvalidInstruction,
+        );
+
+        assert_eq!(recipient_balance_data, before);
+    }
+
+    #[test]
+    fn recipient_balance_mutation_boundary_rejects_reordered_steps_without_changes() {
+        let args = valid_args();
+        let mut plan = valid_execution_plan();
+        plan.steps = [
+            AtomicExecutionStep::ValidateAndPrepareCpi,
+            AtomicExecutionStep::CreditRecipientBalance,
+            AtomicExecutionStep::MarkProcessedEventConsumed,
+            AtomicExecutionStep::KeepLiveRouteDisabled,
+        ];
+
+        let mut recipient_balance_data = valid_recipient_balance_data(&args, 200);
+        let before = recipient_balance_data.clone();
+
+        assert_custom_error(
+            apply_recipient_balance_mutation_boundary(&mut recipient_balance_data, &plan),
+            XxxlError::InvalidInstruction,
+        );
+
+        assert_eq!(recipient_balance_data, before);
     }
 
     #[test]
