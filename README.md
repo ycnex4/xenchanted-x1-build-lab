@@ -990,3 +990,23 @@ No SPL Token `mint_to` is invoked.
 No XXXL minting is enabled.
 No runtime state mutation is performed.
 No live execution is connected to `process_instruction`.
+
+## XXXL runtime local state mutation composition boundary
+
+The XXXL runtime model now composes planning with local program-owned state mutation.
+
+The new boundary accepts accounts and decoded consume-gateway-mint args, performs guarded validation, builds the execution plan, builds the planning-only SPL `mint_to` CPI plan, and then mutates only local program-owned state:
+
+- processed event account
+- recipient balance account
+
+The mutation uses the atomic state mutation composition boundary, which prechecks both local state accounts before writing.
+
+This stage does not call `invoke_signed`.
+
+No live route was activated.
+No SPL Token `mint_to` is invoked.
+No XXXL minting is enabled.
+No SPL mint supply mutation is enabled.
+No recipient SPL token account mutation is enabled.
+No live execution is connected to `process_instruction`.

@@ -10,6 +10,7 @@ use crate::{
     },
     error::XxxlError,
     execution_plan::{
+        apply_atomic_state_mutation_composition_boundary,
         build_atomic_consume_gateway_mint_execution_plan, AtomicConsumeGatewayMintExecutionPlan,
     },
     instruction::{
@@ -48,6 +49,13 @@ pub struct PreparedConsumeGatewayMintCpi<'a, 'b> {
 pub struct RuntimeConsumeGatewayMintPlanningComposition {
     pub execution_plan: AtomicConsumeGatewayMintExecutionPlan,
     pub mint_to_cpi_plan: MintToCpiPlanningBoundary,
+    pub live_route_activation_enabled: bool,
+    pub invoke_signed_from_process_instruction_enabled: bool,
+}
+
+pub struct RuntimeConsumeGatewayMintLocalStateMutationComposition {
+    pub planning_composition: RuntimeConsumeGatewayMintPlanningComposition,
+    pub recipient_balance_after: u128,
     pub live_route_activation_enabled: bool,
     pub invoke_signed_from_process_instruction_enabled: bool,
 }
@@ -131,6 +139,63 @@ pub fn build_runtime_consume_gateway_mint_planning_composition_boundary(
     Ok(RuntimeConsumeGatewayMintPlanningComposition {
         execution_plan,
         mint_to_cpi_plan,
+        live_route_activation_enabled: false,
+        invoke_signed_from_process_instruction_enabled: false,
+    })
+}
+
+pub fn build_runtime_consume_gateway_mint_local_state_mutation_composition_boundary(
+    program_id: &Pubkey,
+    accounts: &[AccountInfo],
+    args: &ConsumeGatewayMintArgs,
+    rent: &Rent,
+    consumed_slot: u64,
+) -> Result<RuntimeConsumeGatewayMintLocalStateMutationComposition, ProgramError> {
+    let planning_composition = build_runtime_consume_gateway_mint_planning_composition_boundary(
+        program_id,
+        accounts,
+        args,
+        rent,
+        consumed_slot,
+    )?;
+
+    if planning_composition.live_route_activation_enabled
+        || planning_composition.invoke_signed_from_process_instruction_enabled
+        || planning_composition
+            .execution_plan
+            .live_route_activation_enabled
+        || planning_composition
+            .execution_plan
+            .mint_to_invocation_from_process_instruction_enabled
+        || planning_composition
+            .mint_to_cpi_plan
+            .live_route_activation_enabled
+        || planning_composition
+            .mint_to_cpi_plan
+            .invoke_signed_from_process_instruction_enabled
+    {
+        return Err(XxxlError::CpiBoundaryNotReady.into());
+    }
+
+    let processed_event_account =
+        account_at(accounts, args.processed_event_account_index as usize)?;
+    let recipient_balance_account =
+        account_at(accounts, args.recipient_balance_account_index as usize)?;
+
+    let recipient_balance_after = {
+        let mut processed_event_data = processed_event_account.try_borrow_mut_data()?;
+        let mut recipient_balance_data = recipient_balance_account.try_borrow_mut_data()?;
+
+        apply_atomic_state_mutation_composition_boundary(
+            &mut processed_event_data,
+            &mut recipient_balance_data,
+            &planning_composition.execution_plan,
+        )?
+    };
+
+    Ok(RuntimeConsumeGatewayMintLocalStateMutationComposition {
+        planning_composition,
+        recipient_balance_after,
         live_route_activation_enabled: false,
         invoke_signed_from_process_instruction_enabled: false,
     })
@@ -676,6 +741,152 @@ mod tests {
         assert_eq!(fixture.data.recipient_balance, recipient_balance_before);
     }
 
+    #[test]
+    fn runtime_local_state_mutation_composition_boundary_marks_event_and_credits_balance() {
+        let mut fixture = HandlerFixture::new();
+        let expected_event_key = fixture.args.canonical_event_key;
+
+        let program_id = fixture.program_id;
+        let args = fixture.args;
+        let rent = Rent::default();
+        let accounts = fixture.accounts();
+
+        let composition =
+            build_runtime_consume_gateway_mint_local_state_mutation_composition_boundary(
+                &program_id,
+                &accounts,
+                &args,
+                &rent,
+                123,
+            )
+            .expect("runtime local state mutation composition boundary");
+
+        assert_eq!(
+            composition
+                .planning_composition
+                .execution_plan
+                .consumed_slot,
+            123
+        );
+        assert_eq!(composition.recipient_balance_after, 1_000);
+        assert!(!composition.live_route_activation_enabled);
+        assert!(!composition.invoke_signed_from_process_instruction_enabled);
+        assert!(
+            !composition
+                .planning_composition
+                .mint_to_cpi_plan
+                .invoke_signed_from_process_instruction_enabled
+        );
+
+        drop(accounts);
+
+        assert_eq!(fixture.data.processed_event[10], 1);
+        assert_eq!(read_u128_le(&fixture.data.processed_event, 112), 1_000);
+        assert_eq!(read_u64_le(&fixture.data.processed_event, 128), 123);
+        assert_eq!(read_u128_le(&fixture.data.recipient_balance, 80), 1_000);
+        assert_eq!(
+            read_fixed_32(&fixture.data.recipient_balance, 96),
+            expected_event_key
+        );
+        assert_eq!(read_u64_le(&fixture.data.spl_mint, 36), 0);
+    }
+
+    #[test]
+    fn runtime_local_state_mutation_composition_boundary_rejects_recipient_overflow_before_event_mark(
+    ) {
+        let mut fixture = HandlerFixture::new();
+        fixture.data.recipient_balance[80..96].copy_from_slice(&u128::MAX.to_le_bytes());
+
+        let processed_before = fixture.data.processed_event.clone();
+        let recipient_balance_before = fixture.data.recipient_balance.clone();
+
+        let program_id = fixture.program_id;
+        let args = fixture.args;
+        let rent = Rent::default();
+        let accounts = fixture.accounts();
+
+        assert_custom_error(
+            build_runtime_consume_gateway_mint_local_state_mutation_composition_boundary(
+                &program_id,
+                &accounts,
+                &args,
+                &rent,
+                123,
+            ),
+            XxxlError::InvalidInstruction,
+        );
+
+        drop(accounts);
+
+        assert_eq!(fixture.data.processed_event, processed_before);
+        assert_eq!(fixture.data.recipient_balance, recipient_balance_before);
+    }
+
+    #[test]
+    fn runtime_local_state_mutation_composition_boundary_rejects_consumed_event_without_credit() {
+        let mut fixture = HandlerFixture::new();
+        fixture.data.processed_event[10] = 1;
+
+        let processed_before = fixture.data.processed_event.clone();
+        let recipient_balance_before = fixture.data.recipient_balance.clone();
+
+        let program_id = fixture.program_id;
+        let args = fixture.args;
+        let rent = Rent::default();
+        let accounts = fixture.accounts();
+
+        assert_custom_error(
+            build_runtime_consume_gateway_mint_local_state_mutation_composition_boundary(
+                &program_id,
+                &accounts,
+                &args,
+                &rent,
+                123,
+            ),
+            XxxlError::InvalidInstruction,
+        );
+
+        drop(accounts);
+
+        assert_eq!(fixture.data.processed_event, processed_before);
+        assert_eq!(fixture.data.recipient_balance, recipient_balance_before);
+    }
+
+    #[test]
+    fn runtime_local_state_mutation_composition_boundary_rejects_wrong_recipient_token_account_without_mutation(
+    ) {
+        let mut fixture = HandlerFixture::new();
+        fixture.data.recipient_token_account = packed_token_account(
+            fixture.keys.spl_mint,
+            Pubkey::new_unique(),
+            AccountState::Initialized,
+        );
+
+        let processed_before = fixture.data.processed_event.clone();
+        let recipient_balance_before = fixture.data.recipient_balance.clone();
+
+        let program_id = fixture.program_id;
+        let args = fixture.args;
+        let rent = Rent::default();
+        let accounts = fixture.accounts();
+
+        assert_custom_error(
+            build_runtime_consume_gateway_mint_local_state_mutation_composition_boundary(
+                &program_id,
+                &accounts,
+                &args,
+                &rent,
+                123,
+            ),
+            XxxlError::InvalidRecipientAta,
+        );
+
+        drop(accounts);
+
+        assert_eq!(fixture.data.processed_event, processed_before);
+        assert_eq!(fixture.data.recipient_balance, recipient_balance_before);
+    }
+
     struct HandlerFixture {
         program_id: Pubkey,
         owners: FixtureOwners,
@@ -1012,6 +1223,24 @@ mod tests {
 
         SplTokenAccount::pack(account, &mut data).expect("pack token account");
         data
+    }
+
+    fn read_u128_le(input: &[u8], offset: usize) -> u128 {
+        let mut output = [0u8; 16];
+        output.copy_from_slice(&input[offset..offset + 16]);
+        u128::from_le_bytes(output)
+    }
+
+    fn read_u64_le(input: &[u8], offset: usize) -> u64 {
+        let mut output = [0u8; 8];
+        output.copy_from_slice(&input[offset..offset + 8]);
+        u64::from_le_bytes(output)
+    }
+
+    fn read_fixed_32(input: &[u8], offset: usize) -> [u8; 32] {
+        let mut output = [0u8; 32];
+        output.copy_from_slice(&input[offset..offset + 32]);
+        output
     }
 
     fn fixture_bump() -> u8 {
