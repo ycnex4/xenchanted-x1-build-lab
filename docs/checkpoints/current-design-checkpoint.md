@@ -35466,3 +35466,52 @@ No SPL Token `mint_to` is invoked.
 No XXXL minting is enabled.
 No processed event mutation is enabled by this boundary.
 This boundary is not connected to `process_instruction`.
+
+## XXXL atomic state mutation composition boundary
+
+Status: `COMPLETED`.
+
+A composed atomic state-mutation boundary was added.
+
+The boundary accepts:
+
+- `AtomicConsumeGatewayMintExecutionPlan`
+- mutable processed-event account data
+- mutable recipient-balance account data
+
+It prechecks:
+
+- fixed atomic step order
+- live route disabled flag
+- mint_to disabled flag
+- non-zero amount
+- processed event not consumed
+- matching canonical event key
+- matching route id
+- matching processed-event recipient
+- matching recipient-balance owner
+- matching recipient-balance mint
+- no recipient-balance overflow
+
+It writes only after all prechecks pass:
+
+- processed-event consumed flag, amount, and slot
+- recipient balance and last canonical event key
+
+The key atomicity property is that recipient-balance failure does not leave processed-event consumed.
+
+Hard checks passed:
+
+- `cargo build-sbf`
+- `cargo fmt --check`
+- `cargo test`
+- `cargo test --test mollusk_consume_gateway_mint -- --ignored --nocapture`
+- `cargo clippy --all-targets -- -D warnings`
+- `cargo audit`
+- `cargo deny` licenses/bans/sources
+
+No live route was activated.
+No SPL Token `mint_to` is invoked.
+No XXXL minting is enabled.
+No SPL mint supply mutation is enabled.
+This boundary is not connected to `process_instruction`.
