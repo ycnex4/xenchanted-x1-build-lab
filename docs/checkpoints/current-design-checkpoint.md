@@ -34925,3 +34925,26 @@ Non-goals:
 - no authority freeze execution
 
 Next likely stage: guarded live-handler wiring model, where activation remains explicitly disabled until all authority/freeze/deploy constraints are satisfied.
+
+## XXXL runtime tooling roadmap
+
+Status: `RUNTIME_TOOLING_ROADMAP_PLANNED`.
+
+The tooling roadmap is now staged explicitly:
+
+1. current runtime layer checks
+2. Rust quality/security baseline
+3. Rust clippy warning cleanup
+4. manual account-constraint audit
+5. Mollusk instruction/state-transition tests
+6. Trident fuzzing invariants
+7. predeploy security readiness gate
+
+Immediate policy:
+
+- keep current runtime fixture stages gated by TypeScript checks, build, and targeted Rust tests
+- add `cargo fmt --check`, full `cargo test`, `cargo audit`, `cargo deny check`, and `cargo geiger` report-only in the next Rust quality/security baseline
+- do not make `cargo clippy --all-targets --all-features -- -D warnings` a hard gate until known scaffold warnings are cleaned up
+- do not add Mollusk/Trident before guarded handler wiring and invariant catalog are mature
+- require a manual account-constraint audit before guarded live-handler wiring
+- require all tools and manual checklists before any real deploy/freeze action
