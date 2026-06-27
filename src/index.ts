@@ -79,3 +79,4 @@ export * from "./xxxl/svm-serialized-runtime-vectors.js";
 export * from "./xxxl/svm-runtime-decoder-handler-model.js";
 export * from "./xxxl/svm-runtime-port-readiness-package.js";
 export * from "./xxxl/x1-svm-port-scaffold.js";
+export * from "./xxxl/real-pda-derivation-fixture.js";
