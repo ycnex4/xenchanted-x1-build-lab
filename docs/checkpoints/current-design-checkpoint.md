@@ -35253,3 +35253,46 @@ Hard checks passed:
 No live route was activated.
 No SPL Token `mint_to` is invoked.
 No XXXL minting is enabled.
+
+## XXXL Mollusk instruction decode negative harness
+
+Status: `COMPLETED`.
+
+The real Mollusk SBF harness now verifies instruction decode failures before the scaffold-only handler is reached.
+
+Added negative ignored tests:
+
+- invalid instruction length
+- invalid discriminator
+- invalid layout version
+
+Verified custom errors:
+
+- `InvalidInstruction` -> `0x1`
+- `InvalidDiscriminator` -> `0x6`
+- `InvalidVersion` -> `0x7`
+
+The existing valid scaffold-only test still confirms:
+
+- the SBF artifact is loaded through Mollusk
+- `consume_gateway_mint` reaches the scaffold-only path
+- runtime log confirms live route execution is not activated
+- target state accounts remain unchanged
+
+Added exact pinned direct dev-dependency:
+
+- `solana-program-error = "=3.0.1"`
+
+Hard checks passed:
+
+- `cargo build-sbf`
+- `cargo fmt --check`
+- `cargo test`
+- `cargo test --test mollusk_consume_gateway_mint -- --ignored --nocapture`
+- `cargo clippy --all-targets -- -D warnings`
+- `cargo audit`
+- `cargo deny` licenses/bans/sources
+
+No live route was activated.
+No SPL Token `mint_to` is invoked.
+No XXXL minting is enabled.
