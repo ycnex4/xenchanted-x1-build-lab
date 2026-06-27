@@ -680,3 +680,18 @@ Verification:
 - Rust tests pass: 63 passed, 0 failed
 - `cargo audit` exits 0
 - `cargo deny` licenses/bans/sources exit 0
+
+## XXXL Rust clippy warning cleanup
+
+The XXXL SVM scaffold now has a strict Rust warning baseline.
+
+Completed:
+
+- fixed the local `clippy::needless_lifetimes` warning
+- documented and scoped the Solana `entrypoint!` macro `unexpected_cfgs` exception
+- confirmed `cargo clippy --all-targets -- -D warnings` passes
+- confirmed Rust tests, audit, and deny checks still pass
+
+The exception is limited to `unexpected_cfgs` emitted by Solana entrypoint macro expansion under host clippy/check-cfg.
+
+No runtime behavior was changed in this stage.

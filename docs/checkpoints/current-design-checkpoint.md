@@ -35001,3 +35001,33 @@ Verification:
 - `cargo deny` licenses/bans/sources exit 0
 
 No live gateway route was activated in this stage.
+
+## XXXL Rust clippy warning cleanup
+
+Status: `COMPLETED`.
+
+The Rust/SVM scaffold now passes strict clippy warning checks.
+
+Resolved:
+
+- local `clippy::needless_lifetimes`
+- strict `clippy -D warnings` failure caused by Solana `entrypoint!` macro `unexpected_cfgs`
+
+Policy:
+
+- keep `#![allow(unexpected_cfgs)]` explicit and documented
+- do not suppress clippy globally
+- do not change runtime behavior
+
+Verification target:
+
+- `cargo fmt --check`
+- `cargo test`
+- `cargo clippy --all-targets`
+- `cargo clippy --all-targets -- -D warnings`
+- `cargo audit`
+- `cargo deny check licenses`
+- `cargo deny check bans`
+- `cargo deny check sources`
+
+No live gateway route was activated in this stage.
