@@ -35380,3 +35380,47 @@ No XXXL minting is enabled.
 No runtime state mutation is enabled.
 
 The runtime can now deterministically describe what would be executed after validation, while still refusing to execute minting or mutation.
+
+## XXXL processed event mutation boundary
+
+Status: `COMPLETED`.
+
+A separately tested processed-event mutation boundary was added.
+
+The boundary accepts:
+
+- `AtomicConsumeGatewayMintExecutionPlan`
+- mutable processed-event account data
+
+It validates:
+
+- fixed atomic step order
+- live route disabled flag
+- mint_to disabled flag
+- non-zero amount
+- not already consumed
+- matching canonical event key
+- matching route id
+- matching recipient
+
+It writes only after validation:
+
+- consumed flag
+- consumed amount
+- consumed slot
+
+Hard checks passed:
+
+- `cargo build-sbf`
+- `cargo fmt --check`
+- `cargo test`
+- `cargo test --test mollusk_consume_gateway_mint -- --ignored --nocapture`
+- `cargo clippy --all-targets -- -D warnings`
+- `cargo audit`
+- `cargo deny` licenses/bans/sources
+
+No live route was activated.
+No SPL Token `mint_to` is invoked.
+No XXXL minting is enabled.
+No recipient balance mutation is enabled.
+This boundary is not connected to `process_instruction`.

@@ -76,6 +76,29 @@ pub fn build_atomic_consume_gateway_mint_execution_plan(
     })
 }
 
+pub fn apply_processed_event_mutation_boundary(
+    processed_event_data: &mut [u8],
+    execution_plan: &AtomicConsumeGatewayMintExecutionPlan,
+) -> Result<(), ProgramError> {
+    assert_atomic_consume_gateway_mint_step_order(&execution_plan.steps)?;
+
+    if execution_plan.live_route_activation_enabled
+        || execution_plan.mint_to_invocation_from_process_instruction_enabled
+        || execution_plan.amount == 0
+    {
+        return Err(XxxlError::InvalidInstruction.into());
+    }
+
+    mark_processed_event_consumed(
+        processed_event_data,
+        execution_plan.canonical_event_key,
+        execution_plan.route_id,
+        execution_plan.recipient,
+        execution_plan.amount as u128,
+        execution_plan.consumed_slot,
+    )
+}
+
 pub fn apply_atomic_state_mutations_fixture(
     processed_event_data: &mut [u8],
     recipient_balance_data: &mut [u8],
@@ -339,6 +362,159 @@ mod tests {
     }
 
     #[test]
+    fn processed_event_mutation_boundary_marks_event_from_execution_plan() {
+        let args = valid_args();
+        let plan = valid_execution_plan();
+        let mut processed_event_data = valid_processed_event_data(&args, false);
+
+        apply_processed_event_mutation_boundary(&mut processed_event_data, &plan)
+            .expect("processed event mutation boundary");
+
+        let processed_event =
+            ProcessedEventAccountView::new(&processed_event_data).expect("processed event");
+
+        assert!(processed_event.consumed());
+        assert_eq!(processed_event.consumed_amount(), 1_000);
+        assert_eq!(read_u64_le(&processed_event_data, 128), 77);
+    }
+
+    #[test]
+    fn processed_event_mutation_boundary_rejects_replay_without_changes() {
+        let args = valid_args();
+        let plan = valid_execution_plan();
+        let mut processed_event_data = valid_processed_event_data(&args, true);
+        let before = processed_event_data.clone();
+
+        assert_custom_error(
+            apply_processed_event_mutation_boundary(&mut processed_event_data, &plan),
+            XxxlError::InvalidInstruction,
+        );
+
+        assert_eq!(processed_event_data, before);
+    }
+
+    #[test]
+    fn processed_event_mutation_boundary_rejects_wrong_event_key_without_changes() {
+        let args = valid_args();
+        let plan = valid_execution_plan();
+        let mut processed_event_data = valid_processed_event_data(&args, false);
+        processed_event_data[16] ^= 0xff;
+        let before = processed_event_data.clone();
+
+        assert_custom_error(
+            apply_processed_event_mutation_boundary(&mut processed_event_data, &plan),
+            XxxlError::InvalidInstruction,
+        );
+
+        assert_eq!(processed_event_data, before);
+    }
+
+    #[test]
+    fn processed_event_mutation_boundary_rejects_wrong_route_without_changes() {
+        let args = valid_args();
+        let plan = valid_execution_plan();
+        let mut processed_event_data = valid_processed_event_data(&args, false);
+        processed_event_data[48] ^= 0xff;
+        let before = processed_event_data.clone();
+
+        assert_custom_error(
+            apply_processed_event_mutation_boundary(&mut processed_event_data, &plan),
+            XxxlError::InvalidInstruction,
+        );
+
+        assert_eq!(processed_event_data, before);
+    }
+
+    #[test]
+    fn processed_event_mutation_boundary_rejects_wrong_recipient_without_changes() {
+        let args = valid_args();
+        let plan = valid_execution_plan();
+        let mut processed_event_data = valid_processed_event_data(&args, false);
+        processed_event_data[80] ^= 0xff;
+        let before = processed_event_data.clone();
+
+        assert_custom_error(
+            apply_processed_event_mutation_boundary(&mut processed_event_data, &plan),
+            XxxlError::InvalidInstruction,
+        );
+
+        assert_eq!(processed_event_data, before);
+    }
+
+    #[test]
+    fn processed_event_mutation_boundary_rejects_zero_amount_plan_without_changes() {
+        let args = valid_args();
+        let mut plan = valid_execution_plan();
+        plan.amount = 0;
+
+        let mut processed_event_data = valid_processed_event_data(&args, false);
+        let before = processed_event_data.clone();
+
+        assert_custom_error(
+            apply_processed_event_mutation_boundary(&mut processed_event_data, &plan),
+            XxxlError::InvalidInstruction,
+        );
+
+        assert_eq!(processed_event_data, before);
+    }
+
+    #[test]
+    fn processed_event_mutation_boundary_rejects_live_route_flag_without_changes() {
+        let args = valid_args();
+        let mut plan = valid_execution_plan();
+        plan.live_route_activation_enabled = true;
+
+        let mut processed_event_data = valid_processed_event_data(&args, false);
+        let before = processed_event_data.clone();
+
+        assert_custom_error(
+            apply_processed_event_mutation_boundary(&mut processed_event_data, &plan),
+            XxxlError::InvalidInstruction,
+        );
+
+        assert_eq!(processed_event_data, before);
+    }
+
+    #[test]
+    fn processed_event_mutation_boundary_rejects_mint_to_flag_without_changes() {
+        let args = valid_args();
+        let mut plan = valid_execution_plan();
+        plan.mint_to_invocation_from_process_instruction_enabled = true;
+
+        let mut processed_event_data = valid_processed_event_data(&args, false);
+        let before = processed_event_data.clone();
+
+        assert_custom_error(
+            apply_processed_event_mutation_boundary(&mut processed_event_data, &plan),
+            XxxlError::InvalidInstruction,
+        );
+
+        assert_eq!(processed_event_data, before);
+    }
+
+    #[test]
+    fn processed_event_mutation_boundary_rejects_reordered_steps_without_changes() {
+        let args = valid_args();
+        let mut plan = valid_execution_plan();
+        plan.steps = [
+            AtomicExecutionStep::ValidateAndPrepareCpi,
+            AtomicExecutionStep::CreditRecipientBalance,
+            AtomicExecutionStep::MarkProcessedEventConsumed,
+            AtomicExecutionStep::KeepLiveRouteDisabled,
+        ];
+
+        let mut processed_event_data = valid_processed_event_data(&args, false);
+        let before = processed_event_data.clone();
+
+        assert_custom_error(
+            apply_processed_event_mutation_boundary(&mut processed_event_data, &plan),
+            XxxlError::InvalidInstruction,
+        );
+
+        assert_eq!(processed_event_data, before);
+    }
+
+    #[test]
     fn atomic_state_mutation_fixture_marks_processed_and_credits_balance() {
         let args = valid_args();
         let mut processed_event_data = valid_processed_event_data(&args, false);
@@ -448,6 +624,23 @@ mod tests {
         }
     }
 
+    fn valid_execution_plan() -> AtomicConsumeGatewayMintExecutionPlan {
+        let args = valid_args();
+
+        AtomicConsumeGatewayMintExecutionPlan {
+            steps: ATOMIC_CONSUME_GATEWAY_MINT_STEP_ORDER,
+            canonical_event_key: args.canonical_event_key,
+            route_id: args.route_id,
+            recipient: args.recipient,
+            mint: args.mint_id,
+            amount: args.amount as u64,
+            consumed_slot: 77,
+            source_chain_weight_bps: args.source_chain_weight_bps,
+            live_route_activation_enabled: false,
+            mint_to_invocation_from_process_instruction_enabled: false,
+        }
+    }
+
     fn valid_processed_event_data(args: &ConsumeGatewayMintArgs, consumed: bool) -> Vec<u8> {
         let mut data = account_data(
             PROCESSED_EVENT_ACCOUNT_LEN,
@@ -482,6 +675,19 @@ mod tests {
         data[8..10].copy_from_slice(&RUNTIME_LAYOUT_VERSION.to_le_bytes());
 
         data
+    }
+
+    fn read_u64_le(input: &[u8], offset: usize) -> u64 {
+        u64::from_le_bytes([
+            input[offset],
+            input[offset + 1],
+            input[offset + 2],
+            input[offset + 3],
+            input[offset + 4],
+            input[offset + 5],
+            input[offset + 6],
+            input[offset + 7],
+        ])
     }
 
     fn read_fixed_32(input: &[u8], offset: usize) -> [u8; 32] {
