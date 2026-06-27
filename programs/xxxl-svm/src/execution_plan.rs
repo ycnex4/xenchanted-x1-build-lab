@@ -121,6 +121,51 @@ pub fn apply_recipient_balance_mutation_boundary(
     )
 }
 
+pub fn apply_atomic_state_mutation_composition_boundary(
+    processed_event_data: &mut [u8],
+    recipient_balance_data: &mut [u8],
+    execution_plan: &AtomicConsumeGatewayMintExecutionPlan,
+) -> Result<u128, ProgramError> {
+    assert_atomic_consume_gateway_mint_step_order(&execution_plan.steps)?;
+
+    if execution_plan.live_route_activation_enabled
+        || execution_plan.mint_to_invocation_from_process_instruction_enabled
+        || execution_plan.amount == 0
+    {
+        return Err(XxxlError::InvalidInstruction.into());
+    }
+
+    {
+        let processed_event = ProcessedEventAccountView::new(processed_event_data)?;
+
+        if processed_event.consumed()
+            || processed_event.canonical_event_key() != execution_plan.canonical_event_key
+            || processed_event.route_id() != execution_plan.route_id
+            || processed_event.recipient() != execution_plan.recipient
+        {
+            return Err(XxxlError::InvalidInstruction.into());
+        }
+    }
+
+    {
+        let recipient_balance = RecipientBalanceAccountView::new(recipient_balance_data)?;
+
+        if recipient_balance.owner() != execution_plan.recipient
+            || recipient_balance.mint() != execution_plan.mint
+        {
+            return Err(XxxlError::InvalidRecipientAta.into());
+        }
+
+        recipient_balance
+            .balance()
+            .checked_add(execution_plan.amount as u128)
+            .ok_or(XxxlError::InvalidInstruction)?;
+    }
+
+    apply_processed_event_mutation_boundary(processed_event_data, execution_plan)?;
+    apply_recipient_balance_mutation_boundary(recipient_balance_data, execution_plan)
+}
+
 pub fn apply_atomic_state_mutations_fixture(
     processed_event_data: &mut [u8],
     recipient_balance_data: &mut [u8],
@@ -675,6 +720,251 @@ mod tests {
         );
 
         assert_eq!(recipient_balance_data, before);
+    }
+
+    #[test]
+    fn atomic_state_mutation_composition_boundary_marks_event_and_credits_balance() {
+        let args = valid_args();
+        let plan = valid_execution_plan();
+        let mut processed_event_data = valid_processed_event_data(&args, false);
+        let mut recipient_balance_data = valid_recipient_balance_data(&args, 200);
+
+        let next_balance = apply_atomic_state_mutation_composition_boundary(
+            &mut processed_event_data,
+            &mut recipient_balance_data,
+            &plan,
+        )
+        .expect("atomic composition boundary");
+
+        let processed_event =
+            ProcessedEventAccountView::new(&processed_event_data).expect("processed event");
+        let recipient_balance =
+            RecipientBalanceAccountView::new(&recipient_balance_data).expect("recipient balance");
+
+        assert_eq!(next_balance, 1_200);
+        assert!(processed_event.consumed());
+        assert_eq!(processed_event.consumed_amount(), 1_000);
+        assert_eq!(read_u64_le(&processed_event_data, 128), 77);
+        assert_eq!(recipient_balance.balance(), 1_200);
+        assert_eq!(
+            read_fixed_32(&recipient_balance_data, 96),
+            args.canonical_event_key
+        );
+    }
+
+    #[test]
+    fn atomic_state_mutation_composition_boundary_rejects_recipient_overflow_before_event_mark() {
+        let args = valid_args();
+        let plan = valid_execution_plan();
+        let mut processed_event_data = valid_processed_event_data(&args, false);
+        let mut recipient_balance_data = valid_recipient_balance_data(&args, u128::MAX);
+        let processed_before = processed_event_data.clone();
+        let balance_before = recipient_balance_data.clone();
+
+        assert_custom_error(
+            apply_atomic_state_mutation_composition_boundary(
+                &mut processed_event_data,
+                &mut recipient_balance_data,
+                &plan,
+            ),
+            XxxlError::InvalidInstruction,
+        );
+
+        assert_eq!(processed_event_data, processed_before);
+        assert_eq!(recipient_balance_data, balance_before);
+    }
+
+    #[test]
+    fn atomic_state_mutation_composition_boundary_rejects_wrong_recipient_owner_before_event_mark()
+    {
+        let args = valid_args();
+        let plan = valid_execution_plan();
+        let mut processed_event_data = valid_processed_event_data(&args, false);
+        let mut recipient_balance_data = valid_recipient_balance_data(&args, 200);
+        recipient_balance_data[16] ^= 0xff;
+        let processed_before = processed_event_data.clone();
+        let balance_before = recipient_balance_data.clone();
+
+        assert_custom_error(
+            apply_atomic_state_mutation_composition_boundary(
+                &mut processed_event_data,
+                &mut recipient_balance_data,
+                &plan,
+            ),
+            XxxlError::InvalidRecipientAta,
+        );
+
+        assert_eq!(processed_event_data, processed_before);
+        assert_eq!(recipient_balance_data, balance_before);
+    }
+
+    #[test]
+    fn atomic_state_mutation_composition_boundary_rejects_wrong_mint_before_event_mark() {
+        let args = valid_args();
+        let plan = valid_execution_plan();
+        let mut processed_event_data = valid_processed_event_data(&args, false);
+        let mut recipient_balance_data = valid_recipient_balance_data(&args, 200);
+        recipient_balance_data[48] ^= 0xff;
+        let processed_before = processed_event_data.clone();
+        let balance_before = recipient_balance_data.clone();
+
+        assert_custom_error(
+            apply_atomic_state_mutation_composition_boundary(
+                &mut processed_event_data,
+                &mut recipient_balance_data,
+                &plan,
+            ),
+            XxxlError::InvalidRecipientAta,
+        );
+
+        assert_eq!(processed_event_data, processed_before);
+        assert_eq!(recipient_balance_data, balance_before);
+    }
+
+    #[test]
+    fn atomic_state_mutation_composition_boundary_rejects_replay_before_balance_credit() {
+        let args = valid_args();
+        let plan = valid_execution_plan();
+        let mut processed_event_data = valid_processed_event_data(&args, true);
+        let mut recipient_balance_data = valid_recipient_balance_data(&args, 200);
+        let processed_before = processed_event_data.clone();
+        let balance_before = recipient_balance_data.clone();
+
+        assert_custom_error(
+            apply_atomic_state_mutation_composition_boundary(
+                &mut processed_event_data,
+                &mut recipient_balance_data,
+                &plan,
+            ),
+            XxxlError::InvalidInstruction,
+        );
+
+        assert_eq!(processed_event_data, processed_before);
+        assert_eq!(recipient_balance_data, balance_before);
+    }
+
+    #[test]
+    fn atomic_state_mutation_composition_boundary_rejects_wrong_event_key_before_balance_credit() {
+        let args = valid_args();
+        let plan = valid_execution_plan();
+        let mut processed_event_data = valid_processed_event_data(&args, false);
+        processed_event_data[16] ^= 0xff;
+        let mut recipient_balance_data = valid_recipient_balance_data(&args, 200);
+        let processed_before = processed_event_data.clone();
+        let balance_before = recipient_balance_data.clone();
+
+        assert_custom_error(
+            apply_atomic_state_mutation_composition_boundary(
+                &mut processed_event_data,
+                &mut recipient_balance_data,
+                &plan,
+            ),
+            XxxlError::InvalidInstruction,
+        );
+
+        assert_eq!(processed_event_data, processed_before);
+        assert_eq!(recipient_balance_data, balance_before);
+    }
+
+    #[test]
+    fn atomic_state_mutation_composition_boundary_rejects_zero_amount_without_changes() {
+        let args = valid_args();
+        let mut plan = valid_execution_plan();
+        plan.amount = 0;
+
+        let mut processed_event_data = valid_processed_event_data(&args, false);
+        let mut recipient_balance_data = valid_recipient_balance_data(&args, 200);
+        let processed_before = processed_event_data.clone();
+        let balance_before = recipient_balance_data.clone();
+
+        assert_custom_error(
+            apply_atomic_state_mutation_composition_boundary(
+                &mut processed_event_data,
+                &mut recipient_balance_data,
+                &plan,
+            ),
+            XxxlError::InvalidInstruction,
+        );
+
+        assert_eq!(processed_event_data, processed_before);
+        assert_eq!(recipient_balance_data, balance_before);
+    }
+
+    #[test]
+    fn atomic_state_mutation_composition_boundary_rejects_live_route_flag_without_changes() {
+        let args = valid_args();
+        let mut plan = valid_execution_plan();
+        plan.live_route_activation_enabled = true;
+
+        let mut processed_event_data = valid_processed_event_data(&args, false);
+        let mut recipient_balance_data = valid_recipient_balance_data(&args, 200);
+        let processed_before = processed_event_data.clone();
+        let balance_before = recipient_balance_data.clone();
+
+        assert_custom_error(
+            apply_atomic_state_mutation_composition_boundary(
+                &mut processed_event_data,
+                &mut recipient_balance_data,
+                &plan,
+            ),
+            XxxlError::InvalidInstruction,
+        );
+
+        assert_eq!(processed_event_data, processed_before);
+        assert_eq!(recipient_balance_data, balance_before);
+    }
+
+    #[test]
+    fn atomic_state_mutation_composition_boundary_rejects_mint_to_flag_without_changes() {
+        let args = valid_args();
+        let mut plan = valid_execution_plan();
+        plan.mint_to_invocation_from_process_instruction_enabled = true;
+
+        let mut processed_event_data = valid_processed_event_data(&args, false);
+        let mut recipient_balance_data = valid_recipient_balance_data(&args, 200);
+        let processed_before = processed_event_data.clone();
+        let balance_before = recipient_balance_data.clone();
+
+        assert_custom_error(
+            apply_atomic_state_mutation_composition_boundary(
+                &mut processed_event_data,
+                &mut recipient_balance_data,
+                &plan,
+            ),
+            XxxlError::InvalidInstruction,
+        );
+
+        assert_eq!(processed_event_data, processed_before);
+        assert_eq!(recipient_balance_data, balance_before);
+    }
+
+    #[test]
+    fn atomic_state_mutation_composition_boundary_rejects_reordered_steps_without_changes() {
+        let args = valid_args();
+        let mut plan = valid_execution_plan();
+        plan.steps = [
+            AtomicExecutionStep::ValidateAndPrepareCpi,
+            AtomicExecutionStep::CreditRecipientBalance,
+            AtomicExecutionStep::MarkProcessedEventConsumed,
+            AtomicExecutionStep::KeepLiveRouteDisabled,
+        ];
+
+        let mut processed_event_data = valid_processed_event_data(&args, false);
+        let mut recipient_balance_data = valid_recipient_balance_data(&args, 200);
+        let processed_before = processed_event_data.clone();
+        let balance_before = recipient_balance_data.clone();
+
+        assert_custom_error(
+            apply_atomic_state_mutation_composition_boundary(
+                &mut processed_event_data,
+                &mut recipient_balance_data,
+                &plan,
+            ),
+            XxxlError::InvalidInstruction,
+        );
+
+        assert_eq!(processed_event_data, processed_before);
+        assert_eq!(recipient_balance_data, balance_before);
     }
 
     #[test]

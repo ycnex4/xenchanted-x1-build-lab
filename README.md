@@ -944,3 +944,22 @@ No live route was activated.
 No SPL Token `mint_to` is invoked.
 No XXXL minting is enabled.
 No processed event mutation is enabled by this boundary.
+
+## XXXL atomic state mutation composition boundary
+
+The XXXL runtime model now has a composed atomic state-mutation boundary.
+
+The new boundary accepts an execution plan, processed-event account data, and recipient-balance account data. It prechecks both accounts before writing either mutation.
+
+The key property is:
+
+    if recipient balance validation fails, processed_event remains unchanged
+
+This prevents partial local state such as an event being marked consumed without the recipient balance being credited.
+
+This stage does not connect mutation to `process_instruction`.
+
+No live route was activated.
+No SPL Token `mint_to` is invoked.
+No XXXL minting is enabled.
+No SPL mint supply mutation is enabled.
