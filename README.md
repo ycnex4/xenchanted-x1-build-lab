@@ -714,3 +714,25 @@ Recorded boundaries:
 - writable/executable constraints required before live activation
 
 This stage does not activate the live gateway route and does not change runtime behavior.
+
+## XXXL guarded live-handler wiring fixture
+
+The XXXL SVM runtime now has a guarded live-handler wiring fixture.
+
+Added:
+
+- `LIVE_ROUTE_ACTIVATION_FROM_PROCESS_INSTRUCTION_ENABLED = false`
+- `build_guarded_consume_gateway_mint_live_handler_fixture`
+- positive fixture test for building a disabled execution plan after validation
+- negative fixture test rejecting invalid processed-event boundary before plan creation
+
+The fixture wires account validation into execution-plan construction, but keeps live route activation disabled.
+
+Verification:
+
+- Rust tests pass: 65 passed, 0 failed
+- `cargo clippy --all-targets -- -D warnings` passes
+- `cargo audit` exits 0
+- `cargo deny` licenses/bans/sources exit 0
+
+No live gateway route was activated in this stage.
