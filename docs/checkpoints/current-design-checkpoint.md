@@ -35131,3 +35131,39 @@ Verification baseline:
 No runtime code was changed.
 
 No live gateway route was activated.
+
+## XXXL Mollusk dependency compatibility probe
+
+Status: `COMPLETED`.
+
+A doc-only compatibility probe was completed for adding `mollusk-svm`.
+
+Current runtime pins:
+
+- `solana-program = 2.3.0`
+- `spl-token = 5.0.2`
+
+Temporary probe result:
+
+- `mollusk-svm = 0.13.4` added successfully in /tmp only
+- `cargo test` passes with 65 tests
+- `cargo clippy --all-targets -- -D warnings` passes
+- `cargo audit` exits 0
+- `cargo deny` licenses/bans/sources exits 0
+
+Dependency footprint:
+
+- baseline cargo audit scan: 196 crates
+- temporary Mollusk cargo audit scan: 404 crates
+
+Allowed audit warnings:
+
+- baseline: 3
+- temporary Mollusk: 6
+
+Decision:
+
+- Mollusk is compatible enough for a future dedicated harness stage.
+- This stage does not add Mollusk to the repository.
+- This stage does not change runtime code.
+- This stage does not activate live route execution.
