@@ -44,6 +44,7 @@ Important supporting documents:
 - [XXXL runtime program skeleton](docs/xxxl/xxxl-runtime-program-skeleton.md)
 - [XXXL runtime execution vectors](docs/xxxl/xxxl-runtime-execution-vectors.md)
 - [XXXL runtime dry-run fixtures](docs/xxxl/xxxl-runtime-dry-run-fixtures.md)
+- [XXXL runtime fixture report export](docs/xxxl/xxxl-runtime-fixture-report-export.md)
 - [XXXL Program v1 deployment readiness](docs/xxxl/xxxl-program-v1-deployment-readiness.md)
 
 The review summary explains:
@@ -71,7 +72,7 @@ The assumptions document explicitly records MVP trust boundaries and known limit
 Current main baseline:
 
 - TypeScript typecheck: passing
-- Tests: 81 files / 601 tests passing
+- Tests: 82 files / 613 tests passing
 - Build: passing
 - npm audit: 0 vulnerabilities
 
@@ -165,6 +166,7 @@ Latest reviewed main includes:
 - XXXL runtime program skeleton
 - XXXL runtime execution vectors
 - XXXL runtime dry-run fixtures
+- XXXL runtime fixture report export
 - XXXL Program v1 deployment readiness
 
 ## Validation commands
@@ -178,8 +180,8 @@ Run:
 
 Expected current result:
 
-    81 test files passed
-    601 tests passed
+    82 test files passed
+    613 tests passed
     found 0 vulnerabilities
 
 ## CLI
