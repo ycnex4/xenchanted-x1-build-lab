@@ -16,6 +16,55 @@ and in:
 -->
 
 
+# Latest XXXL runtime execution vectors checkpoint
+
+Stage XXXL Program v1 now has deterministic runtime execution vectors.
+
+Authoritative document:
+
+- `docs/xxxl/xxxl-runtime-execution-vectors.md`
+
+Checkpoint document:
+
+- `docs/checkpoints/xxxl-runtime-execution-vectors.md`
+
+Implementation files:
+
+- `src/xxxl/runtime-execution-vectors.ts`
+- `tests/xxxl/runtime-execution-vectors.test.ts`
+
+Covered vectors:
+
+- valid Ethereum primary full-weight gateway mint execution
+- valid Avalanche low-weight route-aware execution
+- invalid route policy rejection
+- missing route rejection
+- Stage 1 authorization rejection
+- replay rejection
+- event key mismatch rejection
+- instruction serialization boundary rejection
+
+Key properties:
+
+- runtime remains route-aware
+- Ethereum is not hardcoded as the only possible route
+- non-Ethereum routes require explicit low-weight route policy
+- runtime consumes Stage 1 authorization result only
+- runtime does not verify guardian signatures
+- successful vectors model SPL Token `mint_to` CPI
+- failed vectors skip CPI
+- rejected vectors preserve account state
+- vector canonical JSON serializes bigint values as decimal strings
+
+Expected validation baseline:
+
+- TypeScript typecheck: passing
+- Tests: 80 files / 588 tests passing
+- Build: passing
+
+Status: execution vectors only, before runtime dry-run fixtures.
+
+
 # Latest XXXL runtime program skeleton checkpoint
 
 Stage XXXL Program v1 now has a route-aware runtime program skeleton.
