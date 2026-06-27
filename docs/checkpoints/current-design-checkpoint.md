@@ -16,6 +16,57 @@ and in:
 -->
 
 
+# Latest XXXL runtime fixture report export checkpoint
+
+Stage XXXL Program v1 now has a deterministic runtime fixture report/export layer.
+
+Authoritative document:
+
+- `docs/xxxl/xxxl-runtime-fixture-report-export.md`
+
+Checkpoint document:
+
+- `docs/checkpoints/xxxl-runtime-fixture-report-export.md`
+
+Implementation files:
+
+- `src/xxxl/runtime-fixture-report-export.ts`
+- `tests/xxxl/runtime-fixture-report-export.test.ts`
+
+The export summarizes:
+
+- fixture count
+- unique execution vector count
+- fixture ids
+- vector ids
+- CPI committed vectors
+- CPI skipped vectors
+- supply audit OK vectors
+- expected rejection vectors
+- route-aware success vectors
+- per-fixture report details
+- canonical JSON
+- markdown summary
+
+Key properties:
+
+- default report covers all runtime dry-run fixtures
+- successful Ethereum and Avalanche route-aware vectors are visible
+- rejected vectors are reported as CPI skipped
+- expected rejections are not treated as report failures
+- canonical JSON is deterministic
+- markdown summary is deterministic
+- report validation detects bad canonical JSON, bad markdown, and not-ok reports
+
+Expected validation baseline:
+
+- TypeScript typecheck: passing
+- Tests: 82 files / 613 tests passing
+- Build: passing
+
+Status: deterministic fixture report/export layer only, before live runtime/deployment integration.
+
+
 # Latest XXXL runtime dry-run fixtures checkpoint
 
 Stage XXXL Program v1 now has model-layer runtime dry-run fixtures.
