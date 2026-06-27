@@ -70,6 +70,14 @@ impl<'a> MintStateAccountView<'a> {
     pub fn total_supply(&self) -> u128 {
         read_u128_le(self.data, 48)
     }
+
+    pub fn mint_pubkey(&self) -> [u8; 32] {
+        read_fixed_32(self.data, 16)
+    }
+
+    pub fn gateway_mint_authority_pda(&self) -> [u8; 32] {
+        read_fixed_32(self.data, 64)
+    }
 }
 
 impl<'a> GatewayConfigAccountView<'a> {
@@ -94,6 +102,14 @@ impl<'a> GatewayConfigAccountView<'a> {
     pub fn source_chain_id(&self) -> u64 {
         read_u64_le(self.data, 48)
     }
+
+    pub fn target_mint(&self) -> [u8; 32] {
+        read_fixed_32(self.data, 88)
+    }
+
+    pub fn guardian_set_id(&self) -> [u8; 32] {
+        read_fixed_32(self.data, 120)
+    }
 }
 
 impl<'a> GuardianSetAccountView<'a> {
@@ -114,6 +130,10 @@ impl<'a> GuardianSetAccountView<'a> {
     pub fn guardian_count(&self) -> u8 {
         self.data[14]
     }
+
+    pub fn guardian_set_id(&self) -> [u8; 32] {
+        read_fixed_32(self.data, 272)
+    }
 }
 
 impl<'a> ProcessedEventAccountView<'a> {
@@ -133,6 +153,14 @@ impl<'a> ProcessedEventAccountView<'a> {
 
     pub fn canonical_event_key(&self) -> [u8; 32] {
         read_fixed_32(self.data, 16)
+    }
+
+    pub fn route_id(&self) -> [u8; 32] {
+        read_fixed_32(self.data, 48)
+    }
+
+    pub fn recipient(&self) -> [u8; 32] {
+        read_fixed_32(self.data, 80)
     }
 
     pub fn consumed_amount(&self) -> u128 {
