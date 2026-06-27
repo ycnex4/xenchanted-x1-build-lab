@@ -839,3 +839,29 @@ Verified behavior:
 No live gateway route was activated.
 No SPL Token `mint_to` is invoked.
 No XXXL minting is enabled.
+
+## XXXL Mollusk instruction decode negative harness
+
+The Mollusk SBF harness now includes negative instruction decode tests.
+
+The ignored integration test file verifies four SBF-level cases:
+
+- valid `consume_gateway_mint` scaffold success
+- invalid instruction length
+- invalid discriminator
+- invalid layout version
+
+The negative cases assert the expected custom errors:
+
+- `InvalidInstruction` -> `0x1`
+- `InvalidDiscriminator` -> `0x6`
+- `InvalidVersion` -> `0x7`
+
+The tests remain ignored by default because they require a local SBF artifact:
+
+    cargo build-sbf
+    cargo test --test mollusk_consume_gateway_mint -- --ignored --nocapture
+
+No live gateway route was activated.
+No SPL Token `mint_to` is invoked.
+No XXXL minting is enabled.

@@ -6,9 +6,11 @@ use solana_instruction::{AccountMeta, Instruction};
 use solana_program::{
     program_option::COption, program_pack::Pack, pubkey::Pubkey as ProgramPubkey,
 };
+use solana_program_error::ProgramError;
 use solana_pubkey::Pubkey;
 use spl_token::state::{Account as SplTokenAccount, AccountState, Mint as SplTokenMint};
 use xxxl_svm::{
+    error::XxxlError,
     instruction::{
         CONSUME_GATEWAY_MINT_ACCOUNT_META_COUNT, CONSUME_GATEWAY_MINT_DISCRIMINATOR,
         CONSUME_GATEWAY_MINT_GUARDIAN_SET_ACCOUNT_INDEX, CONSUME_GATEWAY_MINT_INSTRUCTION_LEN,
@@ -68,6 +70,88 @@ fn valid_consume_gateway_mint_scaffold_succeeds_without_state_mutation() {
     ];
 
     mollusk.process_and_validate_instruction(&instruction, &accounts, &checks);
+}
+
+#[test]
+#[ignore = "requires cargo build-sbf and target/deploy/xxxl_svm.so"]
+fn invalid_consume_gateway_mint_length_rejects_before_scaffold_path() {
+    let fixture = ScaffoldFixture::new();
+    let mollusk = mollusk_for_program(&fixture.program_id);
+
+    let mut instruction_data = fixture.instruction_data.to_vec();
+    instruction_data.pop();
+
+    let instruction =
+        Instruction::new_with_bytes(fixture.program_id, &instruction_data, Vec::new());
+    let accounts: Vec<(Pubkey, Account)> = Vec::new();
+
+    mollusk.process_and_validate_instruction(
+        &instruction,
+        &accounts,
+        &[Check::err(ProgramError::Custom(
+            XxxlError::InvalidInstruction as u32,
+        ))],
+    );
+}
+
+#[test]
+#[ignore = "requires cargo build-sbf and target/deploy/xxxl_svm.so"]
+fn invalid_consume_gateway_mint_discriminator_rejects_before_scaffold_path() {
+    let fixture = ScaffoldFixture::new();
+    let mollusk = mollusk_for_program(&fixture.program_id);
+
+    let mut instruction_data = fixture.instruction_data;
+    instruction_data[0] ^= 0xff;
+
+    let instruction =
+        Instruction::new_with_bytes(fixture.program_id, &instruction_data, Vec::new());
+    let accounts: Vec<(Pubkey, Account)> = Vec::new();
+
+    mollusk.process_and_validate_instruction(
+        &instruction,
+        &accounts,
+        &[Check::err(ProgramError::Custom(
+            XxxlError::InvalidDiscriminator as u32,
+        ))],
+    );
+}
+
+#[test]
+#[ignore = "requires cargo build-sbf and target/deploy/xxxl_svm.so"]
+fn invalid_consume_gateway_mint_version_rejects_before_scaffold_path() {
+    let fixture = ScaffoldFixture::new();
+    let mollusk = mollusk_for_program(&fixture.program_id);
+
+    let mut instruction_data = fixture.instruction_data;
+    instruction_data[8..10].copy_from_slice(&2u16.to_le_bytes());
+
+    let instruction =
+        Instruction::new_with_bytes(fixture.program_id, &instruction_data, Vec::new());
+    let accounts: Vec<(Pubkey, Account)> = Vec::new();
+
+    mollusk.process_and_validate_instruction(
+        &instruction,
+        &accounts,
+        &[Check::err(ProgramError::Custom(
+            XxxlError::InvalidVersion as u32,
+        ))],
+    );
+}
+
+fn mollusk_for_program(program_id: &Pubkey) -> Mollusk {
+    let manifest_dir = PathBuf::from(env!("CARGO_MANIFEST_DIR"));
+    let sbf_out_dir = manifest_dir.join("target/deploy");
+    let program_elf = sbf_out_dir.join(format!("{PROGRAM_NAME}.so"));
+
+    assert!(
+        program_elf.exists(),
+        "missing {}; run `cargo build-sbf` before this ignored Mollusk test",
+        program_elf.display()
+    );
+
+    std::env::set_var("SBF_OUT_DIR", &sbf_out_dir);
+
+    Mollusk::new(program_id, PROGRAM_NAME)
 }
 
 struct ScaffoldFixture {
