@@ -35568,3 +35568,49 @@ No `invoke_signed` is called.
 No SPL Token `mint_to` is invoked.
 No XXXL minting is enabled.
 This boundary is not connected to `process_instruction`.
+
+## XXXL runtime planning composition boundary
+
+Status: `COMPLETED`.
+
+A runtime planning composition boundary was added.
+
+The boundary accepts:
+
+- program id
+- account list
+- decoded `ConsumeGatewayMintArgs`
+- rent
+- consumed slot
+
+It composes:
+
+- guarded account validation
+- CPI boundary preparation
+- atomic execution plan construction
+- SPL Token `mint_to` CPI planning
+
+It returns:
+
+- `AtomicConsumeGatewayMintExecutionPlan`
+- `MintToCpiPlanningBoundary`
+- live route disabled flag
+- invoke_signed disabled flag
+
+Hard checks passed:
+
+- `cargo build-sbf`
+- `cargo fmt --check`
+- `cargo test`
+- `cargo test --test mollusk_consume_gateway_mint -- --ignored --nocapture`
+- `cargo clippy --all-targets -- -D warnings`
+- `cargo audit`
+- `cargo deny` licenses/bans/sources
+
+No live route was activated.
+No `invoke_signed` is called.
+No SPL Token `mint_to` is invoked.
+No XXXL minting is enabled.
+No processed-event mutation is performed.
+No recipient-balance mutation is performed.
+This boundary is not connected to live `process_instruction` execution.

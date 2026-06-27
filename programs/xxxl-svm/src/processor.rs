@@ -4,7 +4,10 @@ use solana_program::{
 };
 
 use crate::{
-    cpi::{assert_gateway_mint_authority_pda, MintToCpiAccounts, MintToCpiBoundary},
+    cpi::{
+        assert_gateway_mint_authority_pda, plan_mint_to_cpi_boundary, MintToCpiAccounts,
+        MintToCpiBoundary, MintToCpiPlanningBoundary,
+    },
     error::XxxlError,
     execution_plan::{
         build_atomic_consume_gateway_mint_execution_plan, AtomicConsumeGatewayMintExecutionPlan,
@@ -40,6 +43,13 @@ pub struct PreparedConsumeGatewayMintCpi<'a, 'b> {
     pub boundary: MintToCpiBoundary<'a, 'b>,
     pub mint_decimals: u8,
     pub source_chain_weight_bps: u16,
+}
+
+pub struct RuntimeConsumeGatewayMintPlanningComposition {
+    pub execution_plan: AtomicConsumeGatewayMintExecutionPlan,
+    pub mint_to_cpi_plan: MintToCpiPlanningBoundary,
+    pub live_route_activation_enabled: bool,
+    pub invoke_signed_from_process_instruction_enabled: bool,
 }
 
 pub fn process_instruction(
@@ -90,6 +100,40 @@ fn build_runtime_consume_gateway_mint_execution_plan_boundary(
     }
 
     Ok(execution_plan)
+}
+
+pub fn build_runtime_consume_gateway_mint_planning_composition_boundary(
+    program_id: &Pubkey,
+    accounts: &[AccountInfo],
+    args: &ConsumeGatewayMintArgs,
+    rent: &Rent,
+    consumed_slot: u64,
+) -> Result<RuntimeConsumeGatewayMintPlanningComposition, ProgramError> {
+    let prepared = prepare_consume_gateway_mint_cpi_boundary(program_id, accounts, args, rent)?;
+    let execution_plan =
+        build_atomic_consume_gateway_mint_execution_plan(args, &prepared, consumed_slot)?;
+
+    if execution_plan.live_route_activation_enabled
+        || execution_plan.mint_to_invocation_from_process_instruction_enabled
+    {
+        return Err(XxxlError::CpiBoundaryNotReady.into());
+    }
+
+    let mint_to_cpi_plan =
+        plan_mint_to_cpi_boundary(program_id, &execution_plan, &prepared.boundary)?;
+
+    if mint_to_cpi_plan.live_route_activation_enabled
+        || mint_to_cpi_plan.invoke_signed_from_process_instruction_enabled
+    {
+        return Err(XxxlError::CpiBoundaryNotReady.into());
+    }
+
+    Ok(RuntimeConsumeGatewayMintPlanningComposition {
+        execution_plan,
+        mint_to_cpi_plan,
+        live_route_activation_enabled: false,
+        invoke_signed_from_process_instruction_enabled: false,
+    })
 }
 
 pub fn build_guarded_consume_gateway_mint_live_handler_fixture(
@@ -474,6 +518,162 @@ mod tests {
         assert_eq!(execution_plan.source_chain_weight_bps, 10_000);
         assert!(!execution_plan.live_route_activation_enabled);
         assert!(!execution_plan.mint_to_invocation_from_process_instruction_enabled);
+    }
+
+    #[test]
+    fn runtime_planning_composition_boundary_builds_execution_and_cpi_plans_without_mutation() {
+        let mut fixture = HandlerFixture::new();
+        let processed_before = fixture.data.processed_event.clone();
+        let recipient_balance_before = fixture.data.recipient_balance.clone();
+        let expected_mint_authority_pda = fixture.keys.mint_authority_pda;
+
+        let program_id = fixture.program_id;
+        let args = fixture.args;
+        let rent = Rent::default();
+        let accounts = fixture.accounts();
+
+        let composition = build_runtime_consume_gateway_mint_planning_composition_boundary(
+            &program_id,
+            &accounts,
+            &args,
+            &rent,
+            99,
+        )
+        .expect("runtime planning composition boundary");
+
+        assert_eq!(composition.execution_plan.amount, 1_000);
+        assert_eq!(composition.execution_plan.consumed_slot, 99);
+        assert_eq!(
+            composition.execution_plan.canonical_event_key,
+            args.canonical_event_key
+        );
+        assert_eq!(composition.execution_plan.route_id, args.route_id);
+        assert_eq!(composition.execution_plan.recipient, args.recipient);
+        assert_eq!(composition.execution_plan.mint, args.mint_id);
+        assert_eq!(composition.execution_plan.source_chain_weight_bps, 10_000);
+        assert!(!composition.execution_plan.live_route_activation_enabled);
+        assert!(
+            !composition
+                .execution_plan
+                .mint_to_invocation_from_process_instruction_enabled
+        );
+
+        assert_eq!(composition.mint_to_cpi_plan.token_program, spl_token::id());
+        assert_eq!(composition.mint_to_cpi_plan.mint.to_bytes(), args.mint_id);
+        assert_eq!(composition.mint_to_cpi_plan.amount, 1_000);
+        assert_eq!(
+            composition.mint_to_cpi_plan.mint_authority_pda,
+            expected_mint_authority_pda
+        );
+        assert!(!composition.mint_to_cpi_plan.live_route_activation_enabled);
+        assert!(
+            !composition
+                .mint_to_cpi_plan
+                .invoke_signed_from_process_instruction_enabled
+        );
+
+        assert!(!composition.live_route_activation_enabled);
+        assert!(!composition.invoke_signed_from_process_instruction_enabled);
+
+        drop(accounts);
+
+        assert_eq!(fixture.data.processed_event, processed_before);
+        assert_eq!(fixture.data.recipient_balance, recipient_balance_before);
+    }
+
+    #[test]
+    fn runtime_planning_composition_boundary_rejects_consumed_event_without_mutation() {
+        let mut fixture = HandlerFixture::new();
+        fixture.data.processed_event[10] = 1;
+
+        let processed_before = fixture.data.processed_event.clone();
+        let recipient_balance_before = fixture.data.recipient_balance.clone();
+
+        let program_id = fixture.program_id;
+        let args = fixture.args;
+        let rent = Rent::default();
+        let accounts = fixture.accounts();
+
+        assert_custom_error(
+            build_runtime_consume_gateway_mint_planning_composition_boundary(
+                &program_id,
+                &accounts,
+                &args,
+                &rent,
+                99,
+            ),
+            XxxlError::InvalidInstruction,
+        );
+
+        drop(accounts);
+
+        assert_eq!(fixture.data.processed_event, processed_before);
+        assert_eq!(fixture.data.recipient_balance, recipient_balance_before);
+    }
+
+    #[test]
+    fn runtime_planning_composition_boundary_rejects_zero_amount_without_mutation() {
+        let mut fixture = HandlerFixture::new();
+        fixture.args.amount = 0;
+
+        let processed_before = fixture.data.processed_event.clone();
+        let recipient_balance_before = fixture.data.recipient_balance.clone();
+
+        let program_id = fixture.program_id;
+        let args = fixture.args;
+        let rent = Rent::default();
+        let accounts = fixture.accounts();
+
+        assert_custom_error(
+            build_runtime_consume_gateway_mint_planning_composition_boundary(
+                &program_id,
+                &accounts,
+                &args,
+                &rent,
+                99,
+            ),
+            XxxlError::InvalidInstruction,
+        );
+
+        drop(accounts);
+
+        assert_eq!(fixture.data.processed_event, processed_before);
+        assert_eq!(fixture.data.recipient_balance, recipient_balance_before);
+    }
+
+    #[test]
+    fn runtime_planning_composition_boundary_rejects_wrong_recipient_token_account_without_mutation(
+    ) {
+        let mut fixture = HandlerFixture::new();
+        fixture.data.recipient_token_account = packed_token_account(
+            fixture.keys.spl_mint,
+            Pubkey::new_unique(),
+            AccountState::Initialized,
+        );
+
+        let processed_before = fixture.data.processed_event.clone();
+        let recipient_balance_before = fixture.data.recipient_balance.clone();
+
+        let program_id = fixture.program_id;
+        let args = fixture.args;
+        let rent = Rent::default();
+        let accounts = fixture.accounts();
+
+        assert_custom_error(
+            build_runtime_consume_gateway_mint_planning_composition_boundary(
+                &program_id,
+                &accounts,
+                &args,
+                &rent,
+                99,
+            ),
+            XxxlError::InvalidRecipientAta,
+        );
+
+        drop(accounts);
+
+        assert_eq!(fixture.data.processed_event, processed_before);
+        assert_eq!(fixture.data.recipient_balance, recipient_balance_before);
     }
 
     struct HandlerFixture {
