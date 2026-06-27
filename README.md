@@ -51,6 +51,7 @@ Important supporting documents:
 - [XXXL SVM serialized runtime vectors](docs/xxxl/xxxl-svm-serialized-runtime-vectors.md)
 - [XXXL SVM runtime decoder handler model](docs/xxxl/xxxl-svm-runtime-decoder-handler-model.md)
 - [XXXL SVM runtime port readiness package](docs/xxxl/xxxl-svm-runtime-port-readiness-package.md)
+- [XXXL X1/SVM port scaffold](docs/xxxl/xxxl-x1-svm-port-scaffold.md)
 - [XXXL Program v1 deployment readiness](docs/xxxl/xxxl-program-v1-deployment-readiness.md)
 
 The review summary explains:
@@ -78,7 +79,7 @@ The assumptions document explicitly records MVP trust boundaries and known limit
 Current main baseline:
 
 - TypeScript typecheck: passing
-- Tests: 88 files / 721 tests passing
+- Tests: 89 files / 741 tests passing
 - Build: passing
 - npm audit: 0 vulnerabilities
 
@@ -179,6 +180,7 @@ Latest reviewed main includes:
 - XXXL SVM serialized runtime vectors
 - XXXL SVM runtime decoder handler model
 - XXXL SVM runtime port readiness package
+- XXXL X1/SVM port scaffold
 - XXXL Program v1 deployment readiness
 
 ## Validation commands
@@ -192,8 +194,8 @@ Run:
 
 Expected current result:
 
-    88 test files passed
-    721 tests passed
+    89 test files passed
+    741 tests passed
     found 0 vulnerabilities
 
 ## CLI

@@ -16,6 +16,66 @@ and in:
 -->
 
 
+# Latest XXXL X1/SVM port scaffold checkpoint
+
+Stage XXXL Program v1 now has the first real X1/SVM port scaffold.
+
+Authoritative document:
+
+- `docs/xxxl/xxxl-x1-svm-port-scaffold.md`
+
+Checkpoint document:
+
+- `docs/checkpoints/xxxl-x1-svm-port-scaffold.md`
+
+Implementation/model files:
+
+- `src/xxxl/x1-svm-port-scaffold.ts`
+- `tests/xxxl/x1-svm-port-scaffold.test.ts`
+
+Native SVM scaffold files:
+
+- `programs/xxxl-svm/Cargo.toml`
+- `programs/xxxl-svm/src/lib.rs`
+- `programs/xxxl-svm/src/entrypoint.rs`
+- `programs/xxxl-svm/src/processor.rs`
+- `programs/xxxl-svm/src/instruction.rs`
+- `programs/xxxl-svm/src/state.rs`
+- `programs/xxxl-svm/src/pda.rs`
+- `programs/xxxl-svm/src/cpi.rs`
+- `programs/xxxl-svm/src/validation.rs`
+- `programs/xxxl-svm/src/error.rs`
+
+Status:
+
+- `X1_SVM_PORT_SCAFFOLD_ONLY_NOT_DEPLOYABLE`
+
+Key properties:
+
+- Native SVM Rust scaffold
+- Program ID remains placeholder
+- Token Program ID fixed
+- gateway mint authority PDA seeds fixed
+- real `find_program_address` fixture required later
+- account/instruction decode fixture required later
+- SPL Token `mint_to` CPI fixture required later
+- account owner checks required later
+- rent exemption checks required later
+- recipient ATA validation required later
+- clock/slot source required later
+- no deployment
+- no live transaction submission
+- no route activation
+
+Expected validation baseline:
+
+- TypeScript typecheck: passing
+- Tests: 89 files / 741 tests passing
+- Build: passing
+
+Status: first real SVM port scaffold only, not deployable.
+
+
 # Latest XXXL SVM runtime port readiness package checkpoint
 
 Stage XXXL Program v1 now has a final SVM runtime port readiness package.
