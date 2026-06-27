@@ -34,7 +34,7 @@ const TOKEN_PROGRAM_ID: &str = "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA";
 
 #[test]
 #[ignore = "requires cargo build-sbf and target/deploy/xxxl_svm.so"]
-fn valid_consume_gateway_mint_scaffold_succeeds_without_state_mutation() {
+fn valid_consume_gateway_mint_builds_execution_plan_without_state_mutation() {
     let manifest_dir = PathBuf::from(env!("CARGO_MANIFEST_DIR"));
     let sbf_out_dir = manifest_dir.join("target/deploy");
     let program_elf = sbf_out_dir.join(format!("{PROGRAM_NAME}.so"));

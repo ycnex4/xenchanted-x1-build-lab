@@ -35343,3 +35343,40 @@ No XXXL minting is enabled.
 No runtime state mutation is enabled.
 
 This is a suitable checkpoint for external review before moving toward atomic mutation or SPL CPI execution planning.
+
+## XXXL runtime execution plan boundary
+
+Status: `COMPLETED`.
+
+The real SBF/Mollusk path now reaches execution-plan construction after guarded account validation.
+
+The runtime path now:
+
+- decodes `consume_gateway_mint`
+- reads Rent from the runtime sysvar
+- reads Clock from the runtime sysvar
+- validates guarded accounts
+- prepares the CPI boundary
+- builds `AtomicConsumeGatewayMintExecutionPlan`
+- stops before live execution
+
+Verified runtime log:
+
+    XXXL consume_gateway_mint execution plan built; live route execution is not activated
+
+Hard checks passed:
+
+- `cargo build-sbf`
+- `cargo fmt --check`
+- `cargo test`
+- `cargo test --test mollusk_consume_gateway_mint -- --ignored --nocapture`
+- `cargo clippy --all-targets -- -D warnings`
+- `cargo audit`
+- `cargo deny` licenses/bans/sources
+
+No live route was activated.
+No SPL Token `mint_to` is invoked.
+No XXXL minting is enabled.
+No runtime state mutation is enabled.
+
+The runtime can now deterministically describe what would be executed after validation, while still refusing to execute minting or mutation.

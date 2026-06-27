@@ -899,3 +899,22 @@ No live gateway route was activated.
 No SPL Token `mint_to` is invoked.
 No XXXL minting is enabled.
 No runtime state mutation is enabled.
+
+## XXXL runtime execution plan boundary
+
+The XXXL SVM runtime now builds an execution plan after guarded account validation.
+
+The real SBF path now reaches:
+
+    decode -> guarded account validation -> execution plan -> stop
+
+The execution plan records canonical event key, route id, recipient, mint, amount, consumed slot, source chain weight, fixed atomic step order, and disabled safety flags.
+
+The valid Mollusk path emits:
+
+    XXXL consume_gateway_mint execution plan built; live route execution is not activated
+
+No live route was activated.
+No SPL Token `mint_to` is invoked.
+No XXXL minting is enabled.
+No runtime state mutation is enabled.
