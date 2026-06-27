@@ -35031,3 +35031,34 @@ Verification target:
 - `cargo deny check sources`
 
 No live gateway route was activated in this stage.
+
+## XXXL manual account constraint audit checklist
+
+Status: `COMPLETED`.
+
+The manual account-constraint checklist for the XXXL SVM runtime scaffold has been recorded.
+
+Confirmed baseline:
+
+- `cargo fmt --check` passes
+- `cargo test` passes with 63 tests
+- `cargo clippy --all-targets -- -D warnings` passes
+- `cargo audit` exits 0 with allowed warnings only
+- `cargo deny` licenses/bans/sources exits 0
+
+Recorded:
+
+- canonical 9-account order
+- program-owned account owner/rent/layout checks
+- SPL Token program and SPL mint checks
+- recipient token account / ATA boundary
+- gateway mint authority PDA signer boundary
+- route/gateway config constraints
+- guardian set boundary
+- processed-event replay boundary
+- recipient balance boundary
+- amount constraints
+- atomicity and no-state-change-on-failure expectations
+- writable/executable constraints required before live activation
+
+No live gateway route was activated in this stage.
