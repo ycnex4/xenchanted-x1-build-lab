@@ -695,3 +695,22 @@ Completed:
 The exception is limited to `unexpected_cfgs` emitted by Solana entrypoint macro expansion under host clippy/check-cfg.
 
 No runtime behavior was changed in this stage.
+
+## XXXL manual account constraint audit checklist
+
+The XXXL SVM runtime now has a documented manual account-constraint checklist before live handler wiring.
+
+Recorded boundaries:
+
+- canonical 9-account consume_gateway_mint order
+- program-owned owner and rent checks
+- SPL Token program check
+- initialized SPL mint and recipient token account checks
+- gateway mint authority PDA and invoke_signed seed policy
+- processed-event replay boundary
+- recipient-balance boundary
+- amount constraints
+- atomicity and no-state-change-on-failure policy
+- writable/executable constraints required before live activation
+
+This stage does not activate the live gateway route and does not change runtime behavior.
