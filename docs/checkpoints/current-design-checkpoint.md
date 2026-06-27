@@ -34973,3 +34973,31 @@ Policy:
 - do not ignore the audit blocker as a fake fix
 - do not upgrade Solana/SPL runtime dependencies inside this baseline stage
 - keep the audit blocker unresolved until a dedicated Solana/SPL dependency upgrade stage
+
+## XXXL Solana/SPL dependency upgrade audit
+
+Status: `COMPLETED`.
+
+The dependency upgrade audit selected the minimal passing Solana/SPL stack:
+
+- `solana-program = 2.3.0`
+- `spl-token = 5.0.2`
+- resolved `curve25519-dalek = 4.1.3`
+
+This closes the previous `RUSTSEC-2024-0344` hard vulnerability from the Solana 1.18 dependency chain.
+
+Matrix outcome:
+
+- Solana 1.18 candidates: tests pass, audit fails
+- Solana 2 + SPL Token 4: tests fail, audit fails
+- Solana 2 + SPL Token 5: tests pass, audit passes
+- Solana 2 + SPL Token 6: tests pass, audit passes, but not minimal
+- Solana 3 candidates: audit passes, current tests fail
+
+Verification:
+
+- Rust tests pass: 63 passed, 0 failed
+- `cargo audit` exits 0
+- `cargo deny` licenses/bans/sources exit 0
+
+No live gateway route was activated in this stage.

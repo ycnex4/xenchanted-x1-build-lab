@@ -657,3 +657,26 @@ Policy:
 - no fake audit ignore
 - no Solana/SPL runtime dependency upgrade inside the baseline stage
 - no `clippy -D warnings` hard gate until known entrypoint cfg warnings are handled
+
+## XXXL Solana/SPL dependency upgrade audit
+
+The XXXL SVM dependency audit stage selected the minimal upgrade path that closes the RustSec hard vulnerability in the Solana dependency chain.
+
+Selected versions:
+
+- `solana-program = 2.3.0`
+- `spl-token = 5.0.2`
+- resolved `curve25519-dalek = 4.1.3`
+
+Matrix result:
+
+- Solana 1.18 candidates kept the audit blocker
+- Solana 2 + SPL Token 5 was the first candidate with tests passing and `cargo audit` passing
+- Solana 2 + SPL Token 6 also passed but was not minimal
+- Solana 3 candidates passed audit but failed current tests
+
+Verification:
+
+- Rust tests pass: 63 passed, 0 failed
+- `cargo audit` exits 0
+- `cargo deny` licenses/bans/sources exit 0
