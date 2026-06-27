@@ -761,3 +761,27 @@ The plan records:
 No runtime code was changed.
 
 No live gateway route was activated.
+
+## XXXL Mollusk dependency compatibility probe
+
+A doc-only compatibility probe was completed for adding `mollusk-svm` as a future dev-dependency.
+
+Result:
+
+- `mollusk-svm = 0.13.4` can be added in a temporary repo copy
+- temporary `cargo test` passes with 65 tests
+- temporary `cargo clippy --all-targets -- -D warnings` passes
+- temporary `cargo audit` exits 0
+- temporary `cargo deny` licenses/bans/sources exits 0
+
+Important dependency result:
+
+- baseline cargo audit scan: 196 crates
+- temporary Mollusk cargo audit scan: 404 crates
+- allowed audit warnings increase from 3 to 6
+
+No repository dependency was changed in this stage.
+
+No runtime code was changed.
+
+No live gateway route was activated.
