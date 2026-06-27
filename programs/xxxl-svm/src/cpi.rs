@@ -21,7 +21,7 @@ pub struct MintToCpiBoundary<'a, 'b> {
 
 pub fn mint_to_cpi_boundary(
     _program_id: &Pubkey,
-    _boundary: MintToCpiBoundary,
+    _boundary: MintToCpiBoundary<'_, '_>,
 ) -> Result<(), ProgramError> {
     // Real spl_token::instruction::mint_to + invoke_signed fixture is intentionally
     // deferred to the SPL Token CPI fixture stage.
