@@ -1,6 +1,6 @@
 use solana_program::{
-    account_info::AccountInfo, entrypoint::ProgramResult, msg, program_error::ProgramError,
-    pubkey::Pubkey, rent::Rent, sysvar::Sysvar,
+    account_info::AccountInfo, clock::Clock, entrypoint::ProgramResult, msg,
+    program_error::ProgramError, pubkey::Pubkey, rent::Rent, sysvar::Sysvar,
 };
 
 use crate::{
@@ -62,26 +62,17 @@ fn process_consume_gateway_mint(
     args: &ConsumeGatewayMintArgs,
 ) -> ProgramResult {
     let rent = Rent::get()?;
-    process_consume_gateway_mint_with_rent(program_id, accounts, args, &rent)
-}
+    let clock = Clock::get()?;
 
-fn process_consume_gateway_mint_with_rent(
-    program_id: &Pubkey,
-    accounts: &[AccountInfo],
-    args: &ConsumeGatewayMintArgs,
-    rent: &Rent,
-) -> ProgramResult {
-    let _prepared = prepare_consume_gateway_mint_cpi_boundary(program_id, accounts, args, rent)?;
+    let _execution_plan = build_runtime_consume_gateway_mint_execution_plan_boundary(
+        program_id, accounts, args, &rent, clock.slot,
+    )?;
 
-    if LIVE_ROUTE_ACTIVATION_FROM_PROCESS_INSTRUCTION_ENABLED {
-        return Err(XxxlError::CpiBoundaryNotReady.into());
-    }
-
-    msg!("XXXL consume_gateway_mint preflight validated; live route execution is not activated");
+    msg!("XXXL consume_gateway_mint execution plan built; live route execution is not activated");
     Ok(())
 }
 
-pub fn build_guarded_consume_gateway_mint_live_handler_fixture(
+fn build_runtime_consume_gateway_mint_execution_plan_boundary(
     program_id: &Pubkey,
     accounts: &[AccountInfo],
     args: &ConsumeGatewayMintArgs,
@@ -99,6 +90,22 @@ pub fn build_guarded_consume_gateway_mint_live_handler_fixture(
     }
 
     Ok(execution_plan)
+}
+
+pub fn build_guarded_consume_gateway_mint_live_handler_fixture(
+    program_id: &Pubkey,
+    accounts: &[AccountInfo],
+    args: &ConsumeGatewayMintArgs,
+    rent: &Rent,
+    consumed_slot: u64,
+) -> Result<AtomicConsumeGatewayMintExecutionPlan, ProgramError> {
+    build_runtime_consume_gateway_mint_execution_plan_boundary(
+        program_id,
+        accounts,
+        args,
+        rent,
+        consumed_slot,
+    )
 }
 
 pub fn prepare_consume_gateway_mint_cpi_boundary<'a, 'b>(
@@ -442,15 +449,31 @@ mod tests {
     }
 
     #[test]
-    fn process_instruction_preflight_helper_remains_non_live_route_activation() {
+    fn process_instruction_execution_plan_helper_builds_plan_without_live_route_activation() {
         let mut fixture = HandlerFixture::new();
         let program_id = fixture.program_id;
         let args = fixture.args;
         let rent = Rent::default();
         let accounts = fixture.accounts();
 
-        process_consume_gateway_mint_with_rent(&program_id, &accounts, &args, &rent)
-            .expect("preflight handler remains non-live");
+        let execution_plan = build_runtime_consume_gateway_mint_execution_plan_boundary(
+            &program_id,
+            &accounts,
+            &args,
+            &rent,
+            88,
+        )
+        .expect("execution plan boundary remains non-live");
+
+        assert_eq!(execution_plan.amount, 1_000);
+        assert_eq!(execution_plan.consumed_slot, 88);
+        assert_eq!(execution_plan.canonical_event_key, args.canonical_event_key);
+        assert_eq!(execution_plan.route_id, args.route_id);
+        assert_eq!(execution_plan.recipient, args.recipient);
+        assert_eq!(execution_plan.mint, args.mint_id);
+        assert_eq!(execution_plan.source_chain_weight_bps, 10_000);
+        assert!(!execution_plan.live_route_activation_enabled);
+        assert!(!execution_plan.mint_to_invocation_from_process_instruction_enabled);
     }
 
     struct HandlerFixture {
