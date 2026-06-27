@@ -48,6 +48,7 @@ Important supporting documents:
 - [XXXL runtime predeploy review package](docs/xxxl/xxxl-runtime-predeploy-review-package.md)
 - [XXXL production runtime byte layout](docs/xxxl/xxxl-production-runtime-byte-layout.md)
 - [XXXL X1/SVM program skeleton](docs/xxxl/xxxl-x1-svm-program-skeleton.md)
+- [XXXL SVM serialized runtime vectors](docs/xxxl/xxxl-svm-serialized-runtime-vectors.md)
 - [XXXL Program v1 deployment readiness](docs/xxxl/xxxl-program-v1-deployment-readiness.md)
 
 The review summary explains:
@@ -75,7 +76,7 @@ The assumptions document explicitly records MVP trust boundaries and known limit
 Current main baseline:
 
 - TypeScript typecheck: passing
-- Tests: 85 files / 664 tests passing
+- Tests: 86 files / 680 tests passing
 - Build: passing
 - npm audit: 0 vulnerabilities
 
@@ -173,6 +174,7 @@ Latest reviewed main includes:
 - XXXL runtime predeploy review package
 - XXXL production runtime byte layout
 - XXXL X1/SVM program skeleton
+- XXXL SVM serialized runtime vectors
 - XXXL Program v1 deployment readiness
 
 ## Validation commands
@@ -186,8 +188,8 @@ Run:
 
 Expected current result:
 
-    85 test files passed
-    664 tests passed
+    86 test files passed
+    680 tests passed
     found 0 vulnerabilities
 
 ## CLI
