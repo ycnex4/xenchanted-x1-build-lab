@@ -613,3 +613,23 @@ This stage remains plan-only:
 - no process_instruction recipient-balance mutation
 - no deployment
 - no authority freeze execution
+
+## XXXL runtime tooling roadmap
+
+The XXXL runtime tooling roadmap is now explicit.
+
+Planned order:
+
+1. current runtime layer checks: TypeScript typecheck/tests/build plus targeted Rust tests
+2. Rust quality/security baseline: `cargo fmt --check`, `cargo test`, `cargo audit`, `cargo deny check`, `cargo geiger` report-only, and manual account checklist draft
+3. Rust clippy warning cleanup: `cargo clippy --all-targets --all-features -- -D warnings`
+4. manual account-constraint audit before guarded live-handler wiring
+5. Mollusk instruction/state-transition tests after guarded handler wiring
+6. Trident fuzzing after Mollusk and invariant catalog
+7. full predeploy security readiness gate before any deploy/freeze action
+
+Important decisions:
+
+- clippy `-D warnings` is not a hard gate until known scaffold warnings are cleaned up
+- `cargo geiger` is report-only until manual unsafe review
+- Mollusk and Trident are not introduced before handler/invariant structure is mature
