@@ -976,3 +976,17 @@ No live route was activated.
 No SPL Token `mint_to` is invoked.
 No XXXL minting is enabled.
 No state mutation is connected to `process_instruction`.
+
+## XXXL runtime planning composition boundary
+
+The XXXL runtime model now composes execution planning with SPL Token `mint_to` CPI planning.
+
+The new boundary accepts accounts and decoded consume-gateway-mint args, performs guarded validation, builds an execution plan, then builds a planning-only `mint_to` CPI plan.
+
+This stage does not call `invoke_signed`.
+
+No live route was activated.
+No SPL Token `mint_to` is invoked.
+No XXXL minting is enabled.
+No runtime state mutation is performed.
+No live execution is connected to `process_instruction`.
