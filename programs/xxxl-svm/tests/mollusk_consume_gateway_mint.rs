@@ -74,6 +74,113 @@ fn valid_consume_gateway_mint_scaffold_succeeds_without_state_mutation() {
 
 #[test]
 #[ignore = "requires cargo build-sbf and target/deploy/xxxl_svm.so"]
+fn invalid_consume_gateway_mint_account_count_rejects_before_live_route() {
+    let fixture = ScaffoldFixture::new();
+    let mollusk = mollusk_for_program(&fixture.program_id);
+
+    let mut instruction = fixture.instruction();
+    instruction.accounts.pop();
+
+    let mut accounts = fixture.accounts();
+    accounts.pop();
+
+    mollusk.process_and_validate_instruction(
+        &instruction,
+        &accounts,
+        &[Check::err(ProgramError::Custom(
+            XxxlError::InvalidInstruction as u32,
+        ))],
+    );
+}
+
+#[test]
+#[ignore = "requires cargo build-sbf and target/deploy/xxxl_svm.so"]
+fn invalid_consume_gateway_mint_wrong_program_account_owner_rejects_before_live_route() {
+    let fixture = ScaffoldFixture::new();
+    let mollusk = mollusk_for_program(&fixture.program_id);
+
+    let instruction = fixture.instruction();
+    let mut accounts = fixture.accounts();
+    accounts[0].1.owner = Pubkey::new_unique();
+
+    mollusk.process_and_validate_instruction(
+        &instruction,
+        &accounts,
+        &[Check::err(ProgramError::Custom(
+            XxxlError::InvalidAccountOwner as u32,
+        ))],
+    );
+}
+
+#[test]
+#[ignore = "requires cargo build-sbf and target/deploy/xxxl_svm.so"]
+fn invalid_consume_gateway_mint_consumed_event_rejects_before_live_route() {
+    let fixture = ScaffoldFixture::new();
+    let mollusk = mollusk_for_program(&fixture.program_id);
+
+    let instruction = fixture.instruction();
+    let mut accounts = fixture.accounts();
+    accounts[3].1.data[10] = 1;
+
+    mollusk.process_and_validate_instruction(
+        &instruction,
+        &accounts,
+        &[Check::err(ProgramError::Custom(
+            XxxlError::InvalidInstruction as u32,
+        ))],
+    );
+}
+
+#[test]
+#[ignore = "requires cargo build-sbf and target/deploy/xxxl_svm.so"]
+fn invalid_consume_gateway_mint_wrong_recipient_token_owner_rejects_before_live_route() {
+    let fixture = ScaffoldFixture::new();
+    let mollusk = mollusk_for_program(&fixture.program_id);
+
+    let instruction = fixture.instruction();
+    let mut accounts = fixture.accounts();
+    accounts[6].1.data = packed_token_account(
+        fixture.keys.spl_mint,
+        Pubkey::new_unique(),
+        AccountState::Initialized,
+    );
+
+    mollusk.process_and_validate_instruction(
+        &instruction,
+        &accounts,
+        &[Check::err(ProgramError::Custom(
+            XxxlError::InvalidRecipientAta as u32,
+        ))],
+    );
+}
+
+#[test]
+#[ignore = "requires cargo build-sbf and target/deploy/xxxl_svm.so"]
+fn invalid_consume_gateway_mint_zero_amount_rejects_before_live_route() {
+    let fixture = ScaffoldFixture::new();
+    let mollusk = mollusk_for_program(&fixture.program_id);
+
+    let mut instruction_data = fixture.instruction_data;
+    instruction_data[176..192].copy_from_slice(&0u128.to_le_bytes());
+
+    let instruction = Instruction::new_with_bytes(
+        fixture.program_id,
+        &instruction_data,
+        fixture.instruction().accounts,
+    );
+    let accounts = fixture.accounts();
+
+    mollusk.process_and_validate_instruction(
+        &instruction,
+        &accounts,
+        &[Check::err(ProgramError::Custom(
+            XxxlError::InvalidInstruction as u32,
+        ))],
+    );
+}
+
+#[test]
+#[ignore = "requires cargo build-sbf and target/deploy/xxxl_svm.so"]
 fn invalid_consume_gateway_mint_length_rejects_before_scaffold_path() {
     let fixture = ScaffoldFixture::new();
     let mollusk = mollusk_for_program(&fixture.program_id);

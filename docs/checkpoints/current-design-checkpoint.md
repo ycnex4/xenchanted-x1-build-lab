@@ -35296,3 +35296,50 @@ Hard checks passed:
 No live route was activated.
 No SPL Token `mint_to` is invoked.
 No XXXL minting is enabled.
+
+## XXXL Mollusk guarded account validation preflight
+
+Status: `COMPLETED`.
+
+The real SBF/Mollusk path now reaches guarded account validation after instruction decode.
+
+The runtime path now:
+
+- decodes `consume_gateway_mint`
+- reads Rent from the runtime sysvar
+- prepares the guarded CPI boundary
+- validates account count, owners, rent exemption, PDA, processed event, recipient balance, SPL mint, recipient token account, and amount bounds
+- stops before live route execution
+
+The ignored Mollusk harness now covers 9 SBF-level cases:
+
+- valid preflight success with no state mutation
+- invalid instruction length
+- invalid discriminator
+- invalid layout version
+- wrong account count
+- wrong program-owned account owner
+- consumed processed event
+- wrong recipient token owner
+- zero amount
+
+Verified runtime log:
+
+    XXXL consume_gateway_mint preflight validated; live route execution is not activated
+
+Hard checks passed:
+
+- `cargo build-sbf`
+- `cargo fmt --check`
+- `cargo test`
+- `cargo test --test mollusk_consume_gateway_mint -- --ignored --nocapture`
+- `cargo clippy --all-targets -- -D warnings`
+- `cargo audit`
+- `cargo deny` licenses/bans/sources
+
+No live route was activated.
+No SPL Token `mint_to` is invoked.
+No XXXL minting is enabled.
+No runtime state mutation is enabled.
+
+This is a suitable checkpoint for external review before moving toward atomic mutation or SPL CPI execution planning.

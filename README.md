@@ -865,3 +865,37 @@ The tests remain ignored by default because they require a local SBF artifact:
 No live gateway route was activated.
 No SPL Token `mint_to` is invoked.
 No XXXL minting is enabled.
+
+## XXXL Mollusk guarded account validation preflight
+
+The XXXL SVM program now connects guarded account validation to the real `process_instruction` path.
+
+The runtime path now:
+
+- decodes `consume_gateway_mint`
+- reads Rent from the runtime sysvar
+- prepares the guarded CPI boundary
+- validates account count, owners, rent exemption, PDA, processed event, recipient balance, SPL mint, recipient token account, and amount bounds
+- returns success only after preflight validation
+- keeps live route execution disabled
+
+The ignored Mollusk SBF harness now covers 9 cases:
+
+- valid preflight success without state mutation
+- invalid instruction length
+- invalid discriminator
+- invalid layout version
+- wrong account count
+- wrong program-owned account owner
+- consumed processed event
+- wrong recipient token owner
+- zero amount
+
+The valid SBF path emits:
+
+    XXXL consume_gateway_mint preflight validated; live route execution is not activated
+
+No live gateway route was activated.
+No SPL Token `mint_to` is invoked.
+No XXXL minting is enabled.
+No runtime state mutation is enabled.

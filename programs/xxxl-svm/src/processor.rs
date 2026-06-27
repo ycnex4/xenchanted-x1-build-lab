@@ -1,6 +1,6 @@
 use solana_program::{
     account_info::AccountInfo, entrypoint::ProgramResult, msg, program_error::ProgramError,
-    pubkey::Pubkey, rent::Rent,
+    pubkey::Pubkey, rent::Rent, sysvar::Sysvar,
 };
 
 use crate::{
@@ -57,15 +57,27 @@ pub fn process_instruction(
 }
 
 fn process_consume_gateway_mint(
-    _program_id: &Pubkey,
-    _accounts: &[AccountInfo],
-    _args: &ConsumeGatewayMintArgs,
+    program_id: &Pubkey,
+    accounts: &[AccountInfo],
+    args: &ConsumeGatewayMintArgs,
 ) -> ProgramResult {
+    let rent = Rent::get()?;
+    process_consume_gateway_mint_with_rent(program_id, accounts, args, &rent)
+}
+
+fn process_consume_gateway_mint_with_rent(
+    program_id: &Pubkey,
+    accounts: &[AccountInfo],
+    args: &ConsumeGatewayMintArgs,
+    rent: &Rent,
+) -> ProgramResult {
+    let _prepared = prepare_consume_gateway_mint_cpi_boundary(program_id, accounts, args, rent)?;
+
     if LIVE_ROUTE_ACTIVATION_FROM_PROCESS_INSTRUCTION_ENABLED {
         return Err(XxxlError::CpiBoundaryNotReady.into());
     }
 
-    msg!("XXXL consume_gateway_mint scaffold reached; live route execution is not activated");
+    msg!("XXXL consume_gateway_mint preflight validated; live route execution is not activated");
     Ok(())
 }
 
@@ -220,10 +232,7 @@ fn account_at<'a, 'b>(
 mod tests {
     use super::*;
     use crate::{
-        instruction::{
-            CONSUME_GATEWAY_MINT_DISCRIMINATOR, CONSUME_GATEWAY_MINT_INSTRUCTION_LEN,
-            INSTRUCTION_LAYOUT_VERSION,
-        },
+        instruction::CONSUME_GATEWAY_MINT_INSTRUCTION_LEN,
         pda::find_gateway_mint_authority,
         state::{
             GATEWAY_CONFIG_ACCOUNT_DISCRIMINATOR, GATEWAY_CONFIG_ACCOUNT_LEN,
@@ -433,14 +442,15 @@ mod tests {
     }
 
     #[test]
-    fn process_instruction_remains_scaffold_only_not_live_route_activation() {
+    fn process_instruction_preflight_helper_remains_non_live_route_activation() {
         let mut fixture = HandlerFixture::new();
         let program_id = fixture.program_id;
-        let instruction_data = fixture.instruction_data;
+        let args = fixture.args;
+        let rent = Rent::default();
         let accounts = fixture.accounts();
 
-        process_instruction(&program_id, &accounts, &instruction_data)
-            .expect("scaffold handler remains non-live");
+        process_consume_gateway_mint_with_rent(&program_id, &accounts, &args, &rent)
+            .expect("preflight handler remains non-live");
     }
 
     struct HandlerFixture {
@@ -450,7 +460,6 @@ mod tests {
         lamports: FixtureLamports,
         data: FixtureData,
         args: ConsumeGatewayMintArgs,
-        instruction_data: [u8; CONSUME_GATEWAY_MINT_INSTRUCTION_LEN],
     }
 
     struct FixtureOwners {
@@ -579,8 +588,6 @@ mod tests {
                 source_chain_weight_bps: 10_000,
             };
 
-            let instruction_data = instruction_data_from_args(&args);
-
             Self {
                 program_id,
                 owners,
@@ -588,7 +595,6 @@ mod tests {
                 lamports,
                 data,
                 args,
-                instruction_data,
             }
         }
 
@@ -783,30 +789,6 @@ mod tests {
 
         SplTokenAccount::pack(account, &mut data).expect("pack token account");
         data
-    }
-
-    fn instruction_data_from_args(
-        args: &ConsumeGatewayMintArgs,
-    ) -> [u8; CONSUME_GATEWAY_MINT_INSTRUCTION_LEN] {
-        let mut bytes = [0u8; CONSUME_GATEWAY_MINT_INSTRUCTION_LEN];
-
-        bytes[0..8].copy_from_slice(&CONSUME_GATEWAY_MINT_DISCRIMINATOR);
-        bytes[8..10].copy_from_slice(&INSTRUCTION_LAYOUT_VERSION.to_le_bytes());
-        bytes[10] = args.account_meta_count;
-        bytes[11] = args.route_account_index;
-        bytes[12] = args.guardian_set_account_index;
-        bytes[13] = args.mint_state_account_index;
-        bytes[14] = args.processed_event_account_index;
-        bytes[15] = args.recipient_balance_account_index;
-        bytes[16..48].copy_from_slice(&args.route_id);
-        bytes[48..80].copy_from_slice(&args.guardian_set_id);
-        bytes[80..112].copy_from_slice(&args.mint_id);
-        bytes[112..144].copy_from_slice(&args.canonical_event_key);
-        bytes[144..176].copy_from_slice(&args.recipient);
-        bytes[176..192].copy_from_slice(&args.amount.to_le_bytes());
-        bytes[192..194].copy_from_slice(&args.source_chain_weight_bps.to_le_bytes());
-
-        bytes
     }
 
     fn fixture_bump() -> u8 {
