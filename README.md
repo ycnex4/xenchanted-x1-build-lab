@@ -535,3 +535,16 @@ The next recommended step is the first prototype-only evidence branch for EV-01 
 ## Gateway Build activation boundary
 
 - [Gateway full-profile Build activation boundary](docs/gateway/build-full-profile-activation-boundary.md)
+
+## XXXL runtime account/instruction decode fixture
+
+The XXXL X1/SVM port now has a Rust decode fixture stage for the runtime account and instruction byte boundary.
+
+This stage fixes:
+
+- real `consume_gateway_mint` instruction discriminator, version, length, account meta count, account indexes, and parsed fields
+- real account view checks for length, discriminator, and version
+- negative Rust tests for wrong instruction length, wrong instruction discriminator, wrong instruction version, wrong account discriminator, wrong account version, and truncated account data
+- TypeScript checkpoint metadata for the decode fixture
+
+This stage does not add SPL Token CPI, deployment, route activation, or authority freeze execution.

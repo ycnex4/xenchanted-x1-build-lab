@@ -34783,3 +34783,29 @@ Preview data must not be persisted into Build state, registry state, registrar r
 Preview does not reserve eligibility and does not create any protocol commitment.
 
 Only gateway activation stores verified contribution facts, and activation must validate the submitted full-profile bundle again before mutating state.
+
+## XXXL runtime account/instruction decode fixture
+
+Status: `RUST_DECODE_FIXTURE_ONLY_NOT_DEPLOYABLE`.
+
+This stage hardens the Rust/SVM decode boundary before SPL Token CPI.
+
+What is fixed:
+
+- `consume_gateway_mint` instruction length remains 208 bytes.
+- instruction discriminator is checked before version and field parsing.
+- instruction version remains `1`.
+- account meta count is fixed to 9.
+- canonical account indexes are checked before handler continuation.
+- route id, guardian set id, mint id, canonical event key, recipient, amount, and source-chain weight are parsed from instruction bytes.
+- Mint State, Gateway Config, Guardian Set, Processed Event, and Recipient Balance account views check exact byte length, discriminator, and version.
+- negative Rust tests cover wrong instruction length, wrong instruction discriminator, wrong instruction version, wrong account discriminator, wrong account version, and truncated account data.
+
+Non-goals:
+
+- no SPL Token CPI yet
+- no deployment
+- no route activation
+- no authority freeze execution
+
+Next likely stage after this remains `stage-xxxl-spl-token-mint-to-cpi-fixture`.
