@@ -37274,3 +37274,49 @@ Release decision remains blocked:
 - primary blocker code: `RUNTIME_SAFETY_LOCK_ACTIVE`
 
 The `ACCOUNT_CONTRACT_UNREVIEWED` blocker remains active until separate review and required test evidence are complete.
+
+## XXXL Account Contract Test Gap Closure
+
+Status: COMPLETED.
+
+The account contract test gap closure stage adds focused processor-boundary
+test coverage for security-sensitive `consume_gateway_mint` account
+substitution and binding cases.
+
+New direct processor-boundary coverage includes:
+
+- wrong account order
+- wrong program owner for a program-owned account path
+- wrong SPL Token program id
+- wrong SPL Token mint authority
+- wrong mint authority bump
+- wrong gateway config guardian set id
+- wrong gateway config target mint
+- wrong gateway config source chain weight
+- wrong guardian set id
+- wrong processed event canonical event key
+- wrong processed event route id
+- wrong processed event recipient
+- wrong recipient balance owner
+- wrong recipient balance mint
+- amount larger than SPL Token `u64` range
+
+Existing lower-level tests continue to cover account count, encoded account meta
+count, index mapping, writable/readonly flags, signer requirements, owner model
+classification, recipient token account validation, consumed-event rejection,
+zero amount rejection, and CPI planning-only rejection boundaries.
+
+This stage does not complete external review.
+
+It does not remove `ACCOUNT_CONTRACT_UNREVIEWED`.
+
+It does not unlock runtime behavior, approve deployment, activate live route,
+enable SPL CPI, enable `invoke_signed`, enable SPL Token `mint_to`, select a
+real Program ID, regenerate production PDA fixtures, change runtime deployment
+status, or change deployability predicates.
+
+The runtime remains scaffold-only, locked, unreleasable, and not deployable.
+
+Checkpoint:
+
+- `docs/checkpoints/xxxl-account-contract-test-gap-closure.md`
