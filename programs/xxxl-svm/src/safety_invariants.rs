@@ -331,6 +331,48 @@ pub fn xxxl_runtime_safety_unlock_is_ready() -> bool {
     xxxl_runtime_safety_unlock_criteria_summary().unlock_ready
 }
 
+#[derive(Clone, Copy, Debug, PartialEq, Eq)]
+pub struct XxxlRuntimeSafetyReleaseDecisionReport {
+    pub runtime_safety_lock_active: bool,
+    pub unlock_ready: bool,
+    pub unlock_criteria_not_ready: bool,
+    pub deployment_blocker_evidence_consistent: bool,
+    pub release_allowed: bool,
+    pub release_blocked: bool,
+    pub primary_blocker_code: &'static str,
+}
+
+pub fn xxxl_runtime_safety_release_decision_report() -> XxxlRuntimeSafetyReleaseDecisionReport {
+    let unlock_summary = xxxl_runtime_safety_unlock_criteria_summary();
+    let runtime_safety_lock_active = unlock_summary.runtime_safety_lock_active;
+    let unlock_ready = unlock_summary.unlock_ready;
+    let unlock_criteria_not_ready = !unlock_ready;
+    let deployment_blocker_evidence_consistent = xxxl_deployment_blocker_evidence_is_consistent();
+
+    let release_allowed = !runtime_safety_lock_active && unlock_ready;
+    let primary_blocker_code = if runtime_safety_lock_active {
+        "RUNTIME_SAFETY_LOCK_ACTIVE"
+    } else if unlock_criteria_not_ready {
+        "UNLOCK_CRITERIA_NOT_READY"
+    } else {
+        "NONE"
+    };
+
+    XxxlRuntimeSafetyReleaseDecisionReport {
+        runtime_safety_lock_active,
+        unlock_ready,
+        unlock_criteria_not_ready,
+        deployment_blocker_evidence_consistent,
+        release_allowed,
+        release_blocked: !release_allowed,
+        primary_blocker_code,
+    }
+}
+
+pub fn xxxl_runtime_safety_release_is_allowed() -> bool {
+    xxxl_runtime_safety_release_decision_report().release_allowed
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -484,5 +526,22 @@ mod tests {
     #[test]
     fn runtime_safety_unlock_is_not_ready_for_current_scaffold() {
         assert!(!xxxl_runtime_safety_unlock_is_ready());
+    }
+    #[test]
+    fn runtime_safety_release_decision_report_blocks_current_scaffold() {
+        let report = xxxl_runtime_safety_release_decision_report();
+
+        assert!(report.runtime_safety_lock_active);
+        assert!(!report.unlock_ready);
+        assert!(report.unlock_criteria_not_ready);
+        assert!(report.deployment_blocker_evidence_consistent);
+        assert!(!report.release_allowed);
+        assert!(report.release_blocked);
+        assert_eq!(report.primary_blocker_code, "RUNTIME_SAFETY_LOCK_ACTIVE");
+    }
+
+    #[test]
+    fn runtime_safety_release_is_not_allowed_for_current_scaffold() {
+        assert!(!xxxl_runtime_safety_release_is_allowed());
     }
 }
