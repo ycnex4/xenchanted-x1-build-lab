@@ -472,6 +472,19 @@ This improved test evidence does not complete external review.
 
 This improved test evidence does not remove `ACCOUNT_CONTRACT_UNREVIEWED`.
 
+## Review evidence package
+
+A reviewer-facing evidence package is available at:
+
+- `docs/xxxl/xxxl-account-contract-review-evidence-package.md`
+
+The package collects the current account contract, threat model, test evidence,
+remaining blockers, validation expectations, and reviewer questions in one
+place.
+
+The package is evidence only. It is not approval, not blocker removal, and not
+runtime unlock.
+
 ## Non-goals
 
 This boundary does not implement runtime mutation.
