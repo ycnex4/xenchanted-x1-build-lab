@@ -35864,3 +35864,32 @@ No live route was activated.
 No SPL CPI behavior was enabled.
 No `invoke_signed` path was enabled.
 No minting was enabled.
+
+## XXXL Mollusk account contract negative coverage
+
+Status: `COMPLETED`.
+
+SBF/Mollusk negative coverage was added for the enforced `consume_gateway_mint` account contract.
+
+Added ignored Mollusk tests for:
+
+- readonly account passed writable
+- required writable account passed readonly
+- unexpected external signer
+
+Each invalid account meta case is rejected with `InvalidInstruction`.
+
+Hard checks passed:
+
+- `cargo build-sbf`
+- `cargo fmt --check`
+- `cargo test`
+- `cargo test --test mollusk_consume_gateway_mint -- --ignored --nocapture`
+- `cargo clippy --all-targets -- -D warnings`
+- `cargo audit`
+- `cargo deny` licenses/bans/sources
+
+No live route was activated.
+No SPL CPI behavior was enabled.
+No `invoke_signed` path was enabled.
+No minting was enabled.
