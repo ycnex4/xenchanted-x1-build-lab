@@ -37563,3 +37563,60 @@ Recommended future order:
 8. Live route activation boundary
 
 This inventory is not deployment approval and not runtime unlock approval.
+
+## XXXL Mollusk Implementation Roadmap
+
+Status: completed as a docs-only implementation roadmap boundary.
+
+This stage records a conservative future roadmap for implementing Mollusk/SVM
+coverage in small reviewed stages.
+
+This stage is planning-only.
+
+It does not implement tests.
+
+It does not add dependencies.
+
+It does not change Rust runtime code.
+
+It does not remove blockers.
+
+`MOLLUSK_COVERAGE_INCOMPLETE` remains active.
+
+Recommended future stages:
+
+1. Mollusk Harness Boundary
+2. Account Meta and Ordering Coverage
+3. Program-Owned Account Validation Coverage
+4. SPL Token Mint and Recipient Account Coverage
+5. PDA Coverage
+6. Disabled Execution Gate and No-Mutation Coverage
+7. Replay and Atomicity Coverage
+8. Instruction Bytes and Reserved-Bytes Coverage
+9. Rent and Lifecycle Coverage
+10. Mollusk Coverage Review Package
+11. Mollusk Coverage Assessment
+12. Mollusk Blocker Transition
+
+No blocker was removed.
+
+No blocker was transitioned.
+
+No blocker list was changed.
+
+No Rust source files were changed.
+
+No Cargo files were changed.
+
+The runtime remains:
+
+- scaffold-only
+- locked
+- unreleasable
+- not deployable
+
+Live route execution, SPL CPI execution, `invoke_signed`, and SPL Token
+`mint_to` remain disabled.
+
+This roadmap separates implementation, evidence, assessment, and blocker
+transition.
