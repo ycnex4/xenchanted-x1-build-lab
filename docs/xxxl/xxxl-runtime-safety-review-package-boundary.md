@@ -95,13 +95,18 @@ Expected result:
 
 ## Expected safety invariant result
 
-The safety invariant chain must continue to show:
+The safety invariant summary must continue to show:
 
 - runtime deployable: `false`
 - predeploy gate allows deploy: `false`
 - Program ID placeholder boundary active: `true`
 - live route activation enabled: `false`
 - SPL CPI execution enabled: `false`
+
+## Expected safety lock, unlock, and release result
+
+The derived safety lock, unlock, and release chain must continue to show:
+
 - runtime safety lock active: `true`
 - unlock ready: `false`
 - release allowed: `false`
