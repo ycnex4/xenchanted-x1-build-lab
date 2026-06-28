@@ -5,8 +5,8 @@ use solana_program::{
 
 use crate::{
     cpi::{
-        assert_gateway_mint_authority_pda, plan_mint_to_cpi_boundary, MintToCpiAccounts,
-        MintToCpiBoundary, MintToCpiPlanningBoundary,
+        assert_gateway_mint_authority_pda, guarded_mint_to_cpi_execution_gate_boundary,
+        plan_mint_to_cpi_boundary, MintToCpiAccounts, MintToCpiBoundary, MintToCpiPlanningBoundary,
     },
     error::XxxlError,
     execution_plan::{
@@ -199,6 +199,31 @@ pub fn build_runtime_consume_gateway_mint_local_state_mutation_composition_bound
         live_route_activation_enabled: false,
         invoke_signed_from_process_instruction_enabled: false,
     })
+}
+
+pub fn build_runtime_consume_gateway_mint_disabled_spl_cpi_gate_boundary(
+    program_id: &Pubkey,
+    accounts: &[AccountInfo],
+    args: &ConsumeGatewayMintArgs,
+    rent: &Rent,
+    consumed_slot: u64,
+) -> ProgramResult {
+    let prepared = prepare_consume_gateway_mint_cpi_boundary(program_id, accounts, args, rent)?;
+
+    let planning_composition = build_runtime_consume_gateway_mint_planning_composition_boundary(
+        program_id,
+        accounts,
+        args,
+        rent,
+        consumed_slot,
+    )?;
+
+    guarded_mint_to_cpi_execution_gate_boundary(
+        program_id,
+        &planning_composition.execution_plan,
+        &planning_composition.mint_to_cpi_plan,
+        &prepared.boundary,
+    )
 }
 
 pub fn build_guarded_consume_gateway_mint_live_handler_fixture(
@@ -885,6 +910,159 @@ mod tests {
 
         assert_eq!(fixture.data.processed_event, processed_before);
         assert_eq!(fixture.data.recipient_balance, recipient_balance_before);
+    }
+
+    #[test]
+    fn runtime_disabled_spl_cpi_gate_boundary_rejects_at_gate_without_mutation() {
+        let mut fixture = HandlerFixture::new();
+
+        let processed_before = fixture.data.processed_event.clone();
+        let recipient_balance_before = fixture.data.recipient_balance.clone();
+        let spl_mint_before = fixture.data.spl_mint.clone();
+        let recipient_token_account_before = fixture.data.recipient_token_account.clone();
+
+        let program_id = fixture.program_id;
+        let args = fixture.args;
+        let rent = Rent::default();
+        let accounts = fixture.accounts();
+
+        assert_custom_error(
+            build_runtime_consume_gateway_mint_disabled_spl_cpi_gate_boundary(
+                &program_id,
+                &accounts,
+                &args,
+                &rent,
+                144,
+            ),
+            XxxlError::CpiBoundaryNotReady,
+        );
+
+        drop(accounts);
+
+        assert_eq!(fixture.data.processed_event, processed_before);
+        assert_eq!(fixture.data.recipient_balance, recipient_balance_before);
+        assert_eq!(fixture.data.spl_mint, spl_mint_before);
+        assert_eq!(
+            fixture.data.recipient_token_account,
+            recipient_token_account_before
+        );
+    }
+
+    #[test]
+    fn runtime_disabled_spl_cpi_gate_boundary_rejects_consumed_event_before_gate_without_mutation()
+    {
+        let mut fixture = HandlerFixture::new();
+        fixture.data.processed_event[10] = 1;
+
+        let processed_before = fixture.data.processed_event.clone();
+        let recipient_balance_before = fixture.data.recipient_balance.clone();
+        let spl_mint_before = fixture.data.spl_mint.clone();
+        let recipient_token_account_before = fixture.data.recipient_token_account.clone();
+
+        let program_id = fixture.program_id;
+        let args = fixture.args;
+        let rent = Rent::default();
+        let accounts = fixture.accounts();
+
+        assert_custom_error(
+            build_runtime_consume_gateway_mint_disabled_spl_cpi_gate_boundary(
+                &program_id,
+                &accounts,
+                &args,
+                &rent,
+                144,
+            ),
+            XxxlError::InvalidInstruction,
+        );
+
+        drop(accounts);
+
+        assert_eq!(fixture.data.processed_event, processed_before);
+        assert_eq!(fixture.data.recipient_balance, recipient_balance_before);
+        assert_eq!(fixture.data.spl_mint, spl_mint_before);
+        assert_eq!(
+            fixture.data.recipient_token_account,
+            recipient_token_account_before
+        );
+    }
+
+    #[test]
+    fn runtime_disabled_spl_cpi_gate_boundary_rejects_wrong_recipient_token_account_without_mutation(
+    ) {
+        let mut fixture = HandlerFixture::new();
+        fixture.data.recipient_token_account = packed_token_account(
+            fixture.keys.spl_mint,
+            Pubkey::new_unique(),
+            AccountState::Initialized,
+        );
+
+        let processed_before = fixture.data.processed_event.clone();
+        let recipient_balance_before = fixture.data.recipient_balance.clone();
+        let spl_mint_before = fixture.data.spl_mint.clone();
+        let recipient_token_account_before = fixture.data.recipient_token_account.clone();
+
+        let program_id = fixture.program_id;
+        let args = fixture.args;
+        let rent = Rent::default();
+        let accounts = fixture.accounts();
+
+        assert_custom_error(
+            build_runtime_consume_gateway_mint_disabled_spl_cpi_gate_boundary(
+                &program_id,
+                &accounts,
+                &args,
+                &rent,
+                144,
+            ),
+            XxxlError::InvalidRecipientAta,
+        );
+
+        drop(accounts);
+
+        assert_eq!(fixture.data.processed_event, processed_before);
+        assert_eq!(fixture.data.recipient_balance, recipient_balance_before);
+        assert_eq!(fixture.data.spl_mint, spl_mint_before);
+        assert_eq!(
+            fixture.data.recipient_token_account,
+            recipient_token_account_before
+        );
+    }
+
+    #[test]
+    fn runtime_disabled_spl_cpi_gate_boundary_rejects_zero_amount_without_mutation() {
+        let mut fixture = HandlerFixture::new();
+        fixture.args.amount = 0;
+
+        let processed_before = fixture.data.processed_event.clone();
+        let recipient_balance_before = fixture.data.recipient_balance.clone();
+        let spl_mint_before = fixture.data.spl_mint.clone();
+        let recipient_token_account_before = fixture.data.recipient_token_account.clone();
+
+        let program_id = fixture.program_id;
+        let args = fixture.args;
+        let rent = Rent::default();
+        let accounts = fixture.accounts();
+
+        assert_custom_error(
+            build_runtime_consume_gateway_mint_disabled_spl_cpi_gate_boundary(
+                &program_id,
+                &accounts,
+                &args,
+                &rent,
+                144,
+            ),
+            XxxlError::InvalidInstruction,
+        );
+
+        drop(accounts);
+
+        assert_eq!(fixture.data.processed_event, processed_before);
+        assert_eq!(fixture.data.recipient_balance, recipient_balance_before);
+        assert_eq!(fixture.data.spl_mint, spl_mint_before);
+        assert_eq!(
+            fixture.data.recipient_token_account,
+            recipient_token_account_before
+        );
     }
 
     struct HandlerFixture {
