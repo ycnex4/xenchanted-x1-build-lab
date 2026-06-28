@@ -198,6 +198,16 @@ Expected conclusion:
 - The runtime release decision is blocked.
 - The runtime is not deployable.
 
+## Secondary review closure
+
+A secondary adversarial review was completed for commit:
+
+- `d8d04f086b2959bcee34400114df854a4347d1f3`
+
+The review accepted the current locked scaffold boundary with no open findings.
+
+This does not unlock runtime behavior, approve deployment, or replace final external review before dangerous runtime changes.
+
 ## Decision
 
 The XXXL runtime safety review package boundary is accepted.
