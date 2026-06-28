@@ -1,4 +1,7 @@
-use crate::{deployment_status::XxxlRuntimeDeploymentBlocker, XXXL_PROGRAM_ID_PLACEHOLDER};
+use crate::{
+    deployment_status::{xxxl_runtime_deployment_report_has_blocker, XxxlRuntimeDeploymentBlocker},
+    XXXL_PROGRAM_ID_PLACEHOLDER,
+};
 
 #[derive(Clone, Copy, Debug, PartialEq, Eq)]
 pub enum XxxlProgramIdReadinessStatus {
@@ -67,6 +70,10 @@ pub fn xxxl_program_id_deployable_path_ready() -> bool {
     xxxl_program_id_readiness_report().deployable_path_ready
 }
 
+pub fn xxxl_program_id_placeholder_blocker_is_active_in_deployment_report() -> bool {
+    xxxl_runtime_deployment_report_has_blocker(xxxl_program_id_readiness_report().blocker)
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -108,6 +115,11 @@ mod tests {
 
         assert_eq!(report.blocker.code(), report.blocker_code);
         assert_eq!(report.blocker.resolution(), report.resolution);
+    }
+
+    #[test]
+    fn program_id_placeholder_blocker_is_active_in_deployment_report() {
+        assert!(xxxl_program_id_placeholder_blocker_is_active_in_deployment_report());
     }
 
     #[test]

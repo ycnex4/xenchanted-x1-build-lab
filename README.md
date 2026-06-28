@@ -1503,3 +1503,31 @@ No `invoke_signed` path was enabled.
 No minting was enabled.
 No deployment behavior was enabled.
 No deployability predicate was changed.
+
+## XXXL deployment blocker lookup boundary
+
+Deployment blocker lookup helpers have been added.
+
+Added to `deployment_status`:
+
+- `xxxl_runtime_deployment_blocker_report`
+- `xxxl_runtime_deployment_report_has_blocker`
+- `xxxl_runtime_deployment_report_has_blocker_code`
+
+Added to `program_id_status`:
+
+- `xxxl_program_id_placeholder_blocker_is_active_in_deployment_report`
+
+Current Program ID linked blocker:
+
+- `PLACEHOLDER_PROGRAM_ID`
+
+No real Program ID was selected.
+No production PDA fixtures were regenerated.
+No deployment blocker was removed.
+No live route was activated.
+No SPL CPI behavior was enabled.
+No `invoke_signed` path was enabled.
+No minting was enabled.
+No deployment behavior was enabled.
+No deployability predicate was changed.
