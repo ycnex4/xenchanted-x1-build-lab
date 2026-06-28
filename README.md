@@ -1261,3 +1261,41 @@ No `invoke_signed` path was enabled.
 No minting was enabled.
 No deployment behavior was enabled.
 No deployability predicate was changed.
+
+## XXXL runtime predeploy readiness checklist
+
+A predeploy readiness checklist has been added for the XXXL SVM runtime.
+
+The checklist maps each current blocker to:
+
+- meaning
+- required resolution
+- required evidence before removal
+
+Covered blockers:
+
+- `PLACEHOLDER_PROGRAM_ID`
+- `LIVE_ROUTE_DISABLED`
+- `SPL_CPI_EXECUTION_DISABLED`
+- `PRODUCTION_GUARDIAN_SET_UNSET`
+- `PRODUCTION_PROOF_LOG_UNSET`
+- `EXTERNAL_REVIEW_INCOMPLETE`
+
+Current runtime status:
+
+- `SCAFFOLD_ONLY_NOT_DEPLOYABLE`
+
+Current gate result:
+
+- `Blocked(report)`
+
+Current deploy allow value:
+
+- `false`
+
+No live route was activated.
+No SPL CPI behavior was enabled.
+No `invoke_signed` path was enabled.
+No minting was enabled.
+No deployment behavior was enabled.
+No deployability predicate was changed.
