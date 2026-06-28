@@ -35755,3 +35755,36 @@ No `invoke_signed` is called.
 No SPL Token `mint_to` is invoked.
 No XXXL minting is enabled.
 No CPI execution is connected to `process_instruction`.
+
+## XXXL live route activation and bootstrap guardian policy
+
+Status: `COMPLETED`.
+
+Two policy documents were added:
+
+- `docs/xxxl/xxxl-live-route-activation-checklist.md`
+- `docs/gateway/bootstrap-guardian-policy.md`
+
+The live route activation checklist blocks activation until the following are satisfied:
+
+- runtime account contract
+- mint authority model
+- replay protection
+- atomicity
+- SPL CPI execution proof
+- guardian approval model
+- bootstrap guardian disclosure
+- public proof log
+- caps and blast-radius limits
+- monitoring and incident response
+- external review
+
+The bootstrap guardian policy allows an operator-controlled bootstrap guardian set only as a temporary, disclosed, capped, auditable launch mode.
+
+The policy explicitly rejects calling bootstrap guardians a decentralized guardian network until guardians are independently operated.
+
+No live route was activated.
+No code path was enabled.
+No SPL CPI behavior was changed.
+No guardian keys were generated.
+No secrets were handled.

@@ -1039,3 +1039,17 @@ No `invoke_signed` is called.
 No SPL Token `mint_to` is invoked.
 No XXXL minting is enabled.
 No CPI execution is connected to `process_instruction`.
+
+## XXXL live route activation and bootstrap guardian policy
+
+The project now has explicit policy documents for live XXXL route activation and bootstrap guardians.
+
+Live route activation is blocked until the activation checklist is satisfied.
+
+The bootstrap guardian model is allowed only as a temporary, disclosed, capped, auditable launch mode.
+
+The correct description is `operator-controlled bootstrap guardian set`.
+
+The project must not describe bootstrap guardians as a decentralized guardian network unless guardians are actually independently operated.
+
+Every live XXXL mint must be burn-backed and publicly explainable by a proof bundle.
