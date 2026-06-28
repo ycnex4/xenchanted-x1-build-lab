@@ -36356,3 +36356,47 @@ No `invoke_signed` path was enabled.
 No minting was enabled.
 No deployment behavior was enabled.
 No deployability predicate was changed.
+
+## XXXL PDA fixture verification boundary
+
+Status: `COMPLETED`.
+
+A deterministic PDA fixture verification boundary has been added.
+
+Added:
+
+- `XxxlPdaFixtureVerificationError`
+- `verify_xxxl_pda_fixture_reports`
+
+The verifier checks:
+
+- report count
+- PDA kind
+- PDA name
+- input Program ID
+- derived PDA
+- bump
+
+Current coverage:
+
+- `gateway_mint_authority`
+
+Hard checks passed:
+
+- `cargo build-sbf`
+- `cargo fmt --check`
+- `cargo test`
+- `cargo test --test mollusk_consume_gateway_mint -- --ignored --nocapture`
+- `cargo clippy --all-targets -- -D warnings`
+- `cargo audit`
+- `cargo deny` licenses/bans/sources
+
+No real Program ID was selected.
+No production PDA fixtures were regenerated.
+No deployment blocker was removed.
+No live route was activated.
+No SPL CPI behavior was enabled.
+No `invoke_signed` path was enabled.
+No minting was enabled.
+No deployment behavior was enabled.
+No deployability predicate was changed.
