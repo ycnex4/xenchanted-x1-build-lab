@@ -1142,3 +1142,28 @@ No SPL CPI behavior was enabled.
 No `invoke_signed` path was enabled from `process_instruction`.
 No minting was enabled.
 No deployment behavior was enabled.
+
+## XXXL runtime deployment blocker descriptions
+
+The XXXL runtime deployment status and blockers now expose stable machine-readable codes and human-readable descriptions.
+
+Current status code:
+
+- `SCAFFOLD_ONLY_NOT_DEPLOYABLE`
+
+Current blocker codes:
+
+- `PLACEHOLDER_PROGRAM_ID`
+- `LIVE_ROUTE_DISABLED`
+- `SPL_CPI_EXECUTION_DISABLED`
+- `PRODUCTION_GUARDIAN_SET_UNSET`
+- `PRODUCTION_PROOF_LOG_UNSET`
+- `EXTERNAL_REVIEW_INCOMPLETE`
+
+This is intended for future README rendering, CLI status output, predeploy scripts, UI panels, and deployment checklists.
+
+No live route was activated.
+No SPL CPI behavior was enabled.
+No `invoke_signed` path was enabled.
+No minting was enabled.
+No deployability predicate was changed.
