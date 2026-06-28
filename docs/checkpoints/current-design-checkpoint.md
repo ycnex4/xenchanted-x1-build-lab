@@ -37320,3 +37320,44 @@ The runtime remains scaffold-only, locked, unreleasable, and not deployable.
 Checkpoint:
 
 - `docs/checkpoints/xxxl-account-contract-test-gap-closure.md`
+
+## XXXL Account Contract Review Evidence Package
+
+Status: COMPLETED.
+
+A documentation-only account contract review evidence package has been added.
+
+Added:
+
+- `docs/xxxl/xxxl-account-contract-review-evidence-package.md`
+- `docs/checkpoints/xxxl-account-contract-review-evidence-package.md`
+
+The package gathers reviewer-facing evidence for the current
+`consume_gateway_mint` account contract:
+
+- 9-account contract inventory
+- writable and readonly policy
+- ownership and PDA model
+- account substitution threat model
+- direct processor-boundary negative test evidence
+- existing lower-level test coverage
+- validation commands
+- safety non-changes
+- reviewer questions
+- review outcome placeholder
+
+This stage is docs-only.
+
+No Rust source files were changed.
+
+No runtime behavior was changed.
+
+The runtime remains locked, unreleasable, and not deployable.
+
+`ACCOUNT_CONTRACT_UNREVIEWED` remains active.
+
+This package is evidence only.
+
+It is not approval, not blocker removal, and not runtime unlock.
+
+The next possible step is external/account-contract review, not runtime unlock.
