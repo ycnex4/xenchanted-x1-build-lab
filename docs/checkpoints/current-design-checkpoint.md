@@ -37211,3 +37211,66 @@ Release decision remains blocked:
 - release allowed: `false`
 - release blocked: `true`
 - primary blocker code: `RUNTIME_SAFETY_LOCK_ACTIVE`
+
+## XXXL Account Contract Review Boundary
+
+Status: COMPLETED.
+
+The account contract review boundary documents the existing consume_gateway_mint 9-account contract for review.
+
+The documented account contract includes:
+
+1. `mint_state`
+2. `gateway_config`
+3. `guardian_set`
+4. `processed_event`
+5. `recipient_balance`
+6. `spl_token_mint`
+7. `recipient_token_account`
+8. `mint_authority_pda`
+9. `token_program`
+
+Writable accounts:
+
+- `processed_event`
+- `recipient_balance`
+- `spl_token_mint`
+- `recipient_token_account`
+
+Readonly accounts:
+
+- `mint_state`
+- `gateway_config`
+- `guardian_set`
+- `mint_authority_pda`
+- `token_program`
+
+External signer accounts:
+
+- none
+
+This boundary records:
+
+- account inventory
+- account index mapping
+- writable and readonly account sets
+- signer requirements
+- owner models
+- account substitution protections
+- validation boundaries
+- failure behavior
+- required test matrix before blocker removal
+
+This boundary is documentation-only.
+
+It does not unlock runtime behavior, approve deployment, activate live route, enable SPL CPI, enable `invoke_signed`, enable SPL Token `mint_to`, select a real Program ID, regenerate production PDA fixtures, remove deployment blockers, or change deployability predicates.
+
+The runtime remains scaffold-only, locked, unreleasable, and not deployable.
+
+Release decision remains blocked:
+
+- release allowed: `false`
+- release blocked: `true`
+- primary blocker code: `RUNTIME_SAFETY_LOCK_ACTIVE`
+
+The `ACCOUNT_CONTRACT_UNREVIEWED` blocker remains active until separate review and required test evidence are complete.

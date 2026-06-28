@@ -230,6 +230,22 @@ Roadmap document:
 
 This roadmap does not unlock runtime behavior or approve deployment.
 
+## Account contract review boundary
+
+A Phase 1 account contract review boundary now documents the existing consume_gateway_mint 9-account contract for review.
+
+Boundary document:
+
+- `docs/xxxl/xxxl-account-contract-review-boundary.md`
+
+Checkpoint:
+
+- `docs/checkpoints/xxxl-account-contract-review-boundary.md`
+
+This boundary does not unlock runtime behavior or approve deployment.
+
+The `ACCOUNT_CONTRACT_UNREVIEWED` blocker remains active until separate review and required test evidence are complete.
+
 ## Decision
 
 The XXXL runtime safety review package boundary is accepted.
