@@ -274,7 +274,7 @@ pub fn xxxl_deployment_blocker_evidence_consistency_report(
             && placeholder_program_id_blocker_present
             && live_route_disabled_blocker_present
             && spl_cpi_execution_disabled_blocker_present
-            && account_contract_unreviewed_blocker_present
+            && !account_contract_unreviewed_blocker_present
             && mollusk_coverage_incomplete_blocker_present,
     }
 }
@@ -517,7 +517,7 @@ mod tests {
         assert!(report.placeholder_program_id_blocker_present);
         assert!(report.live_route_disabled_blocker_present);
         assert!(report.spl_cpi_execution_disabled_blocker_present);
-        assert!(report.account_contract_unreviewed_blocker_present);
+        assert!(!report.account_contract_unreviewed_blocker_present);
         assert!(report.mollusk_coverage_incomplete_blocker_present);
         assert!(report.evidence_consistent);
     }

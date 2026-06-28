@@ -37413,3 +37413,47 @@ Runtime safety state remains unchanged:
 - live route disabled
 - SPL CPI execution disabled
 - `ACCOUNT_CONTRACT_UNREVIEWED` active until a later separate blocker-transition stage
+
+## XXXL Account Contract Blocker Transition
+
+Status: completed as a narrow blocker-transition stage.
+
+The `ACCOUNT_CONTRACT_UNREVIEWED` deployment blocker has been transitioned
+after the account-contract review closure boundary.
+
+Transition artifact:
+
+- `docs/xxxl/xxxl-account-contract-blocker-transition.md`
+
+Checkpoint artifact:
+
+- `docs/checkpoints/xxxl-account-contract-blocker-transition.md`
+
+The active deployment blocker list no longer includes:
+
+- `ACCOUNT_CONTRACT_UNREVIEWED`
+
+All other deployment blockers remain active:
+
+- `PLACEHOLDER_PROGRAM_ID`
+- `LIVE_ROUTE_DISABLED`
+- `SPL_CPI_EXECUTION_DISABLED`
+- `MOLLUSK_COVERAGE_INCOMPLETE`
+- `PRODUCTION_GUARDIAN_SET_UNSET`
+- `PRODUCTION_PROOF_LOG_UNSET`
+- `EXTERNAL_REVIEW_INCOMPLETE`
+
+Runtime safety state remains:
+
+- scaffold-only
+- locked
+- unreleasable
+- not deployable
+
+This transition does not enable live route execution, SPL CPI execution,
+`invoke_signed`, or SPL Token `mint_to`.
+
+This transition does not change Program ID, production PDA fixtures, processor
+runtime behavior, CPI runtime behavior, production guardian configuration,
+production proof-log configuration, release lock semantics, or deployment
+readiness.
