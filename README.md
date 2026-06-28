@@ -1365,3 +1365,40 @@ No `invoke_signed` path was enabled.
 No minting was enabled.
 No deployment behavior was enabled.
 No deployability predicate was changed.
+
+## XXXL PDA derivation inventory boundary
+
+An explicit PDA derivation inventory boundary has been added.
+
+Added:
+
+- `XxxlPdaDerivationKind`
+- `XxxlPdaDerivationInventoryEntry`
+- `GATEWAY_MINT_AUTHORITY_SEEDS`
+- `XXXL_PDA_DERIVATION_INVENTORY`
+- `xxxl_pda_derivation_inventory`
+- `xxxl_pda_derivation_inventory_entry`
+
+Current PDA entry:
+
+- `gateway_mint_authority`
+
+Current seeds:
+
+- `xxxl`
+- `gateway-mint-authority`
+- `v1`
+
+Current Program ID dependency:
+
+- `true`
+
+No real Program ID was selected.
+No PDA fixtures were regenerated.
+No deployment blocker was removed.
+No live route was activated.
+No SPL CPI behavior was enabled.
+No `invoke_signed` path was enabled.
+No minting was enabled.
+No deployment behavior was enabled.
+No deployability predicate was changed.
