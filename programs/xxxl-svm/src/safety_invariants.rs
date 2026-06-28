@@ -111,6 +111,33 @@ pub fn xxxl_spl_cpi_is_consistent_with_safety_invariants() -> bool {
     xxxl_spl_cpi_safety_consistency_report().consistent
 }
 
+#[derive(Clone, Copy, Debug, PartialEq, Eq)]
+pub struct XxxlActivationSafetyConsistencySummary {
+    pub predeploy_gate_consistent: bool,
+    pub live_route_consistent: bool,
+    pub spl_cpi_consistent: bool,
+    pub all_activation_gates_consistent: bool,
+}
+
+pub fn xxxl_activation_safety_consistency_summary() -> XxxlActivationSafetyConsistencySummary {
+    let predeploy_gate_consistent = xxxl_predeploy_gate_is_consistent_with_safety_invariants();
+    let live_route_consistent = xxxl_live_route_is_consistent_with_safety_invariants();
+    let spl_cpi_consistent = xxxl_spl_cpi_is_consistent_with_safety_invariants();
+
+    XxxlActivationSafetyConsistencySummary {
+        predeploy_gate_consistent,
+        live_route_consistent,
+        spl_cpi_consistent,
+        all_activation_gates_consistent: predeploy_gate_consistent
+            && live_route_consistent
+            && spl_cpi_consistent,
+    }
+}
+
+pub fn xxxl_all_activation_gates_are_consistent_with_safety_invariants() -> bool {
+    xxxl_activation_safety_consistency_summary().all_activation_gates_consistent
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -172,5 +199,19 @@ mod tests {
     #[test]
     fn spl_cpi_is_consistent_with_current_safety_invariants() {
         assert!(xxxl_spl_cpi_is_consistent_with_safety_invariants());
+    }
+    #[test]
+    fn activation_safety_consistency_summary_collects_all_current_gates() {
+        let summary = xxxl_activation_safety_consistency_summary();
+
+        assert!(summary.predeploy_gate_consistent);
+        assert!(summary.live_route_consistent);
+        assert!(summary.spl_cpi_consistent);
+        assert!(summary.all_activation_gates_consistent);
+    }
+
+    #[test]
+    fn all_activation_gates_are_consistent_with_current_safety_invariants() {
+        assert!(xxxl_all_activation_gates_are_consistent_with_safety_invariants());
     }
 }
