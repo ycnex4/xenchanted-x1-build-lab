@@ -359,8 +359,8 @@ impl ScaffoldFixture {
             self.program_id,
             &self.instruction_data,
             vec![
-                AccountMeta::new(self.keys.mint_state, false),
-                AccountMeta::new(self.keys.gateway_config, false),
+                AccountMeta::new_readonly(self.keys.mint_state, false),
+                AccountMeta::new_readonly(self.keys.gateway_config, false),
                 AccountMeta::new_readonly(self.keys.guardian_set, false),
                 AccountMeta::new(self.keys.processed_event, false),
                 AccountMeta::new(self.keys.recipient_balance, false),

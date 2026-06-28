@@ -1075,3 +1075,26 @@ It documents index, name, writable/readonly requirement, signer requirement, and
 No live route was activated.
 No SPL CPI behavior was changed.
 No `process_instruction` behavior was changed.
+
+## XXXL runtime account contract enforcement boundary
+
+The XXXL runtime now enforces the `consume_gateway_mint` account contract manifest.
+
+The runtime rejects:
+
+- readonly accounts passed as writable
+- writable accounts passed as readonly
+- unexpected external signer accounts
+
+The enforcement is integrated into `prepare_consume_gateway_mint_cpi_boundary`.
+
+The Mollusk fixture was updated to match the manifest:
+
+- `mint_state` readonly
+- `gateway_config` readonly
+- mutable state/SPL accounts remain writable
+
+No live route was activated.
+No SPL CPI behavior was enabled.
+No `invoke_signed` path was enabled.
+No minting was enabled.
