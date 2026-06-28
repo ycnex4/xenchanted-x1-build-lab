@@ -189,6 +189,48 @@ pub fn xxxl_safety_lock_is_consistent_with_deployment_gate() -> bool {
     xxxl_safety_lock_deployment_gate_consistency_report().consistent
 }
 
+#[derive(Clone, Copy, Debug, PartialEq, Eq)]
+pub struct XxxlRuntimeSafetyLockEvidenceSummary {
+    pub runtime_safety_lock_active: bool,
+    pub program_id_placeholder_boundary_active: bool,
+    pub placeholder_blocker_active_in_deployment_report: bool,
+    pub live_route_disabled: bool,
+    pub spl_cpi_execution_disabled: bool,
+    pub predeploy_gate_blocked: bool,
+    pub evidence_complete: bool,
+}
+
+pub fn xxxl_runtime_safety_lock_evidence_summary() -> XxxlRuntimeSafetyLockEvidenceSummary {
+    let safety_summary = xxxl_runtime_safety_invariant_summary();
+    let lock_summary = xxxl_runtime_safety_lock_summary();
+    let predeploy_report = xxxl_predeploy_gate_safety_consistency_report();
+
+    let live_route_disabled = !safety_summary.live_route_activation_enabled;
+    let spl_cpi_execution_disabled = !safety_summary.spl_cpi_execution_enabled;
+    let predeploy_gate_blocked = !predeploy_report.predeploy_gate_allows_deploy;
+
+    XxxlRuntimeSafetyLockEvidenceSummary {
+        runtime_safety_lock_active: lock_summary.runtime_locked,
+        program_id_placeholder_boundary_active: safety_summary
+            .program_id_placeholder_boundary_active,
+        placeholder_blocker_active_in_deployment_report: safety_summary
+            .program_id_placeholder_blocker_active_in_deployment_report,
+        live_route_disabled,
+        spl_cpi_execution_disabled,
+        predeploy_gate_blocked,
+        evidence_complete: lock_summary.runtime_locked
+            && safety_summary.program_id_placeholder_boundary_active
+            && safety_summary.program_id_placeholder_blocker_active_in_deployment_report
+            && live_route_disabled
+            && spl_cpi_execution_disabled
+            && predeploy_gate_blocked,
+    }
+}
+
+pub fn xxxl_runtime_safety_lock_evidence_is_complete() -> bool {
+    xxxl_runtime_safety_lock_evidence_summary().evidence_complete
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -291,5 +333,22 @@ mod tests {
     #[test]
     fn safety_lock_is_consistent_with_current_deployment_gate() {
         assert!(xxxl_safety_lock_is_consistent_with_deployment_gate());
+    }
+    #[test]
+    fn runtime_safety_lock_evidence_summary_collects_current_evidence() {
+        let summary = xxxl_runtime_safety_lock_evidence_summary();
+
+        assert!(summary.runtime_safety_lock_active);
+        assert!(summary.program_id_placeholder_boundary_active);
+        assert!(summary.placeholder_blocker_active_in_deployment_report);
+        assert!(summary.live_route_disabled);
+        assert!(summary.spl_cpi_execution_disabled);
+        assert!(summary.predeploy_gate_blocked);
+        assert!(summary.evidence_complete);
+    }
+
+    #[test]
+    fn runtime_safety_lock_evidence_is_complete_for_current_scaffold() {
+        assert!(xxxl_runtime_safety_lock_evidence_is_complete());
     }
 }
