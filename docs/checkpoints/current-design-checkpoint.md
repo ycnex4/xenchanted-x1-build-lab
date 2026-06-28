@@ -37054,3 +37054,22 @@ No XXXL minting was enabled.
 No runtime state mutation was enabled.
 No deployment behavior was enabled.
 No deployability predicate was changed.
+
+## XXXL Deployment Blocker Expansion Boundary
+
+Status: COMPLETED.
+
+The XXXL SVM runtime deployment blocker model now includes two additional explicit blockers:
+
+- `ACCOUNT_CONTRACT_UNREVIEWED`
+- `MOLLUSK_COVERAGE_INCOMPLETE`
+
+These blockers make account contract review and Mollusk CPI-path coverage visible at code level before any future runtime mutation, SPL CPI execution, `invoke_signed`, or `mint_to` implementation work.
+
+The runtime remains scaffold-only, locked, unreleasable, and not deployable.
+
+Release decision remains blocked:
+
+- release allowed: `false`
+- release blocked: `true`
+- primary blocker code: `RUNTIME_SAFETY_LOCK_ACTIVE`

@@ -8,6 +8,8 @@ pub enum XxxlRuntimeDeploymentBlocker {
     PlaceholderProgramId,
     LiveRouteDisabled,
     SplCpiExecutionDisabled,
+    AccountContractUnreviewed,
+    MolluskCoverageIncomplete,
     ProductionGuardianSetUnset,
     ProductionProofLogUnset,
     ExternalReviewIncomplete,
@@ -39,16 +41,18 @@ pub enum XxxlRuntimeDeploymentGateResult {
 pub const XXXL_RUNTIME_DEPLOYMENT_STATUS: XxxlRuntimeDeploymentStatus =
     XxxlRuntimeDeploymentStatus::ScaffoldOnlyNotDeployable;
 
-pub const XXXL_RUNTIME_DEPLOYMENT_BLOCKERS: [XxxlRuntimeDeploymentBlocker; 6] = [
+pub const XXXL_RUNTIME_DEPLOYMENT_BLOCKERS: [XxxlRuntimeDeploymentBlocker; 8] = [
     XxxlRuntimeDeploymentBlocker::PlaceholderProgramId,
     XxxlRuntimeDeploymentBlocker::LiveRouteDisabled,
     XxxlRuntimeDeploymentBlocker::SplCpiExecutionDisabled,
+    XxxlRuntimeDeploymentBlocker::AccountContractUnreviewed,
+    XxxlRuntimeDeploymentBlocker::MolluskCoverageIncomplete,
     XxxlRuntimeDeploymentBlocker::ProductionGuardianSetUnset,
     XxxlRuntimeDeploymentBlocker::ProductionProofLogUnset,
     XxxlRuntimeDeploymentBlocker::ExternalReviewIncomplete,
 ];
 
-pub const XXXL_RUNTIME_DEPLOYMENT_BLOCKER_REPORTS: [XxxlRuntimeDeploymentBlockerReport; 6] = [
+pub const XXXL_RUNTIME_DEPLOYMENT_BLOCKER_REPORTS: [XxxlRuntimeDeploymentBlockerReport; 8] = [
     XxxlRuntimeDeploymentBlockerReport {
         blocker: XxxlRuntimeDeploymentBlocker::PlaceholderProgramId,
         code: "PLACEHOLDER_PROGRAM_ID",
@@ -66,6 +70,18 @@ pub const XXXL_RUNTIME_DEPLOYMENT_BLOCKER_REPORTS: [XxxlRuntimeDeploymentBlocker
         code: "SPL_CPI_EXECUTION_DISABLED",
         description: "SPL Token mint_to CPI execution remains disabled.",
         resolution: "Enable SPL Token mint_to CPI execution only after live route activation, PDA authority, account contract, and Mollusk coverage are complete.",
+    },
+    XxxlRuntimeDeploymentBlockerReport {
+        blocker: XxxlRuntimeDeploymentBlocker::AccountContractUnreviewed,
+        code: "ACCOUNT_CONTRACT_UNREVIEWED",
+        description: "The runtime account contract and writable account set are not reviewed for production execution.",
+        resolution: "Review and document the full account contract, writable account set, PDA constraints, signer requirements, and account substitution protections before implementation.",
+    },
+    XxxlRuntimeDeploymentBlockerReport {
+        blocker: XxxlRuntimeDeploymentBlocker::MolluskCoverageIncomplete,
+        code: "MOLLUSK_COVERAGE_INCOMPLETE",
+        description: "Mollusk coverage is incomplete for the future SPL CPI mint path and account-substitution failure cases.",
+        resolution: "Add and review Mollusk coverage for SPL CPI success, failed CPI, wrong mint, wrong authority PDA, wrong token program, wrong recipient token account, and replay cases before enabling CPI.",
     },
     XxxlRuntimeDeploymentBlockerReport {
         blocker: XxxlRuntimeDeploymentBlocker::ProductionGuardianSetUnset,
@@ -120,6 +136,12 @@ impl XxxlRuntimeDeploymentBlocker {
             XxxlRuntimeDeploymentBlocker::PlaceholderProgramId => "PLACEHOLDER_PROGRAM_ID",
             XxxlRuntimeDeploymentBlocker::LiveRouteDisabled => "LIVE_ROUTE_DISABLED",
             XxxlRuntimeDeploymentBlocker::SplCpiExecutionDisabled => "SPL_CPI_EXECUTION_DISABLED",
+            XxxlRuntimeDeploymentBlocker::AccountContractUnreviewed => {
+                "ACCOUNT_CONTRACT_UNREVIEWED"
+            }
+            XxxlRuntimeDeploymentBlocker::MolluskCoverageIncomplete => {
+                "MOLLUSK_COVERAGE_INCOMPLETE"
+            }
             XxxlRuntimeDeploymentBlocker::ProductionGuardianSetUnset => {
                 "PRODUCTION_GUARDIAN_SET_UNSET"
             }
@@ -138,6 +160,12 @@ impl XxxlRuntimeDeploymentBlocker {
             }
             XxxlRuntimeDeploymentBlocker::SplCpiExecutionDisabled => {
                 "SPL Token mint_to CPI execution remains disabled."
+            }
+            XxxlRuntimeDeploymentBlocker::AccountContractUnreviewed => {
+                "The runtime account contract and writable account set are not reviewed for production execution."
+            }
+            XxxlRuntimeDeploymentBlocker::MolluskCoverageIncomplete => {
+                "Mollusk coverage is incomplete for the future SPL CPI mint path and account-substitution failure cases."
             }
             XxxlRuntimeDeploymentBlocker::ProductionGuardianSetUnset => {
                 "The production guardian set is not configured or externally documented."
@@ -161,6 +189,12 @@ impl XxxlRuntimeDeploymentBlocker {
             }
             XxxlRuntimeDeploymentBlocker::SplCpiExecutionDisabled => {
                 "Enable SPL Token mint_to CPI execution only after live route activation, PDA authority, account contract, and Mollusk coverage are complete."
+            }
+            XxxlRuntimeDeploymentBlocker::AccountContractUnreviewed => {
+                "Review and document the full account contract, writable account set, PDA constraints, signer requirements, and account substitution protections before implementation."
+            }
+            XxxlRuntimeDeploymentBlocker::MolluskCoverageIncomplete => {
+                "Add and review Mollusk coverage for SPL CPI success, failed CPI, wrong mint, wrong authority PDA, wrong token program, wrong recipient token account, and replay cases before enabling CPI."
             }
             XxxlRuntimeDeploymentBlocker::ProductionGuardianSetUnset => {
                 "Define, publish, and review the production guardian set, threshold, rotation policy, and key custody model."
@@ -277,10 +311,12 @@ mod tests {
     fn runtime_deployment_blockers_are_explicit() {
         let blockers = xxxl_runtime_deployment_blockers();
 
-        assert_eq!(blockers.len(), 6);
+        assert_eq!(blockers.len(), 8);
         assert!(blockers.contains(&XxxlRuntimeDeploymentBlocker::PlaceholderProgramId));
         assert!(blockers.contains(&XxxlRuntimeDeploymentBlocker::LiveRouteDisabled));
         assert!(blockers.contains(&XxxlRuntimeDeploymentBlocker::SplCpiExecutionDisabled));
+        assert!(blockers.contains(&XxxlRuntimeDeploymentBlocker::AccountContractUnreviewed));
+        assert!(blockers.contains(&XxxlRuntimeDeploymentBlocker::MolluskCoverageIncomplete));
         assert!(blockers.contains(&XxxlRuntimeDeploymentBlocker::ProductionGuardianSetUnset));
         assert!(blockers.contains(&XxxlRuntimeDeploymentBlocker::ProductionProofLogUnset));
         assert!(blockers.contains(&XxxlRuntimeDeploymentBlocker::ExternalReviewIncomplete));
@@ -293,9 +329,11 @@ mod tests {
         assert_eq!(blockers[0].code(), "PLACEHOLDER_PROGRAM_ID");
         assert_eq!(blockers[1].code(), "LIVE_ROUTE_DISABLED");
         assert_eq!(blockers[2].code(), "SPL_CPI_EXECUTION_DISABLED");
-        assert_eq!(blockers[3].code(), "PRODUCTION_GUARDIAN_SET_UNSET");
-        assert_eq!(blockers[4].code(), "PRODUCTION_PROOF_LOG_UNSET");
-        assert_eq!(blockers[5].code(), "EXTERNAL_REVIEW_INCOMPLETE");
+        assert_eq!(blockers[3].code(), "ACCOUNT_CONTRACT_UNREVIEWED");
+        assert_eq!(blockers[4].code(), "MOLLUSK_COVERAGE_INCOMPLETE");
+        assert_eq!(blockers[5].code(), "PRODUCTION_GUARDIAN_SET_UNSET");
+        assert_eq!(blockers[6].code(), "PRODUCTION_PROOF_LOG_UNSET");
+        assert_eq!(blockers[7].code(), "EXTERNAL_REVIEW_INCOMPLETE");
     }
 
     #[test]
@@ -380,6 +418,37 @@ mod tests {
             "DEPLOYMENT_READY"
         ));
     }
+    #[test]
+    fn runtime_deployment_report_has_account_contract_review_blocker() {
+        let report = xxxl_runtime_deployment_blocker_report(
+            XxxlRuntimeDeploymentBlocker::AccountContractUnreviewed,
+        )
+        .expect("account contract review blocker report");
+
+        assert_eq!(report.code, "ACCOUNT_CONTRACT_UNREVIEWED");
+        assert_eq!(report.code, report.blocker.code());
+        assert!(report.description.contains("account contract"));
+        assert!(report.resolution.contains("account substitution"));
+        assert!(xxxl_runtime_deployment_report_has_blocker_code(
+            "ACCOUNT_CONTRACT_UNREVIEWED"
+        ));
+    }
+
+    #[test]
+    fn runtime_deployment_report_has_mollusk_coverage_blocker() {
+        let report = xxxl_runtime_deployment_blocker_report(
+            XxxlRuntimeDeploymentBlocker::MolluskCoverageIncomplete,
+        )
+        .expect("Mollusk coverage blocker report");
+
+        assert_eq!(report.code, "MOLLUSK_COVERAGE_INCOMPLETE");
+        assert_eq!(report.code, report.blocker.code());
+        assert!(report.description.contains("Mollusk coverage"));
+        assert!(report.resolution.contains("wrong token program"));
+        assert!(xxxl_runtime_deployment_report_has_blocker_code(
+            "MOLLUSK_COVERAGE_INCOMPLETE"
+        ));
+    }
 
     #[test]
     fn runtime_deployment_report_is_stable_and_not_deployable() {
@@ -395,10 +464,12 @@ mod tests {
             "The XXXL SVM runtime is a scaffold-only build and is not deployable."
         );
         assert!(!report.deployable);
-        assert_eq!(report.blockers.len(), 6);
+        assert_eq!(report.blockers.len(), 8);
         assert_eq!(report.blockers[0].code, "PLACEHOLDER_PROGRAM_ID");
         assert_eq!(report.blockers[1].code, "LIVE_ROUTE_DISABLED");
         assert_eq!(report.blockers[2].code, "SPL_CPI_EXECUTION_DISABLED");
+        assert_eq!(report.blockers[3].code, "ACCOUNT_CONTRACT_UNREVIEWED");
+        assert_eq!(report.blockers[4].code, "MOLLUSK_COVERAGE_INCOMPLETE");
         assert_eq!(
             report.blockers[0].resolution,
             XxxlRuntimeDeploymentBlocker::PlaceholderProgramId.resolution()
@@ -425,7 +496,7 @@ mod tests {
             XxxlRuntimeDeploymentGateResult::Blocked(report) => {
                 assert_eq!(report.status_code, "SCAFFOLD_ONLY_NOT_DEPLOYABLE");
                 assert!(!report.deployable);
-                assert_eq!(report.blockers.len(), 6);
+                assert_eq!(report.blockers.len(), 8);
             }
             XxxlRuntimeDeploymentGateResult::Ready(_) => {
                 panic!("current XXXL runtime must not pass the predeploy gate");

@@ -240,6 +240,8 @@ pub struct XxxlDeploymentBlockerEvidenceConsistencyReport {
     pub placeholder_program_id_blocker_present: bool,
     pub live_route_disabled_blocker_present: bool,
     pub spl_cpi_execution_disabled_blocker_present: bool,
+    pub account_contract_unreviewed_blocker_present: bool,
+    pub mollusk_coverage_incomplete_blocker_present: bool,
     pub evidence_consistent: bool,
 }
 
@@ -254,16 +256,26 @@ pub fn xxxl_deployment_blocker_evidence_consistency_report(
     let spl_cpi_execution_disabled_blocker_present = xxxl_runtime_deployment_report_has_blocker(
         XxxlRuntimeDeploymentBlocker::SplCpiExecutionDisabled,
     );
+    let account_contract_unreviewed_blocker_present = xxxl_runtime_deployment_report_has_blocker(
+        XxxlRuntimeDeploymentBlocker::AccountContractUnreviewed,
+    );
+    let mollusk_coverage_incomplete_blocker_present = xxxl_runtime_deployment_report_has_blocker(
+        XxxlRuntimeDeploymentBlocker::MolluskCoverageIncomplete,
+    );
 
     XxxlDeploymentBlockerEvidenceConsistencyReport {
         safety_lock_evidence_complete,
         placeholder_program_id_blocker_present,
         live_route_disabled_blocker_present,
         spl_cpi_execution_disabled_blocker_present,
+        account_contract_unreviewed_blocker_present,
+        mollusk_coverage_incomplete_blocker_present,
         evidence_consistent: safety_lock_evidence_complete
             && placeholder_program_id_blocker_present
             && live_route_disabled_blocker_present
-            && spl_cpi_execution_disabled_blocker_present,
+            && spl_cpi_execution_disabled_blocker_present
+            && account_contract_unreviewed_blocker_present
+            && mollusk_coverage_incomplete_blocker_present,
     }
 }
 
@@ -299,6 +311,10 @@ pub fn xxxl_runtime_safety_unlock_criteria_summary() -> XxxlRuntimeSafetyUnlockC
         XxxlRuntimeDeploymentBlocker::LiveRouteDisabled,
     ) && !xxxl_runtime_deployment_report_has_blocker(
         XxxlRuntimeDeploymentBlocker::SplCpiExecutionDisabled,
+    ) && !xxxl_runtime_deployment_report_has_blocker(
+        XxxlRuntimeDeploymentBlocker::AccountContractUnreviewed,
+    ) && !xxxl_runtime_deployment_report_has_blocker(
+        XxxlRuntimeDeploymentBlocker::MolluskCoverageIncomplete,
     ) && !xxxl_runtime_deployment_report_has_blocker(
         XxxlRuntimeDeploymentBlocker::ProductionGuardianSetUnset,
     ) && !xxxl_runtime_deployment_report_has_blocker(
@@ -501,6 +517,8 @@ mod tests {
         assert!(report.placeholder_program_id_blocker_present);
         assert!(report.live_route_disabled_blocker_present);
         assert!(report.spl_cpi_execution_disabled_blocker_present);
+        assert!(report.account_contract_unreviewed_blocker_present);
+        assert!(report.mollusk_coverage_incomplete_blocker_present);
         assert!(report.evidence_consistent);
     }
 

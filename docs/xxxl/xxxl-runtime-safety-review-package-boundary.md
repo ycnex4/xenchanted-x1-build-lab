@@ -112,6 +112,8 @@ The deployment blocker report must continue to include:
 - placeholder Program ID
 - live route disabled
 - SPL CPI execution disabled
+- account contract unreviewed
+- Mollusk coverage incomplete
 - production guardian set unset
 - production proof log unset
 - external review incomplete
