@@ -48,6 +48,27 @@ pub fn xxxl_runtime_blocking_safety_invariants_hold() -> bool {
     xxxl_runtime_safety_invariant_summary().blocking_invariants_hold()
 }
 
+#[derive(Clone, Copy, Debug, PartialEq, Eq)]
+pub struct XxxlPredeployGateSafetyConsistencyReport {
+    pub blocking_safety_invariants_hold: bool,
+    pub predeploy_gate_allows_deploy: bool,
+    pub consistent: bool,
+}
+
+pub fn xxxl_predeploy_gate_safety_consistency_report() -> XxxlPredeployGateSafetyConsistencyReport {
+    let summary = xxxl_runtime_safety_invariant_summary();
+
+    XxxlPredeployGateSafetyConsistencyReport {
+        blocking_safety_invariants_hold: summary.blocking_invariants_hold(),
+        predeploy_gate_allows_deploy: summary.predeploy_gate_allows_deploy,
+        consistent: !(summary.blocking_invariants_hold() && summary.predeploy_gate_allows_deploy),
+    }
+}
+
+pub fn xxxl_predeploy_gate_is_consistent_with_safety_invariants() -> bool {
+    xxxl_predeploy_gate_safety_consistency_report().consistent
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -70,5 +91,18 @@ mod tests {
 
         assert!(summary.blocking_invariants_hold());
         assert!(xxxl_runtime_blocking_safety_invariants_hold());
+    }
+    #[test]
+    fn predeploy_gate_safety_consistency_report_is_blocked_and_consistent() {
+        let report = xxxl_predeploy_gate_safety_consistency_report();
+
+        assert!(report.blocking_safety_invariants_hold);
+        assert!(!report.predeploy_gate_allows_deploy);
+        assert!(report.consistent);
+    }
+
+    #[test]
+    fn predeploy_gate_is_consistent_with_current_safety_invariants() {
+        assert!(xxxl_predeploy_gate_is_consistent_with_safety_invariants());
     }
 }
