@@ -69,6 +69,27 @@ pub fn xxxl_predeploy_gate_is_consistent_with_safety_invariants() -> bool {
     xxxl_predeploy_gate_safety_consistency_report().consistent
 }
 
+#[derive(Clone, Copy, Debug, PartialEq, Eq)]
+pub struct XxxlLiveRouteSafetyConsistencyReport {
+    pub blocking_safety_invariants_hold: bool,
+    pub live_route_activation_enabled: bool,
+    pub consistent: bool,
+}
+
+pub fn xxxl_live_route_safety_consistency_report() -> XxxlLiveRouteSafetyConsistencyReport {
+    let summary = xxxl_runtime_safety_invariant_summary();
+
+    XxxlLiveRouteSafetyConsistencyReport {
+        blocking_safety_invariants_hold: summary.blocking_invariants_hold(),
+        live_route_activation_enabled: summary.live_route_activation_enabled,
+        consistent: !(summary.blocking_invariants_hold() && summary.live_route_activation_enabled),
+    }
+}
+
+pub fn xxxl_live_route_is_consistent_with_safety_invariants() -> bool {
+    xxxl_live_route_safety_consistency_report().consistent
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -104,5 +125,18 @@ mod tests {
     #[test]
     fn predeploy_gate_is_consistent_with_current_safety_invariants() {
         assert!(xxxl_predeploy_gate_is_consistent_with_safety_invariants());
+    }
+    #[test]
+    fn live_route_safety_consistency_report_is_disabled_and_consistent() {
+        let report = xxxl_live_route_safety_consistency_report();
+
+        assert!(report.blocking_safety_invariants_hold);
+        assert!(!report.live_route_activation_enabled);
+        assert!(report.consistent);
+    }
+
+    #[test]
+    fn live_route_is_consistent_with_current_safety_invariants() {
+        assert!(xxxl_live_route_is_consistent_with_safety_invariants());
     }
 }
