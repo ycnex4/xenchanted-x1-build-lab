@@ -1098,3 +1098,20 @@ No live route was activated.
 No SPL CPI behavior was enabled.
 No `invoke_signed` path was enabled.
 No minting was enabled.
+
+## XXXL Mollusk account contract negative coverage
+
+The XXXL runtime account contract enforcement now has SBF/Mollusk negative coverage.
+
+Added ignored Mollusk tests for:
+
+- readonly account passed as writable
+- required writable account passed as readonly
+- unexpected external signer
+
+Each invalid account meta case is rejected with `InvalidInstruction`.
+
+No live route was activated.
+No SPL CPI behavior was enabled.
+No `invoke_signed` path was enabled.
+No minting was enabled.
