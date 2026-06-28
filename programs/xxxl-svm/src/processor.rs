@@ -4,6 +4,7 @@ use solana_program::{
 };
 
 use crate::{
+    account_contract::assert_consume_gateway_mint_account_contract,
     cpi::{
         assert_gateway_mint_authority_pda, guarded_mint_to_cpi_execution_gate_boundary,
         plan_mint_to_cpi_boundary, MintToCpiAccounts, MintToCpiBoundary, MintToCpiPlanningBoundary,
@@ -253,6 +254,8 @@ pub fn prepare_consume_gateway_mint_cpi_boundary<'a, 'b>(
     {
         return Err(XxxlError::InvalidInstruction.into());
     }
+
+    assert_consume_gateway_mint_account_contract(accounts)?;
 
     let mint_state_account = account_at(accounts, args.mint_state_account_index as usize)?;
     let gateway_config_account = account_at(accounts, args.route_account_index as usize)?;
@@ -1065,6 +1068,57 @@ mod tests {
         );
     }
 
+    #[test]
+    fn runtime_account_contract_rejects_unnecessary_writable_readonly_account() {
+        let mut fixture = HandlerFixture::new();
+
+        let program_id = fixture.program_id;
+        let args = fixture.args;
+        let rent = Rent::default();
+        let mut accounts = fixture.accounts();
+
+        accounts[ACCOUNT_INDEX_MINT_STATE].is_writable = true;
+
+        assert_custom_error(
+            prepare_consume_gateway_mint_cpi_boundary(&program_id, &accounts, &args, &rent),
+            XxxlError::InvalidInstruction,
+        );
+    }
+
+    #[test]
+    fn runtime_account_contract_rejects_missing_required_writable_account() {
+        let mut fixture = HandlerFixture::new();
+
+        let program_id = fixture.program_id;
+        let args = fixture.args;
+        let rent = Rent::default();
+        let mut accounts = fixture.accounts();
+
+        accounts[ACCOUNT_INDEX_PROCESSED_EVENT].is_writable = false;
+
+        assert_custom_error(
+            prepare_consume_gateway_mint_cpi_boundary(&program_id, &accounts, &args, &rent),
+            XxxlError::InvalidInstruction,
+        );
+    }
+
+    #[test]
+    fn runtime_account_contract_rejects_unexpected_external_signer() {
+        let mut fixture = HandlerFixture::new();
+
+        let program_id = fixture.program_id;
+        let args = fixture.args;
+        let rent = Rent::default();
+        let mut accounts = fixture.accounts();
+
+        accounts[ACCOUNT_INDEX_RECIPIENT_BALANCE].is_signer = true;
+
+        assert_custom_error(
+            prepare_consume_gateway_mint_cpi_boundary(&program_id, &accounts, &args, &rent),
+            XxxlError::InvalidInstruction,
+        );
+    }
+
     struct HandlerFixture {
         program_id: Pubkey,
         owners: FixtureOwners,
@@ -1215,7 +1269,7 @@ mod tests {
                 AccountInfo::new(
                     &self.keys.mint_state,
                     false,
-                    true,
+                    false,
                     &mut self.lamports.mint_state,
                     &mut self.data.mint_state,
                     &self.owners.program,
@@ -1225,7 +1279,7 @@ mod tests {
                 AccountInfo::new(
                     &self.keys.gateway_config,
                     false,
-                    true,
+                    false,
                     &mut self.lamports.gateway_config,
                     &mut self.data.gateway_config,
                     &self.owners.program,

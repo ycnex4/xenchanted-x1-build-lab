@@ -1,3 +1,7 @@
+use solana_program::{account_info::AccountInfo, program_error::ProgramError};
+
+use crate::error::XxxlError;
+
 #[derive(Clone, Copy, Debug, PartialEq, Eq)]
 pub enum AccountWriteAccess {
     Readonly,
@@ -105,6 +109,29 @@ pub fn consume_gateway_mint_account_contract_entry(
         .iter()
         .find(|entry| entry.index == index)
         .copied()
+}
+
+pub fn assert_consume_gateway_mint_account_contract(
+    accounts: &[AccountInfo],
+) -> Result<(), ProgramError> {
+    if accounts.len() != CONSUME_GATEWAY_MINT_ACCOUNT_CONTRACT.len() {
+        return Err(XxxlError::InvalidInstruction.into());
+    }
+
+    for entry in CONSUME_GATEWAY_MINT_ACCOUNT_CONTRACT {
+        let account = accounts
+            .get(entry.index)
+            .ok_or_else(|| ProgramError::from(XxxlError::InvalidInstruction))?;
+
+        let expected_writable = matches!(entry.write_access, AccountWriteAccess::Writable);
+        let expected_signer = matches!(entry.signer_requirement, AccountSignerRequirement::Signer);
+
+        if account.is_writable != expected_writable || account.is_signer != expected_signer {
+            return Err(XxxlError::InvalidInstruction.into());
+        }
+    }
+
+    Ok(())
 }
 
 #[cfg(test)]

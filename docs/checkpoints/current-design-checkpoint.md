@@ -35823,3 +35823,44 @@ No live route was activated.
 No SPL CPI behavior was changed.
 No `process_instruction` behavior was changed.
 No account mutation behavior was changed.
+
+## XXXL runtime account contract enforcement boundary
+
+Status: `COMPLETED`.
+
+The runtime now enforces the explicit `consume_gateway_mint` account contract manifest.
+
+Added:
+
+- `assert_consume_gateway_mint_account_contract`
+
+Integrated into:
+
+- `prepare_consume_gateway_mint_cpi_boundary`
+
+The runtime rejects:
+
+- readonly account passed writable
+- writable account passed readonly
+- unexpected signer account
+
+The Mollusk fixture was aligned with the manifest:
+
+- `mint_state` readonly
+- `gateway_config` readonly
+- mutation-capable state/SPL accounts remain writable
+
+Hard checks passed:
+
+- `cargo build-sbf`
+- `cargo fmt --check`
+- `cargo test`
+- `cargo test --test mollusk_consume_gateway_mint -- --ignored --nocapture`
+- `cargo clippy --all-targets -- -D warnings`
+- `cargo audit`
+- `cargo deny` licenses/bans/sources
+
+No live route was activated.
+No SPL CPI behavior was enabled.
+No `invoke_signed` path was enabled.
+No minting was enabled.
