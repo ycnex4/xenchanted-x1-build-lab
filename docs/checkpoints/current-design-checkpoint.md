@@ -36034,3 +36034,41 @@ No SPL CPI behavior was enabled.
 No `invoke_signed` path was enabled.
 No minting was enabled.
 No deployability predicate was changed.
+
+## XXXL runtime deployment blocker resolution guidance
+
+Status: `COMPLETED`.
+
+The XXXL runtime deployment blocker reports now include resolution guidance.
+
+Extended:
+
+- `XxxlRuntimeDeploymentBlockerReport`
+
+Added:
+
+- `resolution`
+- `XxxlRuntimeDeploymentBlocker::resolution`
+
+Each blocker report now includes:
+
+- blocker enum value
+- stable code
+- human-readable description
+- human-readable resolution guidance
+
+Hard checks passed:
+
+- `cargo build-sbf`
+- `cargo fmt --check`
+- `cargo test`
+- `cargo test --test mollusk_consume_gateway_mint -- --ignored --nocapture`
+- `cargo clippy --all-targets -- -D warnings`
+- `cargo audit`
+- `cargo deny` licenses/bans/sources
+
+No live route was activated.
+No SPL CPI behavior was enabled.
+No `invoke_signed` path was enabled.
+No minting was enabled.
+No deployability predicate was changed.
