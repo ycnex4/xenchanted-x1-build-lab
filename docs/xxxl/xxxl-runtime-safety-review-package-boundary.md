@@ -220,6 +220,16 @@ This is not an unlock approval and not deployment approval.
 
 Dangerous runtime changes still require separate future review.
 
+## Deployment roadmap
+
+A deployment roadmap boundary now defines the ordered path from the locked scaffold boundary toward future deployment and gateway activation.
+
+Roadmap document:
+
+- `docs/xxxl/xxxl-deployment-roadmap-boundary.md`
+
+This roadmap does not unlock runtime behavior or approve deployment.
+
 ## Decision
 
 The XXXL runtime safety review package boundary is accepted.
