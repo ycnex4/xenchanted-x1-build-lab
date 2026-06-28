@@ -20,6 +20,7 @@ pub mod instruction;
 pub mod pda;
 pub mod processor;
 pub mod program_id_status;
+pub mod safety_invariants;
 pub mod state;
 pub mod validation;
 
