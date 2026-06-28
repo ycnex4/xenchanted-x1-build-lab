@@ -90,6 +90,27 @@ pub fn xxxl_live_route_is_consistent_with_safety_invariants() -> bool {
     xxxl_live_route_safety_consistency_report().consistent
 }
 
+#[derive(Clone, Copy, Debug, PartialEq, Eq)]
+pub struct XxxlSplCpiSafetyConsistencyReport {
+    pub blocking_safety_invariants_hold: bool,
+    pub spl_cpi_execution_enabled: bool,
+    pub consistent: bool,
+}
+
+pub fn xxxl_spl_cpi_safety_consistency_report() -> XxxlSplCpiSafetyConsistencyReport {
+    let summary = xxxl_runtime_safety_invariant_summary();
+
+    XxxlSplCpiSafetyConsistencyReport {
+        blocking_safety_invariants_hold: summary.blocking_invariants_hold(),
+        spl_cpi_execution_enabled: summary.spl_cpi_execution_enabled,
+        consistent: !(summary.blocking_invariants_hold() && summary.spl_cpi_execution_enabled),
+    }
+}
+
+pub fn xxxl_spl_cpi_is_consistent_with_safety_invariants() -> bool {
+    xxxl_spl_cpi_safety_consistency_report().consistent
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -138,5 +159,18 @@ mod tests {
     #[test]
     fn live_route_is_consistent_with_current_safety_invariants() {
         assert!(xxxl_live_route_is_consistent_with_safety_invariants());
+    }
+    #[test]
+    fn spl_cpi_safety_consistency_report_is_disabled_and_consistent() {
+        let report = xxxl_spl_cpi_safety_consistency_report();
+
+        assert!(report.blocking_safety_invariants_hold);
+        assert!(!report.spl_cpi_execution_enabled);
+        assert!(report.consistent);
+    }
+
+    #[test]
+    fn spl_cpi_is_consistent_with_current_safety_invariants() {
+        assert!(xxxl_spl_cpi_is_consistent_with_safety_invariants());
     }
 }
