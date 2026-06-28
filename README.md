@@ -1053,3 +1053,25 @@ The correct description is `operator-controlled bootstrap guardian set`.
 The project must not describe bootstrap guardians as a decentralized guardian network unless guardians are actually independently operated.
 
 Every live XXXL mint must be burn-backed and publicly explainable by a proof bundle.
+
+## XXXL runtime account contract manifest boundary
+
+The XXXL runtime now has an explicit account contract manifest for `consume_gateway_mint`.
+
+The manifest fixes the 9-account runtime shape:
+
+0. mint_state
+1. gateway_config
+2. guardian_set
+3. processed_event
+4. recipient_balance
+5. spl_token_mint
+6. recipient_token_account
+7. mint_authority_pda
+8. token_program
+
+It documents index, name, writable/readonly requirement, signer requirement, and owner model.
+
+No live route was activated.
+No SPL CPI behavior was changed.
+No `process_instruction` behavior was changed.

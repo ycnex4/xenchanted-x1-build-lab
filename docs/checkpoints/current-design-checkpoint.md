@@ -35788,3 +35788,38 @@ No code path was enabled.
 No SPL CPI behavior was changed.
 No guardian keys were generated.
 No secrets were handled.
+
+## XXXL runtime account contract manifest boundary
+
+Status: `COMPLETED`.
+
+A new account contract manifest was added:
+
+- `programs/xxxl-svm/src/account_contract.rs`
+
+The manifest documents the 9-account consume-gateway-mint shape:
+
+0. mint_state
+1. gateway_config
+2. guardian_set
+3. processed_event
+4. recipient_balance
+5. spl_token_mint
+6. recipient_token_account
+7. mint_authority_pda
+8. token_program
+
+The manifest records:
+
+- account index
+- account name
+- writable/readonly requirement
+- signer requirement
+- owner model
+
+Tests verify that the manifest matches instruction constants and processor constants.
+
+No live route was activated.
+No SPL CPI behavior was changed.
+No `process_instruction` behavior was changed.
+No account mutation behavior was changed.
