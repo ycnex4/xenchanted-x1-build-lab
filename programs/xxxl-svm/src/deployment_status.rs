@@ -195,6 +195,24 @@ pub fn xxxl_runtime_deployment_blocker_reports() -> &'static [XxxlRuntimeDeploym
     &XXXL_RUNTIME_DEPLOYMENT_BLOCKER_REPORTS
 }
 
+pub fn xxxl_runtime_deployment_blocker_report(
+    blocker: XxxlRuntimeDeploymentBlocker,
+) -> Option<&'static XxxlRuntimeDeploymentBlockerReport> {
+    XXXL_RUNTIME_DEPLOYMENT_BLOCKER_REPORTS
+        .iter()
+        .find(|report| report.blocker == blocker)
+}
+
+pub fn xxxl_runtime_deployment_report_has_blocker(blocker: XxxlRuntimeDeploymentBlocker) -> bool {
+    xxxl_runtime_deployment_blocker_report(blocker).is_some()
+}
+
+pub fn xxxl_runtime_deployment_report_has_blocker_code(code: &str) -> bool {
+    XXXL_RUNTIME_DEPLOYMENT_BLOCKER_REPORTS
+        .iter()
+        .any(|report| report.code == code)
+}
+
 pub fn xxxl_runtime_deployment_report() -> &'static XxxlRuntimeDeploymentReport {
     &XXXL_RUNTIME_DEPLOYMENT_REPORT
 }
@@ -329,6 +347,38 @@ mod tests {
             assert_eq!(report.description, blocker.description());
             assert_eq!(report.resolution, blocker.resolution());
         }
+    }
+
+    #[test]
+    fn runtime_deployment_blocker_report_lookup_finds_placeholder_program_id() {
+        let report = xxxl_runtime_deployment_blocker_report(
+            XxxlRuntimeDeploymentBlocker::PlaceholderProgramId,
+        )
+        .expect("placeholder Program ID blocker report");
+
+        assert_eq!(
+            report.blocker,
+            XxxlRuntimeDeploymentBlocker::PlaceholderProgramId
+        );
+        assert_eq!(report.code, "PLACEHOLDER_PROGRAM_ID");
+        assert_eq!(report.code, report.blocker.code());
+    }
+
+    #[test]
+    fn runtime_deployment_report_has_all_explicit_blockers() {
+        for blocker in xxxl_runtime_deployment_blockers() {
+            assert!(xxxl_runtime_deployment_report_has_blocker(*blocker));
+            assert!(xxxl_runtime_deployment_report_has_blocker_code(
+                blocker.code()
+            ));
+        }
+    }
+
+    #[test]
+    fn runtime_deployment_report_rejects_unknown_blocker_code() {
+        assert!(!xxxl_runtime_deployment_report_has_blocker_code(
+            "DEPLOYMENT_READY"
+        ));
     }
 
     #[test]
