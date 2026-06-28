@@ -138,6 +138,34 @@ pub fn xxxl_all_activation_gates_are_consistent_with_safety_invariants() -> bool
     xxxl_activation_safety_consistency_summary().all_activation_gates_consistent
 }
 
+#[derive(Clone, Copy, Debug, PartialEq, Eq)]
+pub struct XxxlRuntimeSafetyLockSummary {
+    pub blocking_safety_invariants_hold: bool,
+    pub activation_gates_consistent: bool,
+    pub runtime_deployable: bool,
+    pub runtime_locked: bool,
+}
+
+pub fn xxxl_runtime_safety_lock_summary() -> XxxlRuntimeSafetyLockSummary {
+    let safety_summary = xxxl_runtime_safety_invariant_summary();
+    let blocking_safety_invariants_hold = safety_summary.blocking_invariants_hold();
+    let activation_gates_consistent =
+        xxxl_all_activation_gates_are_consistent_with_safety_invariants();
+
+    XxxlRuntimeSafetyLockSummary {
+        blocking_safety_invariants_hold,
+        activation_gates_consistent,
+        runtime_deployable: safety_summary.runtime_deployable,
+        runtime_locked: blocking_safety_invariants_hold
+            && activation_gates_consistent
+            && !safety_summary.runtime_deployable,
+    }
+}
+
+pub fn xxxl_runtime_safety_lock_is_active() -> bool {
+    xxxl_runtime_safety_lock_summary().runtime_locked
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -213,5 +241,19 @@ mod tests {
     #[test]
     fn all_activation_gates_are_consistent_with_current_safety_invariants() {
         assert!(xxxl_all_activation_gates_are_consistent_with_safety_invariants());
+    }
+    #[test]
+    fn runtime_safety_lock_summary_collects_current_lock_state() {
+        let summary = xxxl_runtime_safety_lock_summary();
+
+        assert!(summary.blocking_safety_invariants_hold);
+        assert!(summary.activation_gates_consistent);
+        assert!(!summary.runtime_deployable);
+        assert!(summary.runtime_locked);
+    }
+
+    #[test]
+    fn runtime_safety_lock_is_active_for_current_scaffold() {
+        assert!(xxxl_runtime_safety_lock_is_active());
     }
 }
