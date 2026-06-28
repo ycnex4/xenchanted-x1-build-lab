@@ -166,6 +166,29 @@ pub fn xxxl_runtime_safety_lock_is_active() -> bool {
     xxxl_runtime_safety_lock_summary().runtime_locked
 }
 
+#[derive(Clone, Copy, Debug, PartialEq, Eq)]
+pub struct XxxlSafetyLockDeploymentGateConsistencyReport {
+    pub runtime_safety_lock_active: bool,
+    pub predeploy_gate_allows_deploy: bool,
+    pub consistent: bool,
+}
+
+pub fn xxxl_safety_lock_deployment_gate_consistency_report(
+) -> XxxlSafetyLockDeploymentGateConsistencyReport {
+    let lock_summary = xxxl_runtime_safety_lock_summary();
+    let predeploy_report = xxxl_predeploy_gate_safety_consistency_report();
+
+    XxxlSafetyLockDeploymentGateConsistencyReport {
+        runtime_safety_lock_active: lock_summary.runtime_locked,
+        predeploy_gate_allows_deploy: predeploy_report.predeploy_gate_allows_deploy,
+        consistent: !(lock_summary.runtime_locked && predeploy_report.predeploy_gate_allows_deploy),
+    }
+}
+
+pub fn xxxl_safety_lock_is_consistent_with_deployment_gate() -> bool {
+    xxxl_safety_lock_deployment_gate_consistency_report().consistent
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -255,5 +278,18 @@ mod tests {
     #[test]
     fn runtime_safety_lock_is_active_for_current_scaffold() {
         assert!(xxxl_runtime_safety_lock_is_active());
+    }
+    #[test]
+    fn safety_lock_deployment_gate_consistency_report_is_locked_and_blocked() {
+        let report = xxxl_safety_lock_deployment_gate_consistency_report();
+
+        assert!(report.runtime_safety_lock_active);
+        assert!(!report.predeploy_gate_allows_deploy);
+        assert!(report.consistent);
+    }
+
+    #[test]
+    fn safety_lock_is_consistent_with_current_deployment_gate() {
+        assert!(xxxl_safety_lock_is_consistent_with_deployment_gate());
     }
 }
