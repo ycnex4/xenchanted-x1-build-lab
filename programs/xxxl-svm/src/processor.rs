@@ -537,6 +537,134 @@ mod tests {
     }
 
     #[test]
+    fn handler_integration_rejects_wrong_account_order() {
+        let mut fixture = HandlerFixture::new();
+        let program_id = fixture.program_id;
+        let args = fixture.args;
+        let rent = Rent::default();
+        let mut accounts = fixture.accounts();
+
+        accounts.swap(ACCOUNT_INDEX_GATEWAY_CONFIG, ACCOUNT_INDEX_GUARDIAN_SET);
+
+        assert_custom_error(
+            prepare_consume_gateway_mint_cpi_boundary(&program_id, &accounts, &args, &rent),
+            XxxlError::InvalidInstruction,
+        );
+    }
+
+    #[test]
+    fn handler_integration_rejects_wrong_program_owner_for_program_owned_account() {
+        let mut fixture = HandlerFixture::new();
+        fixture.owners.program = Pubkey::new_unique();
+
+        assert_prepare_boundary_rejects(&mut fixture, XxxlError::InvalidAccountOwner);
+    }
+
+    #[test]
+    fn handler_integration_rejects_wrong_spl_token_program_id() {
+        let mut fixture = HandlerFixture::new();
+        fixture.keys.token_program = Pubkey::new_unique();
+
+        assert_prepare_boundary_rejects(&mut fixture, XxxlError::InvalidAccountOwner);
+    }
+
+    #[test]
+    fn handler_integration_rejects_wrong_spl_mint_authority() {
+        let mut fixture = HandlerFixture::new();
+        fixture.data.spl_mint = packed_mint(Pubkey::new_unique(), true);
+
+        assert_prepare_boundary_rejects(&mut fixture, XxxlError::InvalidPda);
+    }
+
+    #[test]
+    fn handler_integration_rejects_wrong_mint_authority_bump() {
+        let mut fixture = HandlerFixture::new();
+        fixture.data.mint_state[13] = fixture.data.mint_state[13].wrapping_add(1);
+
+        assert_prepare_boundary_rejects(&mut fixture, XxxlError::InvalidPda);
+    }
+
+    #[test]
+    fn handler_integration_rejects_gateway_config_guardian_set_id_mismatch() {
+        let mut fixture = HandlerFixture::new();
+        fixture.data.gateway_config[120] ^= 0xff;
+
+        assert_prepare_boundary_rejects(&mut fixture, XxxlError::InvalidInstruction);
+    }
+
+    #[test]
+    fn handler_integration_rejects_gateway_config_target_mint_mismatch() {
+        let mut fixture = HandlerFixture::new();
+        fixture.data.gateway_config[88] ^= 0xff;
+
+        assert_prepare_boundary_rejects(&mut fixture, XxxlError::InvalidInstruction);
+    }
+
+    #[test]
+    fn handler_integration_rejects_gateway_config_source_chain_weight_mismatch() {
+        let mut fixture = HandlerFixture::new();
+        fixture.data.gateway_config[12] ^= 0xff;
+
+        assert_prepare_boundary_rejects(&mut fixture, XxxlError::InvalidInstruction);
+    }
+
+    #[test]
+    fn handler_integration_rejects_wrong_guardian_set_id() {
+        let mut fixture = HandlerFixture::new();
+        fixture.data.guardian_set[272] ^= 0xff;
+
+        assert_prepare_boundary_rejects(&mut fixture, XxxlError::InvalidInstruction);
+    }
+
+    #[test]
+    fn handler_integration_rejects_wrong_processed_event_canonical_event_key() {
+        let mut fixture = HandlerFixture::new();
+        fixture.data.processed_event[16] ^= 0xff;
+
+        assert_prepare_boundary_rejects(&mut fixture, XxxlError::InvalidInstruction);
+    }
+
+    #[test]
+    fn handler_integration_rejects_wrong_processed_event_route_id() {
+        let mut fixture = HandlerFixture::new();
+        fixture.data.processed_event[48] ^= 0xff;
+
+        assert_prepare_boundary_rejects(&mut fixture, XxxlError::InvalidInstruction);
+    }
+
+    #[test]
+    fn handler_integration_rejects_wrong_processed_event_recipient() {
+        let mut fixture = HandlerFixture::new();
+        fixture.data.processed_event[80] ^= 0xff;
+
+        assert_prepare_boundary_rejects(&mut fixture, XxxlError::InvalidInstruction);
+    }
+
+    #[test]
+    fn handler_integration_rejects_wrong_recipient_balance_owner() {
+        let mut fixture = HandlerFixture::new();
+        fixture.data.recipient_balance[16] ^= 0xff;
+
+        assert_prepare_boundary_rejects(&mut fixture, XxxlError::InvalidRecipientAta);
+    }
+
+    #[test]
+    fn handler_integration_rejects_wrong_recipient_balance_mint() {
+        let mut fixture = HandlerFixture::new();
+        fixture.data.recipient_balance[48] ^= 0xff;
+
+        assert_prepare_boundary_rejects(&mut fixture, XxxlError::InvalidRecipientAta);
+    }
+
+    #[test]
+    fn handler_integration_rejects_amount_larger_than_spl_token_u64_range() {
+        let mut fixture = HandlerFixture::new();
+        fixture.args.amount = u64::MAX as u128 + 1;
+
+        assert_prepare_boundary_rejects(&mut fixture, XxxlError::InvalidInstruction);
+    }
+
+    #[test]
     fn guarded_live_handler_fixture_builds_disabled_execution_plan_after_validation() {
         let mut fixture = HandlerFixture::new();
         let program_id = fixture.program_id;
@@ -1479,6 +1607,18 @@ mod tests {
         let program_id = Pubkey::from_str(FIXTURE_PROGRAM_ID).expect("valid fixture program id");
         let (_pda, bump) = find_gateway_mint_authority(&program_id);
         bump
+    }
+
+    fn assert_prepare_boundary_rejects(fixture: &mut HandlerFixture, error: XxxlError) {
+        let program_id = fixture.program_id;
+        let args = fixture.args;
+        let rent = Rent::default();
+        let accounts = fixture.accounts();
+
+        assert_custom_error(
+            prepare_consume_gateway_mint_cpi_boundary(&program_id, &accounts, &args, &rent),
+            error,
+        );
     }
 
     fn assert_custom_error<T>(result: Result<T, ProgramError>, error: XxxlError) {

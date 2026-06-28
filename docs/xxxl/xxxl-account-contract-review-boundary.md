@@ -438,6 +438,40 @@ The current processor integration tests include visible coverage for:
 
 This is useful evidence, but this document does not claim the blocker is cleared.
 
+## Test gap closure evidence
+
+The `XXXL account contract test gap closure` stage adds focused
+processor-boundary coverage for security-sensitive account substitution and
+binding cases.
+
+New direct processor-boundary tests cover:
+
+- wrong account order
+- wrong program owner for a program-owned account path
+- wrong SPL Token program id
+- wrong SPL Token mint authority
+- wrong mint authority bump
+- wrong gateway config guardian set id
+- wrong gateway config target mint
+- wrong gateway config source chain weight
+- wrong guardian set id
+- wrong processed event canonical event key
+- wrong processed event route id
+- wrong processed event recipient
+- wrong recipient balance owner
+- wrong recipient balance mint
+- amount larger than SPL Token `u64` range
+
+Existing lower-level tests remain the intended coverage for account count,
+encoded account meta count, account index mapping, writable/readonly flags,
+signer requirements, owner model classification, recipient token account
+validation, consumed-event rejection, zero amount rejection, and CPI
+planning-only rejection boundaries.
+
+This improved test evidence does not complete external review.
+
+This improved test evidence does not remove `ACCOUNT_CONTRACT_UNREVIEWED`.
+
 ## Non-goals
 
 This boundary does not implement runtime mutation.
