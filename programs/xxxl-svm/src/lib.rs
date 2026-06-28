@@ -10,6 +10,7 @@
 //! Real Program ID, real PDA fixture, real decode fixtures, and real SPL Token
 //! CPI fixtures must be completed before deployment.
 
+pub mod account_contract;
 pub mod cpi;
 pub mod entrypoint;
 pub mod error;
