@@ -37073,3 +37073,29 @@ Release decision remains blocked:
 - release allowed: `false`
 - release blocked: `true`
 - primary blocker code: `RUNTIME_SAFETY_LOCK_ACTIVE`
+
+## XXXL Canonical Event Key Runtime Reference Boundary
+
+Status: COMPLETED.
+
+The XXXL SVM runtime documentation now has a direct runtime-facing reference for the existing Stage 1 `canonicalEventKey` policy.
+
+The reference records:
+
+- `canonicalEventKey = keccak256(canonicalEventKeyPreimage)`
+- `canonicalEventKeyPreimage = sourceChainId || sourceToken || sourceBurnTxHash || sourceBurnEventIndex`
+- field order is fixed
+- the current Stage 1 vector preimage length is 128 bytes
+- the processed registry key is `canonicalEventKey`
+- one `canonicalEventKey` can produce at most one successful XXXL mint
+- future runtime must recompute and compare `canonicalEventKey` before mutation
+
+This boundary is documentation-only.
+
+The runtime remains scaffold-only, locked, unreleasable, and not deployable.
+
+Release decision remains blocked:
+
+- release allowed: `false`
+- release blocked: `true`
+- primary blocker code: `RUNTIME_SAFETY_LOCK_ACTIVE`

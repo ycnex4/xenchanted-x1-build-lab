@@ -180,6 +180,22 @@ The signer seeds used by `invoke_signed` must match the reviewed PDA derivation 
 
 No placeholder Program ID PDA fixture should be treated as production PDA data.
 
+## Canonical event key runtime reference
+
+The future runtime must use the existing Stage 1 canonical event key policy.
+
+Runtime-facing reference:
+
+- `docs/xxxl/xxxl-canonical-event-key-runtime-reference-boundary.md`
+
+The established direction is:
+
+- `canonicalEventKey = keccak256(sourceChainId || sourceToken || sourceBurnTxHash || sourceBurnEventIndex)`
+
+The current Stage 1 exact cryptographic vectors document the canonical event key preimage length as 128 bytes.
+
+The future runtime must recompute and compare `canonicalEventKey` before processed-burn registry mutation, SPL CPI execution, or minting.
+
 ## Processed-burn registry requirement
 
 The processed-burn registry key must be tied to the canonical burn event.

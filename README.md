@@ -2004,3 +2004,12 @@ No deployability predicate was changed.
 - Adds explicit code-level blockers for account contract review and Mollusk coverage before future SPL CPI / `invoke_signed` / `mint_to` work.
 - Boundary document: `docs/xxxl/xxxl-deployment-blocker-expansion-boundary.md`
 - Checkpoint: `docs/checkpoints/xxxl-deployment-blocker-expansion-boundary.md`
+
+## XXXL Canonical Event Key Runtime Reference Boundary
+
+- Status: completed.
+- Adds a runtime-facing reference for the existing Stage 1 `canonicalEventKey` policy.
+- Records that `canonicalEventKey = keccak256(sourceChainId || sourceToken || sourceBurnTxHash || sourceBurnEventIndex)`.
+- Records that the processed registry key is `canonicalEventKey`.
+- Boundary document: `docs/xxxl/xxxl-canonical-event-key-runtime-reference-boundary.md`
+- Checkpoint: `docs/checkpoints/xxxl-canonical-event-key-runtime-reference-boundary.md`
