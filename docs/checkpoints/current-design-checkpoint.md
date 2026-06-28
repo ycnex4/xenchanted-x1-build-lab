@@ -36220,3 +36220,48 @@ No `invoke_signed` path was enabled.
 No minting was enabled.
 No deployment behavior was enabled.
 No deployability predicate was changed.
+
+## XXXL Program ID and PDA fixture readiness plan
+
+Status: `COMPLETED`.
+
+A readiness plan has been added for the `PLACEHOLDER_PROGRAM_ID` deployment blocker.
+
+Added:
+
+- `docs/xxxl/xxxl-program-id-and-pda-fixture-readiness-plan.md`
+
+The plan defines:
+
+- current blocker meaning
+- non-goals
+- required future inputs
+- PDA derivation inventory
+- required evidence before blocker removal
+- required tests for future blocker removal
+- suggested future stage order
+- interaction with other blockers
+
+Current blocker status:
+
+- `PLACEHOLDER_PROGRAM_ID` remains `BLOCKED`
+
+Hard checks passed:
+
+- `cargo build-sbf`
+- `cargo fmt --check`
+- `cargo test`
+- `cargo test --test mollusk_consume_gateway_mint -- --ignored --nocapture`
+- `cargo clippy --all-targets -- -D warnings`
+- `cargo audit`
+- `cargo deny` licenses/bans/sources
+
+No real Program ID was selected.
+No PDA fixtures were regenerated.
+No deployment blocker was removed.
+No live route was activated.
+No SPL CPI behavior was enabled.
+No `invoke_signed` path was enabled.
+No minting was enabled.
+No deployment behavior was enabled.
+No deployability predicate was changed.
