@@ -37,9 +37,10 @@ Read these files in this order:
 
 1. `docs/xxxl/xxxl-runtime-safety-lock-map-boundary.md`
 2. `docs/xxxl/xxxl-runtime-safety-review-checklist-boundary.md`
-3. `programs/xxxl-svm/src/deployment_status.rs`
-4. `programs/xxxl-svm/src/program_id_status.rs`
-5. `programs/xxxl-svm/src/safety_invariants.rs`
+3. `docs/xxxl/xxxl-canonical-event-key-runtime-reference-boundary.md`
+4. `programs/xxxl-svm/src/deployment_status.rs`
+5. `programs/xxxl-svm/src/program_id_status.rs`
+6. `programs/xxxl-svm/src/safety_invariants.rs`
 
 ## Code-level safety objects to inspect
 
