@@ -12,6 +12,7 @@
 
 pub mod account_contract;
 pub mod cpi;
+pub mod deployment_status;
 pub mod entrypoint;
 pub mod error;
 pub mod execution_plan;
