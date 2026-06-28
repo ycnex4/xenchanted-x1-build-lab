@@ -2048,3 +2048,13 @@ No deployability predicate was changed.
 - This is documentation-only and does not unlock runtime behavior.
 - Boundary document: `docs/xxxl/xxxl-deployment-roadmap-boundary.md`
 - Checkpoint: `docs/checkpoints/xxxl-deployment-roadmap-boundary.md`
+
+## XXXL Account Contract Review Boundary
+
+- Status: completed.
+- Documents the existing consume_gateway_mint 9-account contract for review.
+- Records writable/readonly accounts, signer requirements, owner models, substitution protections, failure behavior, and required test matrix.
+- This is documentation-only and does not unlock runtime behavior.
+- The `ACCOUNT_CONTRACT_UNREVIEWED` blocker remains active until separate review and required test evidence are complete.
+- Boundary document: `docs/xxxl/xxxl-account-contract-review-boundary.md`
+- Checkpoint: `docs/checkpoints/xxxl-account-contract-review-boundary.md`

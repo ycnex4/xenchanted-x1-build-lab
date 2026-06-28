@@ -132,6 +132,17 @@ The account contract is documented, tested, and externally reviewed.
 
 The blocker must remain active until this evidence exists.
 
+Phase 1 boundary output:
+
+- `docs/xxxl/xxxl-account-contract-review-boundary.md`
+- `docs/checkpoints/xxxl-account-contract-review-boundary.md`
+
+This boundary documents the existing code-level account contract for review.
+
+It does not remove the `ACCOUNT_CONTRACT_UNREVIEWED` blocker.
+
+The blocker remains active until separate review and required test evidence are complete.
+
 ## Phase 2: Canonical event and replay implementation planning
 
 Primary risks addressed:
