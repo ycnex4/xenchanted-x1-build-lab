@@ -35978,3 +35978,59 @@ No SPL CPI behavior was enabled.
 No `invoke_signed` path was enabled.
 No minting was enabled.
 No deployability predicate was changed.
+
+## XXXL runtime deployment status report boundary
+
+Status: `COMPLETED`.
+
+The XXXL runtime now exposes a stable deployment status report object.
+
+Added:
+
+- `XxxlRuntimeDeploymentBlockerReport`
+- `XxxlRuntimeDeploymentReport`
+- `XXXL_RUNTIME_DEPLOYMENT_BLOCKER_REPORTS`
+- `XXXL_RUNTIME_DEPLOYMENT_REPORT`
+- `xxxl_runtime_deployment_blocker_reports`
+- `xxxl_runtime_deployment_report`
+
+The report includes:
+
+- deployment status
+- status code
+- status description
+- deployable flag
+- blocker reports
+
+Current status code:
+
+- `SCAFFOLD_ONLY_NOT_DEPLOYABLE`
+
+Current deployability:
+
+- `false`
+
+Current blocker codes:
+
+- `PLACEHOLDER_PROGRAM_ID`
+- `LIVE_ROUTE_DISABLED`
+- `SPL_CPI_EXECUTION_DISABLED`
+- `PRODUCTION_GUARDIAN_SET_UNSET`
+- `PRODUCTION_PROOF_LOG_UNSET`
+- `EXTERNAL_REVIEW_INCOMPLETE`
+
+Hard checks passed:
+
+- `cargo build-sbf`
+- `cargo fmt --check`
+- `cargo test`
+- `cargo test --test mollusk_consume_gateway_mint -- --ignored --nocapture`
+- `cargo clippy --all-targets -- -D warnings`
+- `cargo audit`
+- `cargo deny` licenses/bans/sources
+
+No live route was activated.
+No SPL CPI behavior was enabled.
+No `invoke_signed` path was enabled.
+No minting was enabled.
+No deployability predicate was changed.

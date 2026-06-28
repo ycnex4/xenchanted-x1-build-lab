@@ -13,6 +13,22 @@ pub enum XxxlRuntimeDeploymentBlocker {
     ExternalReviewIncomplete,
 }
 
+#[derive(Clone, Copy, Debug, PartialEq, Eq)]
+pub struct XxxlRuntimeDeploymentBlockerReport {
+    pub blocker: XxxlRuntimeDeploymentBlocker,
+    pub code: &'static str,
+    pub description: &'static str,
+}
+
+#[derive(Clone, Copy, Debug, PartialEq, Eq)]
+pub struct XxxlRuntimeDeploymentReport {
+    pub status: XxxlRuntimeDeploymentStatus,
+    pub status_code: &'static str,
+    pub status_description: &'static str,
+    pub deployable: bool,
+    pub blockers: &'static [XxxlRuntimeDeploymentBlockerReport],
+}
+
 pub const XXXL_RUNTIME_DEPLOYMENT_STATUS: XxxlRuntimeDeploymentStatus =
     XxxlRuntimeDeploymentStatus::ScaffoldOnlyNotDeployable;
 
@@ -24,6 +40,48 @@ pub const XXXL_RUNTIME_DEPLOYMENT_BLOCKERS: [XxxlRuntimeDeploymentBlocker; 6] = 
     XxxlRuntimeDeploymentBlocker::ProductionProofLogUnset,
     XxxlRuntimeDeploymentBlocker::ExternalReviewIncomplete,
 ];
+
+pub const XXXL_RUNTIME_DEPLOYMENT_BLOCKER_REPORTS: [XxxlRuntimeDeploymentBlockerReport; 6] = [
+    XxxlRuntimeDeploymentBlockerReport {
+        blocker: XxxlRuntimeDeploymentBlocker::PlaceholderProgramId,
+        code: "PLACEHOLDER_PROGRAM_ID",
+        description: "The runtime still exposes a placeholder Program ID boundary.",
+    },
+    XxxlRuntimeDeploymentBlockerReport {
+        blocker: XxxlRuntimeDeploymentBlocker::LiveRouteDisabled,
+        code: "LIVE_ROUTE_DISABLED",
+        description: "Live route activation from process_instruction remains disabled.",
+    },
+    XxxlRuntimeDeploymentBlockerReport {
+        blocker: XxxlRuntimeDeploymentBlocker::SplCpiExecutionDisabled,
+        code: "SPL_CPI_EXECUTION_DISABLED",
+        description: "SPL Token mint_to CPI execution remains disabled.",
+    },
+    XxxlRuntimeDeploymentBlockerReport {
+        blocker: XxxlRuntimeDeploymentBlocker::ProductionGuardianSetUnset,
+        code: "PRODUCTION_GUARDIAN_SET_UNSET",
+        description: "The production guardian set is not configured or externally documented.",
+    },
+    XxxlRuntimeDeploymentBlockerReport {
+        blocker: XxxlRuntimeDeploymentBlocker::ProductionProofLogUnset,
+        code: "PRODUCTION_PROOF_LOG_UNSET",
+        description: "The production proof-log and public audit trail are not configured.",
+    },
+    XxxlRuntimeDeploymentBlockerReport {
+        blocker: XxxlRuntimeDeploymentBlocker::ExternalReviewIncomplete,
+        code: "EXTERNAL_REVIEW_INCOMPLETE",
+        description: "External review is not complete for deployment activation.",
+    },
+];
+
+pub const XXXL_RUNTIME_DEPLOYMENT_REPORT: XxxlRuntimeDeploymentReport =
+    XxxlRuntimeDeploymentReport {
+        status: XXXL_RUNTIME_DEPLOYMENT_STATUS,
+        status_code: "SCAFFOLD_ONLY_NOT_DEPLOYABLE",
+        status_description: "The XXXL SVM runtime is a scaffold-only build and is not deployable.",
+        deployable: false,
+        blockers: &XXXL_RUNTIME_DEPLOYMENT_BLOCKER_REPORTS,
+    };
 
 impl XxxlRuntimeDeploymentStatus {
     pub fn code(self) -> &'static str {
@@ -95,6 +153,14 @@ pub fn xxxl_runtime_deployment_status_description() -> &'static str {
 
 pub fn xxxl_runtime_deployment_blockers() -> &'static [XxxlRuntimeDeploymentBlocker] {
     &XXXL_RUNTIME_DEPLOYMENT_BLOCKERS
+}
+
+pub fn xxxl_runtime_deployment_blocker_reports() -> &'static [XxxlRuntimeDeploymentBlockerReport] {
+    &XXXL_RUNTIME_DEPLOYMENT_BLOCKER_REPORTS
+}
+
+pub fn xxxl_runtime_deployment_report() -> &'static XxxlRuntimeDeploymentReport {
+    &XXXL_RUNTIME_DEPLOYMENT_REPORT
 }
 
 pub fn xxxl_runtime_is_deployable() -> bool {
@@ -176,6 +242,56 @@ mod tests {
             XxxlRuntimeDeploymentBlocker::SplCpiExecutionDisabled.description(),
             "SPL Token mint_to CPI execution remains disabled."
         );
+    }
+
+    #[test]
+    fn runtime_deployment_blocker_reports_match_blocker_methods() {
+        let blockers = xxxl_runtime_deployment_blockers();
+        let reports = xxxl_runtime_deployment_blocker_reports();
+
+        assert_eq!(reports.len(), blockers.len());
+
+        for (index, report) in reports.iter().enumerate() {
+            let blocker = blockers[index];
+
+            assert_eq!(report.blocker, blocker);
+            assert_eq!(report.code, blocker.code());
+            assert_eq!(report.description, blocker.description());
+        }
+    }
+
+    #[test]
+    fn runtime_deployment_report_is_stable_and_not_deployable() {
+        let report = xxxl_runtime_deployment_report();
+
+        assert_eq!(
+            report.status,
+            XxxlRuntimeDeploymentStatus::ScaffoldOnlyNotDeployable
+        );
+        assert_eq!(report.status_code, "SCAFFOLD_ONLY_NOT_DEPLOYABLE");
+        assert_eq!(
+            report.status_description,
+            "The XXXL SVM runtime is a scaffold-only build and is not deployable."
+        );
+        assert!(!report.deployable);
+        assert_eq!(report.blockers.len(), 6);
+        assert_eq!(report.blockers[0].code, "PLACEHOLDER_PROGRAM_ID");
+        assert_eq!(report.blockers[1].code, "LIVE_ROUTE_DISABLED");
+        assert_eq!(report.blockers[2].code, "SPL_CPI_EXECUTION_DISABLED");
+    }
+
+    #[test]
+    fn runtime_deployment_report_matches_runtime_flags() {
+        let report = xxxl_runtime_deployment_report();
+
+        assert_eq!(report.deployable, xxxl_runtime_is_deployable());
+        assert_eq!(report.status_code, xxxl_runtime_deployment_status_code());
+        assert_eq!(
+            report.status_description,
+            xxxl_runtime_deployment_status_description()
+        );
+        assert!(!live_route_activation_from_process_instruction_enabled_for_deployment_status());
+        assert!(!spl_cpi_execution_enabled_for_deployment_status());
     }
 
     #[test]

@@ -1167,3 +1167,40 @@ No SPL CPI behavior was enabled.
 No `invoke_signed` path was enabled.
 No minting was enabled.
 No deployability predicate was changed.
+
+## XXXL runtime deployment status report boundary
+
+The XXXL runtime now exposes a stable deployment status report object.
+
+The report includes:
+
+- deployment status
+- status code
+- status description
+- deployable flag
+- blocker reports
+
+Current status code:
+
+- `SCAFFOLD_ONLY_NOT_DEPLOYABLE`
+
+Current deployability:
+
+- `false`
+
+Current blocker codes:
+
+- `PLACEHOLDER_PROGRAM_ID`
+- `LIVE_ROUTE_DISABLED`
+- `SPL_CPI_EXECUTION_DISABLED`
+- `PRODUCTION_GUARDIAN_SET_UNSET`
+- `PRODUCTION_PROOF_LOG_UNSET`
+- `EXTERNAL_REVIEW_INCOMPLETE`
+
+This report can later be consumed by predeploy checks, CLI status output, README/status rendering, deployment checklists, and UI status panels.
+
+No live route was activated.
+No SPL CPI behavior was enabled.
+No `invoke_signed` path was enabled.
+No minting was enabled.
+No deployability predicate was changed.
