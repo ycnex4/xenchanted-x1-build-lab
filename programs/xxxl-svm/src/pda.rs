@@ -28,6 +28,16 @@ pub struct XxxlPdaFixtureDerivationReport {
     pub bump: u8,
 }
 
+#[derive(Clone, Copy, Debug, PartialEq, Eq)]
+pub enum XxxlPdaFixtureVerificationError {
+    WrongReportCount,
+    WrongKind { index: usize },
+    WrongName { index: usize },
+    WrongProgramId { index: usize },
+    WrongPda { index: usize },
+    WrongBump { index: usize },
+}
+
 pub const GATEWAY_MINT_AUTHORITY_SEEDS: [&[u8]; 3] = [
     GATEWAY_MINT_AUTHORITY_SEED_0,
     GATEWAY_MINT_AUTHORITY_SEED_1,
@@ -69,6 +79,41 @@ pub fn derive_gateway_mint_authority_fixture_report(
 
 pub fn derive_xxxl_pda_fixture_reports(program_id: &Pubkey) -> [XxxlPdaFixtureDerivationReport; 1] {
     [derive_gateway_mint_authority_fixture_report(program_id)]
+}
+
+pub fn verify_xxxl_pda_fixture_reports(
+    program_id: &Pubkey,
+    reports: &[XxxlPdaFixtureDerivationReport],
+) -> Result<(), XxxlPdaFixtureVerificationError> {
+    let expected_reports = derive_xxxl_pda_fixture_reports(program_id);
+
+    if reports.len() != expected_reports.len() {
+        return Err(XxxlPdaFixtureVerificationError::WrongReportCount);
+    }
+
+    for (index, (actual, expected)) in reports.iter().zip(expected_reports.iter()).enumerate() {
+        if actual.kind != expected.kind {
+            return Err(XxxlPdaFixtureVerificationError::WrongKind { index });
+        }
+
+        if actual.name != expected.name {
+            return Err(XxxlPdaFixtureVerificationError::WrongName { index });
+        }
+
+        if actual.program_id != expected.program_id {
+            return Err(XxxlPdaFixtureVerificationError::WrongProgramId { index });
+        }
+
+        if actual.pda != expected.pda {
+            return Err(XxxlPdaFixtureVerificationError::WrongPda { index });
+        }
+
+        if actual.bump != expected.bump {
+            return Err(XxxlPdaFixtureVerificationError::WrongBump { index });
+        }
+    }
+
+    Ok(())
 }
 
 pub fn xxxl_pda_derivation_inventory() -> &'static [XxxlPdaDerivationInventoryEntry] {
@@ -188,6 +233,80 @@ mod tests {
         assert_eq!(first[0].program_id, first_program_id);
         assert_eq!(second[0].program_id, second_program_id);
         assert_ne!(first[0].pda, second[0].pda);
+    }
+
+    #[test]
+    fn pda_fixture_verification_accepts_derived_reports() {
+        let program_id = Pubkey::from_str(FIXTURE_PROGRAM_ID).expect("valid fixture program id");
+        let reports = derive_xxxl_pda_fixture_reports(&program_id);
+
+        assert_eq!(
+            verify_xxxl_pda_fixture_reports(&program_id, &reports),
+            Ok(())
+        );
+    }
+
+    #[test]
+    fn pda_fixture_verification_rejects_wrong_report_count() {
+        let program_id = Pubkey::from_str(FIXTURE_PROGRAM_ID).expect("valid fixture program id");
+        let reports: [XxxlPdaFixtureDerivationReport; 0] = [];
+
+        assert_eq!(
+            verify_xxxl_pda_fixture_reports(&program_id, &reports),
+            Err(XxxlPdaFixtureVerificationError::WrongReportCount)
+        );
+    }
+
+    #[test]
+    fn pda_fixture_verification_rejects_wrong_name() {
+        let program_id = Pubkey::from_str(FIXTURE_PROGRAM_ID).expect("valid fixture program id");
+        let mut reports = derive_xxxl_pda_fixture_reports(&program_id);
+        reports[0].name = "wrong_gateway_mint_authority";
+
+        assert_eq!(
+            verify_xxxl_pda_fixture_reports(&program_id, &reports),
+            Err(XxxlPdaFixtureVerificationError::WrongName { index: 0 })
+        );
+    }
+
+    #[test]
+    fn pda_fixture_verification_rejects_wrong_program_id() {
+        let program_id = Pubkey::from_str(FIXTURE_PROGRAM_ID).expect("valid fixture program id");
+        let other_program_id = Pubkey::from_str("BPFLoaderUpgradeab1e11111111111111111111111")
+            .expect("valid fixture program id");
+        let mut reports = derive_xxxl_pda_fixture_reports(&program_id);
+        reports[0].program_id = other_program_id;
+
+        assert_eq!(
+            verify_xxxl_pda_fixture_reports(&program_id, &reports),
+            Err(XxxlPdaFixtureVerificationError::WrongProgramId { index: 0 })
+        );
+    }
+
+    #[test]
+    fn pda_fixture_verification_rejects_wrong_pda() {
+        let program_id = Pubkey::from_str(FIXTURE_PROGRAM_ID).expect("valid fixture program id");
+        let other_pda = Pubkey::from_str("BPFLoaderUpgradeab1e11111111111111111111111")
+            .expect("valid fixture pda");
+        let mut reports = derive_xxxl_pda_fixture_reports(&program_id);
+        reports[0].pda = other_pda;
+
+        assert_eq!(
+            verify_xxxl_pda_fixture_reports(&program_id, &reports),
+            Err(XxxlPdaFixtureVerificationError::WrongPda { index: 0 })
+        );
+    }
+
+    #[test]
+    fn pda_fixture_verification_rejects_wrong_bump() {
+        let program_id = Pubkey::from_str(FIXTURE_PROGRAM_ID).expect("valid fixture program id");
+        let mut reports = derive_xxxl_pda_fixture_reports(&program_id);
+        reports[0].bump = reports[0].bump.wrapping_add(1);
+
+        assert_eq!(
+            verify_xxxl_pda_fixture_reports(&program_id, &reports),
+            Err(XxxlPdaFixtureVerificationError::WrongBump { index: 0 })
+        );
     }
 
     #[test]
