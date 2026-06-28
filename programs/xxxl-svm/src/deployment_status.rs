@@ -30,6 +30,12 @@ pub struct XxxlRuntimeDeploymentReport {
     pub blockers: &'static [XxxlRuntimeDeploymentBlockerReport],
 }
 
+#[derive(Clone, Copy, Debug, PartialEq, Eq)]
+pub enum XxxlRuntimeDeploymentGateResult {
+    Blocked(&'static XxxlRuntimeDeploymentReport),
+    Ready(&'static XxxlRuntimeDeploymentReport),
+}
+
 pub const XXXL_RUNTIME_DEPLOYMENT_STATUS: XxxlRuntimeDeploymentStatus =
     XxxlRuntimeDeploymentStatus::ScaffoldOnlyNotDeployable;
 
@@ -193,6 +199,23 @@ pub fn xxxl_runtime_deployment_report() -> &'static XxxlRuntimeDeploymentReport 
     &XXXL_RUNTIME_DEPLOYMENT_REPORT
 }
 
+pub fn xxxl_runtime_deployment_gate_result() -> XxxlRuntimeDeploymentGateResult {
+    let report = xxxl_runtime_deployment_report();
+
+    if report.deployable && report.blockers.is_empty() {
+        XxxlRuntimeDeploymentGateResult::Ready(report)
+    } else {
+        XxxlRuntimeDeploymentGateResult::Blocked(report)
+    }
+}
+
+pub fn xxxl_runtime_predeploy_gate_allows_deploy() -> bool {
+    matches!(
+        xxxl_runtime_deployment_gate_result(),
+        XxxlRuntimeDeploymentGateResult::Ready(_)
+    )
+}
+
 pub fn xxxl_runtime_is_deployable() -> bool {
     false
 }
@@ -344,6 +367,40 @@ mod tests {
         );
         assert!(!live_route_activation_from_process_instruction_enabled_for_deployment_status());
         assert!(!spl_cpi_execution_enabled_for_deployment_status());
+    }
+
+    #[test]
+    fn runtime_predeploy_gate_is_blocked_for_current_report() {
+        match xxxl_runtime_deployment_gate_result() {
+            XxxlRuntimeDeploymentGateResult::Blocked(report) => {
+                assert_eq!(report.status_code, "SCAFFOLD_ONLY_NOT_DEPLOYABLE");
+                assert!(!report.deployable);
+                assert_eq!(report.blockers.len(), 6);
+            }
+            XxxlRuntimeDeploymentGateResult::Ready(_) => {
+                panic!("current XXXL runtime must not pass the predeploy gate");
+            }
+        }
+
+        assert!(!xxxl_runtime_predeploy_gate_allows_deploy());
+    }
+
+    #[test]
+    fn runtime_predeploy_gate_uses_the_deployment_report() {
+        let report = xxxl_runtime_deployment_report();
+
+        match xxxl_runtime_deployment_gate_result() {
+            XxxlRuntimeDeploymentGateResult::Blocked(blocked_report) => {
+                assert_eq!(blocked_report.status, report.status);
+                assert_eq!(blocked_report.status_code, report.status_code);
+                assert_eq!(blocked_report.status_description, report.status_description);
+                assert_eq!(blocked_report.deployable, report.deployable);
+                assert_eq!(blocked_report.blockers.len(), report.blockers.len());
+            }
+            XxxlRuntimeDeploymentGateResult::Ready(_) => {
+                panic!("current XXXL runtime unexpectedly passed the predeploy gate");
+            }
+        }
     }
 
     #[test]
