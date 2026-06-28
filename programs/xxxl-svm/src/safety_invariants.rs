@@ -271,6 +271,66 @@ pub fn xxxl_deployment_blocker_evidence_is_consistent() -> bool {
     xxxl_deployment_blocker_evidence_consistency_report().evidence_consistent
 }
 
+#[derive(Clone, Copy, Debug, PartialEq, Eq)]
+pub struct XxxlRuntimeSafetyUnlockCriteriaSummary {
+    pub runtime_safety_lock_active: bool,
+    pub real_program_id_selected: bool,
+    pub production_pda_fixtures_verified: bool,
+    pub deployment_blockers_cleared: bool,
+    pub live_route_review_complete: bool,
+    pub spl_cpi_review_complete: bool,
+    pub external_review_complete: bool,
+    pub unlock_ready: bool,
+    pub unlock_blocked: bool,
+}
+
+pub fn xxxl_runtime_safety_unlock_criteria_summary() -> XxxlRuntimeSafetyUnlockCriteriaSummary {
+    let runtime_safety_lock_active = xxxl_runtime_safety_lock_is_active();
+
+    let real_program_id_selected = false;
+    let production_pda_fixtures_verified = false;
+    let live_route_review_complete = false;
+    let spl_cpi_review_complete = false;
+    let external_review_complete = false;
+
+    let deployment_blockers_cleared = !xxxl_runtime_deployment_report_has_blocker(
+        XxxlRuntimeDeploymentBlocker::PlaceholderProgramId,
+    ) && !xxxl_runtime_deployment_report_has_blocker(
+        XxxlRuntimeDeploymentBlocker::LiveRouteDisabled,
+    ) && !xxxl_runtime_deployment_report_has_blocker(
+        XxxlRuntimeDeploymentBlocker::SplCpiExecutionDisabled,
+    ) && !xxxl_runtime_deployment_report_has_blocker(
+        XxxlRuntimeDeploymentBlocker::ProductionGuardianSetUnset,
+    ) && !xxxl_runtime_deployment_report_has_blocker(
+        XxxlRuntimeDeploymentBlocker::ProductionProofLogUnset,
+    ) && !xxxl_runtime_deployment_report_has_blocker(
+        XxxlRuntimeDeploymentBlocker::ExternalReviewIncomplete,
+    );
+
+    let unlock_ready = real_program_id_selected
+        && production_pda_fixtures_verified
+        && deployment_blockers_cleared
+        && live_route_review_complete
+        && spl_cpi_review_complete
+        && external_review_complete;
+
+    XxxlRuntimeSafetyUnlockCriteriaSummary {
+        runtime_safety_lock_active,
+        real_program_id_selected,
+        production_pda_fixtures_verified,
+        deployment_blockers_cleared,
+        live_route_review_complete,
+        spl_cpi_review_complete,
+        external_review_complete,
+        unlock_ready,
+        unlock_blocked: runtime_safety_lock_active && !unlock_ready,
+    }
+}
+
+pub fn xxxl_runtime_safety_unlock_is_ready() -> bool {
+    xxxl_runtime_safety_unlock_criteria_summary().unlock_ready
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -405,5 +465,24 @@ mod tests {
     #[test]
     fn deployment_blocker_evidence_is_consistent_for_current_scaffold() {
         assert!(xxxl_deployment_blocker_evidence_is_consistent());
+    }
+    #[test]
+    fn runtime_safety_unlock_criteria_summary_blocks_current_scaffold() {
+        let summary = xxxl_runtime_safety_unlock_criteria_summary();
+
+        assert!(summary.runtime_safety_lock_active);
+        assert!(!summary.real_program_id_selected);
+        assert!(!summary.production_pda_fixtures_verified);
+        assert!(!summary.deployment_blockers_cleared);
+        assert!(!summary.live_route_review_complete);
+        assert!(!summary.spl_cpi_review_complete);
+        assert!(!summary.external_review_complete);
+        assert!(!summary.unlock_ready);
+        assert!(summary.unlock_blocked);
+    }
+
+    #[test]
+    fn runtime_safety_unlock_is_not_ready_for_current_scaffold() {
+        assert!(!xxxl_runtime_safety_unlock_is_ready());
     }
 }
