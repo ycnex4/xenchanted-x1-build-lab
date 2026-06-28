@@ -2039,3 +2039,12 @@ No deployability predicate was changed.
 - This is not an unlock and not deployment approval.
 - Boundary document: `docs/xxxl/xxxl-final-external-review-closure-boundary.md`
 - Checkpoint: `docs/checkpoints/xxxl-final-external-review-closure-boundary.md`
+
+## XXXL Deployment Roadmap Boundary
+
+- Status: completed.
+- Defines the ordered path from the locked scaffold boundary toward future deployment and gateway activation.
+- Converts the current eight deployment blockers into roadmap phases.
+- This is documentation-only and does not unlock runtime behavior.
+- Boundary document: `docs/xxxl/xxxl-deployment-roadmap-boundary.md`
+- Checkpoint: `docs/checkpoints/xxxl-deployment-roadmap-boundary.md`

@@ -37179,3 +37179,35 @@ Release decision remains blocked:
 - release allowed: `false`
 - release blocked: `true`
 - primary blocker code: `RUNTIME_SAFETY_LOCK_ACTIVE`
+
+## XXXL Deployment Roadmap Boundary
+
+Status: COMPLETED.
+
+The deployment roadmap boundary defines the ordered path from the locked scaffold boundary toward future deployment and gateway activation.
+
+The roadmap phases are:
+
+1. Account contract review
+2. Canonical event and replay implementation planning
+3. Program ID and PDA finalization planning
+4. SPL CPI threat model and Mollusk coverage
+5. Guardian set and proof log policy
+6. Testnet deployment with route still locked
+7. Controlled test route
+8. Production readiness review
+9. Production route activation
+
+This roadmap converts the current eight deployment blockers into explicit future work phases.
+
+This boundary is documentation-only.
+
+It does not unlock runtime behavior, approve deployment, activate live route, enable SPL CPI, enable `invoke_signed`, enable SPL Token `mint_to`, select a real Program ID, regenerate production PDA fixtures, remove deployment blockers, or change deployability predicates.
+
+The runtime remains scaffold-only, locked, unreleasable, and not deployable.
+
+Release decision remains blocked:
+
+- release allowed: `false`
+- release blocked: `true`
+- primary blocker code: `RUNTIME_SAFETY_LOCK_ACTIVE`
