@@ -37510,3 +37510,56 @@ Runtime safety state remains:
 
 Live route execution, SPL CPI execution, `invoke_signed`, and SPL Token
 `mint_to` remain disabled.
+
+## XXXL Remaining Deployment Blockers Inventory
+
+Status: completed as a docs-only blocker inventory boundary.
+
+This stage records the remaining active deployment blockers after:
+
+- account-contract review closure
+- account-contract blocker transition
+- Mollusk coverage gap analysis
+
+Remaining active blockers:
+
+- `PLACEHOLDER_PROGRAM_ID`
+- `LIVE_ROUTE_DISABLED`
+- `SPL_CPI_EXECUTION_DISABLED`
+- `MOLLUSK_COVERAGE_INCOMPLETE`
+- `PRODUCTION_GUARDIAN_SET_UNSET`
+- `PRODUCTION_PROOF_LOG_UNSET`
+- `EXTERNAL_REVIEW_INCOMPLETE`
+
+No blocker was removed.
+
+No blocker was transitioned.
+
+No blocker list was changed.
+
+No Rust source files were changed.
+
+No Cargo files were changed.
+
+The runtime remains:
+
+- scaffold-only
+- locked
+- unreleasable
+- not deployable
+
+Live route execution, SPL CPI execution, `invoke_signed`, and SPL Token
+`mint_to` remain disabled.
+
+Recommended future order:
+
+1. Mollusk/SVM coverage implementation boundary
+2. Mollusk coverage review and blocker-transition boundary
+3. Program ID production-readiness boundary
+4. Guardian set production policy boundary
+5. Proof log production policy boundary
+6. SPL CPI threat model and execution boundary
+7. External review package
+8. Live route activation boundary
+
+This inventory is not deployment approval and not runtime unlock approval.
