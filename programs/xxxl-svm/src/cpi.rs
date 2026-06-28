@@ -94,6 +94,50 @@ pub fn plan_mint_to_cpi_boundary(
     })
 }
 
+pub fn spl_mint_to_cpi_execution_enabled() -> bool {
+    false
+}
+
+pub fn guarded_mint_to_cpi_execution_gate_boundary(
+    program_id: &Pubkey,
+    execution_plan: &crate::execution_plan::AtomicConsumeGatewayMintExecutionPlan,
+    planning_boundary: &MintToCpiPlanningBoundary,
+    boundary: &MintToCpiBoundary<'_, '_>,
+) -> Result<(), ProgramError> {
+    if execution_plan.live_route_activation_enabled
+        || execution_plan.mint_to_invocation_from_process_instruction_enabled
+        || planning_boundary.live_route_activation_enabled
+        || planning_boundary.invoke_signed_from_process_instruction_enabled
+    {
+        return Err(XxxlError::CpiBoundaryNotReady.into());
+    }
+
+    let expected_planning_boundary =
+        plan_mint_to_cpi_boundary(program_id, execution_plan, boundary)?;
+
+    if expected_planning_boundary != *planning_boundary {
+        return Err(XxxlError::InvalidInstruction.into());
+    }
+
+    if !spl_mint_to_cpi_execution_enabled() {
+        return Err(XxxlError::CpiBoundaryNotReady.into());
+    }
+
+    mint_to_cpi_boundary(
+        program_id,
+        MintToCpiBoundary {
+            accounts: MintToCpiAccounts {
+                token_program: boundary.accounts.token_program,
+                mint: boundary.accounts.mint,
+                recipient_token_account: boundary.accounts.recipient_token_account,
+                mint_authority_pda: boundary.accounts.mint_authority_pda,
+            },
+            mint_authority_bump: boundary.mint_authority_bump,
+            amount: boundary.amount,
+        },
+    )
+}
+
 pub fn build_mint_to_instruction(
     token_program_id: &Pubkey,
     mint: &Pubkey,
@@ -285,6 +329,159 @@ mod tests {
 
     fn assert_custom_error<T>(result: Result<T, ProgramError>, error: XxxlError) {
         assert!(matches!(result, Err(ProgramError::Custom(code)) if code == error as u32));
+    }
+
+    #[test]
+    fn guarded_mint_to_cpi_execution_gate_boundary_rejects_when_gate_disabled() {
+        let program_id = Pubkey::from_str(FIXTURE_PROGRAM_ID).expect("valid fixture program id");
+        let (pda, bump) = find_gateway_mint_authority(&program_id);
+        let mint_key = Pubkey::new_unique();
+        let recipient_token_account_key = Pubkey::new_unique();
+        let execution_plan = execution_plan_for_mint(mint_key);
+
+        assert!(!spl_mint_to_cpi_execution_enabled());
+
+        with_mint_to_cpi_boundary_fixture(
+            CpiFixtureParams {
+                program_id,
+                token_program_key: spl_token::id(),
+                mint_key,
+                recipient_token_account_key,
+                mint_authority_pda_key: pda,
+                mint_authority_bump: bump,
+                boundary_amount: 1_000,
+            },
+            |boundary| {
+                let planning_boundary =
+                    plan_mint_to_cpi_boundary(&program_id, &execution_plan, boundary)
+                        .expect("mint_to CPI planning boundary");
+
+                assert_custom_error(
+                    guarded_mint_to_cpi_execution_gate_boundary(
+                        &program_id,
+                        &execution_plan,
+                        &planning_boundary,
+                        boundary,
+                    ),
+                    XxxlError::CpiBoundaryNotReady,
+                );
+            },
+        );
+    }
+
+    #[test]
+    fn guarded_mint_to_cpi_execution_gate_boundary_rejects_planning_boundary_mismatch() {
+        let program_id = Pubkey::from_str(FIXTURE_PROGRAM_ID).expect("valid fixture program id");
+        let (pda, bump) = find_gateway_mint_authority(&program_id);
+        let mint_key = Pubkey::new_unique();
+        let recipient_token_account_key = Pubkey::new_unique();
+        let execution_plan = execution_plan_for_mint(mint_key);
+
+        with_mint_to_cpi_boundary_fixture(
+            CpiFixtureParams {
+                program_id,
+                token_program_key: spl_token::id(),
+                mint_key,
+                recipient_token_account_key,
+                mint_authority_pda_key: pda,
+                mint_authority_bump: bump,
+                boundary_amount: 1_000,
+            },
+            |boundary| {
+                let mut planning_boundary =
+                    plan_mint_to_cpi_boundary(&program_id, &execution_plan, boundary)
+                        .expect("mint_to CPI planning boundary");
+                planning_boundary.amount = 999;
+
+                assert_custom_error(
+                    guarded_mint_to_cpi_execution_gate_boundary(
+                        &program_id,
+                        &execution_plan,
+                        &planning_boundary,
+                        boundary,
+                    ),
+                    XxxlError::InvalidInstruction,
+                );
+            },
+        );
+    }
+
+    #[test]
+    fn guarded_mint_to_cpi_execution_gate_boundary_rejects_live_route_flag_before_cpi() {
+        let program_id = Pubkey::from_str(FIXTURE_PROGRAM_ID).expect("valid fixture program id");
+        let (pda, bump) = find_gateway_mint_authority(&program_id);
+        let mint_key = Pubkey::new_unique();
+        let recipient_token_account_key = Pubkey::new_unique();
+        let execution_plan = execution_plan_for_mint(mint_key);
+
+        with_mint_to_cpi_boundary_fixture(
+            CpiFixtureParams {
+                program_id,
+                token_program_key: spl_token::id(),
+                mint_key,
+                recipient_token_account_key,
+                mint_authority_pda_key: pda,
+                mint_authority_bump: bump,
+                boundary_amount: 1_000,
+            },
+            |boundary| {
+                let mut planning_boundary =
+                    plan_mint_to_cpi_boundary(&program_id, &execution_plan, boundary)
+                        .expect("mint_to CPI planning boundary");
+                planning_boundary.live_route_activation_enabled = true;
+
+                assert_custom_error(
+                    guarded_mint_to_cpi_execution_gate_boundary(
+                        &program_id,
+                        &execution_plan,
+                        &planning_boundary,
+                        boundary,
+                    ),
+                    XxxlError::CpiBoundaryNotReady,
+                );
+            },
+        );
+    }
+
+    #[test]
+    fn guarded_mint_to_cpi_execution_gate_boundary_rejects_wrong_pda_before_gate() {
+        let program_id = Pubkey::from_str(FIXTURE_PROGRAM_ID).expect("valid fixture program id");
+        let (_pda, bump) = find_gateway_mint_authority(&program_id);
+        let mint_key = Pubkey::new_unique();
+        let execution_plan = execution_plan_for_mint(mint_key);
+        let fake_planning_boundary = MintToCpiPlanningBoundary {
+            token_program: spl_token::id(),
+            mint: mint_key,
+            recipient_token_account: Pubkey::new_unique(),
+            mint_authority_pda: Pubkey::new_unique(),
+            mint_authority_bump: bump,
+            amount: 1_000,
+            live_route_activation_enabled: false,
+            invoke_signed_from_process_instruction_enabled: false,
+        };
+
+        with_mint_to_cpi_boundary_fixture(
+            CpiFixtureParams {
+                program_id,
+                token_program_key: spl_token::id(),
+                mint_key,
+                recipient_token_account_key: fake_planning_boundary.recipient_token_account,
+                mint_authority_pda_key: Pubkey::new_unique(),
+                mint_authority_bump: bump,
+                boundary_amount: 1_000,
+            },
+            |boundary| {
+                assert_custom_error(
+                    guarded_mint_to_cpi_execution_gate_boundary(
+                        &program_id,
+                        &execution_plan,
+                        &fake_planning_boundary,
+                        boundary,
+                    ),
+                    XxxlError::InvalidPda,
+                );
+            },
+        );
     }
 
     #[test]
