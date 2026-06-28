@@ -36072,3 +36072,47 @@ No SPL CPI behavior was enabled.
 No `invoke_signed` path was enabled.
 No minting was enabled.
 No deployability predicate was changed.
+
+## XXXL runtime predeploy gate result boundary
+
+Status: `COMPLETED`.
+
+The XXXL runtime now exposes a stable predeploy gate result.
+
+Added:
+
+- `XxxlRuntimeDeploymentGateResult`
+- `xxxl_runtime_deployment_gate_result`
+- `xxxl_runtime_predeploy_gate_allows_deploy`
+
+Current gate result:
+
+- `Blocked(report)`
+
+Current deploy allow value:
+
+- `false`
+
+The gate allows deployment only when:
+
+- `report.deployable == true`
+- `report.blockers.is_empty() == true`
+
+The current runtime remains blocked because the deployment report is not deployable and still has blockers.
+
+Hard checks passed:
+
+- `cargo build-sbf`
+- `cargo fmt --check`
+- `cargo test`
+- `cargo test --test mollusk_consume_gateway_mint -- --ignored --nocapture`
+- `cargo clippy --all-targets -- -D warnings`
+- `cargo audit`
+- `cargo deny` licenses/bans/sources
+
+No live route was activated.
+No SPL CPI behavior was enabled.
+No `invoke_signed` path was enabled.
+No minting was enabled.
+No deployment behavior was enabled.
+No deployability predicate was changed.
