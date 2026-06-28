@@ -35710,3 +35710,48 @@ No `invoke_signed` is called through the guarded gate.
 No SPL Token `mint_to` is invoked through the guarded gate.
 No XXXL minting is enabled.
 No CPI execution is connected to `process_instruction`.
+
+## XXXL runtime disabled SPL CPI gate integration boundary
+
+Status: `COMPLETED`.
+
+A runtime boundary was added to compose runtime validation, execution planning, CPI planning, and the guarded SPL CPI execution gate.
+
+The stage added:
+
+- `build_runtime_consume_gateway_mint_disabled_spl_cpi_gate_boundary`
+
+The boundary performs:
+
+- guarded account validation
+- CPI boundary preparation
+- runtime planning composition
+- guarded SPL CPI execution gate call
+
+Because the SPL CPI execution gate remains disabled, the boundary returns `CpiBoundaryNotReady` before real SPL CPI.
+
+Safety properties proven by tests:
+
+- processed-event state remains unchanged when rejected at the disabled gate
+- recipient-balance state remains unchanged when rejected at the disabled gate
+- SPL mint supply remains unchanged
+- recipient SPL token account remains unchanged
+- consumed event is rejected before gate without mutation
+- wrong recipient token account is rejected without mutation
+- zero amount is rejected without mutation
+
+Hard checks passed:
+
+- `cargo build-sbf`
+- `cargo fmt --check`
+- `cargo test`
+- `cargo test --test mollusk_consume_gateway_mint -- --ignored --nocapture`
+- `cargo clippy --all-targets -- -D warnings`
+- `cargo audit`
+- `cargo deny` licenses/bans/sources
+
+No live route was activated.
+No `invoke_signed` is called.
+No SPL Token `mint_to` is invoked.
+No XXXL minting is enabled.
+No CPI execution is connected to `process_instruction`.
