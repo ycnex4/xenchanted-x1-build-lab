@@ -19,6 +19,15 @@ pub struct XxxlPdaDerivationInventoryEntry {
     pub description: &'static str,
 }
 
+#[derive(Clone, Copy, Debug, PartialEq, Eq)]
+pub struct XxxlPdaFixtureDerivationReport {
+    pub kind: XxxlPdaDerivationKind,
+    pub name: &'static str,
+    pub program_id: Pubkey,
+    pub pda: Pubkey,
+    pub bump: u8,
+}
+
 pub const GATEWAY_MINT_AUTHORITY_SEEDS: [&[u8]; 3] = [
     GATEWAY_MINT_AUTHORITY_SEED_0,
     GATEWAY_MINT_AUTHORITY_SEED_1,
@@ -42,6 +51,24 @@ pub fn gateway_mint_authority_seeds() -> [&'static [u8]; 3] {
 
 pub fn find_gateway_mint_authority(program_id: &Pubkey) -> (Pubkey, u8) {
     Pubkey::find_program_address(&gateway_mint_authority_seeds(), program_id)
+}
+
+pub fn derive_gateway_mint_authority_fixture_report(
+    program_id: &Pubkey,
+) -> XxxlPdaFixtureDerivationReport {
+    let (pda, bump) = find_gateway_mint_authority(program_id);
+
+    XxxlPdaFixtureDerivationReport {
+        kind: XxxlPdaDerivationKind::GatewayMintAuthority,
+        name: "gateway_mint_authority",
+        program_id: *program_id,
+        pda,
+        bump,
+    }
+}
+
+pub fn derive_xxxl_pda_fixture_reports(program_id: &Pubkey) -> [XxxlPdaFixtureDerivationReport; 1] {
+    [derive_gateway_mint_authority_fixture_report(program_id)]
 }
 
 pub fn xxxl_pda_derivation_inventory() -> &'static [XxxlPdaDerivationInventoryEntry] {
@@ -121,6 +148,46 @@ mod tests {
             contract_entry.owner_model,
             AccountOwnerModel::ProgramDerivedAddress
         );
+    }
+
+    #[test]
+    fn gateway_mint_authority_fixture_report_matches_derivation() {
+        let program_id = Pubkey::from_str(FIXTURE_PROGRAM_ID).expect("valid fixture program id");
+        let report = derive_gateway_mint_authority_fixture_report(&program_id);
+        let (expected_pda, expected_bump) = find_gateway_mint_authority(&program_id);
+
+        assert_eq!(report.kind, XxxlPdaDerivationKind::GatewayMintAuthority);
+        assert_eq!(report.name, "gateway_mint_authority");
+        assert_eq!(report.program_id, program_id);
+        assert_eq!(report.pda, expected_pda);
+        assert_eq!(report.bump, expected_bump);
+    }
+
+    #[test]
+    fn pda_fixture_reports_match_inventory() {
+        let program_id = Pubkey::from_str(FIXTURE_PROGRAM_ID).expect("valid fixture program id");
+        let reports = derive_xxxl_pda_fixture_reports(&program_id);
+        let inventory = xxxl_pda_derivation_inventory();
+
+        assert_eq!(reports.len(), inventory.len());
+        assert_eq!(reports[0].kind, inventory[0].kind);
+        assert_eq!(reports[0].name, inventory[0].name);
+        assert_eq!(reports[0].program_id, program_id);
+    }
+
+    #[test]
+    fn pda_fixture_reports_change_with_program_id() {
+        let first_program_id =
+            Pubkey::from_str("11111111111111111111111111111111").expect("valid fixture program id");
+        let second_program_id = Pubkey::from_str("BPFLoaderUpgradeab1e11111111111111111111111")
+            .expect("valid fixture program id");
+
+        let first = derive_xxxl_pda_fixture_reports(&first_program_id);
+        let second = derive_xxxl_pda_fixture_reports(&second_program_id);
+
+        assert_eq!(first[0].program_id, first_program_id);
+        assert_eq!(second[0].program_id, second_program_id);
+        assert_ne!(first[0].pda, second[0].pda);
     }
 
     #[test]

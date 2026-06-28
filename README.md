@@ -1402,3 +1402,33 @@ No `invoke_signed` path was enabled.
 No minting was enabled.
 No deployment behavior was enabled.
 No deployability predicate was changed.
+
+## XXXL PDA fixture derivation report boundary
+
+A deterministic PDA fixture derivation report boundary has been added.
+
+Added:
+
+- `XxxlPdaFixtureDerivationReport`
+- `derive_gateway_mint_authority_fixture_report`
+- `derive_xxxl_pda_fixture_reports`
+
+Current report coverage:
+
+- `gateway_mint_authority`
+
+The report derives:
+
+- input Program ID
+- PDA
+- bump
+
+No real Program ID was selected.
+No production PDA fixtures were regenerated.
+No deployment blocker was removed.
+No live route was activated.
+No SPL CPI behavior was enabled.
+No `invoke_signed` path was enabled.
+No minting was enabled.
+No deployment behavior was enabled.
+No deployability predicate was changed.
