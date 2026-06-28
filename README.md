@@ -1299,3 +1299,41 @@ No `invoke_signed` path was enabled.
 No minting was enabled.
 No deployment behavior was enabled.
 No deployability predicate was changed.
+
+## XXXL runtime predeploy evidence matrix
+
+A predeploy evidence matrix has been added for future XXXL runtime blocker-removal work.
+
+The matrix maps each current blocker to:
+
+- required evidence
+- expected evidence artifact
+- current status
+
+Covered blockers:
+
+- `PLACEHOLDER_PROGRAM_ID`
+- `LIVE_ROUTE_DISABLED`
+- `SPL_CPI_EXECUTION_DISABLED`
+- `PRODUCTION_GUARDIAN_SET_UNSET`
+- `PRODUCTION_PROOF_LOG_UNSET`
+- `EXTERNAL_REVIEW_INCOMPLETE`
+
+All blockers remain:
+
+- `BLOCKED`
+
+Current gate result remains:
+
+- `Blocked(report)`
+
+Current deploy allow value remains:
+
+- `false`
+
+No live route was activated.
+No SPL CPI behavior was enabled.
+No `invoke_signed` path was enabled.
+No minting was enabled.
+No deployment behavior was enabled.
+No deployability predicate was changed.
