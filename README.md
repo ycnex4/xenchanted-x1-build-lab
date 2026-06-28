@@ -1115,3 +1115,30 @@ No live route was activated.
 No SPL CPI behavior was enabled.
 No `invoke_signed` path was enabled.
 No minting was enabled.
+
+## XXXL runtime nondeployable status boundary
+
+The XXXL SVM runtime now has an explicit deployment status module.
+
+Current status:
+
+- `ScaffoldOnlyNotDeployable`
+
+Current deployability:
+
+- `false`
+
+Explicit blockers:
+
+- placeholder Program ID
+- live route disabled
+- SPL CPI execution disabled
+- production guardian set unset
+- production proof log unset
+- external review incomplete
+
+No live route was activated.
+No SPL CPI behavior was enabled.
+No `invoke_signed` path was enabled from `process_instruction`.
+No minting was enabled.
+No deployment behavior was enabled.
