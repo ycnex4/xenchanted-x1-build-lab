@@ -1010,3 +1010,18 @@ No XXXL minting is enabled.
 No SPL mint supply mutation is enabled.
 No recipient SPL token account mutation is enabled.
 No live execution is connected to `process_instruction`.
+
+## XXXL guarded SPL CPI execution gate boundary
+
+The XXXL runtime model now has an explicit disabled gate before real SPL Token `mint_to` CPI execution.
+
+The existing real CPI function remains present behind the gate, but the new guarded boundary revalidates the execution plan and CPI planning boundary, then returns `CpiBoundaryNotReady` while `spl_mint_to_cpi_execution_enabled()` is false.
+
+This stage does not call `invoke_signed`.
+
+No live route was activated.
+No SPL Token `mint_to` is invoked.
+No XXXL minting is enabled.
+No SPL mint supply mutation is enabled.
+No recipient SPL token account mutation is enabled.
+No CPI execution is connected to `process_instruction`.
