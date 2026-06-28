@@ -45,6 +45,8 @@ Current blockers include:
 - placeholder Program ID
 - live route disabled
 - SPL CPI execution disabled
+- account contract unreviewed
+- Mollusk coverage incomplete
 - production guardian set unset
 - production proof log unset
 - external review incomplete
@@ -126,6 +128,8 @@ The current consistency state confirms:
 - placeholder Program ID blocker present: `true`
 - live route disabled blocker present: `true`
 - SPL CPI execution disabled blocker present: `true`
+- account contract unreviewed blocker present: `true`
+- Mollusk coverage incomplete blocker present: `true`
 - evidence consistent: `true`
 
 ## Unlock criteria layer

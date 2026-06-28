@@ -45,6 +45,8 @@ The current release decision must remain:
 - [ ] Confirm the placeholder Program ID blocker is present.
 - [ ] Confirm the live route disabled blocker is present.
 - [ ] Confirm the SPL CPI execution disabled blocker is present.
+- [ ] Confirm the account contract unreviewed blocker is present.
+- [ ] Confirm the Mollusk coverage incomplete blocker is present.
 - [ ] Confirm the production guardian set unset blocker is present.
 - [ ] Confirm the production proof log unset blocker is present.
 - [ ] Confirm the external review incomplete blocker is present.
@@ -103,6 +105,8 @@ The current release decision must remain:
 - [ ] Confirm placeholder Program ID blocker evidence is present.
 - [ ] Confirm live route disabled blocker evidence is present.
 - [ ] Confirm SPL CPI execution disabled blocker evidence is present.
+- [ ] Confirm account contract unreviewed blocker evidence is present.
+- [ ] Confirm Mollusk coverage incomplete blocker evidence is present.
 - [ ] Confirm deployment blocker evidence is consistent with safety lock evidence.
 
 ## Checklist: unlock criteria

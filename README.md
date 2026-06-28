@@ -1997,3 +1997,10 @@ No XXXL minting was enabled.
 No runtime state mutation was enabled.
 No deployment behavior was enabled.
 No deployability predicate was changed.
+
+## XXXL Deployment Blocker Expansion Boundary
+
+- Status: completed.
+- Adds explicit code-level blockers for account contract review and Mollusk coverage before future SPL CPI / `invoke_signed` / `mint_to` work.
+- Boundary document: `docs/xxxl/xxxl-deployment-blocker-expansion-boundary.md`
+- Checkpoint: `docs/checkpoints/xxxl-deployment-blocker-expansion-boundary.md`
