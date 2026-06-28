@@ -1464,3 +1464,42 @@ No `invoke_signed` path was enabled.
 No minting was enabled.
 No deployment behavior was enabled.
 No deployability predicate was changed.
+
+## XXXL Program ID placeholder status boundary
+
+An explicit Program ID placeholder status boundary has been added.
+
+Added module:
+
+- `program_id_status`
+
+Added:
+
+- `XxxlProgramIdReadinessStatus`
+- `XxxlProgramIdReadinessReport`
+- `xxxl_program_id_readiness_status`
+- `xxxl_program_id_readiness_report`
+- `xxxl_program_id_placeholder_boundary_is_active`
+- `xxxl_program_id_deployable_path_ready`
+
+Current Program ID readiness status:
+
+- `Placeholder`
+
+Current deployable path readiness:
+
+- `false`
+
+Current active blocker:
+
+- `PLACEHOLDER_PROGRAM_ID`
+
+No real Program ID was selected.
+No production PDA fixtures were regenerated.
+No deployment blocker was removed.
+No live route was activated.
+No SPL CPI behavior was enabled.
+No `invoke_signed` path was enabled.
+No minting was enabled.
+No deployment behavior was enabled.
+No deployability predicate was changed.
