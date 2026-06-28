@@ -1204,3 +1204,28 @@ No SPL CPI behavior was enabled.
 No `invoke_signed` path was enabled.
 No minting was enabled.
 No deployability predicate was changed.
+
+## XXXL runtime deployment blocker resolution guidance
+
+The XXXL runtime deployment blocker reports now include resolution guidance.
+
+Each blocker now explains:
+
+- what is blocking deployment
+- why it matters
+- what must happen before the blocker can be removed
+
+Current blocker resolution themes:
+
+- set/review the real Program ID and regenerate Program-ID-dependent PDA fixtures
+- activate the live route only in a reviewed stage after blockers are resolved
+- enable SPL Token mint_to CPI execution only after live route, PDA authority, account contract, and Mollusk coverage are complete
+- define, publish, and review the production guardian set, threshold, rotation policy, and key custody model
+- define the production proof-log format, retention policy, public audit trail, and operator publication flow
+- complete external review of live route, guardian policy, CPI path, account contract, replay protection, and deployment checklist
+
+No live route was activated.
+No SPL CPI behavior was enabled.
+No `invoke_signed` path was enabled.
+No minting was enabled.
+No deployability predicate was changed.

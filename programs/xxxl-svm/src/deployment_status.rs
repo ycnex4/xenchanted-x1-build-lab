@@ -18,6 +18,7 @@ pub struct XxxlRuntimeDeploymentBlockerReport {
     pub blocker: XxxlRuntimeDeploymentBlocker,
     pub code: &'static str,
     pub description: &'static str,
+    pub resolution: &'static str,
 }
 
 #[derive(Clone, Copy, Debug, PartialEq, Eq)]
@@ -46,31 +47,37 @@ pub const XXXL_RUNTIME_DEPLOYMENT_BLOCKER_REPORTS: [XxxlRuntimeDeploymentBlocker
         blocker: XxxlRuntimeDeploymentBlocker::PlaceholderProgramId,
         code: "PLACEHOLDER_PROGRAM_ID",
         description: "The runtime still exposes a placeholder Program ID boundary.",
+        resolution: "Set and review the real Program ID and regenerate all Program-ID-dependent PDA fixtures.",
     },
     XxxlRuntimeDeploymentBlockerReport {
         blocker: XxxlRuntimeDeploymentBlocker::LiveRouteDisabled,
         code: "LIVE_ROUTE_DISABLED",
         description: "Live route activation from process_instruction remains disabled.",
+        resolution: "Activate the live route only in a reviewed stage after all deployment blockers are resolved.",
     },
     XxxlRuntimeDeploymentBlockerReport {
         blocker: XxxlRuntimeDeploymentBlocker::SplCpiExecutionDisabled,
         code: "SPL_CPI_EXECUTION_DISABLED",
         description: "SPL Token mint_to CPI execution remains disabled.",
+        resolution: "Enable SPL Token mint_to CPI execution only after live route activation, PDA authority, account contract, and Mollusk coverage are complete.",
     },
     XxxlRuntimeDeploymentBlockerReport {
         blocker: XxxlRuntimeDeploymentBlocker::ProductionGuardianSetUnset,
         code: "PRODUCTION_GUARDIAN_SET_UNSET",
         description: "The production guardian set is not configured or externally documented.",
+        resolution: "Define, publish, and review the production guardian set, threshold, rotation policy, and key custody model.",
     },
     XxxlRuntimeDeploymentBlockerReport {
         blocker: XxxlRuntimeDeploymentBlocker::ProductionProofLogUnset,
         code: "PRODUCTION_PROOF_LOG_UNSET",
         description: "The production proof-log and public audit trail are not configured.",
+        resolution: "Define the production proof-log format, retention policy, public audit trail, and operator publication flow.",
     },
     XxxlRuntimeDeploymentBlockerReport {
         blocker: XxxlRuntimeDeploymentBlocker::ExternalReviewIncomplete,
         code: "EXTERNAL_REVIEW_INCOMPLETE",
         description: "External review is not complete for deployment activation.",
+        resolution: "Complete external review of the live route, guardian policy, CPI path, account contract, replay protection, and deployment checklist.",
     },
 ];
 
@@ -134,6 +141,29 @@ impl XxxlRuntimeDeploymentBlocker {
             }
             XxxlRuntimeDeploymentBlocker::ExternalReviewIncomplete => {
                 "External review is not complete for deployment activation."
+            }
+        }
+    }
+
+    pub fn resolution(self) -> &'static str {
+        match self {
+            XxxlRuntimeDeploymentBlocker::PlaceholderProgramId => {
+                "Set and review the real Program ID and regenerate all Program-ID-dependent PDA fixtures."
+            }
+            XxxlRuntimeDeploymentBlocker::LiveRouteDisabled => {
+                "Activate the live route only in a reviewed stage after all deployment blockers are resolved."
+            }
+            XxxlRuntimeDeploymentBlocker::SplCpiExecutionDisabled => {
+                "Enable SPL Token mint_to CPI execution only after live route activation, PDA authority, account contract, and Mollusk coverage are complete."
+            }
+            XxxlRuntimeDeploymentBlocker::ProductionGuardianSetUnset => {
+                "Define, publish, and review the production guardian set, threshold, rotation policy, and key custody model."
+            }
+            XxxlRuntimeDeploymentBlocker::ProductionProofLogUnset => {
+                "Define the production proof-log format, retention policy, public audit trail, and operator publication flow."
+            }
+            XxxlRuntimeDeploymentBlocker::ExternalReviewIncomplete => {
+                "Complete external review of the live route, guardian policy, CPI path, account contract, replay protection, and deployment checklist."
             }
         }
     }
@@ -245,6 +275,23 @@ mod tests {
     }
 
     #[test]
+    fn runtime_deployment_blocker_resolutions_are_human_readable() {
+        for blocker in xxxl_runtime_deployment_blockers() {
+            assert!(!blocker.resolution().is_empty());
+            assert!(blocker.resolution().contains('.'));
+        }
+
+        assert_eq!(
+            XxxlRuntimeDeploymentBlocker::PlaceholderProgramId.resolution(),
+            "Set and review the real Program ID and regenerate all Program-ID-dependent PDA fixtures."
+        );
+        assert_eq!(
+            XxxlRuntimeDeploymentBlocker::ProductionGuardianSetUnset.resolution(),
+            "Define, publish, and review the production guardian set, threshold, rotation policy, and key custody model."
+        );
+    }
+
+    #[test]
     fn runtime_deployment_blocker_reports_match_blocker_methods() {
         let blockers = xxxl_runtime_deployment_blockers();
         let reports = xxxl_runtime_deployment_blocker_reports();
@@ -257,6 +304,7 @@ mod tests {
             assert_eq!(report.blocker, blocker);
             assert_eq!(report.code, blocker.code());
             assert_eq!(report.description, blocker.description());
+            assert_eq!(report.resolution, blocker.resolution());
         }
     }
 
@@ -278,6 +326,10 @@ mod tests {
         assert_eq!(report.blockers[0].code, "PLACEHOLDER_PROGRAM_ID");
         assert_eq!(report.blockers[1].code, "LIVE_ROUTE_DISABLED");
         assert_eq!(report.blockers[2].code, "SPL_CPI_EXECUTION_DISABLED");
+        assert_eq!(
+            report.blockers[0].resolution,
+            XxxlRuntimeDeploymentBlocker::PlaceholderProgramId.resolution()
+        );
     }
 
     #[test]
@@ -312,6 +364,10 @@ mod tests {
         assert_eq!(
             XxxlRuntimeDeploymentBlocker::PlaceholderProgramId.description(),
             "The runtime still exposes a placeholder Program ID boundary."
+        );
+        assert_eq!(
+            XxxlRuntimeDeploymentBlocker::PlaceholderProgramId.resolution(),
+            "Set and review the real Program ID and regenerate all Program-ID-dependent PDA fixtures."
         );
     }
 }
