@@ -2013,3 +2013,10 @@ No deployability predicate was changed.
 - Records that the processed registry key is `canonicalEventKey`.
 - Boundary document: `docs/xxxl/xxxl-canonical-event-key-runtime-reference-boundary.md`
 - Checkpoint: `docs/checkpoints/xxxl-canonical-event-key-runtime-reference-boundary.md`
+
+## XXXL Review Clarity Follow-up Boundary
+
+- Status: completed.
+- Clarifies the review package distinction between safety invariant summary and derived safety lock / unlock / release result.
+- Clarifies that canonical event key recompute-and-compare happens before replay check.
+- Clarifies that `sourceBurnEventIndex` byte-level encoding must come from Stage 1 exact cryptographic vectors and canonical encoding documents.

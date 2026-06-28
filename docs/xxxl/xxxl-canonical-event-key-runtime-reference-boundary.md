@@ -68,6 +68,10 @@ Future runtime implementation must use the locked Stage 1 canonical encoding and
 
 `sourceBurnEventIndex` must not be omitted, ignored, normalized differently, or replaced with a relayer-local index.
 
+The exact byte-level encoding, width, and normalization of `sourceBurnEventIndex` must be taken from the Stage 1 exact cryptographic vectors and canonical encoding documents.
+
+Future implementation must not infer a new local type, byte order, or width for this field.
+
 ## Replay-protection rule
 
 The processed-burn registry key must be exactly `canonicalEventKey`.
@@ -98,6 +102,10 @@ The runtime must reject the message without state changes if:
 - the computed `canonicalEventKey` is already processed
 
 The runtime must not accept caller-provided `canonicalEventKey` as trusted without recomputation and comparison.
+
+The recompute-and-compare step must happen before the processed registry replay check.
+
+A replay check must only be performed against a canonical event key that has already been recomputed from the source event identity fields and matched against the message field.
 
 ## Relationship to recipient and amount binding
 
@@ -143,8 +151,8 @@ Before implementation work begins, reviewers must confirm:
 - source chain id normalization
 - source token normalization
 - source burn tx hash normalization
-- source burn event index encoding
-- recompute-and-compare behavior
+- source burn event index encoding from the Stage 1 exact cryptographic vectors and canonical encoding documents
+- recompute-and-compare behavior before replay check
 - processed registry key derivation
 - replay rejection behavior
 - no-state-change-on-failure tests

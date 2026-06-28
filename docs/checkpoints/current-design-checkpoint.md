@@ -37099,3 +37099,23 @@ Release decision remains blocked:
 - release allowed: `false`
 - release blocked: `true`
 - primary blocker code: `RUNTIME_SAFETY_LOCK_ACTIVE`
+
+## XXXL Review Clarity Follow-up Boundary
+
+Status: COMPLETED.
+
+This documentation-only follow-up closes minor clarity observations from the updated external review.
+
+Clarified items:
+
+- the runtime safety review package now separates safety invariant summary fields from derived safety lock / unlock / release results
+- canonical event key recompute-and-compare must happen before processed registry replay check
+- `sourceBurnEventIndex` byte-level encoding must be taken from Stage 1 exact cryptographic vectors and canonical encoding documents
+
+The runtime remains scaffold-only, locked, unreleasable, and not deployable.
+
+Release decision remains blocked:
+
+- release allowed: `false`
+- release blocked: `true`
+- primary blocker code: `RUNTIME_SAFETY_LOCK_ACTIVE`
