@@ -36314,3 +36314,45 @@ No `invoke_signed` path was enabled.
 No minting was enabled.
 No deployment behavior was enabled.
 No deployability predicate was changed.
+
+## XXXL PDA fixture derivation report boundary
+
+Status: `COMPLETED`.
+
+A deterministic PDA fixture derivation report boundary has been added.
+
+Added:
+
+- `XxxlPdaFixtureDerivationReport`
+- `derive_gateway_mint_authority_fixture_report`
+- `derive_xxxl_pda_fixture_reports`
+
+Current report coverage:
+
+- `gateway_mint_authority`
+
+The report derives:
+
+- input Program ID
+- PDA
+- bump
+
+Hard checks passed:
+
+- `cargo build-sbf`
+- `cargo fmt --check`
+- `cargo test`
+- `cargo test --test mollusk_consume_gateway_mint -- --ignored --nocapture`
+- `cargo clippy --all-targets -- -D warnings`
+- `cargo audit`
+- `cargo deny` licenses/bans/sources
+
+No real Program ID was selected.
+No production PDA fixtures were regenerated.
+No deployment blocker was removed.
+No live route was activated.
+No SPL CPI behavior was enabled.
+No `invoke_signed` path was enabled.
+No minting was enabled.
+No deployment behavior was enabled.
+No deployability predicate was changed.
