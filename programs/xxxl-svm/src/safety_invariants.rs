@@ -1,3 +1,6 @@
+use crate::deployment_status::{
+    xxxl_runtime_deployment_report_has_blocker, XxxlRuntimeDeploymentBlocker,
+};
 use crate::{
     deployment_status::{
         live_route_activation_from_process_instruction_enabled_for_deployment_status,
@@ -231,6 +234,43 @@ pub fn xxxl_runtime_safety_lock_evidence_is_complete() -> bool {
     xxxl_runtime_safety_lock_evidence_summary().evidence_complete
 }
 
+#[derive(Clone, Copy, Debug, PartialEq, Eq)]
+pub struct XxxlDeploymentBlockerEvidenceConsistencyReport {
+    pub safety_lock_evidence_complete: bool,
+    pub placeholder_program_id_blocker_present: bool,
+    pub live_route_disabled_blocker_present: bool,
+    pub spl_cpi_execution_disabled_blocker_present: bool,
+    pub evidence_consistent: bool,
+}
+
+pub fn xxxl_deployment_blocker_evidence_consistency_report(
+) -> XxxlDeploymentBlockerEvidenceConsistencyReport {
+    let safety_lock_evidence_complete = xxxl_runtime_safety_lock_evidence_is_complete();
+    let placeholder_program_id_blocker_present = xxxl_runtime_deployment_report_has_blocker(
+        XxxlRuntimeDeploymentBlocker::PlaceholderProgramId,
+    );
+    let live_route_disabled_blocker_present =
+        xxxl_runtime_deployment_report_has_blocker(XxxlRuntimeDeploymentBlocker::LiveRouteDisabled);
+    let spl_cpi_execution_disabled_blocker_present = xxxl_runtime_deployment_report_has_blocker(
+        XxxlRuntimeDeploymentBlocker::SplCpiExecutionDisabled,
+    );
+
+    XxxlDeploymentBlockerEvidenceConsistencyReport {
+        safety_lock_evidence_complete,
+        placeholder_program_id_blocker_present,
+        live_route_disabled_blocker_present,
+        spl_cpi_execution_disabled_blocker_present,
+        evidence_consistent: safety_lock_evidence_complete
+            && placeholder_program_id_blocker_present
+            && live_route_disabled_blocker_present
+            && spl_cpi_execution_disabled_blocker_present,
+    }
+}
+
+pub fn xxxl_deployment_blocker_evidence_is_consistent() -> bool {
+    xxxl_deployment_blocker_evidence_consistency_report().evidence_consistent
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -350,5 +390,20 @@ mod tests {
     #[test]
     fn runtime_safety_lock_evidence_is_complete_for_current_scaffold() {
         assert!(xxxl_runtime_safety_lock_evidence_is_complete());
+    }
+    #[test]
+    fn deployment_blocker_evidence_consistency_report_matches_current_lock_evidence() {
+        let report = xxxl_deployment_blocker_evidence_consistency_report();
+
+        assert!(report.safety_lock_evidence_complete);
+        assert!(report.placeholder_program_id_blocker_present);
+        assert!(report.live_route_disabled_blocker_present);
+        assert!(report.spl_cpi_execution_disabled_blocker_present);
+        assert!(report.evidence_consistent);
+    }
+
+    #[test]
+    fn deployment_blocker_evidence_is_consistent_for_current_scaffold() {
+        assert!(xxxl_deployment_blocker_evidence_is_consistent());
     }
 }
