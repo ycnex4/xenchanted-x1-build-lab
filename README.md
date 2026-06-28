@@ -1957,3 +1957,43 @@ No `invoke_signed` path was enabled.
 No minting was enabled.
 No deployment behavior was enabled.
 No deployability predicate was changed.
+
+## XXXL atomic mutation planning notes boundary
+
+A documentation-only atomic mutation planning notes boundary has been added.
+
+Added:
+
+- `docs/xxxl/xxxl-atomic-mutation-planning-notes-boundary.md`
+
+The planning notes define future constraints for:
+
+- transaction-level atomicity
+- check-before-mark behavior
+- no-state-change-on-failure behavior
+- account write boundaries
+- SPL CPI reachability
+- mint authority PDA constraints
+- processed-burn registry constraints
+- proof or audit log constraints
+- mutation ordering
+- review requirements before implementation
+
+Current final decision:
+
+- release allowed: `false`
+- release blocked: `true`
+- primary blocker code: `RUNTIME_SAFETY_LOCK_ACTIVE`
+
+No runtime code was changed.
+No real Program ID was selected.
+No production PDA fixtures were regenerated.
+No deployment blocker was removed.
+No live route was activated.
+No SPL CPI behavior was enabled.
+No `invoke_signed` path was enabled.
+No SPL Token `mint_to` path was enabled.
+No XXXL minting was enabled.
+No runtime state mutation was enabled.
+No deployment behavior was enabled.
+No deployability predicate was changed.
