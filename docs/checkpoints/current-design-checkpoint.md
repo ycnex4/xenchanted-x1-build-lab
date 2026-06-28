@@ -37361,3 +37361,55 @@ This package is evidence only.
 It is not approval, not blocker removal, and not runtime unlock.
 
 The next possible step is external/account-contract review, not runtime unlock.
+
+## XXXL Account Contract Review Closure Boundary
+
+Status: completed as a documentation-only closure boundary.
+
+The XXXL SVM `consume_gateway_mint` account-contract evidence has been accepted for the current locked scaffold boundary.
+
+Closure artifact:
+
+- `docs/xxxl/xxxl-account-contract-review-closure-boundary.md`
+
+Checkpoint artifact:
+
+- `docs/checkpoints/xxxl-account-contract-review-closure-boundary.md`
+
+Review inputs:
+
+- `docs/reviews/xxxl-account-contract-review-assessment-codex.md`
+- `docs/reviews/xxxl-account-contract-review-assessment-theo.md`
+- `docs/reviews/xxxl-account-contract-review-assessment-claude.md`
+- `docs/reviews/xxxl-account-contract-review-assessment-synthesis.md`
+
+Important scope limits:
+
+- This closure is not deployment approval.
+- This closure is not production readiness.
+- This closure is not runtime unlock approval.
+- This closure is not live route approval.
+- This closure is not SPL CPI approval.
+- This closure is not authorization to call `invoke_signed`.
+- This closure is not authorization to execute SPL Token `mint_to`.
+- This closure does not remove or weaken `ACCOUNT_CONTRACT_UNREVIEWED`.
+
+Mandatory future production requirements recorded by closure:
+
+- Program-owned accounts must receive explicit PDA derivation constraints before production live execution.
+- Guardian set live-path validation must include quorum threshold and guardian count constraints.
+- Future live execution must revisit duplicate account keys / account deduplication.
+- Future SPL CPI execution must address close/reinitialization race concerns.
+- Future live mutation must revisit rent exemption timing.
+- Future hardening should revisit PDA semantic separation.
+- Future instruction layout documentation should clarify padding/reserved bytes.
+
+Runtime safety state remains unchanged:
+
+- scaffold-only
+- locked
+- unreleasable
+- not deployable
+- live route disabled
+- SPL CPI execution disabled
+- `ACCOUNT_CONTRACT_UNREVIEWED` active until a later separate blocker-transition stage
