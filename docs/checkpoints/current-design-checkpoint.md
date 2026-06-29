@@ -38938,3 +38938,78 @@ Future work still required:
 This stage does not change Rust source, Cargo files, tests, Program ID constants, PDA derivation logic, deployment status logic, safety invariant logic, live route execution, SPL CPI execution, `invoke_signed`, SPL Token `mint_to`, guardian production configuration, proof-log production configuration, external review status, or release readiness.
 
 The runtime remains scaffold-only, locked, unreleasable, and not deployable.
+
+## XXXL X1 Testnet Deployment Readiness Preflight
+
+Status: Completed
+Branch: `stage-xxxl-x1-testnet-deployment-readiness-preflight`
+Base: `bc7f01c Add X1 testnet PDA fixture verification record`
+
+This docs-only stage records a local deployment-readiness preflight for the selected X1 testnet Program ID candidate.
+
+Preflight record artifact:
+
+- `docs/xxxl/xxxl-x1-testnet-deployment-readiness-preflight.md`
+
+Checkpoint artifact:
+
+- `docs/checkpoints/xxxl-x1-testnet-deployment-readiness-preflight.md`
+
+Selected X1 testnet Program ID candidate:
+
+- `D7AQmZNtFFFoJbducz93atteeSZhw3jq6RmsqBvaf1my`
+
+Verified PDA fixture:
+
+- PDA name: `gateway_mint_authority`
+- PDA: `BLVsQPYXnDsTmfMW9wrXHBFpcmexM47BcAvVcibRtRYG`
+- bump: `252`
+
+Local keypair path:
+
+- `.local-keys/xxxl-x1-testnet-program-keypair.json`
+
+The local keypair is ignored through `.git/info/exclude`.
+
+The local public key matches the selected Program ID.
+
+Preflight test evidence:
+
+- default Rust library tests: `201 passed`, `0 failed`, `1 ignored`
+- PDA fixture verification tests: `6 passed`, `0 failed`
+- selected candidate PDA dry-run: `1 passed`, `0 failed`
+- `OFFCHAIN_ONLY=true`
+- `RPC_USED=false`
+- `DEPLOYED=false`
+- `SOL_SPENT=false`
+
+Current blocker status:
+
+- no blocker removed
+- no blocker transitioned
+- `PLACEHOLDER_PROGRAM_ID` remains active
+
+Remaining active blockers:
+
+- `PLACEHOLDER_PROGRAM_ID`
+- `LIVE_ROUTE_DISABLED`
+- `SPL_CPI_EXECUTION_DISABLED`
+- `PRODUCTION_GUARDIAN_SET_UNSET`
+- `PRODUCTION_PROOF_LOG_UNSET`
+- `EXTERNAL_REVIEW_INCOMPLETE`
+
+Future work still required:
+
+1. X1 testnet deployment command plan
+2. X1 testnet deployment execution evidence
+3. X1 testnet deployed Program ID verification evidence
+4. X1 testnet SPL mint authority transfer plan
+5. X1 testnet SPL mint authority verification evidence
+6. Program ID readiness model update
+7. placeholder Program ID blocker transition
+
+This stage does not change Rust source, Cargo files, tests, Program ID constants, PDA derivation logic, deployment status logic, safety invariant logic, live route execution, SPL CPI execution, `invoke_signed`, SPL Token `mint_to`, guardian production configuration, proof-log production configuration, external review status, or release readiness.
+
+This stage does not use RPC, deploy the program, submit a transaction, spend SOL, record secret material, remove any blocker, or make the runtime deployable.
+
+The runtime remains scaffold-only, locked, unreleasable, and not deployable.
