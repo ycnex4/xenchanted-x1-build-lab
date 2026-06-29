@@ -368,6 +368,138 @@ fn mollusk_rejects_truncated_gateway_config_without_live_route() {
 }
 
 #[test]
+fn mollusk_rejects_low_rent_mint_state_without_live_route() {
+    let fixture = ScaffoldFixture::new();
+    let mollusk = mollusk_for_program(&fixture.program_id);
+
+    let instruction = fixture.instruction();
+    let accounts = accounts_with_low_rent(
+        &fixture,
+        CONSUME_GATEWAY_MINT_MINT_STATE_ACCOUNT_INDEX as usize,
+    );
+
+    mollusk.process_and_validate_instruction(
+        &instruction,
+        &accounts,
+        &[Check::err(ProgramError::Custom(
+            XxxlError::InvalidRentExemption as u32,
+        ))],
+    );
+}
+
+#[test]
+fn mollusk_rejects_low_rent_gateway_config_without_live_route() {
+    let fixture = ScaffoldFixture::new();
+    let mollusk = mollusk_for_program(&fixture.program_id);
+
+    let instruction = fixture.instruction();
+    let accounts =
+        accounts_with_low_rent(&fixture, CONSUME_GATEWAY_MINT_ROUTE_ACCOUNT_INDEX as usize);
+
+    mollusk.process_and_validate_instruction(
+        &instruction,
+        &accounts,
+        &[Check::err(ProgramError::Custom(
+            XxxlError::InvalidRentExemption as u32,
+        ))],
+    );
+}
+
+#[test]
+fn mollusk_rejects_low_rent_guardian_set_without_live_route() {
+    let fixture = ScaffoldFixture::new();
+    let mollusk = mollusk_for_program(&fixture.program_id);
+
+    let instruction = fixture.instruction();
+    let accounts = accounts_with_low_rent(
+        &fixture,
+        CONSUME_GATEWAY_MINT_GUARDIAN_SET_ACCOUNT_INDEX as usize,
+    );
+
+    mollusk.process_and_validate_instruction(
+        &instruction,
+        &accounts,
+        &[Check::err(ProgramError::Custom(
+            XxxlError::InvalidRentExemption as u32,
+        ))],
+    );
+}
+
+#[test]
+fn mollusk_rejects_low_rent_processed_event_without_live_route() {
+    let fixture = ScaffoldFixture::new();
+    let mollusk = mollusk_for_program(&fixture.program_id);
+
+    let instruction = fixture.instruction();
+    let accounts = accounts_with_low_rent(
+        &fixture,
+        CONSUME_GATEWAY_MINT_PROCESSED_EVENT_ACCOUNT_INDEX as usize,
+    );
+
+    mollusk.process_and_validate_instruction(
+        &instruction,
+        &accounts,
+        &[Check::err(ProgramError::Custom(
+            XxxlError::InvalidRentExemption as u32,
+        ))],
+    );
+}
+
+#[test]
+fn mollusk_rejects_low_rent_recipient_balance_without_live_route() {
+    let fixture = ScaffoldFixture::new();
+    let mollusk = mollusk_for_program(&fixture.program_id);
+
+    let instruction = fixture.instruction();
+    let accounts = accounts_with_low_rent(
+        &fixture,
+        CONSUME_GATEWAY_MINT_RECIPIENT_BALANCE_ACCOUNT_INDEX as usize,
+    );
+
+    mollusk.process_and_validate_instruction(
+        &instruction,
+        &accounts,
+        &[Check::err(ProgramError::Custom(
+            XxxlError::InvalidRentExemption as u32,
+        ))],
+    );
+}
+
+#[test]
+fn mollusk_rejects_low_rent_spl_token_mint_without_live_route() {
+    let fixture = ScaffoldFixture::new();
+    let mollusk = mollusk_for_program(&fixture.program_id);
+
+    let instruction = fixture.instruction();
+    let accounts = accounts_with_low_rent(&fixture, SPL_MINT_ACCOUNT_INDEX);
+
+    mollusk.process_and_validate_instruction(
+        &instruction,
+        &accounts,
+        &[Check::err(ProgramError::Custom(
+            XxxlError::InvalidRentExemption as u32,
+        ))],
+    );
+}
+
+#[test]
+fn mollusk_rejects_low_rent_recipient_token_account_without_live_route() {
+    let fixture = ScaffoldFixture::new();
+    let mollusk = mollusk_for_program(&fixture.program_id);
+
+    let instruction = fixture.instruction();
+    let accounts = accounts_with_low_rent(&fixture, RECIPIENT_TOKEN_ACCOUNT_INDEX);
+
+    mollusk.process_and_validate_instruction(
+        &instruction,
+        &accounts,
+        &[Check::err(ProgramError::Custom(
+            XxxlError::InvalidRentExemption as u32,
+        ))],
+    );
+}
+
+#[test]
 fn mollusk_rejects_wrong_spl_mint_owner_without_live_route() {
     let fixture = ScaffoldFixture::new();
     let mollusk = mollusk_for_program(&fixture.program_id);
@@ -1033,6 +1165,19 @@ fn mollusk_for_program(program_id: &Pubkey) -> Mollusk {
     std::env::set_var("SBF_OUT_DIR", &sbf_out_dir);
 
     Mollusk::new(program_id, PROGRAM_NAME)
+}
+
+fn accounts_with_low_rent(
+    fixture: &ScaffoldFixture,
+    account_index: usize,
+) -> Vec<(Pubkey, Account)> {
+    let mut accounts = fixture.accounts();
+    assert!(
+        !accounts[account_index].1.data.is_empty(),
+        "low-rent fixture account must carry data"
+    );
+    accounts[account_index].1.lamports = 1;
+    accounts
 }
 
 fn result_and_unchanged_mutable_account_checks<'a>(

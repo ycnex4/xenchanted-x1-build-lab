@@ -38031,3 +38031,73 @@ SPL Token `mint_to` is not enabled.
 
 The next Mollusk stage should be rent and lifecycle coverage or a coverage
 review package, not blocker transition.
+
+## XXXL Mollusk Rent / Lifecycle Coverage
+
+Status: Completed
+Branch: `stage-xxxl-mollusk-rent-lifecycle-coverage`
+
+This stage adds direct Mollusk/SBF entrypoint coverage for rent-exemption rejection paths.
+
+Added non-ignored tests:
+
+- `mollusk_rejects_low_rent_mint_state_without_live_route`
+- `mollusk_rejects_low_rent_gateway_config_without_live_route`
+- `mollusk_rejects_low_rent_guardian_set_without_live_route`
+- `mollusk_rejects_low_rent_processed_event_without_live_route`
+- `mollusk_rejects_low_rent_recipient_balance_without_live_route`
+- `mollusk_rejects_low_rent_spl_token_mint_without_live_route`
+- `mollusk_rejects_low_rent_recipient_token_account_without_live_route`
+
+Boundary artifact:
+
+- `docs/xxxl/xxxl-mollusk-rent-lifecycle-coverage.md`
+
+Checkpoint artifact:
+
+- `docs/checkpoints/xxxl-mollusk-rent-lifecycle-coverage.md`
+
+Reported validation:
+
+- `cargo fmt --manifest-path programs/xxxl-svm/Cargo.toml --check` passed
+- `cargo test --manifest-path programs/xxxl-svm/Cargo.toml mollusk` passed with 44 Mollusk tests
+- `cargo test --manifest-path programs/xxxl-svm/Cargo.toml` passed with 199 lib tests, 44 Mollusk tests, and 10 ignored
+- `git diff --check` passed
+
+Explicit non-changes:
+
+- no runtime source changes
+- no Cargo changes
+- no deployment blocker logic changes
+- no safety invariant logic changes
+- no production PDA fixture changes
+
+Safety boundary:
+
+- live route execution remains disabled
+- SPL CPI execution remains disabled
+- `invoke_signed` is not enabled
+- SPL Token `mint_to` is not enabled
+- runtime remains scaffold-only, locked, unreleasable, and not deployable
+
+Blocker status:
+
+- no blocker removed
+- no blocker transitioned
+- `MOLLUSK_COVERAGE_INCOMPLETE` remains active
+
+Remaining active blockers:
+
+- `PLACEHOLDER_PROGRAM_ID`
+- `LIVE_ROUTE_DISABLED`
+- `SPL_CPI_EXECUTION_DISABLED`
+- `MOLLUSK_COVERAGE_INCOMPLETE`
+- `PRODUCTION_GUARDIAN_SET_UNSET`
+- `PRODUCTION_PROOF_LOG_UNSET`
+- `EXTERNAL_REVIEW_INCOMPLETE`
+
+Next likely stage:
+
+- `stage-xxxl-mollusk-coverage-review-package`
+
+This stage does not recommend a blocker transition.
