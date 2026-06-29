@@ -37704,3 +37704,48 @@ Live route execution, SPL CPI execution, `invoke_signed`, and SPL Token
 
 The next Mollusk stage should be Program-Owned Account Validation Coverage, not
 blocker transition.
+
+## XXXL Mollusk Program-Owned Account Validation Coverage
+
+Status: completed as a narrow Mollusk/SVM program-owned account validation
+coverage stage.
+
+Added non-ignored Mollusk tests:
+
+- `mollusk_rejects_wrong_mint_state_owner_without_live_route`
+- `mollusk_rejects_wrong_gateway_config_owner_without_live_route`
+- `mollusk_rejects_wrong_guardian_set_owner_without_live_route`
+- `mollusk_rejects_wrong_mint_state_discriminator_without_live_route`
+- `mollusk_rejects_truncated_gateway_config_without_live_route`
+
+These tests execute the XXXL SBF program through Mollusk and assert rejected
+paths for selected program-owned account owner and account-data layout failures.
+
+Boundary artifact:
+
+- `docs/xxxl/xxxl-mollusk-program-owned-account-validation-coverage.md`
+
+Checkpoint artifact:
+
+- `docs/checkpoints/xxxl-mollusk-program-owned-account-validation-coverage.md`
+
+No Cargo files were changed.
+
+No runtime source files were changed.
+
+No blocker was removed.
+
+`MOLLUSK_COVERAGE_INCOMPLETE` remains active.
+
+The runtime remains:
+
+- scaffold-only
+- locked
+- unreleasable
+- not deployable
+
+Live route execution, SPL CPI execution, `invoke_signed`, and SPL Token
+`mint_to` remain disabled.
+
+The next Mollusk stage should be SPL Token Mint and Recipient Account Coverage,
+not blocker transition.

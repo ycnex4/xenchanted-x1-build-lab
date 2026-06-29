@@ -129,6 +129,107 @@ fn mollusk_rejects_writable_readonly_mismatch_without_live_route() {
 }
 
 #[test]
+fn mollusk_rejects_wrong_mint_state_owner_without_live_route() {
+    let fixture = ScaffoldFixture::new();
+    let mollusk = mollusk_for_program(&fixture.program_id);
+
+    let instruction = fixture.instruction();
+    let mut accounts = fixture.accounts();
+    accounts[CONSUME_GATEWAY_MINT_MINT_STATE_ACCOUNT_INDEX as usize]
+        .1
+        .owner = Pubkey::new_unique();
+
+    mollusk.process_and_validate_instruction(
+        &instruction,
+        &accounts,
+        &[Check::err(ProgramError::Custom(
+            XxxlError::InvalidAccountOwner as u32,
+        ))],
+    );
+}
+
+#[test]
+fn mollusk_rejects_wrong_gateway_config_owner_without_live_route() {
+    let fixture = ScaffoldFixture::new();
+    let mollusk = mollusk_for_program(&fixture.program_id);
+
+    let instruction = fixture.instruction();
+    let mut accounts = fixture.accounts();
+    accounts[CONSUME_GATEWAY_MINT_ROUTE_ACCOUNT_INDEX as usize]
+        .1
+        .owner = Pubkey::new_unique();
+
+    mollusk.process_and_validate_instruction(
+        &instruction,
+        &accounts,
+        &[Check::err(ProgramError::Custom(
+            XxxlError::InvalidAccountOwner as u32,
+        ))],
+    );
+}
+
+#[test]
+fn mollusk_rejects_wrong_guardian_set_owner_without_live_route() {
+    let fixture = ScaffoldFixture::new();
+    let mollusk = mollusk_for_program(&fixture.program_id);
+
+    let instruction = fixture.instruction();
+    let mut accounts = fixture.accounts();
+    accounts[CONSUME_GATEWAY_MINT_GUARDIAN_SET_ACCOUNT_INDEX as usize]
+        .1
+        .owner = Pubkey::new_unique();
+
+    mollusk.process_and_validate_instruction(
+        &instruction,
+        &accounts,
+        &[Check::err(ProgramError::Custom(
+            XxxlError::InvalidAccountOwner as u32,
+        ))],
+    );
+}
+
+#[test]
+fn mollusk_rejects_wrong_mint_state_discriminator_without_live_route() {
+    let fixture = ScaffoldFixture::new();
+    let mollusk = mollusk_for_program(&fixture.program_id);
+
+    let instruction = fixture.instruction();
+    let mut accounts = fixture.accounts();
+    accounts[CONSUME_GATEWAY_MINT_MINT_STATE_ACCOUNT_INDEX as usize]
+        .1
+        .data[0] ^= 0xff;
+
+    mollusk.process_and_validate_instruction(
+        &instruction,
+        &accounts,
+        &[Check::err(ProgramError::Custom(
+            XxxlError::InvalidDiscriminator as u32,
+        ))],
+    );
+}
+
+#[test]
+fn mollusk_rejects_truncated_gateway_config_without_live_route() {
+    let fixture = ScaffoldFixture::new();
+    let mollusk = mollusk_for_program(&fixture.program_id);
+
+    let instruction = fixture.instruction();
+    let mut accounts = fixture.accounts();
+    accounts[CONSUME_GATEWAY_MINT_ROUTE_ACCOUNT_INDEX as usize]
+        .1
+        .data
+        .truncate(GATEWAY_CONFIG_ACCOUNT_LEN - 1);
+
+    mollusk.process_and_validate_instruction(
+        &instruction,
+        &accounts,
+        &[Check::err(ProgramError::Custom(
+            XxxlError::InvalidInstruction as u32,
+        ))],
+    );
+}
+
+#[test]
 #[ignore = "requires cargo build-sbf and target/deploy/xxxl_svm.so"]
 fn valid_consume_gateway_mint_builds_execution_plan_without_state_mutation() {
     let manifest_dir = PathBuf::from(env!("CARGO_MANIFEST_DIR"));
