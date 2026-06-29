@@ -39482,3 +39482,60 @@ Blocker status:
 - no blocker removed
 - no blocker transitioned
 - `PLACEHOLDER_PROGRAM_ID` remains active until a dedicated blocker transition assessment explicitly changes the blocker model
+
+## XXXL X1 Testnet Blocker Transition Assessment
+
+Status: Completed
+Branch: `stage-xxxl-x1-testnet-blocker-transition-assessment`
+Base: `7c9e777 Add X1 testnet post-deploy read-only verification`
+
+The blocker model was assessed after the first real X1 testnet deployment and post-deploy read-only verification.
+
+Assessment document:
+
+- `docs/xxxl/xxxl-x1-testnet-blocker-transition-assessment.md`
+
+Checkpoint document:
+
+- `docs/checkpoints/xxxl-x1-testnet-blocker-transition-assessment.md`
+
+Evidence base:
+
+- deployment execution evidence: `6bda36d`
+- post-deploy read-only verification: `7c9e777`
+- X1 testnet Program ID: `D7AQmZNtFFFoJbducz93atteeSZhw3jq6RmsqBvaf1my`
+- ProgramData address: `9tuesaPoJhrifF49vJewcg6PSWZeHAJiqQ97pq3LMW9T`
+- authority after deployment: `DTfvjtRL63u3XYHXQfgRQCdhEanUK1qqawvfEAM9hxAc`
+- artifact SHA-256: `fd4d3b659ccaea4f5e24eca4d9e80ff808c43de1bf1ecef7315961751a085a7e`
+
+Assessment:
+
+- `PLACEHOLDER_PROGRAM_ID` is no longer fully accurate as a blanket X1 testnet statement
+- a real X1 testnet Program ID has been selected, deployed, and verified
+- the blocker should not be removed automatically
+- a dedicated blocker transition stage should replace it with a more precise network-aware model
+
+Recommended future model:
+
+- retire `PLACEHOLDER_PROGRAM_ID` as a blanket X1 testnet blocker
+- record `X1_TESTNET_PROGRAM_DEPLOYED_RUNTIME_LOCKED` as a status or transition marker
+- keep a separate production blocker such as `PRODUCTION_PROGRAM_ID_UNSET`
+- keep runtime blockers independent from Program ID blockers
+
+Current stage decision:
+
+- no blocker removed
+- no blocker transitioned
+- no runtime code changed
+- no upgrade executed
+- no transaction submitted
+- no SOL spent
+
+Current active blockers remain unchanged:
+
+- `PLACEHOLDER_PROGRAM_ID`
+- `LIVE_ROUTE_DISABLED`
+- `SPL_CPI_EXECUTION_DISABLED`
+- `PRODUCTION_GUARDIAN_SET_UNSET`
+- `PRODUCTION_PROOF_LOG_UNSET`
+- `EXTERNAL_REVIEW_INCOMPLETE`
