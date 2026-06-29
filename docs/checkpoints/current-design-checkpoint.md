@@ -39013,3 +39013,96 @@ This stage does not change Rust source, Cargo files, tests, Program ID constants
 This stage does not use RPC, deploy the program, submit a transaction, spend SOL, record secret material, remove any blocker, or make the runtime deployable.
 
 The runtime remains scaffold-only, locked, unreleasable, and not deployable.
+
+## XXXL X1 Testnet Deployment Command Plan
+
+Status: Completed
+Branch: `stage-xxxl-x1-testnet-deployment-command-plan`
+Base: `6597891 Add X1 testnet deployment readiness preflight`
+
+This docs-only stage records the command plan for a future X1 testnet deployment stage.
+
+Deployment command plan artifact:
+
+- `docs/xxxl/xxxl-x1-testnet-deployment-command-plan.md`
+
+Checkpoint artifact:
+
+- `docs/checkpoints/xxxl-x1-testnet-deployment-command-plan.md`
+
+Selected X1 testnet Program ID candidate:
+
+- `D7AQmZNtFFFoJbducz93atteeSZhw3jq6RmsqBvaf1my`
+
+Verified PDA fixture:
+
+- PDA name: `gateway_mint_authority`
+- PDA: `BLVsQPYXnDsTmfMW9wrXHBFpcmexM47BcAvVcibRtRYG`
+- bump: `252`
+
+Local keypair path:
+
+- `.local-keys/xxxl-x1-testnet-program-keypair.json`
+
+Planned X1 testnet RPC:
+
+- `https://rpc.testnet.x1.xyz`
+
+The local keypair is ignored through `.git/info/exclude`.
+
+The local public key matches the selected Program ID.
+
+Planned future command family:
+
+- verify clean git state
+- verify selected Program ID against local keypair public key
+- verify keypair remains ignored
+- verify no keypair or secret files are tracked or untracked
+- run default Rust library tests
+- run PDA fixture verification tests
+- run selected candidate PDA dry-run
+- build SVM/Solana program artifact
+- deploy to X1 testnet using selected program keypair
+- verify deployed Program ID
+- verify program account exists
+- record execution evidence
+
+This stage explicitly did not execute:
+
+- `solana program deploy`
+- RPC deployment commands
+- transaction submission
+- SOL transfer
+- keypair content printing
+- secret file staging
+- blocker transition
+
+Current blocker status:
+
+- no blocker removed
+- no blocker transitioned
+- `PLACEHOLDER_PROGRAM_ID` remains active
+
+Remaining active blockers:
+
+- `PLACEHOLDER_PROGRAM_ID`
+- `LIVE_ROUTE_DISABLED`
+- `SPL_CPI_EXECUTION_DISABLED`
+- `PRODUCTION_GUARDIAN_SET_UNSET`
+- `PRODUCTION_PROOF_LOG_UNSET`
+- `EXTERNAL_REVIEW_INCOMPLETE`
+
+Future work still required:
+
+1. X1 testnet deployment execution evidence
+2. X1 testnet deployed Program ID verification evidence
+3. X1 testnet SPL mint authority transfer plan
+4. X1 testnet SPL mint authority verification evidence
+5. Program ID readiness model update
+6. placeholder Program ID blocker transition
+
+This stage does not change Rust source, Cargo files, tests, Program ID constants, PDA derivation logic, deployment status logic, safety invariant logic, live route execution, SPL CPI execution, `invoke_signed`, SPL Token `mint_to`, guardian production configuration, proof-log production configuration, external review status, or release readiness.
+
+This stage does not use RPC, deploy the program, submit a transaction, spend SOL, record secret material, remove any blocker, or make the runtime deployable.
+
+The runtime remains scaffold-only, locked, unreleasable, and not deployable.
