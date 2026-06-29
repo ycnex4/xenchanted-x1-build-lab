@@ -39206,3 +39206,114 @@ This stage does not change Rust source, Cargo files, tests, Program ID constants
 This stage does not build the program, use RPC, deploy the program, submit a transaction, spend SOL, record secret material, remove any blocker, or make the runtime deployable.
 
 The runtime remains scaffold-only, locked, unreleasable, and not deployable.
+
+## XXXL X1 Testnet Build Execution Evidence
+
+Status: Completed
+Branch: `stage-xxxl-x1-testnet-build-execution-evidence`
+Base: `2b3018b Add X1 testnet toolchain artifact preflight`
+
+This docs-only stage records local SBF build execution evidence for `programs/xxxl-svm`.
+
+Build execution evidence artifact:
+
+- `docs/xxxl/xxxl-x1-testnet-build-execution-evidence.md`
+
+Checkpoint artifact:
+
+- `docs/checkpoints/xxxl-x1-testnet-build-execution-evidence.md`
+
+Selected X1 testnet Program ID candidate:
+
+- `D7AQmZNtFFFoJbducz93atteeSZhw3jq6RmsqBvaf1my`
+
+Verified PDA fixture:
+
+- PDA name: `gateway_mint_authority`
+- PDA: `BLVsQPYXnDsTmfMW9wrXHBFpcmexM47BcAvVcibRtRYG`
+- bump: `252`
+
+Local keypair path:
+
+- `.local-keys/xxxl-x1-testnet-program-keypair.json`
+
+Pre-build keypair safety checks:
+
+- local keypair exists
+- `.local-keys/` is ignored through `.git/info/exclude`
+- local public key equals the selected Program ID
+- no keypair contents were printed
+- no keypair or secret-looking files were tracked or untracked
+
+Local toolchain snapshot:
+
+- `solana --version`: `solana-cli 4.0.0 (src:8de42dc0; feat:dda54cf7, client:Agave)`
+- `cargo --version`: `cargo 1.95.0 (f2d3ce0bd 2026-03-21)`
+- `rustc --version`: `rustc 1.95.0 (59807616e 2026-04-14)`
+- `rustup --version`: `rustup 1.29.0 (28d1352db 2026-03-05)`
+- `cargo build-sbf --version`: `cargo-build-sbf 4.0.0 / platform-tools v1.53 / rustc 1.89.0`
+
+Test evidence:
+
+- command: `cargo test --lib`
+- result: `201 passed`, `0 failed`, `1 ignored`
+
+Build evidence:
+
+- command: `cargo build-sbf --manifest-path programs/xxxl-svm/Cargo.toml`
+- result: success
+- output summary: `Finished release profile [optimized] target(s) in 2.52s`
+- `BUILD_EXECUTED=true`
+- `RPC_USED=false`
+- `DEPLOYED=false`
+- `TRANSACTION_SUBMITTED=false`
+- `SOL_SPENT=false`
+
+Produced artifact evidence:
+
+- actual artifact path: `programs/xxxl-svm/target/deploy/xxxl_svm.so`
+- artifact size: `38584` bytes
+- artifact SHA-256: `fd4d3b659ccaea4f5e24eca4d9e80ff808c43de1bf1ecef7315961751a085a7e`
+
+The produced `.so` artifact is local build output only and was not staged or committed by this stage.
+
+This stage explicitly did not execute:
+
+- `solana program deploy`
+- RPC deployment commands
+- transaction submission
+- SOL transfer
+- keypair content printing
+- secret file staging
+- `.so` artifact staging
+- blocker transition
+
+Current blocker status:
+
+- no blocker removed
+- no blocker transitioned
+- `PLACEHOLDER_PROGRAM_ID` remains active
+
+Remaining active blockers:
+
+- `PLACEHOLDER_PROGRAM_ID`
+- `LIVE_ROUTE_DISABLED`
+- `SPL_CPI_EXECUTION_DISABLED`
+- `PRODUCTION_GUARDIAN_SET_UNSET`
+- `PRODUCTION_PROOF_LOG_UNSET`
+- `EXTERNAL_REVIEW_INCOMPLETE`
+
+Future work still required:
+
+1. X1 testnet deployment execution evidence
+2. X1 testnet deployed Program ID verification evidence
+3. X1 testnet SPL mint authority transfer plan
+4. X1 testnet SPL mint authority verification evidence
+5. Program ID readiness model update
+6. placeholder Program ID blocker transition
+
+This stage does not change Rust source, Cargo files, tests, Program ID constants, PDA derivation logic, deployment status logic, safety invariant logic, live route execution, SPL CPI execution, `invoke_signed`, SPL Token `mint_to`, guardian production configuration, proof-log production configuration, external review status, or release readiness.
+
+This stage does not use RPC, deploy the program, submit a transaction, spend SOL, record secret material, remove any blocker, or make the runtime deployable.
+
+The runtime remains scaffold-only, locked, unreleasable, and not deployable.
