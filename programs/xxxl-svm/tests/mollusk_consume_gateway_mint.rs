@@ -230,6 +230,126 @@ fn mollusk_rejects_truncated_gateway_config_without_live_route() {
 }
 
 #[test]
+fn mollusk_rejects_wrong_spl_mint_owner_without_live_route() {
+    let fixture = ScaffoldFixture::new();
+    let mollusk = mollusk_for_program(&fixture.program_id);
+
+    let instruction = fixture.instruction();
+    let mut accounts = fixture.accounts();
+    accounts[5].1.owner = Pubkey::new_unique();
+
+    mollusk.process_and_validate_instruction(
+        &instruction,
+        &accounts,
+        &[Check::err(ProgramError::Custom(
+            XxxlError::InvalidAccountOwner as u32,
+        ))],
+    );
+}
+
+#[test]
+fn mollusk_rejects_wrong_spl_mint_authority_without_live_route() {
+    let fixture = ScaffoldFixture::new();
+    let mollusk = mollusk_for_program(&fixture.program_id);
+
+    let instruction = fixture.instruction();
+    let mut accounts = fixture.accounts();
+    accounts[5].1.data = packed_mint(Pubkey::new_unique(), true);
+
+    mollusk.process_and_validate_instruction(
+        &instruction,
+        &accounts,
+        &[Check::err(ProgramError::Custom(
+            XxxlError::InvalidPda as u32,
+        ))],
+    );
+}
+
+#[test]
+fn mollusk_rejects_uninitialized_spl_mint_without_live_route() {
+    let fixture = ScaffoldFixture::new();
+    let mollusk = mollusk_for_program(&fixture.program_id);
+
+    let instruction = fixture.instruction();
+    let mut accounts = fixture.accounts();
+    accounts[5].1.data = packed_mint(fixture.keys.mint_authority_pda, false);
+
+    mollusk.process_and_validate_instruction(
+        &instruction,
+        &accounts,
+        &[Check::err(ProgramError::Custom(
+            XxxlError::InvalidInstruction as u32,
+        ))],
+    );
+}
+
+#[test]
+fn mollusk_rejects_wrong_recipient_token_mint_without_live_route() {
+    let fixture = ScaffoldFixture::new();
+    let mollusk = mollusk_for_program(&fixture.program_id);
+
+    let instruction = fixture.instruction();
+    let mut accounts = fixture.accounts();
+    accounts[6].1.data = packed_token_account(
+        Pubkey::new_unique(),
+        fixture.keys.recipient_owner,
+        AccountState::Initialized,
+    );
+
+    mollusk.process_and_validate_instruction(
+        &instruction,
+        &accounts,
+        &[Check::err(ProgramError::Custom(
+            XxxlError::InvalidRecipientAta as u32,
+        ))],
+    );
+}
+
+#[test]
+fn mollusk_rejects_wrong_recipient_token_owner_without_live_route() {
+    let fixture = ScaffoldFixture::new();
+    let mollusk = mollusk_for_program(&fixture.program_id);
+
+    let instruction = fixture.instruction();
+    let mut accounts = fixture.accounts();
+    accounts[6].1.data = packed_token_account(
+        fixture.keys.spl_mint,
+        Pubkey::new_unique(),
+        AccountState::Initialized,
+    );
+
+    mollusk.process_and_validate_instruction(
+        &instruction,
+        &accounts,
+        &[Check::err(ProgramError::Custom(
+            XxxlError::InvalidRecipientAta as u32,
+        ))],
+    );
+}
+
+#[test]
+fn mollusk_rejects_uninitialized_recipient_token_account_without_live_route() {
+    let fixture = ScaffoldFixture::new();
+    let mollusk = mollusk_for_program(&fixture.program_id);
+
+    let instruction = fixture.instruction();
+    let mut accounts = fixture.accounts();
+    accounts[6].1.data = packed_token_account(
+        fixture.keys.spl_mint,
+        fixture.keys.recipient_owner,
+        AccountState::Uninitialized,
+    );
+
+    mollusk.process_and_validate_instruction(
+        &instruction,
+        &accounts,
+        &[Check::err(ProgramError::Custom(
+            XxxlError::InvalidRecipientAta as u32,
+        ))],
+    );
+}
+
+#[test]
 #[ignore = "requires cargo build-sbf and target/deploy/xxxl_svm.so"]
 fn valid_consume_gateway_mint_builds_execution_plan_without_state_mutation() {
     let manifest_dir = PathBuf::from(env!("CARGO_MANIFEST_DIR"));
@@ -532,6 +652,7 @@ struct FixtureKeys {
     guardian_set: Pubkey,
     processed_event: Pubkey,
     recipient_balance: Pubkey,
+    recipient_owner: Pubkey,
     spl_mint: Pubkey,
     recipient_token_account: Pubkey,
     mint_authority_pda: Pubkey,
@@ -569,6 +690,7 @@ impl ScaffoldFixture {
             guardian_set: Pubkey::new_unique(),
             processed_event: Pubkey::new_unique(),
             recipient_balance: Pubkey::new_unique(),
+            recipient_owner,
             spl_mint,
             recipient_token_account: Pubkey::new_unique(),
             mint_authority_pda,

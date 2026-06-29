@@ -37749,3 +37749,49 @@ Live route execution, SPL CPI execution, `invoke_signed`, and SPL Token
 
 The next Mollusk stage should be SPL Token Mint and Recipient Account Coverage,
 not blocker transition.
+
+## XXXL Mollusk SPL Token Account Validation Coverage
+
+Status: completed as a narrow Mollusk/SVM SPL Token mint and recipient token
+account validation coverage stage.
+
+Added non-ignored Mollusk tests:
+
+- `mollusk_rejects_wrong_spl_mint_owner_without_live_route`
+- `mollusk_rejects_wrong_spl_mint_authority_without_live_route`
+- `mollusk_rejects_uninitialized_spl_mint_without_live_route`
+- `mollusk_rejects_wrong_recipient_token_mint_without_live_route`
+- `mollusk_rejects_wrong_recipient_token_owner_without_live_route`
+- `mollusk_rejects_uninitialized_recipient_token_account_without_live_route`
+
+These tests execute the XXXL SBF program through Mollusk and assert rejected
+paths for selected SPL Token mint and recipient token account validation
+failures.
+
+Boundary artifact:
+
+- `docs/xxxl/xxxl-mollusk-spl-token-account-validation-coverage.md`
+
+Checkpoint artifact:
+
+- `docs/checkpoints/xxxl-mollusk-spl-token-account-validation-coverage.md`
+
+No Cargo files were changed.
+
+No runtime source files were changed.
+
+No blocker was removed.
+
+`MOLLUSK_COVERAGE_INCOMPLETE` remains active.
+
+The runtime remains:
+
+- scaffold-only
+- locked
+- unreleasable
+- not deployable
+
+Live route execution, SPL CPI execution, `invoke_signed`, and SPL Token
+`mint_to` remain disabled.
+
+The next Mollusk stage should be PDA Coverage, not blocker transition.
