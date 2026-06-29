@@ -54,6 +54,141 @@ fn mollusk_harness_rejects_malformed_instruction_without_live_route() {
 }
 
 #[test]
+fn mollusk_rejects_wrong_instruction_discriminator_without_live_route() {
+    let fixture = ScaffoldFixture::new();
+    let mollusk = mollusk_for_program(&fixture.program_id);
+
+    let mut instruction_data = fixture.instruction_data;
+    instruction_data[0] ^= 0xff;
+
+    let instruction =
+        Instruction::new_with_bytes(fixture.program_id, &instruction_data, Vec::new());
+    let accounts: Vec<(Pubkey, Account)> = Vec::new();
+
+    mollusk.process_and_validate_instruction(
+        &instruction,
+        &accounts,
+        &[Check::err(ProgramError::Custom(
+            XxxlError::InvalidDiscriminator as u32,
+        ))],
+    );
+}
+
+#[test]
+fn mollusk_rejects_wrong_instruction_version_without_live_route() {
+    let fixture = ScaffoldFixture::new();
+    let mollusk = mollusk_for_program(&fixture.program_id);
+
+    let mut instruction_data = fixture.instruction_data;
+    instruction_data[8..10].copy_from_slice(&2u16.to_le_bytes());
+
+    let instruction =
+        Instruction::new_with_bytes(fixture.program_id, &instruction_data, Vec::new());
+    let accounts: Vec<(Pubkey, Account)> = Vec::new();
+
+    mollusk.process_and_validate_instruction(
+        &instruction,
+        &accounts,
+        &[Check::err(ProgramError::Custom(
+            XxxlError::InvalidVersion as u32,
+        ))],
+    );
+}
+
+#[test]
+fn mollusk_rejects_extra_instruction_bytes_without_live_route() {
+    let fixture = ScaffoldFixture::new();
+    let mollusk = mollusk_for_program(&fixture.program_id);
+
+    let mut instruction_data = fixture.instruction_data.to_vec();
+    instruction_data.push(0);
+
+    let instruction =
+        Instruction::new_with_bytes(fixture.program_id, &instruction_data, Vec::new());
+    let accounts: Vec<(Pubkey, Account)> = Vec::new();
+
+    mollusk.process_and_validate_instruction(
+        &instruction,
+        &accounts,
+        &[Check::err(ProgramError::Custom(
+            XxxlError::InvalidInstruction as u32,
+        ))],
+    );
+}
+
+#[test]
+fn mollusk_rejects_wrong_encoded_account_meta_count_without_live_route() {
+    let fixture = ScaffoldFixture::new();
+    let mollusk = mollusk_for_program(&fixture.program_id);
+
+    let mut instruction_data = fixture.instruction_data;
+    instruction_data[10] = CONSUME_GATEWAY_MINT_ACCOUNT_META_COUNT - 1;
+
+    let instruction = Instruction::new_with_bytes(
+        fixture.program_id,
+        &instruction_data,
+        fixture.instruction().accounts,
+    );
+    let accounts = fixture.accounts();
+
+    mollusk.process_and_validate_instruction(
+        &instruction,
+        &accounts,
+        &[Check::err(ProgramError::Custom(
+            XxxlError::InvalidInstruction as u32,
+        ))],
+    );
+}
+
+#[test]
+fn mollusk_rejects_wrong_encoded_processed_event_account_index_without_live_route() {
+    let fixture = ScaffoldFixture::new();
+    let mollusk = mollusk_for_program(&fixture.program_id);
+
+    let mut instruction_data = fixture.instruction_data;
+    instruction_data[14] = CONSUME_GATEWAY_MINT_RECIPIENT_BALANCE_ACCOUNT_INDEX;
+
+    let instruction = Instruction::new_with_bytes(
+        fixture.program_id,
+        &instruction_data,
+        fixture.instruction().accounts,
+    );
+    let accounts = fixture.accounts();
+
+    mollusk.process_and_validate_instruction(
+        &instruction,
+        &accounts,
+        &[Check::err(ProgramError::Custom(
+            XxxlError::InvalidInstruction as u32,
+        ))],
+    );
+}
+
+#[test]
+fn mollusk_rejects_wrong_encoded_recipient_balance_account_index_without_live_route() {
+    let fixture = ScaffoldFixture::new();
+    let mollusk = mollusk_for_program(&fixture.program_id);
+
+    let mut instruction_data = fixture.instruction_data;
+    instruction_data[15] = CONSUME_GATEWAY_MINT_PROCESSED_EVENT_ACCOUNT_INDEX;
+
+    let instruction = Instruction::new_with_bytes(
+        fixture.program_id,
+        &instruction_data,
+        fixture.instruction().accounts,
+    );
+    let accounts = fixture.accounts();
+
+    mollusk.process_and_validate_instruction(
+        &instruction,
+        &accounts,
+        &[Check::err(ProgramError::Custom(
+            XxxlError::InvalidInstruction as u32,
+        ))],
+    );
+}
+
+#[test]
 fn mollusk_rejects_wrong_account_count_without_live_route() {
     let fixture = ScaffoldFixture::new();
     let mollusk = mollusk_for_program(&fixture.program_id);
