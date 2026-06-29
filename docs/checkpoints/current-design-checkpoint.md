@@ -39431,3 +39431,54 @@ Remaining active blockers:
 - `PRODUCTION_GUARDIAN_SET_UNSET`
 - `PRODUCTION_PROOF_LOG_UNSET`
 - `EXTERNAL_REVIEW_INCOMPLETE`
+
+## XXXL X1 Testnet Post-Deploy Read-Only Verification
+
+Status: Completed
+Branch: `stage-xxxl-x1-testnet-post-deploy-readonly-verification`
+Base: `6bda36d Add X1 testnet deployment execution evidence`
+
+A post-deploy read-only verification was performed against X1 testnet.
+
+Verification document:
+
+- `docs/xxxl/xxxl-x1-testnet-post-deploy-readonly-verification.md`
+
+Checkpoint document:
+
+- `docs/checkpoints/xxxl-x1-testnet-post-deploy-readonly-verification.md`
+
+Result flags:
+
+- `RPC_USED=true`
+- `READ_ONLY=true`
+- `DEPLOYED=true`
+- `TRANSACTION_SUBMITTED=false`
+- `SOL_SPENT=false`
+- `UPGRADE_EXECUTED=false`
+- `RUNTIME_CHANGED=false`
+
+Verified fields:
+
+- Program ID: `D7AQmZNtFFFoJbducz93atteeSZhw3jq6RmsqBvaf1my`
+- ProgramData address: `9tuesaPoJhrifF49vJewcg6PSWZeHAJiqQ97pq3LMW9T`
+- Authority: `DTfvjtRL63u3XYHXQfgRQCdhEanUK1qqawvfEAM9hxAc`
+- Last deployed slot: `169365249`
+- Data length: `38584 (0x96b8) bytes`
+- Program account balance: `0.26974872 SOL`
+- Cluster version: `3.1.14`
+- Fee payer balance observed: `24.52534222 SOL`
+
+Runtime status:
+
+- the deployed program exists on X1 testnet
+- the runtime remains scaffold-only
+- the runtime remains locked
+- the runtime is not a live gateway
+- no live route, SPL CPI, `invoke_signed`, or SPL Token `mint_to` path was enabled
+
+Blocker status:
+
+- no blocker removed
+- no blocker transitioned
+- `PLACEHOLDER_PROGRAM_ID` remains active until a dedicated blocker transition assessment explicitly changes the blocker model
