@@ -350,3 +350,71 @@ mod tests {
         assert_ne!(pda, program_id);
     }
 }
+
+#[cfg(test)]
+mod x1_testnet_program_id_candidate_dry_run_tests {
+    use super::*;
+    use solana_program::pubkey::Pubkey;
+    use std::str::FromStr;
+
+    #[test]
+    #[ignore = "requires XXXL_TESTNET_PROGRAM_ID_CANDIDATE; off-chain only; no RPC, no deploy, no SOL spend"]
+    fn x1_testnet_program_id_candidate_pda_dry_run() {
+        let candidate = std::env::var("XXXL_TESTNET_PROGRAM_ID_CANDIDATE")
+            .expect("set XXXL_TESTNET_PROGRAM_ID_CANDIDATE to the public Program ID candidate");
+
+        assert!(!candidate.trim().is_empty());
+        assert_ne!(candidate, crate::XXXL_PROGRAM_ID_PLACEHOLDER);
+        assert_ne!(candidate, "11111111111111111111111111111111");
+        assert_ne!(candidate, "BPFLoaderUpgradeab1e11111111111111111111111");
+        assert_ne!(candidate, crate::XXXL_TOKEN_PROGRAM_ID);
+
+        let program_id =
+            Pubkey::from_str(&candidate).expect("candidate must be a valid SVM/Solana pubkey");
+
+        let reports = derive_xxxl_pda_fixture_reports(&program_id);
+        let report = reports[0];
+
+        assert_eq!(reports.len(), 1);
+        assert_eq!(report.kind, XxxlPdaDerivationKind::GatewayMintAuthority);
+        assert_eq!(report.name, "gateway_mint_authority");
+        assert_eq!(report.program_id, program_id);
+
+        let (expected_pda, expected_bump) = find_gateway_mint_authority(&program_id);
+
+        assert_eq!(report.pda, expected_pda);
+        assert_eq!(report.bump, expected_bump);
+
+        verify_xxxl_pda_fixture_reports(&program_id, &reports)
+            .expect("candidate-derived PDA fixture must verify");
+
+        let mut wrong_program_id_reports = reports;
+        wrong_program_id_reports[0].program_id = Pubkey::default();
+        assert_eq!(
+            verify_xxxl_pda_fixture_reports(&program_id, &wrong_program_id_reports),
+            Err(XxxlPdaFixtureVerificationError::WrongProgramId { index: 0 })
+        );
+
+        let mut wrong_pda_reports = reports;
+        wrong_pda_reports[0].pda = Pubkey::default();
+        assert_eq!(
+            verify_xxxl_pda_fixture_reports(&program_id, &wrong_pda_reports),
+            Err(XxxlPdaFixtureVerificationError::WrongPda { index: 0 })
+        );
+
+        let mut wrong_bump_reports = reports;
+        wrong_bump_reports[0].bump = report.bump.wrapping_add(1);
+        assert_eq!(
+            verify_xxxl_pda_fixture_reports(&program_id, &wrong_bump_reports),
+            Err(XxxlPdaFixtureVerificationError::WrongBump { index: 0 })
+        );
+
+        println!("XXXL_TESTNET_PROGRAM_ID_CANDIDATE={}", program_id);
+        println!("GATEWAY_MINT_AUTHORITY_PDA={}", report.pda);
+        println!("GATEWAY_MINT_AUTHORITY_BUMP={}", report.bump);
+        println!("OFFCHAIN_ONLY=true");
+        println!("RPC_USED=false");
+        println!("DEPLOYED=false");
+        println!("SOL_SPENT=false");
+    }
+}

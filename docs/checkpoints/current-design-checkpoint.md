@@ -38643,3 +38643,93 @@ Recommended future sequence:
 This stage does not change Rust source, Cargo files, tests, Program ID constants, PDA derivation logic, PDA fixtures, deployment status logic, safety invariant logic, live route execution, SPL CPI execution, `invoke_signed`, SPL Token `mint_to`, guardian production configuration, proof-log production configuration, external review status, or release readiness.
 
 The runtime remains scaffold-only, locked, unreleasable, and not deployable.
+
+## XXXL X1 Testnet Program ID PDA Off-Chain Dry Run
+
+Status: Completed
+Branch: `stage-xxxl-x1-testnet-program-id-pda-offchain-dry-run`
+Base: `50b4c29 Add XXXL program identity authority procedure`
+
+This stage adds an ignored off-chain dry-run test for deriving and verifying the gateway mint authority PDA from an X1 testnet Program ID candidate.
+
+Dry-run artifact:
+
+- `docs/xxxl/xxxl-x1-testnet-program-id-pda-offchain-dry-run.md`
+
+Checkpoint artifact:
+
+- `docs/checkpoints/xxxl-x1-testnet-program-id-pda-offchain-dry-run.md`
+
+Rust test update:
+
+- `programs/xxxl-svm/src/pda.rs`
+
+Public Program ID candidate:
+
+- `D7AQmZNtFFFoJbducz93atteeSZhw3jq6RmsqBvaf1my`
+
+Derived gateway mint authority PDA:
+
+- `BLVsQPYXnDsTmfMW9wrXHBFpcmexM47BcAvVcibRtRYG`
+
+Derived bump:
+
+- `252`
+
+Local keypair path:
+
+- `.local-keys/xxxl-x1-testnet-program-keypair.json`
+
+The local keypair is ignored through `.git/info/exclude`.
+
+The keypair contents are not recorded.
+
+Dry-run flags:
+
+- `OFFCHAIN_ONLY=true`
+- `RPC_USED=false`
+- `DEPLOYED=false`
+- `SOL_SPENT=false`
+
+Default library test result:
+
+- `201 passed`
+- `0 failed`
+- `1 ignored`
+
+Candidate-specific ignored dry-run test result:
+
+- `1 passed`
+- `0 failed`
+
+Verification coverage:
+
+- candidate is a valid pubkey
+- candidate is not placeholder
+- candidate is not local fixture
+- candidate is not SPL Token Program ID
+- PDA is derived from candidate
+- bump is derived from candidate
+- generated fixture verifies
+- wrong Program ID is rejected
+- wrong PDA is rejected
+- wrong bump is rejected
+
+Current blocker status:
+
+- no blocker removed
+- no blocker transitioned
+- `PLACEHOLDER_PROGRAM_ID` remains active
+
+Remaining active blockers:
+
+- `PLACEHOLDER_PROGRAM_ID`
+- `LIVE_ROUTE_DISABLED`
+- `SPL_CPI_EXECUTION_DISABLED`
+- `PRODUCTION_GUARDIAN_SET_UNSET`
+- `PRODUCTION_PROOF_LOG_UNSET`
+- `EXTERNAL_REVIEW_INCOMPLETE`
+
+This stage does not deploy the program, use RPC, submit a transaction, spend SOL, record secret material, enable live route execution, enable SPL CPI execution, enable `invoke_signed`, enable SPL Token `mint_to`, configure production guardians, configure production proof logs, close external review, remove any blocker, or make the runtime deployable.
+
+The runtime remains scaffold-only, locked, unreleasable, and not deployable.
