@@ -37966,3 +37966,68 @@ SPL Token `mint_to` is not enabled.
 
 The next Mollusk stage should be instruction strictness coverage or rent and
 lifecycle coverage, not blocker transition.
+
+## XXXL Mollusk Instruction Strictness Coverage
+
+Status: completed as a narrow Mollusk/SVM instruction strictness coverage stage
+for the current locked `consume_gateway_mint` scaffold.
+
+Added non-ignored Mollusk tests:
+
+- `mollusk_rejects_wrong_instruction_discriminator_without_live_route`
+- `mollusk_rejects_wrong_instruction_version_without_live_route`
+- `mollusk_rejects_extra_instruction_bytes_without_live_route`
+- `mollusk_rejects_wrong_encoded_account_meta_count_without_live_route`
+- `mollusk_rejects_wrong_encoded_processed_event_account_index_without_live_route`
+- `mollusk_rejects_wrong_encoded_recipient_balance_account_index_without_live_route`
+
+These tests execute the XXXL SBF program through Mollusk and assert rejected
+paths for selected malformed instruction bytes and encoded account/index/count
+field strictness failures.
+
+This stage avoids duplicating the earlier account meta/order, PDA,
+replay/validation, SPL account, and no-mutation stages.
+
+Boundary artifact:
+
+- `docs/xxxl/xxxl-mollusk-instruction-strictness-coverage.md`
+
+Checkpoint artifact:
+
+- `docs/checkpoints/xxxl-mollusk-instruction-strictness-coverage.md`
+
+No Cargo files were changed.
+
+No runtime source files were changed.
+
+No blocker was removed.
+
+No blocker was transitioned.
+
+`MOLLUSK_COVERAGE_INCOMPLETE` remains active.
+
+This stage does not claim deployment readiness, future live route atomicity, or
+future SPL CPI success/failure behavior.
+
+This stage does not claim direct Mollusk entrypoint coverage for the disabled
+SPL CPI gate. The disabled SPL CPI gate remains Rust-boundary evidence until a
+future reviewed runtime-composition stage makes that boundary reachable through
+the SBF entrypoint.
+
+The runtime remains:
+
+- scaffold-only
+- locked
+- unreleasable
+- not deployable
+
+Live route execution remains disabled.
+
+SPL CPI execution remains disabled.
+
+`invoke_signed` is not enabled.
+
+SPL Token `mint_to` is not enabled.
+
+The next Mollusk stage should be rent and lifecycle coverage or a coverage
+review package, not blocker transition.
