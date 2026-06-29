@@ -38869,3 +38869,72 @@ Future work still required:
 This stage does not change Rust source, Cargo files, tests, Program ID constants, PDA derivation logic, deployment status logic, safety invariant logic, live route execution, SPL CPI execution, `invoke_signed`, SPL Token `mint_to`, guardian production configuration, proof-log production configuration, external review status, or release readiness.
 
 The runtime remains scaffold-only, locked, unreleasable, and not deployable.
+
+## XXXL X1 Testnet PDA Fixture Verification Record
+
+Status: Completed
+Branch: `stage-xxxl-x1-testnet-pda-fixture-verification-record`
+Base: `7ea8357 Add X1 testnet PDA fixture regeneration record`
+
+This docs-only stage records off-chain verification evidence for the regenerated X1 testnet PDA fixture.
+
+Verification record artifact:
+
+- `docs/xxxl/xxxl-x1-testnet-pda-fixture-verification-record.md`
+
+Checkpoint artifact:
+
+- `docs/checkpoints/xxxl-x1-testnet-pda-fixture-verification-record.md`
+
+Verified X1 testnet fixture:
+
+- Program ID: `D7AQmZNtFFFoJbducz93atteeSZhw3jq6RmsqBvaf1my`
+- PDA name: `gateway_mint_authority`
+- PDA derivation kind: `GatewayMintAuthority`
+- PDA seeds: `xxxl`, `gateway-mint-authority`, `v1`
+- PDA: `BLVsQPYXnDsTmfMW9wrXHBFpcmexM47BcAvVcibRtRYG`
+- bump: `252`
+
+Verification evidence:
+
+- existing fixture verification tests: `cargo test pda_fixture_verification --lib -- --nocapture`
+- ignored candidate dry-run test: `x1_testnet_program_id_candidate_pda_dry_run`
+- `OFFCHAIN_ONLY=true`
+- `RPC_USED=false`
+- `DEPLOYED=false`
+- `SOL_SPENT=false`
+- candidate-specific test result: `1 passed`, `0 failed`
+
+Verified rejection behavior:
+
+- wrong report count is rejected
+- wrong kind is rejected
+- wrong name is rejected
+- wrong Program ID is rejected
+- wrong PDA is rejected
+- wrong bump is rejected
+
+Current blocker status:
+
+- no blocker removed
+- no blocker transitioned
+- `PLACEHOLDER_PROGRAM_ID` remains active
+
+Remaining active blockers:
+
+- `PLACEHOLDER_PROGRAM_ID`
+- `LIVE_ROUTE_DISABLED`
+- `SPL_CPI_EXECUTION_DISABLED`
+- `PRODUCTION_GUARDIAN_SET_UNSET`
+- `PRODUCTION_PROOF_LOG_UNSET`
+- `EXTERNAL_REVIEW_INCOMPLETE`
+
+Future work still required:
+
+1. X1 testnet deployment or deployment-readiness evidence
+2. Program ID readiness model update
+3. placeholder Program ID blocker transition
+
+This stage does not change Rust source, Cargo files, tests, Program ID constants, PDA derivation logic, deployment status logic, safety invariant logic, live route execution, SPL CPI execution, `invoke_signed`, SPL Token `mint_to`, guardian production configuration, proof-log production configuration, external review status, or release readiness.
+
+The runtime remains scaffold-only, locked, unreleasable, and not deployable.
