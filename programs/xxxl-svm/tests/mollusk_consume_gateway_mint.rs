@@ -31,6 +31,7 @@ use xxxl_svm::{
 
 const PROGRAM_NAME: &str = "xxxl_svm";
 const TOKEN_PROGRAM_ID: &str = "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA";
+const MINT_AUTHORITY_PDA_ACCOUNT_INDEX: usize = 7;
 
 #[test]
 fn mollusk_harness_rejects_malformed_instruction_without_live_route() {
@@ -345,6 +346,105 @@ fn mollusk_rejects_uninitialized_recipient_token_account_without_live_route() {
         &accounts,
         &[Check::err(ProgramError::Custom(
             XxxlError::InvalidRecipientAta as u32,
+        ))],
+    );
+}
+
+#[test]
+fn mollusk_rejects_wrong_mint_authority_pda_without_live_route() {
+    let fixture = ScaffoldFixture::new();
+    let mollusk = mollusk_for_program(&fixture.program_id);
+    let wrong_pda = Pubkey::new_unique();
+
+    let mut instruction = fixture.instruction();
+    instruction.accounts[MINT_AUTHORITY_PDA_ACCOUNT_INDEX] =
+        AccountMeta::new_readonly(wrong_pda, false);
+
+    let mut accounts = fixture.accounts();
+    accounts[MINT_AUTHORITY_PDA_ACCOUNT_INDEX].0 = wrong_pda;
+
+    mollusk.process_and_validate_instruction(
+        &instruction,
+        &accounts,
+        &[Check::err(ProgramError::Custom(
+            XxxlError::InvalidInstruction as u32,
+        ))],
+    );
+}
+
+#[test]
+fn mollusk_rejects_wrong_mint_authority_bump_without_live_route() {
+    let fixture = ScaffoldFixture::new();
+    let mollusk = mollusk_for_program(&fixture.program_id);
+
+    let instruction = fixture.instruction();
+    let mut accounts = fixture.accounts();
+    accounts[CONSUME_GATEWAY_MINT_MINT_STATE_ACCOUNT_INDEX as usize]
+        .1
+        .data[13] = accounts[CONSUME_GATEWAY_MINT_MINT_STATE_ACCOUNT_INDEX as usize]
+        .1
+        .data[13]
+        .wrapping_add(1);
+
+    mollusk.process_and_validate_instruction(
+        &instruction,
+        &accounts,
+        &[Check::err(ProgramError::Custom(
+            XxxlError::InvalidPda as u32,
+        ))],
+    );
+}
+
+#[test]
+fn mollusk_rejects_mint_authority_pda_for_wrong_program_id_without_live_route() {
+    let fixture = ScaffoldFixture::new();
+    let mollusk = mollusk_for_program(&fixture.program_id);
+    let wrong_program_id = Pubkey::new_unique();
+    let (wrong_pda, wrong_bump) = Pubkey::find_program_address(
+        &[b"xxxl", b"gateway-mint-authority", b"v1"],
+        &wrong_program_id,
+    );
+
+    let mut instruction = fixture.instruction();
+    instruction.accounts[MINT_AUTHORITY_PDA_ACCOUNT_INDEX] =
+        AccountMeta::new_readonly(wrong_pda, false);
+
+    let mut accounts = fixture.accounts();
+    accounts[MINT_AUTHORITY_PDA_ACCOUNT_INDEX].0 = wrong_pda;
+    accounts[CONSUME_GATEWAY_MINT_MINT_STATE_ACCOUNT_INDEX as usize]
+        .1
+        .data[13] = wrong_bump;
+    accounts[CONSUME_GATEWAY_MINT_MINT_STATE_ACCOUNT_INDEX as usize]
+        .1
+        .data[64..96]
+        .copy_from_slice(&wrong_pda.to_bytes());
+
+    mollusk.process_and_validate_instruction(
+        &instruction,
+        &accounts,
+        &[Check::err(ProgramError::Custom(
+            XxxlError::InvalidPda as u32,
+        ))],
+    );
+}
+
+#[test]
+fn mollusk_rejects_mint_authority_pda_semantic_mismatch_without_live_route() {
+    let fixture = ScaffoldFixture::new();
+    let mollusk = mollusk_for_program(&fixture.program_id);
+
+    let instruction = fixture.instruction();
+    let mut accounts = fixture.accounts();
+    accounts[CONSUME_GATEWAY_MINT_MINT_STATE_ACCOUNT_INDEX as usize]
+        .1
+        .data[64..96]
+        .copy_from_slice(&Pubkey::new_unique().to_bytes());
+
+    mollusk.process_and_validate_instruction(
+        &instruction,
+        &accounts,
+        &[Check::err(ProgramError::Custom(
+            XxxlError::InvalidInstruction as u32,
         ))],
     );
 }

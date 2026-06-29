@@ -37795,3 +37795,49 @@ Live route execution, SPL CPI execution, `invoke_signed`, and SPL Token
 `mint_to` remain disabled.
 
 The next Mollusk stage should be PDA Coverage, not blocker transition.
+
+## XXXL Mollusk PDA Coverage
+
+Status: completed as a narrow Mollusk/SVM PDA coverage stage.
+
+Added non-ignored Mollusk tests:
+
+- `mollusk_rejects_wrong_mint_authority_pda_without_live_route`
+- `mollusk_rejects_wrong_mint_authority_bump_without_live_route`
+- `mollusk_rejects_mint_authority_pda_for_wrong_program_id_without_live_route`
+- `mollusk_rejects_mint_authority_pda_semantic_mismatch_without_live_route`
+
+These tests execute the XXXL SBF program through Mollusk and assert rejected
+paths for selected mint authority PDA key, bump, wrong-program derivation, and
+semantic binding failures.
+
+Boundary artifact:
+
+- `docs/xxxl/xxxl-mollusk-pda-coverage.md`
+
+Checkpoint artifact:
+
+- `docs/checkpoints/xxxl-mollusk-pda-coverage.md`
+
+No Cargo files were changed.
+
+No runtime source files were changed.
+
+No blocker was removed.
+
+`MOLLUSK_COVERAGE_INCOMPLETE` remains active.
+
+Production PDA fixtures were not regenerated.
+
+The runtime remains:
+
+- scaffold-only
+- locked
+- unreleasable
+- not deployable
+
+Live route execution, SPL CPI execution, `invoke_signed`, and SPL Token
+`mint_to` remain disabled.
+
+The next Mollusk stage should be Disabled Execution Gate and No-Mutation
+Coverage, not blocker transition.
