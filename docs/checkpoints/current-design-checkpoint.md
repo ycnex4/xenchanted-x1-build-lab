@@ -38259,3 +38259,79 @@ Recommended next stage:
 - `stage-xxxl-mollusk-coverage-blocker-transition`
 
 The next stage may transition only `MOLLUSK_COVERAGE_INCOMPLETE`; all other blockers must remain active.
+
+## XXXL Mollusk Coverage Blocker Transition
+
+Status: Completed
+Branch: `stage-xxxl-mollusk-coverage-blocker-transition`
+Base: `d0a70ce Add XXXL Mollusk coverage assessment`
+
+This stage performs the narrow deployment blocker transition for `MOLLUSK_COVERAGE_INCOMPLETE`.
+
+Transition artifact:
+
+- `docs/xxxl/xxxl-mollusk-coverage-blocker-transition.md`
+
+Checkpoint artifact:
+
+- `docs/checkpoints/xxxl-mollusk-coverage-blocker-transition.md`
+
+Code files changed:
+
+- `programs/xxxl-svm/src/deployment_status.rs`
+- `programs/xxxl-svm/src/safety_invariants.rs`
+
+Transition result:
+
+- `MOLLUSK_COVERAGE_INCOMPLETE` is no longer active in runtime deployment blockers
+- active blocker count is now 6
+- active deployment report no longer contains code `MOLLUSK_COVERAGE_INCOMPLETE`
+- historical enum variant `MolluskCoverageIncomplete` remains available for explicit transition assertions
+- tests verify that `MOLLUSK_COVERAGE_INCOMPLETE` is absent from active report blocker codes
+
+Remaining active blockers:
+
+- `PLACEHOLDER_PROGRAM_ID`
+- `LIVE_ROUTE_DISABLED`
+- `SPL_CPI_EXECUTION_DISABLED`
+- `PRODUCTION_GUARDIAN_SET_UNSET`
+- `PRODUCTION_PROOF_LOG_UNSET`
+- `EXTERNAL_REVIEW_INCOMPLETE`
+
+Safety boundary:
+
+- runtime remains not deployable
+- predeploy gate remains blocked
+- safety lock remains active
+- safety unlock is not ready
+- safety release is not allowed
+- live route execution remains disabled
+- SPL CPI execution remains disabled
+- `invoke_signed` is not enabled
+- SPL Token `mint_to` is not enabled
+- runtime remains scaffold-only, locked, unreleasable, and not deployable
+
+Validation completed:
+
+- `cargo fmt --manifest-path programs/xxxl-svm/Cargo.toml --check`
+- `cargo test --manifest-path programs/xxxl-svm/Cargo.toml deployment_status --lib`
+- `cargo test --manifest-path programs/xxxl-svm/Cargo.toml safety_invariant --lib`
+- `cargo test --manifest-path programs/xxxl-svm/Cargo.toml --lib`
+- `cargo test --manifest-path programs/xxxl-svm/Cargo.toml mollusk`
+- `cargo test --manifest-path programs/xxxl-svm/Cargo.toml`
+- `git diff --check`
+
+Non-changes:
+
+- no Cargo changes
+- no Mollusk test changes
+- no runtime processor changes
+- no instruction decoding changes
+- no account validation changes
+- no PDA fixture changes
+- no live route activation
+- no SPL CPI activation
+- no deployment readiness claim
+- no release readiness claim
+
+No other blocker is transitioned by this stage.

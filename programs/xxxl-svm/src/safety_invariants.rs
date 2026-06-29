@@ -242,6 +242,9 @@ pub struct XxxlDeploymentBlockerEvidenceConsistencyReport {
     pub spl_cpi_execution_disabled_blocker_present: bool,
     pub account_contract_unreviewed_blocker_present: bool,
     pub mollusk_coverage_incomplete_blocker_present: bool,
+    pub production_guardian_set_unset_blocker_present: bool,
+    pub production_proof_log_unset_blocker_present: bool,
+    pub external_review_incomplete_blocker_present: bool,
     pub evidence_consistent: bool,
 }
 
@@ -262,6 +265,15 @@ pub fn xxxl_deployment_blocker_evidence_consistency_report(
     let mollusk_coverage_incomplete_blocker_present = xxxl_runtime_deployment_report_has_blocker(
         XxxlRuntimeDeploymentBlocker::MolluskCoverageIncomplete,
     );
+    let production_guardian_set_unset_blocker_present = xxxl_runtime_deployment_report_has_blocker(
+        XxxlRuntimeDeploymentBlocker::ProductionGuardianSetUnset,
+    );
+    let production_proof_log_unset_blocker_present = xxxl_runtime_deployment_report_has_blocker(
+        XxxlRuntimeDeploymentBlocker::ProductionProofLogUnset,
+    );
+    let external_review_incomplete_blocker_present = xxxl_runtime_deployment_report_has_blocker(
+        XxxlRuntimeDeploymentBlocker::ExternalReviewIncomplete,
+    );
 
     XxxlDeploymentBlockerEvidenceConsistencyReport {
         safety_lock_evidence_complete,
@@ -270,12 +282,18 @@ pub fn xxxl_deployment_blocker_evidence_consistency_report(
         spl_cpi_execution_disabled_blocker_present,
         account_contract_unreviewed_blocker_present,
         mollusk_coverage_incomplete_blocker_present,
+        production_guardian_set_unset_blocker_present,
+        production_proof_log_unset_blocker_present,
+        external_review_incomplete_blocker_present,
         evidence_consistent: safety_lock_evidence_complete
             && placeholder_program_id_blocker_present
             && live_route_disabled_blocker_present
             && spl_cpi_execution_disabled_blocker_present
             && !account_contract_unreviewed_blocker_present
-            && mollusk_coverage_incomplete_blocker_present,
+            && !mollusk_coverage_incomplete_blocker_present
+            && production_guardian_set_unset_blocker_present
+            && production_proof_log_unset_blocker_present
+            && external_review_incomplete_blocker_present,
     }
 }
 
@@ -392,6 +410,7 @@ pub fn xxxl_runtime_safety_release_is_allowed() -> bool {
 #[cfg(test)]
 mod tests {
     use super::*;
+    use crate::deployment_status::xxxl_runtime_deployment_report_has_blocker_code;
 
     #[test]
     fn runtime_safety_invariant_summary_matches_current_blocking_state() {
@@ -518,13 +537,47 @@ mod tests {
         assert!(report.live_route_disabled_blocker_present);
         assert!(report.spl_cpi_execution_disabled_blocker_present);
         assert!(!report.account_contract_unreviewed_blocker_present);
-        assert!(report.mollusk_coverage_incomplete_blocker_present);
+        assert!(!report.mollusk_coverage_incomplete_blocker_present);
+        assert!(report.production_guardian_set_unset_blocker_present);
+        assert!(report.production_proof_log_unset_blocker_present);
+        assert!(report.external_review_incomplete_blocker_present);
         assert!(report.evidence_consistent);
     }
 
     #[test]
     fn deployment_blocker_evidence_is_consistent_for_current_scaffold() {
         assert!(xxxl_deployment_blocker_evidence_is_consistent());
+    }
+
+    #[test]
+    fn mollusk_coverage_transition_keeps_runtime_blocked_and_safety_locked() {
+        assert!(xxxl_runtime_deployment_report_has_blocker_code(
+            "PLACEHOLDER_PROGRAM_ID"
+        ));
+        assert!(xxxl_runtime_deployment_report_has_blocker_code(
+            "LIVE_ROUTE_DISABLED"
+        ));
+        assert!(xxxl_runtime_deployment_report_has_blocker_code(
+            "SPL_CPI_EXECUTION_DISABLED"
+        ));
+        assert!(xxxl_runtime_deployment_report_has_blocker_code(
+            "PRODUCTION_GUARDIAN_SET_UNSET"
+        ));
+        assert!(xxxl_runtime_deployment_report_has_blocker_code(
+            "PRODUCTION_PROOF_LOG_UNSET"
+        ));
+        assert!(xxxl_runtime_deployment_report_has_blocker_code(
+            "EXTERNAL_REVIEW_INCOMPLETE"
+        ));
+        assert!(!xxxl_runtime_deployment_report_has_blocker_code(
+            "MOLLUSK_COVERAGE_INCOMPLETE"
+        ));
+        assert!(!xxxl_runtime_deployment_report_has_blocker_code(
+            "ACCOUNT_CONTRACT_UNREVIEWED"
+        ));
+        assert!(xxxl_runtime_safety_lock_is_active());
+        assert!(!xxxl_runtime_safety_unlock_is_ready());
+        assert!(!xxxl_runtime_safety_release_is_allowed());
     }
     #[test]
     fn runtime_safety_unlock_criteria_summary_blocks_current_scaffold() {
