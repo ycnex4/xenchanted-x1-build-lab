@@ -651,6 +651,126 @@ fn mollusk_wrong_processed_event_recipient_rejection_leaves_mutable_accounts_unc
 }
 
 #[test]
+fn mollusk_rejects_consumed_processed_event_replay_without_live_route() {
+    let fixture = ScaffoldFixture::new();
+    let mollusk = mollusk_for_program(&fixture.program_id);
+
+    let instruction = fixture.instruction();
+    let mut accounts = fixture.accounts();
+    accounts[CONSUME_GATEWAY_MINT_PROCESSED_EVENT_ACCOUNT_INDEX as usize]
+        .1
+        .data[10] = 1;
+
+    mollusk.process_and_validate_instruction(
+        &instruction,
+        &accounts,
+        &[Check::err(ProgramError::Custom(
+            XxxlError::InvalidInstruction as u32,
+        ))],
+    );
+}
+
+#[test]
+fn mollusk_rejects_wrong_processed_event_canonical_event_key_without_live_route() {
+    let fixture = ScaffoldFixture::new();
+    let mollusk = mollusk_for_program(&fixture.program_id);
+
+    let instruction = fixture.instruction();
+    let mut accounts = fixture.accounts();
+    accounts[CONSUME_GATEWAY_MINT_PROCESSED_EVENT_ACCOUNT_INDEX as usize]
+        .1
+        .data[16] ^= 0xff;
+
+    mollusk.process_and_validate_instruction(
+        &instruction,
+        &accounts,
+        &[Check::err(ProgramError::Custom(
+            XxxlError::InvalidInstruction as u32,
+        ))],
+    );
+}
+
+#[test]
+fn mollusk_rejects_wrong_processed_event_route_id_without_live_route() {
+    let fixture = ScaffoldFixture::new();
+    let mollusk = mollusk_for_program(&fixture.program_id);
+
+    let instruction = fixture.instruction();
+    let mut accounts = fixture.accounts();
+    accounts[CONSUME_GATEWAY_MINT_PROCESSED_EVENT_ACCOUNT_INDEX as usize]
+        .1
+        .data[48] ^= 0xff;
+
+    mollusk.process_and_validate_instruction(
+        &instruction,
+        &accounts,
+        &[Check::err(ProgramError::Custom(
+            XxxlError::InvalidInstruction as u32,
+        ))],
+    );
+}
+
+#[test]
+fn mollusk_rejects_wrong_processed_event_recipient_without_live_route() {
+    let fixture = ScaffoldFixture::new();
+    let mollusk = mollusk_for_program(&fixture.program_id);
+
+    let instruction = fixture.instruction();
+    let mut accounts = fixture.accounts();
+    accounts[CONSUME_GATEWAY_MINT_PROCESSED_EVENT_ACCOUNT_INDEX as usize]
+        .1
+        .data[80] ^= 0xff;
+
+    mollusk.process_and_validate_instruction(
+        &instruction,
+        &accounts,
+        &[Check::err(ProgramError::Custom(
+            XxxlError::InvalidInstruction as u32,
+        ))],
+    );
+}
+
+#[test]
+fn mollusk_rejects_wrong_recipient_balance_owner_without_live_route() {
+    let fixture = ScaffoldFixture::new();
+    let mollusk = mollusk_for_program(&fixture.program_id);
+
+    let instruction = fixture.instruction();
+    let mut accounts = fixture.accounts();
+    accounts[CONSUME_GATEWAY_MINT_RECIPIENT_BALANCE_ACCOUNT_INDEX as usize]
+        .1
+        .data[16] ^= 0xff;
+
+    mollusk.process_and_validate_instruction(
+        &instruction,
+        &accounts,
+        &[Check::err(ProgramError::Custom(
+            XxxlError::InvalidRecipientAta as u32,
+        ))],
+    );
+}
+
+#[test]
+fn mollusk_rejects_wrong_recipient_balance_mint_without_live_route() {
+    let fixture = ScaffoldFixture::new();
+    let mollusk = mollusk_for_program(&fixture.program_id);
+
+    let instruction = fixture.instruction();
+    let mut accounts = fixture.accounts();
+    accounts[CONSUME_GATEWAY_MINT_RECIPIENT_BALANCE_ACCOUNT_INDEX as usize]
+        .1
+        .data[48] ^= 0xff;
+
+    mollusk.process_and_validate_instruction(
+        &instruction,
+        &accounts,
+        &[Check::err(ProgramError::Custom(
+            XxxlError::InvalidRecipientAta as u32,
+        ))],
+    );
+}
+
+#[test]
 #[ignore = "requires cargo build-sbf and target/deploy/xxxl_svm.so"]
 fn invalid_consume_gateway_mint_wrong_recipient_token_owner_rejects_before_live_route() {
     let fixture = ScaffoldFixture::new();
