@@ -38554,3 +38554,92 @@ Remaining active blockers:
 This stage does not change Rust source, Cargo files, tests, Program ID constants, PDA derivation logic, PDA fixtures, deployment status logic, safety invariant logic, live route execution, SPL CPI execution, `invoke_signed`, SPL Token `mint_to`, guardian production configuration, proof-log production configuration, external review status, or release readiness.
 
 The runtime remains scaffold-only, locked, unreleasable, and not deployable.
+
+## XXXL Program Identity and Authority Procedure
+
+Status: Completed
+Branch: `stage-xxxl-program-identity-authority-procedure`
+Base: `51cf4b3 Add XXXL real Program ID selection procedure`
+
+This docs-only stage records the intended authority model for the future XXXL SVM program identity.
+
+Procedure artifact:
+
+- `docs/xxxl/xxxl-program-identity-authority-procedure.md`
+
+Checkpoint artifact:
+
+- `docs/checkpoints/xxxl-program-identity-authority-procedure.md`
+
+Authority model:
+
+- temporary deploy or upgrade authority may exist during development
+- final production target is no human owner
+- final production target is no team-wallet owner
+- final production target is no guardian owner
+- final production target is no deployer owner
+- gateway mint authority must be PDA-controlled
+- production target is immutable or upgrade authority removed/frozen before real release
+
+Role separation:
+
+- temporary deploy authority is not final protocol ownership
+- temporary deploy authority is not mint authority
+- guardians are not program owners
+- guardians are not deploy authorities
+- guardians are not upgrade authorities
+- guardians are not mint authorities
+- guardians only approve or attest gateway proof material
+- gateway mint authority PDA must be derived from final real Program ID
+
+Secret handling:
+
+- repository may record public addresses only
+- repository must not record deploy private keys
+- repository must not record keypair files
+- repository must not record seed phrases
+- repository must not record mnemonic phrases
+- repository must not record guardian private keys
+- repository must not record production signer private keys
+- repository must not record `.env` secrets
+- repository must not record RPC provider secrets
+
+Future Program ID selection record must include:
+
+- public Program ID string
+- target network
+- branch and commit
+- selection source
+- confirmation that no private key is recorded
+- confirmation that no deployment secret is recorded
+- confirmation that Program ID is not placeholder
+- confirmation that Program ID is not local fixture
+- statement that gateway mint authority PDA must be regenerated from it
+
+Current blocker status:
+
+- no blocker removed
+- no blocker transitioned
+- `PLACEHOLDER_PROGRAM_ID` remains active
+
+Remaining active blockers:
+
+- `PLACEHOLDER_PROGRAM_ID`
+- `LIVE_ROUTE_DISABLED`
+- `SPL_CPI_EXECUTION_DISABLED`
+- `PRODUCTION_GUARDIAN_SET_UNSET`
+- `PRODUCTION_PROOF_LOG_UNSET`
+- `EXTERNAL_REVIEW_INCOMPLETE`
+
+Recommended future sequence:
+
+1. `stage-xxxl-real-program-id-selection-record`
+2. `stage-xxxl-production-pda-fixture-regeneration`
+3. `stage-xxxl-production-pda-fixture-verification`
+4. `stage-xxxl-program-id-readiness-model-update`
+5. `stage-xxxl-placeholder-program-id-blocker-transition`
+6. `stage-xxxl-production-authority-removal-plan`
+
+This stage does not change Rust source, Cargo files, tests, Program ID constants, PDA derivation logic, PDA fixtures, deployment status logic, safety invariant logic, live route execution, SPL CPI execution, `invoke_signed`, SPL Token `mint_to`, guardian production configuration, proof-log production configuration, external review status, or release readiness.
+
+The runtime remains scaffold-only, locked, unreleasable, and not deployable.
