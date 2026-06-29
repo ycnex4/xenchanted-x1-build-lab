@@ -51,6 +51,84 @@ fn mollusk_harness_rejects_malformed_instruction_without_live_route() {
 }
 
 #[test]
+fn mollusk_rejects_wrong_account_count_without_live_route() {
+    let fixture = ScaffoldFixture::new();
+    let mollusk = mollusk_for_program(&fixture.program_id);
+
+    let mut instruction = fixture.instruction();
+    instruction.accounts.pop();
+
+    let mut accounts = fixture.accounts();
+    accounts.pop();
+
+    mollusk.process_and_validate_instruction(
+        &instruction,
+        &accounts,
+        &[Check::err(ProgramError::Custom(
+            XxxlError::InvalidInstruction as u32,
+        ))],
+    );
+}
+
+#[test]
+fn mollusk_rejects_wrong_account_order_without_live_route() {
+    let fixture = ScaffoldFixture::new();
+    let mollusk = mollusk_for_program(&fixture.program_id);
+
+    let mut instruction = fixture.instruction();
+    instruction.accounts.swap(1, 2);
+
+    let mut accounts = fixture.accounts();
+    accounts.swap(1, 2);
+
+    mollusk.process_and_validate_instruction(
+        &instruction,
+        &accounts,
+        &[Check::err(ProgramError::Custom(
+            XxxlError::InvalidInstruction as u32,
+        ))],
+    );
+}
+
+#[test]
+fn mollusk_rejects_unexpected_signer_without_live_route() {
+    let fixture = ScaffoldFixture::new();
+    let mollusk = mollusk_for_program(&fixture.program_id);
+
+    let mut instruction = fixture.instruction();
+    instruction.accounts[4] = AccountMeta::new(fixture.keys.recipient_balance, true);
+
+    let accounts = fixture.accounts();
+
+    mollusk.process_and_validate_instruction(
+        &instruction,
+        &accounts,
+        &[Check::err(ProgramError::Custom(
+            XxxlError::InvalidInstruction as u32,
+        ))],
+    );
+}
+
+#[test]
+fn mollusk_rejects_writable_readonly_mismatch_without_live_route() {
+    let fixture = ScaffoldFixture::new();
+    let mollusk = mollusk_for_program(&fixture.program_id);
+
+    let mut instruction = fixture.instruction();
+    instruction.accounts[0] = AccountMeta::new(fixture.keys.mint_state, false);
+
+    let accounts = fixture.accounts();
+
+    mollusk.process_and_validate_instruction(
+        &instruction,
+        &accounts,
+        &[Check::err(ProgramError::Custom(
+            XxxlError::InvalidInstruction as u32,
+        ))],
+    );
+}
+
+#[test]
 #[ignore = "requires cargo build-sbf and target/deploy/xxxl_svm.so"]
 fn valid_consume_gateway_mint_builds_execution_plan_without_state_mutation() {
     let manifest_dir = PathBuf::from(env!("CARGO_MANIFEST_DIR"));
