@@ -39106,3 +39106,103 @@ This stage does not change Rust source, Cargo files, tests, Program ID constants
 This stage does not use RPC, deploy the program, submit a transaction, spend SOL, record secret material, remove any blocker, or make the runtime deployable.
 
 The runtime remains scaffold-only, locked, unreleasable, and not deployable.
+
+## XXXL X1 Testnet Deployment Toolchain Artifact Preflight
+
+Status: Completed
+Branch: `stage-xxxl-x1-testnet-deployment-toolchain-artifact-preflight`
+Base: `8b8259f Add X1 testnet deployment command plan`
+
+This docs-only stage records a local toolchain and artifact-path preflight for a future X1 testnet deployment execution stage.
+
+Toolchain/artifact preflight artifact:
+
+- `docs/xxxl/xxxl-x1-testnet-deployment-toolchain-artifact-preflight.md`
+
+Checkpoint artifact:
+
+- `docs/checkpoints/xxxl-x1-testnet-deployment-toolchain-artifact-preflight.md`
+
+Selected X1 testnet Program ID candidate:
+
+- `D7AQmZNtFFFoJbducz93atteeSZhw3jq6RmsqBvaf1my`
+
+Verified PDA fixture:
+
+- PDA name: `gateway_mint_authority`
+- PDA: `BLVsQPYXnDsTmfMW9wrXHBFpcmexM47BcAvVcibRtRYG`
+- bump: `252`
+
+Local keypair path:
+
+- `.local-keys/xxxl-x1-testnet-program-keypair.json`
+
+Planned X1 testnet RPC:
+
+- `https://rpc.testnet.x1.xyz`
+
+Local toolchain snapshot:
+
+- `solana --version`: `solana-cli 4.0.0 (src:8de42dc0; feat:dda54cf7, client:Agave)`
+- `cargo --version`: `cargo 1.95.0 (f2d3ce0bd 2026-03-21)`
+- `rustc --version`: `rustc 1.95.0 (59807616e 2026-04-14)`
+- `rustup --version`: `rustup 1.29.0 (28d1352db 2026-03-05)`
+- `cargo build-sbf --version`: `cargo-build-sbf 4.0.0 / platform-tools v1.53 / rustc 1.89.0`
+- `cargo build-bpf --version`: `MISSING or failed: error: no such command: `build-bpf` /  / help: a command with a similar name exists: `build-sbf``
+
+Planned build command:
+
+- `cargo build-sbf --manifest-path programs/xxxl-svm/Cargo.toml`
+
+Expected artifact path candidates:
+
+- `programs/xxxl-svm/target/deploy/xxxl_svm.so`
+- `target/deploy/xxxl_svm.so`
+
+Test evidence:
+
+- default Rust library tests: `201 passed`, `0 failed`, `1 ignored`
+
+This stage explicitly did not execute:
+
+- `cargo build-sbf --manifest-path programs/xxxl-svm/Cargo.toml`
+- `cargo build-bpf`
+- `solana program deploy`
+- RPC deployment commands
+- transaction submission
+- SOL transfer
+- keypair content printing
+- secret file staging
+- blocker transition
+
+Current blocker status:
+
+- no blocker removed
+- no blocker transitioned
+- `PLACEHOLDER_PROGRAM_ID` remains active
+
+Remaining active blockers:
+
+- `PLACEHOLDER_PROGRAM_ID`
+- `LIVE_ROUTE_DISABLED`
+- `SPL_CPI_EXECUTION_DISABLED`
+- `PRODUCTION_GUARDIAN_SET_UNSET`
+- `PRODUCTION_PROOF_LOG_UNSET`
+- `EXTERNAL_REVIEW_INCOMPLETE`
+
+Future work still required:
+
+1. X1 testnet build execution evidence
+2. produced artifact path and hash
+3. X1 testnet deployment execution evidence
+4. X1 testnet deployed Program ID verification evidence
+5. X1 testnet SPL mint authority transfer plan
+6. X1 testnet SPL mint authority verification evidence
+7. Program ID readiness model update
+8. placeholder Program ID blocker transition
+
+This stage does not change Rust source, Cargo files, tests, Program ID constants, PDA derivation logic, deployment status logic, safety invariant logic, live route execution, SPL CPI execution, `invoke_signed`, SPL Token `mint_to`, guardian production configuration, proof-log production configuration, external review status, or release readiness.
+
+This stage does not build the program, use RPC, deploy the program, submit a transaction, spend SOL, record secret material, remove any blocker, or make the runtime deployable.
+
+The runtime remains scaffold-only, locked, unreleasable, and not deployable.
