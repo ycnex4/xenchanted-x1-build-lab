@@ -33,6 +33,24 @@ const PROGRAM_NAME: &str = "xxxl_svm";
 const TOKEN_PROGRAM_ID: &str = "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA";
 
 #[test]
+fn mollusk_harness_rejects_malformed_instruction_without_live_route() {
+    let program_id = Pubkey::new_unique();
+    let mollusk = mollusk_for_program(&program_id);
+
+    let instruction_data = vec![0u8; CONSUME_GATEWAY_MINT_INSTRUCTION_LEN - 1];
+    let instruction = Instruction::new_with_bytes(program_id, &instruction_data, Vec::new());
+    let accounts: Vec<(Pubkey, Account)> = Vec::new();
+
+    mollusk.process_and_validate_instruction(
+        &instruction,
+        &accounts,
+        &[Check::err(ProgramError::Custom(
+            XxxlError::InvalidInstruction as u32,
+        ))],
+    );
+}
+
+#[test]
 #[ignore = "requires cargo build-sbf and target/deploy/xxxl_svm.so"]
 fn valid_consume_gateway_mint_builds_execution_plan_without_state_mutation() {
     let manifest_dir = PathBuf::from(env!("CARGO_MANIFEST_DIR"));
@@ -41,7 +59,7 @@ fn valid_consume_gateway_mint_builds_execution_plan_without_state_mutation() {
 
     assert!(
         program_elf.exists(),
-        "missing {}; run `cargo build-sbf` before this ignored Mollusk test",
+        "missing {}; run `cargo build-sbf` before this Mollusk test",
         program_elf.display()
     );
 
