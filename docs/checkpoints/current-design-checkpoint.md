@@ -38483,3 +38483,74 @@ Remaining active blockers:
 This stage does not change Rust source, Cargo files, tests, Program ID constants, PDA derivation logic, PDA fixtures, deployment status logic, safety invariant logic, live route execution, SPL CPI execution, `invoke_signed`, SPL Token `mint_to`, guardian production configuration, proof-log production configuration, external review status, or release readiness.
 
 The runtime remains scaffold-only, locked, unreleasable, and not deployable.
+
+## XXXL Real Program ID Selection Procedure
+
+Status: Completed
+Branch: `stage-xxxl-real-program-id-selection-procedure`
+Base: `abda874 Add XXXL real Program ID readiness plan`
+
+This docs-only stage records the procedure for selecting the future real XXXL SVM Program ID.
+
+Procedure artifact:
+
+- `docs/xxxl/xxxl-real-program-id-selection-procedure.md`
+
+Checkpoint artifact:
+
+- `docs/checkpoints/xxxl-real-program-id-selection-procedure.md`
+
+Current state:
+
+- no real Program ID is selected
+- `XXXL_PROGRAM_ID_PLACEHOLDER` remains active
+- configured placeholder value is `XXXLProgram111111111111111111111111111111111`
+- Program ID readiness status remains `Placeholder`
+- linked blocker remains `PLACEHOLDER_PROGRAM_ID`
+- current Program-ID-dependent PDA is `gateway_mint_authority`
+
+Procedure requirements for a future selection record:
+
+- exact final Program ID string
+- branch and commit where it is recorded
+- source of selection
+- confirmation that the value is not the placeholder
+- confirmation that the value is not a local fixture
+- confirmation that no private key is recorded
+- confirmation that no deployment secret is recorded
+- statement that production PDA fixtures must be regenerated after selection
+
+Forbidden values for future real Program ID:
+
+- `XXXLProgram111111111111111111111111111111111`
+- `11111111111111111111111111111111`
+- `BPFLoaderUpgradeab1e11111111111111111111111`
+- SPL Token Program ID
+- System Program ID
+- any local-only fixture value
+
+Required future follow-up after Program ID selection:
+
+1. production PDA fixture regeneration
+2. production PDA fixture verification
+3. Program ID readiness model update
+4. placeholder Program ID blocker transition
+
+Current blocker status:
+
+- no blocker removed
+- no blocker transitioned
+- `PLACEHOLDER_PROGRAM_ID` remains active
+
+Remaining active blockers:
+
+- `PLACEHOLDER_PROGRAM_ID`
+- `LIVE_ROUTE_DISABLED`
+- `SPL_CPI_EXECUTION_DISABLED`
+- `PRODUCTION_GUARDIAN_SET_UNSET`
+- `PRODUCTION_PROOF_LOG_UNSET`
+- `EXTERNAL_REVIEW_INCOMPLETE`
+
+This stage does not change Rust source, Cargo files, tests, Program ID constants, PDA derivation logic, PDA fixtures, deployment status logic, safety invariant logic, live route execution, SPL CPI execution, `invoke_signed`, SPL Token `mint_to`, guardian production configuration, proof-log production configuration, external review status, or release readiness.
+
+The runtime remains scaffold-only, locked, unreleasable, and not deployable.
