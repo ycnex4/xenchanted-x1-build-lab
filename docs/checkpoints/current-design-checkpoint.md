@@ -38805,3 +38805,67 @@ Future work still required:
 This stage does not change Rust source, Cargo files, tests, Program ID constants, PDA derivation logic, PDA fixtures, deployment status logic, safety invariant logic, live route execution, SPL CPI execution, `invoke_signed`, SPL Token `mint_to`, guardian production configuration, proof-log production configuration, external review status, or release readiness.
 
 The runtime remains scaffold-only, locked, unreleasable, and not deployable.
+
+## XXXL X1 Testnet PDA Fixture Regeneration Record
+
+Status: Completed
+Branch: `stage-xxxl-x1-testnet-pda-fixture-regeneration-record`
+Base: `659d37c Add X1 testnet Program ID selection record`
+
+This docs-only stage records the regenerated X1 testnet PDA fixture for the selected public Program ID candidate.
+
+Regeneration record artifact:
+
+- `docs/xxxl/xxxl-x1-testnet-pda-fixture-regeneration-record.md`
+
+Checkpoint artifact:
+
+- `docs/checkpoints/xxxl-x1-testnet-pda-fixture-regeneration-record.md`
+
+Selected X1 testnet Program ID candidate:
+
+- `D7AQmZNtFFFoJbducz93atteeSZhw3jq6RmsqBvaf1my`
+
+Regenerated PDA fixture:
+
+- PDA name: `gateway_mint_authority`
+- PDA derivation kind: `GatewayMintAuthority`
+- PDA seeds: `xxxl`, `gateway-mint-authority`, `v1`
+- Program ID: `D7AQmZNtFFFoJbducz93atteeSZhw3jq6RmsqBvaf1my`
+- PDA: `BLVsQPYXnDsTmfMW9wrXHBFpcmexM47BcAvVcibRtRYG`
+- bump: `252`
+
+Regeneration evidence:
+
+- ignored off-chain dry-run test: `x1_testnet_program_id_candidate_pda_dry_run`
+- `OFFCHAIN_ONLY=true`
+- `RPC_USED=false`
+- `DEPLOYED=false`
+- `SOL_SPENT=false`
+- test result: `1 passed`, `0 failed`
+
+Current blocker status:
+
+- no blocker removed
+- no blocker transitioned
+- `PLACEHOLDER_PROGRAM_ID` remains active
+
+Remaining active blockers:
+
+- `PLACEHOLDER_PROGRAM_ID`
+- `LIVE_ROUTE_DISABLED`
+- `SPL_CPI_EXECUTION_DISABLED`
+- `PRODUCTION_GUARDIAN_SET_UNSET`
+- `PRODUCTION_PROOF_LOG_UNSET`
+- `EXTERNAL_REVIEW_INCOMPLETE`
+
+Future work still required:
+
+1. X1 testnet PDA fixture verification record
+2. X1 testnet deployment or deployment-readiness evidence
+3. Program ID readiness model update
+4. placeholder Program ID blocker transition
+
+This stage does not change Rust source, Cargo files, tests, Program ID constants, PDA derivation logic, deployment status logic, safety invariant logic, live route execution, SPL CPI execution, `invoke_signed`, SPL Token `mint_to`, guardian production configuration, proof-log production configuration, external review status, or release readiness.
+
+The runtime remains scaffold-only, locked, unreleasable, and not deployable.
