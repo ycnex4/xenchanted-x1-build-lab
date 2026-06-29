@@ -39599,3 +39599,50 @@ Safety result:
 - no SOL spent
 - no live gateway route enabled
 - no SPL CPI, `invoke_signed`, or SPL Token `mint_to` path enabled
+
+## XXXL X1 Testnet Runtime Upgrade Planning Inventory
+
+Status: Docs stage complete — all runtime blockers remain active
+Branch: `stage-xxxl-x1-testnet-runtime-upgrade-planning-inventory`
+Base: `e247831 Clean up X1 testnet blocker inventory summary`
+
+A runtime upgrade planning inventory was recorded after X1 testnet deployment and blocker model transition.
+
+Documents:
+
+- `docs/xxxl/xxxl-x1-testnet-runtime-upgrade-planning-inventory.md`
+- `docs/checkpoints/xxxl-x1-testnet-runtime-upgrade-planning-inventory.md`
+
+Strict external-auditor review:
+
+- initial result: `BLOCKED`
+- blocking issues addressed
+- repeat result: `ACCEPT WITH MINOR NOTES`
+- minor notes addressed before commit
+
+Current X1 testnet status:
+
+- `X1_TESTNET_PROGRAM_DEPLOYED_RUNTIME_LOCKED`
+
+Current active blockers:
+
+- `PRODUCTION_PROGRAM_ID_UNSET`
+- `LIVE_ROUTE_DISABLED`
+- `SPL_CPI_EXECUTION_DISABLED`
+- `PRODUCTION_GUARDIAN_SET_UNSET`
+- `PRODUCTION_PROOF_LOG_UNSET`
+- `EXTERNAL_REVIEW_INCOMPLETE`
+
+Next recommended stage:
+
+- `XXXL X1 Testnet Runtime Upgrade Implementation Boundary`
+
+Safety result:
+
+- no runtime code changed
+- no upgrade executed
+- no transaction submitted
+- no SOL spent
+- no live gateway route enabled
+- no SPL CPI, `invoke_signed`, or SPL Token `mint_to` path enabled
+- no blocker removed
