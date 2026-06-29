@@ -31,6 +31,8 @@ use xxxl_svm::{
 
 const PROGRAM_NAME: &str = "xxxl_svm";
 const TOKEN_PROGRAM_ID: &str = "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA";
+const SPL_MINT_ACCOUNT_INDEX: usize = 5;
+const RECIPIENT_TOKEN_ACCOUNT_INDEX: usize = 6;
 const MINT_AUTHORITY_PDA_ACCOUNT_INDEX: usize = 7;
 
 #[test]
@@ -450,41 +452,14 @@ fn mollusk_rejects_mint_authority_pda_semantic_mismatch_without_live_route() {
 }
 
 #[test]
-#[ignore = "requires cargo build-sbf and target/deploy/xxxl_svm.so"]
-fn valid_consume_gateway_mint_builds_execution_plan_without_state_mutation() {
-    let manifest_dir = PathBuf::from(env!("CARGO_MANIFEST_DIR"));
-    let sbf_out_dir = manifest_dir.join("target/deploy");
-    let program_elf = sbf_out_dir.join(format!("{PROGRAM_NAME}.so"));
-
-    assert!(
-        program_elf.exists(),
-        "missing {}; run `cargo build-sbf` before this Mollusk test",
-        program_elf.display()
-    );
-
-    std::env::set_var("SBF_OUT_DIR", &sbf_out_dir);
-
+fn mollusk_valid_scaffold_entrypoint_leaves_mutable_accounts_unchanged() {
     let fixture = ScaffoldFixture::new();
-    let mollusk = Mollusk::new(&fixture.program_id, PROGRAM_NAME);
+    let mollusk = mollusk_for_program(&fixture.program_id);
 
     let instruction = fixture.instruction();
     let accounts = fixture.accounts();
 
-    let checks = vec![
-        Check::success(),
-        Check::account(&fixture.keys.processed_event)
-            .data(&fixture.data.processed_event)
-            .build(),
-        Check::account(&fixture.keys.recipient_balance)
-            .data(&fixture.data.recipient_balance)
-            .build(),
-        Check::account(&fixture.keys.spl_mint)
-            .data(&fixture.data.spl_mint)
-            .build(),
-        Check::account(&fixture.keys.recipient_token_account)
-            .data(&fixture.data.recipient_token_account)
-            .build(),
-    ];
+    let checks = result_and_unchanged_mutable_account_checks(&fixture, &accounts, Check::success());
 
     mollusk.process_and_validate_instruction(&instruction, &accounts, &checks);
 }
@@ -591,8 +566,7 @@ fn invalid_consume_gateway_mint_wrong_program_account_owner_rejects_before_live_
 }
 
 #[test]
-#[ignore = "requires cargo build-sbf and target/deploy/xxxl_svm.so"]
-fn invalid_consume_gateway_mint_consumed_event_rejects_before_live_route() {
+fn mollusk_consumed_processed_event_rejection_leaves_mutable_accounts_unchanged() {
     let fixture = ScaffoldFixture::new();
     let mollusk = mollusk_for_program(&fixture.program_id);
 
@@ -600,13 +574,80 @@ fn invalid_consume_gateway_mint_consumed_event_rejects_before_live_route() {
     let mut accounts = fixture.accounts();
     accounts[3].1.data[10] = 1;
 
-    mollusk.process_and_validate_instruction(
-        &instruction,
+    let checks = result_and_unchanged_mutable_account_checks(
+        &fixture,
         &accounts,
-        &[Check::err(ProgramError::Custom(
-            XxxlError::InvalidInstruction as u32,
-        ))],
+        Check::err(ProgramError::Custom(XxxlError::InvalidInstruction as u32)),
     );
+
+    mollusk.process_and_validate_instruction(&instruction, &accounts, &checks);
+}
+
+#[test]
+fn mollusk_zero_amount_rejection_leaves_mutable_accounts_unchanged() {
+    let fixture = ScaffoldFixture::new();
+    let mollusk = mollusk_for_program(&fixture.program_id);
+
+    let mut instruction_data = fixture.instruction_data;
+    instruction_data[176..192].copy_from_slice(&0u128.to_le_bytes());
+
+    let instruction = Instruction::new_with_bytes(
+        fixture.program_id,
+        &instruction_data,
+        fixture.instruction().accounts,
+    );
+    let accounts = fixture.accounts();
+
+    let checks = result_and_unchanged_mutable_account_checks(
+        &fixture,
+        &accounts,
+        Check::err(ProgramError::Custom(XxxlError::InvalidInstruction as u32)),
+    );
+
+    mollusk.process_and_validate_instruction(&instruction, &accounts, &checks);
+}
+
+#[test]
+fn mollusk_wrong_recipient_token_account_rejection_leaves_mutable_accounts_unchanged() {
+    let fixture = ScaffoldFixture::new();
+    let mollusk = mollusk_for_program(&fixture.program_id);
+
+    let instruction = fixture.instruction();
+    let mut accounts = fixture.accounts();
+    accounts[RECIPIENT_TOKEN_ACCOUNT_INDEX].1.data = packed_token_account(
+        fixture.keys.spl_mint,
+        Pubkey::new_unique(),
+        AccountState::Initialized,
+    );
+
+    let checks = result_and_unchanged_mutable_account_checks(
+        &fixture,
+        &accounts,
+        Check::err(ProgramError::Custom(XxxlError::InvalidRecipientAta as u32)),
+    );
+
+    mollusk.process_and_validate_instruction(&instruction, &accounts, &checks);
+}
+
+#[test]
+fn mollusk_wrong_processed_event_recipient_rejection_leaves_mutable_accounts_unchanged() {
+    let fixture = ScaffoldFixture::new();
+    let mollusk = mollusk_for_program(&fixture.program_id);
+
+    let instruction = fixture.instruction();
+    let mut accounts = fixture.accounts();
+    accounts[CONSUME_GATEWAY_MINT_PROCESSED_EVENT_ACCOUNT_INDEX as usize]
+        .1
+        .data[80..112]
+        .copy_from_slice(&Pubkey::new_unique().to_bytes());
+
+    let checks = result_and_unchanged_mutable_account_checks(
+        &fixture,
+        &accounts,
+        Check::err(ProgramError::Custom(XxxlError::InvalidInstruction as u32)),
+    );
+
+    mollusk.process_and_validate_instruction(&instruction, &accounts, &checks);
 }
 
 #[test]
@@ -737,6 +778,37 @@ fn mollusk_for_program(program_id: &Pubkey) -> Mollusk {
     std::env::set_var("SBF_OUT_DIR", &sbf_out_dir);
 
     Mollusk::new(program_id, PROGRAM_NAME)
+}
+
+fn result_and_unchanged_mutable_account_checks<'a>(
+    fixture: &'a ScaffoldFixture,
+    accounts: &'a [(Pubkey, Account)],
+    result_check: Check<'a>,
+) -> Vec<Check<'a>> {
+    let mut checks = vec![result_check];
+    checks.extend([
+        Check::account(&fixture.keys.processed_event)
+            .data(
+                &accounts[CONSUME_GATEWAY_MINT_PROCESSED_EVENT_ACCOUNT_INDEX as usize]
+                    .1
+                    .data,
+            )
+            .build(),
+        Check::account(&fixture.keys.recipient_balance)
+            .data(
+                &accounts[CONSUME_GATEWAY_MINT_RECIPIENT_BALANCE_ACCOUNT_INDEX as usize]
+                    .1
+                    .data,
+            )
+            .build(),
+        Check::account(&fixture.keys.spl_mint)
+            .data(&accounts[SPL_MINT_ACCOUNT_INDEX].1.data)
+            .build(),
+        Check::account(&fixture.keys.recipient_token_account)
+            .data(&accounts[RECIPIENT_TOKEN_ACCOUNT_INDEX].1.data)
+            .build(),
+    ]);
+    checks
 }
 
 struct ScaffoldFixture {
