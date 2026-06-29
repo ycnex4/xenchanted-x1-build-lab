@@ -37841,3 +37841,66 @@ Live route execution, SPL CPI execution, `invoke_signed`, and SPL Token
 
 The next Mollusk stage should be Disabled Execution Gate and No-Mutation
 Coverage, not blocker transition.
+
+## XXXL Mollusk Entrypoint No-Mutation Coverage
+
+Status: completed as a narrow Mollusk/SVM entrypoint no-mutation coverage stage
+for the current locked `consume_gateway_mint` scaffold.
+
+Added non-ignored Mollusk tests:
+
+- `mollusk_valid_scaffold_entrypoint_leaves_mutable_accounts_unchanged`
+- `mollusk_consumed_processed_event_rejection_leaves_mutable_accounts_unchanged`
+- `mollusk_zero_amount_rejection_leaves_mutable_accounts_unchanged`
+- `mollusk_wrong_recipient_token_account_rejection_leaves_mutable_accounts_unchanged`
+- `mollusk_wrong_processed_event_recipient_rejection_leaves_mutable_accounts_unchanged`
+
+These tests execute the XXXL SBF program through Mollusk and assert that
+selected valid and rejected entrypoint paths leave the following mutable account
+data unchanged:
+
+- `processed_event`
+- `recipient_balance`
+- `spl_mint`
+- `recipient_token_account`
+
+Boundary artifact:
+
+- `docs/xxxl/xxxl-mollusk-entrypoint-no-mutation-coverage.md`
+
+Checkpoint artifact:
+
+- `docs/checkpoints/xxxl-mollusk-entrypoint-no-mutation-coverage.md`
+
+No Cargo files were changed.
+
+No runtime source files were changed.
+
+No blocker was removed.
+
+No blocker was transitioned.
+
+`MOLLUSK_COVERAGE_INCOMPLETE` remains active.
+
+This stage does not claim direct Mollusk entrypoint coverage for the disabled
+SPL CPI gate. The disabled SPL CPI gate remains Rust-boundary evidence until a
+future reviewed runtime-composition stage makes that boundary reachable through
+the SBF entrypoint.
+
+The runtime remains:
+
+- scaffold-only
+- locked
+- unreleasable
+- not deployable
+
+Live route execution remains disabled.
+
+SPL CPI execution remains disabled.
+
+`invoke_signed` is not enabled.
+
+SPL Token `mint_to` is not enabled.
+
+The next Mollusk stage should be reachable replay/validation rejection coverage
+or instruction strictness coverage, not blocker transition.
