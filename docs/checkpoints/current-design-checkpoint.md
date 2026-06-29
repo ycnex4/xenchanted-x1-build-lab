@@ -37620,3 +37620,42 @@ Live route execution, SPL CPI execution, `invoke_signed`, and SPL Token
 
 This roadmap separates implementation, evidence, assessment, and blocker
 transition.
+
+## XXXL Mollusk Harness Boundary
+
+Status: completed as the first narrow Mollusk/SVM harness boundary.
+
+Added one non-ignored Mollusk sanity test:
+
+- `mollusk_harness_rejects_malformed_instruction_without_live_route`
+
+The test loads the XXXL SBF artifact through Mollusk and verifies that a
+malformed instruction length is rejected with `XxxlError::InvalidInstruction`.
+
+Boundary artifact:
+
+- `docs/xxxl/xxxl-mollusk-harness-boundary.md`
+
+Checkpoint artifact:
+
+- `docs/checkpoints/xxxl-mollusk-harness-boundary.md`
+
+No Cargo dependency change was needed because the Mollusk dev-dependency
+already exists.
+
+No blocker was removed.
+
+`MOLLUSK_COVERAGE_INCOMPLETE` remains active.
+
+The runtime remains:
+
+- scaffold-only
+- locked
+- unreleasable
+- not deployable
+
+Live route execution, SPL CPI execution, `invoke_signed`, and SPL Token
+`mint_to` remain disabled.
+
+The next Mollusk stage should be account meta/order coverage, not blocker
+transition.
