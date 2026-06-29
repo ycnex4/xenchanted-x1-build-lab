@@ -37659,3 +37659,48 @@ Live route execution, SPL CPI execution, `invoke_signed`, and SPL Token
 
 The next Mollusk stage should be account meta/order coverage, not blocker
 transition.
+
+## XXXL Mollusk Account Meta / Order Coverage
+
+Status: completed as a narrow Mollusk/SVM account meta and account ordering
+coverage stage.
+
+Added non-ignored Mollusk tests:
+
+- `mollusk_rejects_wrong_account_count_without_live_route`
+- `mollusk_rejects_wrong_account_order_without_live_route`
+- `mollusk_rejects_unexpected_signer_without_live_route`
+- `mollusk_rejects_writable_readonly_mismatch_without_live_route`
+
+These tests execute the XXXL SBF program through Mollusk and assert rejected
+paths for account count, account order, unexpected signer, and writable /
+readonly mismatch cases.
+
+Boundary artifact:
+
+- `docs/xxxl/xxxl-mollusk-account-meta-order-coverage.md`
+
+Checkpoint artifact:
+
+- `docs/checkpoints/xxxl-mollusk-account-meta-order-coverage.md`
+
+No Cargo files were changed.
+
+No runtime source files were changed.
+
+No blocker was removed.
+
+`MOLLUSK_COVERAGE_INCOMPLETE` remains active.
+
+The runtime remains:
+
+- scaffold-only
+- locked
+- unreleasable
+- not deployable
+
+Live route execution, SPL CPI execution, `invoke_signed`, and SPL Token
+`mint_to` remain disabled.
+
+The next Mollusk stage should be Program-Owned Account Validation Coverage, not
+blocker transition.
