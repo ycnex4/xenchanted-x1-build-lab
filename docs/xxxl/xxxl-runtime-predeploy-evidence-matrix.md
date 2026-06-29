@@ -43,7 +43,7 @@ A blocker may only be removed when:
 
 | Blocker | Required evidence | Evidence artifact | Current status |
 |---|---|---|---|
-| `PLACEHOLDER_PROGRAM_ID` | Real Program ID selected, reviewed, documented, and all Program-ID-dependent PDA fixtures regenerated. | Future Program ID / PDA fixture checkpoint. | BLOCKED |
+| `PRODUCTION_PROGRAM_ID_UNSET` | Production Program ID selected, reviewed, documented, and all production Program-ID-dependent PDA fixtures regenerated. X1 testnet Program ID is already deployed but production identity remains separate. | Future production Program ID / PDA fixture checkpoint. | BLOCKED |
 | `LIVE_ROUTE_DISABLED` | Live route activation design reviewed; activation isolated; negative tests prove invalid inputs fail before mutation/CPI. | Future live route activation checkpoint. | BLOCKED |
 | `SPL_CPI_EXECUTION_DISABLED` | SPL Token `mint_to` CPI path reviewed; PDA authority validated; Mollusk positive/negative CPI coverage complete. | Future SPL CPI execution checkpoint. | BLOCKED |
 | `PRODUCTION_GUARDIAN_SET_UNSET` | Guardian set, threshold, custody model, rotation policy, and emergency replacement policy documented. | Future production guardian policy checkpoint. | BLOCKED |
@@ -52,7 +52,7 @@ A blocker may only be removed when:
 
 ## Evidence detail
 
-### PLACEHOLDER_PROGRAM_ID
+### PRODUCTION_PROGRAM_ID_UNSET
 
 Required evidence:
 
@@ -196,3 +196,26 @@ For any blocker-removal stage involving code, the following checks are required:
 The evidence matrix is the required evidence map for future blocker-removal stages.
 
 All blockers remain active.
+
+
+## X1 Testnet Program Identity Status
+
+Status:
+
+- `X1_TESTNET_PROGRAM_DEPLOYED_RUNTIME_LOCKED`
+
+Retired X1 testnet blanket blocker:
+
+- `PLACEHOLDER_PROGRAM_ID`
+
+X1 testnet Program ID:
+
+- `D7AQmZNtFFFoJbducz93atteeSZhw3jq6RmsqBvaf1my`
+
+ProgramData address:
+
+- `9tuesaPoJhrifF49vJewcg6PSWZeHAJiqQ97pq3LMW9T`
+
+This status does not enable live gateway execution.
+
+This status does not remove production Program ID readiness requirements.

@@ -32,23 +32,37 @@ Until then, the runtime must remain blocked.
 
 ## Current blockers
 
-### 1. PLACEHOLDER_PROGRAM_ID
+### 1. PRODUCTION_PROGRAM_ID_UNSET
 
-Current meaning:
+Status:
 
-The runtime still exposes a placeholder Program ID boundary.
+- `BLOCKED`
 
-Required resolution:
+The previous blanket blocker `PLACEHOLDER_PROGRAM_ID` is retired for X1 testnet.
 
-Set and review the real Program ID and regenerate all Program-ID-dependent PDA fixtures.
+Current X1 testnet status:
 
-Required evidence before removal:
+- `X1_TESTNET_PROGRAM_DEPLOYED_RUNTIME_LOCKED`
 
-- real Program ID selected
-- Program ID documented
-- PDA derivations regenerated for the real Program ID
-- tests updated to use non-placeholder fixtures where required
-- reviewer confirms no placeholder Program ID remains in deployable paths
+X1 testnet Program ID:
+
+- `D7AQmZNtFFFoJbducz93atteeSZhw3jq6RmsqBvaf1my`
+
+ProgramData address:
+
+- `9tuesaPoJhrifF49vJewcg6PSWZeHAJiqQ97pq3LMW9T`
+
+Production remains blocked until:
+
+- production Program ID is selected
+- production PDA fixtures are regenerated
+- production PDA fixtures are verified
+- production authority model is recorded
+- production release readiness is reviewed
+
+This is network-aware.
+
+X1 testnet deployment does not imply production identity readiness.
 
 ### 2. LIVE_ROUTE_DISABLED
 

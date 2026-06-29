@@ -42,38 +42,72 @@ The remaining active deployment blockers are:
 
 No blocker is removed by this inventory.
 
-## 4. Blocker: PLACEHOLDER_PROGRAM_ID
+## 4. Status: X1_TESTNET_PROGRAM_DEPLOYED_RUNTIME_LOCKED
 
-### Meaning
+This is no longer an active deployment blocker for X1 testnet.
 
-The runtime still uses a placeholder / non-production Program ID boundary.
+The previous blanket blocker name was:
 
-### Why It Remains Active
+- `PLACEHOLDER_PROGRAM_ID`
 
-A production Program ID has not been selected, reviewed, locked, and connected
-to production PDA derivation evidence.
+That blocker name is retired for the X1 testnet path because:
 
-### Future Requirements Before Transition
+- a real X1 testnet Program ID was selected
+- PDA fixtures were regenerated from that Program ID
+- PDA fixtures were verified
+- the runtime scaffold was deployed to X1 testnet
+- post-deploy read-only verification confirmed the deployed program account
 
-Before this blocker can be transitioned, a separate reviewed stage must define:
+X1 testnet Program ID:
 
-- production Program ID selection criteria
-- Program ID immutability assumptions
-- PDA derivation impact
-- fixture regeneration policy
-- proof that deployment status remains blocked by other blockers after transition
-- review evidence that changing this blocker does not activate live execution
+- `D7AQmZNtFFFoJbducz93atteeSZhw3jq6RmsqBvaf1my`
 
-### Must Not Happen Implicitly
+ProgramData address:
 
-Transitioning this blocker must not automatically enable:
+- `9tuesaPoJhrifF49vJewcg6PSWZeHAJiqQ97pq3LMW9T`
 
-- live route execution
-- SPL CPI execution
-- `invoke_signed`
-- SPL Token `mint_to`
-- release readiness
-- deployability
+Gateway mint authority PDA:
+
+- `BLVsQPYXnDsTmfMW9wrXHBFpcmexM47BcAvVcibRtRYG`
+
+Gateway mint authority bump:
+
+- `252`
+
+Current X1 testnet status:
+
+- `X1_TESTNET_PROGRAM_DEPLOYED_RUNTIME_LOCKED`
+
+This status is not live gateway readiness.
+
+It only means the X1 testnet program identity exists on-chain and the deployed runtime remains locked.
+
+## 4A. Blocker: PRODUCTION_PROGRAM_ID_UNSET
+
+Status:
+
+- `BLOCKED`
+
+Scope:
+
+- production / mainnet Program ID readiness
+
+Reason:
+
+- the deployed Program ID is an X1 testnet Program ID
+- production Program ID selection remains separate
+- production PDA fixtures remain separate
+- production authority policy remains separate
+- production release readiness remains separate
+
+Resolution requirement:
+
+- select production Program ID when production target is ready
+- document production network identity
+- regenerate production PDA fixtures
+- verify production PDA fixtures
+- record authority model for production release
+- keep testnet and production identities clearly separated
 
 ## 5. Blocker: LIVE_ROUTE_DISABLED
 

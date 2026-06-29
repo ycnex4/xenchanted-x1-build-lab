@@ -35,9 +35,29 @@ Each blocker report now includes:
 
 ## Current blocker resolution guidance
 
-### PLACEHOLDER_PROGRAM_ID
+### PRODUCTION_PROGRAM_ID_UNSET
 
-Set and review the real Program ID and regenerate all Program-ID-dependent PDA fixtures.
+Production Program ID remains unset.
+
+The former blanket blocker `PLACEHOLDER_PROGRAM_ID` is retired for X1 testnet because the X1 testnet Program ID has been selected, deployed, and verified.
+
+Current X1 testnet status:
+
+- `X1_TESTNET_PROGRAM_DEPLOYED_RUNTIME_LOCKED`
+
+X1 testnet Program ID:
+
+- `D7AQmZNtFFFoJbducz93atteeSZhw3jq6RmsqBvaf1my`
+
+Production is still blocked until:
+
+- production Program ID is selected
+- production PDA fixtures are regenerated
+- production PDA fixtures are verified
+- production authority policy is documented
+- production release readiness is reviewed
+
+This blocker must not be confused with X1 testnet deployment status.
 
 ### LIVE_ROUTE_DISABLED
 

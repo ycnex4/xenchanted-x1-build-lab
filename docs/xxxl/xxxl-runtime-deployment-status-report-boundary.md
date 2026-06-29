@@ -68,12 +68,20 @@ Current blocker count:
 
 ## Current blocker codes
 
-- `PLACEHOLDER_PROGRAM_ID`
+- `PRODUCTION_PROGRAM_ID_UNSET`
 - `LIVE_ROUTE_DISABLED`
 - `SPL_CPI_EXECUTION_DISABLED`
 - `PRODUCTION_GUARDIAN_SET_UNSET`
 - `PRODUCTION_PROOF_LOG_UNSET`
 - `EXTERNAL_REVIEW_INCOMPLETE`
+
+Current X1 testnet status:
+
+- `X1_TESTNET_PROGRAM_DEPLOYED_RUNTIME_LOCKED`
+
+Retired X1 testnet blanket blocker:
+
+- `PLACEHOLDER_PROGRAM_ID`
 
 ## Intended future use
 

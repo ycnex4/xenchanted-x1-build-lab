@@ -39539,3 +39539,63 @@ Current active blockers remain unchanged:
 - `PRODUCTION_GUARDIAN_SET_UNSET`
 - `PRODUCTION_PROOF_LOG_UNSET`
 - `EXTERNAL_REVIEW_INCOMPLETE`
+
+## XXXL X1 Testnet Blocker Model Transition
+
+Status: Completed
+Branch: `stage-xxxl-x1-testnet-blocker-model-transition`
+Base: `cf77671 Assess X1 testnet blocker transition after deployment`
+
+The blocker model has been transitioned to a network-aware model after X1 testnet deployment.
+
+Transition document:
+
+- `docs/xxxl/xxxl-x1-testnet-blocker-model-transition.md`
+
+Checkpoint document:
+
+- `docs/checkpoints/xxxl-x1-testnet-blocker-model-transition.md`
+
+Retired X1 testnet blanket blocker:
+
+- `PLACEHOLDER_PROGRAM_ID`
+
+Current X1 testnet status:
+
+- `X1_TESTNET_PROGRAM_DEPLOYED_RUNTIME_LOCKED`
+
+Current production Program ID blocker:
+
+- `PRODUCTION_PROGRAM_ID_UNSET`
+
+Evidence base:
+
+- deployment execution evidence: `6bda36d`
+- post-deploy read-only verification: `7c9e777`
+- blocker transition assessment: `cf77671`
+
+X1 testnet evidence:
+
+- Program ID: `D7AQmZNtFFFoJbducz93atteeSZhw3jq6RmsqBvaf1my`
+- ProgramData address: `9tuesaPoJhrifF49vJewcg6PSWZeHAJiqQ97pq3LMW9T`
+- authority after deployment: `DTfvjtRL63u3XYHXQfgRQCdhEanUK1qqawvfEAM9hxAc`
+- gateway mint authority PDA: `BLVsQPYXnDsTmfMW9wrXHBFpcmexM47BcAvVcibRtRYG`
+- gateway mint authority bump: `252`
+
+Active blockers after transition:
+
+- `PRODUCTION_PROGRAM_ID_UNSET`
+- `LIVE_ROUTE_DISABLED`
+- `SPL_CPI_EXECUTION_DISABLED`
+- `PRODUCTION_GUARDIAN_SET_UNSET`
+- `PRODUCTION_PROOF_LOG_UNSET`
+- `EXTERNAL_REVIEW_INCOMPLETE`
+
+Safety result:
+
+- no runtime code changed
+- no upgrade executed
+- no transaction submitted
+- no SOL spent
+- no live gateway route enabled
+- no SPL CPI, `invoke_signed`, or SPL Token `mint_to` path enabled
