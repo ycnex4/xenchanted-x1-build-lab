@@ -39646,3 +39646,58 @@ Safety result:
 - no live gateway route enabled
 - no SPL CPI, `invoke_signed`, or SPL Token `mint_to` path enabled
 - no blocker removed
+
+## XXXL X1 Testnet Runtime Upgrade Implementation Boundary
+
+Status: Docs-only boundary — all runtime blockers remain active
+Branch: `stage-xxxl-x1-testnet-runtime-upgrade-implementation-boundary`
+Base: `1a0e2fa Add X1 testnet runtime upgrade planning inventory`
+
+A runtime upgrade implementation boundary was recorded for the first future local runtime implementation branch after X1 testnet scaffold deployment.
+
+Documents:
+
+- `docs/xxxl/xxxl-x1-testnet-runtime-upgrade-implementation-boundary.md`
+- `docs/checkpoints/xxxl-x1-testnet-runtime-upgrade-implementation-boundary.md`
+
+Strict external-auditor review:
+
+- result: `ACCEPT WITH MINOR NOTES`
+- minor notes addressed before commit
+
+Current X1 testnet status:
+
+- `X1_TESTNET_PROGRAM_DEPLOYED_RUNTIME_LOCKED`
+
+Current active blockers:
+
+- `PRODUCTION_PROGRAM_ID_UNSET`
+- `LIVE_ROUTE_DISABLED`
+- `SPL_CPI_EXECUTION_DISABLED`
+- `PRODUCTION_GUARDIAN_SET_UNSET`
+- `PRODUCTION_PROOF_LOG_UNSET`
+- `EXTERNAL_REVIEW_INCOMPLETE`
+
+Boundary result:
+
+- future local implementation branch must remain non-deployed
+- no on-chain upgrade authorized
+- no live route authorized
+- no SPL CPI authorized
+- no executable `invoke_signed`
+- no executable SPL Token `mint_to`
+- no blocker removal authorized
+
+Next recommended stage:
+
+- `XXXL X1 Testnet Local Runtime Skeleton Implementation Plan`
+
+Safety result:
+
+- no runtime code changed
+- no upgrade executed
+- no transaction submitted
+- no SOL spent
+- no live gateway route enabled
+- no SPL CPI, `invoke_signed`, or SPL Token `mint_to` path enabled
+- no blocker removed
