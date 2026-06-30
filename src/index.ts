@@ -88,3 +88,4 @@ export * from "./xxxl/atomic-execution-plan-fixture.js";
 export * from "./xxxl/runtime-tooling-roadmap.js";
 export * from "./xxxl/guardian-payload-encoding.js";
 export * from "./xxxl/guardian-approval-verifier.js";
+export * from "./xxxl/gateway-authorization-boundary.js";
