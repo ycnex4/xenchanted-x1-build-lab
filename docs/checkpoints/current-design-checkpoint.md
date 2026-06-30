@@ -40753,3 +40753,126 @@ Phase 7 audit minor notes resolved before commit:
 Recommended next stage:
 
 - `stage-xxxl-x1-testnet-local-runtime-skeleton-phase-8-local-tests-coverage-checkpoint`
+
+
+# Latest XXXL X1 testnet local runtime skeleton Phase 8 local tests coverage checkpoint
+
+Stage:
+
+- `stage-xxxl-x1-testnet-local-runtime-skeleton-phase-8-local-tests-coverage-checkpoint`
+
+Checkpoint artifact:
+
+- `docs/checkpoints/xxxl-x1-testnet-local-runtime-skeleton-phase-8-local-tests-coverage-checkpoint.md`
+
+Phase 8 reconciled local test obligations and coverage criteria for the disabled
+runtime skeleton before any future code-stage, live-route, or SPL-CPI enablement
+work.
+
+Phase 8 is docs-only:
+
+- no runtime code changed
+- no tests changed
+- no deploy
+- no upgrade
+- no transaction
+- no SOL spend
+- no live route
+- no SPL CPI
+- no `invoke_signed`
+- no SPL Token `mint_to`
+
+Coverage classification introduced:
+
+- covered-current
+- partial-current
+- deferred-gap
+- future-live-only
+
+Prior coverage baseline preserved:
+
+- prior phases recorded 54 Mollusk tests total
+- prior phases recorded 44 non-ignored tests
+- prior phases recorded 10 ignored tests
+- prior phases recorded a successful non-ignored Mollusk run with 44 passing and
+  10 ignored
+
+Major coverage areas classified:
+
+- instruction decode coverage
+- account / validation coverage
+- disabled processor control-flow coverage
+- replay / Processed Event coverage
+- Stage 1 authorization boundary coverage
+- live atomicity coverage
+- ignored Mollusk evidence gap
+- minimum future test obligations before code-stage
+- minimum future test obligations before live-route or SPL-CPI enablement
+
+Important preserved gaps:
+
+- exact wrong route account index coverage
+- exact wrong guardian set account index coverage
+- exact wrong mint state account index Mollusk coverage
+- amount overflow / `u64` boundary Mollusk coverage
+- guardian set ID mismatch Mollusk coverage
+- source-chain weight mismatch Mollusk coverage
+- explicit mint-state mint mismatch coverage
+- complete disabled `Ok(())` no-mutation matrix
+- complete validation failure no-mutation matrix
+- no SPL CPI / `invoke_signed` / `mint_to` reachability proof
+- `messageNonce` independence coverage
+- source-chain ID binding coverage
+- Stage 1 invalid vector to runtime no-mint-path coverage
+- 10 ignored Mollusk tests
+- complete Mollusk/SVM coverage criteria before live readiness
+
+Gate preservation:
+
+- bytes `194..208` remain reserved / unparsed / not zero-validated
+- the `u128` amount layout with `u64` SPL range remains a design gap
+- dormant CPI helpers are not reachable from enabled path
+- Stage 1 remains deterministic authorization model
+- runtime remains only consumer / mapping layer
+- Processed Event state is not authorization
+- runtime replay identity remains `canonicalEventKey`
+- `messageNonce` has no current runtime replay semantics
+- current `Ok(())` remains disabled-plan no-op return
+- live atomicity remains unimplemented
+
+Current X1 status remains:
+
+- `X1_TESTNET_PROGRAM_DEPLOYED_RUNTIME_LOCKED`
+
+Active blockers remain:
+
+- `PRODUCTION_PROGRAM_ID_UNSET`
+- `LIVE_ROUTE_DISABLED`
+- `SPL_CPI_EXECUTION_DISABLED`
+- `PRODUCTION_GUARDIAN_SET_UNSET`
+- `PRODUCTION_PROOF_LOG_UNSET`
+- `EXTERNAL_REVIEW_INCOMPLETE`
+
+No blocker was removed.
+
+No production readiness is claimed.
+
+No final immutability is claimed while upgrade authority exists.
+
+
+Phase 8 audit minor notes resolved before commit:
+
+- `/ state-transition model` was removed from Phase 8 Stage 1 wording; Stage 1
+  remains the deterministic authorization model
+- persistent processed-burn tracking remains external to runtime and belongs to
+  the off-chain watcher / orchestrator / authorization-service boundary
+- Phase 9 should explicitly scope any allowed test edits to
+  `programs/xxxl-svm/tests/**`; `programs/xxxl-svm/src/**` should remain
+  read-only unless a later separate implementation boundary explicitly changes
+  that
+- Phase 9 should choose a narrow subset of Phase 8 test obligations rather than
+  attempting to cover every listed gap in one stage
+
+Recommended next stage:
+
+- `stage-xxxl-x1-testnet-local-runtime-skeleton-phase-9-local-tests-implementation-boundary`
