@@ -1173,6 +1173,8 @@ fn result_and_unchanged_mutable_account_checks<'a>(
                     .1
                     .data,
             )
+            .lamports(accounts[CONSUME_GATEWAY_MINT_PROCESSED_EVENT_ACCOUNT_INDEX as usize].1.lamports)
+            .owner(&accounts[CONSUME_GATEWAY_MINT_PROCESSED_EVENT_ACCOUNT_INDEX as usize].1.owner)
             .build(),
         Check::account(&fixture.keys.recipient_balance)
             .data(
@@ -1180,12 +1182,18 @@ fn result_and_unchanged_mutable_account_checks<'a>(
                     .1
                     .data,
             )
+            .lamports(accounts[CONSUME_GATEWAY_MINT_RECIPIENT_BALANCE_ACCOUNT_INDEX as usize].1.lamports)
+            .owner(&accounts[CONSUME_GATEWAY_MINT_RECIPIENT_BALANCE_ACCOUNT_INDEX as usize].1.owner)
             .build(),
         Check::account(&fixture.keys.spl_mint)
             .data(&accounts[SPL_MINT_ACCOUNT_INDEX].1.data)
+            .lamports(accounts[SPL_MINT_ACCOUNT_INDEX].1.lamports)
+            .owner(&accounts[SPL_MINT_ACCOUNT_INDEX].1.owner)
             .build(),
         Check::account(&fixture.keys.recipient_token_account)
             .data(&accounts[RECIPIENT_TOKEN_ACCOUNT_INDEX].1.data)
+            .lamports(accounts[RECIPIENT_TOKEN_ACCOUNT_INDEX].1.lamports)
+            .owner(&accounts[RECIPIENT_TOKEN_ACCOUNT_INDEX].1.owner)
             .build(),
     ]);
     checks
