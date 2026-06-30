@@ -42112,3 +42112,111 @@ Recommended next stage:
 - `stage-xxxl-x1-testnet-local-runtime-skeleton-phase-23-guardian-signature-quorum-boundary`
 
 Only begin Phase 23 after byte-level payload encoding and test vectors are defined.
+
+# Latest XXXL X1 testnet local runtime skeleton Phase 23 guardian payload byte encoding vectors boundary
+
+Stage:
+
+- `stage-xxxl-x1-testnet-local-runtime-skeleton-phase-23-guardian-payload-byte-encoding-vectors-boundary`
+
+Checkpoint artifact:
+
+- `docs/checkpoints/xxxl-x1-testnet-local-runtime-skeleton-phase-23-guardian-payload-byte-encoding-vectors-boundary.md`
+
+Purpose:
+
+- implement TypeScript-only canonical guardian payload binary encoding v1
+- expose payload hash domain separator, hash preimage, and payload hash helpers
+- export deterministic valid and invalid vector surface
+- freeze byte-level representation before guardian signature/quorum work
+
+Phase 23 implements byte-level guardian payload encoding and vectors only.
+
+Runtime source status:
+
+- `programs/xxxl-svm/src/**` unchanged
+
+Runtime test status:
+
+- `programs/xxxl-svm/tests/**` unchanged
+
+Cargo status:
+
+- Cargo files unchanged
+
+Deploy/artifact status:
+
+- no SBF build
+- no `target/deploy` changes
+- no tracked `.so` artifact
+- no tracked keypair file
+- no deploy
+- no upgrade
+- no transaction submission
+- no SOL spend
+
+Guardian verification status:
+
+- no signature verification
+- no quorum validation
+- no Ed25519 verifier import in the Phase 23 guardian payload encoding module
+- no guardian public key account handling
+- no runtime account mutation
+
+Encoding:
+
+- encoding name: `XXXL_GUARDIAN_PAYLOAD_CANONICAL_BINARY_V1`
+- message type: `XXXL_GATEWAY_MINT`
+- schema version: `1`
+- instruction layout version: `2`
+- hash domain label: `XXXL_GUARDIAN_PAYLOAD_HASH_V1`
+- payload bytes: encoded guardian payload only
+- hash preimage: `keccakUtf8Label(domain label) || encoded guardian payload`
+- payload hash: `keccak256(hash preimage)`
+
+Valid vector:
+
+- vector id: `xxxl-guardian-payload-canonical-binary-v1-valid-001`
+- domain separator:
+  `0xf1958bbf04d45ddbc5a9f93f200f5005ee47b05cf61a90faf4d93cd6e3eccd66`
+- payload hash:
+  `0xab0ee59a1268f3eebf4a9d42725640ce68226e642a61dabd5f904e7680f08015`
+
+Safety status:
+
+- `source_chain_weight_bps` remains signed and dual-source:
+  guardian payload field, runtime instruction field, and `GatewayConfig` binding
+- `canonical_event_key` is not derived from `source_chain_id`
+- GatewayConfig layout is unchanged
+- live route remains disabled
+- SPL CPI remains disabled
+- enabled `process_instruction` remains a disabled-plan no-op for live atomicity
+- no production readiness is claimed
+- no final immutability is claimed while upgrade authority exists
+
+Current X1 status remains:
+
+- `X1_TESTNET_PROGRAM_DEPLOYED_RUNTIME_LOCKED`
+
+Active blockers remain:
+
+- `PRODUCTION_PROGRAM_ID_UNSET`
+- `LIVE_ROUTE_DISABLED`
+- `SPL_CPI_EXECUTION_DISABLED`
+- `PRODUCTION_GUARDIAN_SET_UNSET`
+- `PRODUCTION_PROOF_LOG_UNSET`
+- `EXTERNAL_REVIEW_INCOMPLETE`
+
+No blocker was removed.
+
+Validation:
+
+- `npm test -- --run`: passed, 97 test files passed, 862 tests passed
+- `npm run build`: passed
+
+Recommended next stage:
+
+- `stage-xxxl-x1-testnet-local-runtime-skeleton-phase-24-guardian-signature-quorum-boundary`
+
+Phase 24 may implement guardian signature/quorum only after this Phase 23 vector
+surface is audited.

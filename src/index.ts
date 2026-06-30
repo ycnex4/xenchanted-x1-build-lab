@@ -86,3 +86,4 @@ export * from "./xxxl/handler-integration-fixture.js";
 export * from "./xxxl/runtime-state-mutation-fixture.js";
 export * from "./xxxl/atomic-execution-plan-fixture.js";
 export * from "./xxxl/runtime-tooling-roadmap.js";
+export * from "./xxxl/guardian-payload-encoding.js";
