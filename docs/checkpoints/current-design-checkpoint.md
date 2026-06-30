@@ -41975,3 +41975,140 @@ No blocker was removed.
 Recommended next stage:
 
 - `stage-xxxl-x1-testnet-local-runtime-skeleton-phase-22-guardian-payload-structure-boundary`
+
+# Latest XXXL X1 testnet local runtime skeleton Phase 22 guardian payload structure boundary
+
+Stage:
+
+- `stage-xxxl-x1-testnet-local-runtime-skeleton-phase-22-guardian-payload-structure-boundary`
+
+Checkpoint artifact:
+
+- `docs/checkpoints/xxxl-x1-testnet-local-runtime-skeleton-phase-22-guardian-payload-structure-boundary.md`
+
+Purpose:
+
+- freeze the semantic guardian-signed payload field set and canonical order
+- separate future signed payload fields from current Phase 21 runtime instruction fields
+- separate signed payload fields from account/runtime binding fields
+- record fields not yet represented by current runtime instruction/account validation
+- prevent signature/quorum design drift before Phase 23
+
+Phase 22 is documentation/specification only.
+
+Runtime source status:
+
+- `programs/xxxl-svm/src/**` unchanged
+
+Runtime test status:
+
+- `programs/xxxl-svm/tests/**` unchanged
+
+Cargo status:
+
+- Cargo files unchanged
+
+Deploy/artifact status:
+
+- no SBF build
+- no `target/deploy` changes
+- no tracked `.so` artifact
+- no tracked keypair file
+- no deploy
+- no upgrade
+- no transaction submission
+- no SOL spend
+
+Future guardian signed payload semantic order:
+
+1. `message_type`
+2. `schema_version`
+3. `instruction_layout_version`
+4. `route_id`
+5. `source_chain_id`
+6. `source_token`
+7. `source_sender`
+8. `source_burn_tx_hash`
+9. `source_burn_event_index`
+10. `source_block_number`
+11. `source_block_hash`
+12. `source_finality_block`
+13. `canonical_event_key`
+14. `x1_recipient`
+15. `burned_amount`
+16. `source_chain_weight_bps`
+17. `xxxl_mint_amount`
+18. `target_mint`
+19. `guardian_set_id`
+20. `message_nonce`
+21. `expiration_slot_or_unix_ts`
+
+Important boundary:
+
+- Phase 22 freezes semantic field set and canonical order only
+- exact byte-level encoding is not implemented
+- payload hash domain is not implemented
+- guardian signature parsing is not implemented
+- guardian quorum validation is not implemented
+- `message_nonce` replay semantics are not implemented
+- expiration checks are not implemented
+- source block / finality checks are not implemented
+- live route remains disabled
+- SPL CPI remains disabled
+
+Current Phase 21 runtime mapping recorded:
+
+- instruction `route_id` -> signed `route_id`
+- instruction `guardian_set_id` -> signed `guardian_set_id`
+- instruction `mint_id` -> signed `target_mint` or canonical mint identifier
+- instruction `canonical_event_key` -> signed `canonical_event_key`
+- instruction `recipient` -> signed `x1_recipient`
+- instruction `amount` -> signed `xxxl_mint_amount`
+- instruction `source_chain_weight_bps` -> signed `source_chain_weight_bps`
+- instruction `source_chain_id` -> signed `source_chain_id`
+
+Fields not yet represented by current runtime instruction/account validation:
+
+- `source_token`
+- `source_sender`
+- `source_burn_tx_hash`
+- `source_burn_event_index`
+- `source_block_number`
+- `source_block_hash`
+- `source_finality_block`
+- `burned_amount`, if distinct from `xxxl_mint_amount`
+- `message_nonce` replay semantics
+- `expiration_slot_or_unix_ts`
+
+Safety status:
+
+- `source_chain_weight_bps` remains dual-source for now:
+  instruction field plus `GatewayConfig` binding
+- `canonical_event_key` is not derived from `source_chain_id`
+- GatewayConfig layout is unchanged
+- live route remains disabled
+- SPL CPI remains disabled
+- enabled `process_instruction` remains a disabled-plan no-op for live atomicity
+- no production readiness is claimed
+- no final immutability is claimed while upgrade authority exists
+
+Current X1 status remains:
+
+- `X1_TESTNET_PROGRAM_DEPLOYED_RUNTIME_LOCKED`
+
+Active blockers remain:
+
+- `PRODUCTION_PROGRAM_ID_UNSET`
+- `LIVE_ROUTE_DISABLED`
+- `SPL_CPI_EXECUTION_DISABLED`
+- `PRODUCTION_GUARDIAN_SET_UNSET`
+- `PRODUCTION_PROOF_LOG_UNSET`
+- `EXTERNAL_REVIEW_INCOMPLETE`
+
+No blocker was removed.
+
+Recommended next stage:
+
+- `stage-xxxl-x1-testnet-local-runtime-skeleton-phase-23-guardian-signature-quorum-boundary`
+
+Only begin Phase 23 after byte-level payload encoding and test vectors are defined.
