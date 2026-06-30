@@ -40876,3 +40876,109 @@ Phase 8 audit minor notes resolved before commit:
 Recommended next stage:
 
 - `stage-xxxl-x1-testnet-local-runtime-skeleton-phase-9-local-tests-implementation-boundary`
+
+
+# Latest XXXL X1 testnet local runtime skeleton Phase 9 local tests implementation boundary
+
+Stage:
+
+- `stage-xxxl-x1-testnet-local-runtime-skeleton-phase-9-local-tests-implementation-boundary`
+
+Checkpoint artifact:
+
+- `docs/checkpoints/xxxl-x1-testnet-local-runtime-skeleton-phase-9-local-tests-implementation-boundary.md`
+
+Phase 9 defined the first narrow boundary for a future local test implementation
+stage after the Phase 8 coverage checkpoint.
+
+Phase 9 is docs-only:
+
+- no runtime code changed
+- no tests changed
+- no deploy
+- no upgrade
+- no transaction
+- no SOL spend
+- no live route
+- no SPL CPI
+- no `invoke_signed`
+- no SPL Token `mint_to`
+
+Future test implementation allowed files:
+
+- `programs/xxxl-svm/tests/**`
+- docs checkpoint files for that future stage
+
+Future test implementation read-only files:
+
+- `programs/xxxl-svm/src/**`
+- deployment scripts
+- upgrade scripts
+- CI/CD workflows that deploy, upgrade, submit transactions, or spend SOL
+- `.local-keys/**`
+- keypair JSON files
+- `.env`
+- `target/deploy/**`
+- `.so` artifacts
+
+Recommended candidate Phase 10:
+
+- `stage-xxxl-x1-testnet-local-runtime-skeleton-phase-10-disabled-no-mutation-tests`
+
+Candidate Phase 10 target subset:
+
+- valid disabled scaffold input leaves mutable local accounts unchanged
+- selected validation failures leave mutable local accounts unchanged
+- current enabled path remains unable to reach SPL CPI, `invoke_signed`, or SPL
+  Token `mint_to`
+
+Candidate Phase 10 must not target all Phase 8 gaps at once.
+
+Candidate Phase 10 must not modify runtime source.
+
+Candidate Phase 10 must not enable live route execution, Processed Event
+mutation, Recipient Balance mutation, Mint State / supply accounting mutation,
+SPL CPI, `invoke_signed`, or SPL Token `mint_to`.
+
+Current disabled semantics preserved:
+
+- current `Ok(())` means validation + disabled-plan no-op return only
+- current `Ok(())` is not live gateway success
+- current `Ok(())` is not XXXL mint success
+- current `Ok(())` is not Processed Event consumption
+- current `Ok(())` is not Recipient Balance credit
+- current `Ok(())` is not supply update
+
+Stage 1 / runtime boundary preserved:
+
+- Stage 1 remains deterministic authorization model
+- runtime remains consumer / mapping layer
+- Processed Event state is not Stage 1 authorization
+- runtime replay identity remains `canonicalEventKey`
+- `messageNonce` has no current runtime replay semantics
+- persistent Stage 1 processed-burn tracking belongs to off-chain watcher /
+  orchestrator / authorization-service boundary
+- `burnedAmount == xxxlMintAmount` remains Stage 1 responsibility
+
+Current X1 status remains:
+
+- `X1_TESTNET_PROGRAM_DEPLOYED_RUNTIME_LOCKED`
+
+Active blockers remain:
+
+- `PRODUCTION_PROGRAM_ID_UNSET`
+- `LIVE_ROUTE_DISABLED`
+- `SPL_CPI_EXECUTION_DISABLED`
+- `PRODUCTION_GUARDIAN_SET_UNSET`
+- `PRODUCTION_PROOF_LOG_UNSET`
+- `EXTERNAL_REVIEW_INCOMPLETE`
+
+No blocker was removed.
+
+No production readiness is claimed.
+
+No final immutability is claimed while upgrade authority exists.
+
+Recommended next stage:
+
+- `stage-xxxl-x1-testnet-local-runtime-skeleton-phase-10-disabled-no-mutation-tests`
