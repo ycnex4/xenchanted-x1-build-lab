@@ -4,7 +4,10 @@ use crate::error::XxxlError;
 
 pub const CONSUME_GATEWAY_MINT_INSTRUCTION_LEN: usize = 208;
 pub const INSTRUCTION_DISCRIMINATOR_LEN: usize = 8;
-pub const INSTRUCTION_LAYOUT_VERSION: u16 = 1;
+pub const INSTRUCTION_LAYOUT_VERSION: u16 = 2;
+pub const CONSUME_GATEWAY_MINT_SOURCE_CHAIN_ID_OFFSET: usize = 194;
+pub const CONSUME_GATEWAY_MINT_RESERVED_ZERO_START: usize = 202;
+pub const CONSUME_GATEWAY_MINT_RESERVED_ZERO_END: usize = 208;
 
 pub const CONSUME_GATEWAY_MINT_DISCRIMINATOR: [u8; INSTRUCTION_DISCRIMINATOR_LEN] =
     [0xf2, 0xf4, 0xa8, 0x68, 0xbb, 0x89, 0xfe, 0x52];
@@ -36,6 +39,10 @@ pub struct ConsumeGatewayMintArgs {
     pub canonical_event_key: [u8; 32],
     pub recipient: [u8; 32],
     pub amount: u128,
+    pub source_chain_id: u64,
+    // TODO(Phase 22): Evaluate whether source_chain_weight_bps should remain
+    // in instruction as part of the signed guardian payload or move to
+    // GatewayConfig-only. Phase 21 preserves the existing dual-source design.
     pub source_chain_weight_bps: u16,
 }
 
@@ -73,6 +80,13 @@ impl XxxlInstruction {
             return Err(XxxlError::InvalidInstruction.into());
         }
 
+        if input[CONSUME_GATEWAY_MINT_RESERVED_ZERO_START..CONSUME_GATEWAY_MINT_RESERVED_ZERO_END]
+            .iter()
+            .any(|byte| *byte != 0)
+        {
+            return Err(XxxlError::InvalidInstructionReserved.into());
+        }
+
         let mut raw = [0u8; CONSUME_GATEWAY_MINT_INSTRUCTION_LEN];
         raw.copy_from_slice(input);
 
@@ -90,6 +104,7 @@ impl XxxlInstruction {
             canonical_event_key: read_fixed_32(input, 112),
             recipient: read_fixed_32(input, 144),
             amount: read_u128_le(input, 176),
+            source_chain_id: read_u64_le(input, CONSUME_GATEWAY_MINT_SOURCE_CHAIN_ID_OFFSET),
             source_chain_weight_bps: read_u16_le(input, 192),
         }))
     }
@@ -103,6 +118,12 @@ fn read_fixed_32(input: &[u8], offset: usize) -> [u8; 32] {
 
 fn read_u16_le(input: &[u8], offset: usize) -> u16 {
     u16::from_le_bytes([input[offset], input[offset + 1]])
+}
+
+fn read_u64_le(input: &[u8], offset: usize) -> u64 {
+    let mut bytes = [0u8; 8];
+    bytes.copy_from_slice(&input[offset..offset + 8]);
+    u64::from_le_bytes(bytes)
 }
 
 fn read_u128_le(input: &[u8], offset: usize) -> u128 {
@@ -137,6 +158,7 @@ mod tests {
                 assert_eq!(args.canonical_event_key, [0x44; 32]);
                 assert_eq!(args.recipient, [0x55; 32]);
                 assert_eq!(args.amount, 1_000);
+                assert_eq!(args.source_chain_id, 1);
                 assert_eq!(args.source_chain_weight_bps, 10_000);
             }
         }
@@ -174,7 +196,23 @@ mod tests {
     #[test]
     fn consume_gateway_mint_rejects_wrong_instruction_version() {
         let mut bytes = valid_consume_gateway_mint_instruction();
-        bytes[8..10].copy_from_slice(&2u16.to_le_bytes());
+        bytes[8..10].copy_from_slice(&3u16.to_le_bytes());
+
+        assert_custom_error(XxxlInstruction::unpack(&bytes), XxxlError::InvalidVersion);
+    }
+
+    #[test]
+    fn consume_gateway_mint_rejects_version_1() {
+        let mut bytes = valid_consume_gateway_mint_instruction();
+        bytes[8..10].copy_from_slice(&1u16.to_le_bytes());
+
+        assert_custom_error(XxxlInstruction::unpack(&bytes), XxxlError::InvalidVersion);
+    }
+
+    #[test]
+    fn consume_gateway_mint_rejects_version_0() {
+        let mut bytes = valid_consume_gateway_mint_instruction();
+        bytes[8..10].copy_from_slice(&0u16.to_le_bytes());
 
         assert_custom_error(XxxlInstruction::unpack(&bytes), XxxlError::InvalidVersion);
     }
@@ -201,6 +239,60 @@ mod tests {
         );
     }
 
+    #[test]
+    fn consume_gateway_mint_v2_parses_source_chain_id() {
+        let mut bytes = valid_consume_gateway_mint_instruction();
+        let expected_source_chain_id = 42u64;
+        bytes[194..202].copy_from_slice(&expected_source_chain_id.to_le_bytes());
+
+        let instruction = XxxlInstruction::unpack(&bytes).expect("valid v2 instruction");
+
+        match instruction {
+            XxxlInstruction::ConsumeGatewayMint(args) => {
+                assert_eq!(args.source_chain_id, expected_source_chain_id);
+                assert_eq!(args.raw[194..202], expected_source_chain_id.to_le_bytes());
+            }
+        }
+    }
+
+    #[test]
+    fn consume_gateway_mint_v2_parses_max_source_chain_id() {
+        let mut bytes = valid_consume_gateway_mint_instruction();
+        bytes[194..202].copy_from_slice(&u64::MAX.to_le_bytes());
+
+        let instruction = XxxlInstruction::unpack(&bytes).expect("valid v2 instruction");
+
+        match instruction {
+            XxxlInstruction::ConsumeGatewayMint(args) => {
+                assert_eq!(args.source_chain_id, u64::MAX);
+            }
+        }
+    }
+
+    #[test]
+    fn consume_gateway_mint_rejects_nonzero_reserved_202_207() {
+        let mut bytes = valid_consume_gateway_mint_instruction();
+        bytes[202..208].copy_from_slice(&[1, 2, 3, 4, 5, 6]);
+
+        assert_custom_error(
+            XxxlInstruction::unpack(&bytes),
+            XxxlError::InvalidInstructionReserved,
+        );
+    }
+
+    #[test]
+    fn consume_gateway_mint_rejects_nonzero_reserved_any_byte() {
+        for index in 202..208 {
+            let mut bytes = valid_consume_gateway_mint_instruction();
+            bytes[index] = 1;
+
+            assert_custom_error(
+                XxxlInstruction::unpack(&bytes),
+                XxxlError::InvalidInstructionReserved,
+            );
+        }
+    }
+
     fn valid_consume_gateway_mint_instruction() -> [u8; CONSUME_GATEWAY_MINT_INSTRUCTION_LEN] {
         let mut bytes = [0u8; CONSUME_GATEWAY_MINT_INSTRUCTION_LEN];
 
@@ -219,6 +311,7 @@ mod tests {
         bytes[144..176].copy_from_slice(&[0x55; 32]);
         bytes[176..192].copy_from_slice(&1_000u128.to_le_bytes());
         bytes[192..194].copy_from_slice(&10_000u16.to_le_bytes());
+        bytes[194..202].copy_from_slice(&1u64.to_le_bytes());
 
         bytes
     }

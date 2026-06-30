@@ -383,6 +383,7 @@ impl RuntimeFixture {
         let route_id = [0x11; 32];
         let guardian_set_id = [0x22; 32];
         let canonical_event_key = [0x44; 32];
+        let source_chain_id = 1;
 
         let owners = RuntimeFixtureOwners {
             program: program_id,
@@ -404,7 +405,13 @@ impl RuntimeFixture {
 
         let data = RuntimeFixtureData {
             mint_state: mint_state_data(spl_mint, mint_authority_pda, bump),
-            gateway_config: gateway_config_data(route_id, guardian_set_id, spl_mint, 10_000),
+            gateway_config: gateway_config_data(
+                route_id,
+                source_chain_id,
+                guardian_set_id,
+                spl_mint,
+                10_000,
+            ),
             guardian_set: guardian_set_data(guardian_set_id),
             processed_event: processed_event_data(
                 false,
@@ -450,6 +457,7 @@ impl RuntimeFixture {
             canonical_event_key,
             recipient: recipient_owner.to_bytes(),
             amount: 1_000,
+            source_chain_id,
             source_chain_weight_bps: 10_000,
         };
 
@@ -570,6 +578,7 @@ fn mint_state_data(mint: Pubkey, pda: Pubkey, bump: u8) -> Vec<u8> {
 
 fn gateway_config_data(
     route_id: [u8; 32],
+    source_chain_id: u64,
     guardian_set_id: [u8; 32],
     target_mint: Pubkey,
     weight_bps: u16,
@@ -580,6 +589,7 @@ fn gateway_config_data(
     );
     data[12..14].copy_from_slice(&weight_bps.to_le_bytes());
     data[16..48].copy_from_slice(&route_id);
+    data[48..56].copy_from_slice(&source_chain_id.to_le_bytes());
     data[88..120].copy_from_slice(&target_mint.to_bytes());
     data[120..152].copy_from_slice(&guardian_set_id);
     data

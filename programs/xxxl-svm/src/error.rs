@@ -10,6 +10,8 @@ pub enum XxxlError {
     InvalidDiscriminator = 6,
     InvalidVersion = 7,
     CpiBoundaryNotReady = 8,
+    InvalidSourceChain = 9,
+    InvalidInstructionReserved = 10,
 }
 
 impl From<XxxlError> for ProgramError {

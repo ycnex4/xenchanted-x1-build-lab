@@ -1073,6 +1073,7 @@ mod tests {
             canonical_event_key: [0x44; 32],
             recipient: [0x55; 32],
             amount: 1_000,
+            source_chain_id: 1,
             source_chain_weight_bps: 10_000,
         }
     }
