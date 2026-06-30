@@ -41259,3 +41259,72 @@ No final immutability is claimed while upgrade authority exists.
 Recommended next stage:
 
 - `stage-xxxl-x1-testnet-local-runtime-skeleton-phase-14-disabled-cpi-reachability-evidence`
+
+
+# Latest XXXL X1 testnet local runtime skeleton Phase 14 disabled CPI reachability evidence
+
+Stage:
+
+- `stage-xxxl-x1-testnet-local-runtime-skeleton-phase-14-disabled-cpi-reachability-evidence`
+
+Checkpoint artifact:
+
+- `docs/checkpoints/xxxl-x1-testnet-local-runtime-skeleton-phase-14-disabled-cpi-reachability-evidence.md`
+
+Phase 14 is docs-only.
+
+Purpose:
+
+- record source-level evidence that the currently enabled `consume_gateway_mint`
+  path does not reach SPL CPI, `invoke_signed`, or SPL Token `mint_to`
+
+Current enabled path:
+
+1. `entrypoint!(process_instruction)`
+2. `process_instruction`
+3. `process_consume_gateway_mint`
+4. `build_runtime_consume_gateway_mint_execution_plan_boundary`
+5. disabled execution-plan log
+6. `Ok(())`
+
+Current enabled path does not call:
+
+- `build_runtime_consume_gateway_mint_disabled_spl_cpi_gate_boundary`
+- `guarded_mint_to_cpi_execution_gate_boundary`
+- `mint_to_cpi_boundary`
+- `invoke_signed`
+- SPL Token `mint_to`
+
+Dormant CPI helpers exist, but remain gated and unreachable from the enabled
+`process_consume_gateway_mint` path.
+
+Runtime source status:
+
+- `programs/xxxl-svm/src/**` unchanged
+
+Test source status:
+
+- `programs/xxxl-svm/tests/**` unchanged
+
+Current X1 status remains:
+
+- `X1_TESTNET_PROGRAM_DEPLOYED_RUNTIME_LOCKED`
+
+Active blockers remain:
+
+- `PRODUCTION_PROGRAM_ID_UNSET`
+- `LIVE_ROUTE_DISABLED`
+- `SPL_CPI_EXECUTION_DISABLED`
+- `PRODUCTION_GUARDIAN_SET_UNSET`
+- `PRODUCTION_PROOF_LOG_UNSET`
+- `EXTERNAL_REVIEW_INCOMPLETE`
+
+No blocker was removed.
+
+No production readiness is claimed.
+
+No final immutability is claimed while upgrade authority exists.
+
+Recommended next stage:
+
+- `stage-xxxl-x1-testnet-local-runtime-skeleton-phase-15-disabled-cpi-reachability-tests`
