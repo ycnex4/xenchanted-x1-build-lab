@@ -41746,3 +41746,78 @@ No final immutability is claimed while upgrade authority exists.
 Recommended next stage:
 
 - `stage-xxxl-x1-testnet-local-runtime-skeleton-phase-20-invalid-vector-runtime-coverage-boundary`
+
+
+# Latest XXXL X1 testnet local runtime skeleton Phase 20 invalid-vector runtime coverage boundary
+
+Stage:
+
+- `stage-xxxl-x1-testnet-local-runtime-skeleton-phase-20-invalid-vector-runtime-coverage-boundary`
+
+Checkpoint artifact:
+
+- `docs/checkpoints/xxxl-x1-testnet-local-runtime-skeleton-phase-20-invalid-vector-runtime-coverage-boundary.md`
+
+Phase 20 is Rust test evidence plus checkpoint documentation.
+
+Purpose:
+
+- add executable evidence for current runtime-observable invalid-vector classes
+- separate runtime-observable coverage from Stage 1 classes not yet represented
+  by the current runtime instruction/account model
+- preserve Phase 19 live atomicity no-mutation evidence
+
+Changed test files:
+
+- `programs/xxxl-svm/tests/mollusk_consume_gateway_mint.rs`
+- `programs/xxxl-svm/tests/instruction_reserved_bytes.rs`
+
+Runtime source status:
+
+- `programs/xxxl-svm/src/**` unchanged
+
+Cargo status:
+
+- Cargo files unchanged
+
+Validation:
+
+- `cargo fmt --check`: passed
+- `cargo test --test mollusk_consume_gateway_mint`: 51 passed, 0 failed, 10 ignored
+- `cargo test --test disabled_cpi_reachability`: 7 passed, 0 failed
+- `cargo test --test instruction_reserved_bytes`: 1 passed, 0 failed
+- `cargo test --lib`: 201 passed, 0 failed, 1 ignored
+- `git diff --check`: passed
+
+Not claimed as covered:
+
+- sourceChainId final runtime binding
+- source block / finality fields
+- messageNonce runtime replay semantics
+- guardian signature / quorum validation where not represented in the current
+  runtime instruction/account path
+- watcher/model canonical encoding field-order vectors
+- decimal string encoding vectors
+- reserved bytes `194..208` as semantic sourceChainId
+- live SPL mint success path
+- rollback after live SPL CPI failure
+- full Stage 1 invalid-vector runtime completion
+
+Current X1 status remains:
+
+- `X1_TESTNET_PROGRAM_DEPLOYED_RUNTIME_LOCKED`
+
+Active blockers remain:
+
+- `PRODUCTION_PROGRAM_ID_UNSET`
+- `LIVE_ROUTE_DISABLED`
+- `SPL_CPI_EXECUTION_DISABLED`
+- `PRODUCTION_GUARDIAN_SET_UNSET`
+- `PRODUCTION_PROOF_LOG_UNSET`
+- `EXTERNAL_REVIEW_INCOMPLETE`
+
+No blocker was removed.
+
+No production readiness is claimed.
+
+No final immutability is claimed while upgrade authority exists.
