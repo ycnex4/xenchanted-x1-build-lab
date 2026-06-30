@@ -41486,3 +41486,68 @@ No final immutability is claimed while upgrade authority exists.
 Recommended next stage:
 
 - `stage-xxxl-x1-testnet-local-runtime-skeleton-phase-17-source-chain-id-runtime-boundary`
+
+
+# Latest XXXL X1 testnet local runtime skeleton Phase 17 sourceChainId runtime boundary
+
+Stage:
+
+- `stage-xxxl-x1-testnet-local-runtime-skeleton-phase-17-source-chain-id-runtime-boundary`
+
+Checkpoint artifact:
+
+- `docs/checkpoints/xxxl-x1-testnet-local-runtime-skeleton-phase-17-source-chain-id-runtime-boundary.md`
+
+Phase 17 is docs-only.
+
+Purpose:
+
+- record that current runtime typed args do not include `sourceChainId`
+- record that bytes `194..208` are not parsed as `sourceChainId`
+- prevent the misleading claim that current runtime independently validates
+  source-chain identity
+- preserve `sourceChainId` runtime handling as unresolved before live-route or
+  SPL-CPI enablement
+
+Correct statement:
+
+- current runtime does not independently parse `sourceChainId`
+
+Incorrect statement:
+
+- bytes `194..208` are already `sourceChainId`
+
+Runtime source status:
+
+- `programs/xxxl-svm/src/**` unchanged
+
+Test source status:
+
+- `programs/xxxl-svm/tests/**` unchanged
+
+Cargo status:
+
+- Cargo files unchanged
+
+Current X1 status remains:
+
+- `X1_TESTNET_PROGRAM_DEPLOYED_RUNTIME_LOCKED`
+
+Active blockers remain:
+
+- `PRODUCTION_PROGRAM_ID_UNSET`
+- `LIVE_ROUTE_DISABLED`
+- `SPL_CPI_EXECUTION_DISABLED`
+- `PRODUCTION_GUARDIAN_SET_UNSET`
+- `PRODUCTION_PROOF_LOG_UNSET`
+- `EXTERNAL_REVIEW_INCOMPLETE`
+
+No blocker was removed.
+
+No production readiness is claimed.
+
+No final immutability is claimed while upgrade authority exists.
+
+Recommended next stage:
+
+- `stage-xxxl-x1-testnet-local-runtime-skeleton-phase-18-u128-u64-spl-amount-boundary`
