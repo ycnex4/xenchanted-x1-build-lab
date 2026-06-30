@@ -41913,3 +41913,65 @@ Recommended next stage:
 - `stage-xxxl-x1-testnet-local-runtime-skeleton-phase-21-sbf-artifact-mollusk-revalidation-boundary`
 
 This follow-up should refresh or otherwise resolve the stale Mollusk SBF artifact boundary only if that action is explicitly allowed and reviewed.
+
+# Latest XXXL X1 testnet local runtime skeleton Phase 21 SBF artifact Mollusk revalidation boundary
+
+Stage:
+
+- `stage-xxxl-x1-testnet-local-runtime-skeleton-phase-21-sbf-artifact-mollusk-revalidation-boundary`
+
+Checkpoint artifact:
+
+- `docs/checkpoints/xxxl-x1-testnet-local-runtime-skeleton-phase-21-sbf-artifact-mollusk-revalidation-boundary.md`
+
+Purpose:
+
+- resolve the stale local Mollusk SBF artifact blocker after Phase 21 sourceChainId binding
+- refresh only the ignored local `xxxl_svm.so` test artifact
+- rerun Mollusk against Phase 21 instruction layout v2
+- document that no deploy, upgrade, transaction, SOL spend, live route activation, or SPL CPI activation occurred
+
+Artifact handling:
+
+- `programs/xxxl-svm/target/deploy/xxxl_svm.so` remains ignored and untracked
+- `programs/xxxl-svm/target/deploy/xxxl_svm-keypair.json` remains ignored and untracked
+- only the local ignored `.so` was replaced for Mollusk validation
+- keypair content was not read, copied, modified, committed, or used
+- temporary SBF output directory was removed after validation
+
+Validation:
+
+- `cargo build-sbf --sbf-out-dir /tmp/xxxl-svm-phase21-sbf-out`: passed
+- `cargo test --test mollusk_consume_gateway_mint`: 55 passed, 0 failed, 10 ignored
+- `cargo fmt --check`: passed
+- `cargo test --test disabled_cpi_reachability`: 7 passed, 0 failed
+- `cargo test --test instruction_reserved_bytes`: 3 passed, 0 failed
+- `cargo test --lib`: 211 passed, 0 failed, 1 ignored
+
+Safety status:
+
+- live route remains disabled
+- SPL CPI remains disabled
+- enabled `process_instruction` remains a disabled-plan no-op for live atomicity
+- no deployable artifact is committed
+- no production readiness is claimed
+- no final immutability is claimed while upgrade authority exists
+
+Current X1 status remains:
+
+- `X1_TESTNET_PROGRAM_DEPLOYED_RUNTIME_LOCKED`
+
+Active blockers remain:
+
+- `PRODUCTION_PROGRAM_ID_UNSET`
+- `LIVE_ROUTE_DISABLED`
+- `SPL_CPI_EXECUTION_DISABLED`
+- `PRODUCTION_GUARDIAN_SET_UNSET`
+- `PRODUCTION_PROOF_LOG_UNSET`
+- `EXTERNAL_REVIEW_INCOMPLETE`
+
+No blocker was removed.
+
+Recommended next stage:
+
+- `stage-xxxl-x1-testnet-local-runtime-skeleton-phase-22-guardian-payload-structure-boundary`
