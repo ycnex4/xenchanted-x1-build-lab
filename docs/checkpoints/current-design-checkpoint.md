@@ -41328,3 +41328,86 @@ No final immutability is claimed while upgrade authority exists.
 Recommended next stage:
 
 - `stage-xxxl-x1-testnet-local-runtime-skeleton-phase-15-disabled-cpi-reachability-tests`
+
+
+# Latest XXXL X1 testnet local runtime skeleton Phase 15 disabled CPI reachability tests
+
+Stage:
+
+- `stage-xxxl-x1-testnet-local-runtime-skeleton-phase-15-disabled-cpi-reachability-tests`
+
+Checkpoint artifact:
+
+- `docs/checkpoints/xxxl-x1-testnet-local-runtime-skeleton-phase-15-disabled-cpi-reachability-tests.md`
+
+Phase 15 adds test evidence around the disabled CPI boundary.
+
+New test file:
+
+- `programs/xxxl-svm/tests/disabled_cpi_reachability.rs`
+
+New tests:
+
+- `spl_mint_to_cpi_execution_gate_is_disabled`
+- `guarded_mint_to_cpi_boundary_rejects_before_invoke_signed_when_global_gate_disabled`
+- `guarded_mint_to_cpi_boundary_rejects_live_execution_plan_flag`
+- `guarded_mint_to_cpi_boundary_rejects_invoke_signed_planning_flag`
+
+Validation command:
+
+    cd /mnt/c/Users/user/xenchanted-x1-build-lab/programs/xxxl-svm
+    cargo test --test disabled_cpi_reachability
+
+Validation result:
+
+- 4 tests total
+- 4 passed
+- 0 failed
+- 0 ignored
+- 0 measured
+- 0 filtered out
+
+Regression command:
+
+    cd /mnt/c/Users/user/xenchanted-x1-build-lab/programs/xxxl-svm
+    cargo test --test mollusk_consume_gateway_mint
+
+Regression result:
+
+- 53 tests total
+- 43 passed
+- 0 failed
+- 10 ignored
+- 0 measured
+- 0 filtered out
+
+Runtime source status:
+
+- `programs/xxxl-svm/src/**` unchanged
+
+Cargo status:
+
+- Cargo files unchanged
+
+Current X1 status remains:
+
+- `X1_TESTNET_PROGRAM_DEPLOYED_RUNTIME_LOCKED`
+
+Active blockers remain:
+
+- `PRODUCTION_PROGRAM_ID_UNSET`
+- `LIVE_ROUTE_DISABLED`
+- `SPL_CPI_EXECUTION_DISABLED`
+- `PRODUCTION_GUARDIAN_SET_UNSET`
+- `PRODUCTION_PROOF_LOG_UNSET`
+- `EXTERNAL_REVIEW_INCOMPLETE`
+
+No blocker was removed.
+
+No production readiness is claimed.
+
+No final immutability is claimed while upgrade authority exists.
+
+Recommended next stage:
+
+- `stage-xxxl-x1-testnet-local-runtime-skeleton-phase-16-disabled-local-mutation-boundary-tests`
