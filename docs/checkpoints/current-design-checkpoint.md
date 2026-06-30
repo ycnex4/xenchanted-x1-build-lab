@@ -40175,3 +40175,150 @@ Safety clarification:
 - no blocker is removed
 - no production readiness is claimed
 - no final immutability is claimed while upgrade authority exists
+
+
+# Latest XXXL X1 testnet local runtime skeleton Phase 4 validation error model reconciliation checkpoint
+
+Stage:
+
+- `stage-xxxl-x1-testnet-local-runtime-skeleton-phase-4-validation-error-model-reconciliation`
+
+Checkpoint artifact:
+
+- `docs/checkpoints/xxxl-x1-testnet-local-runtime-skeleton-phase-4-validation-error-model-reconciliation.md`
+
+Phase 4 reconciled the current validation pipeline and error model for the
+disabled `CONSUME_GATEWAY_MINT` runtime skeleton.
+
+Validation pipeline summary:
+
+- `process_instruction` calls `XxxlInstruction::unpack`
+- `XxxlInstruction::unpack` checks exact length, discriminator, version, account meta count, and encoded account index bytes
+- `process_consume_gateway_mint` obtains Rent and Clock, then calls `build_runtime_consume_gateway_mint_execution_plan_boundary`
+- `build_runtime_consume_gateway_mint_execution_plan_boundary` calls `prepare_consume_gateway_mint_cpi_boundary`
+- `prepare_consume_gateway_mint_cpi_boundary` checks account count, account contract flags, account ownership, rent exemption, local account layouts, route / guardian / mint / processed-event / recipient-balance relationships, SPL mint validation, recipient token account validation, amount bounds, and source-chain weight
+- `build_atomic_consume_gateway_mint_execution_plan` rechecks amount and source-chain weight consistency and returns disabled live-route / disabled mint-to flags
+- the enabled `process_instruction -> process_consume_gateway_mint` path builds the disabled execution plan and returns without local mutation or SPL CPI
+- the enabled entrypoint path does not return a distinct route-disabled error today
+- separate disabled SPL CPI gate boundaries return `CpiBoundaryNotReady` while SPL CPI remains disabled
+
+Error model summary:
+
+- instruction discriminator mismatch maps to `InvalidDiscriminator`
+- instruction version mismatch maps to `InvalidVersion`
+- instruction length, extra bytes, encoded account meta/index mismatch, account count mismatch, writable/signer mismatch, most relationship mismatches, zero amount, and amount overflow map to `InvalidInstruction`
+- wrong program owner and wrong SPL Token program map to `InvalidAccountOwner`
+- rent exemption failure maps to `InvalidRentExemption`
+- recipient token account and recipient-balance relationship failures map to `InvalidRecipientAta`
+- PDA / mint authority derivation failures map to `InvalidPda`
+- local account discriminator mismatch maps to `InvalidDiscriminator`
+- local account layout version mismatch maps to `InvalidVersion`
+- disabled SPL CPI gate maps to `CpiBoundaryNotReady`
+- no distinct live-route-disabled runtime error is currently returned by the enabled entrypoint path
+
+Phase 3 open questions resolved or classified:
+
+- `mint_state.mint_pubkey()` vs `args.mint_id`: check exists in `prepare_consume_gateway_mint_cpi_boundary`; explicit test remains a coverage gap
+- `args.raw` propagation: no downstream consumer found beyond instruction args and a unit assertion
+- bytes `194..208`: reserved / unparsed / not zero-validated; production semantics not decided; no current error for non-zero trailing bytes inside a valid 208-byte instruction
+- `u128` amount field with `u64` valid range: final rationale absent; design gap
+- `mint_to_cpi_boundary` contains `invoke_signed`; one unit test calls it on a wrong-PDA path that fails before `invoke_signed`; enabled entrypoint remains unable to reach it
+- ignored Mollusk tests have a shared visible reason, `requires cargo build-sbf and target/deploy/xxxl_svm.so`; future disposition remains unresolved evidence
+
+Phase 4 coverage / gap classifications:
+
+- `mint_state.mint_pubkey()` explicit test: coverage gap
+- bytes `194..208` semantics: design gap
+- `u128` amount rationale: design gap
+- amount overflow Mollusk coverage: coverage gap
+- encoded route index independent coverage: coverage gap
+- encoded guardian set index independent coverage: coverage gap
+- encoded mint state index Mollusk coverage: coverage gap
+- guardian set ID mismatch Mollusk coverage: coverage gap
+- source-chain weight mismatch Mollusk coverage: coverage gap
+- ignored Mollusk future disposition: evidence gap
+- live-route disabled error semantics: deferred by blocker model
+- SPL CPI disabled error path: covered in separate internal gate boundary, not reached by enabled entrypoint
+
+Phase 4 made no runtime code changes.
+
+Phase 4 changed no tests.
+
+Phase 4 did not deploy or upgrade.
+
+Phase 4 did not submit transactions.
+
+Phase 4 did not spend SOL.
+
+Phase 4 did not touch `.local-keys/**`, keypair JSON files, `.env`, `target/deploy/**`, or `.so` artifacts.
+
+Phase 4 did not add deployment scripts, upgrade scripts, or CI/CD workflows that deploy, upgrade, submit transactions, or spend SOL.
+
+`LIVE_ROUTE_DISABLED` remains active.
+
+`SPL_CPI_EXECUTION_DISABLED` remains active.
+
+`PRODUCTION_PROGRAM_ID_UNSET` remains active.
+
+`PRODUCTION_GUARDIAN_SET_UNSET` remains active.
+
+`PRODUCTION_PROOF_LOG_UNSET` remains active.
+
+`EXTERNAL_REVIEW_INCOMPLETE` remains active.
+
+No blocker was removed.
+
+No production readiness is claimed.
+
+No final immutability is claimed while upgrade authority exists.
+
+The runtime remains non-deployed, non-live, and unable to mint through the currently enabled executable entrypoint path.
+
+Dormant CPI helpers still have source-level and unit-test call sites, but remain unreachable from the currently enabled executable entrypoint path.
+
+Recommended next stage:
+
+- `stage-xxxl-x1-testnet-local-runtime-skeleton-phase-5-stage-1-authorization-consumer-modeling`
+
+## XXXL X1 Testnet Local Runtime Skeleton Phase 4 Audit Clarifications
+
+The full Phase 4 checkpoint document is the authoritative Phase 4 record.
+
+This current-design section is a condensed summary only.
+
+External audit result:
+
+- `ACCEPT WITH MINOR NOTES`
+- no blocking issues found
+- Phase 4 remains safe to merge as a docs-only reconciliation stage
+- all runtime blockers remain active
+
+Minor notes addressed before commit:
+
+- live-route-disabled `Ok(())` behavior recorded as a decision gate before
+  Phase 5 closure or any implementation stage that changes enabled runtime
+  behavior
+- mixed mint ID mismatch error codes recorded as an unresolved design question
+- CPI / `invoke_signed` claims separated into whole-codebase and
+  enabled-entrypoint-path statements
+- bytes `194..208` guarded by a stricter implementation gate before any code
+  reads, interprets, or validates them as named production fields
+- ignored Mollusk tests assigned to a future SBF artifact / harness or
+  Mollusk-compatible conversion decision
+- defensive amount / source-chain-weight recheck explained as a boundary
+  construction invariant
+- wrong SPL Token program error mapping recorded as a future API consistency
+  review item
+- future Mollusk/SVM coverage checkpoint criteria recorded as still undefined
+
+Safety clarification:
+
+- this remains docs-only
+- no runtime code changed
+- no tests changed
+- no live gateway execution is enabled
+- no SPL CPI is enabled
+- no dormant CPI helper is made reachable from the enabled entrypoint path
+- no blocker is removed
+- no production readiness is claimed
+- no final immutability is claimed while upgrade authority exists
