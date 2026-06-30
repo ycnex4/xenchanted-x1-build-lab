@@ -40176,7 +40176,6 @@ Safety clarification:
 - no production readiness is claimed
 - no final immutability is claimed while upgrade authority exists
 
-
 # Latest XXXL X1 testnet local runtime skeleton Phase 4 validation error model reconciliation checkpoint
 
 Stage:
@@ -40322,3 +40321,153 @@ Safety clarification:
 - no blocker is removed
 - no production readiness is claimed
 - no final immutability is claimed while upgrade authority exists
+
+
+# Latest XXXL X1 testnet local runtime skeleton Phase 5 Stage 1 authorization consumer modeling checkpoint
+
+Stage:
+
+- `stage-xxxl-x1-testnet-local-runtime-skeleton-phase-5-stage-1-authorization-consumer-modeling`
+
+Checkpoint artifact:
+
+- `docs/checkpoints/xxxl-x1-testnet-local-runtime-skeleton-phase-5-stage-1-authorization-consumer-modeling.md`
+
+Phase 5 modeled how the current disabled local SVM runtime skeleton consumes
+the Stage 1 deterministic gateway authorization model.
+
+Required framing preserved:
+
+Stage 1 establishes the deterministic authorization model. Runtime maps that
+result to account-level validation, replay protection, and atomicity
+boundaries.
+
+Stage 1 proves gateway authorization properties at model level; the runtime
+must preserve those properties at account-write and CPI-boundary level.
+
+Stage 1 authorization responsibility summary:
+
+- canonical gateway message validation
+- canonical field order and fixed-width encoding
+- domain separator and message hash binding
+- route, source chain, source token, source sender, and burn evidence binding
+- canonical event key calculation
+- X1 recipient hash calculation
+- burned amount and XXXL mint amount binding
+- source-chain weight and mint token binding for the Stage 1 route
+- guardian approval and quorum verification
+- processed burn replay protection at model level
+
+Current runtime consumer representation:
+
+- the SVM instruction currently carries named runtime fields for route ID,
+  guardian set ID, mint ID, canonical event key, recipient, amount, and
+  source-chain weight
+- it does not carry source-chain ID, source token, source sender, burn
+  transaction hash, burn event index, source block number, source block hash,
+  source nonce, burned amount, deadline/finality block, or message nonce as
+  named runtime fields
+- bytes `194..208` remain reserved, unparsed, and not zero-validated; they are
+  not Stage 1 hidden fields
+
+Current runtime account-level re-checks:
+
+- 9-account count, account flags, and no external signer policy
+- local account owners, rent exemption, discriminators, versions, and lengths
+- SPL Token program ID and SPL-owned account validation
+- gateway mint authority PDA, bump, and SPL mint authority relationships
+- route, guardian set, mint, processed-event, recipient-balance, and recipient
+  token account relationships
+- Processed Event unconsumed state and canonical event key / route / recipient
+  relationships
+- nonzero amount and SPL Token `u64` amount range
+- Gateway Config source-chain weight relationship
+
+Deferred authorization-consumer gaps:
+
+- runtime does not verify Stage 1 message hash, domain separator, Ed25519
+  approvals, or guardian quorum
+- runtime does not independently re-check source token, source sender, source
+  burn transaction hash, source burn event index, source block number, source
+  block hash, source nonce, burned amount, recipient hash, deadline/finality,
+  or message nonce
+- `GatewayConfigAccountView::source_chain_id()` exists, but current processor
+  validation does not compare it to a decoded instruction source-chain field
+- guardian quorum remains a Stage 1 model property, not a runtime computation
+- stale / expired message behavior remains undecided
+
+Phase 4 gates preserved:
+
+- bytes `194..208` remain reserved / unparsed / not zero-validated
+- the `u128` amount layout with `u64` SPL range remains a design gap
+- the enabled runtime path validates and builds a disabled plan, then returns
+  `Ok(())` without mutation or SPL CPI
+- no distinct live-route-disabled error is currently returned by the enabled
+  entrypoint path
+- dormant CPI helpers contain source-level `mint_to` / `invoke_signed` code,
+  but enabled `process_instruction` does not reach SPL CPI, `invoke_signed`, or
+  `mint_to`
+- 10 ignored Mollusk tests remain an evidence gap
+- complete Mollusk/SVM coverage criteria remain undefined before upgrade or
+  live readiness
+
+Phase 5 made no runtime code changes.
+
+Phase 5 changed no tests.
+
+Phase 5 did not deploy or upgrade.
+
+Phase 5 did not submit transactions.
+
+Phase 5 did not spend SOL.
+
+Phase 5 did not touch `.local-keys/**`, keypair JSON files, `.env`,
+`target/deploy/**`, or `.so` artifacts.
+
+Phase 5 did not add deployment scripts, upgrade scripts, or CI/CD workflows
+that deploy, upgrade, submit transactions, or spend SOL.
+
+Current X1 status remains:
+
+- `X1_TESTNET_PROGRAM_DEPLOYED_RUNTIME_LOCKED`
+
+Active blockers remain:
+
+- `PRODUCTION_PROGRAM_ID_UNSET`
+- `LIVE_ROUTE_DISABLED`
+- `SPL_CPI_EXECUTION_DISABLED`
+- `PRODUCTION_GUARDIAN_SET_UNSET`
+- `PRODUCTION_PROOF_LOG_UNSET`
+- `EXTERNAL_REVIEW_INCOMPLETE`
+
+No blocker was removed.
+
+No production readiness is claimed.
+
+No final immutability is claimed while upgrade authority exists.
+
+Phase 5 made no new deployment. The existing X1 testnet scaffold remains
+locked, non-live, and unable to mint through the currently enabled executable
+entrypoint path.
+
+
+Phase 5 audit minor notes resolved before commit:
+
+- the Field Responsibility Matrix explicitly covers all 19 Stage 1 vector
+  fields, including `messageType` and `schemaVersion`
+- `sourceChainId` runtime handling remains a Phase 6 decision path and must not
+  be resolved silently through bytes `194..208`
+- if Stage 1 authorization succeeds but runtime account-level validation fails,
+  future runtime behavior must remain no processed mark, no recipient credit, no
+  supply update, and no SPL CPI
+- `current-design-checkpoint.md` is a rolling aggregate / summary artifact; the
+  standalone Phase 5 checkpoint is the authoritative Phase 5 artifact
+- the 27 Stage 1 invalid vectors remain Stage 1 rejection cases; future Phase
+  6/7 coverage should record that rejected Stage 1 cases never reach a runtime
+  mint path
+- `messageNonce` has no current runtime replay semantics; runtime replay
+  identity remains `canonicalEventKey`
+
+Recommended next stage:
+
+- `stage-xxxl-x1-testnet-local-runtime-skeleton-phase-6-disabled-processor-control-flow-reconciliation`
