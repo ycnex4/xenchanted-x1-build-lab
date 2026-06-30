@@ -42220,3 +42220,110 @@ Recommended next stage:
 
 Phase 24 may implement guardian signature/quorum only after this Phase 23 vector
 surface is audited.
+
+# Latest XXXL X1 testnet local runtime skeleton Phase 24 guardian signature quorum boundary
+
+Stage:
+
+- `stage-xxxl-x1-testnet-local-runtime-skeleton-phase-24-guardian-signature-quorum-boundary`
+
+Checkpoint artifact:
+
+- `docs/checkpoints/xxxl-x1-testnet-local-runtime-skeleton-phase-24-guardian-signature-quorum-boundary.md`
+
+Purpose:
+
+- implement TypeScript-only XXXL guardian approval verification
+- implement TypeScript-only XXXL guardian quorum verification
+- verify Ed25519 guardian signatures over the 32-byte Phase 23 payload hash
+- keep Phase 23 byte encoding unchanged
+
+Important signing decision:
+
+- guardians sign `hashXxxlGuardianPayload(fields)` as exactly 32 bytes
+- guardians do not sign the full Phase 23 hash preimage in Phase 24
+- caller-supplied payload hashes are not accepted as authoritative
+
+Runtime source status:
+
+- `programs/xxxl-svm/src/**` unchanged
+
+Runtime test status:
+
+- `programs/xxxl-svm/tests/**` unchanged
+
+Cargo/package status:
+
+- Cargo files unchanged
+- `package.json` unchanged
+- `package-lock.json` unchanged
+- no dependencies added
+- no `npm install` run
+
+Deploy/artifact status:
+
+- no SBF build
+- no `target/deploy` changes
+- no tracked `.so` artifact
+- no tracked keypair file
+- no `.local-keys` access
+- no `.env` access
+- no deploy
+- no upgrade
+- no Solana/network action
+- no transaction submission
+- no SOL spend
+
+Verifier behavior:
+
+- rejects empty guardian sets
+- rejects invalid thresholds
+- rejects duplicate guardian public keys in config
+- rejects malformed guardian public keys
+- rejects malformed guardian signatures
+- rejects unknown guardian approvals
+- rejects duplicate guardian approvals
+- rejects invalid signatures
+- rejects quorum not reached
+- counts only accepted, known, non-duplicate, valid-signature approvals
+- captures Phase 23 payload validation failures as `INVALID_PAYLOAD`
+
+Safety status:
+
+- Phase 23 payload encoding was not changed
+- `source_chain_weight_bps` remains signed and dual-source:
+  guardian payload field, runtime instruction field, and `GatewayConfig` binding
+- `canonical_event_key` is not derived from `source_chain_id`
+- GatewayConfig layout is unchanged
+- live route remains disabled
+- SPL CPI remains disabled
+- `invoke_signed` remains disabled
+- SPL Token `mint_to` remains disabled
+- no runtime/account state mutation is added
+- no production readiness is claimed
+- no final immutability is claimed while upgrade authority exists
+
+Current X1 status remains:
+
+- `X1_TESTNET_PROGRAM_DEPLOYED_RUNTIME_LOCKED`
+
+Active blockers remain:
+
+- `PRODUCTION_PROGRAM_ID_UNSET`
+- `LIVE_ROUTE_DISABLED`
+- `SPL_CPI_EXECUTION_DISABLED`
+- `PRODUCTION_GUARDIAN_SET_UNSET`
+- `PRODUCTION_PROOF_LOG_UNSET`
+- `EXTERNAL_REVIEW_INCOMPLETE`
+
+No blocker was removed.
+
+Validation:
+
+- `npm run build`: passed
+- `npm test -- --run`: passed, 98 test files passed, 882 tests passed
+
+Recommended next stage:
+
+- define the next reviewed boundary before connecting guardian quorum results to
+  runtime execution, replay storage, expiration checks, or any live route path
