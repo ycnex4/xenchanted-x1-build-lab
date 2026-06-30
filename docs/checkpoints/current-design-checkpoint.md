@@ -39855,6 +39855,8 @@ The already-recorded X1 testnet scaffold status is unchanged by this docs-only i
 
 `SPL_CPI_EXECUTION_DISABLED` remains active.
 
+Dormant CPI helpers have source-level and unit-test call sites, but remain unreachable from the currently enabled executable entrypoint path.
+
 No blocker was removed.
 
 No production readiness is claimed.
@@ -39905,3 +39907,119 @@ Recommended next stage:
 - `stage-xxxl-x1-testnet-local-runtime-skeleton-phase-2-account-layout-reconciliation`
 
 That stage should reconcile the implementation plan's Phase 2 account layout objective with the account layout structures already present in `state.rs`, `account_contract.rs`, `processor.rs`, and the Mollusk coverage file before any additional runtime code is edited.
+
+
+# Latest XXXL X1 testnet local runtime skeleton Phase 2 account layout reconciliation checkpoint
+
+Stage:
+
+- `stage-xxxl-x1-testnet-local-runtime-skeleton-phase-2-account-layout-reconciliation`
+
+Checkpoint artifact:
+
+- `docs/checkpoints/xxxl-x1-testnet-local-runtime-skeleton-phase-2-account-layout-reconciliation.md`
+
+Phase 2 reconciled the existing local account layout skeleton for:
+
+- Mint State
+- Gateway Config
+- Guardian Set
+- Processed Event
+- Recipient Balance
+
+Account layout findings:
+
+- each local account kind is represented in `state.rs` by a fixed discriminator, fixed byte length, runtime layout version check, and typed account view
+- no separate serialized account `kind` field exists today; the discriminator is the current account-kind identity
+- program-owned account owner checks happen in `processor.rs` / `validation.rs`
+- account count, writable flags, readonly flags, and no external signer requirements are documented in `account_contract.rs`
+- relationship checks are consumed by `prepare_consume_gateway_mint_cpi_boundary`
+- Recipient Balance remains local model-level accounting only
+- Recipient Balance is not an SPL Token account
+- Recipient Balance is not the recipient ATA
+- actual recipient token balance remains managed by the recipient SPL token account / ATA, outside Phase 2
+
+Mollusk coverage noted by Phase 2:
+
+- current `programs/xxxl-svm/tests/mollusk_consume_gateway_mint.rs` has 54 `#[test]` entries
+- 44 current Mollusk integration tests are non-ignored
+- 10 current Mollusk integration tests are ignored
+- latest checked command:
+  `RUST_LOG=off cargo test --manifest-path programs/xxxl-svm/Cargo.toml --test mollusk_consume_gateway_mint -- --format terse`
+- latest checked result: 44 passed, 0 failed, 10 ignored
+
+Phase 1 follow-up findings:
+
+- dormant CPI helpers exist in `cpi.rs`
+- unit tests in `cpi.rs` directly call dormant CPI planning, guard, instruction-building, and one direct negative `mint_to_cpi_boundary` path
+- no Mollusk integration test directly calls the dormant CPI helpers
+- no `benches`, `examples`, or utility directories were found under `programs/xxxl-svm`
+- the enabled `process_instruction -> process_consume_gateway_mint` path still does not reach SPL CPI, `invoke_signed`, or SPL Token `mint_to`
+- `build_runtime_consume_gateway_mint_execution_plan_boundary` returns an `AtomicConsumeGatewayMintExecutionPlan` with ordered validation/local-mutation/disabled-route steps, canonical event key, route, recipient, mint, u64 amount, consumed slot, source-chain weight, and disabled live-route/mint-to flags
+- the enabled entrypoint builds the plan and returns without executing local mutation steps or SPL CPI
+
+Replay coverage status:
+
+- processed-event replay rejection is covered
+- processed-event canonical event key, route ID, and recipient mismatch rejection is covered
+- coefficient version replay rejection remains deferred
+- guardian set version replay rejection remains deferred
+- pause/unpause replay rejection remains deferred
+- upgrade replay rejection remains deferred
+- source fork replay rejection remains deferred
+
+Phase 2 made no runtime code changes.
+
+Phase 2 changed no tests.
+
+Phase 2 did not deploy or upgrade.
+
+Phase 2 did not submit transactions.
+
+Phase 2 did not spend SOL.
+
+Phase 2 did not touch `.local-keys/**`, keypair JSON files, `.env`, `target/deploy/**`, or `.so` artifacts.
+
+Phase 2 did not add deployment scripts, upgrade scripts, or CI/CD workflows that deploy, upgrade, submit transactions, or spend SOL.
+
+The runtime remains non-deployed, non-live, and unable to mint through the currently enabled executable entrypoint path.
+
+`LIVE_ROUTE_DISABLED` remains active.
+
+`SPL_CPI_EXECUTION_DISABLED` remains active.
+
+No blocker was removed.
+
+No production readiness is claimed.
+
+No final immutability is claimed while upgrade authority exists.
+
+Recommended next stage:
+
+- `stage-xxxl-x1-testnet-local-runtime-skeleton-phase-3-instruction-decode-reconciliation`
+
+## XXXL X1 Testnet Local Runtime Skeleton Phase 2 Audit Clarifications
+
+The full Phase 2 checkpoint document is the authoritative record.
+
+The current-design checkpoint section is a condensed summary only.
+
+External audit result:
+
+- `ACCEPT WITH MINOR NOTES`
+
+Minor notes addressed before commit:
+
+- `mint_to_cpi_boundary` / `invoke_signed` unit-test and source call-site nuance recorded
+- ignored Mollusk tests listed in the full checkpoint
+- absence of separate serialized `kind` field recorded as current skeleton design decision
+- deferred replay coverage assigned to a future replay / processed-event local model phase
+- Stage 1 authorization consumer boundary assigned to a future Stage 1 consumer modeling phase
+- execution-plan CPI naming clarified as preparation / validation only while `SPL_CPI_EXECUTION_DISABLED` remains active
+
+Important safety clarification:
+
+- dormant CPI helpers have source-level and unit-test call sites
+- the enabled `process_instruction -> process_consume_gateway_mint` path still does not reach SPL CPI, `invoke_signed`, or SPL Token `mint_to`
+- no live gateway execution is enabled
+- no blocker is removed
