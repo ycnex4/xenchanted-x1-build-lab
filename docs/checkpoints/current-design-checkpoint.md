@@ -41410,4 +41410,79 @@ No final immutability is claimed while upgrade authority exists.
 
 Recommended next stage:
 
-- `stage-xxxl-x1-testnet-local-runtime-skeleton-phase-16-disabled-local-mutation-boundary-tests`
+- `stage-xxxl-x1-testnet-local-runtime-skeleton-phase-16-local-mutation-reachability-boundary`
+
+
+# Latest XXXL X1 testnet local runtime skeleton Phase 16 local mutation reachability boundary
+
+Stage:
+
+- `stage-xxxl-x1-testnet-local-runtime-skeleton-phase-16-local-mutation-reachability-boundary`
+
+Checkpoint artifact:
+
+- `docs/checkpoints/xxxl-x1-testnet-local-runtime-skeleton-phase-16-local-mutation-reachability-boundary.md`
+
+Phase 16 is docs-only.
+
+Purpose:
+
+- record that the local mutation boundary exists and can mutate local state if
+  directly called
+- record that the local mutation boundary is not reached from the currently
+  enabled `process_instruction` path
+- prevent the misleading claim that the local mutation boundary itself is
+  globally disabled
+
+Correct statement:
+
+- local mutation boundary is not reached from the currently enabled
+  `process_instruction` path
+
+Incorrect statement:
+
+- local mutation boundary is disabled
+
+Current enabled path remains:
+
+1. `entrypoint!(process_instruction)`
+2. `process_instruction`
+3. `process_consume_gateway_mint`
+4. `build_runtime_consume_gateway_mint_execution_plan_boundary`
+5. disabled execution-plan log
+6. `Ok(())`
+
+Runtime source status:
+
+- `programs/xxxl-svm/src/**` unchanged
+
+Test source status:
+
+- `programs/xxxl-svm/tests/**` unchanged
+
+Cargo status:
+
+- Cargo files unchanged
+
+Current X1 status remains:
+
+- `X1_TESTNET_PROGRAM_DEPLOYED_RUNTIME_LOCKED`
+
+Active blockers remain:
+
+- `PRODUCTION_PROGRAM_ID_UNSET`
+- `LIVE_ROUTE_DISABLED`
+- `SPL_CPI_EXECUTION_DISABLED`
+- `PRODUCTION_GUARDIAN_SET_UNSET`
+- `PRODUCTION_PROOF_LOG_UNSET`
+- `EXTERNAL_REVIEW_INCOMPLETE`
+
+No blocker was removed.
+
+No production readiness is claimed.
+
+No final immutability is claimed while upgrade authority exists.
+
+Recommended next stage:
+
+- `stage-xxxl-x1-testnet-local-runtime-skeleton-phase-17-source-chain-id-runtime-boundary`

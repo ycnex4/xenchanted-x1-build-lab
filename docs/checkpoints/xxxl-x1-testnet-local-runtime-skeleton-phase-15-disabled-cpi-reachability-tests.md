@@ -209,7 +209,8 @@ No final immutability is claimed while upgrade authority exists.
 
 Recommended next stage:
 
-- `stage-xxxl-x1-testnet-local-runtime-skeleton-phase-16-disabled-local-mutation-boundary-tests`
+- `stage-xxxl-x1-testnet-local-runtime-skeleton-phase-16-local-mutation-reachability-boundary`
 
-That future stage may add tests around disabled local-state mutation boundaries
-without enabling live route execution.
+That future stage should clarify that the direct-call local mutation boundary
+can mutate local state, while the currently enabled `process_instruction` path
+does not reach it.
