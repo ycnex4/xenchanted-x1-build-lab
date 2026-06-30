@@ -37,7 +37,7 @@ fn guarded_mint_to_cpi_boundary_rejects_before_invoke_signed_when_global_gate_di
 }
 
 #[test]
-fn guarded_mint_to_cpi_boundary_rejects_live_execution_plan_flag() {
+fn guarded_mint_to_cpi_boundary_rejects_when_execution_plan_live_route_flag_set() {
     with_valid_disabled_cpi_fixture(|program_id, execution_plan, planning_boundary, boundary| {
         let mut live_execution_plan = *execution_plan;
         live_execution_plan.live_route_activation_enabled = true;
@@ -79,6 +79,29 @@ fn guarded_mint_to_cpi_boundary_rejects_invoke_signed_planning_flag() {
         );
     });
 }
+
+#[test]
+fn guarded_mint_to_cpi_boundary_rejects_planning_boundary_mismatch_after_expected_plan() {
+    with_valid_disabled_cpi_fixture(|program_id, execution_plan, planning_boundary, boundary| {
+        let mut mismatched_planning_boundary = *planning_boundary;
+        mismatched_planning_boundary.amount += 1;
+
+        let result = guarded_mint_to_cpi_execution_gate_boundary(
+            program_id,
+            execution_plan,
+            &mismatched_planning_boundary,
+            boundary,
+        );
+
+        assert_eq!(
+            result,
+            Err(ProgramError::Custom(
+                XxxlError::InvalidInstruction as u32
+            ))
+        );
+    });
+}
+
 
 fn with_valid_disabled_cpi_fixture<T>(
     f: impl FnOnce(

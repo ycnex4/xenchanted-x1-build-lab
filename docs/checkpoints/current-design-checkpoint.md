@@ -41551,3 +41551,66 @@ No final immutability is claimed while upgrade authority exists.
 Recommended next stage:
 
 - `stage-xxxl-x1-testnet-local-runtime-skeleton-phase-18-u128-u64-spl-amount-boundary`
+
+
+# Latest XXXL X1 testnet local runtime skeleton Phase 17 audit follow-up minor notes
+
+Stage:
+
+- `stage-xxxl-x1-testnet-local-runtime-skeleton-phase-17-audit-followup-minor-notes`
+
+Checkpoint artifact:
+
+- `docs/checkpoints/xxxl-x1-testnet-local-runtime-skeleton-phase-17-audit-followup-minor-notes.md`
+
+Audit result closed:
+
+- Phase 14: ACCEPT
+- Phase 15: ACCEPT WITH MINOR NOTES
+- Phase 16: ACCEPT
+- Phase 17: ACCEPT
+- Cumulative Phase 14-17: ACCEPT WITH MINOR NOTES
+
+Follow-up changes:
+
+- Phase 14 call graph clarification for step 4
+- Phase 15 test rename for execution-plan live-route guard
+- Phase 15 planning-boundary mismatch test
+- Phase 17 reserved-bytes test for bytes `194..208`
+
+Validation:
+
+- `cargo test --test disabled_cpi_reachability`: 5 passed, 0 failed, 0 ignored
+- `cargo test --test instruction_reserved_bytes`: 1 passed, 0 failed, 0 ignored
+- `cargo test --lib`: 201 passed, 0 failed, 1 ignored
+
+Runtime source status:
+
+- `programs/xxxl-svm/src/**` unchanged
+
+Cargo status:
+
+- Cargo files unchanged
+
+Current X1 status remains:
+
+- `X1_TESTNET_PROGRAM_DEPLOYED_RUNTIME_LOCKED`
+
+Active blockers remain:
+
+- `PRODUCTION_PROGRAM_ID_UNSET`
+- `LIVE_ROUTE_DISABLED`
+- `SPL_CPI_EXECUTION_DISABLED`
+- `PRODUCTION_GUARDIAN_SET_UNSET`
+- `PRODUCTION_PROOF_LOG_UNSET`
+- `EXTERNAL_REVIEW_INCOMPLETE`
+
+No blocker was removed.
+
+No production readiness is claimed.
+
+No final immutability is claimed while upgrade authority exists.
+
+Recommended next stage:
+
+- `stage-xxxl-x1-testnet-local-runtime-skeleton-phase-18-u128-u64-spl-amount-boundary`

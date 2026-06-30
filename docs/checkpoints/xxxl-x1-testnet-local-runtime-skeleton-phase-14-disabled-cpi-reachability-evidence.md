@@ -218,3 +218,38 @@ Recommended next stage:
 
 That future stage may add tests around the guarded disabled CPI boundary without
 enabling live route execution.
+
+
+## Phase 17 Audit Follow-up: Step 4 Call Graph Clarification
+
+The documented enabled path remains correct, but Phase 17 audit noted that
+step 4 can be expanded for precision.
+
+Current enabled path summary:
+
+1. `entrypoint!(process_instruction)`
+2. `process_instruction`
+3. `process_consume_gateway_mint`
+4. `build_runtime_consume_gateway_mint_execution_plan_boundary`
+5. disabled execution-plan log
+6. `Ok(())`
+
+Expanded step 4 call graph:
+
+- `build_runtime_consume_gateway_mint_execution_plan_boundary`
+  - calls `prepare_consume_gateway_mint_cpi_boundary`
+  - calls `build_atomic_consume_gateway_mint_execution_plan`
+  - rejects if live-route or mint-to invocation flags are enabled
+  - returns the disabled execution plan
+
+This does not change the safety claim.
+
+The enabled path still does not call:
+
+- `build_runtime_consume_gateway_mint_planning_composition_boundary`
+- `build_runtime_consume_gateway_mint_local_state_mutation_composition_boundary`
+- `build_runtime_consume_gateway_mint_disabled_spl_cpi_gate_boundary`
+- `guarded_mint_to_cpi_execution_gate_boundary`
+- `mint_to_cpi_boundary`
+- `invoke_signed`
+- SPL Token `mint_to`
