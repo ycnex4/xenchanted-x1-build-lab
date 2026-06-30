@@ -42327,3 +42327,108 @@ Recommended next stage:
 
 - define the next reviewed boundary before connecting guardian quorum results to
   runtime execution, replay storage, expiration checks, or any live route path
+
+# Latest XXXL X1 testnet local runtime skeleton Phase 25 verifier runtime authorization boundary
+
+Stage:
+
+- `stage-xxxl-x1-testnet-local-runtime-skeleton-phase-25-verifier-runtime-authorization-boundary`
+
+Checkpoint artifact:
+
+- `docs/checkpoints/xxxl-x1-testnet-local-runtime-skeleton-phase-25-verifier-runtime-authorization-boundary.md`
+
+Purpose:
+
+- compose Phase 23 payload hashing and Phase 24 guardian quorum verification
+  into a TypeScript-only authorization decision model
+- check replay snapshot, expiration, and route/runtime binding expectations
+- return a structured authorization result without mutating any state
+
+Phase 25 is an authorization-decision boundary only.
+
+Runtime source status:
+
+- `programs/xxxl-svm/src/**` unchanged
+
+Runtime test status:
+
+- `programs/xxxl-svm/tests/**` unchanged
+
+Cargo/package status:
+
+- Cargo files unchanged
+- `package.json` unchanged
+- `package-lock.json` unchanged
+- no dependencies added
+- no `npm install` run
+
+Deploy/artifact status:
+
+- no SBF build
+- no `target/deploy` changes
+- no tracked `.so` artifact
+- no tracked keypair file
+- no `.local-keys` access
+- no `.env` access
+- no deploy
+- no upgrade
+- no Solana/network action
+- no transaction submission
+- no SOL spend
+
+Authorization checks:
+
+- guardian quorum must pass through the Phase 24 verifier
+- caller-supplied payload hashes are not accepted as authoritative
+- `canonical_event_key` must not be already processed in the supplied snapshot
+- `currentTimeOrSlot` must be less than or equal to
+  `expiration_slot_or_unix_ts`
+- route/runtime bindings must match expected `route_id`, `source_chain_id`,
+  `target_mint`, `guardian_set_id`, and `source_chain_weight_bps`
+- malformed payloads fail closed through Phase 23 validation
+
+Safety status:
+
+- Phase 23 payload encoding was not changed
+- Phase 24 signature/quorum verifier behavior was not changed
+- processed registry snapshots are not mutated
+- processed events are not marked
+- no instruction is produced or executed
+- `source_chain_weight_bps` remains signed and dual-source:
+  guardian payload field, runtime instruction field, and `GatewayConfig` binding
+- `canonical_event_key` is not derived from `source_chain_id`
+- GatewayConfig layout is unchanged
+- live route remains disabled
+- SPL CPI remains disabled
+- `invoke_signed` remains disabled
+- SPL Token `mint_to` remains disabled
+- `process_instruction` remains a disabled-plan no-op for live atomicity
+- no runtime/account state mutation is added
+- no production readiness is claimed
+- no final immutability is claimed while upgrade authority exists
+
+Current X1 status remains:
+
+- `X1_TESTNET_PROGRAM_DEPLOYED_RUNTIME_LOCKED`
+
+Active blockers remain:
+
+- `PRODUCTION_PROGRAM_ID_UNSET`
+- `LIVE_ROUTE_DISABLED`
+- `SPL_CPI_EXECUTION_DISABLED`
+- `PRODUCTION_GUARDIAN_SET_UNSET`
+- `PRODUCTION_PROOF_LOG_UNSET`
+- `EXTERNAL_REVIEW_INCOMPLETE`
+
+No blocker was removed.
+
+Validation:
+
+- `npm run build`: passed
+- `npm test -- --run`: passed, 99 test files passed, 899 tests passed
+
+Recommended next stage:
+
+- define a reviewed boundary before connecting authorization decisions to replay
+  storage, runtime account mutation, instruction handling, or any live mint path
