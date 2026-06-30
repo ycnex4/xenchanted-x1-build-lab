@@ -131,12 +131,12 @@ fn mollusk_rejects_wrong_encoded_account_meta_count_without_live_route() {
     );
     let accounts = fixture.accounts();
 
-    mollusk.process_and_validate_instruction(
+    process_rejection_and_assert_mutable_accounts_unchanged(
+        &mollusk,
+        &fixture,
         &instruction,
         &accounts,
-        &[Check::err(ProgramError::Custom(
-            XxxlError::InvalidInstruction as u32,
-        ))],
+        XxxlError::InvalidInstruction,
     );
 }
 
@@ -155,12 +155,12 @@ fn mollusk_rejects_wrong_encoded_processed_event_account_index_without_live_rout
     );
     let accounts = fixture.accounts();
 
-    mollusk.process_and_validate_instruction(
+    process_rejection_and_assert_mutable_accounts_unchanged(
+        &mollusk,
+        &fixture,
         &instruction,
         &accounts,
-        &[Check::err(ProgramError::Custom(
-            XxxlError::InvalidInstruction as u32,
-        ))],
+        XxxlError::InvalidInstruction,
     );
 }
 
@@ -179,12 +179,12 @@ fn mollusk_rejects_wrong_encoded_recipient_balance_account_index_without_live_ro
     );
     let accounts = fixture.accounts();
 
-    mollusk.process_and_validate_instruction(
+    process_rejection_and_assert_mutable_accounts_unchanged(
+        &mollusk,
+        &fixture,
         &instruction,
         &accounts,
-        &[Check::err(ProgramError::Custom(
-            XxxlError::InvalidInstruction as u32,
-        ))],
+        XxxlError::InvalidInstruction,
     );
 }
 
@@ -199,12 +199,12 @@ fn mollusk_rejects_wrong_account_count_without_live_route() {
     let mut accounts = fixture.accounts();
     accounts.pop();
 
-    mollusk.process_and_validate_instruction(
+    process_rejection_and_assert_mutable_accounts_unchanged(
+        &mollusk,
+        &fixture,
         &instruction,
         &accounts,
-        &[Check::err(ProgramError::Custom(
-            XxxlError::InvalidInstruction as u32,
-        ))],
+        XxxlError::InvalidInstruction,
     );
 }
 
@@ -219,12 +219,12 @@ fn mollusk_rejects_wrong_account_order_without_live_route() {
     let mut accounts = fixture.accounts();
     accounts.swap(1, 2);
 
-    mollusk.process_and_validate_instruction(
+    process_rejection_and_assert_mutable_accounts_unchanged(
+        &mollusk,
+        &fixture,
         &instruction,
         &accounts,
-        &[Check::err(ProgramError::Custom(
-            XxxlError::InvalidInstruction as u32,
-        ))],
+        XxxlError::InvalidInstruction,
     );
 }
 
@@ -238,12 +238,12 @@ fn mollusk_rejects_unexpected_signer_without_live_route() {
 
     let accounts = fixture.accounts();
 
-    mollusk.process_and_validate_instruction(
+    process_rejection_and_assert_mutable_accounts_unchanged(
+        &mollusk,
+        &fixture,
         &instruction,
         &accounts,
-        &[Check::err(ProgramError::Custom(
-            XxxlError::InvalidInstruction as u32,
-        ))],
+        XxxlError::InvalidInstruction,
     );
 }
 
@@ -257,12 +257,12 @@ fn mollusk_rejects_writable_readonly_mismatch_without_live_route() {
 
     let accounts = fixture.accounts();
 
-    mollusk.process_and_validate_instruction(
+    process_rejection_and_assert_mutable_accounts_unchanged(
+        &mollusk,
+        &fixture,
         &instruction,
         &accounts,
-        &[Check::err(ProgramError::Custom(
-            XxxlError::InvalidInstruction as u32,
-        ))],
+        XxxlError::InvalidInstruction,
     );
 }
 
@@ -277,12 +277,12 @@ fn mollusk_rejects_wrong_mint_state_owner_without_live_route() {
         .1
         .owner = Pubkey::new_unique();
 
-    mollusk.process_and_validate_instruction(
+    process_rejection_and_assert_mutable_accounts_unchanged(
+        &mollusk,
+        &fixture,
         &instruction,
         &accounts,
-        &[Check::err(ProgramError::Custom(
-            XxxlError::InvalidAccountOwner as u32,
-        ))],
+        XxxlError::InvalidAccountOwner,
     );
 }
 
@@ -297,12 +297,12 @@ fn mollusk_rejects_wrong_gateway_config_owner_without_live_route() {
         .1
         .owner = Pubkey::new_unique();
 
-    mollusk.process_and_validate_instruction(
+    process_rejection_and_assert_mutable_accounts_unchanged(
+        &mollusk,
+        &fixture,
         &instruction,
         &accounts,
-        &[Check::err(ProgramError::Custom(
-            XxxlError::InvalidAccountOwner as u32,
-        ))],
+        XxxlError::InvalidAccountOwner,
     );
 }
 
@@ -317,12 +317,12 @@ fn mollusk_rejects_wrong_guardian_set_owner_without_live_route() {
         .1
         .owner = Pubkey::new_unique();
 
-    mollusk.process_and_validate_instruction(
+    process_rejection_and_assert_mutable_accounts_unchanged(
+        &mollusk,
+        &fixture,
         &instruction,
         &accounts,
-        &[Check::err(ProgramError::Custom(
-            XxxlError::InvalidAccountOwner as u32,
-        ))],
+        XxxlError::InvalidAccountOwner,
     );
 }
 
@@ -337,12 +337,12 @@ fn mollusk_rejects_wrong_mint_state_discriminator_without_live_route() {
         .1
         .data[0] ^= 0xff;
 
-    mollusk.process_and_validate_instruction(
+    process_rejection_and_assert_mutable_accounts_unchanged(
+        &mollusk,
+        &fixture,
         &instruction,
         &accounts,
-        &[Check::err(ProgramError::Custom(
-            XxxlError::InvalidDiscriminator as u32,
-        ))],
+        XxxlError::InvalidDiscriminator,
     );
 }
 
@@ -358,12 +358,12 @@ fn mollusk_rejects_truncated_gateway_config_without_live_route() {
         .data
         .truncate(GATEWAY_CONFIG_ACCOUNT_LEN - 1);
 
-    mollusk.process_and_validate_instruction(
+    process_rejection_and_assert_mutable_accounts_unchanged(
+        &mollusk,
+        &fixture,
         &instruction,
         &accounts,
-        &[Check::err(ProgramError::Custom(
-            XxxlError::InvalidInstruction as u32,
-        ))],
+        XxxlError::InvalidInstruction,
     );
 }
 
@@ -378,12 +378,12 @@ fn mollusk_rejects_low_rent_mint_state_without_live_route() {
         CONSUME_GATEWAY_MINT_MINT_STATE_ACCOUNT_INDEX as usize,
     );
 
-    mollusk.process_and_validate_instruction(
+    process_rejection_and_assert_mutable_accounts_unchanged(
+        &mollusk,
+        &fixture,
         &instruction,
         &accounts,
-        &[Check::err(ProgramError::Custom(
-            XxxlError::InvalidRentExemption as u32,
-        ))],
+        XxxlError::InvalidRentExemption,
     );
 }
 
@@ -396,12 +396,12 @@ fn mollusk_rejects_low_rent_gateway_config_without_live_route() {
     let accounts =
         accounts_with_low_rent(&fixture, CONSUME_GATEWAY_MINT_ROUTE_ACCOUNT_INDEX as usize);
 
-    mollusk.process_and_validate_instruction(
+    process_rejection_and_assert_mutable_accounts_unchanged(
+        &mollusk,
+        &fixture,
         &instruction,
         &accounts,
-        &[Check::err(ProgramError::Custom(
-            XxxlError::InvalidRentExemption as u32,
-        ))],
+        XxxlError::InvalidRentExemption,
     );
 }
 
@@ -416,12 +416,12 @@ fn mollusk_rejects_low_rent_guardian_set_without_live_route() {
         CONSUME_GATEWAY_MINT_GUARDIAN_SET_ACCOUNT_INDEX as usize,
     );
 
-    mollusk.process_and_validate_instruction(
+    process_rejection_and_assert_mutable_accounts_unchanged(
+        &mollusk,
+        &fixture,
         &instruction,
         &accounts,
-        &[Check::err(ProgramError::Custom(
-            XxxlError::InvalidRentExemption as u32,
-        ))],
+        XxxlError::InvalidRentExemption,
     );
 }
 
@@ -436,12 +436,12 @@ fn mollusk_rejects_low_rent_processed_event_without_live_route() {
         CONSUME_GATEWAY_MINT_PROCESSED_EVENT_ACCOUNT_INDEX as usize,
     );
 
-    mollusk.process_and_validate_instruction(
+    process_rejection_and_assert_mutable_accounts_unchanged(
+        &mollusk,
+        &fixture,
         &instruction,
         &accounts,
-        &[Check::err(ProgramError::Custom(
-            XxxlError::InvalidRentExemption as u32,
-        ))],
+        XxxlError::InvalidRentExemption,
     );
 }
 
@@ -456,12 +456,12 @@ fn mollusk_rejects_low_rent_recipient_balance_without_live_route() {
         CONSUME_GATEWAY_MINT_RECIPIENT_BALANCE_ACCOUNT_INDEX as usize,
     );
 
-    mollusk.process_and_validate_instruction(
+    process_rejection_and_assert_mutable_accounts_unchanged(
+        &mollusk,
+        &fixture,
         &instruction,
         &accounts,
-        &[Check::err(ProgramError::Custom(
-            XxxlError::InvalidRentExemption as u32,
-        ))],
+        XxxlError::InvalidRentExemption,
     );
 }
 
@@ -473,12 +473,12 @@ fn mollusk_rejects_low_rent_spl_token_mint_without_live_route() {
     let instruction = fixture.instruction();
     let accounts = accounts_with_low_rent(&fixture, SPL_MINT_ACCOUNT_INDEX);
 
-    mollusk.process_and_validate_instruction(
+    process_rejection_and_assert_mutable_accounts_unchanged(
+        &mollusk,
+        &fixture,
         &instruction,
         &accounts,
-        &[Check::err(ProgramError::Custom(
-            XxxlError::InvalidRentExemption as u32,
-        ))],
+        XxxlError::InvalidRentExemption,
     );
 }
 
@@ -490,12 +490,12 @@ fn mollusk_rejects_low_rent_recipient_token_account_without_live_route() {
     let instruction = fixture.instruction();
     let accounts = accounts_with_low_rent(&fixture, RECIPIENT_TOKEN_ACCOUNT_INDEX);
 
-    mollusk.process_and_validate_instruction(
+    process_rejection_and_assert_mutable_accounts_unchanged(
+        &mollusk,
+        &fixture,
         &instruction,
         &accounts,
-        &[Check::err(ProgramError::Custom(
-            XxxlError::InvalidRentExemption as u32,
-        ))],
+        XxxlError::InvalidRentExemption,
     );
 }
 
@@ -508,12 +508,12 @@ fn mollusk_rejects_wrong_spl_mint_owner_without_live_route() {
     let mut accounts = fixture.accounts();
     accounts[5].1.owner = Pubkey::new_unique();
 
-    mollusk.process_and_validate_instruction(
+    process_rejection_and_assert_mutable_accounts_unchanged(
+        &mollusk,
+        &fixture,
         &instruction,
         &accounts,
-        &[Check::err(ProgramError::Custom(
-            XxxlError::InvalidAccountOwner as u32,
-        ))],
+        XxxlError::InvalidAccountOwner,
     );
 }
 
@@ -526,12 +526,12 @@ fn mollusk_rejects_wrong_spl_mint_authority_without_live_route() {
     let mut accounts = fixture.accounts();
     accounts[5].1.data = packed_mint(Pubkey::new_unique(), true);
 
-    mollusk.process_and_validate_instruction(
+    process_rejection_and_assert_mutable_accounts_unchanged(
+        &mollusk,
+        &fixture,
         &instruction,
         &accounts,
-        &[Check::err(ProgramError::Custom(
-            XxxlError::InvalidPda as u32,
-        ))],
+        XxxlError::InvalidPda,
     );
 }
 
@@ -544,12 +544,12 @@ fn mollusk_rejects_uninitialized_spl_mint_without_live_route() {
     let mut accounts = fixture.accounts();
     accounts[5].1.data = packed_mint(fixture.keys.mint_authority_pda, false);
 
-    mollusk.process_and_validate_instruction(
+    process_rejection_and_assert_mutable_accounts_unchanged(
+        &mollusk,
+        &fixture,
         &instruction,
         &accounts,
-        &[Check::err(ProgramError::Custom(
-            XxxlError::InvalidInstruction as u32,
-        ))],
+        XxxlError::InvalidInstruction,
     );
 }
 
@@ -566,12 +566,12 @@ fn mollusk_rejects_wrong_recipient_token_mint_without_live_route() {
         AccountState::Initialized,
     );
 
-    mollusk.process_and_validate_instruction(
+    process_rejection_and_assert_mutable_accounts_unchanged(
+        &mollusk,
+        &fixture,
         &instruction,
         &accounts,
-        &[Check::err(ProgramError::Custom(
-            XxxlError::InvalidRecipientAta as u32,
-        ))],
+        XxxlError::InvalidRecipientAta,
     );
 }
 
@@ -588,12 +588,12 @@ fn mollusk_rejects_wrong_recipient_token_owner_without_live_route() {
         AccountState::Initialized,
     );
 
-    mollusk.process_and_validate_instruction(
+    process_rejection_and_assert_mutable_accounts_unchanged(
+        &mollusk,
+        &fixture,
         &instruction,
         &accounts,
-        &[Check::err(ProgramError::Custom(
-            XxxlError::InvalidRecipientAta as u32,
-        ))],
+        XxxlError::InvalidRecipientAta,
     );
 }
 
@@ -610,12 +610,12 @@ fn mollusk_rejects_uninitialized_recipient_token_account_without_live_route() {
         AccountState::Uninitialized,
     );
 
-    mollusk.process_and_validate_instruction(
+    process_rejection_and_assert_mutable_accounts_unchanged(
+        &mollusk,
+        &fixture,
         &instruction,
         &accounts,
-        &[Check::err(ProgramError::Custom(
-            XxxlError::InvalidRecipientAta as u32,
-        ))],
+        XxxlError::InvalidRecipientAta,
     );
 }
 
@@ -632,12 +632,12 @@ fn mollusk_rejects_wrong_mint_authority_pda_without_live_route() {
     let mut accounts = fixture.accounts();
     accounts[MINT_AUTHORITY_PDA_ACCOUNT_INDEX].0 = wrong_pda;
 
-    mollusk.process_and_validate_instruction(
+    process_rejection_and_assert_mutable_accounts_unchanged(
+        &mollusk,
+        &fixture,
         &instruction,
         &accounts,
-        &[Check::err(ProgramError::Custom(
-            XxxlError::InvalidInstruction as u32,
-        ))],
+        XxxlError::InvalidInstruction,
     );
 }
 
@@ -655,12 +655,12 @@ fn mollusk_rejects_wrong_mint_authority_bump_without_live_route() {
         .data[13]
         .wrapping_add(1);
 
-    mollusk.process_and_validate_instruction(
+    process_rejection_and_assert_mutable_accounts_unchanged(
+        &mollusk,
+        &fixture,
         &instruction,
         &accounts,
-        &[Check::err(ProgramError::Custom(
-            XxxlError::InvalidPda as u32,
-        ))],
+        XxxlError::InvalidPda,
     );
 }
 
@@ -688,12 +688,12 @@ fn mollusk_rejects_mint_authority_pda_for_wrong_program_id_without_live_route() 
         .data[64..96]
         .copy_from_slice(&wrong_pda.to_bytes());
 
-    mollusk.process_and_validate_instruction(
+    process_rejection_and_assert_mutable_accounts_unchanged(
+        &mollusk,
+        &fixture,
         &instruction,
         &accounts,
-        &[Check::err(ProgramError::Custom(
-            XxxlError::InvalidPda as u32,
-        ))],
+        XxxlError::InvalidPda,
     );
 }
 
@@ -709,12 +709,12 @@ fn mollusk_rejects_mint_authority_pda_semantic_mismatch_without_live_route() {
         .data[64..96]
         .copy_from_slice(&Pubkey::new_unique().to_bytes());
 
-    mollusk.process_and_validate_instruction(
+    process_rejection_and_assert_mutable_accounts_unchanged(
+        &mollusk,
+        &fixture,
         &instruction,
         &accounts,
-        &[Check::err(ProgramError::Custom(
-            XxxlError::InvalidInstruction as u32,
-        ))],
+        XxxlError::InvalidInstruction,
     );
 }
 
@@ -730,6 +730,117 @@ fn mollusk_valid_scaffold_entrypoint_leaves_mutable_accounts_unchanged() {
     let checks = result_and_unchanged_mutable_account_checks(&fixture, &accounts, Check::success());
 
     mollusk.process_and_validate_instruction(&instruction, &accounts, &checks);
+}
+
+#[test]
+fn phase20_current_runtime_boundary_matrix_separates_unrepresented_stage1_classes() {
+    struct RuntimeObservableEvidence {
+        class: &'static str,
+        evidence: &'static str,
+    }
+
+    let runtime_observable = [
+        RuntimeObservableEvidence {
+            class: "wrong instruction discriminator",
+            evidence: "mollusk_rejects_wrong_instruction_discriminator_without_live_route",
+        },
+        RuntimeObservableEvidence {
+            class: "wrong instruction version",
+            evidence: "mollusk_rejects_wrong_instruction_version_without_live_route",
+        },
+        RuntimeObservableEvidence {
+            class: "wrong instruction length",
+            evidence: "mollusk_harness_rejects_malformed_instruction_without_live_route",
+        },
+        RuntimeObservableEvidence {
+            class: "wrong account meta count",
+            evidence: "mollusk_rejects_wrong_encoded_account_meta_count_without_live_route",
+        },
+        RuntimeObservableEvidence {
+            class: "wrong account index or order",
+            evidence: "mollusk_rejects_wrong_account_order_without_live_route",
+        },
+        RuntimeObservableEvidence {
+            class: "wrong route id",
+            evidence: "mollusk_wrong_gateway_config_route_id_rejection_leaves_mutable_accounts_unchanged",
+        },
+        RuntimeObservableEvidence {
+            class: "wrong guardian set id",
+            evidence: "mollusk_wrong_guardian_set_id_rejection_leaves_mutable_accounts_unchanged",
+        },
+        RuntimeObservableEvidence {
+            class: "wrong target mint or mint id",
+            evidence: "mollusk_wrong_gateway_config_target_mint_rejection_leaves_mutable_accounts_unchanged",
+        },
+        RuntimeObservableEvidence {
+            class: "wrong canonical event key",
+            evidence: "mollusk_wrong_processed_event_canonical_event_key_rejection_leaves_mutable_accounts_unchanged",
+        },
+        RuntimeObservableEvidence {
+            class: "wrong recipient or recipient token account mapping",
+            evidence: "mollusk_wrong_recipient_token_account_rejection_leaves_mutable_accounts_unchanged",
+        },
+        RuntimeObservableEvidence {
+            class: "wrong source chain weight bps",
+            evidence: "mollusk_wrong_gateway_config_source_chain_weight_rejection_leaves_mutable_accounts_unchanged",
+        },
+        RuntimeObservableEvidence {
+            class: "zero amount",
+            evidence: "mollusk_zero_amount_rejection_leaves_mutable_accounts_unchanged",
+        },
+        RuntimeObservableEvidence {
+            class: "amount greater than u64 max",
+            evidence: "mollusk_amount_above_u64_rejection_leaves_mutable_accounts_unchanged",
+        },
+        RuntimeObservableEvidence {
+            class: "consumed processed event",
+            evidence: "mollusk_consumed_processed_event_rejection_leaves_mutable_accounts_unchanged",
+        },
+        RuntimeObservableEvidence {
+            class: "wrong processed event fields",
+            evidence: "mollusk_wrong_processed_event_recipient_rejection_leaves_mutable_accounts_unchanged",
+        },
+        RuntimeObservableEvidence {
+            class: "wrong recipient balance owner or mint",
+            evidence: "mollusk_wrong_recipient_balance_owner_rejection_leaves_mutable_accounts_unchanged",
+        },
+        RuntimeObservableEvidence {
+            class: "wrong SPL mint owner authority or initialized state",
+            evidence: "mollusk_rejects_wrong_spl_mint_authority_without_live_route",
+        },
+        RuntimeObservableEvidence {
+            class: "wrong recipient token owner mint or initialized state",
+            evidence: "mollusk_rejects_wrong_recipient_token_mint_without_live_route",
+        },
+        RuntimeObservableEvidence {
+            class: "wrong mint authority PDA or bump",
+            evidence: "mollusk_rejects_wrong_mint_authority_pda_without_live_route",
+        },
+        RuntimeObservableEvidence {
+            class: "low rent where represented",
+            evidence: "mollusk_rejects_low_rent_mint_state_without_live_route",
+        },
+    ];
+
+    let not_runtime_observable = [
+        "sourceChainId final runtime binding",
+        "source block/finality fields",
+        "messageNonce runtime replay semantics",
+        "guardian signature/quorum validation",
+        "canonical encoding field-order vectors at watcher/model layer",
+        "decimal string encoding vectors from Stage 1 model",
+        "reserved bytes 194..208 as semantic sourceChainId",
+        "live SPL mint execution success path",
+        "rollback after live SPL CPI failure",
+    ];
+
+    assert!(runtime_observable
+        .iter()
+        .all(|entry| !entry.class.is_empty() && !entry.evidence.is_empty()));
+    assert!(not_runtime_observable.iter().all(|class| !class.is_empty()));
+    assert!(not_runtime_observable
+        .iter()
+        .all(|class| { runtime_observable.iter().all(|entry| entry.class != *class) }));
 }
 
 #[test]
@@ -873,6 +984,150 @@ fn mollusk_zero_amount_rejection_leaves_mutable_accounts_unchanged() {
     );
 
     mollusk.process_and_validate_instruction(&instruction, &accounts, &checks);
+}
+
+#[test]
+fn mollusk_amount_above_u64_rejection_leaves_mutable_accounts_unchanged() {
+    let fixture = ScaffoldFixture::new();
+    let mollusk = mollusk_for_program(&fixture.program_id);
+
+    let mut instruction_data = fixture.instruction_data;
+    instruction_data[176..192].copy_from_slice(&((u64::MAX as u128) + 1).to_le_bytes());
+
+    let instruction = Instruction::new_with_bytes(
+        fixture.program_id,
+        &instruction_data,
+        fixture.instruction().accounts,
+    );
+    let accounts = fixture.accounts();
+
+    process_rejection_and_assert_mutable_accounts_unchanged(
+        &mollusk,
+        &fixture,
+        &instruction,
+        &accounts,
+        XxxlError::InvalidInstruction,
+    );
+}
+
+#[test]
+fn mollusk_wrong_mint_state_mint_id_rejection_leaves_mutable_accounts_unchanged() {
+    let fixture = ScaffoldFixture::new();
+    let mollusk = mollusk_for_program(&fixture.program_id);
+
+    let instruction = fixture.instruction();
+    let mut accounts = fixture.accounts();
+    accounts[CONSUME_GATEWAY_MINT_MINT_STATE_ACCOUNT_INDEX as usize]
+        .1
+        .data[16] ^= 0xff;
+
+    process_rejection_and_assert_mutable_accounts_unchanged(
+        &mollusk,
+        &fixture,
+        &instruction,
+        &accounts,
+        XxxlError::InvalidInstruction,
+    );
+}
+
+#[test]
+fn mollusk_wrong_gateway_config_route_id_rejection_leaves_mutable_accounts_unchanged() {
+    let fixture = ScaffoldFixture::new();
+    let mollusk = mollusk_for_program(&fixture.program_id);
+
+    let instruction = fixture.instruction();
+    let mut accounts = fixture.accounts();
+    accounts[CONSUME_GATEWAY_MINT_ROUTE_ACCOUNT_INDEX as usize]
+        .1
+        .data[16] ^= 0xff;
+
+    process_rejection_and_assert_mutable_accounts_unchanged(
+        &mollusk,
+        &fixture,
+        &instruction,
+        &accounts,
+        XxxlError::InvalidInstruction,
+    );
+}
+
+#[test]
+fn mollusk_wrong_gateway_config_guardian_set_id_rejection_leaves_mutable_accounts_unchanged() {
+    let fixture = ScaffoldFixture::new();
+    let mollusk = mollusk_for_program(&fixture.program_id);
+
+    let instruction = fixture.instruction();
+    let mut accounts = fixture.accounts();
+    accounts[CONSUME_GATEWAY_MINT_ROUTE_ACCOUNT_INDEX as usize]
+        .1
+        .data[120] ^= 0xff;
+
+    process_rejection_and_assert_mutable_accounts_unchanged(
+        &mollusk,
+        &fixture,
+        &instruction,
+        &accounts,
+        XxxlError::InvalidInstruction,
+    );
+}
+
+#[test]
+fn mollusk_wrong_gateway_config_target_mint_rejection_leaves_mutable_accounts_unchanged() {
+    let fixture = ScaffoldFixture::new();
+    let mollusk = mollusk_for_program(&fixture.program_id);
+
+    let instruction = fixture.instruction();
+    let mut accounts = fixture.accounts();
+    accounts[CONSUME_GATEWAY_MINT_ROUTE_ACCOUNT_INDEX as usize]
+        .1
+        .data[88] ^= 0xff;
+
+    process_rejection_and_assert_mutable_accounts_unchanged(
+        &mollusk,
+        &fixture,
+        &instruction,
+        &accounts,
+        XxxlError::InvalidInstruction,
+    );
+}
+
+#[test]
+fn mollusk_wrong_gateway_config_source_chain_weight_rejection_leaves_mutable_accounts_unchanged() {
+    let fixture = ScaffoldFixture::new();
+    let mollusk = mollusk_for_program(&fixture.program_id);
+
+    let instruction = fixture.instruction();
+    let mut accounts = fixture.accounts();
+    accounts[CONSUME_GATEWAY_MINT_ROUTE_ACCOUNT_INDEX as usize]
+        .1
+        .data[12] ^= 0xff;
+
+    process_rejection_and_assert_mutable_accounts_unchanged(
+        &mollusk,
+        &fixture,
+        &instruction,
+        &accounts,
+        XxxlError::InvalidInstruction,
+    );
+}
+
+#[test]
+fn mollusk_wrong_guardian_set_id_rejection_leaves_mutable_accounts_unchanged() {
+    let fixture = ScaffoldFixture::new();
+    let mollusk = mollusk_for_program(&fixture.program_id);
+
+    let instruction = fixture.instruction();
+    let mut accounts = fixture.accounts();
+    accounts[CONSUME_GATEWAY_MINT_GUARDIAN_SET_ACCOUNT_INDEX as usize]
+        .1
+        .data[272] ^= 0xff;
+
+    process_rejection_and_assert_mutable_accounts_unchanged(
+        &mollusk,
+        &fixture,
+        &instruction,
+        &accounts,
+        XxxlError::InvalidInstruction,
+    );
 }
 
 #[test]
@@ -1159,6 +1414,22 @@ fn accounts_with_low_rent(
     );
     accounts[account_index].1.lamports = 1;
     accounts
+}
+
+fn process_rejection_and_assert_mutable_accounts_unchanged(
+    mollusk: &Mollusk,
+    fixture: &ScaffoldFixture,
+    instruction: &Instruction,
+    accounts: &[(Pubkey, Account)],
+    expected_error: XxxlError,
+) {
+    let checks = result_and_unchanged_mutable_account_checks(
+        fixture,
+        accounts,
+        Check::err(ProgramError::Custom(expected_error as u32)),
+    );
+
+    mollusk.process_and_validate_instruction(instruction, accounts, &checks);
 }
 
 fn result_and_unchanged_mutable_account_checks<'a>(
