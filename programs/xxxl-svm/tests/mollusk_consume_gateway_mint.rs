@@ -938,7 +938,7 @@ fn mollusk_rejects_consumed_processed_event_replay_without_live_route() {
 }
 
 #[test]
-fn mollusk_rejects_wrong_processed_event_canonical_event_key_without_live_route() {
+fn mollusk_wrong_processed_event_canonical_event_key_rejection_leaves_mutable_accounts_unchanged() {
     let fixture = ScaffoldFixture::new();
     let mollusk = mollusk_for_program(&fixture.program_id);
 
@@ -948,17 +948,17 @@ fn mollusk_rejects_wrong_processed_event_canonical_event_key_without_live_route(
         .1
         .data[16] ^= 0xff;
 
-    mollusk.process_and_validate_instruction(
-        &instruction,
+    let checks = result_and_unchanged_mutable_account_checks(
+        &fixture,
         &accounts,
-        &[Check::err(ProgramError::Custom(
-            XxxlError::InvalidInstruction as u32,
-        ))],
+        Check::err(ProgramError::Custom(XxxlError::InvalidInstruction as u32)),
     );
+
+    mollusk.process_and_validate_instruction(&instruction, &accounts, &checks);
 }
 
 #[test]
-fn mollusk_rejects_wrong_processed_event_route_id_without_live_route() {
+fn mollusk_wrong_processed_event_route_id_rejection_leaves_mutable_accounts_unchanged() {
     let fixture = ScaffoldFixture::new();
     let mollusk = mollusk_for_program(&fixture.program_id);
 
@@ -968,13 +968,13 @@ fn mollusk_rejects_wrong_processed_event_route_id_without_live_route() {
         .1
         .data[48] ^= 0xff;
 
-    mollusk.process_and_validate_instruction(
-        &instruction,
+    let checks = result_and_unchanged_mutable_account_checks(
+        &fixture,
         &accounts,
-        &[Check::err(ProgramError::Custom(
-            XxxlError::InvalidInstruction as u32,
-        ))],
+        Check::err(ProgramError::Custom(XxxlError::InvalidInstruction as u32)),
     );
+
+    mollusk.process_and_validate_instruction(&instruction, &accounts, &checks);
 }
 
 #[test]
@@ -998,7 +998,7 @@ fn mollusk_rejects_wrong_processed_event_recipient_without_live_route() {
 }
 
 #[test]
-fn mollusk_rejects_wrong_recipient_balance_owner_without_live_route() {
+fn mollusk_wrong_recipient_balance_owner_rejection_leaves_mutable_accounts_unchanged() {
     let fixture = ScaffoldFixture::new();
     let mollusk = mollusk_for_program(&fixture.program_id);
 
@@ -1008,17 +1008,17 @@ fn mollusk_rejects_wrong_recipient_balance_owner_without_live_route() {
         .1
         .data[16] ^= 0xff;
 
-    mollusk.process_and_validate_instruction(
-        &instruction,
+    let checks = result_and_unchanged_mutable_account_checks(
+        &fixture,
         &accounts,
-        &[Check::err(ProgramError::Custom(
-            XxxlError::InvalidRecipientAta as u32,
-        ))],
+        Check::err(ProgramError::Custom(XxxlError::InvalidRecipientAta as u32)),
     );
+
+    mollusk.process_and_validate_instruction(&instruction, &accounts, &checks);
 }
 
 #[test]
-fn mollusk_rejects_wrong_recipient_balance_mint_without_live_route() {
+fn mollusk_wrong_recipient_balance_mint_rejection_leaves_mutable_accounts_unchanged() {
     let fixture = ScaffoldFixture::new();
     let mollusk = mollusk_for_program(&fixture.program_id);
 
@@ -1028,13 +1028,13 @@ fn mollusk_rejects_wrong_recipient_balance_mint_without_live_route() {
         .1
         .data[48] ^= 0xff;
 
-    mollusk.process_and_validate_instruction(
-        &instruction,
+    let checks = result_and_unchanged_mutable_account_checks(
+        &fixture,
         &accounts,
-        &[Check::err(ProgramError::Custom(
-            XxxlError::InvalidRecipientAta as u32,
-        ))],
+        Check::err(ProgramError::Custom(XxxlError::InvalidRecipientAta as u32)),
     );
+
+    mollusk.process_and_validate_instruction(&instruction, &accounts, &checks);
 }
 
 #[test]
