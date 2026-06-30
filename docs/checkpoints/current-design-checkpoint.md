@@ -40023,3 +40023,155 @@ Important safety clarification:
 - the enabled `process_instruction -> process_consume_gateway_mint` path still does not reach SPL CPI, `invoke_signed`, or SPL Token `mint_to`
 - no live gateway execution is enabled
 - no blocker is removed
+
+
+# Latest XXXL X1 testnet local runtime skeleton Phase 3 instruction decode reconciliation checkpoint
+
+Stage:
+
+- `stage-xxxl-x1-testnet-local-runtime-skeleton-phase-3-instruction-decode-reconciliation`
+
+Checkpoint artifact:
+
+- `docs/checkpoints/xxxl-x1-testnet-local-runtime-skeleton-phase-3-instruction-decode-reconciliation.md`
+
+Phase 3 reconciled the current `CONSUME_GATEWAY_MINT` instruction decoder with
+the Phase 2 account layout reconciliation, processor boundary, and current
+Mollusk coverage.
+
+Instruction decode findings:
+
+- `CONSUME_GATEWAY_MINT_INSTRUCTION_LEN` remains exactly `208`
+- bytes `0..8` are the instruction discriminator
+- bytes `8..10` are `INSTRUCTION_LAYOUT_VERSION = 1`
+- byte `10` is encoded account meta count `9`
+- byte `11` is route account index `1`, mapped to `gateway_config`
+- byte `12` is guardian set account index `2`
+- byte `13` is mint state account index `0`
+- byte `14` is processed event account index `3`
+- byte `15` is recipient balance account index `4`
+- bytes `16..48` are route ID
+- bytes `48..80` are guardian set ID
+- bytes `80..112` are mint ID
+- bytes `112..144` are canonical event key
+- bytes `144..176` are recipient
+- bytes `176..192` are little-endian `u128` amount
+- bytes `192..194` are little-endian `u16` source-chain weight
+- bytes `194..208` are preserved in `args.raw` but are not currently named, interpreted, or zero-validated
+
+Processor reconciliation:
+
+- decoded route ID is checked against Gateway Config and Processed Event
+- decoded guardian set ID is checked against Gateway Config and Guardian Set
+- decoded mint ID is checked against Mint State, Gateway Config, Recipient Balance, and SPL token account validation
+- decoded canonical event key is checked against Processed Event
+- decoded recipient is checked against Processed Event, Recipient Balance, and recipient SPL token account validation
+- decoded amount is rejected if zero or larger than `u64::MAX`
+- decoded source-chain weight is checked against Gateway Config and copied into the disabled execution plan
+- Recipient Balance remains local model-level accounting only, not an SPL Token account and not the recipient ATA
+
+Test coverage reconciliation:
+
+- wrong discriminator: non-ignored Mollusk integration and lower-level unit coverage
+- wrong version: non-ignored Mollusk integration and lower-level unit coverage
+- wrong instruction length / truncated instruction: non-ignored Mollusk integration and lower-level unit coverage
+- extra bytes: non-ignored Mollusk integration and lower-level unit coverage
+- wrong encoded account meta count: non-ignored Mollusk integration and lower-level unit coverage
+- wrong encoded processed event account index: non-ignored Mollusk integration coverage
+- wrong encoded recipient balance account index: non-ignored Mollusk integration coverage
+- zero amount: non-ignored Mollusk integration and lower-level handler coverage
+- route ID mismatch: non-ignored Mollusk coverage for processed-event route mismatch and lower-level handler coverage for gateway-config route mismatch
+- canonical event key mismatch: non-ignored Mollusk integration and lower-level handler coverage
+- recipient mismatch: non-ignored Mollusk integration and lower-level handler coverage
+- amount overflow / `u64` boundary: lower-level handler coverage only
+- guardian set ID mismatch: lower-level handler coverage only
+- source-chain weight mismatch: lower-level handler coverage only
+
+Phase 3 gaps / deferrals:
+
+- wrong encoded route account index lacks exact non-ignored Mollusk and exact route-index unit coverage
+- wrong encoded guardian set account index lacks exact non-ignored Mollusk and exact guardian-index unit coverage
+- wrong encoded mint state account index has lower-level unit coverage but no exact non-ignored Mollusk test
+- amount overflow / `u64` boundary has lower-level handler coverage but no exact non-ignored Mollusk test
+- guardian set ID mismatch has lower-level handler coverage but no exact non-ignored Mollusk test
+- source-chain weight mismatch has lower-level handler coverage but no exact non-ignored Mollusk test
+- explicit mint-state `mint_pubkey` mismatch coverage was not found
+- instruction bytes `194..208` need a future decision: remain reserved/unconstrained or become explicitly zero-checked reserved bytes
+- coefficient version replay rejection remains deferred
+- guardian set version replay rejection remains deferred
+- pause/unpause replay rejection remains deferred
+- upgrade replay rejection remains deferred
+- source fork replay rejection remains deferred
+
+Phase 3 made no runtime code changes.
+
+Phase 3 changed no tests.
+
+Phase 3 did not change `instruction.rs`.
+
+Phase 3 did not change `processor.rs`.
+
+Phase 3 did not deploy or upgrade.
+
+Phase 3 did not submit transactions.
+
+Phase 3 did not spend SOL.
+
+Phase 3 did not touch `.local-keys/**`, keypair JSON files, `.env`, `target/deploy/**`, or `.so` artifacts.
+
+Phase 3 did not add deployment scripts, upgrade scripts, or CI/CD workflows that deploy, upgrade, submit transactions, or spend SOL.
+
+The runtime remains non-deployed, non-live, and unable to mint through the currently enabled executable entrypoint path.
+
+Dormant CPI helpers have source-level and unit-test call sites, but remain unreachable from the currently enabled executable entrypoint path.
+
+Any claim about `invoke_signed` or SPL Token `mint_to` in this checkpoint is scoped to the currently enabled executable entrypoint path, not the whole codebase.
+
+`LIVE_ROUTE_DISABLED` remains active.
+
+`SPL_CPI_EXECUTION_DISABLED` remains active.
+
+No blocker was removed.
+
+No production readiness is claimed.
+
+No final immutability is claimed while upgrade authority exists.
+
+Recommended next stage:
+
+- `stage-xxxl-x1-testnet-local-runtime-skeleton-phase-4-validation-error-model-reconciliation`
+
+## XXXL X1 Testnet Local Runtime Skeleton Phase 3 Audit Clarifications
+
+The full Phase 3 checkpoint document is the authoritative Phase 3 record.
+
+This current-design section is a condensed summary only.
+
+External audit result:
+
+- `ACCEPT WITH MINOR NOTES`
+- no blocking issues found
+- `bytes 194..208` are not a blocker for this docs-only stage
+- all runtime blockers remain active
+
+Minor notes addressed before commit:
+
+- `args.raw` propagation recorded as a future evidence requirement
+- `mint_state.mint_pubkey()` vs `args.mint_id` recorded as unresolved evidence gap
+- encoded route and guardian set account index gaps separated as independent byte-specific gaps
+- `u128` amount field rationale recorded as open until explicitly decided
+- `mint_to_cpi_boundary` / `invoke_signed` unit-test question recorded as pending
+- ignored Mollusk test explanations recorded as incomplete evidence
+- Phase 3 checkpoint marked as authoritative, with this section summary-only
+
+Safety clarification:
+
+- this remains docs-only
+- no runtime code changed
+- no tests changed
+- no live gateway execution is enabled
+- no SPL CPI is enabled
+- no dormant CPI helper is made reachable from the enabled entrypoint path
+- no blocker is removed
+- no production readiness is claimed
+- no final immutability is claimed while upgrade authority exists
