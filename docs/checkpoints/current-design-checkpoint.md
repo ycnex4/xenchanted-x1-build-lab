@@ -40748,7 +40748,7 @@ Phase 7 audit minor notes resolved before commit:
 - Recipient Balance and Mint State / supply accounting atomic-result membership
   must be decided before any live-route / SPL-CPI implementation stage
 - runtime currently checks decoded `amount` for nonzero / `u64` SPL range only;
-  `burnedAmount == xxxlMintAmount` remains a Stage 1 responsibility
+  `burnedAmount == xxxlMintAmount` remains a Stage 1 responsibility because the current SVM instruction does not carry `burnedAmount` separately
 
 Recommended next stage:
 
@@ -40958,7 +40958,7 @@ Stage 1 / runtime boundary preserved:
 - `messageNonce` has no current runtime replay semantics
 - persistent Stage 1 processed-burn tracking belongs to off-chain watcher /
   orchestrator / authorization-service boundary
-- `burnedAmount == xxxlMintAmount` remains Stage 1 responsibility
+- `burnedAmount == xxxlMintAmount` remains a Stage 1 responsibility because the current SVM instruction does not carry `burnedAmount` separately
 
 Current X1 status remains:
 
@@ -41140,3 +41140,46 @@ No final immutability is claimed while upgrade authority exists.
 Recommended next stage:
 
 - `stage-xxxl-x1-testnet-local-runtime-skeleton-phase-12-lamports-owner-invariant-boundary`
+
+
+# Latest XXXL X1 testnet local runtime skeleton Phase 12 lamports / owner invariant boundary
+
+Stage:
+
+- `stage-xxxl-x1-testnet-local-runtime-skeleton-phase-12-lamports-owner-invariant-boundary`
+
+Checkpoint artifact:
+
+- `docs/checkpoints/xxxl-x1-testnet-local-runtime-skeleton-phase-12-lamports-owner-invariant-boundary.md`
+
+Phase 12 is docs-only.
+
+Decision:
+
+- keep current no-mutation helper unchanged in Phase 12
+- current helper remains data-bytes only
+- lamports and owner invariants are worth adding before live-route readiness
+- executable flag and rent epoch are not immediate Phase 13 targets
+
+Recommended next implementation stage:
+
+- `stage-xxxl-x1-testnet-local-runtime-skeleton-phase-13-lamports-owner-invariant-tests`
+
+Runtime source status:
+
+- `programs/xxxl-svm/src/**` unchanged
+
+Active blockers remain:
+
+- `PRODUCTION_PROGRAM_ID_UNSET`
+- `LIVE_ROUTE_DISABLED`
+- `SPL_CPI_EXECUTION_DISABLED`
+- `PRODUCTION_GUARDIAN_SET_UNSET`
+- `PRODUCTION_PROOF_LOG_UNSET`
+- `EXTERNAL_REVIEW_INCOMPLETE`
+
+No blocker was removed.
+
+No production readiness is claimed.
+
+No final immutability is claimed while upgrade authority exists.
