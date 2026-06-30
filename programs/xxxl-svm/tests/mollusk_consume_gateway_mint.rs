@@ -725,6 +725,7 @@ fn mollusk_valid_scaffold_entrypoint_leaves_mutable_accounts_unchanged() {
 
     let instruction = fixture.instruction();
     let accounts = fixture.accounts();
+    assert_live_atomicity_accounts_start_unmutated(&accounts);
 
     let checks = result_and_unchanged_mutable_account_checks(&fixture, &accounts, Check::success());
 
@@ -1173,8 +1174,16 @@ fn result_and_unchanged_mutable_account_checks<'a>(
                     .1
                     .data,
             )
-            .lamports(accounts[CONSUME_GATEWAY_MINT_PROCESSED_EVENT_ACCOUNT_INDEX as usize].1.lamports)
-            .owner(&accounts[CONSUME_GATEWAY_MINT_PROCESSED_EVENT_ACCOUNT_INDEX as usize].1.owner)
+            .lamports(
+                accounts[CONSUME_GATEWAY_MINT_PROCESSED_EVENT_ACCOUNT_INDEX as usize]
+                    .1
+                    .lamports,
+            )
+            .owner(
+                &accounts[CONSUME_GATEWAY_MINT_PROCESSED_EVENT_ACCOUNT_INDEX as usize]
+                    .1
+                    .owner,
+            )
             .build(),
         Check::account(&fixture.keys.recipient_balance)
             .data(
@@ -1182,8 +1191,16 @@ fn result_and_unchanged_mutable_account_checks<'a>(
                     .1
                     .data,
             )
-            .lamports(accounts[CONSUME_GATEWAY_MINT_RECIPIENT_BALANCE_ACCOUNT_INDEX as usize].1.lamports)
-            .owner(&accounts[CONSUME_GATEWAY_MINT_RECIPIENT_BALANCE_ACCOUNT_INDEX as usize].1.owner)
+            .lamports(
+                accounts[CONSUME_GATEWAY_MINT_RECIPIENT_BALANCE_ACCOUNT_INDEX as usize]
+                    .1
+                    .lamports,
+            )
+            .owner(
+                &accounts[CONSUME_GATEWAY_MINT_RECIPIENT_BALANCE_ACCOUNT_INDEX as usize]
+                    .1
+                    .owner,
+            )
             .build(),
         Check::account(&fixture.keys.spl_mint)
             .data(&accounts[SPL_MINT_ACCOUNT_INDEX].1.data)
@@ -1197,6 +1214,33 @@ fn result_and_unchanged_mutable_account_checks<'a>(
             .build(),
     ]);
     checks
+}
+
+fn assert_live_atomicity_accounts_start_unmutated(accounts: &[(Pubkey, Account)]) {
+    assert_eq!(
+        accounts[CONSUME_GATEWAY_MINT_PROCESSED_EVENT_ACCOUNT_INDEX as usize]
+            .1
+            .data[10],
+        0
+    );
+    assert_eq!(
+        read_u128_le(
+            &accounts[CONSUME_GATEWAY_MINT_RECIPIENT_BALANCE_ACCOUNT_INDEX as usize]
+                .1
+                .data,
+            80,
+        ),
+        0
+    );
+
+    let spl_mint =
+        SplTokenMint::unpack(&accounts[SPL_MINT_ACCOUNT_INDEX].1.data).expect("valid SPL mint");
+    assert_eq!(spl_mint.supply, 0);
+
+    let recipient_token_account =
+        SplTokenAccount::unpack(&accounts[RECIPIENT_TOKEN_ACCOUNT_INDEX].1.data)
+            .expect("valid recipient token account");
+    assert_eq!(recipient_token_account.amount, 0);
 }
 
 struct ScaffoldFixture {
@@ -1501,6 +1545,12 @@ fn packed_token_account(mint: Pubkey, owner: Pubkey, state: AccountState) -> Vec
 
 fn to_program_pubkey(pubkey: Pubkey) -> ProgramPubkey {
     ProgramPubkey::new_from_array(pubkey.to_bytes())
+}
+
+fn read_u128_le(input: &[u8], offset: usize) -> u128 {
+    let mut bytes = [0u8; 16];
+    bytes.copy_from_slice(&input[offset..offset + 16]);
+    u128::from_le_bytes(bytes)
 }
 
 fn instruction_data_from_fields(
