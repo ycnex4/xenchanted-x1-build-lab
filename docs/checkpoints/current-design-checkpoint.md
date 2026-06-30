@@ -39757,3 +39757,151 @@ Safety result:
 - no live gateway route enabled
 - no SPL CPI, `invoke_signed`, or SPL Token `mint_to` path enabled
 - no blocker removed
+
+## XXXL X1 Testnet Local Runtime Skeleton Phase 1 Inventory
+
+Status: Docs-only inventory complete — all runtime blockers remain active
+Branch: `stage-xxxl-x1-testnet-local-runtime-skeleton-phase-1-inventory`
+Base: `a7fb50e Add X1 testnet local runtime skeleton implementation plan`
+
+This docs-only stage records Phase 1 inventory for the XXXL X1 testnet local runtime skeleton implementation plan.
+
+Checkpoint artifact:
+
+- `docs/checkpoints/xxxl-x1-testnet-local-runtime-skeleton-phase-1-inventory.md`
+
+Input documents read:
+
+- `docs/xxxl/xxxl-x1-testnet-local-runtime-skeleton-implementation-plan.md`
+- `docs/xxxl/xxxl-x1-testnet-runtime-upgrade-implementation-boundary.md`
+- `docs/xxxl/xxxl-x1-testnet-runtime-upgrade-planning-inventory.md`
+
+Source inventory covered all current `programs/xxxl-svm/src/**` files:
+
+- account contract
+- CPI boundary
+- deployment status
+- entrypoint
+- error model
+- execution plan
+- instruction decode
+- module exports and runtime constants
+- PDA derivation
+- processor boundary
+- Program ID status
+- safety invariants
+- state layout
+- validation helpers
+
+Test inventory covered the current `programs/xxxl-svm/tests/**` file:
+
+- `programs/xxxl-svm/tests/mollusk_consume_gateway_mint.rs`
+
+Current disabled-route behavior summary:
+
+- `process_instruction` decodes `CONSUME_GATEWAY_MINT`.
+- `process_consume_gateway_mint` prepares and validates the boundary.
+- `build_runtime_consume_gateway_mint_execution_plan_boundary` builds a plan with live route activation disabled.
+- `LIVE_ROUTE_ACTIVATION_FROM_PROCESS_INSTRUCTION_ENABLED` remains `false`.
+- `spl_mint_to_cpi_execution_enabled()` remains `false`.
+- the enabled entrypoint route does not mint.
+- the enabled entrypoint route does not call `invoke_signed`.
+- the enabled entrypoint route does not call SPL Token `mint_to`.
+
+Current error model summary:
+
+- `InvalidInstruction = 1`
+- `InvalidAccountOwner = 2`
+- `InvalidRentExemption = 3`
+- `InvalidRecipientAta = 4`
+- `InvalidPda = 5`
+- `InvalidDiscriminator = 6`
+- `InvalidVersion = 7`
+- `CpiBoundaryNotReady = 8`
+
+Current account/instruction boundary summary:
+
+- `consume_gateway_mint` uses 9 accounts.
+- required writable accounts are `processed_event`, `recipient_balance`, `spl_token_mint`, and `recipient_token_account`.
+- all accounts are non-signer accounts.
+- the instruction layout is fixed at 208 bytes.
+- the instruction validates discriminator, version, account meta count, encoded account indices, route, guardian set, mint, canonical event key, recipient, amount, and source-chain weight fields.
+
+Phase 1 made no runtime code changes.
+
+Phase 1 changed no tests.
+
+Phase 1 did not deploy or upgrade.
+
+Phase 1 did not submit transactions.
+
+Phase 1 did not spend SOL.
+
+Phase 1 inspected only `programs/xxxl-svm/src/**` and `programs/xxxl-svm/tests/**`.
+
+No secret material, keypair files, wallet files, or `.env` files were read.
+
+Phase 1 did not touch `.local-keys/**`, keypair JSON files, `.env`, `target/deploy/**`, or `.so` artifacts.
+
+Phase 1 did not add deployment scripts, upgrade scripts, or CI/CD workflows that deploy, upgrade, submit transactions, or spend SOL.
+
+The local runtime skeleton remains non-deployed, non-live, and unable to mint through the currently enabled executable entrypoint path.
+
+Dormant CPI helper functions exist in `cpi.rs`, but they are not reachable from the enabled route.
+
+The already-recorded X1 testnet scaffold status is unchanged by this docs-only inventory.
+
+`LIVE_ROUTE_DISABLED` remains active.
+
+`SPL_CPI_EXECUTION_DISABLED` remains active.
+
+No blocker was removed.
+
+No production readiness is claimed.
+
+No final immutability is claimed while upgrade authority exists.
+
+Inventory note:
+
+- existing `cpi.rs` contains dormant future-boundary helper functions with `spl_token::instruction::mint_to` and `invoke_signed`.
+- Phase 1 did not add or edit those functions.
+- the enabled `process_instruction` live route still does not call `invoke_signed`.
+- the enabled `process_instruction` live route still does not call SPL Token `mint_to`.
+- within the currently enabled executable entrypoint path, `invoke_signed` remains absent.
+- within the currently enabled executable entrypoint path, SPL Token `mint_to` remains absent.
+- any future change that makes that CPI helper reachable requires a separate reviewed boundary and explicit blocker transition.
+
+Active blockers remain unchanged in the implementation-plan boundary:
+
+- `PRODUCTION_PROGRAM_ID_UNSET`
+- `LIVE_ROUTE_DISABLED`
+- `SPL_CPI_EXECUTION_DISABLED`
+- `PRODUCTION_GUARDIAN_SET_UNSET`
+- `PRODUCTION_PROOF_LOG_UNSET`
+- `EXTERNAL_REVIEW_INCOMPLETE`
+
+Current source-level deployment report remains unchanged and still records:
+
+- `PLACEHOLDER_PROGRAM_ID`
+- `LIVE_ROUTE_DISABLED`
+- `SPL_CPI_EXECUTION_DISABLED`
+- `PRODUCTION_GUARDIAN_SET_UNSET`
+- `PRODUCTION_PROOF_LOG_UNSET`
+- `EXTERNAL_REVIEW_INCOMPLETE`
+
+Phase 2 follow-up requirements:
+
+- check whether dormant CPI helpers have call sites outside the enabled `process_instruction` path
+- confirm whether tests, benches, or utilities call dormant CPI helpers directly
+- record current Mollusk test count and latest run result
+- confirm or defer coefficient version replay rejection coverage
+- confirm or defer guardian set version replay rejection coverage
+- confirm or defer pause/unpause replay rejection coverage
+- confirm or defer upgrade replay rejection coverage
+- summarize the full execution-plan boundary return structure
+
+Recommended next stage:
+
+- `stage-xxxl-x1-testnet-local-runtime-skeleton-phase-2-account-layout-reconciliation`
+
+That stage should reconcile the implementation plan's Phase 2 account layout objective with the account layout structures already present in `state.rs`, `account_contract.rs`, `processor.rs`, and the Mollusk coverage file before any additional runtime code is edited.
