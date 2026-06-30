@@ -40605,3 +40605,151 @@ Phase 6 audit minor notes resolved before commit:
 Recommended next stage:
 
 - `stage-xxxl-x1-testnet-local-runtime-skeleton-phase-7-replay-processed-event-local-model-reconciliation`
+
+
+# Latest XXXL X1 testnet local runtime skeleton Phase 7 replay processed-event local model reconciliation checkpoint
+
+Stage:
+
+- `stage-xxxl-x1-testnet-local-runtime-skeleton-phase-7-replay-processed-event-local-model-reconciliation`
+
+Checkpoint artifact:
+
+- `docs/checkpoints/xxxl-x1-testnet-local-runtime-skeleton-phase-7-replay-processed-event-local-model-reconciliation.md`
+
+Phase 7 reconciled the replay / processed-event local model for the current
+disabled runtime skeleton and future live atomicity.
+
+Stage 1 replay boundary preserved:
+
+- Stage 1 owns source replay protection at deterministic model level
+- `canonicalEventKey` represents canonical source burn event identity at model
+  level
+- Stage 1 rejection means the runtime mint path must not be reached
+- relayer-submitted SVM instruction data alone is not proof of authorization
+
+Runtime Processed Event boundary preserved:
+
+- runtime uses `canonicalEventKey` as local Processed Event replay identity
+- Processed Event account binds consumed state, canonical event key, route, and
+  recipient
+- Processed Event presence alone is not authorization
+- Processed Event unconsumed state alone is not authorization
+- Processed Event relationship match alone is not authorization
+
+Current enabled behavior remains disabled and no-op:
+
+- Processed Event layout and relationships are validated
+- Processed Event unconsumed state is checked
+- disabled execution plan is built
+- `Ok(())` remains validation + disabled-plan no-op return
+- Processed Event is not marked consumed
+- Recipient Balance is not credited
+- Mint State / supply accounting is not updated
+- SPL CPI is not executed
+- `invoke_signed` is not called
+- SPL Token `mint_to` is not called
+
+Future live atomicity model recorded:
+
+- no mint without processed mark
+- no processed mark without mint
+- no recipient accounting update without processed mark
+- no supply accounting update without processed mark
+- no state change if validation fails
+
+Replay scenarios classified:
+
+- same `canonicalEventKey`
+- same source burn with different recipient
+- same source burn with different amount
+- same source burn with different route
+- same / different `messageNonce`
+- guardian set rotation
+- coefficient/source-chain-weight version change
+- pause/unpause
+- upgrade
+- source fork / reorg / finality correction
+
+Deferred replay gaps preserved:
+
+- coefficient/version replay
+- guardian set version replay
+- pause/unpause replay
+- upgrade replay
+- source fork / reorg replay
+- `messageNonce` runtime semantics
+- source-chain ID runtime binding
+- complete atomic mark-with-result tests
+- 10 ignored Mollusk tests
+- complete Mollusk/SVM coverage criteria
+
+Phase 4 / Phase 5 / Phase 6 gates preserved:
+
+- bytes `194..208` remain reserved / unparsed / not zero-validated
+- the `u128` amount layout with `u64` SPL range remains a design gap
+- dormant CPI helpers are not reachable from enabled path
+- Stage 1 remains the deterministic authorization model
+- runtime remains only a consumer / mapping layer
+- `sourceChainId` remains unresolved before live route
+- `messageNonce` has no current runtime replay semantics
+- runtime replay identity remains `canonicalEventKey`
+- current `Ok(())` remains disabled-plan no-op return
+- `Ok(())` versus explicit disabled-route error remains a future decision gate
+
+Phase 7 made no runtime code changes.
+
+Phase 7 changed no tests.
+
+Phase 7 did not deploy or upgrade.
+
+Phase 7 did not submit transactions.
+
+Phase 7 did not spend SOL.
+
+Phase 7 did not touch `.local-keys/**`, keypair JSON files, `.env`,
+`target/deploy/**`, or `.so` artifacts.
+
+Phase 7 did not add deployment scripts, upgrade scripts, or CI/CD workflows
+that deploy, upgrade, submit transactions, or spend SOL.
+
+Current X1 status remains:
+
+- `X1_TESTNET_PROGRAM_DEPLOYED_RUNTIME_LOCKED`
+
+Active blockers remain:
+
+- `PRODUCTION_PROGRAM_ID_UNSET`
+- `LIVE_ROUTE_DISABLED`
+- `SPL_CPI_EXECUTION_DISABLED`
+- `PRODUCTION_GUARDIAN_SET_UNSET`
+- `PRODUCTION_PROOF_LOG_UNSET`
+- `EXTERNAL_REVIEW_INCOMPLETE`
+
+No blocker was removed.
+
+No production readiness is claimed.
+
+No final immutability is claimed while upgrade authority exists.
+
+
+Phase 7 audit minor notes resolved before commit:
+
+- Stage 1 replay wording now separates deterministic authorization /
+  state-transition modeling from persistent processed-burn tracking, which
+  belongs to the off-chain watcher / orchestrator / authorization-service
+  boundary
+- Stage 1 rejects re-authorization of an already-authorized
+  `canonicalEventKey`; runtime Processed Event state remains local replay state,
+  not authorization
+- Solana / SVM transaction-level atomicity is the expected rollback mechanism
+  for failed instructions; any equivalent strategy applies only if a future
+  reviewed architecture leaves the single-transaction model
+- Recipient Balance and Mint State / supply accounting atomic-result membership
+  must be decided before any live-route / SPL-CPI implementation stage
+- runtime currently checks decoded `amount` for nonzero / `u64` SPL range only;
+  `burnedAmount == xxxlMintAmount` remains a Stage 1 responsibility
+
+Recommended next stage:
+
+- `stage-xxxl-x1-testnet-local-runtime-skeleton-phase-8-local-tests-coverage-checkpoint`
