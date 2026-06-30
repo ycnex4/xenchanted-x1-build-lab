@@ -41821,3 +41821,95 @@ No blocker was removed.
 No production readiness is claimed.
 
 No final immutability is claimed while upgrade authority exists.
+
+# Latest XXXL X1 testnet local runtime skeleton Phase 21 sourceChainId binding
+
+Stage:
+
+- `stage-xxxl-x1-testnet-local-runtime-skeleton-phase-21-source-chain-id-binding`
+
+Checkpoint artifact:
+
+- `docs/checkpoints/xxxl-x1-testnet-local-runtime-skeleton-phase-21-source-chain-id-binding.md`
+
+Phase 21 is runtime source, Rust test, and checkpoint documentation.
+
+Purpose:
+
+- bump `consume_gateway_mint` instruction layout version from `1` to `2`
+- make bytes `194..201` semantic `source_chain_id: u64` little-endian
+- keep bytes `202..207` reserved and zero-required
+- reject version `1` instructions with `InvalidVersion`
+- reject nonzero reserved bytes `202..207` with `InvalidInstructionReserved`
+- bind instruction `source_chain_id` to existing `GatewayConfig.source_chain_id()`
+- reject source-chain mismatch with `InvalidSourceChain`
+
+Runtime source changed:
+
+- `programs/xxxl-svm/src/error.rs`
+- `programs/xxxl-svm/src/instruction.rs`
+- `programs/xxxl-svm/src/processor.rs`
+- `programs/xxxl-svm/src/execution_plan.rs` test fixture update only
+
+Runtime test files changed:
+
+- `programs/xxxl-svm/tests/disabled_cpi_reachability.rs`
+- `programs/xxxl-svm/tests/instruction_reserved_bytes.rs`
+- `programs/xxxl-svm/tests/mollusk_consume_gateway_mint.rs`
+
+Checkpoint documentation changed:
+
+- `docs/checkpoints/xxxl-x1-testnet-local-runtime-skeleton-phase-21-source-chain-id-binding.md`
+- `docs/checkpoints/current-design-checkpoint.md`
+
+GatewayConfig account layout:
+
+- unchanged
+- existing `GatewayConfigAccountView::source_chain_id()` remains at offset `48`
+
+Not implemented:
+
+- proof `emitter_chain_id` binding
+- source block / finality runtime fields
+- `messageNonce` runtime replay semantics
+- guardian signature parsing
+- guardian quorum validation
+- live SPL mint execution success path
+- rollback after live SPL CPI failure
+
+Validation:
+
+- `cargo fmt --check`: passed
+- `cargo test --test disabled_cpi_reachability`: 7 passed, 0 failed
+- `cargo test --test instruction_reserved_bytes`: 3 passed, 0 failed
+- `cargo test --lib`: 211 passed, 0 failed, 1 ignored
+- `cargo test --test mollusk_consume_gateway_mint`: blocked by stale `target/deploy/xxxl_svm.so` that still rejects v2 instructions with `InvalidVersion`
+
+Mollusk note:
+
+- no `.so` artifact was rebuilt or replaced because Phase 21 explicitly forbids creating `.so` artifacts or touching `target/deploy`
+
+Current X1 status remains:
+
+- `X1_TESTNET_PROGRAM_DEPLOYED_RUNTIME_LOCKED`
+
+Active blockers remain:
+
+- `PRODUCTION_PROGRAM_ID_UNSET`
+- `LIVE_ROUTE_DISABLED`
+- `SPL_CPI_EXECUTION_DISABLED`
+- `PRODUCTION_GUARDIAN_SET_UNSET`
+- `PRODUCTION_PROOF_LOG_UNSET`
+- `EXTERNAL_REVIEW_INCOMPLETE`
+
+No blocker was removed.
+
+No production readiness is claimed.
+
+No final immutability is claimed while upgrade authority exists.
+
+Recommended next stage:
+
+- `stage-xxxl-x1-testnet-local-runtime-skeleton-phase-21-sbf-artifact-mollusk-revalidation-boundary`
+
+This follow-up should refresh or otherwise resolve the stale Mollusk SBF artifact boundary only if that action is explicitly allowed and reviewed.

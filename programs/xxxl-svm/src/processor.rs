@@ -319,6 +319,10 @@ pub fn prepare_consume_gateway_mint_cpi_boundary<'a, 'b>(
         return Err(XxxlError::InvalidInstruction.into());
     }
 
+    if args.source_chain_id != gateway_config.source_chain_id() {
+        return Err(XxxlError::InvalidSourceChain.into());
+    }
+
     if guardian_set.guardian_set_id() != args.guardian_set_id {
         return Err(XxxlError::InvalidInstruction.into());
     }
@@ -401,6 +405,7 @@ mod tests {
         let program_id = fixture.program_id;
         let args = fixture.args;
         let rent = Rent::default();
+        let expected_source_chain_id = read_u64_le(&fixture.data.gateway_config, 48);
 
         let accounts = fixture.accounts();
 
@@ -412,10 +417,25 @@ mod tests {
         assert_eq!(prepared.boundary.mint_authority_bump, fixture_bump());
         assert_eq!(prepared.mint_decimals, 18);
         assert_eq!(prepared.source_chain_weight_bps, 10_000);
+        assert_eq!(args.source_chain_id, expected_source_chain_id);
         assert_eq!(
             prepared.boundary.accounts.token_program.key,
             &spl_token::id()
         );
+    }
+
+    #[test]
+    fn consume_gateway_mint_v2_happy_path_matches_gateway_config() {
+        let mut fixture = HandlerFixture::new();
+        let program_id = fixture.program_id;
+        let args = fixture.args;
+        let rent = Rent::default();
+        let accounts = fixture.accounts();
+
+        prepare_consume_gateway_mint_cpi_boundary(&program_id, &accounts, &args, &rent)
+            .expect("v2 source_chain_id matches GatewayConfig");
+
+        assert_eq!(args.source_chain_id, 1);
     }
 
     #[test]
@@ -606,6 +626,30 @@ mod tests {
         fixture.data.gateway_config[12] ^= 0xff;
 
         assert_prepare_boundary_rejects(&mut fixture, XxxlError::InvalidInstruction);
+    }
+
+    #[test]
+    fn handler_rejects_source_chain_id_mismatch() {
+        let mut fixture = HandlerFixture::new();
+        fixture.data.gateway_config[48..56].copy_from_slice(&2u64.to_le_bytes());
+
+        assert_prepare_boundary_rejects(&mut fixture, XxxlError::InvalidSourceChain);
+    }
+
+    #[test]
+    fn handler_rejects_source_chain_id_zero() {
+        let mut fixture = HandlerFixture::new();
+        fixture.args.source_chain_id = 0;
+
+        assert_prepare_boundary_rejects(&mut fixture, XxxlError::InvalidSourceChain);
+    }
+
+    #[test]
+    fn handler_rejects_source_chain_id_unexpected() {
+        let mut fixture = HandlerFixture::new();
+        fixture.args.source_chain_id = 77;
+
+        assert_prepare_boundary_rejects(&mut fixture, XxxlError::InvalidSourceChain);
     }
 
     #[test]
@@ -1310,6 +1354,7 @@ mod tests {
             let route_id = [0x11; 32];
             let guardian_set_id = [0x22; 32];
             let canonical_event_key = [0x44; 32];
+            let source_chain_id = 1;
 
             let owners = FixtureOwners {
                 program: program_id,
@@ -1332,7 +1377,13 @@ mod tests {
 
             let data = FixtureData {
                 mint_state: mint_state_data(spl_mint, mint_authority_pda, bump),
-                gateway_config: gateway_config_data(route_id, guardian_set_id, spl_mint, 10_000),
+                gateway_config: gateway_config_data(
+                    route_id,
+                    source_chain_id,
+                    guardian_set_id,
+                    spl_mint,
+                    10_000,
+                ),
                 guardian_set: guardian_set_data(guardian_set_id),
                 processed_event: processed_event_data(
                     false,
@@ -1379,6 +1430,7 @@ mod tests {
                 canonical_event_key,
                 recipient: recipient_owner.to_bytes(),
                 amount: 1_000,
+                source_chain_id,
                 source_chain_weight_bps: 10_000,
             };
 
@@ -1499,6 +1551,7 @@ mod tests {
 
     fn gateway_config_data(
         route_id: [u8; 32],
+        source_chain_id: u64,
         guardian_set_id: [u8; 32],
         target_mint: Pubkey,
         weight_bps: u16,
@@ -1509,6 +1562,7 @@ mod tests {
         );
         data[12..14].copy_from_slice(&weight_bps.to_le_bytes());
         data[16..48].copy_from_slice(&route_id);
+        data[48..56].copy_from_slice(&source_chain_id.to_le_bytes());
         data[88..120].copy_from_slice(&target_mint.to_bytes());
         data[120..152].copy_from_slice(&guardian_set_id);
         data

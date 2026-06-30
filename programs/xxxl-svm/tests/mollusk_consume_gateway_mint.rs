@@ -80,7 +80,7 @@ fn mollusk_rejects_wrong_instruction_version_without_live_route() {
     let mollusk = mollusk_for_program(&fixture.program_id);
 
     let mut instruction_data = fixture.instruction_data;
-    instruction_data[8..10].copy_from_slice(&2u16.to_le_bytes());
+    instruction_data[8..10].copy_from_slice(&3u16.to_le_bytes());
 
     let instruction =
         Instruction::new_with_bytes(fixture.program_id, &instruction_data, Vec::new());
@@ -112,6 +112,27 @@ fn mollusk_rejects_extra_instruction_bytes_without_live_route() {
         &accounts,
         &[Check::err(ProgramError::Custom(
             XxxlError::InvalidInstruction as u32,
+        ))],
+    );
+}
+
+#[test]
+fn mollusk_nonzero_reserved_202_207_rejects_before_scaffold_path() {
+    let fixture = ScaffoldFixture::new();
+    let mollusk = mollusk_for_program(&fixture.program_id);
+
+    let mut instruction_data = fixture.instruction_data;
+    instruction_data[202] = 1;
+
+    let instruction =
+        Instruction::new_with_bytes(fixture.program_id, &instruction_data, Vec::new());
+    let accounts: Vec<(Pubkey, Account)> = Vec::new();
+
+    mollusk.process_and_validate_instruction(
+        &instruction,
+        &accounts,
+        &[Check::err(ProgramError::Custom(
+            XxxlError::InvalidInstructionReserved as u32,
         ))],
     );
 }
@@ -733,6 +754,47 @@ fn mollusk_valid_scaffold_entrypoint_leaves_mutable_accounts_unchanged() {
 }
 
 #[test]
+fn mollusk_valid_v2_matching_source_chain_id_leaves_mutable_accounts_unchanged() {
+    let fixture = ScaffoldFixture::new();
+    let mollusk = mollusk_for_program(&fixture.program_id);
+
+    let instruction = fixture.instruction();
+    let accounts = fixture.accounts();
+    assert_eq!(
+        u64::from_le_bytes(
+            instruction.data[194..202]
+                .try_into()
+                .expect("source_chain_id")
+        ),
+        read_u64_le(
+            &accounts[CONSUME_GATEWAY_MINT_ROUTE_ACCOUNT_INDEX as usize]
+                .1
+                .data,
+            48
+        )
+    );
+    assert_live_atomicity_accounts_start_unmutated(&accounts);
+
+    let checks = result_and_unchanged_mutable_account_checks(&fixture, &accounts, Check::success());
+
+    mollusk.process_and_validate_instruction(&instruction, &accounts, &checks);
+}
+
+#[test]
+fn process_instruction_v2_still_disabled_plan() {
+    let fixture = ScaffoldFixture::new();
+    let mollusk = mollusk_for_program(&fixture.program_id);
+
+    let instruction = fixture.instruction();
+    let accounts = fixture.accounts();
+    assert_live_atomicity_accounts_start_unmutated(&accounts);
+
+    let checks = result_and_unchanged_mutable_account_checks(&fixture, &accounts, Check::success());
+
+    mollusk.process_and_validate_instruction(&instruction, &accounts, &checks);
+}
+
+#[test]
 fn phase20_current_runtime_boundary_matrix_separates_unrepresented_stage1_classes() {
     struct RuntimeObservableEvidence {
         class: &'static str,
@@ -785,6 +847,14 @@ fn phase20_current_runtime_boundary_matrix_separates_unrepresented_stage1_classe
             evidence: "mollusk_wrong_gateway_config_source_chain_weight_rejection_leaves_mutable_accounts_unchanged",
         },
         RuntimeObservableEvidence {
+            class: "sourceChainId final runtime binding",
+            evidence: "mollusk_source_chain_id_mismatch_rejection_leaves_mutable_accounts_unchanged",
+        },
+        RuntimeObservableEvidence {
+            class: "reserved bytes 202..207 zero enforcement",
+            evidence: "mollusk_nonzero_reserved_202_207_rejects_before_scaffold_path",
+        },
+        RuntimeObservableEvidence {
             class: "zero amount",
             evidence: "mollusk_zero_amount_rejection_leaves_mutable_accounts_unchanged",
         },
@@ -823,13 +893,12 @@ fn phase20_current_runtime_boundary_matrix_separates_unrepresented_stage1_classe
     ];
 
     let not_runtime_observable = [
-        "sourceChainId final runtime binding",
+        "proof emitter_chain_id binding",
         "source block/finality fields",
         "messageNonce runtime replay semantics",
         "guardian signature/quorum validation",
         "canonical encoding field-order vectors at watcher/model layer",
         "decimal string encoding vectors from Stage 1 model",
-        "reserved bytes 194..208 as semantic sourceChainId",
         "live SPL mint execution success path",
         "rollback after live SPL CPI failure",
     ];
@@ -1111,6 +1180,30 @@ fn mollusk_wrong_gateway_config_source_chain_weight_rejection_leaves_mutable_acc
 }
 
 #[test]
+fn mollusk_source_chain_id_mismatch_rejection_leaves_mutable_accounts_unchanged() {
+    let fixture = ScaffoldFixture::new();
+    let mollusk = mollusk_for_program(&fixture.program_id);
+
+    let mut instruction_data = fixture.instruction_data;
+    instruction_data[194..202].copy_from_slice(&77u64.to_le_bytes());
+
+    let instruction = Instruction::new_with_bytes(
+        fixture.program_id,
+        &instruction_data,
+        fixture.instruction().accounts,
+    );
+    let accounts = fixture.accounts();
+
+    process_rejection_and_assert_mutable_accounts_unchanged(
+        &mollusk,
+        &fixture,
+        &instruction,
+        &accounts,
+        XxxlError::InvalidSourceChain,
+    );
+}
+
+#[test]
 fn mollusk_wrong_guardian_set_id_rejection_leaves_mutable_accounts_unchanged() {
     let fixture = ScaffoldFixture::new();
     let mollusk = mollusk_for_program(&fixture.program_id);
@@ -1372,7 +1465,7 @@ fn invalid_consume_gateway_mint_version_rejects_before_scaffold_path() {
     let mollusk = mollusk_for_program(&fixture.program_id);
 
     let mut instruction_data = fixture.instruction_data;
-    instruction_data[8..10].copy_from_slice(&2u16.to_le_bytes());
+    instruction_data[8..10].copy_from_slice(&3u16.to_le_bytes());
 
     let instruction =
         Instruction::new_with_bytes(fixture.program_id, &instruction_data, Vec::new());
@@ -1558,6 +1651,7 @@ impl ScaffoldFixture {
         let route_id = [0x11; 32];
         let guardian_set_id = [0x22; 32];
         let canonical_event_key = [0x44; 32];
+        let source_chain_id = 1;
 
         let keys = FixtureKeys {
             mint_state: Pubkey::new_unique(),
@@ -1574,7 +1668,13 @@ impl ScaffoldFixture {
 
         let data = FixtureData {
             mint_state: mint_state_data(spl_mint, mint_authority_pda, bump),
-            gateway_config: gateway_config_data(route_id, guardian_set_id, spl_mint, 10_000),
+            gateway_config: gateway_config_data(
+                route_id,
+                source_chain_id,
+                guardian_set_id,
+                spl_mint,
+                10_000,
+            ),
             guardian_set: guardian_set_data(guardian_set_id),
             processed_event: processed_event_data(
                 false,
@@ -1599,6 +1699,7 @@ impl ScaffoldFixture {
             recipient_owner,
             1_000,
             10_000,
+            source_chain_id,
         );
 
         Self {
@@ -1728,6 +1829,7 @@ fn mint_state_data(mint: Pubkey, pda: Pubkey, bump: u8) -> Vec<u8> {
 
 fn gateway_config_data(
     route_id: [u8; 32],
+    source_chain_id: u64,
     guardian_set_id: [u8; 32],
     target_mint: Pubkey,
     weight_bps: u16,
@@ -1738,6 +1840,7 @@ fn gateway_config_data(
     );
     data[12..14].copy_from_slice(&weight_bps.to_le_bytes());
     data[16..48].copy_from_slice(&route_id);
+    data[48..56].copy_from_slice(&source_chain_id.to_le_bytes());
     data[88..120].copy_from_slice(&target_mint.to_bytes());
     data[120..152].copy_from_slice(&guardian_set_id);
     data
@@ -1824,6 +1927,12 @@ fn read_u128_le(input: &[u8], offset: usize) -> u128 {
     u128::from_le_bytes(bytes)
 }
 
+fn read_u64_le(input: &[u8], offset: usize) -> u64 {
+    let mut bytes = [0u8; 8];
+    bytes.copy_from_slice(&input[offset..offset + 8]);
+    u64::from_le_bytes(bytes)
+}
+
 fn instruction_data_from_fields(
     route_id: [u8; 32],
     guardian_set_id: [u8; 32],
@@ -1832,6 +1941,7 @@ fn instruction_data_from_fields(
     recipient: Pubkey,
     amount: u128,
     source_chain_weight_bps: u16,
+    source_chain_id: u64,
 ) -> [u8; CONSUME_GATEWAY_MINT_INSTRUCTION_LEN] {
     let mut bytes = [0u8; CONSUME_GATEWAY_MINT_INSTRUCTION_LEN];
 
@@ -1850,6 +1960,7 @@ fn instruction_data_from_fields(
     bytes[144..176].copy_from_slice(&recipient.to_bytes());
     bytes[176..192].copy_from_slice(&amount.to_le_bytes());
     bytes[192..194].copy_from_slice(&source_chain_weight_bps.to_le_bytes());
+    bytes[194..202].copy_from_slice(&source_chain_id.to_le_bytes());
 
     bytes
 }
