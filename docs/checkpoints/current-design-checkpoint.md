@@ -41614,3 +41614,60 @@ No final immutability is claimed while upgrade authority exists.
 Recommended next stage:
 
 - `stage-xxxl-x1-testnet-local-runtime-skeleton-phase-18-u128-u64-spl-amount-boundary`
+
+
+# Latest XXXL X1 testnet local runtime skeleton Phase 18 u128/u64 SPL amount boundary
+
+Stage:
+
+- `stage-xxxl-x1-testnet-local-runtime-skeleton-phase-18-u128-u64-spl-amount-boundary`
+
+Checkpoint artifact:
+
+- `docs/checkpoints/xxxl-x1-testnet-local-runtime-skeleton-phase-18-u128-u64-spl-amount-boundary.md`
+
+Phase 18 is docs-only.
+
+Purpose:
+
+- record the current boundary between instruction-level `amount: u128` and
+  SPL Token CPI-level `amount: u64`
+- record that current runtime rejects `amount == 0`
+- record that current runtime rejects `amount > u64::MAX`
+- record that current runtime casts to `u64` only after range validation
+- prevent any claim that current SPL route supports full `u128` mint amounts
+
+Runtime source status:
+
+- `programs/xxxl-svm/src/**` unchanged
+
+Test source status:
+
+- `programs/xxxl-svm/tests/**` unchanged
+
+Cargo status:
+
+- Cargo files unchanged
+
+Current X1 status remains:
+
+- `X1_TESTNET_PROGRAM_DEPLOYED_RUNTIME_LOCKED`
+
+Active blockers remain:
+
+- `PRODUCTION_PROGRAM_ID_UNSET`
+- `LIVE_ROUTE_DISABLED`
+- `SPL_CPI_EXECUTION_DISABLED`
+- `PRODUCTION_GUARDIAN_SET_UNSET`
+- `PRODUCTION_PROOF_LOG_UNSET`
+- `EXTERNAL_REVIEW_INCOMPLETE`
+
+No blocker was removed.
+
+No production readiness is claimed.
+
+No final immutability is claimed while upgrade authority exists.
+
+Recommended next stage:
+
+- `stage-xxxl-x1-testnet-local-runtime-skeleton-phase-19-live-atomicity-boundary`
