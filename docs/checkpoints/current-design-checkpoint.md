@@ -45878,3 +45878,95 @@ Recommended next stage:
 - do not open a next phase before review
 - real runtime wiring must be introduced only in a separate future reviewed phase
 - that future runtime wiring phase must be treated as panic-safety-critical
+
+# Latest XXXL X1 testnet local runtime skeleton Phase 41C3A edge-case semantics clarification
+
+Stage:
+
+- `stage-xxxl-x1-testnet-local-runtime-skeleton-phase-41c3a-edge-case-semantics-clarification`
+
+Checkpoint file:
+
+- `docs/checkpoints/xxxl-x1-testnet-local-runtime-skeleton-phase-41c3a-edge-case-semantics-clarification.md`
+
+Review request file:
+
+- `docs/reviews/xxxl-phase-41c3a-edge-case-semantics-clarification-review-request.md`
+
+Purpose:
+
+- close the non-blocking Phase 41C3 edge-case notes before any real
+  runtime-wiring phase
+- pin the mixed-case behavior:
+  - one valid strictly-prior match plus one same-index or later matching
+    descriptor returns `PriorEd25519InstructionLocatedAndOrdered`
+- clarify that Phase 41C3 consumes candidate descriptors, not all real
+  transaction instructions
+- clarify that unrelated real non-Ed25519 transaction instructions must not be
+  forwarded into Phase 41C3 as candidate descriptors
+- clarify that `WrongEd25519ProgramId` means an evidence-candidate descriptor
+  has the wrong program id
+- keep real runtime wiring deferred to a separate future reviewed phase
+
+Files added:
+
+- `docs/xxxl/xxxl-phase-41c3a-edge-case-semantics-clarification.md`
+- `docs/checkpoints/xxxl-x1-testnet-local-runtime-skeleton-phase-41c3a-edge-case-semantics-clarification.md`
+- `docs/reviews/xxxl-phase-41c3a-edge-case-semantics-clarification-review-request.md`
+
+Files changed:
+
+- `programs/xxxl-svm/src/verifier/prior_ed25519_lookup_ordering_boundary.rs`
+- `docs/checkpoints/current-design-checkpoint.md`
+
+Phase 41C3A explicitly does not:
+
+- parse raw Instructions sysvar account data
+- parse `AccountInfo`
+- call `load_instruction`
+- call `load_instruction_at`
+- call `load_instruction_at_checked`
+- read concrete transaction instruction contents
+- verify Ed25519 signatures
+- accept cryptographic signature proof
+- accept verification evidence
+- count quorum
+- authorize minting
+- add a runtime instruction handler
+- add CPI
+- enable `invoke_signed`
+- enable SPL Token `mint_to`
+- add replay writes
+- mark processed events
+- mutate runtime/account state
+- unlock live route execution
+- remove deployment blockers
+- select a production Program ID
+- claim production readiness
+- claim final immutability while upgrade authority exists
+- build SBF artifacts
+- touch `target/deploy`
+- read or modify keypair files
+- read or modify `.env`
+- inspect `.local-keys`
+- run deploy commands
+- run network commands
+- spend SOL
+
+Active blockers remain:
+
+- `X1_TESTNET_PROGRAM_DEPLOYED_RUNTIME_LOCKED`
+- `PRODUCTION_PROGRAM_ID_UNSET`
+- `LIVE_ROUTE_DISABLED`
+- `SPL_CPI_EXECUTION_DISABLED`
+- `PRODUCTION_GUARDIAN_SET_UNSET`
+- `PRODUCTION_PROOF_LOG_UNSET`
+- `EXTERNAL_REVIEW_INCOMPLETE`
+
+Recommended next stage:
+
+- ask the audit demon and Theo to review Phase 41C3A
+- close the 41C descriptor series only after review
+- do not open real runtime wiring before review
+- real runtime wiring must be introduced only as a separate panic-safety-critical
+  reviewed phase
