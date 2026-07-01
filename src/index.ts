@@ -91,3 +91,4 @@ export * from "./xxxl/guardian-approval-verifier.js";
 export * from "./xxxl/gateway-authorization-boundary.js";
 export * from "./xxxl/ts-svm-parity-vector-suite.js";
 export * from "./xxxl/ts-svm-parity-invalid-fixtures.js";
+export * from "./xxxl/ts-svm-parity-verifier-validation.js";
