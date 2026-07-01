@@ -46054,3 +46054,103 @@ Recommended next stage:
 - do not open Phase 41D0 before review
 - Phase 41D0 should be docs-only
 - no real runtime wiring should start before Phase 41D0 is reviewed
+
+# Latest XXXL X1 testnet local runtime skeleton Phase 41D0 runtime wiring plan safety checklist
+
+Stage:
+
+- `stage-xxxl-x1-testnet-local-runtime-skeleton-phase-41d0-runtime-wiring-plan-safety-checklist`
+
+Checkpoint file:
+
+- `docs/checkpoints/xxxl-x1-testnet-local-runtime-skeleton-phase-41d0-runtime-wiring-plan-safety-checklist.md`
+
+Review request file:
+
+- `docs/reviews/xxxl-phase-41d0-runtime-wiring-plan-safety-checklist-review-request.md`
+
+Purpose:
+
+- open the Phase 41D runtime-wiring series as a docs-only safety plan
+- define Phase 41D as the first series where real runtime data may enter the
+  descriptor/model boundary
+- require Phase 41D to be split into separate reviewed read layers
+- require one real read layer per phase
+- preserve the Phase 41C3A pre-filter contract
+- carry forward the same/later fully-matching Ed25519 anomaly decision
+- define panic-safety requirements for future real runtime reads
+- define per-flag transition rules
+- keep all proof, quorum, authorization, replay, CPI, mint execution, and live
+  route behavior forbidden throughout Phase 41D
+
+Files added:
+
+- `docs/xxxl/xxxl-phase-41d0-runtime-wiring-plan-safety-checklist.md`
+- `docs/checkpoints/xxxl-x1-testnet-local-runtime-skeleton-phase-41d0-runtime-wiring-plan-safety-checklist.md`
+- `docs/reviews/xxxl-phase-41d0-runtime-wiring-plan-safety-checklist-review-request.md`
+
+Files changed:
+
+- `docs/checkpoints/current-design-checkpoint.md`
+
+Planned Phase 41D split:
+
+- 41D0 docs-only runtime-wiring plan and safety checklist
+- 41D1 real Instructions sysvar presence/readability from runtime `AccountInfo`
+- 41D2 real current-instruction identity population
+- 41D3 real prior-instruction enumeration, prefiltering, and descriptor construction
+
+Phase 41D0 explicitly does not:
+
+- add runtime code
+- add Rust code
+- modify tests
+- parse real `AccountInfo`
+- parse real Instructions sysvar account data
+- call `load_instruction`
+- call `load_instruction_at`
+- call `load_instruction_at_checked`
+- read concrete transaction instruction contents
+- verify Ed25519 signatures
+- accept cryptographic signature proof
+- accept verification evidence
+- count guardian quorum
+- authorize minting
+- write replay state
+- mark processed events
+- mutate runtime/account state
+- perform CPI
+- call `invoke_signed`
+- call SPL Token `mint_to`
+- add runtime execution handler
+- unlock live route execution
+- select a production Program ID
+- remove deployment blockers
+- claim production readiness
+- claim final immutability while upgrade authority exists
+- build SBF artifacts
+- touch `target/deploy`
+- read or modify keypair files
+- read or modify `.env`
+- inspect `.local-keys`
+- run deploy commands
+- run network commands
+- spend SOL
+
+Active blockers remain:
+
+- `X1_TESTNET_PROGRAM_DEPLOYED_RUNTIME_LOCKED`
+- `PRODUCTION_PROGRAM_ID_UNSET`
+- `LIVE_ROUTE_DISABLED`
+- `SPL_CPI_EXECUTION_DISABLED`
+- `PRODUCTION_GUARDIAN_SET_UNSET`
+- `PRODUCTION_PROOF_LOG_UNSET`
+- `EXTERNAL_REVIEW_INCOMPLETE`
+
+Recommended next stage:
+
+- ask the audit demon and Theo to review Phase 41D0
+- do not open Phase 41D1 before review
+- Phase 41D1 must be limited to real Instructions sysvar presence/readability
+  from runtime `AccountInfo`
+- Phase 41D1 must remain read-only and panic-safety-critical
