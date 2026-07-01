@@ -46243,3 +46243,104 @@ Recommended next stage:
 - Phase 41D2 must be limited to real current-instruction identity population
 - Phase 41D2 must not enumerate prior instructions
 - Phase 41D2 must not accept verification evidence
+
+# Latest XXXL X1 testnet local runtime skeleton Phase 41D2.0 current identity runtime mechanism clarification
+
+Stage:
+
+- `stage-xxxl-x1-testnet-local-runtime-skeleton-phase-41d2-0-current-identity-runtime-mechanism-clarification`
+
+Checkpoint file:
+
+- `docs/checkpoints/xxxl-x1-testnet-local-runtime-skeleton-phase-41d2-0-current-identity-runtime-mechanism-clarification.md`
+
+Review request file:
+
+- `docs/reviews/xxxl-phase-41d2-0-current-identity-runtime-mechanism-clarification-review-request.md`
+
+Purpose:
+
+- clarify future Phase 41D2 current-instruction identity runtime mechanism before code
+- preserve the Phase 41D0 per-flag plan
+- confirm that future Phase 41D2 must not call `load_instruction`,
+  `load_instruction_at`, or `load_instruction_at_checked`
+- confirm that future Phase 41D2 must not load the full current instruction from
+  Instructions sysvar
+- confirm that future Phase 41D2 identity should derive from reviewed runtime
+  context:
+  - direct entrypoint `program_id`
+  - direct entrypoint `instruction_data`
+  - expected program id
+  - expected instruction discriminator
+  - expected payload/context binding checks
+- confirm that future Phase 41D2 may flip only
+  `current_instruction_identity_derived_from_runtime: true`
+- keep prior enumeration and Phase 41C3 descriptor construction deferred to 41D3
+
+Files added:
+
+- `docs/xxxl/xxxl-phase-41d2-0-current-identity-runtime-mechanism-clarification.md`
+- `docs/checkpoints/xxxl-x1-testnet-local-runtime-skeleton-phase-41d2-0-current-identity-runtime-mechanism-clarification.md`
+- `docs/reviews/xxxl-phase-41d2-0-current-identity-runtime-mechanism-clarification-review-request.md`
+
+Files changed:
+
+- `docs/checkpoints/current-design-checkpoint.md`
+
+Phase 41D2.0 explicitly does not:
+
+- add runtime code
+- add Rust code
+- modify tests
+- parse real `AccountInfo`
+- parse real Instructions sysvar account data
+- call `load_instruction`
+- call `load_instruction_at`
+- call `load_instruction_at_checked`
+- read prior instruction contents
+- enumerate prior instructions
+- construct Phase 41C3 candidate descriptors
+- verify Ed25519 signatures
+- accept cryptographic signature proof
+- accept verification evidence
+- count guardian quorum
+- authorize minting
+- write replay state
+- mark processed events
+- mutate runtime/account state
+- perform CPI
+- call `invoke_signed`
+- call SPL Token `mint_to`
+- add runtime execution handler
+- unlock live route execution
+- select a production Program ID
+- remove deployment blockers
+- claim production readiness
+- claim final immutability while upgrade authority exists
+- build SBF artifacts
+- touch `target/deploy`
+- read or modify keypair files
+- read or modify `.env`
+- inspect `.local-keys`
+- run deploy commands
+- run network commands
+- spend SOL
+
+Active blockers remain:
+
+- `X1_TESTNET_PROGRAM_DEPLOYED_RUNTIME_LOCKED`
+- `PRODUCTION_PROGRAM_ID_UNSET`
+- `LIVE_ROUTE_DISABLED`
+- `SPL_CPI_EXECUTION_DISABLED`
+- `PRODUCTION_GUARDIAN_SET_UNSET`
+- `PRODUCTION_PROOF_LOG_UNSET`
+- `EXTERNAL_REVIEW_INCOMPLETE`
+
+Recommended next stage:
+
+- ask the audit demon and Theo to review Phase 41D2.0
+- do not open Phase 41D2 code before review
+- Phase 41D2 code must be limited to current-instruction identity population
+- Phase 41D2 code must not enumerate prior instructions
+- Phase 41D2 code must not construct Phase 41C3 descriptors
+- Phase 41D2 code must not accept verification evidence
