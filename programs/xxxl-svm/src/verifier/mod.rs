@@ -1,5 +1,6 @@
 pub mod boundary;
 pub mod errors;
+pub mod raw_payload;
 pub mod types;
 
 pub use boundary::{
@@ -12,6 +13,12 @@ pub use boundary::{
     RUNTIME_VERIFIER_BOUNDARY_COMPONENTS,
 };
 pub use errors::{VerifierErrorCategory, VERIFIER_ERROR_CATEGORIES};
+pub use raw_payload::{
+    decode_guardian_payload_raw, raw_payload_decoder_report, DecodedGuardianPayloadRaw,
+    RawPayloadDecodeError, RawPayloadDecodeErrorKind, RawPayloadDecoderReport,
+    RAW_PAYLOAD_DECODER_PHASE_33, RAW_PAYLOAD_DECODER_REPORT, RAW_PAYLOAD_DECODER_VERSION,
+    RAW_PAYLOAD_PHASE_23_FIELD_ORDER,
+};
 pub use types::{
     FutureRuntimeParityCase, FutureRuntimeParityCaseReport, RuntimeVerifierBoundaryComponent,
     VerifierBoundaryStatus,
