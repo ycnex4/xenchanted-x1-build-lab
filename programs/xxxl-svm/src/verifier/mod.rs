@@ -3,6 +3,7 @@ pub mod canonical_payload;
 pub mod ed25519_evidence_layout;
 pub mod ed25519_instruction_data_parser;
 pub mod ed25519_verification_evidence;
+pub mod ed25519_verification_evidence_integration_design;
 pub mod errors;
 pub mod guardian_quorum;
 pub mod instructions_sysvar_evidence_scanner;
@@ -51,6 +52,18 @@ pub use ed25519_verification_evidence::{
     Ed25519VerificationEvidenceBoundaryResult, Ed25519VerificationEvidenceModelReport,
     ED25519_VERIFICATION_EVIDENCE_MODEL_PHASE_40B, ED25519_VERIFICATION_EVIDENCE_MODEL_REPORT,
     ED25519_VERIFICATION_EVIDENCE_MODEL_VERSION,
+};
+pub use ed25519_verification_evidence_integration_design::{
+    ed25519_verification_evidence_integration_design_report,
+    future_ed25519_verification_evidence_rejection_cases,
+    future_ed25519_verification_evidence_requirements,
+    Ed25519VerificationEvidenceIntegrationDesignReport,
+    FutureEd25519VerificationEvidenceRejectionCase, FutureEd25519VerificationEvidenceRequirement,
+    ED25519_VERIFICATION_EVIDENCE_INTEGRATION_DESIGN_PHASE_40D,
+    ED25519_VERIFICATION_EVIDENCE_INTEGRATION_DESIGN_REPORT,
+    ED25519_VERIFICATION_EVIDENCE_INTEGRATION_DESIGN_VERSION,
+    FUTURE_ED25519_VERIFICATION_EVIDENCE_REJECTION_CASES,
+    FUTURE_ED25519_VERIFICATION_EVIDENCE_REQUIREMENTS,
 };
 pub use errors::{VerifierErrorCategory, VERIFIER_ERROR_CATEGORIES};
 pub use guardian_quorum::{
