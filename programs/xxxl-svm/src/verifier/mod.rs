@@ -1,5 +1,6 @@
 pub mod boundary;
 pub mod canonical_payload;
+pub mod ed25519_evidence_layout;
 pub mod errors;
 pub mod guardian_quorum;
 pub mod raw_payload;
@@ -22,6 +23,17 @@ pub use canonical_payload::{
     CANONICAL_PAYLOAD_HASH_VALIDATOR_PHASE_34, CANONICAL_PAYLOAD_HASH_VALIDATOR_VERSION,
     XXXL_GUARDIAN_PAYLOAD_HASH_DOMAIN_SEPARATOR_V1, XXXL_GUARDIAN_PAYLOAD_HASH_DOMAIN_V1,
     XXXL_GUARDIAN_PAYLOAD_VALID_HASH_V1,
+};
+pub use ed25519_evidence_layout::{
+    ed25519_evidence_layout_model_report, validate_ed25519_evidence_layout,
+    Ed25519EvidenceLayoutDescriptor, Ed25519EvidenceLayoutError, Ed25519EvidenceLayoutErrorKind,
+    Ed25519EvidenceLayoutModelReport, Ed25519EvidenceLayoutModelResult,
+    Ed25519SignatureOffsetsModel, CURRENT_INSTRUCTION_INDEX_SENTINEL,
+    ED25519_INSTRUCTION_EVIDENCE_LAYOUT_MODEL_PHASE_37,
+    ED25519_INSTRUCTION_EVIDENCE_LAYOUT_MODEL_REPORT,
+    ED25519_INSTRUCTION_EVIDENCE_LAYOUT_MODEL_VERSION, ED25519_INSTRUCTION_HEADER_LEN,
+    ED25519_PROGRAM_ID_REFERENCE, ED25519_PUBLIC_KEY_LEN, ED25519_SIGNATURE_LEN,
+    ED25519_SIGNATURE_OFFSETS_RECORD_LEN, EXPECTED_MESSAGE_LEN, EXPECTED_SIGNATURE_COUNT,
 };
 pub use errors::{VerifierErrorCategory, VERIFIER_ERROR_CATEGORIES};
 pub use guardian_quorum::{

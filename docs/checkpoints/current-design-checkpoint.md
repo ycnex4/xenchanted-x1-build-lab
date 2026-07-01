@@ -43966,3 +43966,160 @@ Recommended next stage:
 - Phase 37 Rust/SVM Ed25519 instruction evidence layout model, still read-only,
   still without instruction processing, account parsing, CPI, mint execution,
   replay checks/writes, or runtime unlock
+
+# Latest XXXL X1 testnet local runtime skeleton Phase 37 Ed25519 instruction evidence layout model
+
+Stage:
+
+- `stage-xxxl-x1-testnet-local-runtime-skeleton-phase-37-ed25519-instruction-evidence-layout-model`
+
+Checkpoint artifact:
+
+- `docs/checkpoints/xxxl-x1-testnet-local-runtime-skeleton-phase-37-ed25519-instruction-evidence-layout-model.md`
+
+Purpose:
+
+- turn the Phase 36 Ed25519 evidence model into a typed, tested Rust layout model
+- model the Solana Ed25519 program instruction data shape for the
+  single-guardian-per-instruction evidence model
+- add a pure structural shape-validation function with per-error-kind test
+  coverage
+- bind the modeled 32-byte message length to the Phase 34 canonical payload hash
+- keep structural quorum (Phase 35) as a separate, still-required check
+- avoid Ed25519 verification, instruction sysvar parsing, account parsing, CPI,
+  mint execution, replay writes, and live route unlock
+
+Preserved security decision:
+
+~~~text
+TS layer = preflight / model / watcher-side decision
+Runtime = independent verifier
+No authorized=true -> execute
+~~~
+
+Files added:
+
+- `programs/xxxl-svm/src/verifier/ed25519_evidence_layout.rs`
+- `docs/xxxl/xxxl-phase-37-ed25519-instruction-evidence-layout-model.md`
+- `docs/checkpoints/xxxl-x1-testnet-local-runtime-skeleton-phase-37-ed25519-instruction-evidence-layout-model.md`
+
+Files changed:
+
+- `programs/xxxl-svm/src/verifier/mod.rs`
+- `docs/checkpoints/current-design-checkpoint.md`
+
+Boundary status:
+
+- read-only structural Ed25519 instruction evidence layout model
+- a Rust source file and Rust tests were added (unlike Phase 36)
+- no Cargo/manifest/lockfile change
+- no dependencies added
+- no instruction handler added
+- no account parser added
+- no runtime execution unlock
+
+Modeled layout:
+
+- header: `num_signatures: u8` (offset 0), `padding: u8` (offset 1), 2 bytes
+- one `Ed25519SignatureOffsets` record of 7 x `u16` little-endian fields, 14 bytes
+- signature length 64 bytes, public key length 32 bytes
+- expected message length 32 bytes = Phase 34 canonical payload hash
+- `EXPECTED_SIGNATURE_COUNT = 1`, `u16::MAX` current-instruction-index sentinel
+
+Explicit honesty:
+
+- a well-shaped layout descriptor is not authorized evidence
+- Phase 35 structural quorum remains a separate, still-required check
+- caller-provided signature claims are not runtime authority
+- Phase 37 does not implement Ed25519 verification
+- Phase 37 does not parse the Instructions sysvar
+- Phase 37 does not inspect real ed25519 program instructions
+- Phase 37 alone cannot make `authorized=true`
+
+Remaining obligations:
+
+- Ed25519 instruction evidence parser over the real Instructions sysvar
+- Ed25519 signature verification
+- signature evidence binding to Phase 34 canonical payload hash
+- source proof verification
+- route config verification
+- target mint account legitimacy verification
+- amount cap enforcement
+- replay storage
+- replay checks
+- replay writes
+- account parsing
+- instruction processing
+- mint execution
+- runtime unlock
+
+Runtime source status:
+
+- `programs/xxxl-svm/src/lib.rs` unchanged
+- `programs/xxxl-svm/src/verifier/ed25519_evidence_layout.rs` added
+- `programs/xxxl-svm/src/verifier/mod.rs` updated with the module and re-exports
+- no instruction handler added
+- no account parser added
+
+Cargo/package status:
+
+- Cargo files unchanged
+- `package.json` unchanged
+- `package-lock.json` unchanged
+- no dependencies added
+
+Deploy/artifact status:
+
+- no SBF build
+- no `target/deploy` changes
+- no tracked `.so` artifact
+- no tracked keypair file
+- no `.local-keys` access
+- no `.env` access
+- no deploy
+- no network command
+- no SOL spend
+
+Safety status:
+
+- live route remains disabled
+- SPL CPI remains disabled
+- `invoke_signed` remains disabled
+- SPL Token `mint_to` remains disabled
+- no runtime/account state mutation is added
+- no replay write is added
+- no processed-event marking is added
+- no production Program ID is selected
+- production PDA fixtures are unchanged
+- deployment blockers remain active
+- no production readiness is claimed
+- no final immutability is claimed while upgrade authority exists
+
+Current X1 status remains:
+
+- `X1_TESTNET_PROGRAM_DEPLOYED_RUNTIME_LOCKED`
+
+Active blockers remain:
+
+- `PRODUCTION_PROGRAM_ID_UNSET`
+- `LIVE_ROUTE_DISABLED`
+- `SPL_CPI_EXECUTION_DISABLED`
+- `PRODUCTION_GUARDIAN_SET_UNSET`
+- `PRODUCTION_PROOF_LOG_UNSET`
+- `EXTERNAL_REVIEW_INCOMPLETE`
+
+No blocker was removed.
+
+Validation:
+
+- `cargo test --lib` (from `programs/xxxl-svm`)
+- `git diff --check`
+- `npm run typecheck`
+- `npm run build`
+- `git status --short --untracked-files=all`
+
+Recommended next stage:
+
+- Phase 38 Rust/SVM Ed25519 instruction evidence parser over the real
+  Instructions sysvar, still read-only, still without instruction processing,
+  account parsing, CPI, mint execution, replay checks/writes, or runtime unlock
