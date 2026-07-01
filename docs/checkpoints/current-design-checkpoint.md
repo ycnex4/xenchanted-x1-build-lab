@@ -44567,3 +44567,86 @@ Recommended next stage:
 - Phase 40B read-only Rust/SVM verification evidence model, still without
   quorum authorization, handler or account parsing, CPI, mint execution, replay
   writes, or runtime unlock
+
+# Latest XXXL X1 testnet local runtime skeleton Phase 40B Ed25519 verification evidence model
+
+Stage:
+
+- `stage-xxxl-x1-testnet-local-runtime-skeleton-phase-40b-ed25519-verification-evidence-model`
+
+Checkpoint artifact:
+
+- `docs/checkpoints/xxxl-x1-testnet-local-runtime-skeleton-phase-40b-ed25519-verification-evidence-model.md`
+
+Purpose:
+
+- add a tiny read-only Rust/SVM boundary model for Ed25519 verification evidence
+- accept Phase 39 scanned candidate evidence only as located/parsed evidence
+- reject candidate evidence that claims verification, proof, quorum,
+  authorization, or execution
+- preserve the separation between located evidence, parsed evidence,
+  verification evidence, quorum, authorization, and execution
+
+Files added:
+
+- `programs/xxxl-svm/src/verifier/ed25519_verification_evidence.rs`
+- `docs/xxxl/xxxl-phase-40b-ed25519-verification-evidence-model.md`
+- `docs/checkpoints/xxxl-x1-testnet-local-runtime-skeleton-phase-40b-ed25519-verification-evidence-model.md`
+
+Files changed:
+
+- `programs/xxxl-svm/src/verifier/mod.rs`
+- `docs/checkpoints/current-design-checkpoint.md`
+
+Boundary rule preserved:
+
+~~~text
+located candidate evidence
+  != parsed evidence
+  != verification evidence
+  != quorum
+  != authorization
+  != execution
+~~~
+
+Phase 40B explicitly does not:
+
+- verify Ed25519 signatures
+- accept cryptographic signature proof
+- produce verified guardian evidence
+- count quorum
+- authorize minting
+- add `process_instruction`
+- add a runtime instruction handler
+- add account parsing
+- parse raw Instructions sysvar account data
+- parse `AccountInfo`
+- call `load_instruction`
+- add CPI
+- enable `invoke_signed`
+- enable SPL Token `mint_to`
+- add replay writes
+- mark processed events
+- mutate runtime/account state
+- unlock live route execution
+- remove deployment blockers
+- select a production Program ID
+- claim production readiness
+- claim final immutability while upgrade authority exists
+
+Active blockers remain:
+
+- `X1_TESTNET_PROGRAM_DEPLOYED_RUNTIME_LOCKED`
+- `PRODUCTION_PROGRAM_ID_UNSET`
+- `LIVE_ROUTE_DISABLED`
+- `SPL_CPI_EXECUTION_DISABLED`
+- `PRODUCTION_GUARDIAN_SET_UNSET`
+- `PRODUCTION_PROOF_LOG_UNSET`
+- `EXTERNAL_REVIEW_INCOMPLETE`
+
+Recommended next stage:
+
+- Phase 40C read-only Ed25519 verification evidence integration design for
+  actual SVM Ed25519 verification evidence, still without quorum authorization,
+  handler or account parsing, CPI, mint execution, replay writes, or runtime
+  unlock
