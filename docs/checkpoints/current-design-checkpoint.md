@@ -43641,3 +43641,176 @@ Recommended next stage:
   Ed25519 verification, source proof verification, route config checks, target
   mint account checks, amount cap enforcement, replay checks/writes, account
   parsing, instruction processing, mint execution, or runtime unlock
+
+
+# Latest XXXL X1 testnet local runtime skeleton Phase 35 Rust/SVM guardian quorum structural verifier
+
+Stage:
+
+- `stage-xxxl-x1-testnet-local-runtime-skeleton-phase-35-rust-svm-guardian-quorum-structural-verifier`
+
+Checkpoint artifact:
+
+- `docs/checkpoints/xxxl-x1-testnet-local-runtime-skeleton-phase-35-rust-svm-guardian-quorum-structural-verifier.md`
+
+Purpose:
+
+- implement only guardian approval membership and quorum structural verification
+- verify non-empty guardian set, valid threshold, guardian set id matching,
+  known guardian membership, duplicate rejection, and threshold count
+- avoid Ed25519 cryptographic signature verification
+- avoid instruction sysvar parsing and ed25519 program instruction validation
+- avoid account parsing, instruction handling, CPI, mint execution, replay
+  writes, and live route unlock
+
+Preserved security decision:
+
+~~~text
+TS layer = preflight / model / watcher-side decision
+Runtime = independent verifier
+No authorized=true -> execute
+~~~
+
+Files added:
+
+- `programs/xxxl-svm/src/verifier/guardian_quorum.rs`
+- `docs/xxxl/xxxl-phase-35-rust-svm-guardian-quorum-structural-verifier.md`
+- `docs/checkpoints/xxxl-x1-testnet-local-runtime-skeleton-phase-35-rust-svm-guardian-quorum-structural-verifier.md`
+
+Files changed:
+
+- `programs/xxxl-svm/src/verifier/mod.rs`
+- `docs/checkpoints/current-design-checkpoint.md`
+
+Boundary status:
+
+- narrow Rust/SVM structural quorum verifier
+- no Ed25519 cryptographic verification
+- no instruction sysvar parsing
+- no ed25519 program instruction validation
+- no full runtime verifier
+- no runtime execution unlock
+
+Structural checks implemented:
+
+- guardian set is non-empty
+- threshold is non-zero
+- threshold does not exceed guardian set size
+- approval list is non-empty
+- approval guardian set id matches guardian set id
+- approval guardian is known in the guardian set
+- duplicate guardian approvals are rejected
+- unique known approvals must meet threshold
+
+Accepted structural condition:
+
+~~~text
+unique known approvals >= threshold
+~~~
+
+Explicit honesty:
+
+- a structurally valid guardian quorum is not enough to authorize minting
+- Phase 35 does not prove that guardians signed the Phase 34 canonical payload hash
+- Phase 35 alone cannot make `authorized=true`
+- cryptographic Ed25519 proof must be implemented in a separate reviewed phase
+
+Remaining obligations:
+
+- Ed25519 cryptographic signature verification
+- signature evidence binding to Phase 34 canonical payload hash
+- source proof verification
+- route config verification
+- target mint account legitimacy verification
+- amount cap enforcement
+- replay storage
+- replay checks
+- replay writes
+- account parsing
+- instruction processing
+- mint execution
+- runtime unlock
+
+Phase 30 future-runtime cases still unsatisfied:
+
+- `wrong-canonical-event-key-preimage`
+- `wrong-source-burn-tx-hash`
+- `wrong-source-burn-event-index`
+- `amount-over-route-cap`
+- `invalid-target-mint`
+- same-shape `wrong-field-order` variants not structurally rejected by Phase 33
+
+Runtime source status:
+
+- `programs/xxxl-svm/src/lib.rs` unchanged
+- no instruction handler added
+- no account parser added
+
+Cargo/package status:
+
+- Cargo files unchanged
+- `package.json` unchanged
+- `package-lock.json` unchanged
+- no dependencies added
+
+Deploy/artifact status:
+
+- no SBF build
+- no `target/deploy` changes
+- no tracked `.so` artifact
+- no tracked keypair file
+- no `.local-keys` access
+- no `.env` access
+- no deploy
+- no network command
+- no SOL spend
+
+Safety status:
+
+- live route remains disabled
+- SPL CPI remains disabled
+- `invoke_signed` remains disabled
+- SPL Token `mint_to` remains disabled
+- no runtime/account state mutation is added
+- no replay write is added
+- no processed-event marking is added
+- no production Program ID is selected
+- production PDA fixtures are unchanged
+- deployment blockers remain active
+- no production readiness is claimed
+- no final immutability is claimed while upgrade authority exists
+
+Current X1 status remains:
+
+- `X1_TESTNET_PROGRAM_DEPLOYED_RUNTIME_LOCKED`
+
+Active blockers remain:
+
+- `PRODUCTION_PROGRAM_ID_UNSET`
+- `LIVE_ROUTE_DISABLED`
+- `SPL_CPI_EXECUTION_DISABLED`
+- `PRODUCTION_GUARDIAN_SET_UNSET`
+- `PRODUCTION_PROOF_LOG_UNSET`
+- `EXTERNAL_REVIEW_INCOMPLETE`
+
+No blocker was removed.
+
+Validation:
+
+- `git diff --check`: passed
+- `cargo fmt --check`: passed
+- `cargo test guardian_quorum --lib`: passed, 16 tests passed
+- `cargo test canonical_payload --lib`: passed, 11 tests passed
+- `cargo test raw_payload --lib`: passed, 11 tests passed
+- `cargo test verifier --lib`: passed, 42 tests passed
+- TS parity tests: passed, 4 test files passed, 40 tests passed
+- `npm run typecheck`: passed
+- `npm run build`: passed
+
+Recommended next stage:
+
+- choose a separately reviewed phase for Ed25519 cryptographic signature
+  evidence verification over the Phase 34 canonical payload hash, without
+  source proof verification, route config checks, target mint account checks,
+  amount cap enforcement, replay checks/writes, account parsing, instruction
+  processing, mint execution, or runtime unlock
