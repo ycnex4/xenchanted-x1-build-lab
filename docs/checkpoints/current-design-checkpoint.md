@@ -43076,3 +43076,135 @@ Recommended next stage:
   any Rust/SVM verifier code, source proof verification, amount cap
   enforcement, target mint account legitimacy checks, replay writes, or runtime
   unlock
+
+# Latest XXXL X1 testnet local runtime skeleton Phase 31 Rust/SVM runtime verifier boundary spec
+
+Stage:
+
+- `stage-xxxl-x1-testnet-local-runtime-skeleton-phase-31-rust-svm-runtime-verifier-boundary-spec`
+
+Checkpoint artifact:
+
+- `docs/checkpoints/xxxl-x1-testnet-local-runtime-skeleton-phase-31-rust-svm-runtime-verifier-boundary-spec.md`
+
+Purpose:
+
+- define the reviewed boundary for a future Rust/SVM runtime verifier
+- carry forward the 7 Phase 30 `FUTURE_RUNTIME_VALIDATION_REQUIRED` cases
+- define verifier components before implementation
+- avoid any runtime implementation, account mutation, or live execution unlock
+
+Preserved security decision:
+
+~~~text
+TS layer = preflight / model / watcher-side decision
+Runtime = independent verifier
+No authorized=true -> execute
+~~~
+
+Files added:
+
+- `docs/xxxl/xxxl-phase-31-rust-svm-runtime-verifier-boundary-spec.md`
+- `docs/checkpoints/xxxl-x1-testnet-local-runtime-skeleton-phase-31-rust-svm-runtime-verifier-boundary-spec.md`
+
+Files changed:
+
+- `docs/checkpoints/current-design-checkpoint.md`
+
+Boundary status:
+
+- docs-only phase
+- no TypeScript source changed
+- no TypeScript tests changed
+- no Rust/SVM source changed
+- no Cargo files changed
+- no package files changed
+- no dependencies added
+
+Runtime verifier components defined:
+
+- raw payload decoder
+- canonical payload validation
+- source proof identity verification
+- guardian approval and quorum verification
+- route binding verification
+- target mint legitimacy verification
+- replay verification
+- expiration verification
+- amount control verification
+- deterministic error surface
+
+Phase 30 future-runtime cases carried forward:
+
+- `wrong-field-order`
+- `wrong-byte-encoding`
+- `wrong-canonical-event-key-preimage`
+- `wrong-source-burn-tx-hash`
+- `wrong-source-burn-event-index`
+- `amount-over-route-cap`
+- `invalid-target-mint`
+
+Runtime source status:
+
+- `programs/xxxl-svm/**` unchanged
+
+Cargo/package status:
+
+- Cargo files unchanged
+- `package.json` unchanged
+- `package-lock.json` unchanged
+- no dependencies added
+
+Deploy/artifact status:
+
+- no SBF build
+- no `target/deploy` changes
+- no tracked `.so` artifact
+- no tracked keypair file
+- no `.local-keys` access
+- no `.env` access
+- no deploy
+- no network command
+- no SOL spend
+
+Safety status:
+
+- live route remains disabled
+- SPL CPI remains disabled
+- `invoke_signed` remains disabled
+- SPL Token `mint_to` remains disabled
+- no runtime/account state mutation is added
+- no processed-event marking is added
+- production Program ID remains unset
+- production PDA fixtures are unchanged
+- deployment blockers remain active
+- no production readiness is claimed
+- no final immutability is claimed while upgrade authority exists
+
+Current X1 status remains:
+
+- `X1_TESTNET_PROGRAM_DEPLOYED_RUNTIME_LOCKED`
+
+Active blockers remain:
+
+- `PRODUCTION_PROGRAM_ID_UNSET`
+- `LIVE_ROUTE_DISABLED`
+- `SPL_CPI_EXECUTION_DISABLED`
+- `PRODUCTION_GUARDIAN_SET_UNSET`
+- `PRODUCTION_PROOF_LOG_UNSET`
+- `EXTERNAL_REVIEW_INCOMPLETE`
+
+No blocker was removed.
+
+Validation:
+
+- `git diff --check`: passed
+- `npm run typecheck`: passed
+- `npm run build`: passed
+
+Recommended next stage:
+
+- choose a separately reviewed Phase 32 boundary before any Rust/SVM verifier
+  code, source proof verification implementation, amount cap implementation,
+  target mint account legitimacy implementation, replay writes, or runtime
+  unlock
