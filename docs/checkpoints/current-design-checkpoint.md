@@ -45749,3 +45749,132 @@ Recommended next stage:
   execution
 - real `AccountInfo` population must be introduced only in a separate future
   reviewed phase
+
+# Latest XXXL X1 testnet local runtime skeleton Phase 41C3 prior Ed25519 lookup ordering boundary
+
+Stage:
+
+- `stage-xxxl-x1-testnet-local-runtime-skeleton-phase-41c3-prior-ed25519-lookup-ordering-boundary`
+
+Checkpoint file:
+
+- `docs/checkpoints/xxxl-x1-testnet-local-runtime-skeleton-phase-41c3-prior-ed25519-lookup-ordering-boundary.md`
+
+Review request file:
+
+- `docs/reviews/xxxl-phase-41c3-prior-ed25519-lookup-ordering-boundary-review-request.md`
+
+Purpose:
+
+- implement a narrow prior Ed25519 lookup and strict ordering boundary over
+  explicit descriptors
+- map descriptor-level lookup and ordering failures to the Phase 41B rejection
+  taxonomy
+- enforce strict ordering as:
+  - `candidate.instruction_index < current_instruction_index`
+- keep real `AccountInfo` population deferred
+- keep real Instructions sysvar parsing deferred
+- keep `load_instruction`, `load_instruction_at`, and
+  `load_instruction_at_checked` deferred
+- preserve proof, quorum, authorization, replay, CPI, and mint execution as
+  forbidden
+
+Files added:
+
+- `programs/xxxl-svm/src/verifier/prior_ed25519_lookup_ordering_boundary.rs`
+- `docs/xxxl/xxxl-phase-41c3-prior-ed25519-lookup-ordering-boundary.md`
+- `docs/checkpoints/xxxl-x1-testnet-local-runtime-skeleton-phase-41c3-prior-ed25519-lookup-ordering-boundary.md`
+- `docs/reviews/xxxl-phase-41c3-prior-ed25519-lookup-ordering-boundary-review-request.md`
+
+Files changed:
+
+- `programs/xxxl-svm/src/verifier/mod.rs`
+- `docs/checkpoints/current-design-checkpoint.md`
+
+Allowed Phase 41C3 outcomes:
+
+- `PriorEd25519InstructionNotFound`
+- `WrongEd25519ProgramId`
+- `MalformedStructuralCandidate`
+- `DuplicateGuardianEvidence`
+- `Ed25519InstructionNotBeforeCurrentInstruction`
+- `AmbiguousCandidateEvidence`
+- `PriorEd25519InstructionLocatedAndOrdered`
+
+Phase 41C3 keeps real runtime sysvar population deferred.
+
+Phase 41C3 keeps this inherited flag true:
+
+- `concrete_runtime_api_selected`
+
+Phase 41C3 keeps these flags false:
+
+- `raw_instructions_sysvar_parser_implemented`
+- `account_info_parser_implemented`
+- `load_instruction_called`
+- `load_instruction_enabled`
+- `current_instruction_identity_derived_from_runtime`
+- `ed25519_signature_verification_performed`
+- `cryptographic_signature_proof_accepted`
+- `verification_evidence_accepted`
+- `quorum_counting_enabled`
+- `authorization_enabled`
+- `replay_write_enabled`
+- `processed_event_marking_enabled`
+- `account_mutation_enabled`
+- `cpi_enabled`
+- `invoke_signed_enabled`
+- `spl_token_mint_to_enabled`
+- `process_instruction_handler_added`
+- `live_route_enabled`
+
+Phase 41C3 explicitly does not:
+
+- parse raw Instructions sysvar account data
+- parse `AccountInfo`
+- call `load_instruction`
+- call `load_instruction_at`
+- call `load_instruction_at_checked`
+- read concrete transaction instruction contents
+- verify Ed25519 signatures
+- accept cryptographic signature proof
+- accept verification evidence
+- count quorum
+- authorize minting
+- add a runtime instruction handler
+- add CPI
+- enable `invoke_signed`
+- enable SPL Token `mint_to`
+- add replay writes
+- mark processed events
+- mutate runtime/account state
+- unlock live route execution
+- remove deployment blockers
+- select a production Program ID
+- claim production readiness
+- claim final immutability while upgrade authority exists
+- build SBF artifacts
+- touch `target/deploy`
+- read or modify keypair files
+- read or modify `.env`
+- inspect `.local-keys`
+- run deploy commands
+- run network commands
+- spend SOL
+
+Active blockers remain:
+
+- `X1_TESTNET_PROGRAM_DEPLOYED_RUNTIME_LOCKED`
+- `PRODUCTION_PROGRAM_ID_UNSET`
+- `LIVE_ROUTE_DISABLED`
+- `SPL_CPI_EXECUTION_DISABLED`
+- `PRODUCTION_GUARDIAN_SET_UNSET`
+- `PRODUCTION_PROOF_LOG_UNSET`
+- `EXTERNAL_REVIEW_INCOMPLETE`
+
+Recommended next stage:
+
+- ask the audit demon and Theo to review Phase 41C3
+- do not open a next phase before review
+- real runtime wiring must be introduced only in a separate future reviewed phase
+- that future runtime wiring phase must be treated as panic-safety-critical
