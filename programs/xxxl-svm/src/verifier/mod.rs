@@ -1,6 +1,7 @@
 pub mod boundary;
 pub mod canonical_payload;
 pub mod ed25519_evidence_layout;
+pub mod ed25519_instruction_data_parser;
 pub mod errors;
 pub mod guardian_quorum;
 pub mod raw_payload;
@@ -34,6 +35,13 @@ pub use ed25519_evidence_layout::{
     ED25519_INSTRUCTION_EVIDENCE_LAYOUT_MODEL_VERSION, ED25519_INSTRUCTION_HEADER_LEN,
     ED25519_PROGRAM_ID_REFERENCE, ED25519_PUBLIC_KEY_LEN, ED25519_SIGNATURE_LEN,
     ED25519_SIGNATURE_OFFSETS_RECORD_LEN, EXPECTED_MESSAGE_LEN, EXPECTED_SIGNATURE_COUNT,
+};
+pub use ed25519_instruction_data_parser::{
+    ed25519_instruction_data_parser_report, parse_ed25519_instruction_data_evidence,
+    Ed25519InstructionDataParserError, Ed25519InstructionDataParserErrorKind,
+    Ed25519InstructionDataParserReport, ParsedEd25519InstructionEvidence,
+    ED25519_INSTRUCTION_DATA_PARSER_PHASE_38, ED25519_INSTRUCTION_DATA_PARSER_REPORT,
+    ED25519_INSTRUCTION_DATA_PARSER_VERSION,
 };
 pub use errors::{VerifierErrorCategory, VERIFIER_ERROR_CATEGORIES};
 pub use guardian_quorum::{
