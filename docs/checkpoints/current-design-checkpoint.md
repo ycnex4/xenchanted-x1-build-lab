@@ -43348,3 +43348,152 @@ Recommended next stage:
   any raw decoder, Ed25519 verification, source proof verification, amount cap
   enforcement, target mint account checks, replay writes, mint execution, or
   runtime unlock
+
+# Latest XXXL X1 testnet local runtime skeleton Phase 33 Rust/SVM raw payload decoder
+
+Stage:
+
+- `stage-xxxl-x1-testnet-local-runtime-skeleton-phase-33-rust-svm-raw-payload-decoder`
+
+Checkpoint artifact:
+
+- `docs/checkpoints/xxxl-x1-testnet-local-runtime-skeleton-phase-33-rust-svm-raw-payload-decoder.md`
+
+Purpose:
+
+- implement only the raw payload decoder boundary component from Phase 32
+- follow the Phase 23 TypeScript canonical binary payload layout
+- reject decoder-level malformed bytes without adding a full runtime verifier
+- avoid account parsing, instruction processing, CPI, mint execution, replay
+  writes, and live route unlock
+
+Preserved security decision:
+
+~~~text
+TS layer = preflight / model / watcher-side decision
+Runtime = independent verifier
+No authorized=true -> execute
+~~~
+
+Files added:
+
+- `programs/xxxl-svm/src/verifier/raw_payload.rs`
+- `docs/xxxl/xxxl-phase-33-rust-svm-raw-payload-decoder.md`
+- `docs/checkpoints/xxxl-x1-testnet-local-runtime-skeleton-phase-33-rust-svm-raw-payload-decoder.md`
+
+Files changed:
+
+- `programs/xxxl-svm/src/verifier/mod.rs`
+- `docs/checkpoints/current-design-checkpoint.md`
+
+Raw payload decoder status:
+
+- decoder marker: `RAW_PAYLOAD_DECODER_PHASE_33`
+- decoder version: `1`
+- parses all 21 Phase 23 canonical fields in order
+- uses u16 little-endian length prefixes for variable bytes
+- uses u16/u64/u128 little-endian numeric fields
+- exposes borrowed slices and fixed 32-byte field references
+- rejects truncated payloads
+- rejects trailing bytes
+- rejects empty variable-length fields
+- rejects malformed length-prefixed byte encoding that overruns the payload
+- rejects unsupported message type, schema version, and instruction layout
+
+Wrong-byte/wrong-field-order status:
+
+- the Phase 28 `wrong-byte-encoding` fixture is rejected at decoder level when
+  the message-type length byte is corrupted
+- a structurally detectable `wrong-field-order` payload that moves
+  `source_token` before `source_chain_id` is rejected
+- Phase 33 does not claim all possible `wrong-field-order` swaps are satisfied
+- same-shape field-order swaps remain future canonical validation, hash
+  validation, or semantic verifier obligations
+
+Remaining future-runtime obligations:
+
+- `wrong-canonical-event-key-preimage`
+- `wrong-source-burn-tx-hash`
+- `wrong-source-burn-event-index`
+- `amount-over-route-cap`
+- `invalid-target-mint`
+- any `wrong-field-order` variant not structurally detectable by raw decoding
+
+Runtime implementation status:
+
+- no Ed25519 verifier implementation
+- no guardian quorum implementation
+- no source proof verifier implementation
+- no route config verifier implementation
+- no amount cap implementation
+- no target mint account legitimacy implementation
+- no replay storage, replay check, or replay write implementation
+- no account parser implementation
+- no instruction handler implementation
+
+Cargo/package status:
+
+- Cargo files unchanged
+- `package.json` unchanged
+- `package-lock.json` unchanged
+- no dependencies added
+
+Deploy/artifact status:
+
+- no SBF build
+- no `target/deploy` changes
+- no tracked `.so` artifact
+- no tracked keypair file
+- no `.local-keys` access
+- no `.env` access
+- no deploy
+- no network command
+- no SOL spend
+
+Safety status:
+
+- live route remains disabled
+- SPL CPI remains disabled
+- `invoke_signed` remains disabled
+- SPL Token `mint_to` remains disabled
+- no mint execution is added
+- no runtime/account state mutation is added
+- no replay writes are added
+- no processed-event marking is added
+- production Program ID remains unset
+- production PDA fixtures are unchanged
+- deployment blockers remain active
+- no production readiness is claimed
+- no final immutability is claimed while upgrade authority exists
+
+Current X1 status remains:
+
+- `X1_TESTNET_PROGRAM_DEPLOYED_RUNTIME_LOCKED`
+
+Active blockers remain:
+
+- `PRODUCTION_PROGRAM_ID_UNSET`
+- `LIVE_ROUTE_DISABLED`
+- `SPL_CPI_EXECUTION_DISABLED`
+- `PRODUCTION_GUARDIAN_SET_UNSET`
+- `PRODUCTION_PROOF_LOG_UNSET`
+- `EXTERNAL_REVIEW_INCOMPLETE`
+
+No blocker was removed.
+
+Validation:
+
+- `wsl bash -lc "cd /mnt/c/Users/user/xenchanted-x1-build-lab/programs/xxxl-svm && cargo fmt --check"`: passed
+- `wsl bash -lc "cd /mnt/c/Users/user/xenchanted-x1-build-lab/programs/xxxl-svm && cargo test raw_payload --lib"`: passed, 10 tests passed
+- `wsl bash -lc "cd /mnt/c/Users/user/xenchanted-x1-build-lab/programs/xxxl-svm && cargo test verifier --lib"`: passed, 16 tests passed
+- `npm test -- --run tests/xxxl/ts-svm-parity-execution-backed-validation.test.ts tests/xxxl/ts-svm-parity-verifier-validation.test.ts tests/xxxl/ts-svm-parity-invalid-fixtures.test.ts tests/xxxl/ts-svm-parity-vector-suite.test.ts`: passed, 4 test files passed, 40 tests passed
+- `npm run typecheck`: passed
+- `npm run build`: passed
+
+Recommended next stage:
+
+- choose a separately reviewed verifier implementation boundary before
+  canonical payload hash validation, Ed25519 verification, source proof
+  verification, route config checks, target mint account checks, amount cap
+  enforcement, replay checks/writes, account parsing, instruction processing,
+  mint execution, or runtime unlock
