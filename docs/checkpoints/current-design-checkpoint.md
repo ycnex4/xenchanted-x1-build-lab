@@ -42661,3 +42661,138 @@ Recommended next stage:
 - choose a separately reviewed Phase 28 boundary before any Rust/SVM verifier
   implementation, replay storage model, guardian lifecycle model, or runtime
   account mapping work
+
+# Latest XXXL X1 testnet local runtime skeleton Phase 28 concrete invalid parity fixtures
+
+Stage:
+
+- `stage-xxxl-x1-testnet-local-runtime-skeleton-phase-28-concrete-invalid-parity-fixtures`
+
+Checkpoint artifact:
+
+- `docs/checkpoints/xxxl-x1-testnet-local-runtime-skeleton-phase-28-concrete-invalid-parity-fixtures.md`
+
+Purpose:
+
+- materialize the 19 invalid Phase 27 parity cases as deterministic concrete
+  tampered fixtures
+- keep the Phase 23 canonical valid vector as the valid control fixture
+- preserve Phase 27 required case ids as the fixture contract
+- provide concrete invalid input material for future independent Rust/SVM
+  verifier parity work
+
+Preserved security decision:
+
+~~~text
+TS layer = preflight / model / watcher-side decision
+Runtime = independent verifier
+No authorized=true -> execute
+~~~
+
+Files added:
+
+- `src/xxxl/ts-svm-parity-invalid-fixtures.ts`
+- `tests/xxxl/ts-svm-parity-invalid-fixtures.test.ts`
+- `docs/xxxl/xxxl-phase-28-concrete-invalid-parity-fixtures.md`
+- `docs/checkpoints/xxxl-x1-testnet-local-runtime-skeleton-phase-28-concrete-invalid-parity-fixtures.md`
+
+Files changed:
+
+- `src/index.ts`
+- `docs/checkpoints/current-design-checkpoint.md`
+
+Fixture suite status:
+
+- suite id: `XXXL_TS_SVM_PARITY_INVALID_FIXTURES_PHASE_28`
+- suite version: `1`
+- boundary marker: `CONCRETE_INVALID_FIXTURES_ONLY_NO_RUNTIME_EXECUTION`
+- valid control fixture reuses `XXXL_GUARDIAN_PAYLOAD_VALID_VECTOR`
+- invalid fixture matrix covers exactly 19 Phase 27 invalid cases
+- all invalid fixtures are `REJECT_BEFORE_EXECUTION`
+- validation helper returns `{ ok: true, errors: [] }`
+
+Materialized invalid cases:
+
+- `wrong-field-order`
+- `wrong-byte-encoding`
+- `wrong-hash-domain`
+- `malformed-bytes32-field`
+- `malformed-var-bytes-field`
+- `invalid-source-chain-id`
+- `wrong-target-mint`
+- `wrong-guardian-set-id`
+- `wrong-source-chain-weight`
+- `invalid-signature`
+- `duplicate-guardian-approval`
+- `insufficient-quorum`
+- `expired-payload`
+- `duplicate-canonical-event-key`
+- `wrong-canonical-event-key-preimage`
+- `wrong-source-burn-tx-hash`
+- `wrong-source-burn-event-index`
+- `amount-over-route-cap`
+- `invalid-target-mint`
+
+Runtime source status:
+
+- `programs/xxxl-svm/**` unchanged
+
+Cargo/package status:
+
+- Cargo files unchanged
+- `package.json` unchanged
+- `package-lock.json` unchanged
+- no dependencies added
+
+Deploy/artifact status:
+
+- no SBF build
+- no `target/deploy` changes
+- no tracked `.so` artifact
+- no tracked keypair file
+- no `.local-keys` access
+- no `.env` access
+- no deploy
+- no network command
+- no SOL spend
+
+Safety status:
+
+- live route remains disabled
+- SPL CPI remains disabled
+- `invoke_signed` remains disabled
+- SPL Token `mint_to` remains disabled
+- no runtime/account state mutation is added
+- no processed-event marking is added
+- production Program ID remains unset
+- production PDA fixtures are unchanged
+- deployment blockers remain active
+- no production readiness is claimed
+- no final immutability is claimed while upgrade authority exists
+
+Current X1 status remains:
+
+- `X1_TESTNET_PROGRAM_DEPLOYED_RUNTIME_LOCKED`
+
+Active blockers remain:
+
+- `PRODUCTION_PROGRAM_ID_UNSET`
+- `LIVE_ROUTE_DISABLED`
+- `SPL_CPI_EXECUTION_DISABLED`
+- `PRODUCTION_GUARDIAN_SET_UNSET`
+- `PRODUCTION_PROOF_LOG_UNSET`
+- `EXTERNAL_REVIEW_INCOMPLETE`
+
+No blocker was removed.
+
+Validation:
+
+- `npm test -- --run tests/xxxl/ts-svm-parity-invalid-fixtures.test.ts tests/xxxl/ts-svm-parity-vector-suite.test.ts`: passed, 2 test files passed, 19 tests passed
+- `npm run typecheck`: passed
+- `npm run build`: passed
+
+Recommended next stage:
+
+- choose a separately reviewed Phase 29 boundary before any Rust/SVM verifier
+  implementation, replay storage model, guardian lifecycle model, or runtime
+  account mapping work
