@@ -45450,3 +45450,90 @@ Recommended next stage:
 - do not open Phase 41C1 before review
 - Phase 41C1 must not combine read-only sysvar access with proof, quorum,
   authorization, replay, CPI, or mint execution
+
+# Latest XXXL X1 testnet local runtime skeleton Phase 41C0A clarify 41C1 sysvar access boundary
+
+Stage:
+
+- `stage-xxxl-x1-testnet-local-runtime-skeleton-phase-41c0a-clarify-41c1-sysvar-access-boundary`
+
+Checkpoint file:
+
+- `docs/checkpoints/xxxl-x1-testnet-local-runtime-skeleton-phase-41c0a-clarify-41c1-sysvar-access-boundary.md`
+
+Review request file:
+
+- `docs/reviews/xxxl-phase-41c0a-clarify-41c1-sysvar-access-boundary-review-request.md`
+
+Purpose:
+
+- record the Phase 41C0 review decision before any Phase 41C1 runtime code
+- defer `load_instruction`, `load_instruction_at`, and equivalent helpers out of
+  Phase 41C1
+- limit Phase 41C1 to concrete API/helper selection plus Instructions sysvar
+  presence/readability
+- preserve Phase 41C2 for current instruction identity derivation
+- preserve Phase 41C3 for prior Ed25519 lookup and strict ordering
+- preserve the Phase 41B taxonomy as authoritative for Phase 41C
+- keep proof, quorum, authorization, replay, CPI, and mint execution forbidden
+
+Files added:
+
+- `docs/xxxl/xxxl-phase-41c0a-clarify-41c1-sysvar-access-boundary.md`
+- `docs/checkpoints/xxxl-x1-testnet-local-runtime-skeleton-phase-41c0a-clarify-41c1-sysvar-access-boundary.md`
+- `docs/reviews/xxxl-phase-41c0a-clarify-41c1-sysvar-access-boundary-review-request.md`
+
+Files changed:
+
+- `docs/checkpoints/current-design-checkpoint.md`
+
+Clarified Phase 41C1 boundary:
+
+Allowed:
+
+- concrete runtime API/helper selection
+- Instructions sysvar presence check
+- Instructions sysvar readability check
+- deterministic structural result:
+  - `MissingInstructionsSysvar`
+  - `UnreadableInstructionsSysvar`
+  - `PresentAndReadable`
+
+Forbidden:
+
+- `load_instruction`
+- `load_instruction_at`
+- `load_instruction_at_checked`
+- reading concrete transaction instruction contents
+- current instruction identity derivation
+- prior Ed25519 lookup
+- Ed25519 signature verification
+- cryptographic proof acceptance
+- verification evidence acceptance
+- quorum
+- authorization
+- replay writes
+- processed event marking
+- account mutation
+- CPI
+- `invoke_signed`
+- SPL Token `mint_to`
+- runtime instruction handler
+- live route unlock
+
+Active blockers remain:
+
+- `X1_TESTNET_PROGRAM_DEPLOYED_RUNTIME_LOCKED`
+- `PRODUCTION_PROGRAM_ID_UNSET`
+- `LIVE_ROUTE_DISABLED`
+- `SPL_CPI_EXECUTION_DISABLED`
+- `PRODUCTION_GUARDIAN_SET_UNSET`
+- `PRODUCTION_PROOF_LOG_UNSET`
+- `EXTERNAL_REVIEW_INCOMPLETE`
+
+Recommended next stage:
+
+- ask the audit demon and Theo to review Phase 41C0A
+- do not open Phase 41C1 before review
+- Phase 41C1 must not include `load_instruction` or concrete instruction content
+  reading
