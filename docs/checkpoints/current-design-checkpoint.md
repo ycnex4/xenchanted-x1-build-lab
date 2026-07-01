@@ -43208,3 +43208,143 @@ Recommended next stage:
   code, source proof verification implementation, amount cap implementation,
   target mint account legitimacy implementation, replay writes, or runtime
   unlock
+
+# Latest XXXL X1 testnet local runtime skeleton Phase 32 read-only Rust/SVM verifier scaffolding
+
+Stage:
+
+- `stage-xxxl-x1-testnet-local-runtime-skeleton-phase-32-read-only-rust-svm-verifier-scaffolding`
+
+Checkpoint artifact:
+
+- `docs/checkpoints/xxxl-x1-testnet-local-runtime-skeleton-phase-32-read-only-rust-svm-verifier-scaffolding.md`
+
+Purpose:
+
+- add read-only Rust/SVM verifier scaffolding after the Phase 31 boundary spec
+- list the Phase 31 verifier boundary components in Rust source
+- carry forward the 7 Phase 30 future-runtime cases as not-implemented
+  verifier obligations
+- record deterministic error categories and disabled safety flags
+- avoid runtime verifier implementation, account mutation, CPI, mint execution,
+  replay writes, and live route unlock
+
+Preserved security decision:
+
+~~~text
+TS layer = preflight / model / watcher-side decision
+Runtime = independent verifier
+No authorized=true -> execute
+~~~
+
+Files added:
+
+- `programs/xxxl-svm/src/verifier/mod.rs`
+- `programs/xxxl-svm/src/verifier/boundary.rs`
+- `programs/xxxl-svm/src/verifier/errors.rs`
+- `programs/xxxl-svm/src/verifier/types.rs`
+- `docs/xxxl/xxxl-phase-32-read-only-rust-svm-verifier-scaffolding.md`
+- `docs/checkpoints/xxxl-x1-testnet-local-runtime-skeleton-phase-32-read-only-rust-svm-verifier-scaffolding.md`
+
+Files changed:
+
+- `programs/xxxl-svm/src/lib.rs`
+- `docs/checkpoints/current-design-checkpoint.md`
+
+Rust/SVM verifier scaffold status:
+
+- scaffold marker: `READ_ONLY_RUNTIME_VERIFIER_SCAFFOLD_PHASE_32`
+- scaffold version: `1`
+- status: `READ_ONLY_SCAFFOLD_ONLY`
+- exactly 10 Phase 31 verifier boundary components are listed
+- exactly 7 Phase 30 future-runtime cases are carried forward
+- all future-runtime cases are marked not implemented
+- 11 verifier error categories are listed
+- all safety flags remain false
+
+Carried-forward future runtime cases:
+
+- `wrong-field-order`
+- `wrong-byte-encoding`
+- `wrong-canonical-event-key-preimage`
+- `wrong-source-burn-tx-hash`
+- `wrong-source-burn-event-index`
+- `amount-over-route-cap`
+- `invalid-target-mint`
+
+Runtime implementation status:
+
+- no raw payload decoder implementation
+- no Ed25519 verifier implementation
+- no source proof verifier implementation
+- no amount cap implementation
+- no target mint account legitimacy implementation
+- no replay storage implementation
+- no account parser implementation
+- no instruction handler implementation
+
+Cargo/package status:
+
+- Cargo files unchanged
+- `package.json` unchanged
+- `package-lock.json` unchanged
+- no dependencies added
+
+Deploy/artifact status:
+
+- no SBF build
+- no `target/deploy` changes
+- no tracked `.so` artifact
+- no tracked keypair file
+- no `.local-keys` access
+- no `.env` access
+- no deploy
+- no network command
+- no SOL spend
+
+Safety status:
+
+- live route remains disabled
+- SPL CPI remains disabled
+- `invoke_signed` remains disabled
+- SPL Token `mint_to` remains disabled
+- no mint execution is added
+- no runtime/account state mutation is added
+- no replay writes are added
+- no processed-event marking is added
+- production Program ID remains unset
+- production PDA fixtures are unchanged
+- deployment blockers remain active
+- no production readiness is claimed
+- no final immutability is claimed while upgrade authority exists
+
+Current X1 status remains:
+
+- `X1_TESTNET_PROGRAM_DEPLOYED_RUNTIME_LOCKED`
+
+Active blockers remain:
+
+- `PRODUCTION_PROGRAM_ID_UNSET`
+- `LIVE_ROUTE_DISABLED`
+- `SPL_CPI_EXECUTION_DISABLED`
+- `PRODUCTION_GUARDIAN_SET_UNSET`
+- `PRODUCTION_PROOF_LOG_UNSET`
+- `EXTERNAL_REVIEW_INCOMPLETE`
+
+No blocker was removed.
+
+Validation:
+
+- `wsl bash -lc "cd /mnt/c/Users/user/xenchanted-x1-build-lab/programs/xxxl-svm && cargo fmt --check"`: passed
+- `wsl bash -lc "cd /mnt/c/Users/user/xenchanted-x1-build-lab/programs/xxxl-svm && cargo test verifier --lib"`: passed, 6 tests passed
+- `git diff --check`: passed
+- `npm run typecheck`: passed
+- `npm run build`: passed
+- `npm test -- --run tests/xxxl/ts-svm-parity-execution-backed-validation.test.ts tests/xxxl/ts-svm-parity-verifier-validation.test.ts tests/xxxl/ts-svm-parity-invalid-fixtures.test.ts tests/xxxl/ts-svm-parity-vector-suite.test.ts`: passed, 4 test files passed, 40 tests passed
+
+Recommended next stage:
+
+- choose a separately reviewed runtime verifier implementation boundary before
+  any raw decoder, Ed25519 verification, source proof verification, amount cap
+  enforcement, target mint account checks, replay writes, mint execution, or
+  runtime unlock

@@ -23,6 +23,7 @@ pub mod program_id_status;
 pub mod safety_invariants;
 pub mod state;
 pub mod validation;
+pub mod verifier;
 
 pub const XXXL_PROGRAM_ID_PLACEHOLDER: &str = "XXXLProgram111111111111111111111111111111111";
 
