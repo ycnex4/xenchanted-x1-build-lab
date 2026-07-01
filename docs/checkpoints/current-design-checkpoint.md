@@ -46154,3 +46154,92 @@ Recommended next stage:
 - Phase 41D1 must be limited to real Instructions sysvar presence/readability
   from runtime `AccountInfo`
 - Phase 41D1 must remain read-only and panic-safety-critical
+
+# Latest XXXL X1 testnet local runtime skeleton Phase 41D1 AccountInfo presence readability runtime boundary
+
+Stage:
+
+- `stage-xxxl-x1-testnet-local-runtime-skeleton-phase-41d1-accountinfo-presence-readability-runtime-boundary`
+
+Checkpoint file:
+
+- `docs/checkpoints/xxxl-x1-testnet-local-runtime-skeleton-phase-41d1-accountinfo-presence-readability-runtime-boundary.md`
+
+Review request file:
+
+- `docs/reviews/xxxl-phase-41d1-accountinfo-presence-readability-runtime-boundary-review-request.md`
+
+Purpose:
+
+- introduce the first real runtime-read boundary
+- check real Instructions sysvar `AccountInfo` presence
+- check real Instructions sysvar account key
+- check real Instructions sysvar account readability through panic-safe borrow
+- map the runtime result into Phase 41C1 descriptor states
+- keep all proof, evidence, quorum, authorization, replay, CPI, mint execution,
+  handler, and live route behavior disabled
+
+Files added:
+
+- `programs/xxxl-svm/src/verifier/instructions_sysvar_accountinfo_presence_readability_runtime_boundary.rs`
+- `docs/xxxl/xxxl-phase-41d1-accountinfo-presence-readability-runtime-boundary.md`
+- `docs/checkpoints/xxxl-x1-testnet-local-runtime-skeleton-phase-41d1-accountinfo-presence-readability-runtime-boundary.md`
+- `docs/reviews/xxxl-phase-41d1-accountinfo-presence-readability-runtime-boundary-review-request.md`
+
+Files changed:
+
+- `programs/xxxl-svm/src/verifier/mod.rs`
+- `docs/checkpoints/current-design-checkpoint.md`
+
+Phase 41D1 explicitly does not:
+
+- call `load_instruction`
+- call `load_instruction_at`
+- call `load_instruction_at_checked`
+- parse concrete transaction instruction contents
+- derive current instruction identity
+- enumerate prior instructions
+- construct Phase 41C3 candidate descriptors
+- verify Ed25519 signatures
+- accept cryptographic signature proof
+- accept verification evidence
+- count guardian quorum
+- authorize minting
+- write replay state
+- mark processed events
+- mutate runtime/account state
+- perform CPI
+- call `invoke_signed`
+- call SPL Token `mint_to`
+- add runtime execution handler
+- unlock live route execution
+- select a production Program ID
+- remove deployment blockers
+- claim production readiness
+- claim final immutability while upgrade authority exists
+- build SBF artifacts
+- touch `target/deploy`
+- read or modify keypair files
+- read or modify `.env`
+- inspect `.local-keys`
+- run deploy commands
+- run network commands
+- spend SOL
+
+Active blockers remain:
+
+- `X1_TESTNET_PROGRAM_DEPLOYED_RUNTIME_LOCKED`
+- `PRODUCTION_PROGRAM_ID_UNSET`
+- `LIVE_ROUTE_DISABLED`
+- `SPL_CPI_EXECUTION_DISABLED`
+- `PRODUCTION_GUARDIAN_SET_UNSET`
+- `PRODUCTION_PROOF_LOG_UNSET`
+- `EXTERNAL_REVIEW_INCOMPLETE`
+
+Recommended next stage:
+
+- ask the audit demon and Theo to review Phase 41D1
+- do not open Phase 41D2 before review
+- Phase 41D2 must be limited to real current-instruction identity population
+- Phase 41D2 must not enumerate prior instructions
+- Phase 41D2 must not accept verification evidence
