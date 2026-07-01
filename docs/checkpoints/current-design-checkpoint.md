@@ -42432,3 +42432,108 @@ Recommended next stage:
 
 - define a reviewed boundary before connecting authorization decisions to replay
   storage, runtime account mutation, instruction handling, or any live mint path
+
+# Latest XXXL X1 testnet local runtime skeleton Phase 26 authorization runtime handoff spec
+
+Branch:
+
+- `stage-xxxl-x1-testnet-local-runtime-skeleton-phase-26-authorization-runtime-handoff-spec`
+
+Base checkpoint:
+
+- `Off-Chain Gateway Authorization Stack Complete`
+
+Base commit:
+
+- `0f2d712`
+
+Phase 26 is a specification-only phase.
+
+Primary spec document:
+
+- `docs/gateway/phase-26-authorization-runtime-handoff-spec.md`
+
+Checkpoint document:
+
+- `docs/checkpoints/xxxl-x1-testnet-local-runtime-skeleton-phase-26-authorization-runtime-handoff-spec.md`
+
+Phase 26 records the selected security model:
+
+~~~text
+TS layer = preflight / model / watcher-side decision
+Runtime = independent verifier
+No authorized=true -> execute
+~~~
+
+The future runtime must not trust an off-chain boolean.
+
+The future runtime must independently verify a structured proof bundle before execution.
+
+Phase 26 documents:
+
+- canonical AuthProofBundle direction
+- runtime MUST-verify checks
+- guardian set lifecycle requirements
+- replay storage and atomicity requirements
+- nonce semantics draft decision
+- expiration semantics draft decision
+- amount/rate limit requirements
+- target mint legitimacy requirements
+- TS-to-SVM parity matrix
+- failure behavior taxonomy
+- Phase 27 review checklist
+
+Draft decisions currently recorded for review:
+
+- `message_nonce` is a uniqueness-only signed message identifier
+- `canonical_event_key` remains the primary replay identity
+- runtime expiration should be slot-based
+- expiration boundary remains inclusive
+- runtime execution requires on-chain `ProcessedEvent` storage
+- off-chain DB may exist only as index/preflight support
+- minimum amount cap before runtime execution is per-route max amount per message
+- emergency halt must be explicit runtime config state
+
+Phase 26 does not implement runtime code.
+
+Phase 26 does not modify:
+
+- `programs/xxxl-svm`
+- Cargo files
+- package files
+- SBF artifacts
+- `target/deploy`
+- keypair files
+- `.local-keys`
+- `.env`
+
+Phase 26 does not enable:
+
+- live route
+- SPL CPI
+- `invoke_signed`
+- SPL Token `mint_to`
+- runtime/account mutation
+- processed-event marking
+
+No production readiness is claimed.
+
+No final immutability is claimed while upgrade authority exists.
+
+Preserved blockers:
+
+- `X1_TESTNET_PROGRAM_DEPLOYED_RUNTIME_LOCKED`
+- `PRODUCTION_PROGRAM_ID_UNSET`
+- `LIVE_ROUTE_DISABLED`
+- `SPL_CPI_EXECUTION_DISABLED`
+- `PRODUCTION_GUARDIAN_SET_UNSET`
+- `PRODUCTION_PROOF_LOG_UNSET`
+- `EXTERNAL_REVIEW_INCOMPLETE`
+
+Next target checkpoint:
+
+~~~text
+Authorization-Runtime Handoff Spec Reviewed
+~~~
+
+Phase 27 must not start until Phase 26 is reviewed.
