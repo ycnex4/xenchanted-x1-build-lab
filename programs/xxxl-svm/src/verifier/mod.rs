@@ -1,6 +1,7 @@
 pub mod boundary;
 pub mod canonical_payload;
 pub mod errors;
+pub mod guardian_quorum;
 pub mod raw_payload;
 pub mod types;
 
@@ -23,6 +24,13 @@ pub use canonical_payload::{
     XXXL_GUARDIAN_PAYLOAD_VALID_HASH_V1,
 };
 pub use errors::{VerifierErrorCategory, VERIFIER_ERROR_CATEGORIES};
+pub use guardian_quorum::{
+    guardian_quorum_structural_report, verify_guardian_quorum_structural, GuardianApprovalClaim,
+    GuardianApprovalRef, GuardianPublicKey, GuardianQuorumStructuralError,
+    GuardianQuorumStructuralErrorKind, GuardianQuorumStructuralReport,
+    GuardianQuorumStructuralResult, GuardianSetRef, GUARDIAN_QUORUM_STRUCTURAL_REPORT,
+    GUARDIAN_QUORUM_STRUCTURAL_VERIFIER_PHASE_35, GUARDIAN_QUORUM_STRUCTURAL_VERIFIER_VERSION,
+};
 pub use raw_payload::{
     decode_guardian_payload_raw, raw_payload_decoder_report, DecodedGuardianPayloadRaw,
     RawPayloadDecodeError, RawPayloadDecodeErrorKind, RawPayloadDecoderReport,
