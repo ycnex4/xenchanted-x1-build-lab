@@ -45638,3 +45638,114 @@ Recommended next stage:
 - Phase 41C2 may focus only on current instruction identity derivation
 - Phase 41C2 must not include prior Ed25519 lookup, proof, quorum,
   authorization, replay, CPI, or mint execution
+
+# Latest XXXL X1 testnet local runtime skeleton Phase 41C2 current instruction identity boundary
+
+Stage:
+
+- `stage-xxxl-x1-testnet-local-runtime-skeleton-phase-41c2-current-instruction-identity-boundary`
+
+Checkpoint file:
+
+- `docs/checkpoints/xxxl-x1-testnet-local-runtime-skeleton-phase-41c2-current-instruction-identity-boundary.md`
+
+Review request file:
+
+- `docs/reviews/xxxl-phase-41c2-current-instruction-identity-boundary-review-request.md`
+
+Purpose:
+
+- implement a narrow current-instruction identity boundary over an explicit
+  descriptor
+- map missing and inconsistent current identity to the Phase 41B
+  `MissingCurrentInstructionIdentity` rejection case
+- keep real `AccountInfo` population deferred
+- keep real Instructions sysvar parsing deferred
+- keep `load_instruction`, `load_instruction_at`, and
+  `load_instruction_at_checked` deferred
+- keep prior Ed25519 lookup and strict ordering in Phase 41C3
+- preserve proof, quorum, authorization, replay, CPI, and mint execution as
+  forbidden
+
+Files added:
+
+- `programs/xxxl-svm/src/verifier/current_instruction_identity_boundary.rs`
+- `docs/xxxl/xxxl-phase-41c2-current-instruction-identity-boundary.md`
+- `docs/checkpoints/xxxl-x1-testnet-local-runtime-skeleton-phase-41c2-current-instruction-identity-boundary.md`
+- `docs/reviews/xxxl-phase-41c2-current-instruction-identity-boundary-review-request.md`
+
+Files changed:
+
+- `programs/xxxl-svm/src/verifier/mod.rs`
+- `docs/checkpoints/current-design-checkpoint.md`
+
+Allowed Phase 41C2 outcomes:
+
+- `MissingCurrentInstructionIdentity`
+- `InconsistentCurrentInstructionIdentity`
+- `CurrentInstructionIdentityBound`
+
+Phase 41C2 keeps real runtime sysvar population deferred.
+
+Phase 41C2 keeps this inherited Phase 41C1 flag true:
+
+- `concrete_runtime_api_selected`
+
+Phase 41C2 keeps this flag false:
+
+- `current_instruction_identity_derived_from_runtime`
+
+Phase 41C2 explicitly does not:
+
+- parse raw Instructions sysvar account data
+- parse `AccountInfo`
+- call `load_instruction`
+- call `load_instruction_at`
+- call `load_instruction_at_checked`
+- read concrete transaction instruction contents
+- locate prior Ed25519 instructions
+- verify Ed25519 signatures
+- accept cryptographic signature proof
+- accept verification evidence
+- count quorum
+- authorize minting
+- add a runtime instruction handler
+- add CPI
+- enable `invoke_signed`
+- enable SPL Token `mint_to`
+- add replay writes
+- mark processed events
+- mutate runtime/account state
+- unlock live route execution
+- remove deployment blockers
+- select a production Program ID
+- claim production readiness
+- claim final immutability while upgrade authority exists
+- build SBF artifacts
+- touch `target/deploy`
+- read or modify keypair files
+- read or modify `.env`
+- inspect `.local-keys`
+- run deploy commands
+- run network commands
+- spend SOL
+
+Active blockers remain:
+
+- `X1_TESTNET_PROGRAM_DEPLOYED_RUNTIME_LOCKED`
+- `PRODUCTION_PROGRAM_ID_UNSET`
+- `LIVE_ROUTE_DISABLED`
+- `SPL_CPI_EXECUTION_DISABLED`
+- `PRODUCTION_GUARDIAN_SET_UNSET`
+- `PRODUCTION_PROOF_LOG_UNSET`
+- `EXTERNAL_REVIEW_INCOMPLETE`
+
+Recommended next stage:
+
+- ask the audit demon and Theo to review Phase 41C2
+- do not open Phase 41C3 before review
+- Phase 41C3 may focus only on prior Ed25519 lookup and strict ordering
+- Phase 41C3 must not include proof, quorum, authorization, replay, CPI, or mint
+  execution
+- real `AccountInfo` population must be introduced only in a separate future
+  reviewed phase
