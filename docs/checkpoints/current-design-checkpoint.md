@@ -42537,3 +42537,127 @@ Authorization-Runtime Handoff Spec Reviewed
 ~~~
 
 Phase 27 must not start until Phase 26 is reviewed.
+
+# Latest XXXL X1 testnet local runtime skeleton Phase 27 TS/SVM parity vector suite
+
+Stage:
+
+- `stage-xxxl-x1-testnet-local-runtime-skeleton-phase-27-ts-svm-parity-vector-suite`
+
+Checkpoint artifact:
+
+- `docs/checkpoints/xxxl-x1-testnet-local-runtime-skeleton-phase-27-ts-svm-parity-vector-suite.md`
+
+Purpose:
+
+- create a bounded TS/SVM parity vector suite for future independent Rust/SVM
+  verifier work
+- reuse the Phase 23 canonical guardian payload vector as the valid parity
+  vector
+- define required valid/invalid case coverage before runtime implementation
+- preserve the Phase 26 reviewed handoff decision
+
+Preserved security decision:
+
+~~~text
+TS layer = preflight / model / watcher-side decision
+Runtime = independent verifier
+No authorized=true -> execute
+~~~
+
+Suite status:
+
+- suite id: `XXXL_TS_SVM_PARITY_VECTOR_SUITE_PHASE_27`
+- suite version: `1`
+- boundary marker: `PARITY_ONLY_PRE_RUNTIME_VECTOR_SUITE`
+- valid vector: reuses `XXXL_GUARDIAN_PAYLOAD_VALID_VECTOR`
+- invalid cases: `REJECT_BEFORE_EXECUTION`
+- suite validation helper returns `{ ok: true, errors: [] }`
+
+Required case coverage:
+
+- `valid-canonical-payload`
+- `wrong-field-order`
+- `wrong-byte-encoding`
+- `wrong-hash-domain`
+- `malformed-bytes32-field`
+- `malformed-var-bytes-field`
+- `invalid-source-chain-id`
+- `wrong-target-mint`
+- `wrong-guardian-set-id`
+- `wrong-source-chain-weight`
+- `invalid-signature`
+- `duplicate-guardian-approval`
+- `insufficient-quorum`
+- `expired-payload`
+- `duplicate-canonical-event-key`
+- `wrong-canonical-event-key-preimage`
+- `wrong-source-burn-tx-hash`
+- `wrong-source-burn-event-index`
+- `amount-over-route-cap`
+- `invalid-target-mint`
+
+Runtime source status:
+
+- `programs/xxxl-svm/**` unchanged
+
+Cargo/package status:
+
+- Cargo files unchanged
+- `package.json` unchanged
+- `package-lock.json` unchanged
+- no dependencies added
+
+Deploy/artifact status:
+
+- no SBF build
+- no `target/deploy` changes
+- no tracked `.so` artifact
+- no tracked keypair file
+- no `.local-keys` access
+- no `.env` access
+- no deploy
+- no network command
+- no SOL spend
+
+Safety status:
+
+- live route remains disabled
+- SPL CPI remains disabled
+- `invoke_signed` remains disabled
+- SPL Token `mint_to` remains disabled
+- no runtime/account state mutation is added
+- no processed-event marking is added
+- production Program ID remains unset
+- production PDA fixtures are unchanged
+- deployment blockers remain active
+- no production readiness is claimed
+- no final immutability is claimed while upgrade authority exists
+
+Current X1 status remains:
+
+- `X1_TESTNET_PROGRAM_DEPLOYED_RUNTIME_LOCKED`
+
+Active blockers remain:
+
+- `PRODUCTION_PROGRAM_ID_UNSET`
+- `LIVE_ROUTE_DISABLED`
+- `SPL_CPI_EXECUTION_DISABLED`
+- `PRODUCTION_GUARDIAN_SET_UNSET`
+- `PRODUCTION_PROOF_LOG_UNSET`
+- `EXTERNAL_REVIEW_INCOMPLETE`
+
+No blocker was removed.
+
+Validation:
+
+- `npm test -- --run tests/xxxl/ts-svm-parity-vector-suite.test.ts`: passed,
+  1 test file passed, 9 tests passed
+- `npm run typecheck`: passed
+- `npm run build`: passed
+
+Recommended next stage:
+
+- choose a separately reviewed Phase 28 boundary before any Rust/SVM verifier
+  implementation, replay storage model, guardian lifecycle model, or runtime
+  account mapping work
