@@ -45337,3 +45337,116 @@ Recommended next stage:
 - do not open Phase 41C before review
 - Phase 41C must not combine raw sysvar implementation with proof, quorum,
   authorization, replay, CPI, or mint execution
+
+# Latest XXXL X1 testnet local runtime skeleton Phase 41C0 real Instructions sysvar implementation boundary
+
+Stage:
+
+- `stage-xxxl-x1-testnet-local-runtime-skeleton-phase-41c0-real-instructions-sysvar-implementation-boundary`
+
+Checkpoint file:
+
+- `docs/checkpoints/xxxl-x1-testnet-local-runtime-skeleton-phase-41c0-real-instructions-sysvar-implementation-boundary.md`
+
+Review request file:
+
+- `docs/reviews/xxxl-phase-41c0-real-instructions-sysvar-implementation-boundary-review-request.md`
+
+Purpose:
+
+- open Phase 41C as a split series instead of one large implementation phase
+- define a docs-only boundary before any real Instructions sysvar runtime code
+- split Phase 41C into narrow reviewed subphases
+- preserve the Phase 41B taxonomy as authoritative for Phase 41C
+- preserve all evidence/proof/quorum/authorization/execution boundaries
+- keep every deployment/runtime blocker active
+
+Phase 41C split:
+
+- Phase 41C1: runtime API selection and read-only sysvar access boundary
+- Phase 41C2: current instruction identity derivation
+- Phase 41C3: prior Ed25519 instruction lookup and strict ordering
+
+Files added:
+
+- `docs/xxxl/xxxl-phase-41c0-real-instructions-sysvar-implementation-boundary.md`
+- `docs/checkpoints/xxxl-x1-testnet-local-runtime-skeleton-phase-41c0-real-instructions-sysvar-implementation-boundary.md`
+- `docs/reviews/xxxl-phase-41c0-real-instructions-sysvar-implementation-boundary-review-request.md`
+
+Files changed:
+
+- `docs/checkpoints/current-design-checkpoint.md`
+
+Boundary rule preserved:
+
+~~~text
+located candidate evidence
+  != parsed evidence
+  != prior-instruction ordering
+  != requirement coverage
+  != runtime sysvar read
+  != structural candidate evidence
+  != verification evidence
+  != cryptographic proof
+  != quorum
+  != authorization
+  != replay consumption
+  != execution
+~~~
+
+Phase 41C0 explicitly does not:
+
+- add Rust code
+- modify Rust source files
+- modify TypeScript source files
+- modify test files
+- modify Cargo files
+- modify package files
+- select a concrete runtime API
+- parse raw Instructions sysvar account data
+- parse `AccountInfo`
+- call `load_instruction`
+- derive current instruction identity from runtime context
+- locate prior Ed25519 instructions
+- verify Ed25519 signatures
+- accept cryptographic signature proof
+- accept verification evidence
+- count quorum
+- authorize minting
+- add a runtime instruction handler
+- add CPI
+- enable `invoke_signed`
+- enable SPL Token `mint_to`
+- add replay writes
+- mark processed events
+- mutate runtime/account state
+- unlock live route execution
+- remove deployment blockers
+- select a production Program ID
+- claim production readiness
+- claim final immutability while upgrade authority exists
+- build SBF artifacts
+- touch `target/deploy`
+- read or modify keypair files
+- read or modify `.env`
+- inspect `.local-keys`
+- run deploy commands
+- run network commands
+- spend SOL
+
+Active blockers remain:
+
+- `X1_TESTNET_PROGRAM_DEPLOYED_RUNTIME_LOCKED`
+- `PRODUCTION_PROGRAM_ID_UNSET`
+- `LIVE_ROUTE_DISABLED`
+- `SPL_CPI_EXECUTION_DISABLED`
+- `PRODUCTION_GUARDIAN_SET_UNSET`
+- `PRODUCTION_PROOF_LOG_UNSET`
+- `EXTERNAL_REVIEW_INCOMPLETE`
+
+Recommended next stage:
+
+- ask the audit demon and Theo to review Phase 41C0
+- do not open Phase 41C1 before review
+- Phase 41C1 must not combine read-only sysvar access with proof, quorum,
+  authorization, replay, CPI, or mint execution
