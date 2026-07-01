@@ -42934,3 +42934,145 @@ Recommended next stage:
 - choose a separately reviewed runtime verifier implementation boundary before
   any Rust/SVM verifier code, replay storage writes, account legitimacy checks,
   amount cap enforcement, or source proof verification work
+
+# Latest XXXL X1 testnet local runtime skeleton Phase 30 execution-backed TS parity validation
+
+Stage:
+
+- `stage-xxxl-x1-testnet-local-runtime-skeleton-phase-30-execution-backed-ts-parity-validation`
+
+Checkpoint artifact:
+
+- `docs/checkpoints/xxxl-x1-testnet-local-runtime-skeleton-phase-30-execution-backed-ts-parity-validation.md`
+
+Purpose:
+
+- execute existing TypeScript verifier/model functions for Phase 29
+  `TS_MODEL_VALIDATED_REJECTION` cases
+- capture concrete expected and actual errors for Phase 28 tampered fixtures
+- preserve the 7 Phase 29 `FUTURE_RUNTIME_VALIDATION_REQUIRED` cases as
+  future runtime verifier obligations
+- avoid any runtime implementation, account mutation, or live execution unlock
+
+Preserved security decision:
+
+~~~text
+TS layer = preflight / model / watcher-side decision
+Runtime = independent verifier
+No authorized=true -> execute
+~~~
+
+Files added:
+
+- `src/xxxl/ts-svm-parity-execution-backed-validation.ts`
+- `tests/xxxl/ts-svm-parity-execution-backed-validation.test.ts`
+- `docs/xxxl/xxxl-phase-30-execution-backed-ts-parity-validation.md`
+- `docs/checkpoints/xxxl-x1-testnet-local-runtime-skeleton-phase-30-execution-backed-ts-parity-validation.md`
+
+Files changed:
+
+- `src/index.ts`
+- `docs/checkpoints/current-design-checkpoint.md`
+
+Execution-backed validation suite status:
+
+- suite id: `XXXL_TS_SVM_PARITY_EXECUTION_BACKED_VALIDATION_PHASE_30`
+- suite version: `1`
+- boundary marker: `EXECUTION_BACKED_TS_PARITY_ONLY_NO_RUNTIME_EXECUTION`
+- validation matrix covers exactly 19 Phase 28 invalid fixtures
+- all entries are `REJECT_BEFORE_EXECUTION`
+- all 12 Phase 29 TS-model cases are `TS_EXECUTION_BACKED_REJECTION`
+- no Phase 29 TS-model case is `TS_EXECUTION_PATH_UNAVAILABLE`
+- all 7 Phase 29 future-runtime-required cases remain
+  `FUTURE_RUNTIME_VALIDATION_REQUIRED`
+- validation helper returns `{ ok: true, errors: [] }`
+
+`TS_EXECUTION_BACKED_REJECTION` cases:
+
+- `wrong-hash-domain`
+- `malformed-bytes32-field`
+- `malformed-var-bytes-field`
+- `invalid-source-chain-id`
+- `wrong-target-mint`
+- `wrong-guardian-set-id`
+- `wrong-source-chain-weight`
+- `invalid-signature`
+- `duplicate-guardian-approval`
+- `insufficient-quorum`
+- `expired-payload`
+- `duplicate-canonical-event-key`
+
+`FUTURE_RUNTIME_VALIDATION_REQUIRED` cases:
+
+- `wrong-field-order`
+- `wrong-byte-encoding`
+- `wrong-canonical-event-key-preimage`
+- `wrong-source-burn-tx-hash`
+- `wrong-source-burn-event-index`
+- `amount-over-route-cap`
+- `invalid-target-mint`
+
+Runtime source status:
+
+- `programs/xxxl-svm/**` unchanged
+
+Cargo/package status:
+
+- Cargo files unchanged
+- `package.json` unchanged
+- `package-lock.json` unchanged
+- no dependencies added
+
+Deploy/artifact status:
+
+- no SBF build
+- no `target/deploy` changes
+- no tracked `.so` artifact
+- no tracked keypair file
+- no `.local-keys` access
+- no `.env` access
+- no deploy
+- no network command
+- no SOL spend
+
+Safety status:
+
+- live route remains disabled
+- SPL CPI remains disabled
+- `invoke_signed` remains disabled
+- SPL Token `mint_to` remains disabled
+- no runtime/account state mutation is added
+- no processed-event marking is added
+- production Program ID remains unset
+- production PDA fixtures are unchanged
+- deployment blockers remain active
+- no production readiness is claimed
+- no final immutability is claimed while upgrade authority exists
+
+Current X1 status remains:
+
+- `X1_TESTNET_PROGRAM_DEPLOYED_RUNTIME_LOCKED`
+
+Active blockers remain:
+
+- `PRODUCTION_PROGRAM_ID_UNSET`
+- `LIVE_ROUTE_DISABLED`
+- `SPL_CPI_EXECUTION_DISABLED`
+- `PRODUCTION_GUARDIAN_SET_UNSET`
+- `PRODUCTION_PROOF_LOG_UNSET`
+- `EXTERNAL_REVIEW_INCOMPLETE`
+
+No blocker was removed.
+
+Validation:
+
+- `npm test -- --run tests/xxxl/ts-svm-parity-execution-backed-validation.test.ts tests/xxxl/ts-svm-parity-verifier-validation.test.ts tests/xxxl/ts-svm-parity-invalid-fixtures.test.ts tests/xxxl/ts-svm-parity-vector-suite.test.ts`: passed, 4 test files passed, 40 tests passed
+- `npm run typecheck`: passed
+- `npm run build`: passed
+
+Recommended next stage:
+
+- choose a separately reviewed runtime verifier implementation boundary before
+  any Rust/SVM verifier code, source proof verification, amount cap
+  enforcement, target mint account legitimacy checks, replay writes, or runtime
+  unlock
