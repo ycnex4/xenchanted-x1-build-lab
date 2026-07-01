@@ -45102,3 +45102,121 @@ Recommended next stage:
 
 - ask the audit demon and Theo to review Phase 40A through Phase 40G
 - after review, open Phase 41A as docs-only reviewed runtime integration plan
+
+# Latest XXXL X1 testnet local runtime skeleton Phase 41A SVM Instructions sysvar runtime integration plan
+
+Stage:
+
+- `stage-xxxl-x1-testnet-local-runtime-skeleton-phase-41a-instructions-sysvar-runtime-integration-plan`
+
+Checkpoint file:
+
+- `docs/checkpoints/xxxl-x1-testnet-local-runtime-skeleton-phase-41a-svm-instructions-sysvar-runtime-integration-plan.md`
+
+Review request file:
+
+- `docs/reviews/xxxl-phase-41a-svm-instructions-sysvar-runtime-integration-plan-review-request.md`
+
+Purpose:
+
+- open Phase 41 as docs-only after the Phase 40A-40G control point
+- define a safe read-only runtime integration plan for future SVM Instructions
+  sysvar access
+- assign owning requirements to the four orphan rejection cases identified in
+  the Phase 40 reviews
+- preserve all evidence/proof/quorum/authorization/execution boundaries
+- keep every runtime and deployment blocker active
+
+Phase 40 review consensus:
+
+- verdict: `ACCEPT WITH NOTES`
+- required fixes: none
+- blocking risks: none
+- Phase 41A must be docs-only
+- Phase 41B should be model-only only after Phase 41A review
+
+Owning requirements assigned in Phase 41A:
+
+| Owning requirement | Rejection case |
+| --- | --- |
+| `InstructionsSysvarReadable` | `UnreadableInstructionsSysvar` |
+| `PriorEd25519InstructionOrdering` | `Ed25519InstructionAfterCurrentInstruction` |
+| `GuardianEvidenceUniqueness` | `DuplicateGuardianEvidence` |
+| `SingleCandidateResolution` | `AmbiguousCandidateEvidence` |
+
+Files added:
+
+- `docs/xxxl/xxxl-phase-41a-svm-instructions-sysvar-runtime-integration-plan.md`
+- `docs/checkpoints/xxxl-x1-testnet-local-runtime-skeleton-phase-41a-svm-instructions-sysvar-runtime-integration-plan.md`
+- `docs/reviews/xxxl-phase-41a-svm-instructions-sysvar-runtime-integration-plan-review-request.md`
+
+Files changed:
+
+- `docs/checkpoints/current-design-checkpoint.md`
+
+Boundary rule preserved:
+
+~~~text
+located candidate evidence
+  != parsed evidence
+  != prior-instruction ordering
+  != requirement coverage
+  != runtime sysvar read
+  != verification evidence
+  != quorum
+  != authorization
+  != execution
+~~~
+
+Phase 41A explicitly does not:
+
+- add Rust code
+- modify Rust source files
+- modify TypeScript source files
+- modify test files
+- modify Cargo files
+- modify package files
+- parse raw Instructions sysvar account data
+- parse `AccountInfo`
+- call `load_instruction`
+- verify Ed25519 signatures
+- accept cryptographic signature proof
+- accept verification evidence
+- count quorum
+- authorize minting
+- add a runtime instruction handler
+- add CPI
+- enable `invoke_signed`
+- enable SPL Token `mint_to`
+- add replay writes
+- mark processed events
+- mutate runtime/account state
+- unlock live route execution
+- remove deployment blockers
+- select a production Program ID
+- claim production readiness
+- claim final immutability while upgrade authority exists
+- build SBF artifacts
+- touch `target/deploy`
+- read or modify keypair files
+- read or modify `.env`
+- inspect `.local-keys`
+- run deploy commands
+- run network commands
+- spend SOL
+
+Active blockers remain:
+
+- `X1_TESTNET_PROGRAM_DEPLOYED_RUNTIME_LOCKED`
+- `PRODUCTION_PROGRAM_ID_UNSET`
+- `LIVE_ROUTE_DISABLED`
+- `SPL_CPI_EXECUTION_DISABLED`
+- `PRODUCTION_GUARDIAN_SET_UNSET`
+- `PRODUCTION_PROOF_LOG_UNSET`
+- `EXTERNAL_REVIEW_INCOMPLETE`
+
+Recommended next stage:
+
+- ask the audit demon and Theo to review Phase 41A
+- if accepted, open Phase 41B as model-only
+- Phase 41B must not parse real raw Instructions sysvar account data
