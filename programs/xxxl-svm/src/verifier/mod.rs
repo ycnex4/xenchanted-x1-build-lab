@@ -2,6 +2,7 @@ pub mod boundary;
 pub mod canonical_payload;
 pub mod ed25519_evidence_layout;
 pub mod ed25519_instruction_data_parser;
+pub mod ed25519_prior_instruction_ordering;
 pub mod ed25519_verification_evidence;
 pub mod ed25519_verification_evidence_integration_design;
 pub mod errors;
@@ -45,6 +46,14 @@ pub use ed25519_instruction_data_parser::{
     Ed25519InstructionDataParserReport, ParsedEd25519InstructionEvidence,
     ED25519_INSTRUCTION_DATA_PARSER_PHASE_38, ED25519_INSTRUCTION_DATA_PARSER_REPORT,
     ED25519_INSTRUCTION_DATA_PARSER_VERSION,
+};
+pub use ed25519_prior_instruction_ordering::{
+    ed25519_prior_instruction_ordering_model_report, model_ed25519_prior_instruction_ordering,
+    Ed25519PriorInstructionOrderingError, Ed25519PriorInstructionOrderingErrorKind,
+    Ed25519PriorInstructionOrderingModelReport, Ed25519PriorInstructionOrderingResult,
+    ED25519_PRIOR_INSTRUCTION_ORDERING_MODEL_PHASE_40E,
+    ED25519_PRIOR_INSTRUCTION_ORDERING_MODEL_REPORT,
+    ED25519_PRIOR_INSTRUCTION_ORDERING_MODEL_VERSION,
 };
 pub use ed25519_verification_evidence::{
     ed25519_verification_evidence_model_report, model_ed25519_verification_evidence_boundary,
