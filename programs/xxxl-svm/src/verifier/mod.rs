@@ -1,4 +1,5 @@
 pub mod boundary;
+pub mod canonical_payload;
 pub mod errors;
 pub mod raw_payload;
 pub mod types;
@@ -11,6 +12,15 @@ pub use boundary::{
     READ_ONLY_RUNTIME_VERIFIER_SCAFFOLD_PHASE_32, READ_ONLY_RUNTIME_VERIFIER_SCAFFOLD_VERSION,
     READ_ONLY_VERIFIER_BOUNDARY, READ_ONLY_VERIFIER_SCAFFOLD_REPORT,
     RUNTIME_VERIFIER_BOUNDARY_COMPONENTS,
+};
+pub use canonical_payload::{
+    canonical_payload_hash_validation_report, compute_guardian_payload_hash,
+    compute_guardian_payload_hash_domain_separator, validate_guardian_payload_hash,
+    CanonicalPayloadHashValidationError, CanonicalPayloadHashValidationErrorKind,
+    CanonicalPayloadHashValidationReport, CANONICAL_PAYLOAD_HASH_VALIDATION_REPORT,
+    CANONICAL_PAYLOAD_HASH_VALIDATOR_PHASE_34, CANONICAL_PAYLOAD_HASH_VALIDATOR_VERSION,
+    XXXL_GUARDIAN_PAYLOAD_HASH_DOMAIN_SEPARATOR_V1, XXXL_GUARDIAN_PAYLOAD_HASH_DOMAIN_V1,
+    XXXL_GUARDIAN_PAYLOAD_VALID_HASH_V1,
 };
 pub use errors::{VerifierErrorCategory, VERIFIER_ERROR_CATEGORIES};
 pub use raw_payload::{
