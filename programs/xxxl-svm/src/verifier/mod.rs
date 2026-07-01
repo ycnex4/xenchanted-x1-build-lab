@@ -112,3 +112,4 @@ pub use types::{
     VerifierBoundaryStatus,
 };
 pub mod instructions_sysvar_access_contract_model;
+pub mod instructions_sysvar_presence_readability_boundary;
