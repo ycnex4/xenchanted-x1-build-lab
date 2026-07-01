@@ -2,6 +2,7 @@ pub mod boundary;
 pub mod canonical_payload;
 pub mod ed25519_evidence_layout;
 pub mod ed25519_instruction_data_parser;
+pub mod ed25519_verification_evidence;
 pub mod errors;
 pub mod guardian_quorum;
 pub mod instructions_sysvar_evidence_scanner;
@@ -43,6 +44,13 @@ pub use ed25519_instruction_data_parser::{
     Ed25519InstructionDataParserReport, ParsedEd25519InstructionEvidence,
     ED25519_INSTRUCTION_DATA_PARSER_PHASE_38, ED25519_INSTRUCTION_DATA_PARSER_REPORT,
     ED25519_INSTRUCTION_DATA_PARSER_VERSION,
+};
+pub use ed25519_verification_evidence::{
+    ed25519_verification_evidence_model_report, model_ed25519_verification_evidence_boundary,
+    Ed25519VerificationEvidenceBoundaryError, Ed25519VerificationEvidenceBoundaryErrorKind,
+    Ed25519VerificationEvidenceBoundaryResult, Ed25519VerificationEvidenceModelReport,
+    ED25519_VERIFICATION_EVIDENCE_MODEL_PHASE_40B, ED25519_VERIFICATION_EVIDENCE_MODEL_REPORT,
+    ED25519_VERIFICATION_EVIDENCE_MODEL_VERSION,
 };
 pub use errors::{VerifierErrorCategory, VERIFIER_ERROR_CATEGORIES};
 pub use guardian_quorum::{
