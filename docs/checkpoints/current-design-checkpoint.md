@@ -44456,3 +44456,114 @@ Recommended next stage:
 - Phase 40 read-only Ed25519 verification evidence integration boundary, still
   without quorum authorization, handler/account parsing, CPI, mint execution,
   replay writes, or runtime unlock
+
+# Latest XXXL X1 testnet local runtime skeleton Phase 40A Ed25519 verification evidence boundary spec
+
+Stage:
+
+- `stage-xxxl-x1-testnet-local-runtime-skeleton-phase-40a-ed25519-verification-evidence-boundary-spec`
+
+Checkpoint artifact:
+
+- `docs/checkpoints/xxxl-x1-testnet-local-runtime-skeleton-phase-40a-ed25519-verification-evidence-boundary-spec.md`
+
+Purpose:
+
+- define the boundary between located/parsed Ed25519 candidate evidence and
+  future Ed25519 verification evidence
+- document that Phase 39 located candidate evidence is not cryptographic proof
+- document that Phase 38 parsed evidence is not cryptographic proof
+- document that future verification evidence is still not quorum
+- document that quorum is still not full mint authorization
+- document that authorization is still not execution
+- preserve the rule that execution remains separately gated
+
+Docs added:
+
+- `docs/xxxl/xxxl-phase-40a-ed25519-verification-evidence-boundary-spec.md`
+- `docs/checkpoints/xxxl-x1-testnet-local-runtime-skeleton-phase-40a-ed25519-verification-evidence-boundary-spec.md`
+
+Files intentionally not changed:
+
+- no Rust source file
+- no TypeScript source file
+- no TypeScript test file
+- no Cargo manifest
+- no Cargo lockfile
+- no package manifest
+- no package lockfile
+- no target/deploy artifact
+- no keypair file
+- no `.env`
+- no `.local-keys`
+
+Preserved security decision:
+
+~~~text
+TS layer = preflight / model / watcher-side decision
+Runtime = independent verifier
+No authorized=true -> execute
+~~~
+
+Boundary rule documented:
+
+~~~text
+located candidate evidence
+  != parsed evidence
+  != verification evidence
+  != quorum
+  != authorization
+  != execution
+~~~
+
+Phase 40A explicitly does not:
+
+- add Rust code
+- add a verifier module
+- modify `programs/xxxl-svm/src/lib.rs`
+- modify `programs/xxxl-svm/src/verifier/mod.rs`
+- parse raw Instructions sysvar account data
+- parse `AccountInfo`
+- call `load_instruction`
+- verify Ed25519 signatures
+- accept cryptographic signature proof
+- count quorum
+- authorize minting
+- add `process_instruction`
+- add a runtime instruction handler
+- add account parsing
+- add CPI
+- enable `invoke_signed`
+- enable SPL Token `mint_to`
+- add replay writes
+- mark processed events
+- mutate runtime/account state
+- unlock live route execution
+- remove deployment blockers
+- select a production Program ID
+- claim production readiness
+- claim final immutability while upgrade authority exists
+- build SBF artifacts
+- touch `target/deploy`
+- read or modify keypair files
+- read or modify `.env`
+- inspect `.local-keys`
+- run deploy commands
+- run network commands
+- spend SOL
+
+Active blockers remain:
+
+- `X1_TESTNET_PROGRAM_DEPLOYED_RUNTIME_LOCKED`
+- `PRODUCTION_PROGRAM_ID_UNSET`
+- `LIVE_ROUTE_DISABLED`
+- `SPL_CPI_EXECUTION_DISABLED`
+- `PRODUCTION_GUARDIAN_SET_UNSET`
+- `PRODUCTION_PROOF_LOG_UNSET`
+- `EXTERNAL_REVIEW_INCOMPLETE`
+
+Recommended next stage:
+
+- Phase 40B read-only Rust/SVM verification evidence model, still without
+  quorum authorization, handler or account parsing, CPI, mint execution, replay
+  writes, or runtime unlock
