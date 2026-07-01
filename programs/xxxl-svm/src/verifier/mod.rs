@@ -4,6 +4,7 @@ pub mod ed25519_evidence_layout;
 pub mod ed25519_instruction_data_parser;
 pub mod errors;
 pub mod guardian_quorum;
+pub mod instructions_sysvar_evidence_scanner;
 pub mod raw_payload;
 pub mod types;
 
@@ -50,6 +51,13 @@ pub use guardian_quorum::{
     GuardianQuorumStructuralErrorKind, GuardianQuorumStructuralReport,
     GuardianQuorumStructuralResult, GuardianSetRef, GUARDIAN_QUORUM_STRUCTURAL_REPORT,
     GUARDIAN_QUORUM_STRUCTURAL_VERIFIER_PHASE_35, GUARDIAN_QUORUM_STRUCTURAL_VERIFIER_VERSION,
+};
+pub use instructions_sysvar_evidence_scanner::{
+    instructions_sysvar_evidence_scanner_report, scan_instructions_sysvar_for_ed25519_evidence,
+    InstructionsSysvarEvidenceScannerError, InstructionsSysvarEvidenceScannerErrorKind,
+    InstructionsSysvarEvidenceScannerReport, InstructionsSysvarInstructionView,
+    ScannedEd25519InstructionEvidence, INSTRUCTIONS_SYSVAR_EVIDENCE_SCANNER_PHASE_39,
+    INSTRUCTIONS_SYSVAR_EVIDENCE_SCANNER_REPORT, INSTRUCTIONS_SYSVAR_EVIDENCE_SCANNER_VERSION,
 };
 pub use raw_payload::{
     decode_guardian_payload_raw, raw_payload_decoder_report, DecodedGuardianPayloadRaw,

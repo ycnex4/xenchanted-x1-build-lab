@@ -44288,3 +44288,171 @@ Recommended next stage:
   Ed25519 cryptographic verification, quorum authorization, instruction
   handlers, account parsing, CPI, mint execution, replay writes, or runtime
   unlock
+
+# Latest XXXL X1 testnet local runtime skeleton Phase 39 Instructions sysvar evidence scanner
+
+Stage:
+
+- `stage-xxxl-x1-testnet-local-runtime-skeleton-phase-39-instructions-sysvar-evidence-scanner`
+
+Checkpoint artifact:
+
+- `docs/checkpoints/xxxl-x1-testnet-local-runtime-skeleton-phase-39-instructions-sysvar-evidence-scanner.md`
+
+Purpose:
+
+- scan prepared read-only Instructions sysvar evidence entries
+- identify candidate Ed25519 program instruction entries
+- feed candidate instruction data bytes into the Phase 38 parser
+- return matched parsed evidence for a specific expected guardian public key and
+  expected Phase 34 payload hash
+- avoid Ed25519 cryptographic verification, cryptographic proof acceptance,
+  quorum counting, mint authorization, account parsing, instruction processing,
+  CPI, mint execution, replay writes, and live route unlock
+
+Preserved security decision:
+
+~~~text
+TS layer = preflight / model / watcher-side decision
+Runtime = independent verifier
+No authorized=true -> execute
+~~~
+
+Files added:
+
+- `programs/xxxl-svm/src/verifier/instructions_sysvar_evidence_scanner.rs`
+- `docs/xxxl/xxxl-phase-39-instructions-sysvar-evidence-scanner.md`
+- `docs/checkpoints/xxxl-x1-testnet-local-runtime-skeleton-phase-39-instructions-sysvar-evidence-scanner.md`
+
+Files changed:
+
+- `programs/xxxl-svm/src/verifier/mod.rs`
+- `docs/checkpoints/current-design-checkpoint.md`
+
+Representation choice:
+
+- scanner accepts prepared read-only instruction entries
+- no raw Instructions sysvar account data parser is added
+- no `AccountInfo` parser is added
+- no full sysvar account integration is added
+
+Scanner status:
+
+- scanner marker: `INSTRUCTIONS_SYSVAR_EVIDENCE_SCANNER_PHASE_39`
+- scanner version: `1`
+- skips non-Ed25519 program instructions
+- identifies Ed25519 program instruction candidates by program id reference
+- calls `parse_ed25519_instruction_data_evidence` for candidate data bytes
+- returns success only when exactly one candidate matches expected guardian and
+  expected Phase 34 hash
+- rejects empty instruction set
+- rejects no matching Ed25519 evidence
+- rejects duplicate matching Ed25519 evidence
+- reports malformed candidate data through Phase 38 parser errors
+- reports guardian public key mismatch through Phase 38 parser errors
+- reports message hash mismatch through Phase 38 parser errors
+
+Explicit honesty:
+
+- no Ed25519 cryptographic verification
+- no cryptographic signature proof accepted
+- no quorum counting
+- no mint authorization
+- no instruction handler
+- no account parser
+- no CPI
+- no replay writes
+- signature bytes remain future verification evidence only
+- successful scan is located and parsed candidate evidence only
+
+Remaining obligations:
+
+- raw Instructions sysvar account integration, if selected in a future phase
+- Ed25519 cryptographic verification
+- proof that guardian signatures cover the Phase 34 canonical payload hash
+- quorum counting over verified signature evidence
+- source proof verification
+- route config verification
+- target mint account legitimacy verification
+- amount cap enforcement
+- replay storage
+- replay checks
+- replay writes
+- account parsing
+- instruction processing
+- mint execution
+- runtime unlock
+
+Runtime source status:
+
+- `programs/xxxl-svm/src/lib.rs` unchanged
+- `programs/xxxl-svm/src/verifier/instructions_sysvar_evidence_scanner.rs`
+  added
+- `programs/xxxl-svm/src/verifier/mod.rs` updated with the module and re-exports
+- no instruction handler added
+- no account parser added
+
+Cargo/package status:
+
+- Cargo files unchanged
+- `package.json` unchanged
+- `package-lock.json` unchanged
+- no dependencies added
+
+Deploy/artifact status:
+
+- no SBF build
+- no `target/deploy` changes
+- no tracked `.so` artifact
+- no tracked keypair file
+- no `.local-keys` access
+- no `.env` access
+- no deploy
+- no network command
+- no SOL spend
+
+Safety status:
+
+- live route remains disabled
+- SPL CPI remains disabled
+- `invoke_signed` remains disabled
+- SPL Token `mint_to` remains disabled
+- no runtime/account state mutation is added
+- no replay write is added
+- no processed-event marking is added
+- no production Program ID is selected
+- production PDA fixtures are unchanged
+- deployment blockers remain active
+- no production readiness is claimed
+- no final immutability is claimed while upgrade authority exists
+
+Current X1 status remains:
+
+- `X1_TESTNET_PROGRAM_DEPLOYED_RUNTIME_LOCKED`
+
+Active blockers remain:
+
+- `PRODUCTION_PROGRAM_ID_UNSET`
+- `LIVE_ROUTE_DISABLED`
+- `SPL_CPI_EXECUTION_DISABLED`
+- `PRODUCTION_GUARDIAN_SET_UNSET`
+- `PRODUCTION_PROOF_LOG_UNSET`
+- `EXTERNAL_REVIEW_INCOMPLETE`
+
+No blocker was removed.
+
+Validation:
+
+- `git diff --check`: passed
+- `wsl bash -lc "cd /mnt/c/Users/user/xenchanted-x1-build-lab/programs/xxxl-svm && cargo fmt --check"`: passed
+- `wsl bash -lc "cd /mnt/c/Users/user/xenchanted-x1-build-lab/programs/xxxl-svm && cargo test instructions_sysvar_evidence_scanner --lib"`: passed, 15 tests passed
+- `wsl bash -lc "cd /mnt/c/Users/user/xenchanted-x1-build-lab/programs/xxxl-svm && cargo test verifier --lib"`: passed, 99 tests passed
+- `wsl bash -lc "cd /mnt/c/Users/user/xenchanted-x1-build-lab/programs/xxxl-svm && cargo test --lib --locked"`: passed, 310 tests passed, 1 ignored
+- `npm run typecheck`: passed
+- `npm run build`: passed
+
+Recommended next stage:
+
+- Phase 40 read-only Ed25519 verification evidence integration boundary, still
+  without quorum authorization, handler/account parsing, CPI, mint execution,
+  replay writes, or runtime unlock
