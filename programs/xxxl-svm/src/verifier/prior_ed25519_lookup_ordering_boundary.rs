@@ -462,6 +462,42 @@ mod tests {
     }
 
     #[test]
+    fn valid_prior_match_with_same_or_later_matching_candidate_still_locates_prior_match() {
+        let candidates = [matching_candidate_at(1), matching_candidate_at(3)];
+
+        let result = locate_prior_ed25519_lookup_ordering_boundary(3, &candidates);
+
+        assert_eq!(
+            result.status,
+            Phase41C3PriorEd25519LookupOrderingStatus::PriorEd25519InstructionLocatedAndOrdered
+        );
+        assert_eq!(result.rejection_case, None);
+        assert_eq!(result.matching_prior_candidate_count, 1);
+        assert_eq!(result.matched_instruction_index, Some(1));
+        assert!(result.strict_ordering_enforced);
+        assert!(result.real_runtime_sysvar_population_deferred);
+        assert!(!result.accepts_verification_evidence);
+        assert!(!result.authorizes_execution);
+    }
+
+    #[test]
+    fn empty_candidate_set_is_the_descriptor_contract_for_no_evidence_candidates() {
+        let result = locate_prior_ed25519_lookup_ordering_boundary(3, &[]);
+
+        assert_eq!(
+            result.status,
+            Phase41C3PriorEd25519LookupOrderingStatus::PriorEd25519InstructionNotFound
+        );
+        assert_eq!(
+            result.rejection_case,
+            Some(Phase41BRejectionCase::Ed25519InstructionNotFound)
+        );
+        assert_eq!(result.candidate_count, 0);
+        assert_eq!(result.matching_prior_candidate_count, 0);
+        assert_eq!(result.matched_instruction_index, None);
+    }
+
+    #[test]
     fn phase_41c3_declares_only_seven_structural_results() {
         assert_eq!(PHASE_41C3_ALLOWED_LOOKUP_ORDERING_STATUSES.len(), 7);
         assert_eq!(
