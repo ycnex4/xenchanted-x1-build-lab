@@ -43814,3 +43814,155 @@ Recommended next stage:
   source proof verification, route config checks, target mint account checks,
   amount cap enforcement, replay checks/writes, account parsing, instruction
   processing, mint execution, or runtime unlock
+
+
+# Latest XXXL X1 testnet local runtime skeleton Phase 36 Ed25519 signature evidence boundary spec
+
+Stage:
+
+- `stage-xxxl-x1-testnet-local-runtime-skeleton-phase-36-ed25519-signature-evidence-boundary-spec`
+
+Checkpoint artifact:
+
+- `docs/checkpoints/xxxl-x1-testnet-local-runtime-skeleton-phase-36-ed25519-signature-evidence-boundary-spec.md`
+
+Purpose:
+
+- define the Ed25519 signature evidence boundary for the future Rust/SVM runtime
+  verifier
+- select SVM ed25519 instruction evidence as the future verification model
+- require future signature evidence to bind guardian public key to the exact
+  Phase 34 canonical payload hash
+- preserve the distinction between structural guardian quorum and cryptographic
+  signature verification
+- avoid runtime code, instruction sysvar parsing, account parsing, CPI, mint
+  execution, replay writes, and live route unlock
+
+Preserved security decision:
+
+~~~text
+TS layer = preflight / model / watcher-side decision
+Runtime = independent verifier
+No authorized=true -> execute
+~~~
+
+Files added:
+
+- `docs/xxxl/xxxl-phase-36-ed25519-signature-evidence-boundary-spec.md`
+- `docs/checkpoints/xxxl-x1-testnet-local-runtime-skeleton-phase-36-ed25519-signature-evidence-boundary-spec.md`
+
+Files changed:
+
+- `docs/checkpoints/current-design-checkpoint.md`
+
+Boundary status:
+
+- docs-only Ed25519 signature evidence boundary
+- no Rust source changed
+- no TypeScript source changed
+- no Cargo/package changes
+- no dependencies added
+- no runtime execution unlock
+
+Selected future model:
+
+- transaction includes SVM ed25519 program instruction evidence
+- future runtime verifier inspects that evidence through the Instructions sysvar
+- each counted signature must bind the expected guardian public key to the exact
+  Phase 34 canonical payload hash
+- only cryptographically verified and structurally valid guardian approvals may
+  contribute toward quorum
+
+Explicit honesty:
+
+- Phase 35 structural quorum is not enough to authorize minting
+- caller-provided signature claims are not runtime authority
+- Phase 36 does not implement Ed25519 verification
+- Phase 36 does not parse instruction sysvar data
+- Phase 36 does not inspect ed25519 program instructions
+- Phase 36 alone cannot make `authorized=true`
+
+Remaining obligations:
+
+- Ed25519 instruction evidence layout model
+- Ed25519 instruction evidence parser
+- signature evidence binding to Phase 34 canonical payload hash
+- source proof verification
+- route config verification
+- target mint account legitimacy verification
+- amount cap enforcement
+- replay storage
+- replay checks
+- replay writes
+- account parsing
+- instruction processing
+- mint execution
+- runtime unlock
+
+Runtime source status:
+
+- `programs/xxxl-svm/src/lib.rs` unchanged
+- no Rust source changed
+- no instruction handler added
+- no account parser added
+
+Cargo/package status:
+
+- Cargo files unchanged
+- `package.json` unchanged
+- `package-lock.json` unchanged
+- no dependencies added
+
+Deploy/artifact status:
+
+- no SBF build
+- no `target/deploy` changes
+- no tracked `.so` artifact
+- no tracked keypair file
+- no `.local-keys` access
+- no `.env` access
+- no deploy
+- no network command
+- no SOL spend
+
+Safety status:
+
+- live route remains disabled
+- SPL CPI remains disabled
+- `invoke_signed` remains disabled
+- SPL Token `mint_to` remains disabled
+- no runtime/account state mutation is added
+- no replay write is added
+- no processed-event marking is added
+- no production Program ID is selected
+- production PDA fixtures are unchanged
+- deployment blockers remain active
+- no production readiness is claimed
+- no final immutability is claimed while upgrade authority exists
+
+Current X1 status remains:
+
+- `X1_TESTNET_PROGRAM_DEPLOYED_RUNTIME_LOCKED`
+
+Active blockers remain:
+
+- `PRODUCTION_PROGRAM_ID_UNSET`
+- `LIVE_ROUTE_DISABLED`
+- `SPL_CPI_EXECUTION_DISABLED`
+- `PRODUCTION_GUARDIAN_SET_UNSET`
+- `PRODUCTION_PROOF_LOG_UNSET`
+- `EXTERNAL_REVIEW_INCOMPLETE`
+
+No blocker was removed.
+
+Validation:
+
+- `git diff --check`: passed
+- `npm run typecheck`: passed
+- `npm run build`: passed
+
+Recommended next stage:
+
+- Phase 37 Rust/SVM Ed25519 instruction evidence layout model, still read-only,
+  still without instruction processing, account parsing, CPI, mint execution,
+  replay checks/writes, or runtime unlock
