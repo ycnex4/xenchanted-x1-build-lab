@@ -4,6 +4,7 @@ pub mod ed25519_evidence_layout;
 pub mod ed25519_instruction_data_parser;
 pub mod ed25519_prior_instruction_ordering;
 pub mod ed25519_verification_evidence;
+pub mod ed25519_verification_evidence_coverage_matrix;
 pub mod ed25519_verification_evidence_integration_design;
 pub mod errors;
 pub mod guardian_quorum;
@@ -61,6 +62,17 @@ pub use ed25519_verification_evidence::{
     Ed25519VerificationEvidenceBoundaryResult, Ed25519VerificationEvidenceModelReport,
     ED25519_VERIFICATION_EVIDENCE_MODEL_PHASE_40B, ED25519_VERIFICATION_EVIDENCE_MODEL_REPORT,
     ED25519_VERIFICATION_EVIDENCE_MODEL_VERSION,
+};
+pub use ed25519_verification_evidence_coverage_matrix::{
+    coverage_for_requirement, ed25519_verification_evidence_coverage_matrix_report,
+    ed25519_verification_evidence_requirement_coverage_matrix,
+    every_phase_40d_requirement_has_coverage_entry, Ed25519VerificationEvidenceCoverageCategory,
+    Ed25519VerificationEvidenceCoverageMatrixReport,
+    Ed25519VerificationEvidenceRequirementCoverage,
+    ED25519_VERIFICATION_EVIDENCE_COVERAGE_MATRIX_PHASE_40F,
+    ED25519_VERIFICATION_EVIDENCE_COVERAGE_MATRIX_REPORT,
+    ED25519_VERIFICATION_EVIDENCE_COVERAGE_MATRIX_VERSION,
+    ED25519_VERIFICATION_EVIDENCE_REQUIREMENT_COVERAGE_MATRIX,
 };
 pub use ed25519_verification_evidence_integration_design::{
     ed25519_verification_evidence_integration_design_report,

@@ -44917,3 +44917,82 @@ Recommended next stage:
 - Phase 40F can add a small requirement-to-error coverage matrix for future
   verification evidence integration. Real raw Instructions sysvar integration
   should remain a dedicated reviewed phase.
+
+# Latest XXXL X1 testnet local runtime skeleton Phase 40F Ed25519 verification evidence coverage matrix
+
+Stage:
+
+- `stage-xxxl-x1-testnet-local-runtime-skeleton-phase-40f-ed25519-verification-evidence-coverage-matrix`
+
+Checkpoint artifact:
+
+- `docs/checkpoints/xxxl-x1-testnet-local-runtime-skeleton-phase-40f-ed25519-verification-evidence-coverage-matrix.md`
+
+Purpose:
+
+- add a tiny read-only Rust/SVM coverage matrix for future Ed25519 verification
+  evidence requirements and rejection cases
+- map Phase 40D requirements to primary future rejection cases
+- keep raw Instructions sysvar parsing, AccountInfo parsing, Ed25519
+  verification, proof acceptance, quorum, authorization, and execution disabled
+
+Files added:
+
+- `programs/xxxl-svm/src/verifier/ed25519_verification_evidence_coverage_matrix.rs`
+- `docs/xxxl/xxxl-phase-40f-ed25519-verification-evidence-coverage-matrix.md`
+- `docs/checkpoints/xxxl-x1-testnet-local-runtime-skeleton-phase-40f-ed25519-verification-evidence-coverage-matrix.md`
+
+Files changed:
+
+- `programs/xxxl-svm/src/verifier/mod.rs`
+- `docs/checkpoints/current-design-checkpoint.md`
+
+Boundary rule preserved:
+
+~~~text
+located candidate evidence
+  != parsed evidence
+  != prior-instruction ordering
+  != requirement coverage
+  != verification evidence
+  != quorum
+  != authorization
+  != execution
+~~~
+
+Phase 40F explicitly does not:
+
+- parse raw Instructions sysvar account data
+- parse `AccountInfo`
+- verify Ed25519 signatures
+- accept cryptographic signature proof
+- accept verification evidence
+- count quorum
+- authorize minting
+- add a runtime instruction handler
+- add CPI
+- enable `invoke_signed`
+- enable SPL Token `mint_to`
+- add replay writes
+- mark processed events
+- mutate runtime/account state
+- unlock live route execution
+- remove deployment blockers
+- select a production Program ID
+- claim production readiness
+- claim final immutability while upgrade authority exists
+
+Active blockers remain:
+
+- `X1_TESTNET_PROGRAM_DEPLOYED_RUNTIME_LOCKED`
+- `PRODUCTION_PROGRAM_ID_UNSET`
+- `LIVE_ROUTE_DISABLED`
+- `SPL_CPI_EXECUTION_DISABLED`
+- `PRODUCTION_GUARDIAN_SET_UNSET`
+- `PRODUCTION_PROOF_LOG_UNSET`
+- `EXTERNAL_REVIEW_INCOMPLETE`
+
+Recommended next stage:
+
+- Phase 40G may add a docs-only closure checkpoint for the Phase 40 series
+  before attempting real raw Instructions sysvar integration in a reviewed phase.
