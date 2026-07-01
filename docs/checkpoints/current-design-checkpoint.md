@@ -45970,3 +45970,87 @@ Recommended next stage:
 - do not open real runtime wiring before review
 - real runtime wiring must be introduced only as a separate panic-safety-critical
   reviewed phase
+
+# Latest XXXL X1 testnet local runtime skeleton Phase 41C4 descriptor series closure runtime wiring boundary
+
+Stage:
+
+- `stage-xxxl-x1-testnet-local-runtime-skeleton-phase-41c4-descriptor-series-closure-runtime-wiring-boundary`
+
+Checkpoint file:
+
+- `docs/checkpoints/xxxl-x1-testnet-local-runtime-skeleton-phase-41c4-descriptor-series-closure-runtime-wiring-boundary.md`
+
+Review request file:
+
+- `docs/reviews/xxxl-phase-41c4-descriptor-series-closure-runtime-wiring-boundary-review-request.md`
+
+Purpose:
+
+- close the Phase 41C descriptor/model boundary series
+- record that Phase 41C did not perform real runtime wiring
+- record that Phase 41C did not parse real `AccountInfo`
+- record that Phase 41C did not parse real Instructions sysvar account data
+- record that Phase 41C did not call `load_instruction`, `load_instruction_at`,
+  or `load_instruction_at_checked`
+- define future Phase 41D as panic-safety-critical runtime wiring
+- require Phase 41D to be split into separate reviewed read layers
+
+Closed Phase 41C phases:
+
+- 41C0
+- 41C0A
+- 41C1
+- 41C2
+- 41C3
+- 41C3A
+
+Files added:
+
+- `docs/xxxl/xxxl-phase-41c4-descriptor-series-closure-runtime-wiring-boundary.md`
+- `docs/checkpoints/xxxl-x1-testnet-local-runtime-skeleton-phase-41c4-descriptor-series-closure-runtime-wiring-boundary.md`
+- `docs/reviews/xxxl-phase-41c4-descriptor-series-closure-runtime-wiring-boundary-review-request.md`
+
+Files changed:
+
+- `docs/checkpoints/current-design-checkpoint.md`
+
+Future Phase 41D proposed split:
+
+- 41D0 docs-only runtime-wiring plan and safety checklist
+- 41D1 real Instructions sysvar presence/readability from runtime `AccountInfo`
+- 41D2 real current-instruction identity population
+- 41D3 real prior-instruction enumeration and prefiltering into descriptors
+
+Phase 41D must remain read-only and must not include:
+
+- Ed25519 cryptographic verification
+- cryptographic proof acceptance
+- verification evidence acceptance
+- guardian quorum counting
+- authorization
+- replay writes
+- processed event marking
+- account mutation
+- CPI
+- `invoke_signed`
+- SPL Token `mint_to`
+- runtime execution handler
+- live route unlock
+
+Active blockers remain:
+
+- `X1_TESTNET_PROGRAM_DEPLOYED_RUNTIME_LOCKED`
+- `PRODUCTION_PROGRAM_ID_UNSET`
+- `LIVE_ROUTE_DISABLED`
+- `SPL_CPI_EXECUTION_DISABLED`
+- `PRODUCTION_GUARDIAN_SET_UNSET`
+- `PRODUCTION_PROOF_LOG_UNSET`
+- `EXTERNAL_REVIEW_INCOMPLETE`
+
+Recommended next stage:
+
+- ask the audit demon and Theo to review Phase 41C4
+- do not open Phase 41D0 before review
+- Phase 41D0 should be docs-only
+- no real runtime wiring should start before Phase 41D0 is reviewed
