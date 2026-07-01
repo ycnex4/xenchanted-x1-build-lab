@@ -45220,3 +45220,120 @@ Recommended next stage:
 - ask the audit demon and Theo to review Phase 41A
 - if accepted, open Phase 41B as model-only
 - Phase 41B must not parse real raw Instructions sysvar account data
+
+# Latest XXXL X1 testnet local runtime skeleton Phase 41B SVM Instructions sysvar access contract model
+
+Stage:
+
+- `stage-xxxl-x1-testnet-local-runtime-skeleton-phase-41b-instructions-sysvar-access-contract-model`
+
+Checkpoint file:
+
+- `docs/checkpoints/xxxl-x1-testnet-local-runtime-skeleton-phase-41b-svm-instructions-sysvar-access-contract-model.md`
+
+Review request file:
+
+- `docs/reviews/xxxl-phase-41b-svm-instructions-sysvar-access-contract-model-review-request.md`
+
+Purpose:
+
+- materialize the accepted Phase 41A docs-only plan as a tiny Rust model
+- close docs-to-code drift by declaring 20 Phase 41B requirements in Rust
+- declare all 18 rejection cases in Rust
+- ensure every rejection case has at least one owning requirement
+- close the four Phase 40 orphan rejection cases in Rust
+- preserve all evidence/proof/quorum/authorization/execution boundaries
+
+Files added:
+
+- `programs/xxxl-svm/src/verifier/instructions_sysvar_access_contract_model.rs`
+- `docs/xxxl/xxxl-phase-41b-svm-instructions-sysvar-access-contract-model.md`
+- `docs/checkpoints/xxxl-x1-testnet-local-runtime-skeleton-phase-41b-svm-instructions-sysvar-access-contract-model.md`
+- `docs/reviews/xxxl-phase-41b-svm-instructions-sysvar-access-contract-model-review-request.md`
+
+Files changed:
+
+- `programs/xxxl-svm/src/verifier/mod.rs`
+- `docs/checkpoints/current-design-checkpoint.md`
+
+Phase 41B declares:
+
+- 20 requirements
+- 18 rejection cases
+- full rejection ownership
+- 4 explicit Phase 40 orphan rejection closures
+- safety flags that all remain false
+
+Four orphan rejection closures:
+
+| Owning requirement | Rejection case |
+| --- | --- |
+| `InstructionsSysvarReadable` | `UnreadableInstructionsSysvar` |
+| `PriorEd25519InstructionOrdering` | `Ed25519InstructionAfterCurrentInstruction` |
+| `GuardianEvidenceUniqueness` | `DuplicateGuardianEvidence` |
+| `SingleCandidateResolution` | `AmbiguousCandidateEvidence` |
+
+Boundary rule preserved:
+
+~~~text
+located candidate evidence
+  != parsed evidence
+  != prior-instruction ordering
+  != requirement coverage
+  != runtime sysvar read
+  != verification evidence
+  != quorum
+  != authorization
+  != execution
+~~~
+
+Phase 41B explicitly does not:
+
+- parse raw Instructions sysvar account data
+- parse `AccountInfo`
+- call `load_instruction`
+- enable `load_instruction`
+- select a concrete runtime API
+- derive current instruction identity from runtime context
+- verify Ed25519 signatures
+- accept cryptographic signature proof
+- accept verification evidence
+- count quorum
+- authorize minting
+- add a runtime instruction handler
+- add CPI
+- enable `invoke_signed`
+- enable SPL Token `mint_to`
+- add replay writes
+- mark processed events
+- mutate runtime/account state
+- unlock live route execution
+- remove deployment blockers
+- select a production Program ID
+- claim production readiness
+- claim final immutability while upgrade authority exists
+- build SBF artifacts
+- touch `target/deploy`
+- read or modify keypair files
+- read or modify `.env`
+- inspect `.local-keys`
+- run deploy commands
+- run network commands
+- spend SOL
+
+Active blockers remain:
+
+- `X1_TESTNET_PROGRAM_DEPLOYED_RUNTIME_LOCKED`
+- `PRODUCTION_PROGRAM_ID_UNSET`
+- `LIVE_ROUTE_DISABLED`
+- `SPL_CPI_EXECUTION_DISABLED`
+- `PRODUCTION_GUARDIAN_SET_UNSET`
+- `PRODUCTION_PROOF_LOG_UNSET`
+- `EXTERNAL_REVIEW_INCOMPLETE`
+
+Recommended next stage:
+
+- ask the audit demon and Theo to review Phase 41B
+- do not open Phase 41C before review
+- Phase 41C must not combine raw sysvar implementation with proof, quorum,
+  authorization, replay, CPI, or mint execution
