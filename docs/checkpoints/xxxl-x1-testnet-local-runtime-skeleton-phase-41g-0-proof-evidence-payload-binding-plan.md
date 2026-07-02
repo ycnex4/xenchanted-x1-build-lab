@@ -50,3 +50,26 @@ Preferred model:
 ## Next Gate
 
 After external acceptance, Phase 41G.1 payload evidence shape may begin under separate review.
+
+## Canonical Field Order Fix
+
+The authoritative canonical field order must exactly match:
+
+`programs/xxxl-svm/src/verifier/raw_payload.rs`
+
+Constant:
+
+`RAW_PAYLOAD_PHASE_23_FIELD_ORDER`
+
+The canonical field count is 21.
+
+Required fields include:
+
+- `instruction_layout_version`;
+- `guardian_set_id`;
+- `source_finality_block`;
+- `expiration_slot_or_unix_ts`.
+
+The previous 19-field planning list is superseded.
+
+`source_finality_block` and `expiration_slot_or_unix_ts` are distinct and must not be collapsed.

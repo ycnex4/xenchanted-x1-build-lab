@@ -53,12 +53,14 @@ Please check:
 2. Is payload binding correctly separated from guardian/quorum/auth?
 3. Is the preferred `signed_message_bytes == expected_gateway_payload_hash_bytes` model acceptable?
 4. Is `keccak256(canonical_gateway_payload_bytes)` the right planned hash model?
-5. Is the canonical field list complete and consistent with Stage 1?
-6. Are route/source/burn/recipient/amount/mint/finality/nonce bindings complete?
-7. Is public key handling correctly deferred to guardian validation?
-8. Are negative cases sufficient?
-9. Are all forbidden operations still forbidden?
-10. Can Phase 41G.1 payload evidence shape begin after acceptance?
+5. Is the canonical 21-field list complete and exactly consistent with `RAW_PAYLOAD_PHASE_23_FIELD_ORDER`?
+6. Are `instruction_layout_version` and `guardian_set_id` correctly included and bound?
+7. Are `source_finality_block` and `expiration_slot_or_unix_ts` correctly separated?
+8. Are route/source/burn/recipient/amount/mint/guardian-set/finality/expiration/nonce bindings complete?
+9. Is public key handling correctly deferred to guardian validation?
+10. Are negative cases sufficient?
+11. Are all forbidden operations still forbidden?
+12. Can Phase 41G.1 payload evidence shape begin after acceptance?
 
 ## Expected Verdict Format
 
@@ -70,7 +72,10 @@ Please check:
 - Payload binding separation acceptable: yes/no
 - Signed-message-equals-payload-hash model acceptable: yes/no
 - Hash model acceptable: yes/no
-- Canonical field list acceptable: yes/no
+- Canonical 21-field list acceptable: yes/no
+- instruction_layout_version binding acceptable: yes/no
+- guardian_set_id binding acceptable: yes/no
+- source_finality_block / expiration separation acceptable: yes/no
 - Binding requirements acceptable: yes/no
 - Guardian validation deferral acceptable: yes/no
 - Negative matrix sufficient: yes/no
