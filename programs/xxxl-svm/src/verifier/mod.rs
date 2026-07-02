@@ -113,6 +113,7 @@ pub use types::{
 };
 pub mod current_instruction_identity_boundary;
 pub mod current_instruction_identity_runtime_boundary;
+pub mod current_instruction_index_runtime_boundary;
 pub mod instructions_sysvar_access_contract_model;
 pub mod instructions_sysvar_accountinfo_presence_readability_runtime_boundary;
 pub mod instructions_sysvar_presence_readability_boundary;
