@@ -47556,3 +47556,113 @@ Next action:
 
 - request external review of Phase 41D3.2.3.0 plan;
 - do not start Phase 41D3.2.3 code until the plan is accepted.
+
+---
+
+## XXXL Phase 41D3.2.3.0 Prefilter + Phase 41C3 Candidate Descriptor Plan — External Acceptance
+
+Date: 2026-07-02
+
+Main checkpoint:
+
+`5147b32 Merge XXXL phase 41D3 prefilter descriptor plan`
+
+Acceptance record:
+
+`docs/reviews/xxxl-phase-41d3-2-3-0-prefilter-descriptor-plan-external-acceptance.md`
+
+External review status:
+
+- Audit Demon: ACCEPT
+- Theo: ACCEPT
+- Required fixes: none
+- Blocking risks: none
+- Scope violations: no
+- Descriptor boundary acceptable: yes
+- Trust-sensitive wording acceptable: yes
+
+Accepted Phase 41D3.2.3 code boundary:
+
+- consume loaded prior instructions from Phase 41D3.2.2;
+- process only loaded entries marked runtime-data-only;
+- prefilter unrelated loaded prior instructions;
+- identify Ed25519 program-id candidates structurally;
+- construct Phase 41C3 candidate descriptors;
+- explicitly reject same-index candidates;
+- explicitly reject later-index candidates;
+- keep descriptors non-authorizing;
+- allow `locates_prior_ed25519_instruction: true` only as structural candidate location.
+
+Accepted meaning of `locates_prior_ed25519_instruction: true`:
+
+- prior Ed25519 program-id instruction structurally located;
+- non-authorizing candidate descriptor created.
+
+It must not mean:
+
+- Ed25519 signature verified;
+- cryptographic signature proof accepted;
+- verification evidence accepted;
+- guardian quorum counted;
+- execution authorized;
+- replay registry writable;
+- runtime state mutable.
+
+41C3 delegation note:
+
+- Phase 41D3.2.3 must construct descriptors and feed them into the already reviewed Phase 41C3 ordering/ambiguity model;
+- Phase 41D3.2.3 must not re-invent duplicate, ambiguous, or ordering logic;
+- Phase 41C3 remains authoritative for:
+  - `DuplicateGuardianEvidence`;
+  - `AmbiguousCandidateEvidence`;
+  - ordering cases.
+
+Future naming note:
+
+- `locates_prior_ed25519_instruction` is accepted for Phase 41D3.2.3;
+- when entering Phase 41E or equivalent verification phase, consider a clearer name:
+  - `structurally_locates_prior_ed25519_instruction`;
+  - `candidate_prior_ed25519_instruction_located`.
+
+Streaming / heap guidance:
+
+- iterate loaded prior entries by reference;
+- prefilter immediately;
+- discard non-candidates immediately;
+- store only minimal candidate metadata;
+- avoid cloning full `Instruction` data unless bounded and justified;
+- avoid holding all loaded instructions and full candidate copies simultaneously.
+
+Allowed new trust-sensitive flag after code and review:
+
+- `locates_prior_ed25519_instruction: true`.
+
+Must remain false:
+
+- Ed25519 cryptographic verification;
+- signature proof acceptance;
+- verification evidence acceptance;
+- guardian quorum counting;
+- authorization;
+- replay writes;
+- processed event marking;
+- account mutation;
+- CPI;
+- `invoke_signed`;
+- SPL Token `mint_to`;
+- handler;
+- live route unlock.
+
+Active blockers remain:
+
+- `X1_TESTNET_PROGRAM_DEPLOYED_RUNTIME_LOCKED`
+- `PRODUCTION_PROGRAM_ID_UNSET`
+- `LIVE_ROUTE_DISABLED`
+- `SPL_CPI_EXECUTION_DISABLED`
+- `PRODUCTION_GUARDIAN_SET_UNSET`
+- `PRODUCTION_PROOF_LOG_UNSET`
+- `EXTERNAL_REVIEW_INCOMPLETE`
+
+Next allowed code sub-step:
+
+Phase 41D3.2.3 may start after this acceptance record is merged.
