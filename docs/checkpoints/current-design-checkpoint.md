@@ -48412,3 +48412,93 @@ Active blockers remain:
 - `PRODUCTION_GUARDIAN_SET_UNSET`
 - `PRODUCTION_PROOF_LOG_UNSET`
 - `EXTERNAL_REVIEW_INCOMPLETE`
+
+---
+
+## XXXL Phase 41E.2 Offset-Table Alias Hardening — External Acceptance
+
+Date: 2026-07-02
+
+Accepted main checkpoint:
+
+`43e6860 Merge XXXL phase 41E offset table alias hardening`
+
+Acceptance record:
+
+`docs/reviews/xxxl-phase-41e-2-offset-table-alias-hardening-external-acceptance.md`
+
+External review status:
+
+- Theo: ACCEPT
+- Audit Demon: ACCEPT
+- Required fixes: none
+- Blocking risks: none
+- Scope violations: no
+- Offset-table alias hardening acceptable: yes
+- Forbidden operations detected: no
+- Trust-sensitive boundary drift: no
+- Next phase allowed: yes
+
+Accepted strict rule:
+
+The parser now requires:
+
+- `signature_offset >= ED25519_SINGLE_SIGNATURE_OFFSET_TABLE_LEN`;
+- `public_key_offset >= ED25519_SINGLE_SIGNATURE_OFFSET_TABLE_LEN`;
+- `message_offset >= ED25519_SINGLE_SIGNATURE_OFFSET_TABLE_LEN`.
+
+For the current single-signature layout:
+
+- `ED25519_SINGLE_SIGNATURE_OFFSET_TABLE_LEN == 16`.
+
+Accepted failure mode:
+
+If any parsed range starts inside Ed25519 header/offset-table bytes `[0,16)`, parser fails closed with:
+
+- `ParsedRangeAliasesOffsetTable`.
+
+Accepted test coverage:
+
+- signature range aliasing offset table;
+- public key range aliasing offset table;
+- message range aliasing offset table.
+
+Phase 41E completion:
+
+- 41E.0 — Ed25519 byte parsing plan;
+- 41E.1 — Ed25519 byte parsing code boundary;
+- 41E.2 — offset-table alias hardening.
+
+Still forbidden:
+
+- Ed25519 cryptographic verification;
+- signature validity acceptance;
+- guardian validity acceptance;
+- cryptographic signature proof acceptance;
+- verification evidence acceptance;
+- quorum counting;
+- authorization;
+- replay writes;
+- processed event marking;
+- account mutation;
+- CPI;
+- `invoke_signed`;
+- SPL Token `mint_to`;
+- process instruction handler;
+- live route unlock.
+
+Active blockers remain:
+
+- `X1_TESTNET_PROGRAM_DEPLOYED_RUNTIME_LOCKED`
+- `PRODUCTION_PROGRAM_ID_UNSET`
+- `LIVE_ROUTE_DISABLED`
+- `SPL_CPI_EXECUTION_DISABLED`
+- `PRODUCTION_GUARDIAN_SET_UNSET`
+- `PRODUCTION_PROOF_LOG_UNSET`
+- `EXTERNAL_REVIEW_INCOMPLETE`
+
+Next recommended phase:
+
+- Phase 41F.0 — Ed25519 cryptographic verification plan.
+
+Phase 41F.0 must be docs-only first and must remain under separate review before any code begins.
