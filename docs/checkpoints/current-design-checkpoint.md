@@ -48815,3 +48815,93 @@ Active blockers remain:
 Next gate:
 
 External review required before Phase 41F.2 planning begins.
+
+---
+
+## XXXL Phase 41F.1 Checked Ed25519 Byte Extraction Boundary — External Acceptance
+
+Date: 2026-07-02
+
+Accepted main checkpoint:
+
+`698b1df Merge XXXL phase 41F checked Ed25519 byte extraction boundary`
+
+Acceptance record:
+
+`docs/reviews/xxxl-phase-41f-1-checked-byte-extraction-boundary-external-acceptance.md`
+
+External review status:
+
+- Theo: ACCEPT
+- Audit Demon: ACCEPT WITH NOTES
+- Required fixes: none
+- Blocking risks: none
+- Scope violations: no
+- Checked extraction acceptable: yes
+- Message borrow/no-copy acceptable: yes
+- Forbidden operations detected: no
+- Signature verification drift: no
+- Trust-sensitive boundary drift: no
+- Next phase allowed: yes
+
+Accepted scope:
+
+- consume Phase 41E parsed offsets;
+- consume already loaded prior instruction data;
+- require `Ed25519InstructionBytesParsed`;
+- require matched instruction index;
+- require parsed offsets;
+- find matching loaded prior instruction by index;
+- re-check loaded entry is runtime-data-only;
+- check loaded data length matches the Phase 41E parse result;
+- extract signature as checked `&[u8; 64]`;
+- extract public key as checked `&[u8; 32]`;
+- extract message as borrowed checked `&[u8]`;
+- avoid attacker-sized message `Vec` copy.
+
+Demon non-blocking notes to carry forward:
+
+1. Clarify whether `SAFETY_FLAGS` are cumulative pipeline capability flags or local module capability flags.
+2. Consider adding a program-id defense-in-depth re-check in the 41F extraction/verification boundary.
+
+Still forbidden:
+
+- local cryptographic verification;
+- native Ed25519 verification establishment;
+- signature validity acceptance;
+- proof acceptance;
+- verification evidence acceptance;
+- guardian validity acceptance;
+- guardian set membership acceptance;
+- quorum counting;
+- authorization;
+- replay writes;
+- processed event marking;
+- account mutation;
+- CPI;
+- `invoke_signed`;
+- SPL Token `mint_to`;
+- process instruction handler;
+- live route unlock.
+
+Active blockers remain:
+
+- `X1_TESTNET_PROGRAM_DEPLOYED_RUNTIME_LOCKED`
+- `PRODUCTION_PROGRAM_ID_UNSET`
+- `LIVE_ROUTE_DISABLED`
+- `SPL_CPI_EXECUTION_DISABLED`
+- `PRODUCTION_GUARDIAN_SET_UNSET`
+- `PRODUCTION_PROOF_LOG_UNSET`
+- `EXTERNAL_REVIEW_INCOMPLETE`
+
+Next gate:
+
+Phase 41F.2 — Ed25519 signature verification boundary plan.
+
+Before any signature-verification flag is flipped, future work must address:
+
+- cumulative-vs-local `SAFETY_FLAGS` semantics;
+- Model A soundness documentation;
+- self-reference binding preservation;
+- signature validity separation from proof/evidence/guardian/quorum/auth;
+- program-id defense-in-depth re-check consideration.
