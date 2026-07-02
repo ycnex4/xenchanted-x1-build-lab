@@ -46857,3 +46857,66 @@ Next action:
 
 - request external review of Phase 41D3.2.0 plan;
 - do not start 41D3.2.1 code until the plan is accepted.
+
+---
+
+## XXXL Phase 41D3.2.0 Prior Enumeration / Checked Loading Plan — External Acceptance
+
+Date: 2026-07-02
+
+Main checkpoint:
+
+`d64a4e4 Merge XXXL phase 41D3 prior enumeration loading plan`
+
+Acceptance record:
+
+`docs/reviews/xxxl-phase-41d3-2-0-prior-enumeration-loading-plan-external-acceptance.md`
+
+External review status:
+
+- Theo: ACCEPT
+- Audit Demon: ACCEPT
+- Required fixes: none
+- Blocking risks: none
+
+Accepted split:
+
+- Phase 41D3.2.1 — prior index range enumeration only;
+- Phase 41D3.2.2 — checked prior instruction loading via `load_instruction_at_checked`;
+- Phase 41D3.2.3 — prefilter + Phase 41C3 descriptors + explicit same/later reject.
+
+Accepted constraints:
+
+- `current_index == 0 => empty prior range`;
+- prior means strictly `< current_index`;
+- same-index and later-index reject remains explicit defense-in-depth for 41D3.2.3;
+- `load_instruction_at_checked` is the only allowed checked loading helper for the loading sub-step;
+- raw Instructions sysvar byte parsing remains forbidden;
+- unchecked loading remains forbidden;
+- `load_instruction` remains forbidden;
+- descriptors do not mean proof/evidence/auth;
+- proof/evidence/quorum/auth/replay/CPI/mint/live route remain closed.
+
+Active blockers remain:
+
+- `X1_TESTNET_PROGRAM_DEPLOYED_RUNTIME_LOCKED`
+- `PRODUCTION_PROGRAM_ID_UNSET`
+- `LIVE_ROUTE_DISABLED`
+- `SPL_CPI_EXECUTION_DISABLED`
+- `PRODUCTION_GUARDIAN_SET_UNSET`
+- `PRODUCTION_PROOF_LOG_UNSET`
+- `EXTERNAL_REVIEW_INCOMPLETE`
+
+Next allowed code sub-step:
+
+Phase 41D3.2.1 may start after this record is merged.
+
+41D3.2.1 scope:
+
+- accept checked current index from 41D3.1;
+- construct bounded prior range `0..current_index`;
+- `current_index == 0` yields empty range;
+- no loading;
+- no sysvar parsing;
+- no descriptors;
+- no flag flips.
