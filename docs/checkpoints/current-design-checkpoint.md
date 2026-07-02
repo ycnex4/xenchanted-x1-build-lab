@@ -50795,3 +50795,51 @@ Allowed companion update:
 Forbidden:
 
 No runtime account loading, AccountInfo, sysvar loading, quorum, auth, replay, mutation, CPI, mint, handler, or live route.
+
+---
+
+## XXXL Phase 41H Guardian Membership Validation Boundary — Acceptance
+
+Date: 2026-07-03
+
+Accepted main:
+
+`801f26a Merge XXXL phase 41H guardian membership validation boundary`
+
+Acceptance record:
+
+`docs/reviews/xxxl-phase-41h-guardian-membership-validation-boundary-acceptance.md`
+
+Final verdict:
+
+- Theo: ACCEPT
+- Audit Demon: ACCEPT WITH NOTES
+- Required fixes: none
+- Blocking risks: none for the current non-authorizing boundary model
+
+41H code boundary is accepted as:
+
+`verified_signer_public_key ∈ authoritative_guardian_set`
+
+Mandatory note:
+
+The current 41H function accepts `PayloadHashBindingEstablished` and `DecodedGuardianPayloadRaw` as separate inputs.
+
+Because the 41G success type is only a status marker, the decoded payload is not yet internally proven to be decoded from the same raw payload bytes that were hash-bound by 41G.
+
+Next gate is not 41I yet.
+
+Next gate:
+
+Phase 41H.1 — Decoded Payload Binding Hardening.
+
+Preferred closure:
+
+- 41H receives raw payload bytes;
+- 41H internally decodes them;
+- 41H uses only the internally decoded payload for guardian set ID linkage;
+- free caller-provided decoded payload is removed from the 41H public boundary.
+
+Forbidden surfaces remain forbidden:
+
+No runtime account loading, AccountInfo, sysvar loading, quorum, auth, replay, mutation, CPI, mint, handler, or live route.
