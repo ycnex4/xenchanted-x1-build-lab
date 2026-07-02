@@ -47461,3 +47461,98 @@ Active blockers remain:
 - `PRODUCTION_GUARDIAN_SET_UNSET`
 - `PRODUCTION_PROOF_LOG_UNSET`
 - `EXTERNAL_REVIEW_INCOMPLETE`
+
+---
+
+## XXXL Phase 41D3.2.3.0 Prefilter + Phase 41C3 Candidate Descriptor Plan
+
+Date: 2026-07-02
+
+Parent checkpoint:
+
+`0cb2478 Merge XXXL phase 41D3 checked prior loading acceptance record`
+
+Type:
+
+- docs-only planning checkpoint;
+- no runtime code changed.
+
+Plan document:
+
+`docs/xxxl/xxxl-phase-41d3-2-3-0-prefilter-descriptor-plan.md`
+
+Review request:
+
+`docs/reviews/xxxl-phase-41d3-2-3-0-prefilter-descriptor-plan-review-request.md`
+
+Planned Phase 41D3.2.3 boundary:
+
+- consume loaded prior instructions from Phase 41D3.2.2;
+- process only loaded entries marked runtime-data-only;
+- prefilter unrelated loaded prior instructions;
+- identify Ed25519 program-id candidates structurally;
+- construct Phase 41C3 candidate descriptors;
+- explicitly reject same-index candidates;
+- explicitly reject later-index candidates;
+- keep descriptors non-authorizing;
+- allow `locates_prior_ed25519_instruction: true` only as structural candidate location.
+
+Important trust boundary:
+
+`locates_prior_ed25519_instruction: true` must not mean evidence/proof/auth.
+
+It may mean only:
+
+- prior Ed25519 program-id instruction structurally located;
+- non-authorizing candidate descriptor created.
+
+It must not mean:
+
+- Ed25519 signature verified;
+- cryptographic signature proof accepted;
+- verification evidence accepted;
+- guardian quorum counted;
+- execution authorized;
+- replay registry writable;
+- runtime state mutable.
+
+Streaming / heap guidance:
+
+- prefer streaming `load -> prefilter -> discard non-candidates`;
+- avoid cloning full instruction data into descriptors unless bounded and justified;
+- store only minimal candidate descriptor metadata where possible.
+
+Allowed new flag after code and review:
+
+- `locates_prior_ed25519_instruction: true`.
+
+Must remain false:
+
+- cryptographic verification;
+- signature proof acceptance;
+- verification evidence acceptance;
+- quorum counting;
+- authorization;
+- replay writes;
+- processed event marking;
+- account mutation;
+- CPI;
+- `invoke_signed`;
+- SPL Token `mint_to`;
+- handler;
+- live route unlock.
+
+Active blockers remain:
+
+- `X1_TESTNET_PROGRAM_DEPLOYED_RUNTIME_LOCKED`
+- `PRODUCTION_PROGRAM_ID_UNSET`
+- `LIVE_ROUTE_DISABLED`
+- `SPL_CPI_EXECUTION_DISABLED`
+- `PRODUCTION_GUARDIAN_SET_UNSET`
+- `PRODUCTION_PROOF_LOG_UNSET`
+- `EXTERNAL_REVIEW_INCOMPLETE`
+
+Next action:
+
+- request external review of Phase 41D3.2.3.0 plan;
+- do not start Phase 41D3.2.3 code until the plan is accepted.
