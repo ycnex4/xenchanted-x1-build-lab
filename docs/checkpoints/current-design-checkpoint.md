@@ -46800,3 +46800,60 @@ Still forbidden:
 - SPL Token `mint_to`;
 - runtime handler;
 - live route unlock.
+
+---
+
+## XXXL Phase 41D3.2.0 Prior Enumeration / Checked Loading Plan
+
+Date: 2026-07-02
+
+Parent checkpoint:
+
+`e52d8ac Merge XXXL phase 41D3 current index external acceptance record`
+
+Type:
+
+- docs-only planning checkpoint;
+- no runtime code changed.
+
+Plan document:
+
+`docs/xxxl/xxxl-phase-41d3-2-0-prior-enumeration-loading-plan.md`
+
+Review request:
+
+`docs/reviews/xxxl-phase-41d3-2-0-prior-enumeration-loading-plan-review-request.md`
+
+Planned split:
+
+- Phase 41D3.2.1 — prior index range enumeration only;
+- Phase 41D3.2.2 — checked prior instruction loading via `load_instruction_at_checked`;
+- Phase 41D3.2.3 — prefilter + Phase 41C3 descriptors + explicit same/later reject.
+
+Important carry-over from Phase 41D3.1 acceptance:
+
+- `current_index == 0` must remain fail-closed for prior lookup;
+- no prior instruction can exist before index `0`;
+- index data is ordering-only.
+
+Still forbidden:
+
+- raw Instructions sysvar byte parsing;
+- unchecked instruction loading;
+- `load_instruction`;
+- cryptographic verification;
+- verification evidence acceptance;
+- quorum counting;
+- authorization;
+- replay writes;
+- account mutation;
+- CPI;
+- `invoke_signed`;
+- SPL Token `mint_to`;
+- handler;
+- live route unlock.
+
+Next action:
+
+- request external review of Phase 41D3.2.0 plan;
+- do not start 41D3.2.1 code until the plan is accepted.
