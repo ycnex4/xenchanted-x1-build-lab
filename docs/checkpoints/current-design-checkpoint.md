@@ -50058,3 +50058,85 @@ Carry-forward requirements for 41G.2:
 - Stage-1 / Phase 33 / Phase 34 vector parity must be preserved.
 
 Phase 41G.2 may begin under a separate reviewed boundary.
+
+---
+
+## XXXL Phase 41G.2 Payload Hash Binding Plan
+
+Date: 2026-07-03
+
+Parent gate:
+
+`c89fc59 Merge XXXL phase 41G payload evidence shape acceptance`
+
+Plan:
+
+`docs/xxxl/xxxl-phase-41g-2-payload-hash-binding-plan.md`
+
+Checkpoint:
+
+`docs/checkpoints/xxxl-x1-testnet-local-runtime-skeleton-phase-41g-2-payload-hash-binding-plan.md`
+
+Review request:
+
+`docs/reviews/xxxl-phase-41g-2-payload-hash-binding-plan-review-request.md`
+
+Scope:
+
+Docs-only planning checkpoint.
+
+No runtime code.
+
+No verification logic change.
+
+No guardian/quorum/auth/replay/mutation/CPI/mint/live behavior enabled.
+
+Purpose:
+
+Plan the narrow hash binding relation:
+
+`signed_message_bytes == compute_guardian_payload_hash(raw_payload_bytes)`
+
+Critical requirements:
+
+- reuse `raw_payload.rs`;
+- reuse `canonical_payload.rs`;
+- use 32-byte domain separator hash;
+- do not prepend literal UTF-8 label bytes directly;
+- do not trust caller-provided hash;
+- raw payload bytes remain untrusted until hash binding succeeds;
+- structural decode proves only well-formedness.
+
+Canonical field order remains:
+
+- `message_type`;
+- `schema_version`;
+- `instruction_layout_version`;
+- `route_id`;
+- `source_chain_id`;
+- `source_token`;
+- `source_sender`;
+- `source_burn_tx_hash`;
+- `source_burn_event_index`;
+- `source_block_number`;
+- `source_block_hash`;
+- `source_finality_block`;
+- `canonical_event_key`;
+- `x1_recipient`;
+- `burned_amount`;
+- `source_chain_weight_bps`;
+- `xxxl_mint_amount`;
+- `target_mint`;
+- `guardian_set_id`;
+- `message_nonce`;
+- `expiration_slot_or_unix_ts`.
+
+Boundary:
+
+41G.2 may plan payload hash binding.
+
+41G.2 must not validate guardian membership, count quorum, authorize, write replay state, mutate accounts, CPI, mint, add handler, or unlock live route.
+
+Next gate:
+
+After external acceptance, Phase 41G.2 implementation planning may begin under a separate reviewed boundary.
