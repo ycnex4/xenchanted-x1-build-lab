@@ -46437,3 +46437,66 @@ Recommended next stage:
 - Phase 41D3 must preserve the Phase 41C3A pre-filter contract
 - Phase 41D3 must explicitly decide the same/later fully-matching Ed25519 anomaly question
 - Phase 41D3 must not accept verification evidence
+
+# Latest XXXL Phase 41D2 external acceptance
+
+Review file:
+
+- `docs/reviews/xxxl-phase-41d2-current-identity-runtime-boundary-external-acceptance.md`
+
+Reviewed main:
+
+- `e64e5c6 Merge XXXL phase 41D2 current identity runtime boundary`
+
+Verdicts:
+
+- Demon: `ACCEPT`
+- Theo: `ACCEPT`
+
+Required fixes:
+
+- none
+
+Blocking risks:
+
+- none
+
+Gate result:
+
+- Phase 41D2 external review gate is closed
+- Phase 41D3 may start
+
+Theo confirmed:
+
+- Phase 41D2 is limited to current-instruction identity population
+- identity is derived from entrypoint `program_id` and `instruction_data`
+- no `load_instruction*` calls are introduced
+- no raw Instructions sysvar parsing is introduced
+- no prior-instruction enumeration is introduced
+- no Phase 41C3 candidate descriptor construction is introduced
+- discriminator checking is length-safe
+- short instruction data maps to inconsistency, not panic
+- missing or empty identity inputs map to `MissingCurrentInstructionIdentity`
+- valid current identity maps only to `CurrentInstructionIdentityBound`
+- implementation is panic-safe
+- only the intended current-identity runtime flag is flipped
+- all trust-sensitive flags remain false
+
+Minimum safe Phase 41D3 boundary:
+
+- real prior-instruction enumeration via Instructions sysvar
+- checked instruction loading through `load_instruction_at_checked` or reviewed equivalent
+- prefiltering unrelated instructions
+- Phase 41C3 candidate descriptor construction
+- explicit same/later fully-matching Ed25519 anomaly decision
+- no Ed25519 cryptographic verification
+- no verification evidence acceptance
+- no guardian quorum counting
+- no authorization
+- no replay writes
+- no account mutation
+- no CPI
+- no `invoke_signed`
+- no SPL Token `mint_to`
+- no live route unlock
+- no handler or execution flag enablement
