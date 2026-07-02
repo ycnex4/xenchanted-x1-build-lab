@@ -48345,3 +48345,70 @@ Next work must be a separate reviewed boundary.
 Recommended immediate next step:
 
 - offset-table alias hardening before future Ed25519 cryptographic verification.
+
+---
+
+## XXXL Phase 41E.2 Offset-Table Alias Hardening
+
+Date: 2026-07-02
+
+Parent checkpoint:
+
+`ac7fcb3 Merge XXXL phase 41E Ed25519 byte parsing boundary acceptance record`
+
+Type:
+
+- parser hardening;
+- no cryptographic verification;
+- no proof/evidence/quorum/auth/replay/mutation/CPI/mint/live route.
+
+Runtime module modified:
+
+`programs/xxxl-svm/src/verifier/ed25519_instruction_byte_parsing_boundary.rs`
+
+Checkpoint:
+
+`docs/checkpoints/xxxl-x1-testnet-local-runtime-skeleton-phase-41e-2-offset-table-alias-hardening.md`
+
+Review request:
+
+`docs/reviews/xxxl-phase-41e-2-offset-table-alias-hardening-review-request.md`
+
+Implemented:
+
+- added `ParsedRangeAliasesOffsetTable`;
+- added `rejects_offset_table_aliasing`;
+- require:
+  - `signature_offset >= ED25519_SINGLE_SIGNATURE_OFFSET_TABLE_LEN`;
+  - `public_key_offset >= ED25519_SINGLE_SIGNATURE_OFFSET_TABLE_LEN`;
+  - `message_offset >= ED25519_SINGLE_SIGNATURE_OFFSET_TABLE_LEN`;
+- reject ranges that alias Ed25519 header/offset-table `[0, 16)`;
+- added tests for signature/public-key/message alias rejection.
+
+Still forbidden:
+
+- Ed25519 cryptographic verification;
+- signature validity acceptance;
+- guardian validity acceptance;
+- cryptographic signature proof acceptance;
+- verification evidence acceptance;
+- quorum counting;
+- authorization;
+- replay writes;
+- processed event marking;
+- account mutation;
+- CPI;
+- `invoke_signed`;
+- SPL Token `mint_to`;
+- process instruction handler;
+- live route unlock.
+
+Active blockers remain:
+
+- `X1_TESTNET_PROGRAM_DEPLOYED_RUNTIME_LOCKED`
+- `PRODUCTION_PROGRAM_ID_UNSET`
+- `LIVE_ROUTE_DISABLED`
+- `SPL_CPI_EXECUTION_DISABLED`
+- `PRODUCTION_GUARDIAN_SET_UNSET`
+- `PRODUCTION_PROOF_LOG_UNSET`
+- `EXTERNAL_REVIEW_INCOMPLETE`
