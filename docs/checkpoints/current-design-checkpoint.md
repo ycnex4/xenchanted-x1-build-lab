@@ -50569,3 +50569,59 @@ The live-wiring Model A precondition from Phase 41F.2 remains a future high-risk
 Next gate:
 
 Phase 41H guardian validation planning may begin under a separate reviewed boundary.
+
+---
+
+## XXXL Phase 41H Guardian Membership Validation Plan
+
+Date: 2026-07-03
+
+Parent gate:
+
+`f910152 Merge XXXL phase 41G payload binding focused audit`
+
+Plan:
+
+`docs/xxxl/xxxl-phase-41h-guardian-membership-validation-plan.md`
+
+Checkpoint:
+
+`docs/checkpoints/xxxl-x1-testnet-local-runtime-skeleton-phase-41h-guardian-membership-validation-plan.md`
+
+Review request:
+
+`docs/reviews/xxxl-phase-41h-guardian-membership-validation-plan-review-request.md`
+
+Scope:
+
+Docs-only planning checkpoint.
+
+No `.rs` changes.
+
+No runtime behavior change.
+
+No quorum/auth/replay/mutation/CPI/mint/live behavior enabled.
+
+Purpose:
+
+Plan the next narrow trust boundary:
+
+verified signer public key → guardian set membership.
+
+Core rule:
+
+41H is membership validation only.
+
+41H is not quorum authorization.
+
+41H is not replay protection.
+
+41H is not mint execution.
+
+Existing Phase 35 structural guardian quorum verifier may inform structural checks, but it must not be treated as cryptographic proof acceptance or execution authorization.
+
+Next gate:
+
+External review of the 41H guardian membership validation plan.
+
+After acceptance, create the 41H plan acceptance record and then a separate implementation plan.
