@@ -49635,3 +49635,88 @@ Future live wiring must receive a separate high-risk audit.
 Message payload correctness remains Phase 41G work.
 
 Phase 41G may begin under a separate reviewed boundary.
+
+---
+
+## XXXL Phase 41G.0 Proof / Evidence / Payload Binding Plan
+
+Date: 2026-07-02
+
+Parent gate:
+
+`72951e8 Merge XXXL phase 41F focused crypto boundary audit acceptance`
+
+Plan:
+
+`docs/xxxl/xxxl-phase-41g-0-proof-evidence-payload-binding-plan.md`
+
+Checkpoint:
+
+`docs/checkpoints/xxxl-x1-testnet-local-runtime-skeleton-phase-41g-0-proof-evidence-payload-binding-plan.md`
+
+Review request:
+
+`docs/reviews/xxxl-phase-41g-0-proof-evidence-payload-binding-plan-review-request.md`
+
+Scope:
+
+Docs-only planning checkpoint.
+
+No runtime code.
+
+No verification logic change.
+
+Purpose:
+
+Plan the next layer after Phase 41F.
+
+Phase 41F established that native Ed25519 verification was already performed by the SVM.
+
+Phase 41G must establish that the verified message bytes are bound to the expected gateway payload hash.
+
+Preferred model:
+
+- guardians sign expected gateway payload hash bytes;
+- Phase 41G checks `signed_message_bytes == expected_gateway_payload_hash_bytes`;
+- expected hash is planned as `keccak256(canonical_gateway_payload_bytes)`.
+
+Critical separation:
+
+Phase 41G payload binding remains separate from:
+
+- guardian validity;
+- guardian set membership;
+- quorum;
+- authorization;
+- replay writes;
+- mutation;
+- CPI;
+- mint;
+- handler;
+- live route.
+
+Canonical fields carried forward:
+
+- `messageType`;
+- `schemaVersion`;
+- `routeId`;
+- `sourceChainId`;
+- `sourceToken`;
+- `sourceSender`;
+- `sourceBurnTxHash`;
+- `sourceBurnEventIndex`;
+- `sourceBlockNumber`;
+- `sourceBlockHash`;
+- `sourceNonce`;
+- `canonicalEventKey`;
+- `x1RecipientHash`;
+- `burnedAmount`;
+- `sourceChainWeightBps`;
+- `xxxlMintAmount`;
+- `mintToken`;
+- `deadlineOrFinalityBlock`;
+- `messageNonce`.
+
+Next gate:
+
+After external acceptance, Phase 41G.1 payload evidence shape may begin under a separate reviewed boundary.
