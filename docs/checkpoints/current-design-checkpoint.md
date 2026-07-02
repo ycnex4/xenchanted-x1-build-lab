@@ -49472,3 +49472,57 @@ Future live-wiring must ensure the 41F.2 boundary is called only from an actuall
 Next gate:
 
 Focused crypto-boundary audit can proceed before Phase 41G.
+
+---
+
+## XXXL Phase 41F Focused Crypto-Boundary Audit
+
+Date: 2026-07-02
+
+Current main checkpoint:
+
+`2efb5aa Merge XXXL phase 41F extraction safety flags acceptance record`
+
+Audit scope:
+
+`docs/xxxl/xxxl-phase-41f-focused-crypto-boundary-audit-scope.md`
+
+Checkpoint:
+
+`docs/checkpoints/xxxl-x1-testnet-local-runtime-skeleton-phase-41f-focused-crypto-boundary-audit.md`
+
+Review request:
+
+`docs/reviews/xxxl-phase-41f-focused-crypto-boundary-audit-review-request.md`
+
+Scope:
+
+Audit-only checkpoint before Phase 41G.
+
+No code changes.
+
+Audit goal:
+
+Close Phase 41F as a focused crypto-boundary.
+
+The audit must confirm:
+
+- Model A abort-before-current soundness;
+- SVM is the verifier;
+- XXXL only establishes that SVM verified;
+- self-reference binding is preserved;
+- checked extraction is bounded and borrowed;
+- program-id re-check exists;
+- statuses are model-attributed;
+- SAFETY_FLAGS are cumulative and consistent across Phase 41F;
+- message payload correctness remains downstream;
+- no proof/evidence/guardian/quorum/auth drift;
+- no replay/mutation/CPI/mint/live drift;
+- active blockers remain;
+- live-wiring precondition is carried forward.
+
+Main forward risk:
+
+Model A is load-bearing only when the Phase 41F.2 boundary is called from an actually executing runtime path with `loading_result` derived from the real Instructions sysvar.
+
+Phase 41G must not begin until this focused crypto-boundary audit is externally accepted.
