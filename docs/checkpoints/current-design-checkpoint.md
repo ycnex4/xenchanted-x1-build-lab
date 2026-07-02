@@ -50625,3 +50625,63 @@ Next gate:
 External review of the 41H guardian membership validation plan.
 
 After acceptance, create the 41H plan acceptance record and then a separate implementation plan.
+
+---
+
+## XXXL Phase 41H Guardian Membership Validation Plan — Acceptance
+
+Date: 2026-07-03
+
+Accepted main:
+
+`930c940 Merge XXXL phase 41H guardian membership validation plan`
+
+Acceptance record:
+
+`docs/reviews/xxxl-phase-41h-guardian-membership-validation-plan-acceptance.md`
+
+Final verdict:
+
+- Theo: ACCEPT
+- Audit Demon: ACCEPT WITH NOTES
+- Required fixes: none at plan stage
+- Blocking risks: none at plan stage
+- Phase 41H planning accepted: yes
+
+Accepted scope:
+
+41H is guardian membership validation only.
+
+41H is not quorum authorization.
+
+41H is not replay protection.
+
+41H is not mint execution.
+
+Mandatory downstream implementation-plan note:
+
+Membership validation is `verified_pubkey ∈ guardian_set`.
+
+Both operands require trusted provenance.
+
+The verified public key must come from the reviewed Ed25519 evidence path.
+
+The guardian set, guardian set ID, threshold, and guardian public keys must come from an authoritative program-controlled / on-chain source.
+
+They must never be trusted from caller instruction data.
+
+The 41H implementation plan must add:
+
+- rejected precondition for unauthenticated / caller-supplied guardian set;
+- explicit error kind such as `UnauthenticatedGuardianSet` or `CallerSuppliedGuardianSetRejected`;
+- test proving caller-supplied guardian set cannot pass membership validation.
+
+No `.rs` implementation may begin until this is closed in the implementation plan.
+
+Accepted taxonomy:
+
+Guardian membership does not mean proof acceptance, verification evidence acceptance, quorum, authorization, replay safety, mutation, CPI, mint, handler, or live route.
+
+Next gate:
+
+Phase 41H guardian membership validation implementation plan.
