@@ -112,85 +112,118 @@ Implementation must separately confirm:
 
 ## Canonical Gateway Payload Fields
 
-Phase 41G payload binding must bind the signed payload hash to the accepted gateway message fields.
+Phase 41G payload binding must use the authoritative 21-field canonical order from:
 
-Canonical field order carried forward from Stage 1:
+`programs/xxxl-svm/src/verifier/raw_payload.rs`
 
-1. `messageType`
-2. `schemaVersion`
-3. `routeId`
-4. `sourceChainId`
-5. `sourceToken`
-6. `sourceSender`
-7. `sourceBurnTxHash`
-8. `sourceBurnEventIndex`
-9. `sourceBlockNumber`
-10. `sourceBlockHash`
-11. `sourceNonce`
-12. `canonicalEventKey`
-13. `x1RecipientHash`
-14. `burnedAmount`
-15. `sourceChainWeightBps`
-16. `xxxlMintAmount`
-17. `mintToken`
-18. `deadlineOrFinalityBlock`
-19. `messageNonce`
+Authoritative Rust constant:
+
+`RAW_PAYLOAD_PHASE_23_FIELD_ORDER`
+
+The canonical field count is 21.
+
+Canonical field order:
+
+1. `message_type`
+2. `schema_version`
+3. `instruction_layout_version`
+4. `route_id`
+5. `source_chain_id`
+6. `source_token`
+7. `source_sender`
+8. `source_burn_tx_hash`
+9. `source_burn_event_index`
+10. `source_block_number`
+11. `source_block_hash`
+12. `source_finality_block`
+13. `canonical_event_key`
+14. `x1_recipient`
+15. `burned_amount`
+16. `source_chain_weight_bps`
+17. `xxxl_mint_amount`
+18. `target_mint`
+19. `guardian_set_id`
+20. `message_nonce`
+21. `expiration_slot_or_unix_ts`
 
 Phase 41G must not silently reorder, omit, rename, or reinterpret fields.
 
+The previous 19-field planning list is superseded.
+
+Important corrections:
+
+- `instruction_layout_version` is required;
+- `guardian_set_id` is required;
+- `source_finality_block` is required and distinct from expiration;
+- `expiration_slot_or_unix_ts` is required and distinct from source finality.
+
 ## Binding Requirements
 
-Phase 41G must bind at least:
+Phase 41G must bind all 21 canonical payload fields.
 
-- route;
-- source chain;
-- source token;
-- source sender;
-- burn transaction hash;
-- burn event index;
-- source block number;
-- source block hash;
-- source nonce;
-- canonical event key;
-- X1 recipient hash;
-- burned amount;
-- chain weight;
-- XXXL mint amount;
-- target mint token;
-- deadline or finality block;
-- message nonce.
+Required bound fields:
+
+- `message_type`;
+- `schema_version`;
+- `instruction_layout_version`;
+- `route_id`;
+- `source_chain_id`;
+- `source_token`;
+- `source_sender`;
+- `source_burn_tx_hash`;
+- `source_burn_event_index`;
+- `source_block_number`;
+- `source_block_hash`;
+- `source_finality_block`;
+- `canonical_event_key`;
+- `x1_recipient`;
+- `burned_amount`;
+- `source_chain_weight_bps`;
+- `xxxl_mint_amount`;
+- `target_mint`;
+- `guardian_set_id`;
+- `message_nonce`;
+- `expiration_slot_or_unix_ts`.
+
+No field may be omitted.
+
+No field may be renamed without an explicit mapping and external review.
+
+The signed message hash preimage is order-sensitive, so the field order must exactly match `RAW_PAYLOAD_PHASE_23_FIELD_ORDER`.
 
 ## Route Binding
 
-The payload must bind:
+The payload must bind route and asset identity using canonical fields including:
 
-- `routeId`;
-- `sourceChainId`;
-- `sourceToken`;
-- `mintToken`.
+- `route_id`;
+- `source_chain_id`;
+- `source_token`;
+- `target_mint`.
 
 This prevents a signature for one route or asset from being replayed as another route or asset.
 
 ## Burn Event Binding
 
-The payload must bind:
+The payload must bind the source burn event using canonical fields including:
 
-- `sourceBurnTxHash`;
-- `sourceBurnEventIndex`;
-- `sourceBlockNumber`;
-- `sourceBlockHash`;
-- `sourceNonce`;
-- `canonicalEventKey`.
+- `source_burn_tx_hash`;
+- `source_burn_event_index`;
+- `source_block_number`;
+- `source_block_hash`;
+- `source_finality_block`;
+- `canonical_event_key`.
 
 This prevents a signature over one burn event from being reused for a different burn event.
+
+`source_finality_block` is a distinct canonical field and must not be collapsed into expiration.
 
 ## Recipient Binding
 
 The payload must bind:
 
-- `x1RecipientHash`.
+- `x1_recipient`.
 
-Phase 41G should compare only the expected recipient hash at this layer.
+Phase 41G should compare only the expected recipient field at this layer.
 
 It must not yet create or mutate recipient token accounts.
 
@@ -200,29 +233,62 @@ Recipient account validation, associated token account handling, and mint recipi
 
 The payload must bind:
 
-- `burnedAmount`;
-- `sourceChainWeightBps`;
-- `xxxlMintAmount`.
+- `burned_amount`;
+- `source_chain_weight_bps`;
+- `xxxl_mint_amount`.
 
 Phase 41G must not authorize minting.
 
 It only proves that the verified signed payload committed to the expected amounts.
 
-## Finality / Expiration Binding
+## Guardian Set ID Binding
 
 The payload must bind:
 
-- `deadlineOrFinalityBlock`.
+- `guardian_set_id`.
+
+This is required even though Phase 41G must not validate guardian set membership.
+
+Purpose:
+
+- bind the signed payload to the intended guardian set;
+- prevent replay of signatures across guardian set rotation;
+- preserve a clean boundary between payload binding and future guardian validation.
+
+Phase 41G may prove that `guardian_set_id` is part of the signed payload hash.
+
+It must not decide whether the signing public key belongs to that guardian set.
+
+## Instruction Layout Version Binding
+
+The payload must bind:
+
+- `instruction_layout_version`.
+
+This prevents a signature over one payload layout from being reused under a different decoding or canonicalization layout.
+
+## Finality / Expiration Binding
+
+The canonical payload has two separate temporal fields:
+
+- `source_finality_block`;
+- `expiration_slot_or_unix_ts`.
+
+They must not be collapsed into a single field.
+
+`source_finality_block` binds the source-chain finality reference.
+
+`expiration_slot_or_unix_ts` binds the payload expiration condition.
 
 This phase may plan the binding, but it must not introduce live watcher finality acceptance unless separately reviewed.
 
-Finality source, block safety rules, and watcher proof logs remain separate infrastructure/runtime phases.
+Finality source, block safety rules, expiration interpretation, and watcher proof logs remain separate infrastructure/runtime phases.
 
 ## Message Nonce Binding
 
 The payload must bind:
 
-- `messageNonce`.
+- `message_nonce`.
 
 Message nonce binding is separate from replay write.
 
@@ -311,24 +377,33 @@ Future tests should include:
 
 - signed message length mismatch;
 - signed message hash mismatch;
-- wrong `routeId`;
-- wrong `sourceChainId`;
-- wrong `sourceToken`;
-- wrong `sourceBurnTxHash`;
-- wrong `sourceBurnEventIndex`;
-- wrong `canonicalEventKey`;
-- wrong `x1RecipientHash`;
-- wrong `burnedAmount`;
-- wrong `sourceChainWeightBps`;
-- wrong `xxxlMintAmount`;
-- wrong `mintToken`;
-- wrong `deadlineOrFinalityBlock`;
-- wrong `messageNonce`;
+- wrong `message_type`;
+- wrong `schema_version`;
+- wrong `instruction_layout_version`;
+- wrong `route_id`;
+- wrong `source_chain_id`;
+- wrong `source_token`;
+- wrong `source_sender`;
+- wrong `source_burn_tx_hash`;
+- wrong `source_burn_event_index`;
+- wrong `source_block_number`;
+- wrong `source_block_hash`;
+- wrong `source_finality_block`;
+- wrong `canonical_event_key`;
+- wrong `x1_recipient`;
+- wrong `burned_amount`;
+- wrong `source_chain_weight_bps`;
+- wrong `xxxl_mint_amount`;
+- wrong `target_mint`;
+- wrong `guardian_set_id`;
+- wrong `message_nonce`;
+- wrong `expiration_slot_or_unix_ts`;
 - field order mismatch;
 - missing field;
 - extra field;
 - invalid integer/decimal encoding;
-- malformed canonical bytes.
+- malformed canonical bytes;
+- Stage-1 vector mismatch.
 
 Each failure must be fail-closed and must not enable guardian/quorum/auth/mint.
 
@@ -393,12 +468,14 @@ External review should answer:
 2. Is payload binding correctly separated from guardian/quorum/auth?
 3. Is the preferred signed-message-equals-payload-hash model acceptable?
 4. Is `keccak256(canonical_gateway_payload_bytes)` the correct planned hash model?
-5. Is the canonical field list complete and consistent with Stage 1?
-6. Are route, burn event, recipient, amount, mint, finality, and nonce binding requirements complete?
-7. Is public key handling correctly deferred to guardian validation?
-8. Are negative cases sufficient?
-9. Are all forbidden operations still forbidden?
-10. Can Phase 41G.1 payload evidence shape begin after acceptance?
+5. Is the canonical 21-field list complete and exactly consistent with `RAW_PAYLOAD_PHASE_23_FIELD_ORDER`?
+6. Are `instruction_layout_version` and `guardian_set_id` correctly included and bound?
+7. Are `source_finality_block` and `expiration_slot_or_unix_ts` correctly separated?
+8. Are route, burn event, recipient, amount, mint, guardian-set, finality, expiration, and nonce binding requirements complete?
+9. Is public key handling correctly deferred to guardian validation?
+10. Are negative cases sufficient?
+11. Are all forbidden operations still forbidden?
+12. Can Phase 41G.1 payload evidence shape begin after acceptance?
 
 ## Next Gate
 

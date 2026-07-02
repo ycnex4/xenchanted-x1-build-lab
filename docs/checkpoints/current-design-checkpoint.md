@@ -49720,3 +49720,82 @@ Canonical fields carried forward:
 Next gate:
 
 After external acceptance, Phase 41G.1 payload evidence shape may begin under a separate reviewed boundary.
+
+---
+
+## XXXL Phase 41G.0 Canonical Payload Field Order Fix
+
+Date: 2026-07-03
+
+Parent checkpoint:
+
+`c05732d Merge XXXL phase 41G payload binding plan`
+
+Fix document:
+
+`docs/xxxl/xxxl-phase-41g-0-canonical-payload-field-order-fix.md`
+
+Reason:
+
+Audit Demon detected a blocking canonical field mismatch in the initial Phase 41G.0 plan.
+
+The plan listed 19 fields.
+
+The authoritative Rust decoder declares 21 fields in:
+
+`programs/xxxl-svm/src/verifier/raw_payload.rs`
+
+Authoritative constant:
+
+`RAW_PAYLOAD_PHASE_23_FIELD_ORDER`
+
+Correct canonical field count:
+
+21.
+
+Correct canonical field order:
+
+- `message_type`;
+- `schema_version`;
+- `instruction_layout_version`;
+- `route_id`;
+- `source_chain_id`;
+- `source_token`;
+- `source_sender`;
+- `source_burn_tx_hash`;
+- `source_burn_event_index`;
+- `source_block_number`;
+- `source_block_hash`;
+- `source_finality_block`;
+- `canonical_event_key`;
+- `x1_recipient`;
+- `burned_amount`;
+- `source_chain_weight_bps`;
+- `xxxl_mint_amount`;
+- `target_mint`;
+- `guardian_set_id`;
+- `message_nonce`;
+- `expiration_slot_or_unix_ts`.
+
+Security fixes:
+
+- add missing `instruction_layout_version`;
+- add missing `guardian_set_id`;
+- separate `source_finality_block` from `expiration_slot_or_unix_ts`;
+- update negative matrix for instruction layout version, guardian set, source finality, and expiration.
+
+Security rationale:
+
+`guardian_set_id` must be signed to prevent replay across guardian set rotation.
+
+`instruction_layout_version` must be signed to prevent layout/canonicalization replay.
+
+Scope:
+
+Docs-only fix.
+
+No runtime code.
+
+No guardian/quorum/auth/replay/mutation/CPI/mint/live behavior enabled.
+
+Phase 41G.1 remains blocked until this fix is externally accepted.
