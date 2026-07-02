@@ -49391,3 +49391,84 @@ This cleanup does not introduce proof/evidence/guardian/quorum/auth/replay/mutat
 Next gate:
 
 After review and acceptance, the focused crypto-boundary audit can proceed with consistent cumulative Phase 41F safety flag semantics.
+
+---
+
+## XXXL Phase 41F.1 SAFETY_FLAGS Cumulative Alignment — External Acceptance
+
+Date: 2026-07-02
+
+Accepted main checkpoint:
+
+`be96d3e Merge XXXL phase 41F extraction safety flags alignment`
+
+Implementation commit:
+
+`1254356 Align phase 41F extraction safety flags with cumulative semantics`
+
+Acceptance record:
+
+`docs/reviews/xxxl-phase-41f-1-safety-flags-cumulative-alignment-external-acceptance.md`
+
+External review status:
+
+- Theo: ACCEPT
+- Audit Demon: ACCEPT
+- Required fixes: none
+- Blocking risks: none
+- Scope violations: no
+- Cumulative semantics acceptable: yes
+- Upstream true flags acceptable: yes
+- Signature verification still false in 41F.1: yes
+- Downstream trust flags still false: yes
+- Logic changed: no
+- Trust-sensitive boundary drift: no
+- Focused audit can proceed: yes
+
+Accepted scope:
+
+Phase 41F.1 SAFETY_FLAGS cumulative alignment is semantic consistency cleanup only.
+
+Accepted flag changes:
+
+- `account_info_parser_implemented: true`;
+- `load_instruction_called: true`;
+- `load_instruction_enabled: true`;
+- `concrete_runtime_api_selected: true`;
+- `current_instruction_identity_derived_from_runtime: true`.
+
+These reflect upstream capabilities already established by earlier accepted phases.
+
+Still false in Phase 41F.1:
+
+- `ed25519_signature_verification_performed`;
+- `cryptographic_signature_proof_accepted`;
+- `verification_evidence_accepted`;
+- `quorum_counting_enabled`;
+- `authorization_enabled`;
+- `replay_write_enabled`;
+- `processed_event_marking_enabled`;
+- `account_mutation_enabled`;
+- `cpi_enabled`;
+- `invoke_signed_enabled`;
+- `spl_token_mint_to_enabled`;
+- `process_instruction_handler_added`;
+- `live_route_enabled`.
+
+No logic changed.
+
+No trust-sensitive boundary drift.
+
+Demon non-blocking note:
+
+Optionally add positive assertions for the five cumulative upstream flags inside `report_preserves_extraction_only_non_authorizing_boundary`.
+
+Carry-forward risk:
+
+The Phase 41F.2 Model A live-wiring precondition remains the main forward risk.
+
+Future live-wiring must ensure the 41F.2 boundary is called only from an actually executing runtime path with `loading_result` derived from the real Instructions sysvar.
+
+Next gate:
+
+Focused crypto-boundary audit can proceed before Phase 41G.
