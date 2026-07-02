@@ -48139,3 +48139,82 @@ Active blockers remain:
 Next phase:
 
 A narrow Phase 41E byte parsing code boundary may begin after this acceptance record is merged.
+
+---
+
+## XXXL Phase 41E.1 Ed25519 Instruction Byte Parsing Boundary
+
+Date: 2026-07-02
+
+Parent checkpoint:
+
+`e550a51 Merge XXXL phase 41E Ed25519 byte parsing plan acceptance record`
+
+Type:
+
+- code boundary;
+- non-authorizing Ed25519 instruction byte parsing only.
+
+Runtime module:
+
+`programs/xxxl-svm/src/verifier/ed25519_instruction_byte_parsing_boundary.rs`
+
+Checkpoint:
+
+`docs/checkpoints/xxxl-x1-testnet-local-runtime-skeleton-phase-41e-1-ed25519-byte-parsing-boundary.md`
+
+Review request:
+
+`docs/reviews/xxxl-phase-41e-1-ed25519-byte-parsing-boundary-review-request.md`
+
+Implemented:
+
+- consumes Phase 41D3.2.2 loaded prior instructions;
+- consumes Phase 41D3.2.3 prefilter/descriptor result;
+- gates only on:
+  - `status == PriorEd25519InstructionStructurallyLocated`;
+  - `matched_instruction_index.is_some()`;
+- does not gate on `locates_prior_ed25519_instruction`;
+- does not trust Phase 41D3.2.3 descriptor booleans as evidence;
+- parses Ed25519 instruction header and offset metadata;
+- rejects cross-instruction references;
+- does not load referenced instructions;
+- stores variable-length message as bounded indices;
+- does not copy attacker-sized message data;
+- rejects overlapping parsed byte ranges deterministically;
+- uses checked offset arithmetic;
+- keeps parsed output non-authorizing.
+
+Still not implemented:
+
+- Ed25519 cryptographic verification;
+- signature validity acceptance;
+- guardian validity acceptance;
+- proof acceptance;
+- evidence acceptance;
+- quorum counting;
+- authorization;
+- replay writes;
+- processed event marking;
+- account mutation;
+- CPI;
+- `invoke_signed`;
+- SPL Token `mint_to`;
+- handler;
+- live route unlock.
+
+Active blockers remain:
+
+- `X1_TESTNET_PROGRAM_DEPLOYED_RUNTIME_LOCKED`
+- `PRODUCTION_PROGRAM_ID_UNSET`
+- `LIVE_ROUTE_DISABLED`
+- `SPL_CPI_EXECUTION_DISABLED`
+- `PRODUCTION_GUARDIAN_SET_UNSET`
+- `PRODUCTION_PROOF_LOG_UNSET`
+- `EXTERNAL_REVIEW_INCOMPLETE`
+
+Next action:
+
+- run local validation;
+- request external review of Phase 41E.1;
+- do not start verification/proof/evidence/quorum/auth/replay/CPI/mint/live-route work before external acceptance.
