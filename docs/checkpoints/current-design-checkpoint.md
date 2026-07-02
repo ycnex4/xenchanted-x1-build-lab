@@ -50506,3 +50506,66 @@ Next gate:
 After external acceptance, create the 41G.3 focused audit record.
 
 After 41G.3 audit acceptance, Phase 41H guardian validation planning may begin under a separate reviewed boundary.
+
+---
+
+## XXXL Phase 41G.3 Payload Binding Focused Audit Record — Acceptance
+
+Date: 2026-07-03
+
+Accepted main:
+
+`8ebac43 Merge XXXL phase 41G payload binding focused audit plan`
+
+Focused audit record:
+
+`docs/reviews/xxxl-phase-41g-3-payload-binding-focused-audit-record.md`
+
+Final verdict:
+
+- Theo: ACCEPT
+- Audit Demon: ACCEPT
+- Required fixes: none
+- Blocking risks: none
+- Phase 41G.3 focused audit accepted: yes
+
+Accepted scope:
+
+Docs-only focused audit shell around the accepted 41G.2 payload hash binding boundary.
+
+No `.rs` changes.
+
+No runtime behavior change.
+
+No guardian/quorum/auth/replay/mutation/CPI/mint/live behavior enabled.
+
+Accepted coverage model:
+
+- direct 41G.2 tests cover boundary-specific failures;
+- Phase 33 raw decoder owns raw payload structural validity;
+- Phase 34 canonical payload validator owns domain-separated hash validity;
+- per-field local duplication in 41G.2 is intentionally not required.
+
+Ignored test evidence:
+
+- all ignore attrs: 11;
+- sbf/deploy-gated attrs: 10;
+- off-chain env-gated attrs: 1;
+- payload_hash_binding ignore attrs: 0;
+- all 7 payload hash binding boundary tests are active.
+
+Accepted taxonomy:
+
+Payload hash binding is not proof acceptance.
+
+Payload hash binding is not verification evidence acceptance.
+
+Payload hash binding is not guardian validation, quorum, authorization, replay safety, mutation, CPI, mint, handler, or live route.
+
+Forward risk reminder:
+
+The live-wiring Model A precondition from Phase 41F.2 remains a future high-risk audit item.
+
+Next gate:
+
+Phase 41H guardian validation planning may begin under a separate reviewed boundary.
