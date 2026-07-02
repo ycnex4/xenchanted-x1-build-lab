@@ -49560,3 +49560,78 @@ Clarification added:
 No trust boundary changes.
 
 Phase 41G remains locked until focused crypto-boundary audit acceptance is recorded.
+
+---
+
+## XXXL Phase 41F Focused Crypto-Boundary Audit — External Acceptance
+
+Date: 2026-07-02
+
+Accepted main checkpoint:
+
+`81346e2 Merge XXXL phase 41F focused audit status attribution note`
+
+Acceptance record:
+
+`docs/reviews/xxxl-phase-41f-focused-crypto-boundary-audit-external-acceptance.md`
+
+External review status:
+
+- Theo: ACCEPT
+- Audit Demon: ACCEPT
+- Required fixes: none
+- Blocking risks: none
+- Scope violations: no
+- Model A soundness acceptable: yes
+- SVM-as-verifier framing acceptable: yes
+- Live-wiring precondition captured: yes
+- Self-reference binding acceptable: yes
+- Checked extraction acceptable: yes
+- Program-id re-check acceptable: yes
+- Status attribution acceptable: yes
+- SAFETY_FLAGS taxonomy acceptable: yes
+- Message-payload deferral acceptable: yes
+- Proof/evidence/guardian/quorum/auth drift: no
+- Replay/mutation/CPI/mint/live drift: no
+- Active blockers preserved: yes
+- Phase 41G allowed after acceptance: yes
+
+Accepted boundary:
+
+Phase 41F establishes only that native Ed25519 verification was already performed by the SVM.
+
+The SVM is the verifier.
+
+XXXL only establishes that SVM verified.
+
+Phase 41F does not establish:
+
+- message payload correctness;
+- proof acceptance;
+- evidence acceptance;
+- guardian validity;
+- guardian set membership;
+- quorum;
+- authorization;
+- replay protection;
+- account mutation;
+- CPI;
+- mint;
+- handler;
+- live route.
+
+Status attribution clarification:
+
+- success status is `NativeEd25519VerificationEstablished`;
+- success is structural;
+- no misleading Model A `Ed25519SignatureValid` or `Ed25519SignatureInvalid` status is allowed.
+
+Carry-forward live-wiring precondition:
+
+Model A is load-bearing only when Phase 41F.2 is called from an actually executing runtime path with `loading_result` derived from the real Instructions sysvar.
+
+Future live wiring must receive a separate high-risk audit.
+
+Message payload correctness remains Phase 41G work.
+
+Phase 41G may begin under a separate reviewed boundary.
