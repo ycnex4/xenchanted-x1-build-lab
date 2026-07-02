@@ -50235,3 +50235,86 @@ Accepted boundary:
 41G.2 must not validate guardian membership, count quorum, authorize, write replay state, mutate accounts, CPI, mint, add handler, or unlock live route.
 
 Phase 41G.2 implementation planning may begin under a separate reviewed boundary.
+
+---
+
+## XXXL Phase 41G.2 Payload Hash Binding Implementation Plan
+
+Date: 2026-07-03
+
+Parent gate:
+
+`0825dad Merge XXXL phase 41G payload hash binding plan acceptance`
+
+Plan:
+
+`docs/xxxl/xxxl-phase-41g-2-payload-hash-binding-implementation-plan.md`
+
+Checkpoint:
+
+`docs/checkpoints/xxxl-x1-testnet-local-runtime-skeleton-phase-41g-2-payload-hash-binding-implementation-plan.md`
+
+Review request:
+
+`docs/reviews/xxxl-phase-41g-2-payload-hash-binding-implementation-plan-review-request.md`
+
+Scope:
+
+Docs-only implementation planning checkpoint.
+
+No runtime code.
+
+No `.rs` changes.
+
+No verification logic change.
+
+No guardian/quorum/auth/replay/mutation/CPI/mint/live behavior enabled.
+
+Purpose:
+
+Plan the future implementation of the narrow payload hash binding boundary.
+
+Preferred future validation path:
+
+`validate_guardian_payload_hash(raw_payload_bytes, signed_hash_32)`
+
+Critical future implementation flow:
+
+1. require Phase 41F verification established;
+2. require `signed_message_bytes.len() == 32`;
+3. checked-convert to `&[u8; 32]`;
+4. call `validate_guardian_payload_hash(raw_payload_bytes, signed_hash_32)`;
+5. success means only payload hash binding established;
+6. failure is fail-closed.
+
+Canonical field order remains:
+
+- `message_type`;
+- `schema_version`;
+- `instruction_layout_version`;
+- `route_id`;
+- `source_chain_id`;
+- `source_token`;
+- `source_sender`;
+- `source_burn_tx_hash`;
+- `source_burn_event_index`;
+- `source_block_number`;
+- `source_block_hash`;
+- `source_finality_block`;
+- `canonical_event_key`;
+- `x1_recipient`;
+- `burned_amount`;
+- `source_chain_weight_bps`;
+- `xxxl_mint_amount`;
+- `target_mint`;
+- `guardian_set_id`;
+- `message_nonce`;
+- `expiration_slot_or_unix_ts`.
+
+Boundary:
+
+Implementation planning must not include guardian validation, quorum, authorization, replay writes, mutation, CPI, mint, handler, or live route.
+
+Next gate:
+
+After external acceptance, Phase 41G.2 implementation may begin under a separate reviewed boundary.
