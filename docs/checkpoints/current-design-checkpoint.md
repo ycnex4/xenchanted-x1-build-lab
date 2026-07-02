@@ -46344,3 +46344,96 @@ Recommended next stage:
 - Phase 41D2 code must not enumerate prior instructions
 - Phase 41D2 code must not construct Phase 41C3 descriptors
 - Phase 41D2 code must not accept verification evidence
+
+# Latest XXXL X1 testnet local runtime skeleton Phase 41D2 current identity runtime boundary
+
+Stage:
+
+- `stage-xxxl-x1-testnet-local-runtime-skeleton-phase-41d2-current-identity-runtime-boundary`
+
+Checkpoint file:
+
+- `docs/checkpoints/xxxl-x1-testnet-local-runtime-skeleton-phase-41d2-current-identity-runtime-boundary.md`
+
+Review request file:
+
+- `docs/reviews/xxxl-phase-41d2-current-identity-runtime-boundary-review-request.md`
+
+Purpose:
+
+- introduce real current-instruction identity population from direct entrypoint context
+- derive identity from entrypoint `program_id` and `instruction_data`
+- compare the entrypoint program id to the expected program id
+- compare the entrypoint instruction-data discriminator prefix to the expected discriminator
+- consume a payload/context binding result
+- map the runtime identity into Phase 41C2 descriptor states
+- flip only `current_instruction_identity_derived_from_runtime: true`
+- keep prior enumeration and Phase 41C3 descriptor construction deferred to 41D3
+- keep all proof, evidence, quorum, authorization, replay, CPI, mint execution,
+  handler, and live route behavior disabled
+
+Files added:
+
+- `programs/xxxl-svm/src/verifier/current_instruction_identity_runtime_boundary.rs`
+- `docs/xxxl/xxxl-phase-41d2-current-identity-runtime-boundary.md`
+- `docs/checkpoints/xxxl-x1-testnet-local-runtime-skeleton-phase-41d2-current-identity-runtime-boundary.md`
+- `docs/reviews/xxxl-phase-41d2-current-identity-runtime-boundary-review-request.md`
+
+Files changed:
+
+- `programs/xxxl-svm/src/verifier/mod.rs`
+- `docs/checkpoints/current-design-checkpoint.md`
+
+Phase 41D2 explicitly does not:
+
+- call `load_instruction`
+- call `load_instruction_at`
+- call `load_instruction_at_checked`
+- parse raw Instructions sysvar account data
+- enumerate prior instructions
+- construct Phase 41C3 candidate descriptors
+- locate prior Ed25519 instructions
+- verify Ed25519 signatures
+- accept cryptographic signature proof
+- accept verification evidence
+- count guardian quorum
+- authorize minting
+- write replay state
+- mark processed events
+- mutate runtime/account state
+- perform CPI
+- call `invoke_signed`
+- call SPL Token `mint_to`
+- add runtime execution handler
+- unlock live route execution
+- select a production Program ID
+- remove deployment blockers
+- claim production readiness
+- claim final immutability while upgrade authority exists
+- build SBF artifacts
+- touch `target/deploy`
+- read or modify keypair files
+- read or modify `.env`
+- inspect `.local-keys`
+- run deploy commands
+- run network commands
+- spend SOL
+
+Active blockers remain:
+
+- `X1_TESTNET_PROGRAM_DEPLOYED_RUNTIME_LOCKED`
+- `PRODUCTION_PROGRAM_ID_UNSET`
+- `LIVE_ROUTE_DISABLED`
+- `SPL_CPI_EXECUTION_DISABLED`
+- `PRODUCTION_GUARDIAN_SET_UNSET`
+- `PRODUCTION_PROOF_LOG_UNSET`
+- `EXTERNAL_REVIEW_INCOMPLETE`
+
+Recommended next stage:
+
+- ask the audit demon and Theo to review Phase 41D2
+- do not open Phase 41D3 before review
+- Phase 41D3 must be limited to prior-instruction enumeration, prefiltering, and descriptor construction
+- Phase 41D3 must preserve the Phase 41C3A pre-filter contract
+- Phase 41D3 must explicitly decide the same/later fully-matching Ed25519 anomaly question
+- Phase 41D3 must not accept verification evidence
