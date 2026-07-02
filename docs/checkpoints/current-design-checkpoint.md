@@ -47744,3 +47744,116 @@ Next action:
 - run local validation;
 - request external review of Phase 41D3.2.3;
 - do not start verification/evidence/auth/replay/CPI/mint/live-route work before external acceptance.
+
+---
+
+## XXXL Phase 41D3.2.3 Prefilter + Phase 41C3 Candidate Descriptor Boundary — External Acceptance
+
+Date: 2026-07-02
+
+Accepted main checkpoint:
+
+`85f74f6 Merge XXXL phase 41D3 prefilter descriptor boundary`
+
+Acceptance record:
+
+`docs/reviews/xxxl-phase-41d3-2-3-prefilter-descriptor-boundary-external-acceptance.md`
+
+External review status:
+
+- Theo: ACCEPT
+- Audit Demon: ACCEPT WITH NOTES
+- Required fixes: none
+- Blocking risks: none
+- Scope violations: no
+- Forbidden operations detected: no
+- Trust-sensitive boundary drift: no
+- Descriptor boundary acceptable: yes
+- Phase 41C3 delegation acceptable: yes
+- Next phase allowed: yes
+
+Accepted implementation scope:
+
+- consume loaded prior instructions from Phase 41D3.2.2;
+- process runtime-data-only entries;
+- iterate loaded entries by reference;
+- discard unrelated non-candidates immediately;
+- prefilter by Ed25519 program id only;
+- construct Phase 41C3 candidate descriptors;
+- delegate duplicate, ambiguous, ordering, same-index, and later-index handling to Phase 41C3;
+- keep descriptors non-authorizing.
+
+Accepted semantic meaning:
+
+`locates_prior_ed25519_instruction: true`
+
+means the structural lookup layer was activated and completed.
+
+It does not mean:
+
+- valid Ed25519 instruction accepted;
+- signature verified;
+- proof accepted;
+- evidence accepted;
+- guardian valid;
+- quorum reached;
+- execution authorized;
+- mint allowed.
+
+Downstream guardrail:
+
+Future phases must not gate on `locates_prior_ed25519_instruction`.
+
+Future phases must gate only on both:
+
+- `status == PriorEd25519InstructionStructurallyLocated`;
+- `matched_instruction_index.is_some()`.
+
+Descriptor boolean guardrail:
+
+Phase 41D3.2.3 descriptor booleans are not validated evidence:
+
+- `structurally_well_formed_candidate: true`;
+- `guardian_evidence_unique: true`;
+- `matches_expected_current_identity_binding: true`.
+
+Future evidence parsing must validate real Ed25519 instruction bytes independently and must not trust those booleans as proof/evidence.
+
+Phase 41D3 structural prior-instruction lookup pipeline is complete:
+
+- Phase 41D1 — AccountInfo presence/readability;
+- Phase 41D2 — current instruction identity;
+- Phase 41D3.1 — current index acquisition;
+- Phase 41D3.2.1 — prior index range;
+- Phase 41D3.2.2 — checked prior instruction loading;
+- Phase 41D3.2.3 — prefilter + Phase 41C3 descriptors.
+
+Still forbidden:
+
+- Ed25519 cryptographic verification;
+- signature proof acceptance;
+- verification evidence acceptance;
+- guardian quorum counting;
+- authorization;
+- replay writes;
+- processed event marking;
+- account mutation;
+- CPI;
+- `invoke_signed`;
+- SPL Token `mint_to`;
+- process instruction handler;
+- live route unlock.
+
+Active blockers remain:
+
+- `X1_TESTNET_PROGRAM_DEPLOYED_RUNTIME_LOCKED`
+- `PRODUCTION_PROGRAM_ID_UNSET`
+- `LIVE_ROUTE_DISABLED`
+- `SPL_CPI_EXECUTION_DISABLED`
+- `PRODUCTION_GUARDIAN_SET_UNSET`
+- `PRODUCTION_PROOF_LOG_UNSET`
+- `EXTERNAL_REVIEW_INCOMPLETE`
+
+Next phase:
+
+Allowed only as a separate reviewed micro-phase.
