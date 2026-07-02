@@ -49007,3 +49007,113 @@ Active blockers remain:
 Next gate:
 
 External review required before Phase 41F.2 implementation begins.
+
+---
+
+## XXXL Phase 41F.2 Ed25519 Signature Verification Boundary Plan — External Acceptance
+
+Date: 2026-07-02
+
+Accepted main checkpoint:
+
+`01a3f3a Merge XXXL phase 41F Ed25519 signature verification plan`
+
+Acceptance record:
+
+`docs/reviews/xxxl-phase-41f-2-ed25519-signature-verification-boundary-plan-external-acceptance.md`
+
+External review status:
+
+- Theo: ACCEPT
+- Audit Demon: ACCEPT
+- Required fixes: none
+- Blocking risks: none
+- Scope violations: no
+- Model A soundness acceptable: yes
+- Model B deferral acceptable: yes
+- Self-reference binding acceptable: yes
+- Status model attribution acceptable: yes
+- SAFETY_FLAGS resolution requirement acceptable: yes
+- Program-id re-check requirement acceptable: yes
+- Audit checkpoint acceptable: yes
+- Trust-sensitive boundary drift: no
+- Next phase allowed: yes
+
+Accepted scope:
+
+- Phase 41F.2 is docs-only;
+- no runtime code was introduced;
+- Model A native Ed25519 verification remains the preferred default;
+- Model B local cryptographic verification remains deferred unless separately reviewed;
+- self-reference binding must be preserved;
+- statuses must be attributed to Model A or Model B;
+- SAFETY_FLAGS semantics must be resolved before any verification flag flip;
+- program-id defense-in-depth re-check is required;
+- focused crypto-boundary audit is required after implementation and before any proof/evidence gate.
+
+Demon carry-forward note:
+
+Signature validity over a message does not mean the message is the correct gateway or guardian payload.
+
+Message-to-expected-payload-hash binding remains a separate downstream proof/evidence gate.
+
+Future work must keep separate:
+
+- signature validity;
+- message payload correctness;
+- proof acceptance;
+- evidence acceptance;
+- guardian validity;
+- quorum;
+- authorization.
+
+Accepted Model A soundness:
+
+Reaching the current instruction means the prior native Ed25519 instruction already verified successfully, because native Ed25519 verification failure aborts the transaction before the current instruction.
+
+Accepted self-reference binding:
+
+- signature instruction index == `u16::MAX`;
+- public key instruction index == `u16::MAX`;
+- message instruction index == `u16::MAX`.
+
+Accepted implementation prerequisites:
+
+- resolve SAFETY_FLAGS cumulative-vs-local semantics before flipping `ed25519_signature_verification_performed`;
+- add or require `loaded_entry.instruction.program_id == ed25519_program::id()`;
+- use Model A / Model B attributed statuses;
+- preserve message-payload-correctness as a later gate;
+- preserve all proof/evidence/guardian/quorum/auth separations.
+
+Still forbidden:
+
+- proof acceptance;
+- verification evidence acceptance;
+- guardian validity acceptance;
+- guardian set membership acceptance;
+- quorum counting;
+- authorization;
+- replay writes;
+- processed event marking;
+- account mutation;
+- CPI;
+- `invoke_signed`;
+- SPL Token `mint_to`;
+- process instruction handler;
+- live route unlock.
+
+Active blockers remain:
+
+- `X1_TESTNET_PROGRAM_DEPLOYED_RUNTIME_LOCKED`
+- `PRODUCTION_PROGRAM_ID_UNSET`
+- `LIVE_ROUTE_DISABLED`
+- `SPL_CPI_EXECUTION_DISABLED`
+- `PRODUCTION_GUARDIAN_SET_UNSET`
+- `PRODUCTION_PROOF_LOG_UNSET`
+- `EXTERNAL_REVIEW_INCOMPLETE`
+
+Next gate:
+
+Phase 41F.2 implementation may begin under a separate reviewed code boundary.
+
+After implementation, a focused crypto-boundary audit is required before any proof/evidence gate begins.
