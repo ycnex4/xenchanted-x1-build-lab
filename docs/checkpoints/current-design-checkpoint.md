@@ -46645,3 +46645,91 @@ Demon audit focus for Phase 41D3 code:
 - explicit same/later reject implementation
 - no descriptor-layer fallthrough
 - exact intended flag flips only
+
+# Latest XXXL Phase 41D3.1 current index runtime boundary
+
+Stage:
+
+- `stage-xxxl-x1-testnet-local-runtime-skeleton-phase-41d3-1-current-index-runtime-boundary`
+
+Checkpoint file:
+
+- `docs/checkpoints/xxxl-x1-testnet-local-runtime-skeleton-phase-41d3-1-current-index-runtime-boundary.md`
+
+Review request file:
+
+- `docs/reviews/xxxl-phase-41d3-1-current-index-runtime-boundary-review-request.md`
+
+Purpose:
+
+- split Phase 41D3 into a smaller code step
+- implement only checked current-instruction index acquisition
+- use `load_current_index_checked`
+- expose current index only as ordering data
+- keep prior-instruction enumeration deferred
+- keep checked prior-instruction loading deferred
+- keep Phase 41C3 candidate descriptor construction deferred
+- keep same/later anomaly implementation deferred
+- keep all proof, evidence, quorum, authorization, replay, CPI, mint execution,
+  handler, and live route behavior disabled
+
+Files added:
+
+- `programs/xxxl-svm/src/verifier/current_instruction_index_runtime_boundary.rs`
+- `docs/xxxl/xxxl-phase-41d3-1-current-index-runtime-boundary.md`
+- `docs/checkpoints/xxxl-x1-testnet-local-runtime-skeleton-phase-41d3-1-current-index-runtime-boundary.md`
+- `docs/reviews/xxxl-phase-41d3-1-current-index-runtime-boundary-review-request.md`
+
+Files changed:
+
+- `programs/xxxl-svm/src/verifier/mod.rs`
+- `docs/checkpoints/current-design-checkpoint.md`
+
+Phase 41D3.1 explicitly does not:
+
+- call `load_instruction`
+- call `load_instruction_at`
+- call `load_instruction_at_checked`
+- enumerate prior instructions
+- parse raw Instructions sysvar account data
+- construct Phase 41C3 candidate descriptors
+- locate prior Ed25519 instructions
+- verify Ed25519 signatures
+- accept cryptographic signature proof
+- accept verification evidence
+- count guardian quorum
+- authorize minting
+- write replay state
+- mark processed events
+- mutate runtime/account state
+- perform CPI
+- call `invoke_signed`
+- call SPL Token `mint_to`
+- add runtime execution handler
+- unlock live route execution
+- select a production Program ID
+- remove deployment blockers
+- claim production readiness
+- build SBF artifacts
+- touch `target/deploy`
+- read or modify keypair files
+- read or modify `.env`
+- inspect `.local-keys`
+- run deploy commands
+- run network commands
+- spend SOL
+
+Active blockers remain:
+
+- `X1_TESTNET_PROGRAM_DEPLOYED_RUNTIME_LOCKED`
+- `PRODUCTION_PROGRAM_ID_UNSET`
+- `LIVE_ROUTE_DISABLED`
+- `SPL_CPI_EXECUTION_DISABLED`
+- `PRODUCTION_GUARDIAN_SET_UNSET`
+- `PRODUCTION_PROOF_LOG_UNSET`
+- `EXTERNAL_REVIEW_INCOMPLETE`
+
+Recommended next stage:
+
+- request Demon and Theo review of Phase 41D3.1
+- do not open the next prior-enumeration/loading sub-step before review
