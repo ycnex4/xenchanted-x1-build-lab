@@ -47005,3 +47005,90 @@ Next action:
 - run local validation;
 - request external review of Phase 41D3.2.1;
 - do not start Phase 41D3.2.2 checked loading before external acceptance.
+
+---
+
+## XXXL Phase 41D3.2.1 Prior Index Range Boundary — External Acceptance
+
+Date: 2026-07-02
+
+Main checkpoint:
+
+`650f605 Merge XXXL phase 41D3 prior index range boundary`
+
+Acceptance record:
+
+`docs/reviews/xxxl-phase-41d3-2-1-prior-index-range-boundary-external-acceptance.md`
+
+External review status:
+
+- Theo: ACCEPT
+- Audit Demon: ACCEPT
+- Required fixes: none
+- Blocking risks: none
+
+Accepted boundary:
+
+- prior index range construction only;
+- accepts checked current index result from Phase 41D3.1;
+- constructs bounded range `0..current_index`;
+- `current_index == 0` yields empty prior range;
+- strict `< current_index` ordering is preserved;
+- same index is excluded by construction;
+- later indexes are excluded by construction;
+- unavailable current index fails closed;
+- inconsistent acquired status without index fails closed;
+- forged oversized current index fails closed before allocation.
+
+Still not implemented:
+
+- instruction loading;
+- `load_instruction`;
+- `load_instruction_at`;
+- `load_instruction_at_checked`;
+- raw sysvar parsing;
+- instruction data access;
+- prefilter;
+- Phase 41C3 descriptors;
+- cryptographic verification;
+- evidence acceptance;
+- quorum counting;
+- authorization;
+- replay writes;
+- account mutation;
+- CPI;
+- `invoke_signed`;
+- SPL Token `mint_to`;
+- handler;
+- live route unlock.
+
+Non-blocking forward-looking note:
+
+- Phase 41D3.2.1 materializes `(0..current).collect::<Vec<usize>>()`;
+- accepted for this range-only phase because the input is bounded and no live handler/loading exists yet;
+- Phase 41D3.2.2 should prefer lazy iteration or enforce a realistic instruction cap before checked loading to avoid BPF heap pressure.
+
+Active blockers remain:
+
+- `X1_TESTNET_PROGRAM_DEPLOYED_RUNTIME_LOCKED`
+- `PRODUCTION_PROGRAM_ID_UNSET`
+- `LIVE_ROUTE_DISABLED`
+- `SPL_CPI_EXECUTION_DISABLED`
+- `PRODUCTION_GUARDIAN_SET_UNSET`
+- `PRODUCTION_PROOF_LOG_UNSET`
+- `EXTERNAL_REVIEW_INCOMPLETE`
+
+Next allowed code sub-step:
+
+Phase 41D3.2.2 may start after this record is merged.
+
+41D3.2.2 scope:
+
+- accept bounded prior range from 41D3.2.1;
+- checked loading via `load_instruction_at_checked`;
+- deterministic mapping of checked loading success/failure;
+- prefer lazy iteration over prior indexes;
+- no crypto verification;
+- no evidence acceptance;
+- no quorum/auth/replay;
+- no CPI/mint/live route.
