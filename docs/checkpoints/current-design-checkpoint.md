@@ -50735,3 +50735,63 @@ Next gate:
 External review of the 41H implementation plan.
 
 No `.rs` implementation may begin until this implementation plan is reviewed and accepted.
+
+---
+
+## XXXL Phase 41H Guardian Membership Validation Implementation Plan — Acceptance
+
+Date: 2026-07-03
+
+Accepted main:
+
+`4a2b962 Merge XXXL phase 41H guardian membership implementation plan`
+
+Acceptance record:
+
+`docs/reviews/xxxl-phase-41h-guardian-membership-validation-implementation-plan-acceptance.md`
+
+Final verdict:
+
+- Theo: ACCEPT
+- Audit Demon: ACCEPT WITH NOTES
+- Required fixes: none
+- Blocking risks: none
+- `.rs` implementation may begin after acceptance: yes
+
+Accepted implementation boundary:
+
+`verified_signer_public_key ∈ authoritative_guardian_set`
+
+Mandatory `.rs` note 1:
+
+`AuthoritativeGuardianSetRef` is a provenance marker, not an enforcement mechanism by itself.
+
+The wrapper must not expose an unrestricted public constructor that lets arbitrary caller data be marked as authoritative.
+
+Wrapper fields should not be publicly forgeable.
+
+The future authenticated guardian-set account-loading boundary must be the real production source of this wrapper.
+
+Mandatory `.rs` note 2:
+
+Guardian set ID must be linked to the 41G-bound signed payload, not only to a locally expected configured ID.
+
+Required binding:
+
+`payload.guardian_set_id == authoritative_guardian_set.guardian_set_id`
+
+This protects guardian rotation safety and prevents pairing a signer from one set with a payload declaring another set.
+
+Next gate:
+
+Begin narrow Phase 41H `.rs` implementation:
+
+`programs/xxxl-svm/src/verifier/guardian_membership_validation_boundary.rs`
+
+Allowed companion update:
+
+`programs/xxxl-svm/src/verifier/mod.rs`
+
+Forbidden:
+
+No runtime account loading, AccountInfo, sysvar loading, quorum, auth, replay, mutation, CPI, mint, handler, or live route.
