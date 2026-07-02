@@ -47254,3 +47254,90 @@ Active blockers remain:
 Next allowed code sub-step:
 
 Phase 41D3.2.2 may start after this record is merged.
+
+---
+
+## XXXL Phase 41D3.2.2 Checked Prior Instruction Loading Runtime Boundary
+
+Date: 2026-07-02
+
+Parent checkpoint:
+
+`5b8850e Merge XXXL phase 41D3 checked loading plan acceptance record`
+
+Type:
+
+- code boundary;
+- checked prior instruction loading only.
+
+Runtime module:
+
+`programs/xxxl-svm/src/verifier/checked_prior_instruction_loading_runtime_boundary.rs`
+
+Checkpoint:
+
+`docs/checkpoints/xxxl-x1-testnet-local-runtime-skeleton-phase-41d3-2-2-checked-prior-loading-boundary.md`
+
+Review request:
+
+`docs/reviews/xxxl-phase-41d3-2-2-checked-prior-loading-boundary-review-request.md`
+
+Implemented:
+
+- consumes bounded prior range from Phase 41D3.2.1;
+- verifies prior indexes are still strictly before current index;
+- accepts Instructions sysvar AccountInfo as loading source;
+- checks Instructions sysvar account key before loading;
+- empty prior range causes no loading attempt;
+- iterates prior indexes with `.iter().copied()`;
+- calls `load_instruction_at_checked` only for prior indexes;
+- maps checked loading success to runtime-data-only entries;
+- maps checked loading failure to deterministic non-authorizing failure.
+
+Still not implemented:
+
+- `load_instruction`;
+- `load_instruction_at`;
+- unchecked loading;
+- raw sysvar parsing;
+- direct sysvar byte slicing;
+- prefilter;
+- Phase 41C3 descriptors;
+- `locates_prior_ed25519_instruction`;
+- cryptographic verification;
+- evidence acceptance;
+- quorum counting;
+- authorization;
+- replay writes;
+- account mutation;
+- CPI;
+- `invoke_signed`;
+- SPL Token `mint_to`;
+- handler;
+- live route unlock.
+
+Safety flag status:
+
+- loading-related flags are enabled:
+  - `prior_instruction_loading_enabled`;
+  - `load_instruction_called`;
+  - `load_instruction_enabled`;
+- locating remains disabled;
+- descriptor construction remains disabled;
+- trust-sensitive flags remain disabled.
+
+Active blockers remain:
+
+- `X1_TESTNET_PROGRAM_DEPLOYED_RUNTIME_LOCKED`
+- `PRODUCTION_PROGRAM_ID_UNSET`
+- `LIVE_ROUTE_DISABLED`
+- `SPL_CPI_EXECUTION_DISABLED`
+- `PRODUCTION_GUARDIAN_SET_UNSET`
+- `PRODUCTION_PROOF_LOG_UNSET`
+- `EXTERNAL_REVIEW_INCOMPLETE`
+
+Next action:
+
+- run local validation;
+- request external review of Phase 41D3.2.2;
+- do not start Phase 41D3.2.3 prefilter/descriptor construction before external acceptance.

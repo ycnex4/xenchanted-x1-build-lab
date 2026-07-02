@@ -111,6 +111,7 @@ pub use types::{
     FutureRuntimeParityCase, FutureRuntimeParityCaseReport, RuntimeVerifierBoundaryComponent,
     VerifierBoundaryStatus,
 };
+pub mod checked_prior_instruction_loading_runtime_boundary;
 pub mod current_instruction_identity_boundary;
 pub mod current_instruction_identity_runtime_boundary;
 pub mod current_instruction_index_runtime_boundary;
