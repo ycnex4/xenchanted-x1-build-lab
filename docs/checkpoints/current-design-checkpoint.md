@@ -48027,3 +48027,115 @@ Active blockers remain:
 Next gate:
 
 External review required before any Phase 41E byte parsing code begins.
+
+---
+
+## XXXL Phase 41E.0 Ed25519 Instruction Byte Parsing Plan — External Acceptance
+
+Date: 2026-07-02
+
+Accepted main checkpoint:
+
+`332df6c Merge XXXL phase 41E Ed25519 byte parsing plan`
+
+Acceptance record:
+
+`docs/reviews/xxxl-phase-41e-0-ed25519-byte-parsing-plan-external-acceptance.md`
+
+External review status:
+
+- Theo: ACCEPT
+- Audit Demon: ACCEPT
+- Required fixes: none
+- Blocking risks: none
+- Scope violations: no
+- Entry gate acceptable: yes
+- Descriptor boolean guardrail acceptable: yes
+- Byte parsing boundary acceptable: yes
+- Trust-sensitive boundary drift: no
+- Next code sub-step allowed: yes
+
+Accepted future Phase 41E code scope:
+
+- parse real bytes from a structurally located prior Ed25519 instruction;
+- classify malformed layouts deterministically;
+- classify out-of-bounds offsets deterministically;
+- extract non-authorizing parsed metadata;
+- keep all parsed fields non-authorizing.
+
+Required entry gate:
+
+Future Phase 41E code must not gate on:
+
+- `locates_prior_ed25519_instruction`.
+
+Future Phase 41E code must gate only on both:
+
+- `status == PriorEd25519InstructionStructurallyLocated`;
+- `matched_instruction_index.is_some()`.
+
+Descriptor boolean guardrail:
+
+Future Phase 41E code must not trust Phase 41D3.2.3 descriptor booleans as validated evidence:
+
+- `structurally_well_formed_candidate: true`;
+- `guardian_evidence_unique: true`;
+- `matches_expected_current_identity_binding: true`.
+
+Cross-instruction reference guardrail:
+
+- parse only bytes of the located Ed25519 instruction;
+- any non-self signature/public-key/message instruction-index reference must fail closed;
+- do not load referenced instructions;
+- any future referenced-instruction loading requires a separate reviewed gate.
+
+Variable-length message guardrail:
+
+- signature range is fixed at 64 bytes;
+- public key range is fixed at 32 bytes;
+- message range must be represented as checked bounded indices, such as `(message_offset, message_len)`;
+- do not copy attacker-sized message bytes into a new `Vec`.
+
+Overlap guardrail:
+
+- future Phase 41E code must choose a deterministic overlap policy;
+- recommended strict parser policy: reject overlapping parsed byte ranges;
+- overlap handling must not remain ambiguous.
+
+Parsing-specific flag guardrail:
+
+A future flag such as `parses_ed25519_instruction_bytes: true` may mean only byte parsing occurred.
+
+It must not imply proof/evidence/verification/quorum/auth/replay/mutation/CPI/mint/live route.
+
+Still forbidden:
+
+- Ed25519 cryptographic verification;
+- signature validity acceptance;
+- guardian validity acceptance;
+- cryptographic signature proof acceptance;
+- verification evidence acceptance;
+- quorum counting;
+- authorization;
+- replay writes;
+- processed event marking;
+- account mutation;
+- CPI;
+- `invoke_signed`;
+- SPL Token `mint_to`;
+- process instruction handler;
+- live route unlock.
+
+Active blockers remain:
+
+- `X1_TESTNET_PROGRAM_DEPLOYED_RUNTIME_LOCKED`
+- `PRODUCTION_PROGRAM_ID_UNSET`
+- `LIVE_ROUTE_DISABLED`
+- `SPL_CPI_EXECUTION_DISABLED`
+- `PRODUCTION_GUARDIAN_SET_UNSET`
+- `PRODUCTION_PROOF_LOG_UNSET`
+- `EXTERNAL_REVIEW_INCOMPLETE`
+
+Next phase:
+
+A narrow Phase 41E byte parsing code boundary may begin after this acceptance record is merged.
