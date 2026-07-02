@@ -47666,3 +47666,81 @@ Active blockers remain:
 Next allowed code sub-step:
 
 Phase 41D3.2.3 may start after this acceptance record is merged.
+
+---
+
+## XXXL Phase 41D3.2.3 Prefilter + Phase 41C3 Candidate Descriptor Runtime Boundary
+
+Date: 2026-07-02
+
+Parent checkpoint:
+
+`c6bbf72 Merge XXXL phase 41D3 prefilter descriptor plan acceptance record`
+
+Type:
+
+- code boundary;
+- structural prefiltering and non-authorizing candidate descriptor construction only.
+
+Runtime module:
+
+`programs/xxxl-svm/src/verifier/prefilter_phase_41c3_candidate_descriptor_runtime_boundary.rs`
+
+Checkpoint:
+
+`docs/checkpoints/xxxl-x1-testnet-local-runtime-skeleton-phase-41d3-2-3-prefilter-descriptor-boundary.md`
+
+Review request:
+
+`docs/reviews/xxxl-phase-41d3-2-3-prefilter-descriptor-boundary-review-request.md`
+
+Implemented:
+
+- consumes loaded prior instructions from Phase 41D3.2.2;
+- processes only runtime-data-only loaded entries;
+- iterates loaded entries by reference;
+- discards unrelated non-candidates immediately;
+- prefilters by Ed25519 program id only;
+- constructs Phase 41C3 candidate descriptors;
+- delegates ordering, duplicate, ambiguous, same/later cases to Phase 41C3;
+- keeps descriptors non-authorizing;
+- flips `locates_prior_ed25519_instruction: true` only as structural candidate location.
+
+Still not implemented:
+
+- Ed25519 cryptographic verification;
+- signature proof acceptance;
+- verification evidence acceptance;
+- guardian quorum counting;
+- authorization;
+- replay writes;
+- processed event marking;
+- account mutation;
+- CPI;
+- `invoke_signed`;
+- SPL Token `mint_to`;
+- handler;
+- live route unlock.
+
+Safety flag status:
+
+- structural location flag is enabled:
+  - `locates_prior_ed25519_instruction`;
+- descriptor construction is enabled;
+- evidence/proof/auth/quorum/replay/mutation/CPI/mint/live-route flags remain disabled.
+
+Active blockers remain:
+
+- `X1_TESTNET_PROGRAM_DEPLOYED_RUNTIME_LOCKED`
+- `PRODUCTION_PROGRAM_ID_UNSET`
+- `LIVE_ROUTE_DISABLED`
+- `SPL_CPI_EXECUTION_DISABLED`
+- `PRODUCTION_GUARDIAN_SET_UNSET`
+- `PRODUCTION_PROOF_LOG_UNSET`
+- `EXTERNAL_REVIEW_INCOMPLETE`
+
+Next action:
+
+- run local validation;
+- request external review of Phase 41D3.2.3;
+- do not start verification/evidence/auth/replay/CPI/mint/live-route work before external acceptance.
