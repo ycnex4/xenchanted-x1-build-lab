@@ -46733,3 +46733,70 @@ Recommended next stage:
 
 - request Demon and Theo review of Phase 41D3.1
 - do not open the next prior-enumeration/loading sub-step before review
+
+---
+
+## XXXL Phase 41D3.1 Current Index Runtime Boundary — External Acceptance
+
+Date: 2026-07-02
+
+Main checkpoint:
+
+`02cdaaa Merge XXXL phase 41D3 current index runtime boundary`
+
+Acceptance record:
+
+`docs/reviews/xxxl-phase-41d3-1-current-index-runtime-boundary-external-acceptance.md`
+
+External review status:
+
+- Audit Demon: ACCEPT
+- Theo: ACCEPT
+- Required fixes: none
+- Blocking risks: none
+
+Accepted boundary:
+
+- checked current-instruction index acquisition is now accepted;
+- `load_current_index_checked` is accepted as the runtime helper for this sub-step;
+- current index is ordering-only;
+- missing/wrong Instructions sysvar account fails closed;
+- checked helper failure fails closed;
+- no raw sysvar byte parsing is introduced;
+- no prior-instruction enumeration is introduced;
+- no `load_instruction*` call is introduced;
+- no Phase 41C3 descriptors are introduced;
+- no proof/evidence/quorum/auth/replay/CPI/mint/handler/live route is introduced.
+
+Important accepted observation:
+
+- zeroed or degenerate sysvar data may map to `Ok(0)` through `load_current_index_checked`;
+- this remains safe in 41D3.1 because index `0` is only ordering data;
+- downstream 41D3.2 must remain fail-closed for `current_index == 0`, because no prior instruction can exist before index `0`.
+
+Next allowed sub-step:
+
+Phase 41D3.2 may start after this record is merged.
+
+Allowed next:
+
+- prior-instruction enumeration;
+- checked instruction loading;
+- prefiltering unrelated instructions;
+- Phase 41C3 descriptor construction;
+- explicit same-index reject;
+- explicit later-index reject.
+
+Still forbidden:
+
+- cryptographic verification;
+- verification evidence acceptance;
+- quorum counting;
+- authorization;
+- replay writes;
+- account mutation;
+- CPI;
+- `invoke_signed`;
+- SPL Token `mint_to`;
+- runtime handler;
+- live route unlock.
