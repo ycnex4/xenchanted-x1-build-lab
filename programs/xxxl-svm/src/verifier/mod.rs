@@ -118,3 +118,4 @@ pub mod instructions_sysvar_access_contract_model;
 pub mod instructions_sysvar_accountinfo_presence_readability_runtime_boundary;
 pub mod instructions_sysvar_presence_readability_boundary;
 pub mod prior_ed25519_lookup_ordering_boundary;
+pub mod prior_instruction_index_range_runtime_boundary;

@@ -46920,3 +46920,88 @@ Phase 41D3.2.1 may start after this record is merged.
 - no sysvar parsing;
 - no descriptors;
 - no flag flips.
+
+---
+
+## XXXL Phase 41D3.2.1 Prior Index Range Runtime Boundary
+
+Date: 2026-07-02
+
+Parent checkpoint:
+
+`b1c17cd Merge XXXL phase 41D3 prior enumeration plan acceptance record`
+
+Type:
+
+- code boundary;
+- prior index range construction only.
+
+Runtime module:
+
+`programs/xxxl-svm/src/verifier/prior_instruction_index_range_runtime_boundary.rs`
+
+Checkpoint:
+
+`docs/checkpoints/xxxl-x1-testnet-local-runtime-skeleton-phase-41d3-2-1-prior-index-range-boundary.md`
+
+Review request:
+
+`docs/reviews/xxxl-phase-41d3-2-1-prior-index-range-boundary-review-request.md`
+
+Implemented:
+
+- accepts checked current index result from Phase 41D3.1;
+- requires acquired current index;
+- constructs bounded prior index range `0..current_index`;
+- `current_index == 0` yields empty range;
+- same index is excluded by range construction;
+- later indexes are excluded by range construction;
+- unavailable current index fails closed;
+- structurally inconsistent current index fails closed;
+- forged oversized current index fails closed without allocation.
+
+Still not implemented:
+
+- instruction loading;
+- `load_instruction`;
+- `load_instruction_at`;
+- `load_instruction_at_checked`;
+- raw Instructions sysvar byte parsing;
+- instruction data access;
+- prefilter;
+- Phase 41C3 descriptors;
+- explicit same/later reject path;
+- cryptographic verification;
+- evidence acceptance;
+- quorum counting;
+- authorization;
+- replay writes;
+- account mutation;
+- CPI;
+- `invoke_signed`;
+- SPL Token `mint_to`;
+- handler;
+- live route unlock.
+
+Safety flag status:
+
+- no loading flag flip;
+- no locating flag flip;
+- no trust-sensitive flag flip;
+- no evidence/auth/replay/CPI/mint/live-route flag flip.
+
+Active blockers remain:
+
+- `X1_TESTNET_PROGRAM_DEPLOYED_RUNTIME_LOCKED`
+- `PRODUCTION_PROGRAM_ID_UNSET`
+- `LIVE_ROUTE_DISABLED`
+- `SPL_CPI_EXECUTION_DISABLED`
+- `PRODUCTION_GUARDIAN_SET_UNSET`
+- `PRODUCTION_PROOF_LOG_UNSET`
+- `EXTERNAL_REVIEW_INCOMPLETE`
+
+Next action:
+
+- run local validation;
+- request external review of Phase 41D3.2.1;
+- do not start Phase 41D3.2.2 checked loading before external acceptance.
