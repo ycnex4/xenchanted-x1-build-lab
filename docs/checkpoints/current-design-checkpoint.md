@@ -47938,3 +47938,92 @@ Active blockers remain:
 Next phase:
 
 Only a separate reviewed micro-phase may begin.
+
+---
+
+## XXXL Phase 41E.0 Ed25519 Instruction Byte Parsing Plan
+
+Date: 2026-07-02
+
+Parent checkpoint:
+
+`99ba836 Merge XXXL phase 41D3 structural prior lookup closure`
+
+Type:
+
+- docs-only plan;
+- no runtime code introduced.
+
+Plan document:
+
+`docs/xxxl/xxxl-phase-41e-0-ed25519-byte-parsing-plan.md`
+
+Checkpoint:
+
+`docs/checkpoints/xxxl-x1-testnet-local-runtime-skeleton-phase-41e-0-ed25519-byte-parsing-plan.md`
+
+Review request:
+
+`docs/reviews/xxxl-phase-41e-0-ed25519-byte-parsing-plan-review-request.md`
+
+Purpose:
+
+Plan a future non-authorizing Ed25519 instruction byte parsing boundary after Phase 41D3 structural prior-instruction lookup closure.
+
+Required future entry gate:
+
+Future Phase 41E code must not gate on:
+
+- `locates_prior_ed25519_instruction`.
+
+Future Phase 41E code must gate only on both:
+
+- `status == PriorEd25519InstructionStructurallyLocated`;
+- `matched_instruction_index.is_some()`.
+
+Descriptor boolean guardrail:
+
+Future Phase 41E code must not trust Phase 41D3.2.3 descriptor booleans as validated evidence:
+
+- `structurally_well_formed_candidate: true`;
+- `guardian_evidence_unique: true`;
+- `matches_expected_current_identity_binding: true`.
+
+Planned allowed future scope:
+
+- parse real Ed25519 instruction bytes;
+- classify malformed/out-of-bounds layouts deterministically;
+- extract non-authorizing parsed metadata;
+- keep parsed fields non-authorizing.
+
+Still forbidden:
+
+- Ed25519 cryptographic verification;
+- signature validity acceptance;
+- guardian validity acceptance;
+- cryptographic signature proof acceptance;
+- verification evidence acceptance;
+- quorum counting;
+- authorization;
+- replay writes;
+- processed event marking;
+- account mutation;
+- CPI;
+- `invoke_signed`;
+- SPL Token `mint_to`;
+- process instruction handler;
+- live route unlock.
+
+Active blockers remain:
+
+- `X1_TESTNET_PROGRAM_DEPLOYED_RUNTIME_LOCKED`
+- `PRODUCTION_PROGRAM_ID_UNSET`
+- `LIVE_ROUTE_DISABLED`
+- `SPL_CPI_EXECUTION_DISABLED`
+- `PRODUCTION_GUARDIAN_SET_UNSET`
+- `PRODUCTION_PROOF_LOG_UNSET`
+- `EXTERNAL_REVIEW_INCOMPLETE`
+
+Next gate:
+
+External review required before any Phase 41E byte parsing code begins.
