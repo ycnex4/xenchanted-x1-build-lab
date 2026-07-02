@@ -49799,3 +49799,99 @@ No runtime code.
 No guardian/quorum/auth/replay/mutation/CPI/mint/live behavior enabled.
 
 Phase 41G.1 remains blocked until this fix is externally accepted.
+
+---
+
+## XXXL Phase 41G.0 Proof / Evidence / Payload Binding Plan — Acceptance After Canonical Field-Order Fix
+
+Date: 2026-07-03
+
+Accepted main:
+
+`2eb7416 Merge XXXL phase 41G canonical payload field order fix`
+
+Acceptance record:
+
+`docs/reviews/xxxl-phase-41g-0-proof-evidence-payload-binding-plan-acceptance.md`
+
+Final verdict:
+
+- ACCEPT
+- Required fixes: none
+- Blocking risks: none
+- Phase 41G.1 allowed after acceptance: yes
+
+Review history:
+
+The initial Phase 41G.0 plan was blocked because it listed 19 canonical fields while the authoritative Rust decoder declares 21.
+
+Authoritative source:
+
+`programs/xxxl-svm/src/verifier/raw_payload.rs`
+
+Authoritative constant:
+
+`RAW_PAYLOAD_PHASE_23_FIELD_ORDER`
+
+Blocking fixes addressed:
+
+- canonical field list updated to 21 fields;
+- `instruction_layout_version` included and bound;
+- `guardian_set_id` included and bound;
+- `source_finality_block` separated from `expiration_slot_or_unix_ts`;
+- binding requirements updated for all 21 fields;
+- negative matrix updated;
+- Stage-1 vector mismatch added as a future negative case.
+
+Accepted canonical field order:
+
+1. `message_type`
+2. `schema_version`
+3. `instruction_layout_version`
+4. `route_id`
+5. `source_chain_id`
+6. `source_token`
+7. `source_sender`
+8. `source_burn_tx_hash`
+9. `source_burn_event_index`
+10. `source_block_number`
+11. `source_block_hash`
+12. `source_finality_block`
+13. `canonical_event_key`
+14. `x1_recipient`
+15. `burned_amount`
+16. `source_chain_weight_bps`
+17. `xxxl_mint_amount`
+18. `target_mint`
+19. `guardian_set_id`
+20. `message_nonce`
+21. `expiration_slot_or_unix_ts`
+
+Accepted boundary:
+
+Phase 41G may establish only that the SVM-verified Ed25519 message bytes are bound to the expected gateway payload hash.
+
+Still not established:
+
+- source burn proof acceptance;
+- watcher honesty;
+- guardian validity;
+- guardian set membership;
+- quorum;
+- authorization;
+- replay protection;
+- mutation;
+- CPI;
+- SPL Token mint;
+- handler;
+- live route.
+
+Carry-forward requirements for Phase 41G.2:
+
+- the implementation hash preimage must include domain separator `XXXL_GUARDIAN_PAYLOAD_HASH_V1`;
+- the signed guardian hash and expected program hash must use identical preimage bytes;
+- Phase 41G.2 must reuse the existing canonical payload boundary, especially `raw_payload.rs` and `canonical_payload.rs`;
+- Phase 41G.2 must not rewrite canonicalization from scratch;
+- Stage-1 vector parity must be preserved.
+
+Phase 41G.1 may begin under a separate reviewed boundary.
