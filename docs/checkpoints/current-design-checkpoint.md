@@ -47857,3 +47857,84 @@ Active blockers remain:
 Next phase:
 
 Allowed only as a separate reviewed micro-phase.
+
+---
+
+## XXXL Phase 41D3 Structural Prior-Instruction Lookup Pipeline — Closure
+
+Date: 2026-07-02
+
+Closing main checkpoint:
+
+`3d391ba Merge XXXL phase 41D3 prefilter descriptor boundary acceptance record`
+
+Closure document:
+
+`docs/xxxl/xxxl-phase-41d3-structural-prior-instruction-lookup-pipeline-closure.md`
+
+Closure checkpoint:
+
+`docs/checkpoints/xxxl-x1-testnet-local-runtime-skeleton-phase-41d3-closure.md`
+
+Status:
+
+Phase 41D3 is complete.
+
+Completed structural prior-instruction lookup pipeline:
+
+- Phase 41D1 — AccountInfo presence/readability;
+- Phase 41D2 — current instruction identity;
+- Phase 41D3.1 — current instruction index acquisition;
+- Phase 41D3.2.1 — bounded prior index range;
+- Phase 41D3.2.2 — checked prior instruction loading;
+- Phase 41D3.2.3 — prefilter + Phase 41C3 candidate descriptors.
+
+Accepted final boundary:
+
+- structural prior instruction lookup is complete;
+- prior Ed25519 program-id candidates can be structurally located;
+- non-authorizing Phase 41C3 candidate descriptors can be constructed;
+- ordering/same/later/duplicate/ambiguous handling is delegated to Phase 41C3.
+
+Critical downstream guardrail:
+
+Future phases must not gate on `locates_prior_ed25519_instruction`.
+
+Future phases must gate only on both:
+
+- `status == PriorEd25519InstructionStructurallyLocated`;
+- `matched_instruction_index.is_some()`.
+
+Descriptor boolean guardrail:
+
+Phase 41D3.2.3 descriptor booleans are not validated evidence and must not be trusted by future evidence phases.
+
+Still forbidden:
+
+- Ed25519 cryptographic verification;
+- signature proof acceptance;
+- verification evidence acceptance;
+- guardian quorum counting;
+- authorization;
+- replay writes;
+- processed event marking;
+- account mutation;
+- CPI;
+- `invoke_signed`;
+- SPL Token `mint_to`;
+- process instruction handler;
+- live route unlock.
+
+Active blockers remain:
+
+- `X1_TESTNET_PROGRAM_DEPLOYED_RUNTIME_LOCKED`
+- `PRODUCTION_PROGRAM_ID_UNSET`
+- `LIVE_ROUTE_DISABLED`
+- `SPL_CPI_EXECUTION_DISABLED`
+- `PRODUCTION_GUARDIAN_SET_UNSET`
+- `PRODUCTION_PROOF_LOG_UNSET`
+- `EXTERNAL_REVIEW_INCOMPLETE`
+
+Next phase:
+
+Only a separate reviewed micro-phase may begin.
