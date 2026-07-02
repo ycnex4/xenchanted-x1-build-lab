@@ -47092,3 +47092,84 @@ Phase 41D3.2.2 may start after this record is merged.
 - no evidence acceptance;
 - no quorum/auth/replay;
 - no CPI/mint/live route.
+
+---
+
+## XXXL Phase 41D3.2.2.0 Checked Prior Instruction Loading Plan
+
+Date: 2026-07-02
+
+Parent checkpoint:
+
+`9880d63 Merge XXXL phase 41D3 prior index range acceptance record`
+
+Type:
+
+- docs-only planning checkpoint;
+- no runtime code changed.
+
+Plan document:
+
+`docs/xxxl/xxxl-phase-41d3-2-2-0-checked-prior-instruction-loading-plan.md`
+
+Review request:
+
+`docs/reviews/xxxl-phase-41d3-2-2-0-checked-loading-plan-review-request.md`
+
+Planned Phase 41D3.2.2 boundary:
+
+- accept bounded prior range from Phase 41D3.2.1;
+- iterate prior indexes lazily;
+- call `load_instruction_at_checked` only for prior indexes;
+- deterministically map checked loading success/failure;
+- do not prefilter;
+- do not construct Phase 41C3 descriptors;
+- do not accept evidence;
+- do not authorize;
+- do not mutate runtime state.
+
+Important carry-over from Phase 41D3.2.1 acceptance:
+
+- avoid compounding memory pressure during loading;
+- prefer lazy iteration over the prior range;
+- avoid materializing a second large vector unless bounded and justified.
+
+Expected allowed loading-related flips after code and review:
+
+- `prior_instruction_loading_enabled: true`;
+- `load_instruction_called: true`;
+- `load_instruction_enabled: true`.
+
+Must remain false:
+
+- raw Instructions sysvar byte parsing;
+- unchecked loading;
+- `load_instruction`;
+- `load_instruction_at`;
+- `locates_prior_ed25519_instruction`;
+- cryptographic verification;
+- evidence acceptance;
+- quorum counting;
+- authorization;
+- replay writes;
+- account mutation;
+- CPI;
+- `invoke_signed`;
+- SPL Token `mint_to`;
+- handler;
+- live route unlock.
+
+Active blockers remain:
+
+- `X1_TESTNET_PROGRAM_DEPLOYED_RUNTIME_LOCKED`
+- `PRODUCTION_PROGRAM_ID_UNSET`
+- `LIVE_ROUTE_DISABLED`
+- `SPL_CPI_EXECUTION_DISABLED`
+- `PRODUCTION_GUARDIAN_SET_UNSET`
+- `PRODUCTION_PROOF_LOG_UNSET`
+- `EXTERNAL_REVIEW_INCOMPLETE`
+
+Next action:
+
+- request external review of Phase 41D3.2.2.0 plan;
+- do not start Phase 41D3.2.2 code until the plan is accepted.
