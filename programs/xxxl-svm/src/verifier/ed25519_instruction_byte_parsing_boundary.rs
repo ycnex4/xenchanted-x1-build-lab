@@ -37,6 +37,7 @@ pub enum Phase41E_1Ed25519ByteParsingStatus {
     MissingMessageByteRange,
     OutOfBoundsMessageOffset,
     UnexpectedInstructionIndexReference,
+    ParsedRangeAliasesOffsetTable,
     OverlappingParsedByteRanges,
     Ed25519InstructionBytesParsed,
 }
@@ -84,6 +85,7 @@ pub struct Phase41E_1Ed25519ByteParsingResult {
     pub consumes_phase_41d3_2_3_prefilter_result: bool,
     pub loads_referenced_instructions: bool,
     pub rejects_cross_instruction_references: bool,
+    pub rejects_offset_table_aliasing: bool,
     pub stores_message_as_bounded_indices: bool,
     pub copies_attacker_sized_message_data: bool,
     pub rejects_overlapping_parsed_ranges: bool,
@@ -114,6 +116,7 @@ pub struct Phase41E_1Ed25519ByteParsingBoundaryReport {
     pub consumes_phase_41d3_2_3_prefilter_result: bool,
     pub loads_referenced_instructions: bool,
     pub rejects_cross_instruction_references: bool,
+    pub rejects_offset_table_aliasing: bool,
     pub stores_message_as_bounded_indices: bool,
     pub copies_attacker_sized_message_data: bool,
     pub rejects_overlapping_parsed_ranges: bool,
@@ -167,6 +170,7 @@ pub const PHASE_41E_1_ED25519_BYTE_PARSING_BOUNDARY_REPORT:
     consumes_phase_41d3_2_3_prefilter_result: true,
     loads_referenced_instructions: false,
     rejects_cross_instruction_references: true,
+    rejects_offset_table_aliasing: true,
     stores_message_as_bounded_indices: true,
     copies_attacker_sized_message_data: false,
     rejects_overlapping_parsed_ranges: true,
@@ -481,6 +485,20 @@ fn parse_ed25519_instruction_data_bytes(
         );
     };
 
+    if !range_starts_after_offset_table(signature_range)
+        || !range_starts_after_offset_table(public_key_range)
+        || !range_starts_after_offset_table(message_range)
+    {
+        return fail_with_header(
+            Phase41E_1Ed25519ByteParsingStatus::ParsedRangeAliasesOffsetTable,
+            Some(Phase41BRejectionCase::UnsupportedOffsetLayout),
+            Some(matched_instruction_index),
+            instruction_data_len,
+            Some(signature_count),
+            Some(padding_byte),
+        );
+    }
+
     if byte_ranges_overlap(signature_range, public_key_range)
         || byte_ranges_overlap(signature_range, message_range)
         || byte_ranges_overlap(public_key_range, message_range)
@@ -557,6 +575,10 @@ fn checked_byte_range(offset: usize, len: usize, data_len: usize) -> Option<Phas
     Some(Phase41E_1ByteRange { offset, len })
 }
 
+fn range_starts_after_offset_table(range: Phase41E_1ByteRange) -> bool {
+    range.offset >= ED25519_SINGLE_SIGNATURE_OFFSET_TABLE_LEN
+}
+
 fn byte_ranges_overlap(left: Phase41E_1ByteRange, right: Phase41E_1ByteRange) -> bool {
     let Some(left_end) = left.offset.checked_add(left.len) else {
         return true;
@@ -600,6 +622,7 @@ fn parsed(
         consumes_phase_41d3_2_3_prefilter_result: true,
         loads_referenced_instructions: false,
         rejects_cross_instruction_references: true,
+        rejects_offset_table_aliasing: true,
         stores_message_as_bounded_indices: true,
         copies_attacker_sized_message_data: false,
         rejects_overlapping_parsed_ranges: true,
@@ -659,6 +682,7 @@ fn fail_with_header(
         consumes_phase_41d3_2_3_prefilter_result: true,
         loads_referenced_instructions: false,
         rejects_cross_instruction_references: true,
+        rejects_offset_table_aliasing: true,
         stores_message_as_bounded_indices: true,
         copies_attacker_sized_message_data: false,
         rejects_overlapping_parsed_ranges: true,
@@ -928,6 +952,7 @@ mod tests {
         assert_eq!(result.padding_byte, Some(0));
         assert!(result.parses_ed25519_instruction_bytes);
         assert!(result.stores_message_as_bounded_indices);
+        assert!(result.rejects_offset_table_aliasing);
         assert!(!result.copies_attacker_sized_message_data);
         assert!(!result.ed25519_signature_verification_performed);
         assert!(!result.cryptographic_signature_proof_accepted);
@@ -1273,6 +1298,79 @@ mod tests {
     }
 
     #[test]
+    fn rejects_signature_range_aliasing_offset_table() {
+        let mut data = valid_ed25519_instruction_data(8);
+        replace_u16_le(&mut data, 2, 0);
+
+        let loading_result = loading_result(vec![loaded_prior_instruction(
+            1,
+            ed25519_instruction_with_data(data),
+        )]);
+        let prefilter_result = prefilter_result(
+            Phase41D3_2_3PrefilterDescriptorStatus::PriorEd25519InstructionStructurallyLocated,
+            Some(1),
+        );
+
+        let result = parse_located_ed25519_instruction_bytes(&loading_result, &prefilter_result);
+
+        assert_eq!(
+            result.status,
+            Phase41E_1Ed25519ByteParsingStatus::ParsedRangeAliasesOffsetTable
+        );
+        assert!(result.rejects_offset_table_aliasing);
+        assert!(!result.parses_ed25519_instruction_bytes);
+    }
+
+    #[test]
+    fn rejects_public_key_range_aliasing_offset_table() {
+        let mut data = valid_ed25519_instruction_data(8);
+        replace_u16_le(&mut data, 6, 1);
+
+        let loading_result = loading_result(vec![loaded_prior_instruction(
+            1,
+            ed25519_instruction_with_data(data),
+        )]);
+        let prefilter_result = prefilter_result(
+            Phase41D3_2_3PrefilterDescriptorStatus::PriorEd25519InstructionStructurallyLocated,
+            Some(1),
+        );
+
+        let result = parse_located_ed25519_instruction_bytes(&loading_result, &prefilter_result);
+
+        assert_eq!(
+            result.status,
+            Phase41E_1Ed25519ByteParsingStatus::ParsedRangeAliasesOffsetTable
+        );
+        assert!(result.rejects_offset_table_aliasing);
+        assert!(!result.parses_ed25519_instruction_bytes);
+    }
+
+    #[test]
+    fn rejects_message_range_aliasing_offset_table() {
+        let mut data = valid_ed25519_instruction_data(8);
+        replace_u16_le(&mut data, 10, 15);
+        replace_u16_le(&mut data, 12, 1);
+
+        let loading_result = loading_result(vec![loaded_prior_instruction(
+            1,
+            ed25519_instruction_with_data(data),
+        )]);
+        let prefilter_result = prefilter_result(
+            Phase41D3_2_3PrefilterDescriptorStatus::PriorEd25519InstructionStructurallyLocated,
+            Some(1),
+        );
+
+        let result = parse_located_ed25519_instruction_bytes(&loading_result, &prefilter_result);
+
+        assert_eq!(
+            result.status,
+            Phase41E_1Ed25519ByteParsingStatus::ParsedRangeAliasesOffsetTable
+        );
+        assert!(result.rejects_offset_table_aliasing);
+        assert!(!result.parses_ed25519_instruction_bytes);
+    }
+
+    #[test]
     fn rejects_overlapping_parsed_ranges_deterministically() {
         let mut data = valid_ed25519_instruction_data(8);
         replace_u16_le(
@@ -1316,6 +1414,7 @@ mod tests {
         assert!(report.consumes_phase_41d3_2_3_prefilter_result);
         assert!(!report.loads_referenced_instructions);
         assert!(report.rejects_cross_instruction_references);
+        assert!(report.rejects_offset_table_aliasing);
         assert!(report.stores_message_as_bounded_indices);
         assert!(!report.copies_attacker_sized_message_data);
         assert!(report.rejects_overlapping_parsed_ranges);
