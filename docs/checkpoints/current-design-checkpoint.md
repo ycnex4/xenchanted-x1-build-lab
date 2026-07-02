@@ -49185,3 +49185,141 @@ Still deferred:
 Required next audit:
 
 A focused crypto-boundary audit is required after Phase 41F.2 implementation acceptance and before any proof/evidence gate.
+
+---
+
+## XXXL Phase 41F.2 Ed25519 Signature Verification Boundary — External Acceptance
+
+Date: 2026-07-02
+
+Accepted main checkpoint:
+
+`133acb8 Merge XXXL phase 41F Ed25519 signature verification boundary`
+
+Implementation commit:
+
+`863ca71 Add phase 41F Ed25519 signature verification boundary`
+
+Acceptance record:
+
+`docs/reviews/xxxl-phase-41f-2-ed25519-signature-verification-boundary-external-acceptance.md`
+
+External review status:
+
+- Theo: ACCEPT
+- Audit Demon: ACCEPT WITH NOTES
+- Required fixes: none
+- Blocking risks: none
+- Scope violations: no
+- Model A establishment acceptable: yes
+- SAFETY_FLAGS semantics acceptable: yes
+- Program-id re-check acceptable: yes
+- Self-reference binding acceptable: yes
+- Status attribution acceptable: yes
+- Message-payload deferral acceptable: yes
+- Forbidden operations detected: no
+- Trust-sensitive boundary drift: no
+- Focused crypto-audit required before 41G: yes
+- Next phase allowed: yes
+
+Accepted result:
+
+Phase 41F.2 establishes Model A native Ed25519 verification structurally.
+
+The SVM is the verifier.
+
+The XXXL program verifies that SVM verified.
+
+SAFETY_FLAGS convention:
+
+- cumulative pipeline capability flags.
+
+Accepted flag flip:
+
+- `ed25519_signature_verification_performed: true`.
+
+Still false:
+
+- proof acceptance;
+- evidence acceptance;
+- guardian validity;
+- quorum;
+- authorization;
+- replay writes;
+- account mutation;
+- CPI;
+- mint;
+- handler;
+- live route.
+
+Demon carry-forward note 1:
+
+Model A soundness is load-bearing only when 41F.2 is called from an actually executing runtime path with `loading_result` derived from the real Instructions sysvar.
+
+Future live-wiring must explicitly enforce and audit:
+
+- real Instructions sysvar source;
+- runtime-derived current instruction index;
+- no fabricated or reconstructed loading result accepted as load-bearing;
+- no live execution path before focused wiring audit.
+
+Demon carry-forward note 2:
+
+Phase 41F.1 SAFETY_FLAGS still use conservative local-module-style semantics.
+
+Phase 41F.2 canonizes cumulative pipeline capability semantics.
+
+This is non-blocking, because 41F.1 is non-authorizing and conservative false does not enable trust.
+
+A later small cleanup should align 41F.1 SAFETY_FLAGS to cumulative convention.
+
+Accepted message-payload deferral:
+
+Signature verification over message bytes does not prove that the message is the correct gateway payload.
+
+Message-to-payload-hash binding remains downstream proof/evidence work.
+
+Still forbidden:
+
+- local cryptographic verification unless separately reviewed;
+- proof acceptance;
+- evidence acceptance;
+- guardian validity acceptance;
+- guardian set membership acceptance;
+- quorum counting;
+- authorization;
+- replay writes;
+- processed event marking;
+- account mutation;
+- CPI;
+- `invoke_signed`;
+- SPL Token `mint_to`;
+- process instruction handler;
+- live route unlock.
+
+Active blockers remain:
+
+- `X1_TESTNET_PROGRAM_DEPLOYED_RUNTIME_LOCKED`
+- `PRODUCTION_PROGRAM_ID_UNSET`
+- `LIVE_ROUTE_DISABLED`
+- `SPL_CPI_EXECUTION_DISABLED`
+- `PRODUCTION_GUARDIAN_SET_UNSET`
+- `PRODUCTION_PROOF_LOG_UNSET`
+- `EXTERNAL_REVIEW_INCOMPLETE`
+
+Next gate:
+
+A focused crypto-boundary audit is required before Phase 41G begins.
+
+The focused audit must include:
+
+- Model A abort-before-current soundness;
+- self-reference binding;
+- checked extraction;
+- program-id re-check;
+- status attribution;
+- cumulative SAFETY_FLAGS convention;
+- message-payload correctness remains downstream;
+- no proof/evidence/guardian/quorum/auth drift;
+- no replay/mutation/CPI/mint/live drift;
+- Model A live-wiring precondition.
