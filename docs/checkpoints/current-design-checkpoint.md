@@ -50685,3 +50685,53 @@ Guardian membership does not mean proof acceptance, verification evidence accept
 Next gate:
 
 Phase 41H guardian membership validation implementation plan.
+
+---
+
+## XXXL Phase 41H Guardian Membership Validation Implementation Plan
+
+Date: 2026-07-03
+
+Parent gate:
+
+`0fa2220 Merge XXXL phase 41H guardian membership validation plan acceptance`
+
+Plan:
+
+`docs/xxxl/xxxl-phase-41h-guardian-membership-validation-implementation-plan.md`
+
+Checkpoint:
+
+`docs/checkpoints/xxxl-x1-testnet-local-runtime-skeleton-phase-41h-guardian-membership-validation-implementation-plan.md`
+
+Review request:
+
+`docs/reviews/xxxl-phase-41h-guardian-membership-validation-implementation-plan-review-request.md`
+
+Scope:
+
+Docs-only implementation plan.
+
+No `.rs` changes.
+
+No quorum/auth/replay/mutation/CPI/mint/live behavior enabled.
+
+Purpose:
+
+Plan the narrow code boundary for:
+
+`verified_signer_public_key ∈ authoritative_guardian_set`
+
+Mandatory provenance rule:
+
+Both membership operands require trusted provenance.
+
+The signer public key must come from Phase 41F.1 extracted Ed25519 public key bytes and must be bound to Phase 41F.2 native SVM Ed25519 verification.
+
+The guardian set must come from an authoritative program-controlled / on-chain source and must not come from caller instruction data.
+
+Next gate:
+
+External review of the 41H implementation plan.
+
+No `.rs` implementation may begin until this implementation plan is reviewed and accepted.
