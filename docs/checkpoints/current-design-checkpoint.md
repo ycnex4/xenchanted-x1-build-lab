@@ -50318,3 +50318,56 @@ Implementation planning must not include guardian validation, quorum, authorizat
 Next gate:
 
 After external acceptance, Phase 41G.2 implementation may begin under a separate reviewed boundary.
+
+---
+
+## XXXL Phase 41G.2 Payload Hash Binding Implementation Plan — Acceptance
+
+Date: 2026-07-03
+
+Accepted main:
+
+`56c782e Merge XXXL phase 41G payload hash binding implementation plan`
+
+Acceptance record:
+
+`docs/reviews/xxxl-phase-41g-2-payload-hash-binding-implementation-plan-acceptance.md`
+
+Final verdict:
+
+- Theo: ACCEPT
+- Audit Demon: ACCEPT
+- Required fixes: none
+- Blocking risks: none
+- Phase 41G.2 implementation allowed after acceptance: yes
+
+Accepted future implementation boundary:
+
+`establish_payload_hash_binding(raw_payload_bytes, signed_message_bytes, phase_41f_result) -> Result<PayloadHashBindingEstablished, PayloadHashBindingError>`
+
+Preferred validation path:
+
+`validate_guardian_payload_hash(raw_payload_bytes, signed_hash_32)`
+
+Accepted implementation flow:
+
+1. require Phase 41F verification established;
+2. require `signed_message_bytes.len() == 32`;
+3. checked-convert to `&[u8; 32]`;
+4. call `validate_guardian_payload_hash(raw_payload_bytes, signed_hash_32)`;
+5. success means only payload hash binding established;
+6. failure is fail-closed.
+
+Carry-forward Demon notes:
+
+- cumulative `Phase41BSafetyFlags` taxonomy must be explicit;
+- implementation must either introduce a separate cumulative flag such as `payload_hash_binding_established` or leave cumulative `Phase41BSafetyFlags` unchanged;
+- `cryptographic_signature_proof_accepted` must remain false;
+- `verification_evidence_accepted` must remain false;
+- `SignedMessageHashConversionFailed` is defensive-only after `len == 32`, or length check and conversion should be combined into one fallible step.
+
+Accepted boundary:
+
+Payload hash binding does not prove guardian membership, quorum, source burn, watcher honesty, finality, expiration, authorization, replay safety, mutation permission, CPI permission, mint permission, handler readiness, or live route readiness.
+
+Phase 41G.2 `.rs` implementation may begin under a separate reviewed boundary.
