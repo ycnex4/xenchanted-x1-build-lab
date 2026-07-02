@@ -47173,3 +47173,84 @@ Next action:
 
 - request external review of Phase 41D3.2.2.0 plan;
 - do not start Phase 41D3.2.2 code until the plan is accepted.
+
+---
+
+## XXXL Phase 41D3.2.2.0 Checked Prior Instruction Loading Plan — External Acceptance
+
+Date: 2026-07-02
+
+Main checkpoint:
+
+`fbefba4 Merge XXXL phase 41D3 checked loading plan`
+
+Acceptance record:
+
+`docs/reviews/xxxl-phase-41d3-2-2-0-checked-loading-plan-external-acceptance.md`
+
+External review status:
+
+- Audit Demon: ACCEPT
+- Theo: ACCEPT
+- Required fixes: none
+- Blocking risks: none
+
+Accepted Phase 41D3.2.2 code boundary:
+
+- consume bounded prior range from Phase 41D3.2.1;
+- borrow prior indexes and iterate with `.iter().copied()`;
+- accept Instructions sysvar AccountInfo as checked loading source;
+- verify Instructions sysvar account key before loading;
+- call `load_instruction_at_checked(index, instructions_sysvar_account)` only for prior indexes;
+- deterministic mapping of checked loading success/failure;
+- empty prior range causes no loading attempt;
+- checked loading failure is non-panic and non-authorizing;
+- loaded instruction remains runtime data only.
+
+Allowed loading-related flips:
+
+- `prior_instruction_loading_enabled: true`;
+- `load_instruction_called: true`;
+- `load_instruction_enabled: true`.
+
+Must remain false / forbidden:
+
+- `load_instruction`;
+- `load_instruction_at`;
+- unchecked loading;
+- raw Instructions sysvar byte parsing;
+- direct sysvar byte slicing;
+- prefiltering;
+- Phase 41C3 descriptors;
+- `locates_prior_ed25519_instruction`;
+- cryptographic verification;
+- evidence acceptance;
+- quorum counting;
+- authorization;
+- replay writes;
+- account mutation;
+- CPI;
+- `invoke_signed`;
+- SPL Token `mint_to`;
+- handler;
+- live route unlock.
+
+Cap / memory note:
+
+- no additional cap is required because the accepted prior range is already bounded by checked current-index space;
+- implementation should still prefer lazy iteration and avoid constructing a second large vector;
+- if loaded results are collected, the collection must remain bounded by the accepted prior range.
+
+Active blockers remain:
+
+- `X1_TESTNET_PROGRAM_DEPLOYED_RUNTIME_LOCKED`
+- `PRODUCTION_PROGRAM_ID_UNSET`
+- `LIVE_ROUTE_DISABLED`
+- `SPL_CPI_EXECUTION_DISABLED`
+- `PRODUCTION_GUARDIAN_SET_UNSET`
+- `PRODUCTION_PROOF_LOG_UNSET`
+- `EXTERNAL_REVIEW_INCOMPLETE`
+
+Next allowed code sub-step:
+
+Phase 41D3.2.2 may start after this record is merged.
