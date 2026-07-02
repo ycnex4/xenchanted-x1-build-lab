@@ -49117,3 +49117,71 @@ Next gate:
 Phase 41F.2 implementation may begin under a separate reviewed code boundary.
 
 After implementation, a focused crypto-boundary audit is required before any proof/evidence gate begins.
+
+---
+
+## XXXL Phase 41F.2 Ed25519 Signature Verification Boundary Implementation
+
+Date: 2026-07-02
+
+Parent checkpoint:
+
+`326bfb9 Merge XXXL phase 41F signature verification plan acceptance record`
+
+Code:
+
+`programs/xxxl-svm/src/verifier/ed25519_signature_verification_boundary.rs`
+
+Docs:
+
+`docs/xxxl/xxxl-phase-41f-2-ed25519-signature-verification-boundary.md`
+
+Checkpoint:
+
+`docs/checkpoints/xxxl-x1-testnet-local-runtime-skeleton-phase-41f-2-ed25519-signature-verification-boundary.md`
+
+Review request:
+
+`docs/reviews/xxxl-phase-41f-2-ed25519-signature-verification-boundary-review-request.md`
+
+Scope:
+
+Phase 41F.2 implements Model A native Ed25519 verification establishment.
+
+SAFETY_FLAGS semantics:
+
+- cumulative pipeline capability flags.
+
+Model A success status:
+
+- `NativeEd25519VerificationEstablished`.
+
+Implemented guardrails:
+
+- consumes Phase 41F.1 checked extraction;
+- consumes Phase 41E parsed offsets;
+- consumes Phase 41D3.2.2 loaded prior instructions;
+- re-checks loaded instruction program id;
+- re-checks runtime-data-only entry;
+- checks parse/extraction data length consistency;
+- preserves self-reference binding;
+- checks extracted ranges match parsed ranges.
+
+Still deferred:
+
+- message payload correctness;
+- proof acceptance;
+- evidence acceptance;
+- guardian validity;
+- quorum;
+- authorization;
+- replay writes;
+- mutation;
+- CPI;
+- mint;
+- handler;
+- live route.
+
+Required next audit:
+
+A focused crypto-boundary audit is required after Phase 41F.2 implementation acceptance and before any proof/evidence gate.
