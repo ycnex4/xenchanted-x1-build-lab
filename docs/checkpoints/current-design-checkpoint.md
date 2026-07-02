@@ -49323,3 +49323,71 @@ The focused audit must include:
 - no proof/evidence/guardian/quorum/auth drift;
 - no replay/mutation/CPI/mint/live drift;
 - Model A live-wiring precondition.
+
+---
+
+## XXXL Phase 41F.1 SAFETY_FLAGS Cumulative Alignment
+
+Date: 2026-07-02
+
+Parent checkpoint:
+
+`6e793c9 Merge XXXL phase 41F signature verification boundary acceptance record`
+
+Code:
+
+`programs/xxxl-svm/src/verifier/checked_ed25519_byte_extraction_boundary.rs`
+
+Docs:
+
+`docs/xxxl/xxxl-phase-41f-1-safety-flags-cumulative-alignment.md`
+
+Checkpoint:
+
+`docs/checkpoints/xxxl-x1-testnet-local-runtime-skeleton-phase-41f-1-safety-flags-cumulative-alignment.md`
+
+Review request:
+
+`docs/reviews/xxxl-phase-41f-1-safety-flags-cumulative-alignment-review-request.md`
+
+Reason:
+
+Audit Demon accepted Phase 41F.2 implementation with a non-blocking note that Phase 41F.1 still used conservative local-module-style safety flags while Phase 41F.2 canonized cumulative pipeline capability semantics.
+
+Scope:
+
+Semantic consistency cleanup only.
+
+No extraction logic is changed.
+
+Updated cumulative true flags in Phase 41F.1:
+
+- `account_info_parser_implemented`;
+- `load_instruction_called`;
+- `load_instruction_enabled`;
+- `concrete_runtime_api_selected`;
+- `current_instruction_identity_derived_from_runtime`.
+
+Still false in Phase 41F.1:
+
+- `ed25519_signature_verification_performed`;
+- `cryptographic_signature_proof_accepted`;
+- `verification_evidence_accepted`;
+- `quorum_counting_enabled`;
+- `authorization_enabled`;
+- `replay_write_enabled`;
+- `processed_event_marking_enabled`;
+- `account_mutation_enabled`;
+- `cpi_enabled`;
+- `invoke_signed_enabled`;
+- `spl_token_mint_to_enabled`;
+- `process_instruction_handler_added`;
+- `live_route_enabled`.
+
+No trust expansion:
+
+This cleanup does not introduce proof/evidence/guardian/quorum/auth/replay/mutation/CPI/mint/live behavior.
+
+Next gate:
+
+After review and acceptance, the focused crypto-boundary audit can proceed with consistent cumulative Phase 41F safety flag semantics.

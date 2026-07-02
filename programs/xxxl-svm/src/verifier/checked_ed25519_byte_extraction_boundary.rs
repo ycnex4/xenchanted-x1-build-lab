@@ -106,11 +106,11 @@ pub struct Phase41F_1CheckedByteExtractionBoundaryReport {
 
 pub const PHASE_41F_1_SAFETY_FLAGS: Phase41BSafetyFlags = Phase41BSafetyFlags {
     raw_instructions_sysvar_parser_implemented: false,
-    account_info_parser_implemented: false,
-    load_instruction_called: false,
-    load_instruction_enabled: false,
-    concrete_runtime_api_selected: false,
-    current_instruction_identity_derived_from_runtime: false,
+    account_info_parser_implemented: true,
+    load_instruction_called: true,
+    load_instruction_enabled: true,
+    concrete_runtime_api_selected: true,
+    current_instruction_identity_derived_from_runtime: true,
     ed25519_signature_verification_performed: false,
     cryptographic_signature_proof_accepted: false,
     verification_evidence_accepted: false,
