@@ -48905,3 +48905,105 @@ Before any signature-verification flag is flipped, future work must address:
 - self-reference binding preservation;
 - signature validity separation from proof/evidence/guardian/quorum/auth;
 - program-id defense-in-depth re-check consideration.
+
+---
+
+## XXXL Phase 41F.2 Ed25519 Signature Verification Boundary Plan
+
+Date: 2026-07-02
+
+Parent checkpoint:
+
+`f5c9c7f Merge XXXL phase 41F checked extraction acceptance record`
+
+Type:
+
+- docs-only plan;
+- no runtime code introduced.
+
+Plan document:
+
+`docs/xxxl/xxxl-phase-41f-2-ed25519-signature-verification-boundary-plan.md`
+
+Checkpoint:
+
+`docs/checkpoints/xxxl-x1-testnet-local-runtime-skeleton-phase-41f-2-ed25519-signature-verification-boundary-plan.md`
+
+Review request:
+
+`docs/reviews/xxxl-phase-41f-2-ed25519-signature-verification-boundary-plan-review-request.md`
+
+Purpose:
+
+Plan the Ed25519 signature verification boundary after Phase 41F.1 checked byte extraction.
+
+Critical separation:
+
+Signature validity must remain separate from:
+
+- proof acceptance;
+- evidence acceptance;
+- guardian validity;
+- guardian set membership;
+- quorum;
+- authorization;
+- replay writes;
+- processed event marking;
+- account mutation;
+- CPI;
+- `invoke_signed`;
+- SPL Token `mint_to`;
+- process instruction handler;
+- live route unlock.
+
+Verification model planning:
+
+- Model A — native Ed25519 instruction verification boundary;
+- Model B — local cryptographic verification boundary.
+
+Preferred direction:
+
+- Model A remains preferred unless external review says otherwise;
+- Model B remains deferred unless separately reviewed.
+
+Required carry-forward guardrails:
+
+- document Model A soundness explicitly;
+- preserve self-reference binding;
+- attribute statuses to Model A or Model B;
+- clarify cumulative-vs-local `SAFETY_FLAGS` semantics before code;
+- add or require program-id defense-in-depth re-check;
+- place focused crypto-boundary audit checkpoint after implementation.
+
+Still forbidden in this plan:
+
+- local cryptographic verification code;
+- native Ed25519 verification establishment code;
+- proof acceptance;
+- verification evidence acceptance;
+- guardian validity acceptance;
+- guardian set membership acceptance;
+- quorum counting;
+- authorization;
+- replay writes;
+- processed event marking;
+- account mutation;
+- CPI;
+- `invoke_signed`;
+- SPL Token `mint_to`;
+- process instruction handler;
+- live route unlock.
+
+Active blockers remain:
+
+- `X1_TESTNET_PROGRAM_DEPLOYED_RUNTIME_LOCKED`
+- `PRODUCTION_PROGRAM_ID_UNSET`
+- `LIVE_ROUTE_DISABLED`
+- `SPL_CPI_EXECUTION_DISABLED`
+- `PRODUCTION_GUARDIAN_SET_UNSET`
+- `PRODUCTION_PROOF_LOG_UNSET`
+- `EXTERNAL_REVIEW_INCOMPLETE`
+
+Next gate:
+
+External review required before Phase 41F.2 implementation begins.
