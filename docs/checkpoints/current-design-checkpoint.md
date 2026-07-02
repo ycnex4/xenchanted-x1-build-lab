@@ -48710,3 +48710,108 @@ Next gate:
 Phase 41F.1 may begin after this acceptance record is merged.
 
 Phase 41F.1 must not perform cryptographic verification and must not flip `ed25519_signature_verification_performed`.
+
+---
+
+## XXXL Phase 41F.1 Checked Ed25519 Byte Extraction Boundary
+
+Date: 2026-07-02
+
+Parent checkpoint:
+
+`e45869c Merge XXXL phase 41F Ed25519 verification plan acceptance record`
+
+Code:
+
+`programs/xxxl-svm/src/verifier/checked_ed25519_byte_extraction_boundary.rs`
+
+Docs:
+
+`docs/xxxl/xxxl-phase-41f-1-checked-byte-extraction-boundary.md`
+
+Checkpoint:
+
+`docs/checkpoints/xxxl-x1-testnet-local-runtime-skeleton-phase-41f-1-checked-byte-extraction-boundary.md`
+
+Review request:
+
+`docs/reviews/xxxl-phase-41f-1-checked-byte-extraction-boundary-review-request.md`
+
+Scope:
+
+Phase 41F.1 extracts checked borrowed references from already parsed Ed25519 instruction byte ranges.
+
+Allowed:
+
+- checked signature extraction as `&[u8; 64]`;
+- checked public key extraction as `&[u8; 32]`;
+- checked message extraction as borrowed `&[u8]`;
+- no attacker-sized message `Vec` copy.
+
+Guardrails:
+
+- consumes Phase 41E parsed result;
+- consumes already loaded prior instruction data;
+- checks matched instruction index;
+- checks loaded entry remains runtime-data-only;
+- checks loaded data length matches Phase 41E parse result;
+- uses checked range access only;
+- no unchecked indexing;
+- no unchecked slicing;
+- no `unwrap`;
+- no `expect`;
+- no `panic!`;
+- no `unsafe`.
+
+Still not allowed:
+
+- Ed25519 cryptographic verification;
+- local cryptographic verification;
+- native Ed25519 verification establishment;
+- signature validity acceptance;
+- proof acceptance;
+- verification evidence acceptance;
+- guardian validity acceptance;
+- guardian set membership acceptance;
+- quorum counting;
+- authorization;
+- replay writes;
+- processed event marking;
+- account mutation;
+- CPI;
+- `invoke_signed`;
+- SPL Token `mint_to`;
+- process instruction handler;
+- live route unlock.
+
+Phase 41F.1 must keep:
+
+- `ed25519_signature_verification_performed == false`;
+- `cryptographic_signature_proof_accepted == false`;
+- `accepts_verification_evidence == false`;
+- `guardian_validity_accepted == false`;
+- `quorum_counting_enabled == false`;
+- `authorizes_execution == false`.
+
+Model A soundness remains future 41F.2 scope.
+
+Phase 41F.1 does not claim:
+
+- prior native Ed25519 verification established;
+- message correctness;
+- guardian validity;
+- proof acceptance.
+
+Active blockers remain:
+
+- `X1_TESTNET_PROGRAM_DEPLOYED_RUNTIME_LOCKED`
+- `PRODUCTION_PROGRAM_ID_UNSET`
+- `LIVE_ROUTE_DISABLED`
+- `SPL_CPI_EXECUTION_DISABLED`
+- `PRODUCTION_GUARDIAN_SET_UNSET`
+- `PRODUCTION_PROOF_LOG_UNSET`
+- `EXTERNAL_REVIEW_INCOMPLETE`
+
+Next gate:
+
+External review required before Phase 41F.2 planning begins.
