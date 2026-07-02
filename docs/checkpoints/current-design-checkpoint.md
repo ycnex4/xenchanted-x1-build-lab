@@ -46580,3 +46580,68 @@ Recommended next step:
 - request Demon and Theo review of Phase 41D3.0 boundary plan
 - if accepted, open Phase 41D3 code
 - if changes are requested, amend the plan before code
+
+# Latest XXXL Phase 41D3.0 external acceptance
+
+Review file:
+
+- `docs/reviews/xxxl-phase-41d3-0-prior-instruction-enumeration-plan-external-acceptance.md`
+
+Reviewed main:
+
+- `a79bc6b Merge XXXL phase 41D3 prior instruction enumeration plan`
+
+Verdicts:
+
+- Theo: `ACCEPT`
+- Demon: `ACCEPT`
+
+Required fixes:
+
+- none
+
+Blocking risks:
+
+- none
+
+Gate result:
+
+- Phase 41D3.0 external review gate is closed
+- Phase 41D3 code may start
+- Phase 41D3 code remains gated under separate review before merge
+
+Minimum safe Phase 41D3 code boundary:
+
+- real prior-instruction enumeration via Instructions sysvar
+- checked current-index acquisition
+- checked instruction loading through `load_instruction_at_checked` or reviewed equivalent
+- prefiltering unrelated instructions
+- Phase 41C3 candidate descriptor construction
+- explicit same-index reject
+- explicit later-index reject
+- prior-index candidate only
+- `locates_prior_ed25519_instruction: true` flag flip
+- `load_instruction_called: true` flag flip if a checked helper is used
+
+Phase 41D3 code must not include:
+
+- Ed25519 cryptographic verification
+- verification evidence acceptance
+- guardian quorum counting
+- authorization
+- replay writes
+- account mutation
+- CPI
+- `invoke_signed`
+- SPL Token `mint_to`
+- live route unlock
+- handler or execution flag enablement
+
+Demon audit focus for Phase 41D3 code:
+
+- panic-safety of every runtime sub-step
+- checked current-index acquisition
+- checked prior-instruction loading
+- explicit same/later reject implementation
+- no descriptor-layer fallthrough
+- exact intended flag flips only
