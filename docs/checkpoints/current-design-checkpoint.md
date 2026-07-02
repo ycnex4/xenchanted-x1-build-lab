@@ -50458,3 +50458,51 @@ Recommended next gate:
 Phase 41G.3 — payload binding negative matrix and focused audit.
 
 Phase 41H guardian validation planning should wait until 41G.3 is closed.
+
+---
+
+## XXXL Phase 41G.3 Payload Binding Negative Matrix + Focused Audit Plan
+
+Date: 2026-07-03
+
+Parent gate:
+
+`1ce0fb4 Merge XXXL phase 41G payload hash binding boundary acceptance`
+
+Plan:
+
+`docs/xxxl/xxxl-phase-41g-3-payload-binding-negative-matrix-focused-audit-plan.md`
+
+Checkpoint:
+
+`docs/checkpoints/xxxl-x1-testnet-local-runtime-skeleton-phase-41g-3-payload-binding-negative-matrix-focused-audit-plan.md`
+
+Review request:
+
+`docs/reviews/xxxl-phase-41g-3-payload-binding-negative-matrix-focused-audit-plan-review-request.md`
+
+Scope:
+
+Docs-only focused audit planning checkpoint.
+
+No runtime code.
+
+No `.rs` changes.
+
+No guardian/quorum/auth/replay/mutation/CPI/mint/live behavior enabled.
+
+Purpose:
+
+Plan the focused negative matrix and audit shell for the accepted 41G.2 payload hash binding boundary.
+
+Core rule:
+
+41G.2 local tests cover boundary-specific failures.
+
+Phase 33 / Phase 34 remain authoritative for raw payload and canonical hash details.
+
+Next gate:
+
+After external acceptance, create the 41G.3 focused audit record.
+
+After 41G.3 audit acceptance, Phase 41H guardian validation planning may begin under a separate reviewed boundary.
