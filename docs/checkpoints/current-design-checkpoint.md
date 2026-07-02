@@ -47341,3 +47341,123 @@ Next action:
 - run local validation;
 - request external review of Phase 41D3.2.2;
 - do not start Phase 41D3.2.3 prefilter/descriptor construction before external acceptance.
+
+---
+
+## XXXL Phase 41D3.2.2 Checked Prior Instruction Loading Boundary — External Acceptance
+
+Date: 2026-07-02
+
+Main checkpoint:
+
+`d2a87b4 Merge XXXL phase 41D3 checked prior loading boundary`
+
+Acceptance record:
+
+`docs/reviews/xxxl-phase-41d3-2-2-checked-prior-loading-boundary-external-acceptance.md`
+
+External review status:
+
+- Theo: ACCEPT
+- Audit Demon: ACCEPT
+- Required fixes: none
+- Blocking risks: none
+- Scope violations: no
+- Forbidden operations detected: no
+- Trust-sensitive boundary drift: no
+
+Accepted implementation boundary:
+
+- consumes bounded prior range from Phase 41D3.2.1;
+- verifies prior indexes remain strictly before current index;
+- accepts Instructions sysvar AccountInfo;
+- checks Instructions sysvar account key before loading;
+- empty prior range causes no loading attempt;
+- iterates prior indexes with `.iter().copied()`;
+- calls `load_instruction_at_checked` only for prior indexes;
+- maps checked loading success to runtime-data-only entries;
+- maps checked loading failure to deterministic non-authorizing failure.
+
+Accepted safety properties:
+
+- `load_instruction_at_checked` is the only loading helper used;
+- `load_instruction` and `load_instruction_at` are absent;
+- unchecked loading is absent;
+- raw sysvar parsing is absent;
+- direct byte slicing is absent;
+- prefiltering is absent;
+- Phase 41C3 descriptors are absent;
+- `locates_prior_ed25519_instruction` remains false;
+- loaded entries remain runtime data only;
+- loaded entries are not evidence;
+- loaded entries do not authorize execution.
+
+Accepted loading-related flips:
+
+- `prior_instruction_loading_enabled: true`;
+- `load_instruction_called: true`;
+- `load_instruction_enabled: true`.
+
+Still false / forbidden:
+
+- `raw_instructions_sysvar_parser_implemented`;
+- `locates_prior_ed25519_instruction`;
+- cryptographic verification;
+- signature proof acceptance;
+- verification evidence acceptance;
+- quorum counting;
+- authorization;
+- replay writes;
+- processed event marking;
+- account mutation;
+- CPI;
+- `invoke_signed`;
+- SPL Token `mint_to`;
+- handler;
+- live route unlock.
+
+Non-blocking heap note for Phase 41D3.2.3:
+
+- Phase 41D3.2.2 collects loaded prior instructions in a bounded vector;
+- this is accepted for the current non-live boundary;
+- Phase 41D3.2.3 should prefer streaming `load -> prefilter -> discard non-candidates`;
+- descriptors must remain non-authorizing.
+
+Next allowed code sub-step:
+
+Phase 41D3.2.3 may start after this acceptance record is merged.
+
+Minimum safe Phase 41D3.2.3 boundary:
+
+- prefilter unrelated instructions from loaded prior instructions;
+- identify Ed25519 program-id candidates structurally;
+- construct Phase 41C3 candidate descriptors;
+- explicitly reject same-index candidates;
+- explicitly reject later-index candidates;
+- flip `locates_prior_ed25519_instruction: true`.
+
+Still forbidden in Phase 41D3.2.3:
+
+- Ed25519 cryptographic verification;
+- signature proof acceptance;
+- verification evidence acceptance;
+- guardian quorum counting;
+- authorization;
+- replay writes;
+- processed event marking;
+- account mutation;
+- CPI;
+- `invoke_signed`;
+- SPL Token `mint_to`;
+- handler;
+- live route unlock.
+
+Active blockers remain:
+
+- `X1_TESTNET_PROGRAM_DEPLOYED_RUNTIME_LOCKED`
+- `PRODUCTION_PROGRAM_ID_UNSET`
+- `LIVE_ROUTE_DISABLED`
+- `SPL_CPI_EXECUTION_DISABLED`
+- `PRODUCTION_GUARDIAN_SET_UNSET`
+- `PRODUCTION_PROOF_LOG_UNSET`
+- `EXTERNAL_REVIEW_INCOMPLETE`
