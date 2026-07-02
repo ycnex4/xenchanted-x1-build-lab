@@ -46500,3 +46500,83 @@ Minimum safe Phase 41D3 boundary:
 - no SPL Token `mint_to`
 - no live route unlock
 - no handler or execution flag enablement
+
+# Latest XXXL Phase 41D3.0 prior-instruction enumeration plan
+
+Stage:
+
+- `stage-xxxl-x1-testnet-local-runtime-skeleton-phase-41d3-0-prior-instruction-enumeration-plan`
+
+Checkpoint file:
+
+- `docs/checkpoints/xxxl-x1-testnet-local-runtime-skeleton-phase-41d3-0-prior-instruction-enumeration-plan.md`
+
+Review request file:
+
+- `docs/reviews/xxxl-phase-41d3-0-prior-instruction-enumeration-plan-review-request.md`
+
+Purpose:
+
+- open Phase 41D3 planning after Phase 41D2 external acceptance
+- define the safety boundary for real prior-instruction enumeration
+- require checked current-index acquisition
+- require checked prior-instruction loading
+- require prefiltering unrelated instructions
+- require Phase 41C3 candidate descriptor construction only
+- require explicit same/later fully-matching Ed25519 anomaly decision
+- keep proof, evidence, quorum, authorization, replay, CPI, mint execution, handler, and live route disabled
+
+Files added:
+
+- `docs/xxxl/xxxl-phase-41d3-0-prior-instruction-enumeration-runtime-boundary-plan.md`
+- `docs/checkpoints/xxxl-x1-testnet-local-runtime-skeleton-phase-41d3-0-prior-instruction-enumeration-plan.md`
+- `docs/reviews/xxxl-phase-41d3-0-prior-instruction-enumeration-plan-review-request.md`
+
+Files changed:
+
+- `docs/checkpoints/current-design-checkpoint.md`
+
+Phase 41D3.0 explicitly does not:
+
+- add Rust code
+- modify Cargo manifests
+- add dependencies
+- call `load_instruction`
+- call `load_instruction_at`
+- call `load_instruction_at_checked`
+- parse raw Instructions sysvar account data
+- enumerate prior instructions
+- construct runtime Phase 41C3 candidate descriptors
+- locate prior Ed25519 instructions at runtime
+- verify Ed25519 signatures
+- accept cryptographic signature proof
+- accept verification evidence
+- count guardian quorum
+- authorize minting
+- write replay state
+- mark processed events
+- mutate runtime/account state
+- perform CPI
+- call `invoke_signed`
+- call SPL Token `mint_to`
+- add runtime execution handler
+- unlock live route execution
+- select a production Program ID
+- remove deployment blockers
+- claim production readiness
+
+Active blockers remain:
+
+- `X1_TESTNET_PROGRAM_DEPLOYED_RUNTIME_LOCKED`
+- `PRODUCTION_PROGRAM_ID_UNSET`
+- `LIVE_ROUTE_DISABLED`
+- `SPL_CPI_EXECUTION_DISABLED`
+- `PRODUCTION_GUARDIAN_SET_UNSET`
+- `PRODUCTION_PROOF_LOG_UNSET`
+- `EXTERNAL_REVIEW_INCOMPLETE`
+
+Recommended next step:
+
+- request Demon and Theo review of Phase 41D3.0 boundary plan
+- if accepted, open Phase 41D3 code
+- if changes are requested, amend the plan before code
