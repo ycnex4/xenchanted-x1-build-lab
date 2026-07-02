@@ -48218,3 +48218,130 @@ Next action:
 - run local validation;
 - request external review of Phase 41E.1;
 - do not start verification/proof/evidence/quorum/auth/replay/CPI/mint/live-route work before external acceptance.
+
+---
+
+## XXXL Phase 41E.1 Ed25519 Instruction Byte Parsing Boundary — External Acceptance
+
+Date: 2026-07-02
+
+Accepted main checkpoint:
+
+`00861cf Merge XXXL phase 41E Ed25519 byte parsing boundary`
+
+Acceptance record:
+
+`docs/reviews/xxxl-phase-41e-1-ed25519-byte-parsing-boundary-external-acceptance.md`
+
+External review status:
+
+- Theo: ACCEPT
+- Audit Demon: ACCEPT
+- Required fixes: none
+- Blocking risks: none
+- Scope violations: no
+- Forbidden operations detected: no
+- Entry gate acceptable: yes
+- Cross-instruction reference policy acceptable: yes
+- Message range allocation policy acceptable: yes
+- Overlap policy acceptable: yes
+- Trust-sensitive boundary drift: no
+- Next phase allowed: yes
+
+Accepted runtime scope:
+
+- consume Phase 41D3.2.2 loaded prior instructions;
+- consume Phase 41D3.2.3 prefilter result;
+- gate only on located status plus matched instruction index;
+- parse already-loaded matched Ed25519 instruction bytes;
+- parse header/signature-count/offset metadata;
+- parse signature/public-key/message ranges as bounded metadata;
+- reject malformed/out-of-bounds/cross-instruction/overlap cases deterministically;
+- keep parsed output non-authorizing.
+
+Accepted entry gate:
+
+- `status == PriorEd25519InstructionStructurallyLocated`;
+- `matched_instruction_index.is_some()`.
+
+Not accepted as a gate:
+
+- `locates_prior_ed25519_instruction`.
+
+Descriptor boolean guardrail accepted:
+
+Phase 41E.1 does not trust Phase 41D3.2.3 descriptor booleans as evidence:
+
+- `structurally_well_formed_candidate`;
+- `guardian_evidence_unique`;
+- `matches_expected_current_identity_binding`.
+
+Cross-instruction reference policy accepted:
+
+- signature instruction index must be `u16::MAX`;
+- public key instruction index must be `u16::MAX`;
+- message instruction index must be `u16::MAX`;
+- any non-self index reference fails closed;
+- no referenced instructions are loaded.
+
+Message range policy accepted:
+
+- message is stored as bounded metadata `(offset, len)`;
+- attacker-sized message bytes are not copied into a new `Vec`.
+
+Overlap policy accepted:
+
+- overlapping signature/public-key/message parsed ranges are rejected deterministically.
+
+Demon non-blocking note:
+
+Future hardening should require parsed ranges to begin after the Ed25519 offset table:
+
+- `signature_offset >= ED25519_SINGLE_SIGNATURE_OFFSET_TABLE_LEN`;
+- `public_key_offset >= ED25519_SINGLE_SIGNATURE_OFFSET_TABLE_LEN`;
+- `message_offset >= ED25519_SINGLE_SIGNATURE_OFFSET_TABLE_LEN`.
+
+Purpose:
+
+- prevent parsed ranges from aliasing header/offset-table bytes `[0, 16)`;
+- prepare a stricter parser before future verification-oriented boundaries.
+
+This note is non-blocking for Phase 41E.1 because the boundary is non-authorizing.
+
+Still forbidden:
+
+- Ed25519 cryptographic verification;
+- signature validity acceptance;
+- guardian validity acceptance;
+- cryptographic signature proof acceptance;
+- verification evidence acceptance;
+- quorum counting;
+- authorization;
+- replay writes;
+- processed event marking;
+- account mutation;
+- CPI;
+- `invoke_signed`;
+- SPL Token `mint_to`;
+- process instruction handler;
+- live route unlock.
+
+Active blockers remain:
+
+- `X1_TESTNET_PROGRAM_DEPLOYED_RUNTIME_LOCKED`
+- `PRODUCTION_PROGRAM_ID_UNSET`
+- `LIVE_ROUTE_DISABLED`
+- `SPL_CPI_EXECUTION_DISABLED`
+- `PRODUCTION_GUARDIAN_SET_UNSET`
+- `PRODUCTION_PROOF_LOG_UNSET`
+- `EXTERNAL_REVIEW_INCOMPLETE`
+
+Next gate:
+
+Phase 41E.1 is accepted.
+
+Next work must be a separate reviewed boundary.
+
+Recommended immediate next step:
+
+- offset-table alias hardening before future Ed25519 cryptographic verification.
