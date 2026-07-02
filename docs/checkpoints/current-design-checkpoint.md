@@ -49895,3 +49895,88 @@ Carry-forward requirements for Phase 41G.2:
 - Stage-1 vector parity must be preserved.
 
 Phase 41G.1 may begin under a separate reviewed boundary.
+
+---
+
+## XXXL Phase 41G.1 Payload Evidence Shape Plan
+
+Date: 2026-07-03
+
+Parent gate:
+
+`b4ff536 Merge XXXL phase 41G payload binding plan acceptance`
+
+Plan:
+
+`docs/xxxl/xxxl-phase-41g-1-payload-evidence-shape-plan.md`
+
+Checkpoint:
+
+`docs/checkpoints/xxxl-x1-testnet-local-runtime-skeleton-phase-41g-1-payload-evidence-shape-plan.md`
+
+Review request:
+
+`docs/reviews/xxxl-phase-41g-1-payload-evidence-shape-plan-review-request.md`
+
+Scope:
+
+Docs-only planning checkpoint.
+
+No runtime code.
+
+No verification logic change.
+
+No hash comparison.
+
+No guardian/quorum/auth/replay/mutation/CPI/mint/live behavior enabled.
+
+Purpose:
+
+Define the shape of candidate payload evidence for future Phase 41G.2 payload hash binding.
+
+Authoritative sources:
+
+- `programs/xxxl-svm/src/verifier/raw_payload.rs`;
+- `RAW_PAYLOAD_PHASE_23_FIELD_ORDER`;
+- `DecodedGuardianPayloadRaw<'a>`;
+- `programs/xxxl-svm/src/verifier/canonical_payload.rs`.
+
+Canonical field order:
+
+- `message_type`;
+- `schema_version`;
+- `instruction_layout_version`;
+- `route_id`;
+- `source_chain_id`;
+- `source_token`;
+- `source_sender`;
+- `source_burn_tx_hash`;
+- `source_burn_event_index`;
+- `source_block_number`;
+- `source_block_hash`;
+- `source_finality_block`;
+- `canonical_event_key`;
+- `x1_recipient`;
+- `burned_amount`;
+- `source_chain_weight_bps`;
+- `xxxl_mint_amount`;
+- `target_mint`;
+- `guardian_set_id`;
+- `message_nonce`;
+- `expiration_slot_or_unix_ts`.
+
+Boundary:
+
+41G.1 may define candidate payload evidence shape.
+
+41G.1 must not accept proof, validate guardian membership, count quorum, authorize, write replay state, mutate accounts, CPI, mint, add handler, or unlock live route.
+
+Carry-forward to 41G.2:
+
+- use domain-separated payload hash;
+- reuse existing `raw_payload.rs` and `canonical_payload.rs`;
+- preserve Stage-1 vector parity.
+
+Next gate:
+
+After external acceptance, Phase 41G.2 payload hash binding may be planned separately.
