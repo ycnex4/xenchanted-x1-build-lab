@@ -50371,3 +50371,90 @@ Accepted boundary:
 Payload hash binding does not prove guardian membership, quorum, source burn, watcher honesty, finality, expiration, authorization, replay safety, mutation permission, CPI permission, mint permission, handler readiness, or live route readiness.
 
 Phase 41G.2 `.rs` implementation may begin under a separate reviewed boundary.
+
+---
+
+## XXXL Phase 41G.2 Payload Hash Binding Boundary Code — Acceptance
+
+Date: 2026-07-03
+
+Accepted main:
+
+`730b5d9 Merge XXXL phase 41G payload hash binding boundary`
+
+Acceptance record:
+
+`docs/reviews/xxxl-phase-41g-2-payload-hash-binding-boundary-acceptance.md`
+
+Final verdict:
+
+- Theo: ACCEPT
+- Audit Demon: ACCEPT
+- Required fixes: none
+- Blocking risks: none
+- Phase 41G.2 code boundary accepted: yes
+
+Accepted implementation:
+
+`establish_payload_hash_binding(raw_payload_bytes, signed_message_bytes, phase_41f_result)`
+
+Accepted flow:
+
+1. require Phase 41F native Ed25519 verification established;
+2. require `signed_message_bytes.len() == 32`;
+3. checked-convert to `&[u8; 32]`;
+4. call `validate_guardian_payload_hash(raw_payload_bytes, signed_hash_32)`;
+5. success returns only narrow payload hash binding marker/status;
+6. failure is fail-closed.
+
+Accepted changed files:
+
+- `programs/xxxl-svm/src/verifier/payload_hash_binding_boundary.rs`;
+- `programs/xxxl-svm/src/verifier/mod.rs`.
+
+Accepted taxonomy:
+
+Payload hash binding is not proof acceptance.
+
+Payload hash binding is not verification evidence acceptance.
+
+The implementation does not flip cumulative `Phase41BSafetyFlags`.
+
+The following remain false:
+
+- `cryptographic_signature_proof_accepted`;
+- `verification_evidence_accepted`;
+- `guardian_validity_accepted`;
+- `guardian_set_membership_accepted`;
+- `quorum_counting_enabled`;
+- `authorization_enabled`;
+- `replay_write_enabled`;
+- `processed_event_marking_enabled`;
+- `account_mutation_enabled`;
+- `cpi_enabled`;
+- `invoke_signed_enabled`;
+- `spl_token_mint_to_enabled`;
+- `process_instruction_handler_added`;
+- `live_route_enabled`.
+
+Accepted validation:
+
+- targeted payload hash binding tests passed: 7 passed;
+- full `xxxl-svm` tests passed: 55 passed, 0 failed, 10 ignored;
+- `cargo fmt` passed;
+- `git diff --check` passed.
+
+Demon non-blocking notes:
+
+- `SignedMessageHashConversionFailed` is defensive-only / practically unreachable after `len == 32`;
+- per-field negative granularity is accepted by delegation to Phase 33/34 raw/canonical tests and hash mismatch boundary.
+
+Forward risk reminder:
+
+The live-wiring Model A precondition from Phase 41F.2 remains a future high-risk audit item when handler integration is planned.
+
+Recommended next gate:
+
+Phase 41G.3 — payload binding negative matrix and focused audit.
+
+Phase 41H guardian validation planning should wait until 41G.3 is closed.
