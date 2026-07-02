@@ -7,6 +7,7 @@ pub mod ed25519_verification_evidence;
 pub mod ed25519_verification_evidence_coverage_matrix;
 pub mod ed25519_verification_evidence_integration_design;
 pub mod errors;
+pub mod guardian_membership_validation_boundary;
 pub mod guardian_quorum;
 pub mod instructions_sysvar_evidence_scanner;
 pub mod raw_payload;
@@ -87,6 +88,15 @@ pub use ed25519_verification_evidence_integration_design::{
     FUTURE_ED25519_VERIFICATION_EVIDENCE_REQUIREMENTS,
 };
 pub use errors::{VerifierErrorCategory, VERIFIER_ERROR_CATEGORIES};
+pub use guardian_membership_validation_boundary::{
+    establish_guardian_membership_validation, guardian_membership_validation_boundary_report,
+    AuthoritativeGuardianSetRef, AuthoritativeGuardianSetSource, GuardianMembershipValidated,
+    GuardianMembershipValidationBoundaryReport, GuardianMembershipValidationError,
+    GuardianMembershipValidationErrorKind, GuardianMembershipValidationStatus,
+    GUARDIAN_MEMBERSHIP_VALIDATION_BOUNDARY_PHASE_41H,
+    GUARDIAN_MEMBERSHIP_VALIDATION_BOUNDARY_REPORT,
+    GUARDIAN_MEMBERSHIP_VALIDATION_BOUNDARY_VERSION,
+};
 pub use guardian_quorum::{
     guardian_quorum_structural_report, verify_guardian_quorum_structural, GuardianApprovalClaim,
     GuardianApprovalRef, GuardianPublicKey, GuardianQuorumStructuralError,
