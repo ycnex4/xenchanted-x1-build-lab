@@ -48597,3 +48597,116 @@ Active blockers remain:
 Next gate:
 
 External review required before Phase 41F.1 begins.
+
+---
+
+## XXXL Phase 41F.0 Ed25519 Cryptographic Verification Plan — External Acceptance
+
+Date: 2026-07-02
+
+Accepted main checkpoint:
+
+`39b1a94 Merge XXXL phase 41F Ed25519 verification plan`
+
+Acceptance record:
+
+`docs/reviews/xxxl-phase-41f-0-ed25519-cryptographic-verification-plan-external-acceptance.md`
+
+External review status:
+
+- Theo: ACCEPT
+- Audit Demon: ACCEPT
+- Required fixes: none
+- Blocking risks: none
+- Scope violations: no
+- Native verification model preference acceptable: yes
+- Checked extraction sub-phase acceptable: yes
+- Signature/proof separation acceptable: yes
+- Trust-sensitive boundary drift: no
+- Next sub-phase allowed: yes
+
+Accepted planning scope:
+
+- Phase 41F.0 is docs-only;
+- no runtime code was introduced;
+- signature validity remains separate from proof/evidence/guardian/quorum/auth;
+- Model A native Ed25519 instruction verification is the preferred default unless external review says otherwise;
+- Model B local cryptographic verification remains deferred unless explicitly reviewed;
+- checked byte extraction should be Phase 41F.1 before cryptographic verification.
+
+Model A soundness guardrail:
+
+Future Phase 41F.1 or Phase 41F.2 documentation must explicitly state:
+
+- reaching the current instruction means the prior native Ed25519 instruction already verified successfully;
+- otherwise the transaction would have aborted before the current instruction.
+
+Self-reference invariant guardrail:
+
+Model A must continue to require:
+
+- signature instruction index == `u16::MAX`;
+- public key instruction index == `u16::MAX`;
+- message instruction index == `u16::MAX`.
+
+This binds native Ed25519 verification to the parsed signature/public-key/message ranges.
+
+Status model guardrail:
+
+Future Phase 41F statuses must be attributed to the selected verification model.
+
+Under Model A:
+
+- invalid signature is normally not reachable at runtime because native Ed25519 verification aborts before the current instruction.
+
+Under Model B:
+
+- invalid signature can be directly returned by local cryptographic verification.
+
+Future statuses such as `Ed25519SignatureInvalid` and `NativeEd25519VerificationNotEstablished` must not create misleading dead paths or accidental proof/evidence/auth acceptance.
+
+Accepted next sub-phase:
+
+Phase 41F.1 — checked signature/public-key/message byte extraction boundary.
+
+Phase 41F.1 allowed future scope:
+
+- checked fixed extraction of signature bytes;
+- checked fixed extraction of public key bytes;
+- checked borrowed message slice/reference;
+- no attacker-sized message `Vec` copy;
+- no crypto verification;
+- no proof/evidence/guardian/quorum/auth.
+
+Still forbidden:
+
+- proof acceptance;
+- verification evidence acceptance;
+- guardian validity acceptance;
+- guardian set membership acceptance;
+- quorum counting;
+- authorization;
+- replay writes;
+- processed event marking;
+- account mutation;
+- CPI;
+- `invoke_signed`;
+- SPL Token `mint_to`;
+- process instruction handler;
+- live route unlock.
+
+Active blockers remain:
+
+- `X1_TESTNET_PROGRAM_DEPLOYED_RUNTIME_LOCKED`
+- `PRODUCTION_PROGRAM_ID_UNSET`
+- `LIVE_ROUTE_DISABLED`
+- `SPL_CPI_EXECUTION_DISABLED`
+- `PRODUCTION_GUARDIAN_SET_UNSET`
+- `PRODUCTION_PROOF_LOG_UNSET`
+- `EXTERNAL_REVIEW_INCOMPLETE`
+
+Next gate:
+
+Phase 41F.1 may begin after this acceptance record is merged.
+
+Phase 41F.1 must not perform cryptographic verification and must not flip `ed25519_signature_verification_performed`.
