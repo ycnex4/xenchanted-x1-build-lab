@@ -49980,3 +49980,81 @@ Carry-forward to 41G.2:
 Next gate:
 
 After external acceptance, Phase 41G.2 payload hash binding may be planned separately.
+
+---
+
+## XXXL Phase 41G.1 Payload Evidence Shape Plan — Acceptance
+
+Date: 2026-07-03
+
+Accepted main:
+
+`b62b704 Merge XXXL phase 41G payload evidence shape plan`
+
+Acceptance record:
+
+`docs/reviews/xxxl-phase-41g-1-payload-evidence-shape-plan-acceptance.md`
+
+Final verdict:
+
+- Theo: ACCEPT
+- Audit Demon: ACCEPT
+- Required fixes: none
+- Blocking risks: none
+- Phase 41G.2 allowed after acceptance: yes
+
+Accepted principle:
+
+Evidence shape is not evidence acceptance.
+
+Accepted purpose:
+
+41G.1 defines only the shape of candidate payload evidence for future Phase 41G.2 payload hash binding.
+
+Authoritative sources:
+
+- `programs/xxxl-svm/src/verifier/raw_payload.rs`;
+- `RAW_PAYLOAD_PHASE_23_FIELD_ORDER`;
+- `DecodedGuardianPayloadRaw<'a>`;
+- `programs/xxxl-svm/src/verifier/canonical_payload.rs`.
+
+Accepted canonical 21-field shape:
+
+- `message_type`;
+- `schema_version`;
+- `instruction_layout_version`;
+- `route_id`;
+- `source_chain_id`;
+- `source_token`;
+- `source_sender`;
+- `source_burn_tx_hash`;
+- `source_burn_event_index`;
+- `source_block_number`;
+- `source_block_hash`;
+- `source_finality_block`;
+- `canonical_event_key`;
+- `x1_recipient`;
+- `burned_amount`;
+- `source_chain_weight_bps`;
+- `xxxl_mint_amount`;
+- `target_mint`;
+- `guardian_set_id`;
+- `message_nonce`;
+- `expiration_slot_or_unix_ts`.
+
+Accepted boundary:
+
+41G.1 may shape candidate payload evidence.
+
+41G.1 must not accept source burn proof, watcher honesty, guardian validity, guardian set membership, quorum, authorization, replay safety, mutation, CPI, mint, handler, or live route.
+
+Carry-forward requirements for 41G.2:
+
+- domain separator is the 32-byte hash of UTF-8 label `XXXL_GUARDIAN_PAYLOAD_HASH_V1`, not raw label bytes;
+- Phase 41G.2 must reuse `compute_guardian_payload_hash` from `canonical_payload.rs`;
+- raw payload bytes are caller/instruction-supplied and untrusted;
+- structural decode proves only well-formedness;
+- authenticity comes only from `signed_message_bytes == compute_guardian_payload_hash(raw_payload_bytes)`;
+- Stage-1 / Phase 33 / Phase 34 vector parity must be preserved.
+
+Phase 41G.2 may begin under a separate reviewed boundary.
