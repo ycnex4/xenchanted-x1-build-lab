@@ -48502,3 +48502,98 @@ Next recommended phase:
 - Phase 41F.0 — Ed25519 cryptographic verification plan.
 
 Phase 41F.0 must be docs-only first and must remain under separate review before any code begins.
+
+---
+
+## XXXL Phase 41F.0 Ed25519 Cryptographic Verification Plan
+
+Date: 2026-07-02
+
+Parent checkpoint:
+
+`2f759b7 Merge XXXL phase 41E offset table hardening acceptance record`
+
+Type:
+
+- docs-only plan;
+- no runtime code introduced.
+
+Plan document:
+
+`docs/xxxl/xxxl-phase-41f-0-ed25519-cryptographic-verification-plan.md`
+
+Checkpoint:
+
+`docs/checkpoints/xxxl-x1-testnet-local-runtime-skeleton-phase-41f-0-ed25519-cryptographic-verification-plan.md`
+
+Review request:
+
+`docs/reviews/xxxl-phase-41f-0-ed25519-cryptographic-verification-plan-review-request.md`
+
+Purpose:
+
+Plan the next trust-sensitive boundary after Phase 41E byte parsing completion.
+
+Critical separation:
+
+Future Phase 41F may establish only Ed25519 signature validity.
+
+Signature validity must not imply:
+
+- proof acceptance;
+- evidence acceptance;
+- guardian validity;
+- quorum;
+- authorization;
+- replay writes;
+- mutation;
+- CPI;
+- mint;
+- handler;
+- live route.
+
+Verification model to review:
+
+- Model A: native Ed25519 instruction verification boundary;
+- Model B: local cryptographic verification boundary.
+
+Preferred planning direction:
+
+- prefer Model A unless external review says otherwise;
+- defer local cryptographic verification unless explicitly reviewed.
+
+Recommended future split:
+
+- Phase 41F.1 — checked signature/public-key/message byte extraction boundary;
+- Phase 41F.2 — Ed25519 signature verification boundary.
+
+Still forbidden:
+
+- proof acceptance;
+- verification evidence acceptance;
+- guardian validity acceptance;
+- guardian set membership acceptance;
+- quorum counting;
+- authorization;
+- replay writes;
+- processed event marking;
+- account mutation;
+- CPI;
+- `invoke_signed`;
+- SPL Token `mint_to`;
+- process instruction handler;
+- live route unlock.
+
+Active blockers remain:
+
+- `X1_TESTNET_PROGRAM_DEPLOYED_RUNTIME_LOCKED`
+- `PRODUCTION_PROGRAM_ID_UNSET`
+- `LIVE_ROUTE_DISABLED`
+- `SPL_CPI_EXECUTION_DISABLED`
+- `PRODUCTION_GUARDIAN_SET_UNSET`
+- `PRODUCTION_PROOF_LOG_UNSET`
+- `EXTERNAL_REVIEW_INCOMPLETE`
+
+Next gate:
+
+External review required before Phase 41F.1 begins.
