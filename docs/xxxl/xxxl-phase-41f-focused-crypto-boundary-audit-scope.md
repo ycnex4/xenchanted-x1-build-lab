@@ -110,6 +110,26 @@ The audit must confirm Phase 41F.2 re-checks:
 
 This is a defense-in-depth check against stale or mismatched pipeline pairing.
 
+## Status Attribution
+
+The audit must confirm that Phase 41F statuses remain Model-A-attributed.
+
+Accepted success status:
+
+- `NativeEd25519VerificationEstablished`.
+
+The success status is structural.
+
+It means the SVM already verified the native Ed25519 instruction before the current instruction was reached.
+
+Phase 41F must not use misleading Model A statuses such as:
+
+- `Ed25519SignatureValid`;
+- `Ed25519SignatureInvalid`.
+
+A local invalid-signature path belongs only to a separately reviewed local-crypto Model B, not to Model A.
+
+
 ## SAFETY_FLAGS Taxonomy
 
 The audit must confirm cumulative pipeline capability semantics.

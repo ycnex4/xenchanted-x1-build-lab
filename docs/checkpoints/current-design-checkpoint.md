@@ -49526,3 +49526,37 @@ Main forward risk:
 Model A is load-bearing only when the Phase 41F.2 boundary is called from an actually executing runtime path with `loading_result` derived from the real Instructions sysvar.
 
 Phase 41G must not begin until this focused crypto-boundary audit is externally accepted.
+
+---
+
+## XXXL Phase 41F Focused Crypto-Boundary Audit — Status Attribution Addendum
+
+Date: 2026-07-02
+
+Parent checkpoint:
+
+`8933534 Merge XXXL phase 41F focused crypto boundary audit`
+
+Reason:
+
+Audit Demon accepted the Phase 41F focused crypto-boundary audit with a non-blocking note that the audit scope should explicitly restate status attribution before Phase 41G.
+
+Scope:
+
+Docs-only clarification.
+
+No code changes.
+
+No runtime behavior changes.
+
+Clarification added:
+
+- Phase 41F statuses remain Model-A-attributed;
+- success status is `NativeEd25519VerificationEstablished`;
+- success is structural, not a local cryptographic result;
+- Phase 41F must not use misleading Model A statuses such as `Ed25519SignatureValid` or `Ed25519SignatureInvalid`;
+- local invalid-signature status belongs only to separately reviewed Model B.
+
+No trust boundary changes.
+
+Phase 41G remains locked until focused crypto-boundary audit acceptance is recorded.
