@@ -50140,3 +50140,98 @@ Boundary:
 Next gate:
 
 After external acceptance, Phase 41G.2 implementation planning may begin under a separate reviewed boundary.
+
+---
+
+## XXXL Phase 41G.2 Payload Hash Binding Plan — Acceptance
+
+Date: 2026-07-03
+
+Accepted main:
+
+`7eee7d7 Merge XXXL phase 41G payload hash binding plan`
+
+Acceptance record:
+
+`docs/reviews/xxxl-phase-41g-2-payload-hash-binding-plan-acceptance.md`
+
+Final verdict:
+
+- Theo: ACCEPT
+- Audit Demon: ACCEPT
+- Required fixes: none
+- Blocking risks: none
+- Phase 41G.2 implementation planning allowed after acceptance: yes
+
+Accepted purpose:
+
+Plan the narrow payload hash binding relation:
+
+`signed_message_bytes == compute_guardian_payload_hash(raw_payload_bytes)`
+
+Accepted authoritative sources:
+
+- `programs/xxxl-svm/src/verifier/raw_payload.rs`;
+- `RAW_PAYLOAD_PHASE_23_FIELD_ORDER`;
+- `DecodedGuardianPayloadRaw<'a>`;
+- `programs/xxxl-svm/src/verifier/canonical_payload.rs`.
+
+Accepted canonical 21-field shape:
+
+- `message_type`;
+- `schema_version`;
+- `instruction_layout_version`;
+- `route_id`;
+- `source_chain_id`;
+- `source_token`;
+- `source_sender`;
+- `source_burn_tx_hash`;
+- `source_burn_event_index`;
+- `source_block_number`;
+- `source_block_hash`;
+- `source_finality_block`;
+- `canonical_event_key`;
+- `x1_recipient`;
+- `burned_amount`;
+- `source_chain_weight_bps`;
+- `xxxl_mint_amount`;
+- `target_mint`;
+- `guardian_set_id`;
+- `message_nonce`;
+- `expiration_slot_or_unix_ts`.
+
+Accepted exact domain separator preimage:
+
+- domain separator = `keccak256(utf8("XXXL_GUARDIAN_PAYLOAD_HASH_V1"))`;
+- payload hash preimage = `domain_separator_32_bytes || raw_payload_bytes`;
+- payload hash = `keccak256(domain_separator_32_bytes || raw_payload_bytes)`;
+- literal UTF-8 label bytes must not be prepended directly.
+
+Carry-forward implementation requirement:
+
+Prefer `validate_guardian_payload_hash(raw_payload_bytes, &signed_hash_32)`.
+
+Recommended implementation flow:
+
+1. require `signed_message_bytes.len() == 32`;
+2. checked-convert signed message bytes to `&[u8; 32]`;
+3. call `validate_guardian_payload_hash(raw_payload_bytes, signed_hash_32)`;
+4. fail closed on mismatch or raw payload decode error.
+
+Accepted provenance rule:
+
+`raw_payload_bytes` are caller/instruction-supplied and untrusted.
+
+Structural decode proves only well-formedness.
+
+Authenticity comes only from:
+
+`signed_message_bytes == compute_guardian_payload_hash(raw_payload_bytes)`
+
+Accepted boundary:
+
+41G.2 may plan payload hash binding.
+
+41G.2 must not validate guardian membership, count quorum, authorize, write replay state, mutate accounts, CPI, mint, add handler, or unlock live route.
+
+Phase 41G.2 implementation planning may begin under a separate reviewed boundary.
