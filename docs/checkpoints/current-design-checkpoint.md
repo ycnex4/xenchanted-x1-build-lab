@@ -51521,3 +51521,65 @@ Next gate:
 Important:
 
 No runtime sysvar loading, guardian PDA loading, registry PDA loading, mutation, CPI, mint, handler, or live route is enabled by this plan acceptance.
+
+---
+
+## XXXL Phase 41K.1 Instructions Sysvar Live-Wiring Implementation Acceptance
+
+Date: 2026-07-03
+
+Status: accepted implementation
+
+Branch:
+
+`stage-xxxl-x1-testnet-local-runtime-skeleton-phase-41k-1-instructions-sysvar-implementation`
+
+Accepted commits:
+
+- `01405b7 Implement phase 41K.1 instructions sysvar live-wiring boundary`
+- `c3d9101 Document phase 41K.1 instructions sysvar implementation review`
+- `4ff8c8a Address phase 41K.1 implementation review notes`
+
+Acceptance record:
+
+`docs/reviews/xxxl-phase-41k-1-instructions-sysvar-implementation-acceptance.md`
+
+Reviewer verdicts:
+
+- Theo: ACCEPT
+- Audit Demon: ACCEPT WITH NOTES
+
+Required fixes: none.
+
+41K.1 implementation accepted.
+
+Accepted runtime surface:
+
+- real Instructions sysvar AccountInfo boundary;
+- checked current instruction index path;
+- checked prior instruction loading path;
+- N prior Ed25519 precompile enumeration;
+- Ed25519 program-id filtering.
+
+Important caveat preserved:
+
+41K.1 preserves the sysvar-input side of Model A.
+
+Full handler execution-context enforcement remains a 41K.5 responsibility.
+
+Still disabled:
+
+- guardian-set PDA loading;
+- processed-registry PDA loading;
+- replay write;
+- processed event marking;
+- account mutation;
+- CPI;
+- invoke_signed;
+- SPL token mint;
+- process instruction handler;
+- live route.
+
+Next gate:
+
+41K.2 real guardian-set account/PDA loading.
