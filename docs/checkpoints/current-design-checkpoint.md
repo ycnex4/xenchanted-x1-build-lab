@@ -51044,3 +51044,35 @@ Accepted implementation:
 Downstream:
 
 After merge, Phase 41I may resume under separate high-risk audit.
+
+---
+
+## XXXL Phase 41I Quorum Authorization Plan Resumed
+
+Date: 2026-07-03
+
+Status: resumed planning
+
+Branch:
+
+`stage-xxxl-x1-testnet-local-runtime-skeleton-phase-41i-quorum-authorization-plan-resumed`
+
+Base main:
+
+`52d6a77 Merge XXXL phase 41H signed message binding hardening implementation acceptance`
+
+Reason:
+
+Phase 41H.2 is now accepted. The upstream signed-message binding gap that blocked 41I is closed.
+
+Resumed 41I rule:
+
+Every counted guardian must pass hardened 41H.2 and prove `41F-verified message == canonical_hash(raw_payload_bytes)`.
+
+Addendum:
+
+`docs/xxxl/xxxl-phase-41i-quorum-authorization-plan-resumption-addendum.md`
+
+Next step:
+
+Review resumed 41I plan before writing 41I code.
