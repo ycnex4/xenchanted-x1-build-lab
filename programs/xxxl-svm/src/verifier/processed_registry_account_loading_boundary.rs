@@ -20,8 +20,6 @@ pub const PROCESSED_EVENT_CONSUMED_SLOT_OFFSET: usize = 128;
 pub const PROCESSED_EVENT_PDA_SEED_0: &[u8] = b"xxxl";
 pub const PROCESSED_EVENT_PDA_SEED_1: &[u8] = b"processed-event";
 
-const EMPTY_PROCESSED_KEYS: &[[u8; 32]] = &[];
-
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 pub enum Phase41K3ProcessedRegistryAccountLoadingStatus {
     ProcessedEventAccountUnprocessed,
@@ -74,16 +72,11 @@ impl Phase41K3ProcessedRegistryLoadWitness {
     pub fn to_authoritative_processed_registry_view(
         &self,
     ) -> AuthoritativeProcessedRegistryViewRef<'_> {
-        match &self.processed_canonical_event_key {
-            Some(canonical_event_key) => {
-                AuthoritativeProcessedRegistryViewRef::from_program_controlled_abstract_model(
-                    core::slice::from_ref(canonical_event_key),
-                )
-            }
-            None => AuthoritativeProcessedRegistryViewRef::from_program_controlled_abstract_model(
-                EMPTY_PROCESSED_KEYS,
-            ),
-        }
+        AuthoritativeProcessedRegistryViewRef::from_phase_41k_3_processed_registry_load_witness(self)
+    }
+
+    pub(crate) fn processed_canonical_event_key_ref(&self) -> Option<&[u8; 32]> {
+        self.processed_canonical_event_key.as_ref()
     }
 
     pub fn processed_canonical_event_key(&self) -> Option<[u8; 32]> {
@@ -642,6 +635,18 @@ pub fn decode_phase_41k_3_processed_event_account_data(
         );
     }
 
+    if consumed_flag != 1 {
+        return rejected(
+            data.len(),
+            Phase41K3ProcessedRegistryAccountRejectionCase::MalformedProcessedEventAccountData,
+            Some(canonical_event_key),
+            Some(route_id),
+            Some(recipient),
+            Some(consumed_amount),
+            Some(consumed_slot),
+        );
+    }
+
     processed(
         data.len(),
         canonical_event_key,
@@ -674,8 +679,8 @@ fn unprocessed(account_data_len: usize) -> Phase41K3ProcessedRegistryAccountLoad
         account_owner_checked: false,
         pda_checked: false,
         discriminator_checked: false,
-        zero_discriminator_rejected: true,
-        wrong_discriminator_rejected: true,
+        zero_discriminator_rejected: false,
+        wrong_discriminator_rejected: false,
         schema_version_checked: false,
         canonical_event_key_checked: false,
         route_id_checked: false,
@@ -768,6 +773,24 @@ fn rejected(
     consumed_amount: Option<u128>,
     consumed_slot: Option<u64>,
 ) -> Phase41K3ProcessedRegistryAccountLoadingResult {
+    let (
+        discriminator_checked,
+        zero_discriminator_rejected,
+        wrong_discriminator_rejected,
+        schema_version_checked,
+        canonical_event_key_checked,
+        route_id_checked,
+        recipient_checked,
+        consumed_checked,
+    ) = rejected_decode_check_flags(
+        rejection_case,
+        canonical_event_key,
+        route_id,
+        recipient,
+        consumed_amount,
+        consumed_slot,
+    );
+
     Phase41K3ProcessedRegistryAccountLoadingResult {
         status: Phase41K3ProcessedRegistryAccountLoadingStatus::ProcessedEventAccountRejected,
         rejection_case: Some(rejection_case),
@@ -786,14 +809,14 @@ fn rejected(
         account_key_checked: false,
         account_owner_checked: false,
         pda_checked: false,
-        discriminator_checked: true,
-        zero_discriminator_rejected: true,
-        wrong_discriminator_rejected: true,
-        schema_version_checked: true,
-        canonical_event_key_checked: true,
-        route_id_checked: true,
-        recipient_checked: true,
-        consumed_checked: true,
+        discriminator_checked,
+        zero_discriminator_rejected,
+        wrong_discriminator_rejected,
+        schema_version_checked,
+        canonical_event_key_checked,
+        route_id_checked,
+        recipient_checked,
+        consumed_checked,
         processed_event_account_writable: false,
         processed_event_account_non_signer: false,
         processed_event_account_non_executable: false,
@@ -812,6 +835,48 @@ fn rejected(
         spl_token_mint_to_enabled: false,
         process_instruction_handler_added: false,
         live_route_enabled: false,
+    }
+}
+
+fn rejected_decode_check_flags(
+    rejection_case: Phase41K3ProcessedRegistryAccountRejectionCase,
+    canonical_event_key: Option<[u8; 32]>,
+    route_id: Option<[u8; 32]>,
+    recipient: Option<[u8; 32]>,
+    consumed_amount: Option<u128>,
+    consumed_slot: Option<u64>,
+) -> (bool, bool, bool, bool, bool, bool, bool, bool) {
+    use Phase41K3ProcessedRegistryAccountRejectionCase::*;
+
+    match rejection_case {
+        MissingProcessedEventAccount
+        | AccountDataBorrowFailed
+        | ProcessedEventAccountIsSigner
+        | ProcessedEventAccountIsExecutable
+        | ProcessedEventAccountPdaMismatch
+        | ProcessedEventAccountOwnerMismatch
+        | SystemOwnedAccountWithNonzeroData
+        | MissingDiscriminator
+        | InvalidAccountDataLength => (false, false, false, false, false, false, false, false),
+
+        ZeroDiscriminator => (true, true, false, false, false, false, false, false),
+        WrongDiscriminator => (true, true, true, false, false, false, false, false),
+        UnsupportedSchemaVersion => (true, true, true, true, false, false, false, false),
+        CanonicalEventKeyMismatch => (true, true, true, true, true, false, false, false),
+        RouteIdMismatch => (true, true, true, true, true, true, false, false),
+        RecipientMismatch => (true, true, true, true, true, true, true, false),
+        InitializedButUnconsumedProcessedEvent => (true, true, true, true, true, true, true, true),
+
+        MalformedProcessedEventAccountData => (
+            true,
+            true,
+            true,
+            true,
+            canonical_event_key.is_some(),
+            route_id.is_some(),
+            recipient.is_some(),
+            consumed_amount.is_some() && consumed_slot.is_some(),
+        ),
     }
 }
 
@@ -1289,6 +1354,26 @@ mod tests {
             Phase41K3ProcessedRegistryAccountRejectionCase::InitializedButUnconsumedProcessedEvent,
         );
         assert!(result.authoritative_view_witness.is_none());
+    }
+
+    #[test]
+    fn invalid_consumed_flags_reject_fail_closed() {
+        for consumed_flag in [2u8, 0xff] {
+            let data = valid_processed_event_account_data(consumed_flag);
+
+            let result = decode_phase_41k_3_processed_event_account_data(
+                &data,
+                &CANONICAL_EVENT_KEY,
+                &ROUTE_ID,
+                &RECIPIENT,
+            );
+
+            assert_rejected(
+                &result,
+                Phase41K3ProcessedRegistryAccountRejectionCase::MalformedProcessedEventAccountData,
+            );
+            assert!(result.authoritative_view_witness.is_none());
+        }
     }
 
     #[test]
