@@ -126,6 +126,9 @@ pub enum GuardianMembershipValidationErrorKind {
     VerifiedSignerPublicKeyMissing,
     VerifiedSignerRangeMissing,
     VerifiedSignerRangeMismatch,
+    VerifiedMessageRangeMismatch,
+    VerifiedSignatureRangeMismatch,
+    ExtractedSignedMessageLengthInvalid,
     MatchedInstructionIndexMismatch,
     InstructionDataLengthMismatch,
     PayloadHashBindingNotEstablished,
@@ -164,6 +167,12 @@ pub struct GuardianMembershipValidationBoundaryReport {
     pub requires_phase_41f_1_checked_extraction: bool,
     pub requires_phase_41f_2_verified_ranges: bool,
     pub checks_public_key_range_binding: bool,
+    pub checks_message_range_binding: bool,
+    pub checks_signature_range_binding: bool,
+    pub derives_signed_message_from_41f_extraction: bool,
+    pub accepts_free_signed_message_input: bool,
+    pub checks_extracted_signed_message_len_32: bool,
+    pub binds_41f_verified_message_to_payload_hash: bool,
     pub checks_matched_instruction_index_binding: bool,
     pub checks_instruction_data_length_binding: bool,
     pub requires_phase_41g_payload_hash_binding: bool,
@@ -205,6 +214,12 @@ pub const GUARDIAN_MEMBERSHIP_VALIDATION_BOUNDARY_REPORT:
     requires_phase_41f_1_checked_extraction: true,
     requires_phase_41f_2_verified_ranges: true,
     checks_public_key_range_binding: true,
+    checks_message_range_binding: true,
+    checks_signature_range_binding: true,
+    derives_signed_message_from_41f_extraction: true,
+    accepts_free_signed_message_input: false,
+    checks_extracted_signed_message_len_32: true,
+    binds_41f_verified_message_to_payload_hash: true,
     checks_matched_instruction_index_binding: true,
     checks_instruction_data_length_binding: true,
     requires_phase_41g_payload_hash_binding: true,
@@ -246,7 +261,6 @@ pub fn establish_guardian_membership_validation(
     phase_41f_result: &Phase41F_2Ed25519SignatureVerificationResult,
     extraction_result: &Phase41F_1CheckedByteExtractionResult<'_>,
     raw_payload_bytes: &[u8],
-    signed_message_bytes: &[u8],
     expected_configured_guardian_set_id: &[u8; 32],
     guardian_set: AuthoritativeGuardianSetRef<'_>,
 ) -> Result<GuardianMembershipValidated, GuardianMembershipValidationError> {
@@ -300,6 +314,24 @@ pub fn establish_guardian_membership_validation(
         ));
     }
 
+    if verified_ranges.message_range != extracted_slices.message_range {
+        return Err(error(
+            GuardianMembershipValidationErrorKind::VerifiedMessageRangeMismatch,
+            phase_41f_result,
+            extraction_result,
+            guardian_set,
+        ));
+    }
+
+    if verified_ranges.signature_range != extracted_slices.signature_range {
+        return Err(error(
+            GuardianMembershipValidationErrorKind::VerifiedSignatureRangeMismatch,
+            phase_41f_result,
+            extraction_result,
+            guardian_set,
+        ));
+    }
+
     if phase_41f_result.matched_instruction_index != extraction_result.matched_instruction_index {
         return Err(error(
             GuardianMembershipValidationErrorKind::MatchedInstructionIndexMismatch,
@@ -318,16 +350,29 @@ pub fn establish_guardian_membership_validation(
         ));
     }
 
-    establish_payload_hash_binding(raw_payload_bytes, signed_message_bytes, phase_41f_result)
-        .map_err(|payload_hash_binding_error| {
-            error_with_payload_hash_binding_error(
-                GuardianMembershipValidationErrorKind::PayloadHashBindingNotEstablished,
-                phase_41f_result,
-                extraction_result,
-                guardian_set,
-                payload_hash_binding_error,
-            )
-        })?;
+    if extracted_slices.message_bytes.len() != 32 {
+        return Err(error(
+            GuardianMembershipValidationErrorKind::ExtractedSignedMessageLengthInvalid,
+            phase_41f_result,
+            extraction_result,
+            guardian_set,
+        ));
+    }
+
+    establish_payload_hash_binding(
+        raw_payload_bytes,
+        extracted_slices.message_bytes,
+        phase_41f_result,
+    )
+    .map_err(|payload_hash_binding_error| {
+        error_with_payload_hash_binding_error(
+            GuardianMembershipValidationErrorKind::PayloadHashBindingNotEstablished,
+            phase_41f_result,
+            extraction_result,
+            guardian_set,
+            payload_hash_binding_error,
+        )
+    })?;
 
     let decoded_payload =
         decode_guardian_payload_raw(raw_payload_bytes).map_err(|decode_error| {
@@ -565,7 +610,7 @@ mod tests {
     const SOURCE_BURN_TX_HASH: [u8; 32] = [0xaa; 32];
     const SOURCE_BLOCK_HASH: [u8; 32] = [0xbb; 32];
 
-    const WRONG_SIGNED_MESSAGE_BYTES: [u8; 32] = [0xff; 32];
+    const SHORT_MESSAGE_BYTES: [u8; 31] = [0x07; 31];
 
     fn write_u16_le(out: &mut Vec<u8>, value: u16) {
         out.extend_from_slice(&value.to_le_bytes());
@@ -615,7 +660,7 @@ mod tests {
     const SIGNATURE_BYTES: [u8; 64] = [0x11; 64];
     const PUBLIC_KEY_BYTES: [u8; 32] = [0x02; 32];
     const OTHER_PUBLIC_KEY_BYTES: [u8; 32] = [0x09; 32];
-    const MESSAGE_BYTES: [u8; 32] = [0x03; 32];
+    const ARBITRARY_MESSAGE_BYTES: [u8; 32] = [0x03; 32];
 
     fn guardian(byte: u8) -> GuardianPublicKey {
         GuardianPublicKey([byte; 32])
@@ -649,13 +694,42 @@ mod tests {
         }
     }
 
+    fn other_message_range() -> Phase41E_1ByteRange {
+        Phase41E_1ByteRange {
+            offset: 113,
+            len: 32,
+        }
+    }
+
+    fn other_signature_range() -> Phase41E_1ByteRange {
+        Phase41E_1ByteRange {
+            offset: 17,
+            len: 64,
+        }
+    }
+
+    fn short_message_range() -> Phase41E_1ByteRange {
+        Phase41E_1ByteRange {
+            offset: 112,
+            len: 31,
+        }
+    }
+
     fn verified_ranges(
         public_key_range: Phase41E_1ByteRange,
     ) -> Phase41F_2VerifiedEd25519SignatureRanges {
+        verified_ranges_full(signature_range(), public_key_range, message_range())
+    }
+
+    fn verified_ranges_full(
+        signature_range: Phase41E_1ByteRange,
+        public_key_range: Phase41E_1ByteRange,
+        message_range: Phase41E_1ByteRange,
+    ) -> Phase41F_2VerifiedEd25519SignatureRanges {
         Phase41F_2VerifiedEd25519SignatureRanges {
-            signature_range: signature_range(),
+            signature_range,
             public_key_range,
-            message_range: message_range(),
+            message_range,
         }
     }
 
@@ -726,10 +800,31 @@ mod tests {
             Some(Phase41F_1ExtractedEd25519ByteSlices {
                 signature_bytes: &SIGNATURE_BYTES,
                 public_key_bytes,
-                message_bytes: &MESSAGE_BYTES,
+                message_bytes: &XXXL_GUARDIAN_PAYLOAD_VALID_HASH_V1,
                 signature_range: signature_range(),
                 public_key_range: public_key_range(),
                 message_range: message_range(),
+            }),
+            Some(1),
+            144,
+        )
+    }
+
+    fn established_extraction_result_with_ranges<'a>(
+        public_key_bytes: &'a [u8; 32],
+        message_bytes: &'a [u8],
+        signature_range: Phase41E_1ByteRange,
+        message_range: Phase41E_1ByteRange,
+    ) -> Phase41F_1CheckedByteExtractionResult<'a> {
+        extraction_result(
+            Phase41F_1CheckedByteExtractionStatus::CheckedEd25519ByteSlicesExtracted,
+            Some(Phase41F_1ExtractedEd25519ByteSlices {
+                signature_bytes: &SIGNATURE_BYTES,
+                public_key_bytes,
+                message_bytes,
+                signature_range,
+                public_key_range: public_key_range(),
+                message_range,
             }),
             Some(1),
             144,
@@ -792,7 +887,6 @@ mod tests {
         phase_41f: &'a Phase41F_2Ed25519SignatureVerificationResult,
         extraction: &'a Phase41F_1CheckedByteExtractionResult<'a>,
         raw_payload_bytes: &'a [u8],
-        signed_message_bytes: &'a [u8],
         expected_set_id: &'a [u8; 32],
         guardian_set: AuthoritativeGuardianSetRef<'a>,
     ) -> Result<GuardianMembershipValidated, GuardianMembershipValidationError> {
@@ -800,7 +894,6 @@ mod tests {
             phase_41f,
             extraction,
             raw_payload_bytes,
-            signed_message_bytes,
             expected_set_id,
             guardian_set,
         )
@@ -826,7 +919,6 @@ mod tests {
             &phase_41f,
             &extraction,
             &raw_payload,
-            &XXXL_GUARDIAN_PAYLOAD_VALID_HASH_V1,
             &GUARDIAN_SET_ID,
             authoritative_set(&GUARDIAN_SET_ID, 2, &guardians),
         )
@@ -860,7 +952,6 @@ mod tests {
                 &phase_41f,
                 &extraction,
                 &raw_payload,
-                &XXXL_GUARDIAN_PAYLOAD_VALID_HASH_V1,
                 &GUARDIAN_SET_ID,
                 authoritative_set(&GUARDIAN_SET_ID, 1, &guardians),
             ),
@@ -886,7 +977,6 @@ mod tests {
                 &phase_41f,
                 &extraction,
                 &raw_payload,
-                &XXXL_GUARDIAN_PAYLOAD_VALID_HASH_V1,
                 &GUARDIAN_SET_ID,
                 authoritative_set(&GUARDIAN_SET_ID, 1, &guardians),
             ),
@@ -911,7 +1001,6 @@ mod tests {
                 &phase_41f,
                 &extraction,
                 &raw_payload,
-                &XXXL_GUARDIAN_PAYLOAD_VALID_HASH_V1,
                 &GUARDIAN_SET_ID,
                 authoritative_set(&GUARDIAN_SET_ID, 1, &guardians),
             ),
@@ -936,7 +1025,6 @@ mod tests {
                 &phase_41f,
                 &extraction,
                 &raw_payload,
-                &XXXL_GUARDIAN_PAYLOAD_VALID_HASH_V1,
                 &GUARDIAN_SET_ID,
                 authoritative_set(&GUARDIAN_SET_ID, 1, &guardians),
             ),
@@ -962,7 +1050,6 @@ mod tests {
                 &phase_41f,
                 &extraction,
                 &raw_payload,
-                &XXXL_GUARDIAN_PAYLOAD_VALID_HASH_V1,
                 &GUARDIAN_SET_ID,
                 authoritative_set(&GUARDIAN_SET_ID, 1, &guardians),
             ),
@@ -988,11 +1075,136 @@ mod tests {
                 &phase_41f,
                 &extraction,
                 &raw_payload,
-                &XXXL_GUARDIAN_PAYLOAD_VALID_HASH_V1,
                 &GUARDIAN_SET_ID,
                 authoritative_set(&GUARDIAN_SET_ID, 1, &guardians),
             ),
             GuardianMembershipValidationErrorKind::VerifiedSignerRangeMismatch,
+        );
+    }
+
+    #[test]
+    fn rejects_message_range_mismatch() {
+        let guardians = [guardian(2)];
+        let phase_41f = phase_41f_result(
+            Phase41F_2Ed25519SignatureVerificationStatus::NativeEd25519VerificationEstablished,
+            true,
+            Some(verified_ranges_full(
+                signature_range(),
+                public_key_range(),
+                other_message_range(),
+            )),
+            Some(1),
+            144,
+        );
+        let extraction = established_extraction_result(&PUBLIC_KEY_BYTES);
+        let raw_payload = raw_payload_bytes_with_guardian_set_id(&GUARDIAN_SET_ID);
+
+        assert_error_kind(
+            validate_with(
+                &phase_41f,
+                &extraction,
+                &raw_payload,
+                &GUARDIAN_SET_ID,
+                authoritative_set(&GUARDIAN_SET_ID, 1, &guardians),
+            ),
+            GuardianMembershipValidationErrorKind::VerifiedMessageRangeMismatch,
+        );
+    }
+
+    #[test]
+    fn rejects_signature_range_mismatch() {
+        let guardians = [guardian(2)];
+        let phase_41f = phase_41f_result(
+            Phase41F_2Ed25519SignatureVerificationStatus::NativeEd25519VerificationEstablished,
+            true,
+            Some(verified_ranges_full(
+                other_signature_range(),
+                public_key_range(),
+                message_range(),
+            )),
+            Some(1),
+            144,
+        );
+        let extraction = established_extraction_result(&PUBLIC_KEY_BYTES);
+        let raw_payload = raw_payload_bytes_with_guardian_set_id(&GUARDIAN_SET_ID);
+
+        assert_error_kind(
+            validate_with(
+                &phase_41f,
+                &extraction,
+                &raw_payload,
+                &GUARDIAN_SET_ID,
+                authoritative_set(&GUARDIAN_SET_ID, 1, &guardians),
+            ),
+            GuardianMembershipValidationErrorKind::VerifiedSignatureRangeMismatch,
+        );
+    }
+
+    #[test]
+    fn rejects_arbitrary_message_range_pairing_attack() {
+        let guardians = [guardian(2)];
+        let phase_41f = phase_41f_result(
+            Phase41F_2Ed25519SignatureVerificationStatus::NativeEd25519VerificationEstablished,
+            true,
+            Some(verified_ranges_full(
+                signature_range(),
+                public_key_range(),
+                other_message_range(),
+            )),
+            Some(1),
+            144,
+        );
+        let extraction = established_extraction_result_with_ranges(
+            &PUBLIC_KEY_BYTES,
+            &XXXL_GUARDIAN_PAYLOAD_VALID_HASH_V1,
+            signature_range(),
+            message_range(),
+        );
+        let raw_payload = raw_payload_bytes_with_guardian_set_id(&GUARDIAN_SET_ID);
+
+        assert_error_kind(
+            validate_with(
+                &phase_41f,
+                &extraction,
+                &raw_payload,
+                &GUARDIAN_SET_ID,
+                authoritative_set(&GUARDIAN_SET_ID, 1, &guardians),
+            ),
+            GuardianMembershipValidationErrorKind::VerifiedMessageRangeMismatch,
+        );
+    }
+
+    #[test]
+    fn rejects_extracted_signed_message_length_not_32() {
+        let guardians = [guardian(2)];
+        let phase_41f = phase_41f_result(
+            Phase41F_2Ed25519SignatureVerificationStatus::NativeEd25519VerificationEstablished,
+            true,
+            Some(verified_ranges_full(
+                signature_range(),
+                public_key_range(),
+                short_message_range(),
+            )),
+            Some(1),
+            144,
+        );
+        let extraction = established_extraction_result_with_ranges(
+            &PUBLIC_KEY_BYTES,
+            &SHORT_MESSAGE_BYTES,
+            signature_range(),
+            short_message_range(),
+        );
+        let raw_payload = raw_payload_bytes_with_guardian_set_id(&GUARDIAN_SET_ID);
+
+        assert_error_kind(
+            validate_with(
+                &phase_41f,
+                &extraction,
+                &raw_payload,
+                &GUARDIAN_SET_ID,
+                authoritative_set(&GUARDIAN_SET_ID, 1, &guardians),
+            ),
+            GuardianMembershipValidationErrorKind::ExtractedSignedMessageLengthInvalid,
         );
     }
 
@@ -1014,7 +1226,6 @@ mod tests {
                 &phase_41f,
                 &extraction,
                 &raw_payload,
-                &XXXL_GUARDIAN_PAYLOAD_VALID_HASH_V1,
                 &GUARDIAN_SET_ID,
                 authoritative_set(&GUARDIAN_SET_ID, 1, &guardians),
             ),
@@ -1040,7 +1251,6 @@ mod tests {
                 &phase_41f,
                 &extraction,
                 &raw_payload,
-                &XXXL_GUARDIAN_PAYLOAD_VALID_HASH_V1,
                 &GUARDIAN_SET_ID,
                 authoritative_set(&GUARDIAN_SET_ID, 1, &guardians),
             ),
@@ -1049,10 +1259,15 @@ mod tests {
     }
 
     #[test]
-    fn rejects_payload_hash_binding_failure_for_raw_payload_bytes() {
+    fn rejects_payload_hash_binding_failure_for_extracted_message_bytes() {
         let guardians = [guardian(2)];
         let phase_41f = established_phase_41f_result();
-        let extraction = established_extraction_result(&PUBLIC_KEY_BYTES);
+        let extraction = established_extraction_result_with_ranges(
+            &PUBLIC_KEY_BYTES,
+            &ARBITRARY_MESSAGE_BYTES,
+            signature_range(),
+            message_range(),
+        );
         let raw_payload = raw_payload_bytes_with_guardian_set_id(&GUARDIAN_SET_ID);
 
         assert_error_kind(
@@ -1060,7 +1275,6 @@ mod tests {
                 &phase_41f,
                 &extraction,
                 &raw_payload,
-                &WRONG_SIGNED_MESSAGE_BYTES,
                 &GUARDIAN_SET_ID,
                 authoritative_set(&GUARDIAN_SET_ID, 1, &guardians),
             ),
@@ -1080,7 +1294,6 @@ mod tests {
                 &phase_41f,
                 &extraction,
                 &raw_payload,
-                &XXXL_GUARDIAN_PAYLOAD_VALID_HASH_V1,
                 &GUARDIAN_SET_ID,
                 AuthoritativeGuardianSetRef::unauthenticated_for_rejection(
                     &GUARDIAN_SET_ID,
@@ -1104,7 +1317,6 @@ mod tests {
                 &phase_41f,
                 &extraction,
                 &raw_payload,
-                &XXXL_GUARDIAN_PAYLOAD_VALID_HASH_V1,
                 &GUARDIAN_SET_ID,
                 AuthoritativeGuardianSetRef::caller_supplied_for_rejection(
                     &GUARDIAN_SET_ID,
@@ -1128,7 +1340,6 @@ mod tests {
                 &phase_41f,
                 &extraction,
                 &raw_payload,
-                &XXXL_GUARDIAN_PAYLOAD_VALID_HASH_V1,
                 &GUARDIAN_SET_ID,
                 authoritative_set(&GUARDIAN_SET_ID, 1, &guardians),
             ),
@@ -1148,7 +1359,6 @@ mod tests {
                 &phase_41f,
                 &extraction,
                 &raw_payload,
-                &XXXL_GUARDIAN_PAYLOAD_VALID_HASH_V1,
                 &GUARDIAN_SET_ID,
                 authoritative_set(&GUARDIAN_SET_ID, 0, &guardians),
             ),
@@ -1168,7 +1378,6 @@ mod tests {
                 &phase_41f,
                 &extraction,
                 &raw_payload,
-                &XXXL_GUARDIAN_PAYLOAD_VALID_HASH_V1,
                 &GUARDIAN_SET_ID,
                 authoritative_set(&GUARDIAN_SET_ID, 2, &guardians),
             ),
@@ -1188,7 +1397,6 @@ mod tests {
                 &phase_41f,
                 &extraction,
                 &raw_payload,
-                &XXXL_GUARDIAN_PAYLOAD_VALID_HASH_V1,
                 &GUARDIAN_SET_ID,
                 authoritative_set(&GUARDIAN_SET_ID, 1, &guardians),
             ),
@@ -1208,7 +1416,6 @@ mod tests {
                 &phase_41f,
                 &extraction,
                 &raw_payload,
-                &XXXL_GUARDIAN_PAYLOAD_VALID_HASH_V1,
                 &OTHER_GUARDIAN_SET_ID,
                 authoritative_set(&GUARDIAN_SET_ID, 1, &guardians),
             ),
@@ -1220,17 +1427,21 @@ mod tests {
     fn rejects_payload_guardian_set_id_mismatch() {
         let guardians = [guardian(2)];
         let phase_41f = established_phase_41f_result();
-        let extraction = established_extraction_result(&PUBLIC_KEY_BYTES);
         let raw_payload = raw_payload_bytes_with_guardian_set_id(&OTHER_GUARDIAN_SET_ID);
-        let signed_message_bytes =
+        let extracted_message_bytes =
             compute_guardian_payload_hash(&raw_payload).expect("hash for alternate valid payload");
+        let extraction = established_extraction_result_with_ranges(
+            &PUBLIC_KEY_BYTES,
+            &extracted_message_bytes,
+            signature_range(),
+            message_range(),
+        );
 
         assert_error_kind(
             validate_with(
                 &phase_41f,
                 &extraction,
                 &raw_payload,
-                &signed_message_bytes,
                 &GUARDIAN_SET_ID,
                 authoritative_set(&GUARDIAN_SET_ID, 1, &guardians),
             ),
@@ -1250,7 +1461,6 @@ mod tests {
                 &phase_41f,
                 &extraction,
                 &raw_payload,
-                &XXXL_GUARDIAN_PAYLOAD_VALID_HASH_V1,
                 &GUARDIAN_SET_ID,
                 authoritative_set(&GUARDIAN_SET_ID, 1, &guardians),
             ),
@@ -1270,7 +1480,6 @@ mod tests {
                 &phase_41f,
                 &extraction,
                 &raw_payload,
-                &XXXL_GUARDIAN_PAYLOAD_VALID_HASH_V1,
                 &GUARDIAN_SET_ID,
                 authoritative_set(&GUARDIAN_SET_ID, 1, &guardians),
             ),
@@ -1290,7 +1499,6 @@ mod tests {
                 &phase_41f,
                 &extraction,
                 &raw_payload,
-                &XXXL_GUARDIAN_PAYLOAD_VALID_HASH_V1,
                 &GUARDIAN_SET_ID,
                 authoritative_set(&GUARDIAN_SET_ID, 1, &guardians),
             ),
@@ -1309,7 +1517,6 @@ mod tests {
             &phase_41f,
             &extraction,
             &raw_payload,
-            &XXXL_GUARDIAN_PAYLOAD_VALID_HASH_V1,
             &GUARDIAN_SET_ID,
             authoritative_set(&GUARDIAN_SET_ID, 1, &guardians),
         )
@@ -1342,6 +1549,12 @@ mod tests {
         assert!(report.requires_phase_41f_1_checked_extraction);
         assert!(report.requires_phase_41f_2_verified_ranges);
         assert!(report.checks_public_key_range_binding);
+        assert!(report.checks_message_range_binding);
+        assert!(report.checks_signature_range_binding);
+        assert!(report.derives_signed_message_from_41f_extraction);
+        assert!(!report.accepts_free_signed_message_input);
+        assert!(report.checks_extracted_signed_message_len_32);
+        assert!(report.binds_41f_verified_message_to_payload_hash);
         assert!(report.checks_matched_instruction_index_binding);
         assert!(report.checks_instruction_data_length_binding);
         assert!(report.requires_phase_41g_payload_hash_binding);
