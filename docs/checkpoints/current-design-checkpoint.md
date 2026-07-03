@@ -50950,3 +50950,52 @@ Reason:
 The proof must establish that the bytes used as the 41G payload hash are the same bytes over which 41F.2 established native Ed25519 verification.
 
 41I remains blocked.
+
+---
+
+## XXXL Phase 41H.2 Signed Message Binding Hardening Plan Acceptance
+
+Date: 2026-07-03
+
+Status: accepted plan
+
+Branch:
+
+`stage-xxxl-x1-testnet-local-runtime-skeleton-phase-41h-2-signed-message-binding-hardening`
+
+Accepted commit:
+
+`0e043f5 Document phase 41H signed message binding hardening plan`
+
+Acceptance record:
+
+`docs/reviews/xxxl-phase-41h-2-signed-message-binding-hardening-plan-acceptance.md`
+
+Reviewer verdicts:
+
+- Theo: ACCEPT
+- Audit Demon: ACCEPT
+
+Required fixes: none.
+
+Accepted closure:
+
+41H.2 must remove free `signed_message_bytes`, derive signed message bytes from `extraction_result.extracted_slices.message_bytes`, bind verified ranges to extracted ranges, require extracted message length exactly 32, and call 41G with the extracted message bytes.
+
+Required range bindings:
+
+- `verified_ranges.public_key_range == extracted_slices.public_key_range`
+- `verified_ranges.message_range == extracted_slices.message_range`
+- `verified_ranges.signature_range == extracted_slices.signature_range`
+
+Accepted proof target:
+
+`guardian signed canonical_hash(raw_payload_bytes)`
+
+Downstream:
+
+41I remains blocked until 41H.2 code is implemented, reviewed, and accepted.
+
+Next step:
+
+Create a separate 41H.2 code implementation branch after this plan acceptance is merged.
