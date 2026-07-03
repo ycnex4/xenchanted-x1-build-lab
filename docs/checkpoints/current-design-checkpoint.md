@@ -51483,3 +51483,41 @@ Notes captured in plan:
 41K.1 remains docs-only at this checkpoint.
 
 No runtime sysvar loading, mutation, CPI, mint, handler, or live route is enabled by this plan.
+
+---
+
+## XXXL Phase 41K.1 Instructions Sysvar Loading Plan Acceptance
+
+Date: 2026-07-03
+
+Status: accepted plan
+
+Branch:
+
+`stage-xxxl-x1-testnet-local-runtime-skeleton-phase-41k-1-instructions-sysvar-plan`
+
+Accepted commits:
+
+- `6b41d47 Document phase 41K.1 instructions sysvar loading plan`
+- `50536c0 Address phase 41K.1 instructions sysvar plan review notes`
+
+Acceptance record:
+
+`docs/reviews/xxxl-phase-41k-1-instructions-sysvar-plan-acceptance.md`
+
+Reviewer verdicts:
+
+- Theo: ACCEPT
+- Audit Demon: ACCEPT WITH NOTES
+
+Required fixes: none.
+
+41K.1 plan accepted.
+
+Next gate:
+
+41K.1 real Instructions sysvar loading code implementation.
+
+Important:
+
+No runtime sysvar loading, guardian PDA loading, registry PDA loading, mutation, CPI, mint, handler, or live route is enabled by this plan acceptance.
