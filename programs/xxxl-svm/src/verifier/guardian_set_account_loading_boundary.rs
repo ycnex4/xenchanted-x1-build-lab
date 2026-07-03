@@ -242,6 +242,9 @@ pub fn load_phase_41k_2_guardian_set_account_info(
             expected_pda,
             *expected_program_id,
             pda_bump,
+            false,
+            false,
+            false,
         );
     }
 
@@ -260,6 +263,9 @@ pub fn load_phase_41k_2_guardian_set_account_info(
             expected_pda,
             *expected_program_id,
             pda_bump,
+            false,
+            false,
+            false,
         );
     }
 
@@ -278,6 +284,9 @@ pub fn load_phase_41k_2_guardian_set_account_info(
             expected_pda,
             *expected_program_id,
             pda_bump,
+            false,
+            true,
+            false,
         );
     }
 
@@ -296,6 +305,9 @@ pub fn load_phase_41k_2_guardian_set_account_info(
             expected_pda,
             *expected_program_id,
             pda_bump,
+            true,
+            true,
+            true,
         );
     }
 
@@ -316,6 +328,9 @@ pub fn load_phase_41k_2_guardian_set_account_info(
                 expected_pda,
                 *expected_program_id,
                 pda_bump,
+                true,
+                true,
+                true,
             );
         }
     };
@@ -329,6 +344,9 @@ pub fn load_phase_41k_2_guardian_set_account_info(
         expected_pda,
         *expected_program_id,
         pda_bump,
+        true,
+        true,
+        true,
     )
 }
 
@@ -722,6 +740,9 @@ fn with_account_metadata(
     expected_account_key: Pubkey,
     expected_program_id: Pubkey,
     pda_bump: u8,
+    account_key_checked: bool,
+    account_owner_checked: bool,
+    pda_checked: bool,
 ) -> Phase41K2GuardianSetAccountLoadingResult {
     result.account_info_used = true;
     result.account_key = Some(*account.key);
@@ -729,9 +750,9 @@ fn with_account_metadata(
     result.account_owner = Some(*account.owner);
     result.expected_program_id = Some(expected_program_id);
     result.pda_bump = Some(pda_bump);
-    result.account_key_checked = true;
-    result.account_owner_checked = true;
-    result.pda_checked = true;
+    result.account_key_checked = account_key_checked;
+    result.account_owner_checked = account_owner_checked;
+    result.pda_checked = pda_checked;
     result.guardian_set_account_readonly = !account.is_writable;
     result.guardian_set_account_non_signer = !account.is_signer;
     result.guardian_set_runtime_loading_enabled = true;
@@ -957,7 +978,9 @@ mod tests {
         assert_eq!(result.account_owner, Some(wrong_owner));
         assert_eq!(result.expected_program_id, Some(program_id));
         assert!(result.account_info_used);
+        assert!(!result.account_key_checked);
         assert!(result.account_owner_checked);
+        assert!(!result.pda_checked);
         assert!(result.guardian_set_runtime_loading_enabled);
         assert!(!result.source_marker_program_controlled_on_chain);
     }
@@ -998,6 +1021,8 @@ mod tests {
         assert_eq!(result.account_key, Some(wrong_pda));
         assert_eq!(result.expected_program_id, Some(program_id));
         assert!(result.account_info_used);
+        assert!(result.account_key_checked);
+        assert!(result.account_owner_checked);
         assert!(result.pda_checked);
         assert!(result.guardian_set_runtime_loading_enabled);
         assert!(!result.source_marker_program_controlled_on_chain);
@@ -1070,6 +1095,9 @@ mod tests {
         assert!(result.account_info_used);
         assert_eq!(result.account_key, Some(guardian_set_pda));
         assert_eq!(result.account_owner, Some(program_id));
+        assert!(!result.account_key_checked);
+        assert!(!result.account_owner_checked);
+        assert!(!result.pda_checked);
         assert!(!result.guardian_set_account_non_signer);
         assert!(result.guardian_set_account_readonly);
         assert!(result.guardian_set_runtime_loading_enabled);
@@ -1114,6 +1142,9 @@ mod tests {
         assert!(result.account_info_used);
         assert_eq!(result.account_key, Some(guardian_set_pda));
         assert_eq!(result.account_owner, Some(program_id));
+        assert!(!result.account_key_checked);
+        assert!(!result.account_owner_checked);
+        assert!(!result.pda_checked);
         assert!(result.guardian_set_account_non_signer);
         assert!(!result.guardian_set_account_readonly);
         assert!(result.guardian_set_runtime_loading_enabled);
