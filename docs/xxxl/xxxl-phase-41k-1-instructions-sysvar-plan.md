@@ -229,6 +229,48 @@ Before 41K.1 code, reviewers must answer:
 10. Does 41K.1 avoid mutation, CPI, mint, handler, and live route?
 11. Is this plan sufficient before 41K.1 code?
 
+## Review Notes Incorporated
+
+The following review notes are incorporated into the 41K.1 plan before implementation.
+
+### Multi-Guardian Prior Ed25519 Enumeration
+
+41K.1 code must support the accepted 41I quorum model.
+
+41I does not rely on a single guardian attempt.
+
+A quorum may require N guardian attempts, and each successful attempt may correspond to a separate prior Ed25519 precompile instruction in the same transaction.
+
+Therefore 41K.1 implementation must specify how to enumerate N prior Ed25519 precompile instructions from the real Instructions sysvar.
+
+For each prior Ed25519 precompile instruction, the implementation must preserve the same Model A requirements:
+
+- instruction is loaded from the real Instructions sysvar;
+- instruction is strictly prior to the current instruction;
+- instruction program id is the real Ed25519 precompile program id;
+- instruction entry is not fabricated;
+- instruction data is not caller-provided;
+- instruction data is not watcher/frontend-provided;
+- signature, public key, and message byte ranges flow into the accepted 41F.1 / 41F.2 boundaries.
+
+Model A applies per prior precompile instruction.
+
+All prior Ed25519 precompile instructions used for quorum must be verified independently before their guardian attempts can feed 41I.
+
+### Instructions Sysvar Identity and Checked API Rule
+
+41K.1 implementation must verify the identity of the Instructions sysvar account before trusting its data.
+
+Required:
+
+- the Instructions sysvar account key must equal the canonical `instructions::id()`;
+- arbitrary accounts pretending to be the Instructions sysvar must be rejected;
+- current instruction index must be loaded through a checked runtime path equivalent to `load_current_index_checked`;
+- prior instructions must be loaded through a checked runtime path equivalent to `load_instruction_at_checked`;
+- checked loading must fail closed on malformed sysvar data, missing current index, out-of-bounds indexes, or invalid prior instruction indexes.
+
+The current instruction index must never be caller-provided.
+
 ## Current Plan Status
 
 This is a plan document only.
