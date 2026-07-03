@@ -51377,3 +51377,75 @@ All execution and mutation surfaces remain closed.
 Next gate:
 
 41K live-wiring, including real registry PDA loading, atomic check-mark-mint, CPI, handler, and live route.
+
+---
+
+## XXXL Phase 41K Live-Wiring Plan Review Notes
+
+Date: 2026-07-03
+
+Branch:
+
+`stage-xxxl-x1-testnet-local-runtime-skeleton-phase-41k-live-wiring-plan`
+
+Plan commit:
+
+- `2a0d36f Document phase 41K live-wiring plan`
+
+Reviewer status:
+
+- Theo: ACCEPT
+- Audit Demon: ACCEPT WITH NOTES
+
+Required fixes: none.
+
+Notes captured in plan:
+
+- 41K.1 must explicitly preserve the Model A live-wiring soundness precondition.
+- Real Instructions sysvar loading is necessary but not sufficient.
+- Current instruction index must come from the real Instructions sysvar, not caller input.
+- Prior Ed25519 instruction must be a real prior precompile in the same transaction.
+- Active deployment blockers remain mapped to 41K sub-gates.
+- No blocker is removed by the master 41K plan.
+
+41K remains docs-only at this checkpoint.
+
+No AccountInfo, sysvar loading, PDA loading, CPI, mint, handler, or live route is enabled by this plan.
+
+---
+
+## XXXL Phase 41K Live-Wiring Plan Acceptance
+
+Date: 2026-07-03
+
+Status: accepted plan
+
+Branch:
+
+`stage-xxxl-x1-testnet-local-runtime-skeleton-phase-41k-live-wiring-plan`
+
+Accepted commits:
+
+- `2a0d36f Document phase 41K live-wiring plan`
+- `6f000ac Address phase 41K live-wiring plan review notes`
+
+Acceptance record:
+
+`docs/reviews/xxxl-phase-41k-live-wiring-plan-acceptance.md`
+
+Reviewer verdicts:
+
+- Theo: ACCEPT
+- Audit Demon: ACCEPT WITH NOTES
+
+Required fixes: none.
+
+41K master plan accepted.
+
+Next gate:
+
+41K.1 real Instructions sysvar loading plan/code.
+
+Important:
+
+No 41K runtime surface is enabled by this plan acceptance.
