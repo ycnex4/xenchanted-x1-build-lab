@@ -50884,3 +50884,69 @@ Phase 41I — Quorum counting / threshold authorization planning.
 Still forbidden:
 
 No replay write, mutation, CPI, mint, handler, or live route.
+
+---
+
+## XXXL Phase 41H.2 Signed Message Binding Hardening Plan
+
+Date: 2026-07-03
+
+Status: planning only
+
+Branch:
+
+`stage-xxxl-x1-testnet-local-runtime-skeleton-phase-41h-2-signed-message-binding-hardening`
+
+Parent accepted main:
+
+`7579c14 Merge XXXL phase 41H decoded payload binding hardening acceptance`
+
+Plan:
+
+`docs/xxxl/xxxl-phase-41h-2-signed-message-binding-hardening-plan.md`
+
+Checkpoint:
+
+`docs/checkpoints/xxxl-x1-testnet-local-runtime-skeleton-phase-41h-2-signed-message-binding-hardening-plan.md`
+
+Reason:
+
+Phase 41I high-risk audit found a blocking inherited gap:
+
+41F verifies the message bytes inside the Ed25519 instruction, while 41G checks a separate free `signed_message_bytes` input against the raw payload hash.
+
+41H.2 must remove free `signed_message_bytes` from 41H and derive the signed message from `extraction_result.extracted_slices.message_bytes`.
+
+Downstream:
+
+41I remains blocked until 41H.2 is implemented, reviewed, and accepted.
+
+Still forbidden:
+
+No quorum counting, authorization marker, replay write, processed event marking, account mutation, CPI, invoke_signed, mint_to, handler, or live route.
+
+---
+
+## XXXL Phase 41H.2 High-Risk Audit Update — Message Range Binding
+
+Date: 2026-07-03
+
+Status: planning correction
+
+Audit Demon required a blocking correction:
+
+41H.2 must not only remove free `signed_message_bytes`.
+
+41H.2 must also verify:
+
+`verified_ranges.message_range == extracted_slices.message_range`
+
+The corrected plan also requires signature range binding:
+
+`verified_ranges.signature_range == extracted_slices.signature_range`
+
+Reason:
+
+The proof must establish that the bytes used as the 41G payload hash are the same bytes over which 41F.2 established native Ed25519 verification.
+
+41I remains blocked.
