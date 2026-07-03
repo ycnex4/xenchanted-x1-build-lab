@@ -50843,3 +50843,44 @@ Preferred closure:
 Forbidden surfaces remain forbidden:
 
 No runtime account loading, AccountInfo, sysvar loading, quorum, auth, replay, mutation, CPI, mint, handler, or live route.
+
+---
+
+## XXXL Phase 41H.1 Decoded Payload Binding Hardening — Acceptance
+
+Date: 2026-07-03
+
+Accepted main:
+
+`302fb0d Merge XXXL phase 41H decoded payload binding hardening`
+
+Acceptance record:
+
+`docs/reviews/xxxl-phase-41h-1-decoded-payload-binding-hardening-acceptance.md`
+
+Final verdict:
+
+- Theo: ACCEPT
+- Audit Demon: ACCEPT
+- Required fixes: none
+- Blocking risks: none
+
+Accepted closure:
+
+41H no longer accepts a free `DecodedGuardianPayloadRaw`.
+
+41H now accepts `raw_payload_bytes` and `signed_message_bytes`, internally runs `establish_payload_hash_binding`, internally decodes `raw_payload_bytes`, and uses only the internally decoded payload for guardian set ID linkage.
+
+Demon Note 1 is closed.
+
+Forward note:
+
+Future guardian-set account-loading must preserve authoritative wrapper unforgeability.
+
+Next gate:
+
+Phase 41I — Quorum counting / threshold authorization planning.
+
+Still forbidden:
+
+No replay write, mutation, CPI, mint, handler, or live route.
