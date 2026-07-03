@@ -51134,3 +51134,68 @@ The base 41I plan was reconciled with accepted 41H.2. 41I must not accept, threa
 Next step:
 
 Create a separate 41I code implementation branch.
+
+---
+
+## XXXL Phase 41I Quorum Authorization Boundary Implementation Acceptance
+
+Date: 2026-07-03
+
+Status: accepted implementation
+
+Branch:
+
+`stage-xxxl-x1-testnet-local-runtime-skeleton-phase-41i-quorum-authorization-implementation`
+
+Accepted commit:
+
+`9677edf Implement phase 41I quorum authorization boundary`
+
+Acceptance record:
+
+`docs/reviews/xxxl-phase-41i-quorum-authorization-implementation-acceptance.md`
+
+Reviewer verdicts:
+
+- Theo: ACCEPT
+- Audit Demon: ACCEPT
+
+Required fixes: none.
+
+Accepted proof target:
+
+Every counted guardian passes hardened 41H.2 and proves:
+
+`41F-verified extracted message == canonical_hash(raw_payload_bytes)`
+
+Accepted 41I boundary:
+
+- shared raw payload for all attempts;
+- shared expected guardian set ID for all attempts;
+- shared authoritative guardian set for all attempts;
+- no free signed message bytes;
+- no free decoded payload;
+- no free guardian approval claims;
+- count only successful distinct 41H.2 validations;
+- dedup by matched guardian index and public key;
+- per-attempt errors preserved;
+- failed attempts do not kill valid M-of-N quorum;
+- threshold enforced from authoritative guardian set.
+
+Execution status:
+
+41I remains non-executing.
+
+`logical_quorum_authorization_established` is a logical marker only.
+
+`authorization_enabled` remains false.
+
+Replay writes, processed event marking, mutation, CPI, mint, handler, and live route remain disabled.
+
+Non-blocking note:
+
+The authoritative guardian-set constructor is now `pub(crate)`, not public. This is accepted for the boundary model, but future live-wiring must ensure authoritative wrappers are built only from real on-chain guardian-set data.
+
+Next step:
+
+Merge 41I implementation acceptance, then begin Phase 41J as a separate high-risk gate.
