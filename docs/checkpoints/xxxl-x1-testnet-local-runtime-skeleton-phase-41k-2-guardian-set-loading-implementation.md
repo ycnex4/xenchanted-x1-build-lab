@@ -105,3 +105,28 @@ Additional local checks:
 Submit 41K.2 implementation to Theo / Demon review.
 
 After review acceptance, update current checkpoint and proceed to 41K.3 processed-registry PDA loading.
+
+## Acceptance Update
+
+Phase 41K.2 implementation accepted with notes after Theo and Demon review.
+
+Acceptance document:
+
+`docs/reviews/xxxl-phase-41k-2-guardian-set-loading-implementation-acceptance.md`
+
+Final accepted HEAD:
+
+`6611695 Refine phase 41K.2 account check progress flags`
+
+Reviewer verdicts:
+
+- Theo: ACCEPT WITH NOTES, required fixes none.
+- Demon: ACCEPT WITH NOTES, required fixes none.
+
+The shared non-blocking note is carried forward as a future gate:
+
+Before 41K.5 live-handler wiring, successful 41K.2 guardian-set loading must feed `AuthoritativeGuardianSetRef::from_program_controlled_on_chain_source(...)` through a single type-enforced adapter, not through handler discipline.
+
+Next gate:
+
+41K.3 real processed-registry PDA loading.
