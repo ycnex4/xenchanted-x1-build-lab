@@ -51616,3 +51616,66 @@ Notes captured in plan:
 41K.2 remains docs-only at this checkpoint.
 
 No guardian-set runtime account loading, registry loading, mutation, CPI, mint, handler, or live route is enabled by this plan.
+
+---
+
+## XXXL Phase 41K.2 Guardian-Set Account/PDA Loading Plan Acceptance
+
+Date: 2026-07-03
+
+Status: accepted plan
+
+Branch:
+
+`stage-xxxl-x1-testnet-local-runtime-skeleton-phase-41k-2-guardian-set-loading-plan`
+
+Accepted commits:
+
+- `7c0d176 Document phase 41K.2 guardian-set loading plan`
+- `265740f Address phase 41K.2 guardian-set loading plan review notes`
+
+Acceptance record:
+
+`docs/reviews/xxxl-phase-41k-2-guardian-set-loading-plan-acceptance.md`
+
+Reviewer verdicts:
+
+- Theo: ACCEPT
+- Audit Demon: ACCEPT WITH NOTES
+
+Required fixes: none.
+
+41K.2 plan accepted.
+
+Accepted next runtime surface:
+
+- real guardian-set account/PDA loading;
+- checked account identity;
+- checked account owner;
+- checked PDA derivation;
+- checked schema/discriminator/version;
+- checked threshold/count/duplicates/active status;
+- authoritative guardian-set wrapper equivalent to ProgramControlledOnChain.
+
+Important implementation requirements:
+
+- exact PDA seed format must be fixed before 41K.2 code acceptance;
+- stored guardian_set_id must match seed-implied guardian_set_id;
+- guardian-set account must be read-only, non-writable, non-signer in future handler wiring;
+- uninitialized / zero-discriminator accounts must be explicitly rejected.
+
+Still disabled:
+
+- processed-registry PDA loading;
+- replay write;
+- processed event marking;
+- account mutation;
+- CPI;
+- invoke_signed;
+- SPL token mint;
+- process instruction handler;
+- live route.
+
+Next gate:
+
+41K.2 real guardian-set account/PDA loading code implementation.
