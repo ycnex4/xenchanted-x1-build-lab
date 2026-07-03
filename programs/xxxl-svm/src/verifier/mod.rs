@@ -10,6 +10,7 @@ pub mod errors;
 pub mod guardian_membership_validation_boundary;
 pub mod guardian_quorum;
 pub mod instructions_sysvar_evidence_scanner;
+pub mod instructions_sysvar_live_wiring_boundary;
 pub mod raw_payload;
 pub mod types;
 
@@ -110,6 +111,16 @@ pub use instructions_sysvar_evidence_scanner::{
     InstructionsSysvarEvidenceScannerReport, InstructionsSysvarInstructionView,
     ScannedEd25519InstructionEvidence, INSTRUCTIONS_SYSVAR_EVIDENCE_SCANNER_PHASE_39,
     INSTRUCTIONS_SYSVAR_EVIDENCE_SCANNER_REPORT, INSTRUCTIONS_SYSVAR_EVIDENCE_SCANNER_VERSION,
+};
+pub use instructions_sysvar_live_wiring_boundary::{
+    establish_phase_41k_1_instructions_sysvar_live_wiring_boundary,
+    phase_41k_1_instructions_sysvar_live_wiring_boundary_report,
+    Phase41K1InstructionsSysvarLiveWiringBoundaryReport,
+    Phase41K1InstructionsSysvarLiveWiringResult, Phase41K1InstructionsSysvarLiveWiringStatus,
+    Phase41K1LoadedPriorEd25519PrecompileInstruction,
+    PHASE_41K_1_INSTRUCTIONS_SYSVAR_LIVE_WIRING_BOUNDARY_PHASE,
+    PHASE_41K_1_INSTRUCTIONS_SYSVAR_LIVE_WIRING_BOUNDARY_REPORT,
+    PHASE_41K_1_INSTRUCTIONS_SYSVAR_LIVE_WIRING_BOUNDARY_VERSION,
 };
 pub use quorum_authorization_boundary::{
     establish_guardian_quorum_authorization, guardian_quorum_authorization_boundary_report,
