@@ -1,5 +1,26 @@
 # XXXL Phase 41I — Quorum Counting / Threshold Authorization Plan
 
+
+## 41H.2 Reconciliation Note — Signed Message Model Supersession
+
+This base 41I plan is resumed after accepted Phase 41H.2.
+
+Any earlier wording in this document that refers to 41I passing or enforcing a free `signed_message_bytes` operand is superseded by the accepted 41H.2 model.
+
+41I must not accept, thread, compare, or pass free signed message bytes.
+
+41I composes hardened 41H.2 internally. Each counted guardian must pass 41H.2, where 41H.2 derives the signed message from `extraction_result.extracted_slices.message_bytes` and proves:
+
+`41F-verified extracted message == canonical_hash(raw_payload_bytes)`
+
+The 41I shared-context invariant is therefore:
+
+- same `raw_payload_bytes` for all attempts;
+- same authoritative guardian set for all attempts;
+- same expected configured guardian set ID for all attempts;
+- every counted guardian independently proves the extracted signed message equals the canonical hash of that same raw payload through 41H.2.
+
+There is no separate `same signed_message_bytes` invariant in 41I after 41H.2.
 Date: 2026-07-03
 
 Status: planning only

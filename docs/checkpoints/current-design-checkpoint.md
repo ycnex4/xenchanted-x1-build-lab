@@ -51076,3 +51076,25 @@ Addendum:
 Next step:
 
 Review resumed 41I plan before writing 41I code.
+
+---
+
+## XXXL Phase 41I Plan Reconciliation — 41H.2 Signed Message Model
+
+Date: 2026-07-03
+
+Status: doc consistency update
+
+Audit Demon accepted the resumed 41I plan with a non-blocking note:
+
+The base 41I plan still had stale wording about free or same `signed_message_bytes`.
+
+Resolution:
+
+The base 41I plan now explicitly states that all such wording is superseded by accepted 41H.2.
+
+41I must not accept, thread, compare, or pass free signed message bytes.
+
+41I composes hardened 41H.2 internally and counts only guardians that prove:
+
+`41F-verified extracted message == canonical_hash(raw_payload_bytes)`
