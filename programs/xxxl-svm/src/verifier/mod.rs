@@ -107,7 +107,8 @@ pub use guardian_quorum::{
     GUARDIAN_QUORUM_STRUCTURAL_VERIFIER_PHASE_35, GUARDIAN_QUORUM_STRUCTURAL_VERIFIER_VERSION,
 };
 pub use guardian_set_account_loading_boundary::{
-    decode_phase_41k_2_guardian_set_account_data,
+    decode_phase_41k_2_guardian_set_account_data, find_phase_41k_2_guardian_set_pda,
+    load_phase_41k_2_guardian_set_account_info,
     phase_41k_2_guardian_set_account_loading_boundary_report,
     Phase41K2GuardianSetAccountLoadingBoundaryReport, Phase41K2GuardianSetAccountLoadingResult,
     Phase41K2GuardianSetAccountLoadingStatus, Phase41K2GuardianSetAccountRejectionCase,
