@@ -111,6 +111,15 @@ pub use instructions_sysvar_evidence_scanner::{
     ScannedEd25519InstructionEvidence, INSTRUCTIONS_SYSVAR_EVIDENCE_SCANNER_PHASE_39,
     INSTRUCTIONS_SYSVAR_EVIDENCE_SCANNER_REPORT, INSTRUCTIONS_SYSVAR_EVIDENCE_SCANNER_VERSION,
 };
+pub use quorum_authorization_boundary::{
+    establish_guardian_quorum_authorization, guardian_quorum_authorization_boundary_report,
+    GuardianQuorumAuthorizationAttempt, GuardianQuorumAuthorizationAttemptOutcome,
+    GuardianQuorumAuthorizationAttemptStatus, GuardianQuorumAuthorizationBoundaryReport,
+    GuardianQuorumAuthorizationError, GuardianQuorumAuthorizationErrorKind,
+    GuardianQuorumAuthorizationEstablished, GuardianQuorumAuthorizationStatus,
+    GUARDIAN_QUORUM_AUTHORIZATION_BOUNDARY_REPORT, QUORUM_AUTHORIZATION_BOUNDARY_PHASE_41I,
+    QUORUM_AUTHORIZATION_BOUNDARY_VERSION,
+};
 pub use raw_payload::{
     decode_guardian_payload_raw, raw_payload_decoder_report, DecodedGuardianPayloadRaw,
     RawPayloadDecodeError, RawPayloadDecodeErrorKind, RawPayloadDecoderReport,
@@ -135,3 +144,4 @@ pub mod payload_hash_binding_boundary;
 pub mod prefilter_phase_41c3_candidate_descriptor_runtime_boundary;
 pub mod prior_ed25519_lookup_ordering_boundary;
 pub mod prior_instruction_index_range_runtime_boundary;
+pub mod quorum_authorization_boundary;
