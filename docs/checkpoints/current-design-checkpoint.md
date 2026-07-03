@@ -51340,3 +51340,40 @@ The abstract processed-registry view should carry authoritative-source provenanc
 Next step:
 
 Merge accepted 41J plan, then create separate 41J code implementation branch.
+
+---
+
+## XXXL Phase 41J Replay Protection Boundary Implementation Acceptance
+
+Date: 2026-07-03
+
+Status: accepted implementation
+
+Branch:
+
+`stage-xxxl-x1-testnet-local-runtime-skeleton-phase-41j-replay-protection-implementation`
+
+Accepted commit:
+
+- `2f78b49 Implement phase 41J replay protection boundary`
+
+Acceptance record:
+
+`docs/reviews/xxxl-phase-41j-replay-protection-implementation-acceptance.md`
+
+Reviewer verdicts:
+
+- Theo: ACCEPT
+- Audit Demon: ACCEPT
+
+Required fixes: none.
+
+41J accepted implementation:
+
+`raw_payload_bytes -> internal 41I quorum authorization -> internal raw payload decode -> canonicalEventKey -> authoritative abstract processed-registry view -> eligibility / intent`
+
+All execution and mutation surfaces remain closed.
+
+Next gate:
+
+41K live-wiring, including real registry PDA loading, atomic check-mark-mint, CPI, handler, and live route.
