@@ -126,6 +126,14 @@ pub use raw_payload::{
     RAW_PAYLOAD_DECODER_PHASE_33, RAW_PAYLOAD_DECODER_REPORT, RAW_PAYLOAD_DECODER_VERSION,
     RAW_PAYLOAD_PHASE_23_FIELD_ORDER,
 };
+pub use replay_protection_boundary::{
+    establish_replay_protection_eligibility, replay_protection_boundary_report,
+    AuthoritativeProcessedRegistryViewRef, ProcessedRegistryViewSource,
+    ReplayProtectionBoundaryReport, ReplayProtectionEligibilityError,
+    ReplayProtectionEligibilityErrorKind, ReplayProtectionEligibilityEstablished,
+    ReplayProtectionEligibilityStatus, REPLAY_PROTECTION_BOUNDARY_PHASE_41J,
+    REPLAY_PROTECTION_BOUNDARY_REPORT, REPLAY_PROTECTION_BOUNDARY_VERSION,
+};
 pub use types::{
     FutureRuntimeParityCase, FutureRuntimeParityCaseReport, RuntimeVerifierBoundaryComponent,
     VerifierBoundaryStatus,
@@ -145,3 +153,4 @@ pub mod prefilter_phase_41c3_candidate_descriptor_runtime_boundary;
 pub mod prior_ed25519_lookup_ordering_boundary;
 pub mod prior_instruction_index_range_runtime_boundary;
 pub mod quorum_authorization_boundary;
+pub mod replay_protection_boundary;
