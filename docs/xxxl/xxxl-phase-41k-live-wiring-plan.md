@@ -126,6 +126,25 @@ Output:
 
 A runtime-derived structure that can feed the accepted 41F.1 / 41F.2 boundaries.
 
+
+#### Model A Live-Wiring Soundness Precondition
+
+41K.1 must explicitly preserve the Model A soundness assumption behind the accepted 41F.2 boundary.
+
+Loading the real Instructions sysvar is necessary but not sufficient.
+
+41K.1 must verify the runtime context that makes `native Ed25519 verification established` meaningful:
+
+- the XXXL verifier is executing as the current instruction;
+- the Ed25519 instruction is a real prior Ed25519 precompile instruction in the same transaction;
+- the current instruction index is loaded from the real Instructions sysvar using a checked current-index path;
+- the current instruction index is not caller-provided;
+- the prior Ed25519 instruction index is checked relative to the real current index;
+- the loaded prior instruction is not fabricated from instruction data;
+- the Solana/SVM precompile ordering assumption holds: reaching the current instruction implies prior Ed25519 precompile verification already passed.
+
+Future 41K.5 handler wiring must enforce this same precondition before any execution or mutation path can rely on 41F.2 evidence.
+
 ### 41K.2 — Real Guardian-Set Account Loading
 
 Goal:
@@ -244,6 +263,7 @@ Before any 41K implementation is accepted, reviewers must answer:
 
 1. Are all runtime-derived inputs truly loaded from runtime state?
 2. Is the Instructions sysvar path real and non-fabricated?
+3. Is the Model A live-wiring soundness precondition explicitly preserved?
 3. Is the guardian set loaded only from an authoritative program-controlled account?
 4. Is the processed registry loaded only from an authoritative program-controlled PDA?
 5. Is the same raw payload used for quorum, decode, replay key, recipient, amount, and mint?
@@ -252,6 +272,24 @@ Before any 41K implementation is accepted, reviewers must answer:
 8. Are all partial-commit windows closed?
 9. Are handler/CPI/live route surfaces separately gated?
 10. Does any caller-supplied field become authority?
+
+## Active Deployment Blocker Mapping
+
+41K master plan does not remove any active deployment blocker.
+
+The following blockers remain active until the corresponding sub-gates are implemented, reviewed, and accepted.
+
+| Deployment blocker | Related sub-gate | Meaning |
+| --- | --- | --- |
+| `PRODUCTION_PROGRAM_ID_UNSET` | 41K.5 / deployment gate | Production program identity is not selected for live execution. |
+| `X1_TESTNET_PROGRAM_DEPLOYED_RUNTIME_LOCKED` | 41K.5 / deployment gate | Runtime deployment is not locked for live route use. |
+| `PRODUCTION_GUARDIAN_SET_UNSET` | 41K.2 | Real authoritative guardian-set account/PDA loading is not accepted yet. |
+| `PRODUCTION_PROOF_LOG_UNSET` | 41K.3 | Real processed-registry / proof-log PDA loading is not accepted yet. |
+| `SPL_CPI_EXECUTION_DISABLED` | 41K.5 | SPL CPI / mint execution remains disabled. |
+| `LIVE_ROUTE_DISABLED` | 41K.5 | Live route remains disabled. |
+| `EXTERNAL_REVIEW_INCOMPLETE` | all 41K sub-gates | External review gates all runtime, mutation, CPI, handler, and live-route surfaces. |
+
+No 41K sub-gate may remove its blocker without a separate implementation review and explicit acceptance.
 
 ## Current Plan Status
 
