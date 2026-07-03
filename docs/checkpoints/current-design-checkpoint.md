@@ -50999,3 +50999,48 @@ Downstream:
 Next step:
 
 Create a separate 41H.2 code implementation branch after this plan acceptance is merged.
+
+---
+
+## XXXL Phase 41H.2 Signed Message Binding Hardening Implementation Acceptance
+
+Date: 2026-07-03
+
+Status: accepted implementation
+
+Branch:
+
+`stage-xxxl-x1-testnet-local-runtime-skeleton-phase-41h-2-signed-message-binding-hardening-implementation`
+
+Accepted commit:
+
+`4cc79de Harden phase 41H signed message binding`
+
+Acceptance record:
+
+`docs/reviews/xxxl-phase-41h-2-signed-message-binding-hardening-implementation-acceptance.md`
+
+Reviewer verdicts:
+
+- Theo: ACCEPT
+- Audit Demon: ACCEPT
+
+Required fixes: none.
+
+Accepted proof target:
+
+`guardian signed canonical_hash(raw_payload_bytes)`
+
+Accepted implementation:
+
+- free `signed_message_bytes` removed;
+- extracted message is sole signed message operand;
+- public key, message, and signature ranges are bound between 41F.1 and 41F.2;
+- extracted message length is exactly 32;
+- 41G uses extracted message bytes;
+- arbitrary-M range-pairing attack is closed;
+- forbidden runtime surfaces remain absent.
+
+Downstream:
+
+After merge, Phase 41I may resume under separate high-risk audit.
