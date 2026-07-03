@@ -89,3 +89,28 @@ The 41K.3 plan keeps disabled:
 ## Next
 
 Submit 41K.3 plan to Theo / Demon review.
+
+
+## Amendment 1 Update
+
+Amendment document:
+
+`docs/xxxl/xxxl-phase-41k-3-processed-registry-loading-plan-amendment-1.md`
+
+Amended review request:
+
+`docs/reviews/xxxl-phase-41k-3-processed-registry-loading-plan-amended-review-request.md`
+
+Amendment 1 supersedes conflicting wording in the base plan.
+
+Key changes:
+
+- missing / uninitialized expected processed-event PDA means unprocessed, not replay rejection;
+- writable processed-event account must not be rejected solely for writability;
+- initialized `consumed == false` lifecycle must be explicitly accepted or rejected before code;
+- 41J list-based registry view must be reconciled with per-event PDA lookup;
+- successful 41K.3 loading must later feed an authoritative processed-registry view through a type-enforced adapter or explicit 41J interface refinement.
+
+Updated review target:
+
+Reviewers should review the base plan together with Amendment 1.
