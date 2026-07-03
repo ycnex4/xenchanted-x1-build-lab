@@ -447,3 +447,185 @@ A read-only scaffold may be allowed only if it is explicitly marked:
 - not production replay protection.
 
 The next step after this document is review, not implementation.
+
+## Amendment 1 — Required design fixes from hostile review
+
+This amendment resolves the first hostile design review findings for Phase 41K.4.
+
+### RF1 — System Program CPI and invoke_signed are in scope
+
+Phase 41K.4 must explicitly distinguish between two kinds of CPI:
+
+- System Program CPI required for processed-event PDA setup;
+- SPL Token CPI, which remains out of scope until a later mint integration phase.
+
+System Program CPI is required because the processed-event PDA has no private key.
+
+The PDA can only be allocated, assigned, or funded through the runtime-supported signed PDA path using:
+
+- the canonical processed-event PDA seeds;
+- the canonical bump returned by Pubkey::find_program_address;
+- invoke_signed to the System Program.
+
+The canonical signer seeds are:
+
+    b"xxxl"
+    b"processed-event"
+    canonical_event_key
+    bump
+
+The bump must be the canonical bump derived by the program.
+
+The caller must not supply or override this bump.
+
+The implementation account manifest must include at least:
+
+- processed-event PDA: writable, non-signer, non-executable;
+- rent payer: signer, writable when top-up may be needed;
+- System Program account;
+- Clock sysvar if consumed_slot uses runtime slot;
+- all accounts required by the earlier verifier pipeline.
+
+The safety flag rule is therefore refined:
+
+- System Program CPI for allocate, assign, and rent top-up is allowed in 41K.4.
+- SPL Token CPI remains disabled.
+- SPL mint remains disabled unless the later mint integration phase explicitly makes mark and mint atomic together.
+
+### RF2 — Mark and mint must be atomic in the final live route
+
+The processed-event mark is irreversible from the protocol perspective.
+
+Once an event reaches State C:
+
+    consumed == true
+
+the event is considered already processed and future attempts must reject as replay.
+
+Therefore a final live burn-to-mint route must never allow:
+
+    transaction 1: mark processed-event as consumed
+    transaction 2: mint XXXL later
+
+This would create a permanent marked-but-unminted failure mode.
+
+The final live route must satisfy the stronger invariant:
+
+    replay mark and SPL mint commit atomically, or both roll back
+
+Phase 41K.4 itself may still implement only the processed-event marking primitive.
+
+However, the plan must not claim that live replay protection is complete until the later mint integration proves that:
+
+- quorum verification;
+- payload decode;
+- replay eligibility;
+- processed-event marking;
+- SPL mint;
+
+are committed atomically in the final live execution path.
+
+Before that final integration exists, any marking-only path must remain non-live, no-route, and not production replay protection.
+
+
+### RF3 — consumed_amount is fixed to xxxl_mint_amount
+
+Phase 41K.4 fixes the processed-event consumed_amount value as:
+
+    consumed_amount = xxxl_mint_amount
+
+Rationale:
+
+The processed-event account belongs to the X1 XXXL mint route.
+
+Its consumed_amount should record the amount authorized for the X1-side mint result, not merely the Ethereum-side burned input.
+
+burned_amount remains part of the authorized payload and remains available for audit.
+
+However, the replay marker records the X1 mint-side amount.
+
+This value must be read from the same quorum-authorized payload used by 41J.
+
+It must not be caller-supplied independently.
+
+It must not be inferred from account state.
+
+It must not be recomputed from an untrusted source.
+
+If a future route needs to record both burned_amount and xxxl_mint_amount, that must be a later account-layout change and not a 41K.4 ambiguity.
+
+### RF4 — Quorum, decode, eligibility, and mark are one atomic verification path
+
+41K.4 must not split authorization and marking across independent instructions.
+
+The following steps must use the same internally decoded, quorum-authorized payload in one atomic execution path:
+
+1. raw payload decode;
+2. guardian quorum verification;
+3. canonical_event_key derivation;
+4. processed-event PDA derivation;
+5. 41K.3 loader expected key;
+6. 41J replay eligibility;
+7. final processed-event byte-image write.
+
+The loader expected_canonical_event_key must be exactly the canonical_event_key decoded by 41J from the authorized raw payload.
+
+The mark path must not accept a free canonical_event_key.
+
+The mark path must not accept a free route_id.
+
+The mark path must not accept a free recipient.
+
+The mark path must not accept a free consumed_amount.
+
+The mark path must not accept a pre-decoded payload from caller instruction data unless that decoded payload is itself bound to the same verified raw payload in the same execution path.
+
+A later live route must extend this same atomic path to include SPL minting.
+
+Until that exists, 41K.4 marking-only code must remain non-live and non-production.
+
+
+## Non-blocking review notes carried forward
+
+### Durable-state boundary
+
+The durable invariant is transaction-level, not field-write-order-level.
+
+Temporary in-instruction memory writes are not durable state.
+
+The real forbidden condition is any committed transaction boundary where the processed-event account exists as initialized with:
+
+    consumed == false
+
+The implementation may write account bytes in any safe internal order if the transaction can only commit with the final consumed image.
+
+### Single source of layout truth
+
+The 41K.4 implementation must use the same account-layout constants as state.rs and the 41K.3 loader.
+
+The final byte image must not rely on a duplicated, drifting layout definition.
+
+The final re-decode test using the 41K.3 loader is mandatory.
+
+### Unprocessed identity binding
+
+For a system-owned empty-data PDA, route_id and recipient cannot be pre-checked from account data because no account data exists yet.
+
+For that state, identity binding is enforced by:
+
+- deriving the PDA from the authorized canonical_event_key;
+- writing route_id from the authorized payload;
+- writing recipient from the authorized payload;
+- re-decoding the final account through the 41K.3 loader.
+
+### System-owned nonzero-data rationale
+
+A hostile external actor can dust the PDA with lamports by transferring funds.
+
+A hostile external actor should not be able to allocate nonzero data for the PDA without a valid PDA signature path.
+
+Therefore system-owned nonzero-data at the expected PDA is treated as malformed and rejected.
+
+### Intra-transaction duplicate marking
+
+If a transaction attempts to mark the same event more than once, the second mark attempt must observe the first successful mark in the same transaction execution context or otherwise fail safely as already processed.
