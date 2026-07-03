@@ -51449,3 +51449,75 @@ Next gate:
 Important:
 
 No 41K runtime surface is enabled by this plan acceptance.
+
+---
+
+## XXXL Phase 41K.1 Instructions Sysvar Plan Review Notes
+
+Date: 2026-07-03
+
+Branch:
+
+`stage-xxxl-x1-testnet-local-runtime-skeleton-phase-41k-1-instructions-sysvar-plan`
+
+Plan commit:
+
+- `6b41d47 Document phase 41K.1 instructions sysvar loading plan`
+
+Reviewer status:
+
+- Theo: ACCEPT
+- Audit Demon: ACCEPT WITH NOTES
+
+Required fixes: none.
+
+Notes captured in plan:
+
+- 41K.1 must support enumeration of N prior Ed25519 precompile instructions for quorum.
+- Model A applies per prior precompile instruction.
+- Each prior precompile must be strictly prior, Ed25519-program-id checked, and non-fabricated.
+- The Instructions sysvar account identity must be checked against canonical `instructions::id()`.
+- Current index must be loaded through a checked runtime path equivalent to `load_current_index_checked`.
+- Prior instructions must be loaded through a checked runtime path equivalent to `load_instruction_at_checked`.
+
+41K.1 remains docs-only at this checkpoint.
+
+No runtime sysvar loading, mutation, CPI, mint, handler, or live route is enabled by this plan.
+
+---
+
+## XXXL Phase 41K.1 Instructions Sysvar Loading Plan Acceptance
+
+Date: 2026-07-03
+
+Status: accepted plan
+
+Branch:
+
+`stage-xxxl-x1-testnet-local-runtime-skeleton-phase-41k-1-instructions-sysvar-plan`
+
+Accepted commits:
+
+- `6b41d47 Document phase 41K.1 instructions sysvar loading plan`
+- `50536c0 Address phase 41K.1 instructions sysvar plan review notes`
+
+Acceptance record:
+
+`docs/reviews/xxxl-phase-41k-1-instructions-sysvar-plan-acceptance.md`
+
+Reviewer verdicts:
+
+- Theo: ACCEPT
+- Audit Demon: ACCEPT WITH NOTES
+
+Required fixes: none.
+
+41K.1 plan accepted.
+
+Next gate:
+
+41K.1 real Instructions sysvar loading code implementation.
+
+Important:
+
+No runtime sysvar loading, guardian PDA loading, registry PDA loading, mutation, CPI, mint, handler, or live route is enabled by this plan acceptance.
