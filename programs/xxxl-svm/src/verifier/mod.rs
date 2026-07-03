@@ -9,6 +9,7 @@ pub mod ed25519_verification_evidence_integration_design;
 pub mod errors;
 pub mod guardian_membership_validation_boundary;
 pub mod guardian_quorum;
+pub mod guardian_set_account_loading_boundary;
 pub mod instructions_sysvar_evidence_scanner;
 pub mod instructions_sysvar_live_wiring_boundary;
 pub mod raw_payload;
@@ -104,6 +105,20 @@ pub use guardian_quorum::{
     GuardianQuorumStructuralErrorKind, GuardianQuorumStructuralReport,
     GuardianQuorumStructuralResult, GuardianSetRef, GUARDIAN_QUORUM_STRUCTURAL_REPORT,
     GUARDIAN_QUORUM_STRUCTURAL_VERIFIER_PHASE_35, GUARDIAN_QUORUM_STRUCTURAL_VERIFIER_VERSION,
+};
+pub use guardian_set_account_loading_boundary::{
+    decode_phase_41k_2_guardian_set_account_data, find_phase_41k_2_guardian_set_pda,
+    load_phase_41k_2_guardian_set_account_info,
+    phase_41k_2_guardian_set_account_loading_boundary_report,
+    Phase41K2GuardianSetAccountLoadingBoundaryReport, Phase41K2GuardianSetAccountLoadingResult,
+    Phase41K2GuardianSetAccountLoadingStatus, Phase41K2GuardianSetAccountRejectionCase,
+    GUARDIAN_PUBLIC_KEY_LEN, GUARDIAN_SET_ACTIVE_STATUS_OFFSET, GUARDIAN_SET_GUARDIAN_COUNT_OFFSET,
+    GUARDIAN_SET_GUARDIAN_KEYS_OFFSET, GUARDIAN_SET_GUARDIAN_SET_ID_OFFSET,
+    GUARDIAN_SET_QUORUM_THRESHOLD_OFFSET, GUARDIAN_SET_STATUS_ACTIVE,
+    GUARDIAN_SET_STATUS_DEPRECATED, GUARDIAN_SET_STATUS_INACTIVE, MAX_SUPPORTED_GUARDIAN_COUNT,
+    PHASE_41K_2_GUARDIAN_SET_ACCOUNT_LOADING_BOUNDARY_PHASE,
+    PHASE_41K_2_GUARDIAN_SET_ACCOUNT_LOADING_BOUNDARY_REPORT,
+    PHASE_41K_2_GUARDIAN_SET_ACCOUNT_LOADING_BOUNDARY_VERSION,
 };
 pub use instructions_sysvar_evidence_scanner::{
     instructions_sysvar_evidence_scanner_report, scan_instructions_sysvar_for_ed25519_evidence,
