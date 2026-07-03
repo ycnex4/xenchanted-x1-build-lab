@@ -51199,3 +51199,35 @@ The authoritative guardian-set constructor is now `pub(crate)`, not public. This
 Next step:
 
 Merge 41I implementation acceptance, then begin Phase 41J as a separate high-risk gate.
+
+---
+
+## XXXL Phase 41J Replay Protection Plan Started
+
+Date: 2026-07-03
+
+Status: planning
+
+Branch:
+
+`stage-xxxl-x1-testnet-local-runtime-skeleton-phase-41j-replay-protection-plan`
+
+Base main:
+
+`63373c4 Merge XXXL phase 41I quorum authorization implementation acceptance`
+
+Scope:
+
+Docs-only plan for replay protection and processed event marking.
+
+Core invariant:
+
+A canonical event may be processed at most once.
+
+Replay key:
+
+`canonicalEventKey`, derived internally from `raw_payload_bytes`.
+
+Control point:
+
+Do not write 41J code until this plan is reviewed and accepted.
