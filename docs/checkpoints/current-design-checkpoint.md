@@ -51231,3 +51231,54 @@ Replay key:
 Control point:
 
 Do not write 41J code until this plan is reviewed and accepted.
+
+---
+
+## XXXL Phase 41J Replay Protection Plan Required Fixes
+
+Date: 2026-07-03
+
+Status: required fixes documented
+
+Branch:
+
+`stage-xxxl-x1-testnet-local-runtime-skeleton-phase-41j-replay-protection-plan`
+
+Audit Demon verdict:
+
+`REQUIRES FIXES`
+
+Required fixes:
+
+1. Bind 41J `raw_payload_bytes` to the 41I-authorized payload.
+2. Clarify 41J as a non-mutating boundary model.
+
+Resolution document:
+
+`docs/xxxl/xxxl-phase-41j-replay-protection-plan-fixes.md`
+
+Updated model:
+
+41J composes accepted 41I internally over the same `raw_payload_bytes`.
+
+41J then decodes that same raw payload and derives `canonicalEventKey`.
+
+41J boundary code does not perform real replay writes or processed-event marking.
+
+Forbidden in 41J boundary code:
+
+- AccountInfo;
+- sysvar loading;
+- runtime account loading;
+- replay registry write;
+- processed event marking write;
+- account mutation;
+- CPI;
+- invoke_signed;
+- SPL mint_to;
+- handler;
+- live route.
+
+Next step:
+
+Request re-review of the fixed 41J plan.

@@ -41,3 +41,29 @@ Confirm whether the Phase 41J replay protection / processed event marking plan i
 - processed marking scope sufficiently narrow: yes/no
 - forbidden runtime surfaces absent: yes/no
 - plan sufficient before 41J code: yes/no
+
+
+## Required Fixes Update
+
+Audit Demon initially returned:
+
+`REQUIRES FIXES`
+
+Blocking issues:
+
+1. `raw_payload_bytes` was not bound to the 41I-authorized payload.
+2. The plan was ambiguous about real runtime account access / mutation.
+
+Fix document:
+
+`docs/xxxl/xxxl-phase-41j-replay-protection-plan-fixes.md`
+
+Updated review focus:
+
+- 41J internally composes 41I over the same raw payload;
+- no standalone 41I result can be paired with a different raw payload;
+- 41J is non-mutating boundary code;
+- AccountInfo/sysvar/runtime-account-loading are forbidden;
+- replay write and processed marking remain disabled;
+- output is replay eligibility / intent only;
+- real registry write + atomic mint/live route are deferred to a separate future gate.

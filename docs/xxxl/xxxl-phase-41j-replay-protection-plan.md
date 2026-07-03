@@ -1,5 +1,37 @@
 # XXXL Phase 41J — Replay Protection / Processed Event Marking Plan
 
+
+## Required Fixes Reconciliation
+
+Audit Demon identified two blocking gaps in the initial 41J plan.
+
+This base plan is amended by:
+
+`docs/xxxl/xxxl-phase-41j-replay-protection-plan-fixes.md`
+
+That fixes document supersedes any earlier wording implying that 41J may accept a standalone 41I result plus separate `raw_payload_bytes` without payload commitment.
+
+Updated binding model:
+
+41J must internally compose accepted 41I over the same `raw_payload_bytes` that is later decoded for `canonicalEventKey`.
+
+Updated implementation scope:
+
+41J is a non-mutating boundary model. It may return replay eligibility / processed-marking intent, but it must not perform runtime account loading or real processed-event marking.
+
+The following remain forbidden in 41J boundary code:
+
+- AccountInfo;
+- sysvar loading;
+- runtime account loading;
+- real replay registry write;
+- real processed event marking;
+- account mutation;
+- CPI;
+- invoke_signed;
+- SPL mint_to;
+- handler;
+- live route.
 Date: 2026-07-03
 
 Status: planning
