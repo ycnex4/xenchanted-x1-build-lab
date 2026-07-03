@@ -51098,3 +51098,39 @@ The base 41I plan now explicitly states that all such wording is superseded by a
 41I composes hardened 41H.2 internally and counts only guardians that prove:
 
 `41F-verified extracted message == canonical_hash(raw_payload_bytes)`
+
+---
+
+## XXXL Phase 41I Resumed Quorum Authorization Plan Acceptance
+
+Date: 2026-07-03
+
+Status: accepted resumed plan
+
+Branch:
+
+`stage-xxxl-x1-testnet-local-runtime-skeleton-phase-41i-quorum-authorization-plan-resumed`
+
+Accepted commits:
+
+- `1f8050e Resume phase 41I quorum authorization plan after 41H hardening`
+- `93fe61c Reconcile phase 41I plan with hardened 41H signed message model`
+
+Acceptance record:
+
+`docs/reviews/xxxl-phase-41i-quorum-authorization-plan-resumed-acceptance.md`
+
+Reviewer verdicts:
+
+- Theo: ACCEPT
+- Audit Demon: ACCEPT WITH NOTES
+
+Required fixes: none.
+
+Resolved note:
+
+The base 41I plan was reconciled with accepted 41H.2. 41I must not accept, thread, compare, or pass free signed message bytes.
+
+Next step:
+
+Create a separate 41I code implementation branch.
