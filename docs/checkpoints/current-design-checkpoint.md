@@ -50884,3 +50884,39 @@ Phase 41I — Quorum counting / threshold authorization planning.
 Still forbidden:
 
 No replay write, mutation, CPI, mint, handler, or live route.
+
+---
+
+## XXXL Phase 41I Quorum Counting / Threshold Authorization Plan
+
+Date: 2026-07-03
+
+Status: planning only
+
+Branch:
+
+`stage-xxxl-x1-testnet-local-runtime-skeleton-phase-41i-quorum-authorization-plan`
+
+Parent accepted main:
+
+`7579c14 Merge XXXL phase 41H decoded payload binding hardening acceptance`
+
+Plan:
+
+`docs/xxxl/xxxl-phase-41i-quorum-authorization-plan.md`
+
+Checkpoint:
+
+`docs/checkpoints/xxxl-x1-testnet-local-runtime-skeleton-phase-41i-quorum-authorization-plan.md`
+
+Scope:
+
+41I is scoped to quorum counting and threshold authorization planning.
+
+Preferred model:
+
+41I composes 41H internally for each verification attempt and counts only successful 41H membership validations.
+
+Still forbidden:
+
+No replay write, processed event marking, account mutation, CPI, invoke_signed, mint_to, handler, or live route.
