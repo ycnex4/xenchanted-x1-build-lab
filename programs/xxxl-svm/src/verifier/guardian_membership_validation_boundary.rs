@@ -30,7 +30,7 @@ pub struct AuthoritativeGuardianSetRef<'a> {
 }
 
 impl<'a> AuthoritativeGuardianSetRef<'a> {
-    fn from_program_controlled_on_chain_source(
+    pub(crate) fn from_program_controlled_on_chain_source(
         guardian_set_id: &'a [u8; 32],
         threshold: u8,
         guardians: &'a [GuardianPublicKey],
