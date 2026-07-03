@@ -3,6 +3,7 @@ use super::quorum_authorization_boundary::{
     establish_guardian_quorum_authorization, GuardianQuorumAuthorizationAttempt,
     GuardianQuorumAuthorizationError,
 };
+use super::processed_registry_account_loading_boundary::Phase41K3ProcessedRegistryLoadWitness;
 use super::raw_payload::{decode_guardian_payload_raw, RawPayloadDecodeError};
 
 pub const REPLAY_PROTECTION_BOUNDARY_PHASE_41J: &str = "41J";
@@ -23,13 +24,24 @@ pub struct AuthoritativeProcessedRegistryViewRef<'a> {
 }
 
 impl<'a> AuthoritativeProcessedRegistryViewRef<'a> {
-    pub(crate) fn from_program_controlled_abstract_model(
+    fn from_program_controlled_abstract_model(
         processed_canonical_event_keys: &'a [[u8; 32]],
     ) -> Self {
         Self {
             processed_canonical_event_keys,
             source: ProcessedRegistryViewSource::ProgramControlledAbstractModel,
             caller_instruction_data: false,
+        }
+    }
+
+    pub(crate) fn from_phase_41k_3_processed_registry_load_witness(
+        witness: &'a Phase41K3ProcessedRegistryLoadWitness,
+    ) -> Self {
+        match witness.processed_canonical_event_key_ref() {
+            Some(canonical_event_key) => Self::from_program_controlled_abstract_model(
+                core::slice::from_ref(canonical_event_key),
+            ),
+            None => Self::from_program_controlled_abstract_model(&[]),
         }
     }
 
