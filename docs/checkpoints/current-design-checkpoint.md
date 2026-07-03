@@ -51583,3 +51583,36 @@ Still disabled:
 Next gate:
 
 41K.2 real guardian-set account/PDA loading.
+
+---
+
+## XXXL Phase 41K.2 Guardian-Set Loading Plan Review Notes
+
+Date: 2026-07-03
+
+Branch:
+
+`stage-xxxl-x1-testnet-local-runtime-skeleton-phase-41k-2-guardian-set-loading-plan`
+
+Plan commit:
+
+- `7c0d176 Document phase 41K.2 guardian-set loading plan`
+
+Reviewer status:
+
+- Theo: ACCEPT
+- Audit Demon: ACCEPT WITH NOTES
+
+Required fixes: none.
+
+Notes captured in plan:
+
+- exact guardian-set PDA seed format must be fixed before 41K.2 code acceptance;
+- guardian-set PDA must be program-derived and owned by the expected XXXL program id;
+- stored guardian_set_id must match the guardian_set_id implied by the PDA seed;
+- future 41K.5 handler must pass guardian-set account as read-only, non-writable, non-signer;
+- uninitialized / zero-discriminator guardian-set accounts must be explicitly rejected.
+
+41K.2 remains docs-only at this checkpoint.
+
+No guardian-set runtime account loading, registry loading, mutation, CPI, mint, handler, or live route is enabled by this plan.

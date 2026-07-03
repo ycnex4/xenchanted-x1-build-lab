@@ -316,6 +316,64 @@ but the blocker remains until a reviewed production guardian-set account / PDA a
 16. Are deployment blockers preserved?
 17. Is this plan sufficient before 41K.2 code?
 
+## Review Notes Incorporated
+
+The following review notes are incorporated into the 41K.2 plan before implementation.
+
+### Exact PDA Seed Format Must Be Fixed Before Code Acceptance
+
+41K.2 code acceptance must fix the exact guardian-set PDA seed format.
+
+The implementation review must confirm:
+
+- the guardian-set account is program-derived;
+- the PDA is derived under the expected XXXL program id / runtime authority;
+- the guardian-set account owner is the expected XXXL program id;
+- the exact seed bytes are documented and tested;
+- the PDA bump is checked if used or stored;
+- the stored guardian_set_id matches the guardian_set_id implied by the PDA seed.
+
+For the preferred by-id model, this means:
+
+`stored guardian_set_id == seed guardian_set_id`
+
+This prevents guardian-set id / PDA desynchronization.
+
+A guardian-set account must not be accepted if the PDA address implies one guardian_set_id but the stored account data contains another guardian_set_id.
+
+### Read-Only Account Requirement for Handler Wiring
+
+41K.2 is a loading boundary only.
+
+It does not require signer authority and does not require write authority.
+
+The future 41K.5 handler must pass the guardian-set account as:
+
+- read-only;
+- non-writable;
+- non-signer.
+
+Any future write/update path for guardian-set accounts must be a separate reviewed governance or rotation gate.
+
+41K.2 must not introduce or rely on a writable guardian-set account path.
+
+### Uninitialized / Zero-Discriminator Rejection
+
+41K.2 code must explicitly reject uninitialized guardian-set accounts.
+
+Required rejection cases include:
+
+- all-zero discriminator;
+- default discriminator;
+- missing discriminator;
+- wrong discriminator;
+- account kind not equal to guardian-set;
+- zeroed program-owned account with otherwise readable data.
+
+This is a defense-in-depth rule against type confusion and accidental acceptance of uninitialized program-owned accounts.
+
+Schema, threshold, count, and active-status checks remain required, but discriminator rejection must be explicit.
+
 ## Current Plan Status
 
 This is a docs-only plan.
