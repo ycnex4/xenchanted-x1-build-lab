@@ -180,3 +180,37 @@ Amendment 3 addresses Claude hostile audit findings:
 41K.3 remains read/loading/classification only.
 
 No write / mark / mutation / CPI / mint / handler / live route surfaces are enabled.
+
+
+## Amendment 4 Cleanup
+
+Cleanup document:
+
+`docs/xxxl/xxxl-phase-41k-3-processed-registry-loading-plan-amendment-4-cleanup.md`
+
+Purpose:
+
+Record non-blocking Claude hostile audit notes after Amendment 3.
+
+Status:
+
+`ACCEPT WITH NOTES`
+
+Required fixes:
+
+None.
+
+Cleanup items:
+
+- withdraw old writable-rejection test from the base plan;
+- replace it with writable-allowed-but-not-mutated test;
+- preserve panic-safety test for no unchecked slicing / `unwrap` / `expect`;
+- require total fail-closed account classification;
+- explicitly reject system-owned nonzero-data expected PDA;
+- apply signer / executable rejection to all states;
+- strengthen type-enforcement language from handler discipline / broad `pub(crate)` to a private-field witness/newtype construction pattern;
+- carry lamport-dusted atomic initialization proof forward to 41K.4.
+
+This cleanup does not reopen 41K.3 architecture.
+
+It prepares the plan for final acceptance recording.
