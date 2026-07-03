@@ -6,9 +6,9 @@ use super::ed25519_signature_verification_boundary::{
 };
 use super::guardian_quorum::GuardianPublicKey;
 use super::payload_hash_binding_boundary::{
-    PayloadHashBindingEstablished, PayloadHashBindingStatus,
+    establish_payload_hash_binding, PayloadHashBindingError,
 };
-use super::raw_payload::DecodedGuardianPayloadRaw;
+use super::raw_payload::{decode_guardian_payload_raw, RawPayloadDecodeError};
 
 pub const GUARDIAN_MEMBERSHIP_VALIDATION_BOUNDARY_PHASE_41H: &str = "41H";
 pub const GUARDIAN_MEMBERSHIP_VALIDATION_BOUNDARY_VERSION: &str = "0.1.0";
@@ -129,6 +129,7 @@ pub enum GuardianMembershipValidationErrorKind {
     MatchedInstructionIndexMismatch,
     InstructionDataLengthMismatch,
     PayloadHashBindingNotEstablished,
+    RawPayloadDecodeFailed,
     UnauthenticatedGuardianSet,
     CallerSuppliedGuardianSetRejected,
     EmptyGuardianSet,
@@ -150,6 +151,8 @@ pub struct GuardianMembershipValidationError {
     pub guardian_set_from_caller_instruction_data: bool,
     pub guardian_count: usize,
     pub threshold: u8,
+    pub payload_hash_binding_error: Option<PayloadHashBindingError>,
+    pub raw_payload_decode_error: Option<RawPayloadDecodeError>,
 }
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
@@ -164,6 +167,9 @@ pub struct GuardianMembershipValidationBoundaryReport {
     pub checks_matched_instruction_index_binding: bool,
     pub checks_instruction_data_length_binding: bool,
     pub requires_phase_41g_payload_hash_binding: bool,
+    pub recomputes_phase_41g_payload_hash_binding_from_raw_payload: bool,
+    pub decodes_raw_payload_internally: bool,
+    pub accepts_free_decoded_payload_input: bool,
     pub requires_authoritative_guardian_set_wrapper: bool,
     pub rejects_caller_supplied_guardian_set: bool,
     pub rejects_unauthenticated_guardian_set: bool,
@@ -202,6 +208,9 @@ pub const GUARDIAN_MEMBERSHIP_VALIDATION_BOUNDARY_REPORT:
     checks_matched_instruction_index_binding: true,
     checks_instruction_data_length_binding: true,
     requires_phase_41g_payload_hash_binding: true,
+    recomputes_phase_41g_payload_hash_binding_from_raw_payload: true,
+    decodes_raw_payload_internally: true,
+    accepts_free_decoded_payload_input: false,
     requires_authoritative_guardian_set_wrapper: true,
     rejects_caller_supplied_guardian_set: true,
     rejects_unauthenticated_guardian_set: true,
@@ -236,8 +245,8 @@ pub fn guardian_membership_validation_boundary_report(
 pub fn establish_guardian_membership_validation(
     phase_41f_result: &Phase41F_2Ed25519SignatureVerificationResult,
     extraction_result: &Phase41F_1CheckedByteExtractionResult<'_>,
-    payload_hash_binding: Option<&PayloadHashBindingEstablished>,
-    decoded_payload: &DecodedGuardianPayloadRaw<'_>,
+    raw_payload_bytes: &[u8],
+    signed_message_bytes: &[u8],
     expected_configured_guardian_set_id: &[u8; 32],
     guardian_set: AuthoritativeGuardianSetRef<'_>,
 ) -> Result<GuardianMembershipValidated, GuardianMembershipValidationError> {
@@ -309,17 +318,27 @@ pub fn establish_guardian_membership_validation(
         ));
     }
 
-    if payload_hash_binding
-        .map(|binding| binding.status != PayloadHashBindingStatus::PayloadHashBindingEstablished)
-        .unwrap_or(true)
-    {
-        return Err(error(
-            GuardianMembershipValidationErrorKind::PayloadHashBindingNotEstablished,
-            phase_41f_result,
-            extraction_result,
-            guardian_set,
-        ));
-    }
+    establish_payload_hash_binding(raw_payload_bytes, signed_message_bytes, phase_41f_result)
+        .map_err(|payload_hash_binding_error| {
+            error_with_payload_hash_binding_error(
+                GuardianMembershipValidationErrorKind::PayloadHashBindingNotEstablished,
+                phase_41f_result,
+                extraction_result,
+                guardian_set,
+                payload_hash_binding_error,
+            )
+        })?;
+
+    let decoded_payload =
+        decode_guardian_payload_raw(raw_payload_bytes).map_err(|decode_error| {
+            error_with_raw_payload_decode_error(
+                GuardianMembershipValidationErrorKind::RawPayloadDecodeFailed,
+                phase_41f_result,
+                extraction_result,
+                guardian_set,
+                decode_error,
+            )
+        })?;
 
     if guardian_set.caller_instruction_data {
         return Err(error(
@@ -431,9 +450,14 @@ pub fn establish_guardian_membership_validation(
 
 fn duplicate_guardian_public_key_index(guardians: &[GuardianPublicKey]) -> Option<usize> {
     for (index, guardian) in guardians.iter().enumerate() {
-        if guardians[..index]
-            .iter()
-            .any(|previous| previous == guardian)
+        if guardians
+            .get(..index)
+            .map(|previous_guardians| {
+                previous_guardians
+                    .iter()
+                    .any(|previous| previous == guardian)
+            })
+            .unwrap_or(false)
         {
             return Some(index);
         }
@@ -448,6 +472,58 @@ fn error(
     extraction_result: &Phase41F_1CheckedByteExtractionResult<'_>,
     guardian_set: AuthoritativeGuardianSetRef<'_>,
 ) -> GuardianMembershipValidationError {
+    error_with_details(
+        kind,
+        phase_41f_result,
+        extraction_result,
+        guardian_set,
+        None,
+        None,
+    )
+}
+
+fn error_with_payload_hash_binding_error(
+    kind: GuardianMembershipValidationErrorKind,
+    phase_41f_result: &Phase41F_2Ed25519SignatureVerificationResult,
+    extraction_result: &Phase41F_1CheckedByteExtractionResult<'_>,
+    guardian_set: AuthoritativeGuardianSetRef<'_>,
+    payload_hash_binding_error: PayloadHashBindingError,
+) -> GuardianMembershipValidationError {
+    error_with_details(
+        kind,
+        phase_41f_result,
+        extraction_result,
+        guardian_set,
+        Some(payload_hash_binding_error),
+        None,
+    )
+}
+
+fn error_with_raw_payload_decode_error(
+    kind: GuardianMembershipValidationErrorKind,
+    phase_41f_result: &Phase41F_2Ed25519SignatureVerificationResult,
+    extraction_result: &Phase41F_1CheckedByteExtractionResult<'_>,
+    guardian_set: AuthoritativeGuardianSetRef<'_>,
+    raw_payload_decode_error: RawPayloadDecodeError,
+) -> GuardianMembershipValidationError {
+    error_with_details(
+        kind,
+        phase_41f_result,
+        extraction_result,
+        guardian_set,
+        None,
+        Some(raw_payload_decode_error),
+    )
+}
+
+fn error_with_details(
+    kind: GuardianMembershipValidationErrorKind,
+    phase_41f_result: &Phase41F_2Ed25519SignatureVerificationResult,
+    extraction_result: &Phase41F_1CheckedByteExtractionResult<'_>,
+    guardian_set: AuthoritativeGuardianSetRef<'_>,
+    payload_hash_binding_error: Option<PayloadHashBindingError>,
+    raw_payload_decode_error: Option<RawPayloadDecodeError>,
+) -> GuardianMembershipValidationError {
     GuardianMembershipValidationError {
         kind,
         phase_41f_status: phase_41f_result.status,
@@ -458,11 +534,16 @@ fn error(
         guardian_set_from_caller_instruction_data: guardian_set.caller_instruction_data,
         guardian_count: guardian_set.guardians.len(),
         threshold: guardian_set.threshold,
+        payload_hash_binding_error,
+        raw_payload_decode_error,
     }
 }
 
 #[cfg(test)]
 mod tests {
+    use super::super::canonical_payload::{
+        compute_guardian_payload_hash, XXXL_GUARDIAN_PAYLOAD_VALID_HASH_V1,
+    };
     use super::super::checked_ed25519_byte_extraction_boundary::{
         Phase41F_1CheckedByteExtractionStatus, Phase41F_1ExtractedEd25519ByteSlices,
     };
@@ -470,7 +551,6 @@ mod tests {
     use super::super::ed25519_signature_verification_boundary::{
         Phase41F_2Ed25519VerificationModel, Phase41F_2VerifiedEd25519SignatureRanges,
     };
-    use super::super::raw_payload::DecodedGuardianPayloadRaw;
     use super::*;
 
     const GUARDIAN_SET_ID: [u8; 32] = [0x22; 32];
@@ -484,6 +564,53 @@ mod tests {
     const SOURCE_SENDER: [u8; 20] = [0xaa; 20];
     const SOURCE_BURN_TX_HASH: [u8; 32] = [0xaa; 32];
     const SOURCE_BLOCK_HASH: [u8; 32] = [0xbb; 32];
+
+    const WRONG_SIGNED_MESSAGE_BYTES: [u8; 32] = [0xff; 32];
+
+    fn write_u16_le(out: &mut Vec<u8>, value: u16) {
+        out.extend_from_slice(&value.to_le_bytes());
+    }
+
+    fn write_u64_le(out: &mut Vec<u8>, value: u64) {
+        out.extend_from_slice(&value.to_le_bytes());
+    }
+
+    fn write_u128_le(out: &mut Vec<u8>, value: u128) {
+        out.extend_from_slice(&value.to_le_bytes());
+    }
+
+    fn write_var(out: &mut Vec<u8>, bytes: &[u8]) {
+        write_u16_le(out, bytes.len() as u16);
+        out.extend_from_slice(bytes);
+    }
+
+    fn raw_payload_bytes_with_guardian_set_id(guardian_set_id: &[u8; 32]) -> Vec<u8> {
+        let mut out = Vec::new();
+
+        write_var(&mut out, b"XXXL_GATEWAY_MINT");
+        write_u16_le(&mut out, 1);
+        write_u16_le(&mut out, 2);
+        out.extend_from_slice(&ROUTE_ID);
+        write_u64_le(&mut out, 1);
+        write_var(&mut out, &SOURCE_TOKEN);
+        write_var(&mut out, &SOURCE_SENDER);
+        write_var(&mut out, &SOURCE_BURN_TX_HASH);
+        write_u64_le(&mut out, 7);
+        write_u64_le(&mut out, 123_456_789);
+        write_var(&mut out, &SOURCE_BLOCK_HASH);
+        write_u64_le(&mut out, 123_456_900);
+        out.extend_from_slice(&CANONICAL_EVENT_KEY);
+        out.extend_from_slice(&X1_RECIPIENT);
+        write_u128_le(&mut out, 1_000_000_000_000);
+        write_u16_le(&mut out, 10_000);
+        write_u128_le(&mut out, 1_000_000_000_000);
+        out.extend_from_slice(&TARGET_MINT);
+        out.extend_from_slice(guardian_set_id);
+        out.extend_from_slice(&MESSAGE_NONCE);
+        write_u64_le(&mut out, 987_654_321);
+
+        out
+    }
 
     const SIGNATURE_BYTES: [u8; 64] = [0x11; 64];
     const PUBLIC_KEY_BYTES: [u8; 32] = [0x02; 32];
@@ -519,38 +646,6 @@ mod tests {
         Phase41E_1ByteRange {
             offset: 112,
             len: 32,
-        }
-    }
-
-    fn decoded_payload<'a>(guardian_set_id: &'a [u8; 32]) -> DecodedGuardianPayloadRaw<'a> {
-        DecodedGuardianPayloadRaw {
-            message_type: b"XXXL_GATEWAY_MINT",
-            schema_version: 1,
-            instruction_layout_version: 2,
-            route_id: &ROUTE_ID,
-            source_chain_id: 1,
-            source_token: &SOURCE_TOKEN,
-            source_sender: &SOURCE_SENDER,
-            source_burn_tx_hash: &SOURCE_BURN_TX_HASH,
-            source_burn_event_index: 7,
-            source_block_number: 123_456_789,
-            source_block_hash: &SOURCE_BLOCK_HASH,
-            source_finality_block: 123_456_900,
-            canonical_event_key: &CANONICAL_EVENT_KEY,
-            x1_recipient: &X1_RECIPIENT,
-            burned_amount: 1_000_000_000_000,
-            source_chain_weight_bps: 10_000,
-            xxxl_mint_amount: 1_000_000_000_000,
-            target_mint: &TARGET_MINT,
-            guardian_set_id,
-            message_nonce: &MESSAGE_NONCE,
-            expiration_slot_or_unix_ts: 987_654_321,
-        }
-    }
-
-    fn payload_hash_binding() -> PayloadHashBindingEstablished {
-        PayloadHashBindingEstablished {
-            status: PayloadHashBindingStatus::PayloadHashBindingEstablished,
         }
     }
 
@@ -696,16 +791,16 @@ mod tests {
     fn validate_with<'a>(
         phase_41f: &'a Phase41F_2Ed25519SignatureVerificationResult,
         extraction: &'a Phase41F_1CheckedByteExtractionResult<'a>,
-        binding: Option<&'a PayloadHashBindingEstablished>,
-        decoded: &'a DecodedGuardianPayloadRaw<'a>,
+        raw_payload_bytes: &'a [u8],
+        signed_message_bytes: &'a [u8],
         expected_set_id: &'a [u8; 32],
         guardian_set: AuthoritativeGuardianSetRef<'a>,
     ) -> Result<GuardianMembershipValidated, GuardianMembershipValidationError> {
         establish_guardian_membership_validation(
             phase_41f,
             extraction,
-            binding,
-            decoded,
+            raw_payload_bytes,
+            signed_message_bytes,
             expected_set_id,
             guardian_set,
         )
@@ -725,14 +820,13 @@ mod tests {
         let guardians = [guardian(1), guardian(2), guardian(3)];
         let phase_41f = established_phase_41f_result();
         let extraction = established_extraction_result(&PUBLIC_KEY_BYTES);
-        let binding = payload_hash_binding();
-        let decoded = decoded_payload(&GUARDIAN_SET_ID);
+        let raw_payload = raw_payload_bytes_with_guardian_set_id(&GUARDIAN_SET_ID);
 
         let result = validate_with(
             &phase_41f,
             &extraction,
-            Some(&binding),
-            &decoded,
+            &raw_payload,
+            &XXXL_GUARDIAN_PAYLOAD_VALID_HASH_V1,
             &GUARDIAN_SET_ID,
             authoritative_set(&GUARDIAN_SET_ID, 2, &guardians),
         )
@@ -759,15 +853,14 @@ mod tests {
             0,
         );
         let extraction = established_extraction_result(&PUBLIC_KEY_BYTES);
-        let binding = payload_hash_binding();
-        let decoded = decoded_payload(&GUARDIAN_SET_ID);
+        let raw_payload = raw_payload_bytes_with_guardian_set_id(&GUARDIAN_SET_ID);
 
         assert_error_kind(
             validate_with(
                 &phase_41f,
                 &extraction,
-                Some(&binding),
-                &decoded,
+                &raw_payload,
+                &XXXL_GUARDIAN_PAYLOAD_VALID_HASH_V1,
                 &GUARDIAN_SET_ID,
                 authoritative_set(&GUARDIAN_SET_ID, 1, &guardians),
             ),
@@ -786,15 +879,14 @@ mod tests {
             144,
         );
         let extraction = established_extraction_result(&PUBLIC_KEY_BYTES);
-        let binding = payload_hash_binding();
-        let decoded = decoded_payload(&GUARDIAN_SET_ID);
+        let raw_payload = raw_payload_bytes_with_guardian_set_id(&GUARDIAN_SET_ID);
 
         assert_error_kind(
             validate_with(
                 &phase_41f,
                 &extraction,
-                Some(&binding),
-                &decoded,
+                &raw_payload,
+                &XXXL_GUARDIAN_PAYLOAD_VALID_HASH_V1,
                 &GUARDIAN_SET_ID,
                 authoritative_set(&GUARDIAN_SET_ID, 1, &guardians),
             ),
@@ -812,15 +904,14 @@ mod tests {
             Some(1),
             144,
         );
-        let binding = payload_hash_binding();
-        let decoded = decoded_payload(&GUARDIAN_SET_ID);
+        let raw_payload = raw_payload_bytes_with_guardian_set_id(&GUARDIAN_SET_ID);
 
         assert_error_kind(
             validate_with(
                 &phase_41f,
                 &extraction,
-                Some(&binding),
-                &decoded,
+                &raw_payload,
+                &XXXL_GUARDIAN_PAYLOAD_VALID_HASH_V1,
                 &GUARDIAN_SET_ID,
                 authoritative_set(&GUARDIAN_SET_ID, 1, &guardians),
             ),
@@ -838,15 +929,14 @@ mod tests {
             Some(1),
             144,
         );
-        let binding = payload_hash_binding();
-        let decoded = decoded_payload(&GUARDIAN_SET_ID);
+        let raw_payload = raw_payload_bytes_with_guardian_set_id(&GUARDIAN_SET_ID);
 
         assert_error_kind(
             validate_with(
                 &phase_41f,
                 &extraction,
-                Some(&binding),
-                &decoded,
+                &raw_payload,
+                &XXXL_GUARDIAN_PAYLOAD_VALID_HASH_V1,
                 &GUARDIAN_SET_ID,
                 authoritative_set(&GUARDIAN_SET_ID, 1, &guardians),
             ),
@@ -865,15 +955,14 @@ mod tests {
             144,
         );
         let extraction = established_extraction_result(&PUBLIC_KEY_BYTES);
-        let binding = payload_hash_binding();
-        let decoded = decoded_payload(&GUARDIAN_SET_ID);
+        let raw_payload = raw_payload_bytes_with_guardian_set_id(&GUARDIAN_SET_ID);
 
         assert_error_kind(
             validate_with(
                 &phase_41f,
                 &extraction,
-                Some(&binding),
-                &decoded,
+                &raw_payload,
+                &XXXL_GUARDIAN_PAYLOAD_VALID_HASH_V1,
                 &GUARDIAN_SET_ID,
                 authoritative_set(&GUARDIAN_SET_ID, 1, &guardians),
             ),
@@ -892,15 +981,14 @@ mod tests {
             144,
         );
         let extraction = established_extraction_result(&PUBLIC_KEY_BYTES);
-        let binding = payload_hash_binding();
-        let decoded = decoded_payload(&GUARDIAN_SET_ID);
+        let raw_payload = raw_payload_bytes_with_guardian_set_id(&GUARDIAN_SET_ID);
 
         assert_error_kind(
             validate_with(
                 &phase_41f,
                 &extraction,
-                Some(&binding),
-                &decoded,
+                &raw_payload,
+                &XXXL_GUARDIAN_PAYLOAD_VALID_HASH_V1,
                 &GUARDIAN_SET_ID,
                 authoritative_set(&GUARDIAN_SET_ID, 1, &guardians),
             ),
@@ -919,15 +1007,14 @@ mod tests {
             144,
         );
         let extraction = established_extraction_result(&PUBLIC_KEY_BYTES);
-        let binding = payload_hash_binding();
-        let decoded = decoded_payload(&GUARDIAN_SET_ID);
+        let raw_payload = raw_payload_bytes_with_guardian_set_id(&GUARDIAN_SET_ID);
 
         assert_error_kind(
             validate_with(
                 &phase_41f,
                 &extraction,
-                Some(&binding),
-                &decoded,
+                &raw_payload,
+                &XXXL_GUARDIAN_PAYLOAD_VALID_HASH_V1,
                 &GUARDIAN_SET_ID,
                 authoritative_set(&GUARDIAN_SET_ID, 1, &guardians),
             ),
@@ -946,15 +1033,14 @@ mod tests {
             145,
         );
         let extraction = established_extraction_result(&PUBLIC_KEY_BYTES);
-        let binding = payload_hash_binding();
-        let decoded = decoded_payload(&GUARDIAN_SET_ID);
+        let raw_payload = raw_payload_bytes_with_guardian_set_id(&GUARDIAN_SET_ID);
 
         assert_error_kind(
             validate_with(
                 &phase_41f,
                 &extraction,
-                Some(&binding),
-                &decoded,
+                &raw_payload,
+                &XXXL_GUARDIAN_PAYLOAD_VALID_HASH_V1,
                 &GUARDIAN_SET_ID,
                 authoritative_set(&GUARDIAN_SET_ID, 1, &guardians),
             ),
@@ -963,18 +1049,18 @@ mod tests {
     }
 
     #[test]
-    fn rejects_missing_payload_hash_binding() {
+    fn rejects_payload_hash_binding_failure_for_raw_payload_bytes() {
         let guardians = [guardian(2)];
         let phase_41f = established_phase_41f_result();
         let extraction = established_extraction_result(&PUBLIC_KEY_BYTES);
-        let decoded = decoded_payload(&GUARDIAN_SET_ID);
+        let raw_payload = raw_payload_bytes_with_guardian_set_id(&GUARDIAN_SET_ID);
 
         assert_error_kind(
             validate_with(
                 &phase_41f,
                 &extraction,
-                None,
-                &decoded,
+                &raw_payload,
+                &WRONG_SIGNED_MESSAGE_BYTES,
                 &GUARDIAN_SET_ID,
                 authoritative_set(&GUARDIAN_SET_ID, 1, &guardians),
             ),
@@ -987,15 +1073,14 @@ mod tests {
         let guardians = [guardian(2)];
         let phase_41f = established_phase_41f_result();
         let extraction = established_extraction_result(&PUBLIC_KEY_BYTES);
-        let binding = payload_hash_binding();
-        let decoded = decoded_payload(&GUARDIAN_SET_ID);
+        let raw_payload = raw_payload_bytes_with_guardian_set_id(&GUARDIAN_SET_ID);
 
         assert_error_kind(
             validate_with(
                 &phase_41f,
                 &extraction,
-                Some(&binding),
-                &decoded,
+                &raw_payload,
+                &XXXL_GUARDIAN_PAYLOAD_VALID_HASH_V1,
                 &GUARDIAN_SET_ID,
                 AuthoritativeGuardianSetRef::unauthenticated_for_rejection(
                     &GUARDIAN_SET_ID,
@@ -1012,15 +1097,14 @@ mod tests {
         let guardians = [guardian(2)];
         let phase_41f = established_phase_41f_result();
         let extraction = established_extraction_result(&PUBLIC_KEY_BYTES);
-        let binding = payload_hash_binding();
-        let decoded = decoded_payload(&GUARDIAN_SET_ID);
+        let raw_payload = raw_payload_bytes_with_guardian_set_id(&GUARDIAN_SET_ID);
 
         assert_error_kind(
             validate_with(
                 &phase_41f,
                 &extraction,
-                Some(&binding),
-                &decoded,
+                &raw_payload,
+                &XXXL_GUARDIAN_PAYLOAD_VALID_HASH_V1,
                 &GUARDIAN_SET_ID,
                 AuthoritativeGuardianSetRef::caller_supplied_for_rejection(
                     &GUARDIAN_SET_ID,
@@ -1037,15 +1121,14 @@ mod tests {
         let guardians = [];
         let phase_41f = established_phase_41f_result();
         let extraction = established_extraction_result(&PUBLIC_KEY_BYTES);
-        let binding = payload_hash_binding();
-        let decoded = decoded_payload(&GUARDIAN_SET_ID);
+        let raw_payload = raw_payload_bytes_with_guardian_set_id(&GUARDIAN_SET_ID);
 
         assert_error_kind(
             validate_with(
                 &phase_41f,
                 &extraction,
-                Some(&binding),
-                &decoded,
+                &raw_payload,
+                &XXXL_GUARDIAN_PAYLOAD_VALID_HASH_V1,
                 &GUARDIAN_SET_ID,
                 authoritative_set(&GUARDIAN_SET_ID, 1, &guardians),
             ),
@@ -1058,15 +1141,14 @@ mod tests {
         let guardians = [guardian(2)];
         let phase_41f = established_phase_41f_result();
         let extraction = established_extraction_result(&PUBLIC_KEY_BYTES);
-        let binding = payload_hash_binding();
-        let decoded = decoded_payload(&GUARDIAN_SET_ID);
+        let raw_payload = raw_payload_bytes_with_guardian_set_id(&GUARDIAN_SET_ID);
 
         assert_error_kind(
             validate_with(
                 &phase_41f,
                 &extraction,
-                Some(&binding),
-                &decoded,
+                &raw_payload,
+                &XXXL_GUARDIAN_PAYLOAD_VALID_HASH_V1,
                 &GUARDIAN_SET_ID,
                 authoritative_set(&GUARDIAN_SET_ID, 0, &guardians),
             ),
@@ -1079,15 +1161,14 @@ mod tests {
         let guardians = [guardian(2)];
         let phase_41f = established_phase_41f_result();
         let extraction = established_extraction_result(&PUBLIC_KEY_BYTES);
-        let binding = payload_hash_binding();
-        let decoded = decoded_payload(&GUARDIAN_SET_ID);
+        let raw_payload = raw_payload_bytes_with_guardian_set_id(&GUARDIAN_SET_ID);
 
         assert_error_kind(
             validate_with(
                 &phase_41f,
                 &extraction,
-                Some(&binding),
-                &decoded,
+                &raw_payload,
+                &XXXL_GUARDIAN_PAYLOAD_VALID_HASH_V1,
                 &GUARDIAN_SET_ID,
                 authoritative_set(&GUARDIAN_SET_ID, 2, &guardians),
             ),
@@ -1100,15 +1181,14 @@ mod tests {
         let guardians = [guardian(2), guardian(2)];
         let phase_41f = established_phase_41f_result();
         let extraction = established_extraction_result(&PUBLIC_KEY_BYTES);
-        let binding = payload_hash_binding();
-        let decoded = decoded_payload(&GUARDIAN_SET_ID);
+        let raw_payload = raw_payload_bytes_with_guardian_set_id(&GUARDIAN_SET_ID);
 
         assert_error_kind(
             validate_with(
                 &phase_41f,
                 &extraction,
-                Some(&binding),
-                &decoded,
+                &raw_payload,
+                &XXXL_GUARDIAN_PAYLOAD_VALID_HASH_V1,
                 &GUARDIAN_SET_ID,
                 authoritative_set(&GUARDIAN_SET_ID, 1, &guardians),
             ),
@@ -1121,15 +1201,14 @@ mod tests {
         let guardians = [guardian(2)];
         let phase_41f = established_phase_41f_result();
         let extraction = established_extraction_result(&PUBLIC_KEY_BYTES);
-        let binding = payload_hash_binding();
-        let decoded = decoded_payload(&GUARDIAN_SET_ID);
+        let raw_payload = raw_payload_bytes_with_guardian_set_id(&GUARDIAN_SET_ID);
 
         assert_error_kind(
             validate_with(
                 &phase_41f,
                 &extraction,
-                Some(&binding),
-                &decoded,
+                &raw_payload,
+                &XXXL_GUARDIAN_PAYLOAD_VALID_HASH_V1,
                 &OTHER_GUARDIAN_SET_ID,
                 authoritative_set(&GUARDIAN_SET_ID, 1, &guardians),
             ),
@@ -1142,15 +1221,16 @@ mod tests {
         let guardians = [guardian(2)];
         let phase_41f = established_phase_41f_result();
         let extraction = established_extraction_result(&PUBLIC_KEY_BYTES);
-        let binding = payload_hash_binding();
-        let decoded = decoded_payload(&OTHER_GUARDIAN_SET_ID);
+        let raw_payload = raw_payload_bytes_with_guardian_set_id(&OTHER_GUARDIAN_SET_ID);
+        let signed_message_bytes =
+            compute_guardian_payload_hash(&raw_payload).expect("hash for alternate valid payload");
 
         assert_error_kind(
             validate_with(
                 &phase_41f,
                 &extraction,
-                Some(&binding),
-                &decoded,
+                &raw_payload,
+                &signed_message_bytes,
                 &GUARDIAN_SET_ID,
                 authoritative_set(&GUARDIAN_SET_ID, 1, &guardians),
             ),
@@ -1159,19 +1239,38 @@ mod tests {
     }
 
     #[test]
-    fn rejects_verified_signer_not_in_guardian_set() {
-        let guardians = [guardian(1), guardian(3)];
+    fn rejects_free_decoded_payload_substitution_by_hash_binding_raw_payload_bytes() {
+        let guardians = [guardian(2)];
         let phase_41f = established_phase_41f_result();
         let extraction = established_extraction_result(&PUBLIC_KEY_BYTES);
-        let binding = payload_hash_binding();
-        let decoded = decoded_payload(&GUARDIAN_SET_ID);
+        let raw_payload = raw_payload_bytes_with_guardian_set_id(&OTHER_GUARDIAN_SET_ID);
 
         assert_error_kind(
             validate_with(
                 &phase_41f,
                 &extraction,
-                Some(&binding),
-                &decoded,
+                &raw_payload,
+                &XXXL_GUARDIAN_PAYLOAD_VALID_HASH_V1,
+                &GUARDIAN_SET_ID,
+                authoritative_set(&GUARDIAN_SET_ID, 1, &guardians),
+            ),
+            GuardianMembershipValidationErrorKind::PayloadHashBindingNotEstablished,
+        );
+    }
+
+    #[test]
+    fn rejects_verified_signer_not_in_guardian_set() {
+        let guardians = [guardian(1), guardian(3)];
+        let phase_41f = established_phase_41f_result();
+        let extraction = established_extraction_result(&PUBLIC_KEY_BYTES);
+        let raw_payload = raw_payload_bytes_with_guardian_set_id(&GUARDIAN_SET_ID);
+
+        assert_error_kind(
+            validate_with(
+                &phase_41f,
+                &extraction,
+                &raw_payload,
+                &XXXL_GUARDIAN_PAYLOAD_VALID_HASH_V1,
                 &GUARDIAN_SET_ID,
                 authoritative_set(&GUARDIAN_SET_ID, 1, &guardians),
             ),
@@ -1184,15 +1283,14 @@ mod tests {
         let guardians = [GuardianPublicKey(OTHER_PUBLIC_KEY_BYTES)];
         let phase_41f = established_phase_41f_result();
         let extraction = established_extraction_result(&PUBLIC_KEY_BYTES);
-        let binding = payload_hash_binding();
-        let decoded = decoded_payload(&GUARDIAN_SET_ID);
+        let raw_payload = raw_payload_bytes_with_guardian_set_id(&GUARDIAN_SET_ID);
 
         assert_error_kind(
             validate_with(
                 &phase_41f,
                 &extraction,
-                Some(&binding),
-                &decoded,
+                &raw_payload,
+                &XXXL_GUARDIAN_PAYLOAD_VALID_HASH_V1,
                 &GUARDIAN_SET_ID,
                 authoritative_set(&GUARDIAN_SET_ID, 1, &guardians),
             ),
@@ -1205,14 +1303,13 @@ mod tests {
         let guardians = [guardian(2)];
         let phase_41f = established_phase_41f_result();
         let extraction = established_extraction_result(&PUBLIC_KEY_BYTES);
-        let binding = payload_hash_binding();
-        let decoded = decoded_payload(&GUARDIAN_SET_ID);
+        let raw_payload = raw_payload_bytes_with_guardian_set_id(&GUARDIAN_SET_ID);
 
         let result = validate_with(
             &phase_41f,
             &extraction,
-            Some(&binding),
-            &decoded,
+            &raw_payload,
+            &XXXL_GUARDIAN_PAYLOAD_VALID_HASH_V1,
             &GUARDIAN_SET_ID,
             authoritative_set(&GUARDIAN_SET_ID, 1, &guardians),
         )
@@ -1248,6 +1345,9 @@ mod tests {
         assert!(report.checks_matched_instruction_index_binding);
         assert!(report.checks_instruction_data_length_binding);
         assert!(report.requires_phase_41g_payload_hash_binding);
+        assert!(report.recomputes_phase_41g_payload_hash_binding_from_raw_payload);
+        assert!(report.decodes_raw_payload_internally);
+        assert!(!report.accepts_free_decoded_payload_input);
         assert!(report.requires_authoritative_guardian_set_wrapper);
         assert!(report.rejects_caller_supplied_guardian_set);
         assert!(report.rejects_unauthenticated_guardian_set);
