@@ -137,6 +137,22 @@ pub use instructions_sysvar_live_wiring_boundary::{
     PHASE_41K_1_INSTRUCTIONS_SYSVAR_LIVE_WIRING_BOUNDARY_REPORT,
     PHASE_41K_1_INSTRUCTIONS_SYSVAR_LIVE_WIRING_BOUNDARY_VERSION,
 };
+pub use processed_registry_account_loading_boundary::{
+    decode_phase_41k_3_processed_event_account_data, find_phase_41k_3_processed_event_pda,
+    load_phase_41k_3_processed_registry_account_info,
+    phase_41k_3_processed_registry_account_loading_boundary_report,
+    Phase41K3ProcessedRegistryAccountLoadingBoundaryReport,
+    Phase41K3ProcessedRegistryAccountLoadingResult,
+    Phase41K3ProcessedRegistryAccountLoadingStatus,
+    Phase41K3ProcessedRegistryAccountRejectionCase, Phase41K3ProcessedRegistryLoadWitness,
+    PHASE_41K_3_PROCESSED_REGISTRY_ACCOUNT_LOADING_BOUNDARY_PHASE,
+    PHASE_41K_3_PROCESSED_REGISTRY_ACCOUNT_LOADING_BOUNDARY_REPORT,
+    PHASE_41K_3_PROCESSED_REGISTRY_ACCOUNT_LOADING_BOUNDARY_VERSION,
+    PROCESSED_EVENT_CANONICAL_EVENT_KEY_OFFSET, PROCESSED_EVENT_CONSUMED_AMOUNT_OFFSET,
+    PROCESSED_EVENT_CONSUMED_OFFSET, PROCESSED_EVENT_CONSUMED_SLOT_OFFSET,
+    PROCESSED_EVENT_PDA_SEED_0, PROCESSED_EVENT_PDA_SEED_1,
+    PROCESSED_EVENT_RECIPIENT_OFFSET, PROCESSED_EVENT_ROUTE_ID_OFFSET,
+};
 pub use quorum_authorization_boundary::{
     establish_guardian_quorum_authorization, guardian_quorum_authorization_boundary_report,
     GuardianQuorumAuthorizationAttempt, GuardianQuorumAuthorizationAttemptOutcome,
@@ -178,5 +194,6 @@ pub mod payload_hash_binding_boundary;
 pub mod prefilter_phase_41c3_candidate_descriptor_runtime_boundary;
 pub mod prior_ed25519_lookup_ordering_boundary;
 pub mod prior_instruction_index_range_runtime_boundary;
+pub mod processed_registry_account_loading_boundary;
 pub mod quorum_authorization_boundary;
 pub mod replay_protection_boundary;
