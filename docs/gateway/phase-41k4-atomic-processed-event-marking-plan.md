@@ -61,7 +61,7 @@ For a successful burn-to-mint route, the processed-event account must end the tr
     canonical_event_key = authorized payload canonical_event_key
     route_id = authorized payload route_id
     recipient = authorized payload x1_recipient
-    consumed_amount = authorized payload burned_amount or explicitly selected marked amount
+    consumed_amount = xxxl_mint_amount
     consumed_slot = current runtime slot
 
 For every failure path, the runtime must not leave durable initialized account state with:
@@ -328,30 +328,24 @@ If the loader is called with a key derived from any source other than the author
 
 ## Marked amount rule
 
-41K.4 must define which authorized amount is written into consumed_amount.
+41K.4 fixes the processed-event consumed_amount value as:
 
-Possible options:
+    consumed_amount = xxxl_mint_amount
 
-- burned_amount;
-- xxxl_mint_amount;
-- a dedicated processed-mark amount derived from the payload.
-
-The selected value must be deterministic and must be bound to the quorum-authorized payload.
+The selected value is deterministic and must be bound to the quorum-authorized payload.
 
 The selected value must not be caller-supplied independently.
 
 The selected value must not be inferred from account state.
 
-The initial recommendation is:
-
-    consumed_amount = xxxl_mint_amount
-
 Reason:
 
 The processed-event account is part of the X1 mint route.
-It should record the amount this event authorized for the XXXL mint path.
+It records the amount this event authorized for the XXXL mint path.
 
-However, this recommendation must be reviewed before implementation.
+burned_amount remains part of the authorized payload for audit, but it is not the processed-event consumed_amount value.
+
+This rule is confirmed by Amendment 1 / RF3.
 
 ## Slot rule
 
