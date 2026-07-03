@@ -64,6 +64,9 @@ pub struct Phase41K1InstructionsSysvarLiveWiringResult {
     pub current_index_caller_provided: bool,
     pub enumerates_n_prior_ed25519_precompile_instructions: bool,
     pub model_a_live_wiring_precondition_preserved: bool,
+    pub model_a_sysvar_input_precondition_preserved: bool,
+    pub full_model_a_handler_execution_context_enforced_here: bool,
+    pub requires_41k5_handler_execution_context_enforcement: bool,
     pub all_loaded_ed25519_precompiles_strictly_prior: bool,
     pub all_loaded_ed25519_precompiles_program_id_checked: bool,
     pub accepts_caller_provided_instruction_bytes: bool,
@@ -95,6 +98,8 @@ pub struct Phase41K1InstructionsSysvarLiveWiringBoundaryReport {
     pub accepts_caller_provided_instruction_bytes: bool,
     pub accepts_frontend_or_watcher_ed25519_proof: bool,
     pub model_a_live_wiring_precondition_required: bool,
+    pub full_model_a_handler_execution_context_enforced_here: bool,
+    pub requires_41k5_handler_execution_context_enforcement: bool,
     pub guardian_set_runtime_loading_enabled: bool,
     pub processed_registry_runtime_loading_enabled: bool,
     pub replay_write_enabled: bool,
@@ -123,6 +128,8 @@ pub const PHASE_41K_1_INSTRUCTIONS_SYSVAR_LIVE_WIRING_BOUNDARY_REPORT:
         accepts_caller_provided_instruction_bytes: false,
         accepts_frontend_or_watcher_ed25519_proof: false,
         model_a_live_wiring_precondition_required: true,
+        full_model_a_handler_execution_context_enforced_here: false,
+        requires_41k5_handler_execution_context_enforcement: true,
         guardian_set_runtime_loading_enabled: false,
         processed_registry_runtime_loading_enabled: false,
         replay_write_enabled: false,
@@ -160,8 +167,8 @@ pub fn establish_phase_41k_1_instructions_sysvar_live_wiring_boundary(
             0,
             0,
             Vec::new(),
-            false,
-            false,
+            current_index_result.uses_instructions_sysvar_account_info,
+            current_index_result.checks_instructions_sysvar_program_id,
             false,
             false,
             false,
@@ -450,6 +457,9 @@ fn result(
         current_index_caller_provided: false,
         enumerates_n_prior_ed25519_precompile_instructions: true,
         model_a_live_wiring_precondition_preserved: prior_ed25519_precompile_count > 0,
+        model_a_sysvar_input_precondition_preserved: prior_ed25519_precompile_count > 0,
+        full_model_a_handler_execution_context_enforced_here: false,
+        requires_41k5_handler_execution_context_enforcement: true,
         all_loaded_ed25519_precompiles_strictly_prior,
         all_loaded_ed25519_precompiles_program_id_checked,
         accepts_caller_provided_instruction_bytes: false,
@@ -469,7 +479,9 @@ fn result(
 
 #[cfg(test)]
 mod tests {
-    use solana_program::{ed25519_program, instruction::Instruction, pubkey::Pubkey};
+    use solana_program::{
+        account_info::AccountInfo, ed25519_program, instruction::Instruction, pubkey::Pubkey,
+    };
 
     use super::super::checked_prior_instruction_loading_runtime_boundary::{
         Phase41D3_2_2CheckedPriorInstructionLoadingResult,
@@ -477,6 +489,15 @@ mod tests {
     };
     use super::super::instructions_sysvar_access_contract_model::Phase41BRejectionCase;
     use super::*;
+
+    fn account_info_for_key<'a>(
+        key: &'a Pubkey,
+        owner: &'a Pubkey,
+        lamports: &'a mut u64,
+        data: &'a mut [u8],
+    ) -> AccountInfo<'a> {
+        AccountInfo::new(key, false, false, lamports, data, owner, false, 0)
+    }
 
     fn instruction(program_id: Pubkey, data_len: usize) -> Instruction {
         Instruction {
@@ -551,6 +572,8 @@ mod tests {
         assert!(!report.accepts_caller_provided_instruction_bytes);
         assert!(!report.accepts_frontend_or_watcher_ed25519_proof);
         assert!(report.model_a_live_wiring_precondition_required);
+        assert!(!report.full_model_a_handler_execution_context_enforced_here);
+        assert!(report.requires_41k5_handler_execution_context_enforcement);
         assert!(!report.guardian_set_runtime_loading_enabled);
         assert!(!report.processed_registry_runtime_loading_enabled);
         assert!(!report.replay_write_enabled);
@@ -561,6 +584,56 @@ mod tests {
         assert!(!report.spl_token_mint_to_enabled);
         assert!(!report.process_instruction_handler_added);
         assert!(!report.live_route_enabled);
+    }
+
+    #[test]
+    fn direct_accountinfo_entry_missing_sysvar_fails_closed() {
+        let result = establish_phase_41k_1_instructions_sysvar_live_wiring_boundary(None);
+
+        assert_eq!(
+            result.status,
+            Phase41K1InstructionsSysvarLiveWiringStatus::MissingInstructionsSysvar
+        );
+        assert_eq!(
+            result.rejection_case,
+            Some(Phase41BRejectionCase::MissingInstructionsSysvar)
+        );
+        assert!(!result.uses_real_instructions_sysvar_account_info);
+        assert!(!result.checks_instructions_sysvar_account_id);
+        assert!(!result.load_instruction_at_checked_used);
+        assert!(!result.model_a_sysvar_input_precondition_preserved);
+        assert!(!result.full_model_a_handler_execution_context_enforced_here);
+        assert!(result.requires_41k5_handler_execution_context_enforcement);
+        assert!(!result.account_mutation_enabled);
+        assert!(!result.live_route_enabled);
+    }
+
+    #[test]
+    fn direct_accountinfo_entry_wrong_sysvar_key_fails_closed_after_identity_check() {
+        let key = Pubkey::new_from_array([7; 32]);
+        let owner = Pubkey::new_from_array([9; 32]);
+        let mut lamports = 0;
+        let mut data = [0_u8; 8];
+        let account = account_info_for_key(&key, &owner, &mut lamports, &mut data);
+
+        let result = establish_phase_41k_1_instructions_sysvar_live_wiring_boundary(Some(&account));
+
+        assert_eq!(
+            result.status,
+            Phase41K1InstructionsSysvarLiveWiringStatus::MissingInstructionsSysvar
+        );
+        assert_eq!(
+            result.rejection_case,
+            Some(Phase41BRejectionCase::MissingInstructionsSysvar)
+        );
+        assert!(result.uses_real_instructions_sysvar_account_info);
+        assert!(result.checks_instructions_sysvar_account_id);
+        assert!(!result.load_instruction_at_checked_used);
+        assert!(!result.model_a_sysvar_input_precondition_preserved);
+        assert!(!result.full_model_a_handler_execution_context_enforced_here);
+        assert!(result.requires_41k5_handler_execution_context_enforcement);
+        assert!(!result.account_mutation_enabled);
+        assert!(!result.live_route_enabled);
     }
 
     #[test]
@@ -585,6 +658,9 @@ mod tests {
         assert_eq!(result.prior_ed25519_precompile_count, 2);
         assert!(result.enumerates_n_prior_ed25519_precompile_instructions);
         assert!(result.model_a_live_wiring_precondition_preserved);
+        assert!(result.model_a_sysvar_input_precondition_preserved);
+        assert!(!result.full_model_a_handler_execution_context_enforced_here);
+        assert!(result.requires_41k5_handler_execution_context_enforcement);
         assert!(result.all_loaded_ed25519_precompiles_strictly_prior);
         assert!(result.all_loaded_ed25519_precompiles_program_id_checked);
         assert!(result.load_instruction_at_checked_used);
@@ -643,6 +719,9 @@ mod tests {
         );
         assert_eq!(result.prior_ed25519_precompile_count, 0);
         assert!(!result.model_a_live_wiring_precondition_preserved);
+        assert!(!result.model_a_sysvar_input_precondition_preserved);
+        assert!(!result.full_model_a_handler_execution_context_enforced_here);
+        assert!(result.requires_41k5_handler_execution_context_enforcement);
         assert!(!result.accepts_frontend_or_watcher_ed25519_proof);
         assert!(!result.account_mutation_enabled);
         assert!(!result.live_route_enabled);
