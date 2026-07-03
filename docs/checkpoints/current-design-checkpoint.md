@@ -51199,3 +51199,144 @@ The authoritative guardian-set constructor is now `pub(crate)`, not public. This
 Next step:
 
 Merge 41I implementation acceptance, then begin Phase 41J as a separate high-risk gate.
+
+---
+
+## XXXL Phase 41J Replay Protection Plan Started
+
+Date: 2026-07-03
+
+Status: planning
+
+Branch:
+
+`stage-xxxl-x1-testnet-local-runtime-skeleton-phase-41j-replay-protection-plan`
+
+Base main:
+
+`63373c4 Merge XXXL phase 41I quorum authorization implementation acceptance`
+
+Scope:
+
+Docs-only plan for replay protection and processed event marking.
+
+Core invariant:
+
+A canonical event may be processed at most once.
+
+Replay key:
+
+`canonicalEventKey`, derived internally from `raw_payload_bytes`.
+
+Control point:
+
+Do not write 41J code until this plan is reviewed and accepted.
+
+---
+
+## XXXL Phase 41J Replay Protection Plan Required Fixes
+
+Date: 2026-07-03
+
+Status: required fixes documented
+
+Branch:
+
+`stage-xxxl-x1-testnet-local-runtime-skeleton-phase-41j-replay-protection-plan`
+
+Audit Demon verdict:
+
+`REQUIRES FIXES`
+
+Required fixes:
+
+1. Bind 41J `raw_payload_bytes` to the 41I-authorized payload.
+2. Clarify 41J as a non-mutating boundary model.
+
+Resolution document:
+
+`docs/xxxl/xxxl-phase-41j-replay-protection-plan-fixes.md`
+
+Updated model:
+
+41J composes accepted 41I internally over the same `raw_payload_bytes`.
+
+41J then decodes that same raw payload and derives `canonicalEventKey`.
+
+41J boundary code does not perform real replay writes or processed-event marking.
+
+Forbidden in 41J boundary code:
+
+- AccountInfo;
+- sysvar loading;
+- runtime account loading;
+- replay registry write;
+- processed event marking write;
+- account mutation;
+- CPI;
+- invoke_signed;
+- SPL mint_to;
+- handler;
+- live route.
+
+Next step:
+
+Request re-review of the fixed 41J plan.
+
+---
+
+## XXXL Phase 41J Replay Protection Plan Acceptance
+
+Date: 2026-07-03
+
+Status: accepted fixed plan
+
+Branch:
+
+`stage-xxxl-x1-testnet-local-runtime-skeleton-phase-41j-replay-protection-plan`
+
+Accepted commits:
+
+- `7f8a173 Document phase 41J replay protection plan`
+- `0ab2603 Address phase 41J replay protection plan review fixes`
+
+Acceptance record:
+
+`docs/reviews/xxxl-phase-41j-replay-protection-plan-acceptance.md`
+
+Reviewer verdicts:
+
+- Theo: ACCEPT
+- Audit Demon: ACCEPT
+
+Required fixes: none.
+
+Accepted model:
+
+41J internally composes accepted 41I over the same `raw_payload_bytes`.
+
+41J then decodes that same raw payload and derives `canonicalEventKey`.
+
+41J boundary code is non-mutating and returns replay eligibility / processed-marking intent only.
+
+Forbidden in 41J boundary code:
+
+- AccountInfo;
+- sysvar loading;
+- runtime account loading;
+- replay registry write;
+- processed event marking write;
+- account mutation;
+- CPI;
+- invoke_signed;
+- SPL mint_to;
+- handler;
+- live route.
+
+Non-blocking code note:
+
+The abstract processed-registry view should carry authoritative-source provenance and reject caller-supplied or unauthenticated registry views.
+
+Next step:
+
+Merge accepted 41J plan, then create separate 41J code implementation branch.
