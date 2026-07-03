@@ -114,3 +114,42 @@ Key changes:
 Updated review target:
 
 Reviewers should review the base plan together with Amendment 1.
+
+
+## Amendment 2 Update
+
+Amendment document:
+
+`docs/xxxl/xxxl-phase-41k-3-processed-registry-loading-plan-amendment-2.md`
+
+Review request:
+
+`docs/reviews/xxxl-phase-41k-3-processed-registry-loading-plan-amendment-2-review-request.md`
+
+Amendment 2 resolves the two blocking issues from Theo and Demon review of Amendment 1:
+
+1. `consumed == false` lifecycle;
+2. 41J list-based registry view vs per-event PDA point-lookup reconciliation.
+
+Decisions:
+
+- missing `AccountInfo` is rejected;
+- supplied expected PDA in accepted uninitialized runtime representation means unprocessed / eligible;
+- initialized `consumed == true` means already processed;
+- initialized `consumed == false` is rejected as invalid lifecycle state;
+- writable account is allowed but not mutated in 41K.3;
+- 41J reconciliation uses Option A: internal type-enforced adapter to existing 41J list-based interface;
+- existing `mark_processed_event_consumed(...)` is not accepted as live semantics without later 41K.4 review;
+- 41K.4 must bind marked amount / mint amount to the quorum-authorized payload;
+- rent / close / recreate lifecycle risks are documented and carried forward;
+- active deployment blockers remain unchanged.
+
+Active deployment blockers remain:
+
+- `PRODUCTION_PROGRAM_ID_UNSET`;
+- `X1_TESTNET_PROGRAM_DEPLOYED_RUNTIME_LOCKED`;
+- `PRODUCTION_GUARDIAN_SET_UNSET`;
+- `PRODUCTION_PROOF_LOG_UNSET`;
+- `SPL_CPI_EXECUTION_DISABLED`;
+- `LIVE_ROUTE_DISABLED`;
+- `EXTERNAL_REVIEW_INCOMPLETE`.
