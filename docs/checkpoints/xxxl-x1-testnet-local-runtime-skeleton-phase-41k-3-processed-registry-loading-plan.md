@@ -153,3 +153,30 @@ Active deployment blockers remain:
 - `SPL_CPI_EXECUTION_DISABLED`;
 - `LIVE_ROUTE_DISABLED`;
 - `EXTERNAL_REVIEW_INCOMPLETE`.
+
+
+## Amendment 3 Update
+
+Amendment document:
+
+`docs/xxxl/xxxl-phase-41k-3-processed-registry-loading-plan-amendment-3.md`
+
+Review request:
+
+`docs/reviews/xxxl-phase-41k-3-processed-registry-loading-plan-amendment-3-review-request.md`
+
+Amendment 3 addresses Claude hostile audit findings:
+
+- canonical bump-only PDA derivation;
+- caller-supplied bump never trusted;
+- exact uninitialized expected PDA representation;
+- lamports ignored for uninitialized classification to avoid lamport-dusting DoS;
+- XXXL-owned zero/wrong discriminator invalid, not unprocessed;
+- canonical_event_key sufficiency stated as canonical source-event identity from accepted payload binding;
+- 41K.4 atomic create/init/consume invariant promoted to required forward invariant;
+- Option A adapter assumptions made explicit;
+- adapter construction must be internal and type-enforced.
+
+41K.3 remains read/loading/classification only.
+
+No write / mark / mutation / CPI / mint / handler / live route surfaces are enabled.
