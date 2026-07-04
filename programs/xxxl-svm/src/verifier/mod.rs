@@ -13,6 +13,8 @@ pub mod b1c_ed25519_evidence_authorization_result;
 #[cfg(feature = "phase-41k6-b1c-ed25519-evidence-wiring-test-gate")]
 pub mod b1c_ed25519_evidence_parser;
 #[cfg(feature = "phase-41k6-b1c-ed25519-evidence-wiring-test-gate")]
+pub mod b1c_guardian_membership_validation;
+#[cfg(feature = "phase-41k6-b1c-ed25519-evidence-wiring-test-gate")]
 pub mod b1c_instructions_sysvar_evidence_bridge;
 #[cfg(feature = "phase-41k6-b1c-ed25519-evidence-wiring-test-gate")]
 pub mod b1c_payload_hash_binding;
@@ -42,6 +44,17 @@ pub use b1c_connect_ed25519_evidence_adapter::{
     B1CConnectedEd25519EvidenceParseRejection, B1CConnectedEd25519EvidenceStatus,
     B1C_CONNECT_ED25519_EVIDENCE_ADAPTER_REPORT, PHASE_41K6_B1C_3_CONNECT_ED25519_EVIDENCE_PHASE,
     PHASE_41K6_B1C_3_CONNECT_ED25519_EVIDENCE_VERSION,
+};
+
+#[cfg(feature = "phase-41k6-b1c-ed25519-evidence-wiring-test-gate")]
+pub use b1c_guardian_membership_validation::{
+    b1c_guardian_membership_validation_report,
+    validate_b1c_payload_bound_evidence_guardian_membership, B1CGuardianMembershipValidated,
+    B1CGuardianMembershipValidationRejectionKind, B1CGuardianMembershipValidationReport,
+    B1CGuardianMembershipValidationResult, B1CGuardianMembershipValidationStatus,
+    B1C_GUARDIAN_MEMBERSHIP_VALIDATION_REPORT,
+    PHASE_41K6_B1C_5_GUARDIAN_MEMBERSHIP_VALIDATION_PHASE,
+    PHASE_41K6_B1C_5_GUARDIAN_MEMBERSHIP_VALIDATION_VERSION,
 };
 
 #[cfg(feature = "phase-41k6-b1c-ed25519-evidence-wiring-test-gate")]
