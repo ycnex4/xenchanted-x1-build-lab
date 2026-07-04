@@ -1,3 +1,14 @@
+#[cfg(all(
+    feature = "phase-41k6-b1c-ed25519-evidence-wiring-test-gate",
+    not(feature = "dangerously-allow-phase-41k6-b1c-ed25519-evidence-wiring-test-gate-sbf-build")
+))]
+compile_error!(
+    "phase-41k6-b1c-ed25519-evidence-wiring-test-gate introduces B1C authorization result types and later Ed25519 evidence wiring. It is a non-production integration gate and must never be included in deploy artifacts without the explicit dangerous test allow feature."
+);
+
+#[cfg(feature = "phase-41k6-b1c-ed25519-evidence-wiring-test-gate")]
+pub mod b1c_ed25519_evidence_authorization_result;
+
 pub mod boundary;
 pub mod canonical_payload;
 pub mod ed25519_evidence_layout;
@@ -14,6 +25,15 @@ pub mod instructions_sysvar_evidence_scanner;
 pub mod instructions_sysvar_live_wiring_boundary;
 pub mod raw_payload;
 pub mod types;
+
+#[cfg(feature = "phase-41k6-b1c-ed25519-evidence-wiring-test-gate")]
+pub use b1c_ed25519_evidence_authorization_result::{
+    b1c_ed25519_evidence_authorization_result_report, B1CEd25519EvidenceAuthorizationEstablished,
+    B1CEd25519EvidenceAuthorizationRejected, B1CEd25519EvidenceAuthorizationRejectionKind,
+    B1CEd25519EvidenceAuthorizationResult, B1CEd25519EvidenceAuthorizationResultReport,
+    B1CEd25519EvidenceAuthorizationStatus, B1C_ED25519_EVIDENCE_AUTHORIZATION_RESULT_REPORT,
+    PHASE_41K6_B1C_1_RESULT_TYPES_PHASE, PHASE_41K6_B1C_1_RESULT_TYPES_VERSION,
+};
 
 pub use boundary::{
     future_runtime_parity_case_reports, read_only_verifier_boundary,
@@ -142,16 +162,15 @@ pub use processed_registry_account_loading_boundary::{
     load_phase_41k_3_processed_registry_account_info,
     phase_41k_3_processed_registry_account_loading_boundary_report,
     Phase41K3ProcessedRegistryAccountLoadingBoundaryReport,
-    Phase41K3ProcessedRegistryAccountLoadingResult,
-    Phase41K3ProcessedRegistryAccountLoadingStatus,
+    Phase41K3ProcessedRegistryAccountLoadingResult, Phase41K3ProcessedRegistryAccountLoadingStatus,
     Phase41K3ProcessedRegistryAccountRejectionCase, Phase41K3ProcessedRegistryLoadWitness,
     PHASE_41K_3_PROCESSED_REGISTRY_ACCOUNT_LOADING_BOUNDARY_PHASE,
     PHASE_41K_3_PROCESSED_REGISTRY_ACCOUNT_LOADING_BOUNDARY_REPORT,
     PHASE_41K_3_PROCESSED_REGISTRY_ACCOUNT_LOADING_BOUNDARY_VERSION,
     PROCESSED_EVENT_CANONICAL_EVENT_KEY_OFFSET, PROCESSED_EVENT_CONSUMED_AMOUNT_OFFSET,
     PROCESSED_EVENT_CONSUMED_OFFSET, PROCESSED_EVENT_CONSUMED_SLOT_OFFSET,
-    PROCESSED_EVENT_PDA_SEED_0, PROCESSED_EVENT_PDA_SEED_1,
-    PROCESSED_EVENT_RECIPIENT_OFFSET, PROCESSED_EVENT_ROUTE_ID_OFFSET,
+    PROCESSED_EVENT_PDA_SEED_0, PROCESSED_EVENT_PDA_SEED_1, PROCESSED_EVENT_RECIPIENT_OFFSET,
+    PROCESSED_EVENT_ROUTE_ID_OFFSET,
 };
 pub use quorum_authorization_boundary::{
     establish_guardian_quorum_authorization, guardian_quorum_authorization_boundary_report,
