@@ -8,6 +8,8 @@ compile_error!(
 
 #[cfg(feature = "phase-41k6-b1c-ed25519-evidence-wiring-test-gate")]
 pub mod b1c_ed25519_evidence_authorization_result;
+#[cfg(feature = "phase-41k6-b1c-ed25519-evidence-wiring-test-gate")]
+pub mod b1c_instructions_sysvar_evidence_bridge;
 
 pub mod boundary;
 pub mod canonical_payload;
@@ -25,6 +27,18 @@ pub mod instructions_sysvar_evidence_scanner;
 pub mod instructions_sysvar_live_wiring_boundary;
 pub mod raw_payload;
 pub mod types;
+
+#[cfg(feature = "phase-41k6-b1c-ed25519-evidence-wiring-test-gate")]
+pub use b1c_instructions_sysvar_evidence_bridge::{
+    b1c_instructions_sysvar_evidence_bridge_report,
+    derive_b1c_instructions_sysvar_evidence_from_41k1,
+    load_b1c_instructions_sysvar_evidence_bridge, B1CInstructionsSysvarEvidenceBridgeReport,
+    B1CInstructionsSysvarEvidenceLoaded, B1CInstructionsSysvarEvidenceRejected,
+    B1CInstructionsSysvarEvidenceResult, B1CInstructionsSysvarEvidenceStatus,
+    B1CLoadedPriorEd25519EvidenceDescriptor, B1C_INSTRUCTIONS_SYSVAR_EVIDENCE_BRIDGE_REPORT,
+    PHASE_41K6_B1C_2_INSTRUCTIONS_SYSVAR_EVIDENCE_PHASE,
+    PHASE_41K6_B1C_2_INSTRUCTIONS_SYSVAR_EVIDENCE_VERSION,
+};
 
 #[cfg(feature = "phase-41k6-b1c-ed25519-evidence-wiring-test-gate")]
 pub use b1c_ed25519_evidence_authorization_result::{
