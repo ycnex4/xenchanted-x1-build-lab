@@ -14,6 +14,8 @@ pub mod b1c_ed25519_evidence_authorization_result;
 pub mod b1c_ed25519_evidence_parser;
 #[cfg(feature = "phase-41k6-b1c-ed25519-evidence-wiring-test-gate")]
 pub mod b1c_instructions_sysvar_evidence_bridge;
+#[cfg(feature = "phase-41k6-b1c-ed25519-evidence-wiring-test-gate")]
+pub mod b1c_payload_hash_binding;
 
 pub mod boundary;
 pub mod canonical_payload;
@@ -40,6 +42,16 @@ pub use b1c_connect_ed25519_evidence_adapter::{
     B1CConnectedEd25519EvidenceParseRejection, B1CConnectedEd25519EvidenceStatus,
     B1C_CONNECT_ED25519_EVIDENCE_ADAPTER_REPORT, PHASE_41K6_B1C_3_CONNECT_ED25519_EVIDENCE_PHASE,
     PHASE_41K6_B1C_3_CONNECT_ED25519_EVIDENCE_VERSION,
+};
+
+#[cfg(feature = "phase-41k6-b1c-ed25519-evidence-wiring-test-gate")]
+pub use b1c_payload_hash_binding::{
+    b1c_payload_hash_binding_report, bind_b1c_parsed_ed25519_evidence_to_expected_payload_hash,
+    compute_b1c_expected_authorization_payload_hash, B1CAuthorizationPayloadContext,
+    B1CPayloadBoundEvidence, B1CPayloadHashBindingRejectionKind, B1CPayloadHashBindingReport,
+    B1CPayloadHashBindingResult, B1CPayloadHashBindingStatus, B1C_AUTHORIZATION_PAYLOAD_DOMAIN,
+    B1C_AUTHORIZATION_PAYLOAD_HASH_LEN, B1C_PAYLOAD_HASH_BINDING_REPORT,
+    PHASE_41K6_B1C_4_PAYLOAD_HASH_BINDING_PHASE, PHASE_41K6_B1C_4_PAYLOAD_HASH_BINDING_VERSION,
 };
 
 #[cfg(feature = "phase-41k6-b1c-ed25519-evidence-wiring-test-gate")]
