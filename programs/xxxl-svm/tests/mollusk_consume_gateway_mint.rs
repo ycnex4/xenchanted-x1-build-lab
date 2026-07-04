@@ -449,23 +449,29 @@ fn mollusk_rejects_low_rent_guardian_set_without_live_route() {
 }
 
 #[test]
-fn mollusk_rejects_low_rent_processed_event_without_live_route() {
+fn mollusk_accepts_dusted_system_owned_empty_processed_event_without_live_route() {
     let fixture = ScaffoldFixture::new();
     let mollusk = mollusk_for_program(&fixture.program_id);
 
     let instruction = fixture.instruction();
-    let accounts = accounts_with_low_rent(
-        &fixture,
-        CONSUME_GATEWAY_MINT_PROCESSED_EVENT_ACCOUNT_INDEX as usize,
+    let accounts = fixture.accounts();
+
+    assert!(
+        accounts[CONSUME_GATEWAY_MINT_PROCESSED_EVENT_ACCOUNT_INDEX as usize]
+            .1
+            .data
+            .is_empty()
+    );
+    assert_eq!(
+        accounts[CONSUME_GATEWAY_MINT_PROCESSED_EVENT_ACCOUNT_INDEX as usize]
+            .1
+            .lamports,
+        1
     );
 
-    process_rejection_and_assert_mutable_accounts_unchanged(
-        &mollusk,
-        &fixture,
-        &instruction,
-        &accounts,
-        XxxlError::InvalidRentExemption,
-    );
+    let checks = result_and_unchanged_mutable_account_checks(&fixture, &accounts, Check::success());
+
+    mollusk.process_and_validate_instruction(&instruction, &accounts, &checks);
 }
 
 #[test]
@@ -1022,7 +1028,7 @@ fn mollusk_consumed_processed_event_rejection_leaves_mutable_accounts_unchanged(
 
     let instruction = fixture.instruction();
     let mut accounts = fixture.accounts();
-    accounts[3].1.data[10] = 1;
+    set_program_owned_initialized_processed_event(&fixture, &mut accounts, true);
 
     let checks = result_and_unchanged_mutable_account_checks(
         &fixture,
@@ -1254,6 +1260,7 @@ fn mollusk_wrong_processed_event_recipient_rejection_leaves_mutable_accounts_unc
 
     let instruction = fixture.instruction();
     let mut accounts = fixture.accounts();
+    set_program_owned_initialized_processed_event(&fixture, &mut accounts, false);
     accounts[CONSUME_GATEWAY_MINT_PROCESSED_EVENT_ACCOUNT_INDEX as usize]
         .1
         .data[80..112]
@@ -1275,6 +1282,7 @@ fn mollusk_wrong_processed_event_canonical_event_key_rejection_leaves_mutable_ac
 
     let instruction = fixture.instruction();
     let mut accounts = fixture.accounts();
+    set_program_owned_initialized_processed_event(&fixture, &mut accounts, false);
     accounts[CONSUME_GATEWAY_MINT_PROCESSED_EVENT_ACCOUNT_INDEX as usize]
         .1
         .data[16] ^= 0xff;
@@ -1295,6 +1303,7 @@ fn mollusk_wrong_processed_event_route_id_rejection_leaves_mutable_accounts_unch
 
     let instruction = fixture.instruction();
     let mut accounts = fixture.accounts();
+    set_program_owned_initialized_processed_event(&fixture, &mut accounts, false);
     accounts[CONSUME_GATEWAY_MINT_PROCESSED_EVENT_ACCOUNT_INDEX as usize]
         .1
         .data[48] ^= 0xff;
@@ -1315,6 +1324,7 @@ fn mollusk_wrong_processed_event_recipient_bit_flip_rejection_leaves_mutable_acc
 
     let instruction = fixture.instruction();
     let mut accounts = fixture.accounts();
+    set_program_owned_initialized_processed_event(&fixture, &mut accounts, false);
     accounts[CONSUME_GATEWAY_MINT_PROCESSED_EVENT_ACCOUNT_INDEX as usize]
         .1
         .data[80] ^= 0xff;
@@ -1511,6 +1521,22 @@ fn accounts_with_low_rent(
     accounts
 }
 
+fn set_program_owned_initialized_processed_event(
+    fixture: &ScaffoldFixture,
+    accounts: &mut [(Pubkey, Account)],
+    consumed: bool,
+) {
+    let index = CONSUME_GATEWAY_MINT_PROCESSED_EVENT_ACCOUNT_INDEX as usize;
+    let route_id = read_fixed_32(&fixture.instruction_data, 16);
+    let canonical_event_key = read_fixed_32(&fixture.instruction_data, 112);
+    let recipient = Pubkey::new_from_array(read_fixed_32(&fixture.instruction_data, 144));
+
+    accounts[index].1.owner = fixture.program_id;
+    accounts[index].1.lamports = 10_000_000_000;
+    accounts[index].1.data =
+        processed_event_data(consumed, canonical_event_key, route_id, recipient);
+}
+
 fn process_rejection_and_assert_mutable_accounts_unchanged(
     mollusk: &Mollusk,
     fixture: &ScaffoldFixture,
@@ -1588,11 +1614,11 @@ fn result_and_unchanged_mutable_account_checks<'a>(
 }
 
 fn assert_live_atomicity_accounts_start_unmutated(accounts: &[(Pubkey, Account)]) {
-    assert_eq!(
+    assert!(
         accounts[CONSUME_GATEWAY_MINT_PROCESSED_EVENT_ACCOUNT_INDEX as usize]
             .1
-            .data[10],
-        0
+            .data
+            .is_empty()
     );
     assert_eq!(
         read_u128_le(
@@ -1664,12 +1690,16 @@ impl ScaffoldFixture {
         let guardian_set_id = [0x22; 32];
         let canonical_event_key = [0x44; 32];
         let source_chain_id = 1;
+        let (processed_event, _) = Pubkey::find_program_address(
+            &[b"xxxl", b"processed-event", &canonical_event_key],
+            &program_id,
+        );
 
         let keys = FixtureKeys {
             mint_state: Pubkey::new_unique(),
             gateway_config: Pubkey::new_unique(),
             guardian_set: Pubkey::new_unique(),
-            processed_event: Pubkey::new_unique(),
+            processed_event,
             recipient_balance: Pubkey::new_unique(),
             recipient_owner,
             spl_mint,
@@ -1690,12 +1720,7 @@ impl ScaffoldFixture {
                 10_000,
             ),
             guardian_set: guardian_set_data(guardian_set_id),
-            processed_event: processed_event_data(
-                false,
-                canonical_event_key,
-                route_id,
-                recipient_owner,
-            ),
+            processed_event: Vec::new(),
             recipient_balance: recipient_balance_data(recipient_owner, spl_mint),
             spl_mint: packed_mint(mint_authority_pda, true),
             recipient_token_account: packed_token_account(
@@ -1782,9 +1807,9 @@ impl ScaffoldFixture {
             (
                 self.keys.processed_event,
                 account(
-                    lamports,
+                    1,
                     self.data.processed_event.clone(),
-                    self.program_id,
+                    self.keys.system_program,
                     false,
                 ),
             ),
@@ -1958,6 +1983,12 @@ fn read_u64_le(input: &[u8], offset: usize) -> u64 {
     let mut bytes = [0u8; 8];
     bytes.copy_from_slice(&input[offset..offset + 8]);
     u64::from_le_bytes(bytes)
+}
+
+fn read_fixed_32(input: &[u8], offset: usize) -> [u8; 32] {
+    let mut bytes = [0u8; 32];
+    bytes.copy_from_slice(&input[offset..offset + 32]);
+    bytes
 }
 
 fn instruction_data_from_fields(

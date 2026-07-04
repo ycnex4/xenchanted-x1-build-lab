@@ -28,11 +28,15 @@ use crate::{
     },
     state::{
         GatewayConfigAccountView, GuardianSetAccountView, MintStateAccountView,
-        ProcessedEventAccountView, RecipientBalanceAccountView,
+        RecipientBalanceAccountView,
     },
     validation::{
         assert_account_owner, assert_initialized_mint_account, assert_recipient_ata_boundary,
         assert_rent_exempt,
+    },
+    verifier::{
+        load_phase_41k_3_processed_registry_account_info,
+        Phase41K3ProcessedRegistryAccountLoadingStatus,
     },
 };
 
@@ -309,7 +313,6 @@ pub fn prepare_consume_gateway_mint_cpi_boundary<'a, 'b>(
         mint_state_account,
         gateway_config_account,
         guardian_set_account,
-        processed_event_account,
         recipient_balance_account,
     ] {
         assert_account_owner(program_owned_account, program_id)?;
@@ -322,13 +325,11 @@ pub fn prepare_consume_gateway_mint_cpi_boundary<'a, 'b>(
     let mint_state_data = mint_state_account.try_borrow_data()?;
     let gateway_config_data = gateway_config_account.try_borrow_data()?;
     let guardian_set_data = guardian_set_account.try_borrow_data()?;
-    let processed_event_data = processed_event_account.try_borrow_data()?;
     let recipient_balance_data = recipient_balance_account.try_borrow_data()?;
 
     let mint_state = MintStateAccountView::new(&mint_state_data)?;
     let gateway_config = GatewayConfigAccountView::new(&gateway_config_data)?;
     let guardian_set = GuardianSetAccountView::new(&guardian_set_data)?;
-    let processed_event = ProcessedEventAccountView::new(&processed_event_data)?;
     let recipient_balance = RecipientBalanceAccountView::new(&recipient_balance_data)?;
 
     if mint_state.mint_pubkey() != args.mint_id
@@ -359,10 +360,16 @@ pub fn prepare_consume_gateway_mint_cpi_boundary<'a, 'b>(
         return Err(XxxlError::InvalidInstruction.into());
     }
 
-    if processed_event.consumed()
-        || processed_event.canonical_event_key() != args.canonical_event_key
-        || processed_event.route_id() != args.route_id
-        || processed_event.recipient() != args.recipient
+    let processed_event_load = load_phase_41k_3_processed_registry_account_info(
+        Some(processed_event_account),
+        program_id,
+        &args.canonical_event_key,
+        &args.route_id,
+        &args.recipient,
+    );
+
+    if processed_event_load.status
+        != Phase41K3ProcessedRegistryAccountLoadingStatus::ProcessedEventAccountUnprocessed
     {
         return Err(XxxlError::InvalidInstruction.into());
     }
@@ -422,6 +429,7 @@ mod tests {
             RECIPIENT_BALANCE_ACCOUNT_DISCRIMINATOR, RECIPIENT_BALANCE_ACCOUNT_LEN,
             RUNTIME_LAYOUT_VERSION,
         },
+        verifier::find_phase_41k_3_processed_event_pda,
     };
     use solana_program::{
         account_info::AccountInfo, program_option::COption, program_pack::Pack, pubkey::Pubkey,
@@ -507,6 +515,7 @@ mod tests {
     #[test]
     fn handler_integration_rejects_consumed_processed_event() {
         let mut fixture = HandlerFixture::new();
+        fixture.use_program_owned_initialized_unconsumed_processed_event();
         fixture.data.processed_event[10] = 1;
 
         let program_id = fixture.program_id;
@@ -695,6 +704,7 @@ mod tests {
     #[test]
     fn handler_integration_rejects_wrong_processed_event_canonical_event_key() {
         let mut fixture = HandlerFixture::new();
+        fixture.use_program_owned_initialized_unconsumed_processed_event();
         fixture.data.processed_event[16] ^= 0xff;
 
         assert_prepare_boundary_rejects(&mut fixture, XxxlError::InvalidInstruction);
@@ -703,6 +713,7 @@ mod tests {
     #[test]
     fn handler_integration_rejects_wrong_processed_event_route_id() {
         let mut fixture = HandlerFixture::new();
+        fixture.use_program_owned_initialized_unconsumed_processed_event();
         fixture.data.processed_event[48] ^= 0xff;
 
         assert_prepare_boundary_rejects(&mut fixture, XxxlError::InvalidInstruction);
@@ -711,6 +722,7 @@ mod tests {
     #[test]
     fn handler_integration_rejects_wrong_processed_event_recipient() {
         let mut fixture = HandlerFixture::new();
+        fixture.use_program_owned_initialized_unconsumed_processed_event();
         fixture.data.processed_event[80] ^= 0xff;
 
         assert_prepare_boundary_rejects(&mut fixture, XxxlError::InvalidInstruction);
@@ -771,6 +783,7 @@ mod tests {
     #[test]
     fn guarded_live_handler_fixture_rejects_invalid_boundary_before_plan() {
         let mut fixture = HandlerFixture::new();
+        fixture.use_program_owned_initialized_unconsumed_processed_event();
         fixture.data.processed_event[10] = 1;
 
         let program_id = fixture.program_id;
@@ -881,6 +894,7 @@ mod tests {
     #[test]
     fn runtime_planning_composition_boundary_rejects_consumed_event_without_mutation() {
         let mut fixture = HandlerFixture::new();
+        fixture.use_program_owned_initialized_unconsumed_processed_event();
         fixture.data.processed_event[10] = 1;
 
         let processed_before = fixture.data.processed_event.clone();
@@ -974,53 +988,35 @@ mod tests {
     }
 
     #[test]
-    fn runtime_local_state_mutation_composition_boundary_marks_event_and_credits_balance() {
+    fn runtime_local_state_mutation_composition_boundary_rejects_live_style_system_owned_empty_processed_event(
+    ) {
         let mut fixture = HandlerFixture::new();
-        let expected_event_key = fixture.args.canonical_event_key;
+
+        let processed_before = fixture.data.processed_event.clone();
+        let recipient_balance_before = fixture.data.recipient_balance.clone();
+        let spl_mint_before = fixture.data.spl_mint.clone();
 
         let program_id = fixture.program_id;
         let args = fixture.args;
         let rent = Rent::default();
         let accounts = fixture.accounts();
 
-        let composition =
+        assert_custom_error(
             build_runtime_consume_gateway_mint_local_state_mutation_composition_boundary(
                 &program_id,
                 &accounts,
                 &args,
                 &rent,
                 123,
-            )
-            .expect("runtime local state mutation composition boundary");
-
-        assert_eq!(
-            composition
-                .planning_composition
-                .execution_plan
-                .consumed_slot,
-            123
-        );
-        assert_eq!(composition.recipient_balance_after, 1_000);
-        assert!(!composition.live_route_activation_enabled);
-        assert!(!composition.invoke_signed_from_process_instruction_enabled);
-        assert!(
-            !composition
-                .planning_composition
-                .mint_to_cpi_plan
-                .invoke_signed_from_process_instruction_enabled
+            ),
+            XxxlError::InvalidInstruction,
         );
 
         drop(accounts);
 
-        assert_eq!(fixture.data.processed_event[10], 1);
-        assert_eq!(read_u128_le(&fixture.data.processed_event, 112), 1_000);
-        assert_eq!(read_u64_le(&fixture.data.processed_event, 128), 123);
-        assert_eq!(read_u128_le(&fixture.data.recipient_balance, 80), 1_000);
-        assert_eq!(
-            read_fixed_32(&fixture.data.recipient_balance, 96),
-            expected_event_key
-        );
-        assert_eq!(read_u64_le(&fixture.data.spl_mint, 36), 0);
+        assert_eq!(fixture.data.processed_event, processed_before);
+        assert_eq!(fixture.data.recipient_balance, recipient_balance_before);
+        assert_eq!(fixture.data.spl_mint, spl_mint_before);
     }
 
     #[test]
@@ -1057,6 +1053,7 @@ mod tests {
     #[test]
     fn runtime_local_state_mutation_composition_boundary_rejects_consumed_event_without_credit() {
         let mut fixture = HandlerFixture::new();
+        fixture.use_program_owned_initialized_unconsumed_processed_event();
         fixture.data.processed_event[10] = 1;
 
         let processed_before = fixture.data.processed_event.clone();
@@ -1159,6 +1156,7 @@ mod tests {
     fn runtime_disabled_spl_cpi_gate_boundary_rejects_consumed_event_before_gate_without_mutation()
     {
         let mut fixture = HandlerFixture::new();
+        fixture.use_program_owned_initialized_unconsumed_processed_event();
         fixture.data.processed_event[10] = 1;
 
         let processed_before = fixture.data.processed_event.clone();
@@ -1384,6 +1382,7 @@ mod tests {
 
     struct FixtureOwners {
         program: Pubkey,
+        processed_event: Pubkey,
         spl_token: Pubkey,
         token_program_owner: Pubkey,
     }
@@ -1443,9 +1442,12 @@ mod tests {
             let guardian_set_id = [0x22; 32];
             let canonical_event_key = [0x44; 32];
             let source_chain_id = 1;
+            let (processed_event, _) =
+                find_phase_41k_3_processed_event_pda(&program_id, &canonical_event_key);
 
             let owners = FixtureOwners {
                 program: program_id,
+                processed_event: system_program::id(),
                 spl_token: spl_token::id(),
                 token_program_owner: Pubkey::new_unique(),
             };
@@ -1454,7 +1456,7 @@ mod tests {
                 mint_state: Pubkey::new_unique(),
                 gateway_config: Pubkey::new_unique(),
                 guardian_set: Pubkey::new_unique(),
-                processed_event: Pubkey::new_unique(),
+                processed_event,
                 recipient_balance: Pubkey::new_unique(),
                 spl_mint,
                 recipient_token_account: Pubkey::new_unique(),
@@ -1475,12 +1477,7 @@ mod tests {
                     10_000,
                 ),
                 guardian_set: guardian_set_data(guardian_set_id),
-                processed_event: processed_event_data(
-                    false,
-                    canonical_event_key,
-                    route_id,
-                    recipient_owner,
-                ),
+                processed_event: Vec::new(),
                 recipient_balance: recipient_balance_data(recipient_owner, spl_mint),
                 spl_mint: packed_mint(mint_authority_pda, true),
                 recipient_token_account: packed_token_account(
@@ -1500,7 +1497,7 @@ mod tests {
                 mint_state: rent.minimum_balance(data.mint_state.len()),
                 gateway_config: rent.minimum_balance(data.gateway_config.len()),
                 guardian_set: rent.minimum_balance(data.guardian_set.len()),
-                processed_event: rent.minimum_balance(data.processed_event.len()),
+                processed_event: 1,
                 recipient_balance: rent.minimum_balance(data.recipient_balance.len()),
                 spl_mint: rent.minimum_balance(data.spl_mint.len()),
                 recipient_token_account: rent.minimum_balance(data.recipient_token_account.len()),
@@ -1536,6 +1533,18 @@ mod tests {
                 data,
                 args,
             }
+        }
+
+        fn use_program_owned_initialized_unconsumed_processed_event(&mut self) {
+            self.owners.processed_event = self.program_id;
+            self.data.processed_event = processed_event_data(
+                false,
+                self.args.canonical_event_key,
+                self.args.route_id,
+                Pubkey::new_from_array(self.args.recipient),
+            );
+            self.lamports.processed_event =
+                Rent::default().minimum_balance(self.data.processed_event.len());
         }
 
         fn accounts(&mut self) -> Vec<AccountInfo<'_>> {
@@ -1576,7 +1585,7 @@ mod tests {
                     true,
                     &mut self.lamports.processed_event,
                     &mut self.data.processed_event,
-                    &self.owners.program,
+                    &self.owners.processed_event,
                     false,
                     0,
                 ),

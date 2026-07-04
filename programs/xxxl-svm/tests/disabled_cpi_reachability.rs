@@ -326,6 +326,10 @@ impl RuntimeFixture {
         let guardian_set_id = [0x22; 32];
         let canonical_event_key = [0x44; 32];
         let source_chain_id = 1;
+        let (processed_event, _) = Pubkey::find_program_address(
+            &[b"xxxl", b"processed-event", &canonical_event_key],
+            &program_id,
+        );
 
         let owners = RuntimeFixtureOwners {
             program: program_id,
@@ -337,7 +341,7 @@ impl RuntimeFixture {
             mint_state: Pubkey::new_unique(),
             gateway_config: Pubkey::new_unique(),
             guardian_set: Pubkey::new_unique(),
-            processed_event: Pubkey::new_unique(),
+            processed_event,
             recipient_balance: Pubkey::new_unique(),
             spl_mint,
             recipient_token_account: Pubkey::new_unique(),
@@ -357,12 +361,7 @@ impl RuntimeFixture {
                 10_000,
             ),
             guardian_set: guardian_set_data(guardian_set_id),
-            processed_event: processed_event_data(
-                false,
-                canonical_event_key,
-                route_id,
-                recipient_owner,
-            ),
+            processed_event: Vec::new(),
             recipient_balance: recipient_balance_data(recipient_owner, spl_mint),
             spl_mint: packed_mint(mint_authority_pda, true),
             recipient_token_account: packed_token_account(
@@ -381,7 +380,7 @@ impl RuntimeFixture {
             mint_state: rent.minimum_balance(data.mint_state.len()),
             gateway_config: rent.minimum_balance(data.gateway_config.len()),
             guardian_set: rent.minimum_balance(data.guardian_set.len()),
-            processed_event: rent.minimum_balance(data.processed_event.len()),
+            processed_event: 1,
             recipient_balance: rent.minimum_balance(data.recipient_balance.len()),
             spl_mint: rent.minimum_balance(data.spl_mint.len()),
             recipient_token_account: rent.minimum_balance(data.recipient_token_account.len()),
@@ -457,7 +456,7 @@ impl RuntimeFixture {
                 true,
                 &mut self.lamports.processed_event,
                 &mut self.data.processed_event,
-                &self.owners.program,
+                &self.keys.system_program,
                 false,
                 0,
             ),
