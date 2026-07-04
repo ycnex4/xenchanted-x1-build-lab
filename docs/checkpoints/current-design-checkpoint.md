@@ -51679,3 +51679,23 @@ Still disabled:
 Next gate:
 
 41K.2 real guardian-set account/PDA loading code implementation.
+
+
+## Phase 41K.6 B1 Closure Checkpoint
+
+Status: B1C complete and merged to main.
+
+Merge:
+
+    fce6ddf Merge phase 41K.6 B1C handler integration
+
+Conclusion:
+
+    Claude B1 blocker RESOLVED.
+    Guardian quorum authorization is implemented end-to-end.
+    Default builds remain closed.
+    B1C7 feature-gated builds can execute guardian-authorized mark + mint.
+
+Hostile review package:
+
+    docs/gateway/phase-41k6-b1-closure-hostile-review-package.md
