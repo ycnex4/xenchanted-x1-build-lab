@@ -9,6 +9,8 @@ compile_error!(
 #[cfg(feature = "phase-41k6-b1c-ed25519-evidence-wiring-test-gate")]
 pub mod b1c_ed25519_evidence_authorization_result;
 #[cfg(feature = "phase-41k6-b1c-ed25519-evidence-wiring-test-gate")]
+pub mod b1c_ed25519_evidence_parser;
+#[cfg(feature = "phase-41k6-b1c-ed25519-evidence-wiring-test-gate")]
 pub mod b1c_instructions_sysvar_evidence_bridge;
 
 pub mod boundary;
@@ -38,6 +40,17 @@ pub use b1c_instructions_sysvar_evidence_bridge::{
     B1CLoadedPriorEd25519EvidenceDescriptor, B1C_INSTRUCTIONS_SYSVAR_EVIDENCE_BRIDGE_REPORT,
     PHASE_41K6_B1C_2_INSTRUCTIONS_SYSVAR_EVIDENCE_PHASE,
     PHASE_41K6_B1C_2_INSTRUCTIONS_SYSVAR_EVIDENCE_VERSION,
+};
+
+#[cfg(feature = "phase-41k6-b1c-ed25519-evidence-wiring-test-gate")]
+pub use b1c_ed25519_evidence_parser::{
+    b1c_ed25519_evidence_parser_report, parse_b1c_single_ed25519_precompile_evidence,
+    B1CEd25519EvidenceParserReport, B1CEd25519EvidenceParsingRejected,
+    B1CEd25519EvidenceParsingRejectionKind, B1CEd25519EvidenceParsingResult,
+    B1CEd25519EvidenceParsingStatus, B1CParsedEd25519Evidence, B1C_ED25519_EVIDENCE_PARSER_REPORT,
+    ED25519_CURRENT_INSTRUCTION_INDEX_SENTINEL, ED25519_SINGLE_SIGNATURE_HEADER_LEN,
+    PHASE_41K6_B1C_3_ED25519_EVIDENCE_PARSER_PHASE,
+    PHASE_41K6_B1C_3_ED25519_EVIDENCE_PARSER_VERSION,
 };
 
 #[cfg(feature = "phase-41k6-b1c-ed25519-evidence-wiring-test-gate")]
