@@ -13,6 +13,24 @@ use solana_program::{
     program_error::ProgramError, pubkey::Pubkey, rent::Rent, system_program, sysvar::Sysvar,
 };
 
+#[cfg(feature = "phase-41k6-b1c7-handler-integration-test-gate")]
+use crate::account_contract::assert_b1_v3_consume_gateway_mint_account_contract;
+
+#[cfg(feature = "phase-41k6-b1c7-handler-integration-test-gate")]
+use crate::verifier::{
+    establish_b1c7_handler_authorization_before_mark_and_mint, B1C7HandlerAuthorizationResult,
+    B1C7HandlerAuthorizationStatus, B1CAuthorizationPayloadContext,
+};
+
+#[cfg(feature = "phase-41k6-b1c7-handler-integration-test-gate")]
+use crate::verifier::checked_prior_instruction_loading_runtime_boundary::load_checked_prior_instructions_from_bounded_range;
+
+#[cfg(feature = "phase-41k6-b1c7-handler-integration-test-gate")]
+use crate::verifier::current_instruction_index_runtime_boundary::acquire_current_instruction_index_from_checked_instructions_sysvar;
+
+#[cfg(feature = "phase-41k6-b1c7-handler-integration-test-gate")]
+use crate::verifier::prior_instruction_index_range_runtime_boundary::construct_prior_instruction_index_range_from_checked_current_index;
+
 use crate::{
     account_contract::assert_consume_gateway_mint_account_contract,
     cpi::{
@@ -68,6 +86,14 @@ pub const ACCOUNT_INDEX_MINT_AUTHORITY_PDA: usize = 7;
 pub const ACCOUNT_INDEX_TOKEN_PROGRAM: usize = 8;
 pub const ACCOUNT_INDEX_RENT_PAYER: usize = 9;
 pub const ACCOUNT_INDEX_SYSTEM_PROGRAM: usize = 10;
+
+#[cfg(all(
+    feature = "phase-41k6-b1c7-handler-integration-test-gate",
+    not(feature = "dangerously-allow-phase-41k6-b1c7-handler-integration-test-gate-sbf-build")
+))]
+compile_error!(
+    "phase-41k6-b1c7-handler-integration-test-gate wires the guardian-authorized ConsumeGatewayMint mark+mint path. It is a non-production integration gate and must never be included in deploy artifacts without the explicit dangerous test allow feature."
+);
 
 pub const LIVE_ROUTE_ACTIVATION_FROM_PROCESS_INSTRUCTION_ENABLED: bool = false;
 
@@ -166,6 +192,168 @@ pub fn b1b_load_authoritative_guardian_set_for_consume_gateway_mint(
     })
 }
 
+#[cfg(feature = "phase-41k6-b1c7-handler-integration-test-gate")]
+pub struct RuntimeConsumeGatewayMintB1C7AuthorizedMarkAndMintComposition {
+    pub authorization: B1C7HandlerAuthorizationResult,
+    pub atomic_mark_and_mint: RuntimeConsumeGatewayMintAtomicMarkAndMintComposition,
+    pub authorization_enabled: bool,
+    pub processed_event_marking_enabled: bool,
+    pub cpi_enabled: bool,
+    pub live_route_enabled: bool,
+}
+
+#[cfg(feature = "phase-41k6-b1c7-handler-integration-test-gate")]
+pub fn b1c7_authorized_consume_gateway_mint_handler_boundary(
+    program_id: &Pubkey,
+    accounts: &[AccountInfo],
+    args: &ConsumeGatewayMintArgs,
+    rent: &Rent,
+    consumed_slot: u64,
+) -> Result<RuntimeConsumeGatewayMintB1C7AuthorizedMarkAndMintComposition, ProgramError> {
+    let authorization = establish_b1c7_consume_gateway_mint_authorization_from_handler_inputs(
+        program_id, accounts, args, rent,
+    )?;
+
+    let legacy_mark_mint_accounts = accounts
+        .get(..CONSUME_GATEWAY_MINT_REQUIRED_ACCOUNTS)
+        .ok_or_else(|| ProgramError::from(XxxlError::InvalidInstruction))?;
+
+    b1c7_atomic_mark_and_mint_after_authorization_boundary(
+        program_id,
+        legacy_mark_mint_accounts,
+        args,
+        rent,
+        consumed_slot,
+        authorization,
+    )
+}
+
+#[cfg(feature = "phase-41k6-b1c7-handler-integration-test-gate")]
+pub fn establish_b1c7_consume_gateway_mint_authorization_from_handler_inputs(
+    program_id: &Pubkey,
+    accounts: &[AccountInfo],
+    args: &ConsumeGatewayMintArgs,
+    rent: &Rent,
+) -> Result<B1C7HandlerAuthorizationResult, ProgramError> {
+    assert_b1_v3_consume_gateway_mint_account_contract(accounts)?;
+
+    let legacy_validation_accounts = accounts
+        .get(..CONSUME_GATEWAY_MINT_REQUIRED_ACCOUNTS)
+        .ok_or_else(|| ProgramError::from(XxxlError::InvalidInstruction))?;
+
+    let prepared = prepare_consume_gateway_mint_cpi_boundary(
+        program_id,
+        legacy_validation_accounts,
+        args,
+        rent,
+    )?;
+
+    let guardian_set_account = account_at(accounts, args.guardian_set_account_index as usize)?;
+    let instructions_sysvar_account = account_at(accounts, CONSUME_GATEWAY_MINT_REQUIRED_ACCOUNTS)?;
+
+    let guardian_set = load_phase_41k_2_guardian_set_account_info(
+        Some(guardian_set_account),
+        program_id,
+        &args.guardian_set_id,
+    );
+
+    if guardian_set.status
+        != Phase41K2GuardianSetAccountLoadingStatus::GuardianSetAccountDataDecoded
+    {
+        return Err(XxxlError::InvalidInstruction.into());
+    }
+
+    let current_instruction_index =
+        acquire_current_instruction_index_from_checked_instructions_sysvar(Some(
+            instructions_sysvar_account,
+        ));
+    let prior_index_range = construct_prior_instruction_index_range_from_checked_current_index(
+        &current_instruction_index,
+    );
+    let checked_prior_loading = load_checked_prior_instructions_from_bounded_range(
+        &prior_index_range,
+        Some(instructions_sysvar_account),
+    );
+
+    let processed_event_account =
+        account_at(accounts, args.processed_event_account_index as usize)?;
+
+    if args.amount == 0 || args.amount > u64::MAX as u128 {
+        return Err(XxxlError::InvalidInstruction.into());
+    }
+
+    let payload_context = B1CAuthorizationPayloadContext {
+        processed_event: *processed_event_account.key,
+        mint: *prepared.boundary.accounts.mint.key,
+        recipient: *prepared.boundary.accounts.recipient_token_account.key,
+        amount: args.amount as u64,
+        guardian_set_id: b1c7_guardian_set_numeric_id(&args.guardian_set_id),
+    };
+
+    let authorization = establish_b1c7_handler_authorization_before_mark_and_mint(
+        &guardian_set,
+        &checked_prior_loading,
+        &payload_context,
+    );
+
+    if authorization.status != B1C7HandlerAuthorizationStatus::Authorized
+        || !authorization.authorization_enabled
+    {
+        return Err(XxxlError::InvalidInstruction.into());
+    }
+
+    Ok(authorization)
+}
+
+#[cfg(feature = "phase-41k6-b1c7-handler-integration-test-gate")]
+pub fn b1c7_atomic_mark_and_mint_after_authorization_boundary(
+    program_id: &Pubkey,
+    accounts: &[AccountInfo],
+    args: &ConsumeGatewayMintArgs,
+    rent: &Rent,
+    consumed_slot: u64,
+    authorization: B1C7HandlerAuthorizationResult,
+) -> Result<RuntimeConsumeGatewayMintB1C7AuthorizedMarkAndMintComposition, ProgramError> {
+    if authorization.status != B1C7HandlerAuthorizationStatus::Authorized
+        || !authorization.authorization_enabled
+        || !authorization.fail_fast_before_mutation
+        || !authorization.evidence_from_prior_ed25519_instructions
+        || !authorization.payload_hash_bound
+        || !authorization.guardian_membership_validated
+        || !authorization.quorum_met
+    {
+        return Err(XxxlError::InvalidInstruction.into());
+    }
+
+    if !crate::cpi::spl_mint_to_cpi_execution_enabled() {
+        return Err(XxxlError::CpiBoundaryNotReady.into());
+    }
+
+    let atomic_mark_and_mint =
+        atomic_mark_and_mint_boundary(program_id, accounts, args, rent, consumed_slot)?;
+
+    Ok(
+        RuntimeConsumeGatewayMintB1C7AuthorizedMarkAndMintComposition {
+            authorization,
+            atomic_mark_and_mint,
+            authorization_enabled: true,
+            processed_event_marking_enabled: true,
+            cpi_enabled: true,
+            live_route_enabled: false,
+        },
+    )
+}
+
+#[cfg(feature = "phase-41k6-b1c7-handler-integration-test-gate")]
+fn b1c7_guardian_set_numeric_id(guardian_set_id: &[u8; 32]) -> u32 {
+    u32::from_le_bytes([
+        guardian_set_id[0],
+        guardian_set_id[1],
+        guardian_set_id[2],
+        guardian_set_id[3],
+    ])
+}
+
 pub fn process_instruction(
     program_id: &Pubkey,
     accounts: &[AccountInfo],
@@ -204,6 +392,7 @@ pub fn process_instruction(
     }
 }
 
+#[cfg(not(feature = "phase-41k6-b1c7-handler-integration-test-gate"))]
 fn process_consume_gateway_mint(
     program_id: &Pubkey,
     accounts: &[AccountInfo],
@@ -215,6 +404,23 @@ fn process_consume_gateway_mint(
     atomic_mark_and_mint_boundary(program_id, accounts, args, &rent, clock.slot)?;
 
     msg!("XXXL consume_gateway_mint atomic mark + mint completed");
+    Ok(())
+}
+
+#[cfg(feature = "phase-41k6-b1c7-handler-integration-test-gate")]
+fn process_consume_gateway_mint(
+    program_id: &Pubkey,
+    accounts: &[AccountInfo],
+    args: &ConsumeGatewayMintArgs,
+) -> ProgramResult {
+    let rent = Rent::get()?;
+    let clock = Clock::get()?;
+
+    b1c7_authorized_consume_gateway_mint_handler_boundary(
+        program_id, accounts, args, &rent, clock.slot,
+    )?;
+
+    msg!("XXXL consume_gateway_mint guardian-authorized atomic mark + mint completed");
     Ok(())
 }
 
@@ -599,6 +805,8 @@ fn account_at<'a, 'b>(
 #[cfg(test)]
 mod tests {
     use super::*;
+    #[cfg(feature = "phase-41k6-b1c7-handler-integration-test-gate")]
+    use crate::verifier::B1C7HandlerAuthorizationRejectionKind;
     #[cfg(feature = "phase-41k6-b1b-guardian-set-loading-test-gate")]
     use crate::verifier::{
         find_phase_41k_2_guardian_set_pda, GUARDIAN_PUBLIC_KEY_LEN,
@@ -2143,5 +2351,125 @@ mod tests {
 
     fn assert_custom_error<T>(result: Result<T, ProgramError>, error: XxxlError) {
         assert!(matches!(result, Err(ProgramError::Custom(code)) if code == error as u32));
+    }
+
+    #[cfg(feature = "phase-41k6-b1c7-handler-integration-test-gate")]
+    fn b1c7_rejected_authorization_result() -> B1C7HandlerAuthorizationResult {
+        B1C7HandlerAuthorizationResult {
+            status: B1C7HandlerAuthorizationStatus::Rejected,
+            rejection_kind: Some(B1C7HandlerAuthorizationRejectionKind::QuorumRejected),
+            parsed_evidence_count: 2,
+            payload_bound_evidence_count: 2,
+            membership_validated_signer_count: 2,
+            unique_guardian_count: 1,
+            threshold: Some(2),
+            fail_fast_before_mutation: true,
+            evidence_from_prior_ed25519_instructions: false,
+            payload_hash_bound: false,
+            guardian_membership_validated: false,
+            quorum_met: false,
+            authorization_enabled: false,
+            processed_event_marking_enabled: false,
+            cpi_enabled: false,
+            live_route_enabled: false,
+        }
+    }
+
+    #[cfg(feature = "phase-41k6-b1c7-handler-integration-test-gate")]
+    fn b1c7_authorized_result_for_cpi_gate_test() -> B1C7HandlerAuthorizationResult {
+        B1C7HandlerAuthorizationResult {
+            status: B1C7HandlerAuthorizationStatus::Authorized,
+            rejection_kind: None,
+            parsed_evidence_count: 2,
+            payload_bound_evidence_count: 2,
+            membership_validated_signer_count: 2,
+            unique_guardian_count: 2,
+            threshold: Some(2),
+            fail_fast_before_mutation: true,
+            evidence_from_prior_ed25519_instructions: true,
+            payload_hash_bound: true,
+            guardian_membership_validated: true,
+            quorum_met: true,
+            authorization_enabled: true,
+            processed_event_marking_enabled: false,
+            cpi_enabled: false,
+            live_route_enabled: false,
+        }
+    }
+
+    #[cfg(feature = "phase-41k6-b1c7-handler-integration-test-gate")]
+    #[test]
+    fn b1c7_rejected_authorization_blocks_mark_and_mint_before_mutation() {
+        let mut fixture = HandlerFixture::new();
+
+        let processed_before = fixture.data.processed_event.clone();
+        let recipient_balance_before = fixture.data.recipient_balance.clone();
+        let spl_mint_before = fixture.data.spl_mint.clone();
+        let recipient_token_account_before = fixture.data.recipient_token_account.clone();
+
+        let program_id = fixture.program_id;
+        let args = fixture.args;
+        let rent = Rent::default();
+        let accounts = fixture.accounts();
+
+        assert_custom_error(
+            b1c7_atomic_mark_and_mint_after_authorization_boundary(
+                &program_id,
+                &accounts,
+                &args,
+                &rent,
+                144,
+                b1c7_rejected_authorization_result(),
+            ),
+            XxxlError::InvalidInstruction,
+        );
+
+        drop(accounts);
+
+        assert_eq!(fixture.data.processed_event, processed_before);
+        assert_eq!(fixture.data.recipient_balance, recipient_balance_before);
+        assert_eq!(fixture.data.spl_mint, spl_mint_before);
+        assert_eq!(
+            fixture.data.recipient_token_account,
+            recipient_token_account_before
+        );
+    }
+
+    #[cfg(feature = "phase-41k6-b1c7-handler-integration-test-gate")]
+    #[test]
+    fn b1c7_authorized_result_still_blocks_before_mutation_when_cpi_gate_closed() {
+        let mut fixture = HandlerFixture::new();
+
+        let processed_before = fixture.data.processed_event.clone();
+        let recipient_balance_before = fixture.data.recipient_balance.clone();
+        let spl_mint_before = fixture.data.spl_mint.clone();
+        let recipient_token_account_before = fixture.data.recipient_token_account.clone();
+
+        let program_id = fixture.program_id;
+        let args = fixture.args;
+        let rent = Rent::default();
+        let accounts = fixture.accounts();
+
+        assert_custom_error(
+            b1c7_atomic_mark_and_mint_after_authorization_boundary(
+                &program_id,
+                &accounts,
+                &args,
+                &rent,
+                144,
+                b1c7_authorized_result_for_cpi_gate_test(),
+            ),
+            XxxlError::CpiBoundaryNotReady,
+        );
+
+        drop(accounts);
+
+        assert_eq!(fixture.data.processed_event, processed_before);
+        assert_eq!(fixture.data.recipient_balance, recipient_balance_before);
+        assert_eq!(fixture.data.spl_mint, spl_mint_before);
+        assert_eq!(
+            fixture.data.recipient_token_account,
+            recipient_token_account_before
+        );
     }
 }
