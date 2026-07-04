@@ -192,7 +192,20 @@ impl<'a> RecipientBalanceAccountView<'a> {
     }
 }
 
-pub fn mark_processed_event_consumed(
+// LEGACY: Pre-41K.4 planning helper.
+//
+// Assumes an already-initialized processed-event account exists with
+// consumed == false, then flips it to consumed == true.
+//
+// This is not compatible with the Phase 41K.4 atomic marking model:
+//
+//     SystemOwnedEmpty -> InitializedConsumed
+//
+// Do not use this helper for replay protection, 41K.4 marking, or any
+// live burn-to-mint route.
+#[cfg(test)]
+#[deprecated(note = "Use the Phase 41K.4 processed-event marking boundary instead")]
+pub(crate) fn mark_processed_event_consumed_legacy_planning_only(
     data: &mut [u8],
     expected_canonical_event_key: [u8; 32],
     expected_route_id: [u8; 32],
@@ -301,6 +314,55 @@ mod tests {
         assert_eq!(GUARDIAN_SET_ACCOUNT_LEN, 320);
         assert_eq!(PROCESSED_EVENT_ACCOUNT_LEN, 144);
         assert_eq!(RECIPIENT_BALANCE_ACCOUNT_LEN, 144);
+    }
+    #[test]
+    fn phase_41k4_marking_modules_must_not_call_legacy_processed_event_helper() {
+        let manifest_dir = std::env::var("CARGO_MANIFEST_DIR").expect("CARGO_MANIFEST_DIR is set");
+        let src_dir = std::path::Path::new(&manifest_dir).join("src");
+        let mut offenders = Vec::new();
+
+        collect_41k4_marking_legacy_helper_offenders(&src_dir, &mut offenders);
+
+        assert!(
+            offenders.is_empty(),
+            "41K.4/marking modules must not call legacy processed-event helper: {offenders:?}"
+        );
+    }
+
+    fn collect_41k4_marking_legacy_helper_offenders(
+        path: &std::path::Path,
+        offenders: &mut Vec<String>,
+    ) {
+        let Ok(entries) = std::fs::read_dir(path) else {
+            return;
+        };
+
+        for entry in entries.flatten() {
+            let path = entry.path();
+
+            if path.is_dir() {
+                collect_41k4_marking_legacy_helper_offenders(&path, offenders);
+                continue;
+            }
+
+            if path.extension().and_then(|ext| ext.to_str()) != Some("rs") {
+                continue;
+            }
+
+            let path_string = path.to_string_lossy().to_ascii_lowercase();
+
+            if !path_string.contains("41k4") && !path_string.contains("marking") {
+                continue;
+            }
+
+            let Ok(content) = std::fs::read_to_string(&path) else {
+                continue;
+            };
+
+            if content.contains("mark_processed_event_consumed_legacy_planning_only") {
+                offenders.push(path.to_string_lossy().into_owned());
+            }
+        }
     }
 
     #[test]
@@ -423,7 +485,7 @@ mod tests {
         data[48..80].copy_from_slice(&route_id);
         data[80..112].copy_from_slice(&recipient);
 
-        mark_processed_event_consumed(
+        mark_processed_event_consumed_legacy_planning_only(
             &mut data,
             canonical_event_key,
             route_id,
@@ -456,7 +518,7 @@ mod tests {
         data[80..112].copy_from_slice(&recipient);
 
         assert_custom_error(
-            mark_processed_event_consumed(
+            mark_processed_event_consumed_legacy_planning_only(
                 &mut data,
                 canonical_event_key,
                 route_id,
@@ -483,7 +545,9 @@ mod tests {
         data[80..112].copy_from_slice(&recipient);
 
         assert_custom_error(
-            mark_processed_event_consumed(&mut data, [0x99; 32], route_id, recipient, 1_000, 77),
+            mark_processed_event_consumed_legacy_planning_only(
+                &mut data, [0x99; 32], route_id, recipient, 1_000, 77,
+            ),
             XxxlError::InvalidInstruction,
         );
     }

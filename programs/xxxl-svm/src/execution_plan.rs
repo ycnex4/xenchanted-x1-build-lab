@@ -1,13 +1,19 @@
 use solana_program::program_error::ProgramError;
 
+// LEGACY / PRE-41K.4:
+// This module still represents an older planning scaffold that assumes an
+// already-initialized program-owned processed-event account.
+// It is not valid Phase 41K.4 atomic replay marking semantics.
+// 41K.4 must use a separate SystemOwnedEmpty -> InitializedConsumed boundary.
+
+#[cfg(test)]
+use crate::state::mark_processed_event_consumed_legacy_planning_only;
+
 use crate::{
     error::XxxlError,
     instruction::ConsumeGatewayMintArgs,
     processor::PreparedConsumeGatewayMintCpi,
-    state::{
-        credit_recipient_balance, mark_processed_event_consumed, ProcessedEventAccountView,
-        RecipientBalanceAccountView,
-    },
+    state::{credit_recipient_balance, ProcessedEventAccountView, RecipientBalanceAccountView},
 };
 
 #[derive(Clone, Copy, Debug, PartialEq, Eq)]
@@ -76,6 +82,8 @@ pub fn build_atomic_consume_gateway_mint_execution_plan(
     })
 }
 
+#[cfg(test)]
+#[allow(deprecated)]
 pub fn apply_processed_event_mutation_boundary(
     processed_event_data: &mut [u8],
     execution_plan: &AtomicConsumeGatewayMintExecutionPlan,
@@ -89,7 +97,7 @@ pub fn apply_processed_event_mutation_boundary(
         return Err(XxxlError::InvalidInstruction.into());
     }
 
-    mark_processed_event_consumed(
+    mark_processed_event_consumed_legacy_planning_only(
         processed_event_data,
         execution_plan.canonical_event_key,
         execution_plan.route_id,
@@ -121,6 +129,7 @@ pub fn apply_recipient_balance_mutation_boundary(
     )
 }
 
+#[cfg(test)]
 pub fn apply_atomic_state_mutation_composition_boundary(
     processed_event_data: &mut [u8],
     recipient_balance_data: &mut [u8],
@@ -166,6 +175,8 @@ pub fn apply_atomic_state_mutation_composition_boundary(
     apply_recipient_balance_mutation_boundary(recipient_balance_data, execution_plan)
 }
 
+#[cfg(test)]
+#[allow(deprecated)]
 pub fn apply_atomic_state_mutations_fixture(
     processed_event_data: &mut [u8],
     recipient_balance_data: &mut [u8],
@@ -201,7 +212,7 @@ pub fn apply_atomic_state_mutations_fixture(
             .ok_or(XxxlError::InvalidInstruction)?;
     }
 
-    mark_processed_event_consumed(
+    mark_processed_event_consumed_legacy_planning_only(
         processed_event_data,
         args.canonical_event_key,
         args.route_id,

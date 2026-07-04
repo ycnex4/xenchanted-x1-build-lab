@@ -53,6 +53,10 @@ pub const CONSUME_GATEWAY_MINT_ACCOUNT_CONTRACT: [ConsumeGatewayMintAccountContr
         signer_requirement: AccountSignerRequirement::NotSigner,
         owner_model: AccountOwnerModel::ProgramOwned,
     },
+    // LEGACY / PRE-41K.4:
+    // This instruction-level scaffold assumes processed_event is already
+    // program-owned. It is not the Phase 41K.4 atomic marking account
+    // manifest, where entry state is a system-owned empty-data PDA.
     ConsumeGatewayMintAccountContractEntry {
         index: 3,
         name: "processed_event",

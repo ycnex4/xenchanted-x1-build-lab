@@ -1,3 +1,13 @@
+// LEGACY / PRE-41K.4:
+// This processor scaffold validates and plans around an already-initialized
+// program-owned processed_event account. It is intentionally not a Phase
+// 41K.4 atomic marking route and must not be used as live replay protection.
+//
+// Phase 41K.4 must remain isolated until a later mark+mint atomic integration
+// proves quorum + decode + eligibility + mark + SPL mint in one execution path.
+#[cfg(test)]
+use crate::execution_plan::apply_atomic_state_mutation_composition_boundary;
+
 use solana_program::{
     account_info::AccountInfo, clock::Clock, entrypoint::ProgramResult, msg,
     program_error::ProgramError, pubkey::Pubkey, rent::Rent, sysvar::Sysvar,
@@ -11,7 +21,6 @@ use crate::{
     },
     error::XxxlError,
     execution_plan::{
-        apply_atomic_state_mutation_composition_boundary,
         build_atomic_consume_gateway_mint_execution_plan, AtomicConsumeGatewayMintExecutionPlan,
     },
     instruction::{
@@ -54,6 +63,7 @@ pub struct RuntimeConsumeGatewayMintPlanningComposition {
     pub invoke_signed_from_process_instruction_enabled: bool,
 }
 
+#[cfg(test)]
 pub struct RuntimeConsumeGatewayMintLocalStateMutationComposition {
     pub planning_composition: RuntimeConsumeGatewayMintPlanningComposition,
     pub recipient_balance_after: u128,
@@ -66,6 +76,19 @@ pub fn process_instruction(
     accounts: &[AccountInfo],
     instruction_data: &[u8],
 ) -> ProgramResult {
+    #[cfg(feature = "phase-41k4-svm-test-harness")]
+    {
+        if crate::processed_event_marking_svm_harness::is_phase_41k4_marking_svm_harness_instruction(
+            instruction_data,
+        ) {
+            return crate::processed_event_marking_svm_harness::process_phase_41k4_marking_svm_harness_instruction(
+                program_id,
+                accounts,
+                instruction_data,
+            );
+        }
+    }
+
     let instruction = XxxlInstruction::unpack(instruction_data)?;
 
     match instruction {
@@ -145,6 +168,7 @@ pub fn build_runtime_consume_gateway_mint_planning_composition_boundary(
     })
 }
 
+#[cfg(test)]
 pub fn build_runtime_consume_gateway_mint_local_state_mutation_composition_boundary(
     program_id: &Pubkey,
     accounts: &[AccountInfo],
