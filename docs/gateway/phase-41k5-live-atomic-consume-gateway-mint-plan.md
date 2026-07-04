@@ -39,6 +39,36 @@ This phase does not cover:
 
 Those are later MVP layers after the on-chain atomic path is correct.
 
+## Clarifications after Theo review
+
+### `source_chain_weight_bps` intent
+
+Phase 41K.5 does not recompute the mint amount from `source_chain_weight_bps` on-chain.
+
+The live route mints the already-authorized `args.amount`.
+
+For 41K.5, `source_chain_weight_bps` remains a route/config consistency and audit field:
+
+- instruction `source_chain_weight_bps` must match `GatewayConfig`;
+- execution plan preserves the field for traceability;
+- `consumed_amount` equals the actual XXXL mint amount;
+- no additional multiplication or weighting is performed inside the live SVM path.
+
+Any future change where the program recomputes amount from a source burn amount and route weight is out of scope for 41K.5 and must be handled as a separate phase.
+
+### `recipient_balance` intent
+
+For Phase 41K.5, the authoritative user balance is the SPL Token recipient account updated by `mint_to`.
+
+The old `recipient_balance` mutation scaffold is not treated as the authoritative live balance update for 41K.5.
+
+Until the mirror-ledger decision is made explicitly:
+
+- live mark+mint must not silently mix SPL minting with legacy recipient-balance crediting;
+- `recipient_balance` may remain part of validation/account-contract compatibility;
+- any live update to `recipient_balance` is deferred unless a later 41K.5 sub-step explicitly reintroduces it with atomic tests.
+
+
 ## Current blockers in `main`
 
 ### 1. Live route is still disabled
