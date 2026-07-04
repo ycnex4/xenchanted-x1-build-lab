@@ -53,9 +53,19 @@ B1C.4 expected payload should bind at minimum:
 - recipient token account pubkey
 - amount u64
 - guardian_set_id u32
-- current slot u64
 
 All numeric fields use little-endian encoding.
+
+## Slot policy
+
+current_slot is intentionally omitted from the authorization payload.
+
+Reason:
+
+- guardians sign asynchronously
+- exact execution slot is not predictable
+- processed_event uniqueness plus processed registry provides replay protection
+- including exact slot would create operational fragility without meaningful extra security
 
 ## Field sources
 
@@ -68,8 +78,6 @@ recipient comes from the live recipient token account key.
 amount comes from decoded ConsumeGatewayMint args.
 
 guardian_set_id comes from decoded ConsumeGatewayMint args.
-
-current slot comes from Clock slot used in the live boundary.
 
 ## Verification rule
 
@@ -127,11 +135,10 @@ Minimum tests:
 5. Different recipient changes hash.
 6. Different amount changes hash.
 7. Different guardian_set_id changes hash.
-8. Different slot changes hash.
-9. Matching parsed evidence passes payload binding.
-10. Mismatched parsed evidence rejects.
-11. Wrong signed_message length rejects.
-12. All rejection paths keep execution flags false.
+8. Matching parsed evidence passes payload binding.
+9. Mismatched parsed evidence rejects.
+10. Wrong signed_message length rejects.
+11. All rejection paths keep execution flags false.
 
 ## Completion criteria
 
@@ -140,6 +147,6 @@ B1C.4 spec is complete when Theo accepts:
 - local hash computation
 - SHA-256
 - domain separation
-- live field sources
+- live field sources, with current_slot intentionally omitted
 - no caller-provided precomputed hash
 - no execution authorization in this slice
