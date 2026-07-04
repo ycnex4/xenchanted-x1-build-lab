@@ -50,6 +50,40 @@ Default production build must remain closed.
 
 B1C.7 must not silently open live route or production behavior outside the explicit test/integration gate.
 
+
+## Additional implementation requirements
+
+### Fail-fast policy
+
+B1C.7 must fail fast.
+
+Any single failure in the authorization pipeline aborts the handler before any mutable account change:
+
+- missing or invalid instructions_sysvar
+- no prior Ed25519 evidence
+- Ed25519 parser rejection
+- payload hash mismatch
+- unauthorized guardian
+- duplicate-only quorum inflation attempt
+- quorum not met
+- guardian set mismatch
+
+### Guardian set expiry policy
+
+Current B1B guardian set layout has active status but no active-until slot or expiry field.
+
+Therefore B1C.7 verifies the existing active guardian set status through B1B loading.
+
+If a future guardian set layout adds expiry, B1C.7 must verify current_slot <= active_until_slot before accepting the set.
+
+### Compile gate policy
+
+B1C.7 must keep the production gate explicit.
+
+The B1C.7 integration feature must fail compilation unless paired with its explicit dangerous test allow feature.
+
+Earlier compile_error guards must not be removed or weakened.
+
 ## Non-goals
 
 B1C.7 does not redesign canonical message encoding.
@@ -90,3 +124,6 @@ B1C.7 spec is complete when Theo accepts:
 - rollback/no-mutation failure rule
 - feature-gated integration only
 - default production closed gate preserved
+- fail-fast before mutation
+- current guardian set has no expiry field; active status is enforced by B1B
+- B1C.7 compile_error guard is preserved
