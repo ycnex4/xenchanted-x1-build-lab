@@ -19,6 +19,8 @@ pub mod execution_plan;
 pub mod instruction;
 pub mod pda;
 pub mod processed_event_marking_boundary;
+#[cfg(feature = "phase-41k4-svm-test-harness")]
+pub mod processed_event_marking_svm_harness;
 pub mod processor;
 pub mod program_id_status;
 pub mod safety_invariants;

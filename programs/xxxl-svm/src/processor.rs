@@ -76,6 +76,19 @@ pub fn process_instruction(
     accounts: &[AccountInfo],
     instruction_data: &[u8],
 ) -> ProgramResult {
+    #[cfg(feature = "phase-41k4-svm-test-harness")]
+    {
+        if crate::processed_event_marking_svm_harness::is_phase_41k4_marking_svm_harness_instruction(
+            instruction_data,
+        ) {
+            return crate::processed_event_marking_svm_harness::process_phase_41k4_marking_svm_harness_instruction(
+                program_id,
+                accounts,
+                instruction_data,
+            );
+        }
+    }
+
     let instruction = XxxlInstruction::unpack(instruction_data)?;
 
     match instruction {
