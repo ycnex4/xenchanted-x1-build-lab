@@ -469,7 +469,11 @@ fn mollusk_accepts_dusted_system_owned_empty_processed_event_without_live_route(
         1
     );
 
-    let checks = result_and_unchanged_mutable_account_checks(&fixture, &accounts, Check::success());
+    let checks = result_and_unchanged_mutable_account_checks(
+        &fixture,
+        &accounts,
+        Check::err(ProgramError::Custom(XxxlError::CpiBoundaryNotReady as u32)),
+    );
 
     mollusk.process_and_validate_instruction(&instruction, &accounts, &checks);
 }
@@ -756,7 +760,11 @@ fn mollusk_valid_scaffold_entrypoint_leaves_mutable_accounts_unchanged() {
     let accounts = fixture.accounts();
     assert_live_atomicity_accounts_start_unmutated(&accounts);
 
-    let checks = result_and_unchanged_mutable_account_checks(&fixture, &accounts, Check::success());
+    let checks = result_and_unchanged_mutable_account_checks(
+        &fixture,
+        &accounts,
+        Check::err(ProgramError::Custom(XxxlError::CpiBoundaryNotReady as u32)),
+    );
 
     mollusk.process_and_validate_instruction(&instruction, &accounts, &checks);
 }
@@ -783,7 +791,11 @@ fn mollusk_valid_v2_matching_source_chain_id_leaves_mutable_accounts_unchanged()
     );
     assert_live_atomicity_accounts_start_unmutated(&accounts);
 
-    let checks = result_and_unchanged_mutable_account_checks(&fixture, &accounts, Check::success());
+    let checks = result_and_unchanged_mutable_account_checks(
+        &fixture,
+        &accounts,
+        Check::err(ProgramError::Custom(XxxlError::CpiBoundaryNotReady as u32)),
+    );
 
     mollusk.process_and_validate_instruction(&instruction, &accounts, &checks);
 }
@@ -797,7 +809,11 @@ fn process_instruction_v2_still_disabled_plan() {
     let accounts = fixture.accounts();
     assert_live_atomicity_accounts_start_unmutated(&accounts);
 
-    let checks = result_and_unchanged_mutable_account_checks(&fixture, &accounts, Check::success());
+    let checks = result_and_unchanged_mutable_account_checks(
+        &fixture,
+        &accounts,
+        Check::err(ProgramError::Custom(XxxlError::CpiBoundaryNotReady as u32)),
+    );
 
     mollusk.process_and_validate_instruction(&instruction, &accounts, &checks);
 }

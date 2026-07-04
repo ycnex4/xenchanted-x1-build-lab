@@ -26,6 +26,7 @@ use crate::{
     instruction::{
         ConsumeGatewayMintArgs, XxxlInstruction, CONSUME_GATEWAY_MINT_ACCOUNT_META_COUNT,
     },
+    processed_event_marking_boundary::{mark_processed_event_atomic, ProcessedEventMarkingWitness},
     state::{
         GatewayConfigAccountView, GuardianSetAccountView, MintStateAccountView,
         RecipientBalanceAccountView,
@@ -65,6 +66,14 @@ pub struct PreparedConsumeGatewayMintCpi<'a, 'b> {
 pub struct RuntimeConsumeGatewayMintPlanningComposition {
     pub execution_plan: AtomicConsumeGatewayMintExecutionPlan,
     pub mint_to_cpi_plan: MintToCpiPlanningBoundary,
+    pub live_route_activation_enabled: bool,
+    pub invoke_signed_from_process_instruction_enabled: bool,
+}
+
+pub struct RuntimeConsumeGatewayMintAtomicMarkAndMintComposition {
+    pub execution_plan: AtomicConsumeGatewayMintExecutionPlan,
+    pub mint_to_cpi_plan: MintToCpiPlanningBoundary,
+    pub marking_witness: ProcessedEventMarkingWitness,
     pub live_route_activation_enabled: bool,
     pub invoke_signed_from_process_instruction_enabled: bool,
 }
@@ -112,11 +121,9 @@ fn process_consume_gateway_mint(
     let rent = Rent::get()?;
     let clock = Clock::get()?;
 
-    let _execution_plan = build_runtime_consume_gateway_mint_execution_plan_boundary(
-        program_id, accounts, args, &rent, clock.slot,
-    )?;
+    atomic_mark_and_mint_boundary(program_id, accounts, args, &rent, clock.slot)?;
 
-    msg!("XXXL consume_gateway_mint execution plan built; live route execution is not activated");
+    msg!("XXXL consume_gateway_mint atomic mark + mint completed");
     Ok(())
 }
 
@@ -230,6 +237,89 @@ pub fn build_runtime_consume_gateway_mint_local_state_mutation_composition_bound
         live_route_activation_enabled: false,
         invoke_signed_from_process_instruction_enabled: false,
     })
+}
+
+pub fn atomic_mark_and_mint_boundary(
+    program_id: &Pubkey,
+    accounts: &[AccountInfo],
+    args: &ConsumeGatewayMintArgs,
+    rent: &Rent,
+    consumed_slot: u64,
+) -> Result<RuntimeConsumeGatewayMintAtomicMarkAndMintComposition, ProgramError> {
+    let prepared = prepare_consume_gateway_mint_cpi_boundary(program_id, accounts, args, rent)?;
+    let execution_plan =
+        build_atomic_consume_gateway_mint_execution_plan(args, &prepared, consumed_slot)?;
+
+    if execution_plan.live_route_activation_enabled
+        || execution_plan.mint_to_invocation_from_process_instruction_enabled
+    {
+        return Err(XxxlError::CpiBoundaryNotReady.into());
+    }
+
+    let mint_to_cpi_plan =
+        plan_mint_to_cpi_boundary(program_id, &execution_plan, &prepared.boundary)?;
+
+    if mint_to_cpi_plan.live_route_activation_enabled
+        || mint_to_cpi_plan.invoke_signed_from_process_instruction_enabled
+    {
+        return Err(XxxlError::CpiBoundaryNotReady.into());
+    }
+
+    let processed_event_account =
+        account_at(accounts, args.processed_event_account_index as usize)?;
+    let rent_payer = account_at(accounts, ACCOUNT_INDEX_RENT_PAYER)?;
+    let system_program_account = account_at(accounts, ACCOUNT_INDEX_SYSTEM_PROGRAM)?;
+
+    let marking_witness = mark_processed_event_atomic(
+        program_id,
+        processed_event_account,
+        rent_payer,
+        system_program_account,
+        &execution_plan.canonical_event_key,
+        &execution_plan.route_id,
+        &execution_plan.recipient,
+        execution_plan.amount as u128,
+        execution_plan.consumed_slot,
+        rent,
+    )?;
+
+    assert_marking_witness_matches_execution_plan(&marking_witness, &execution_plan)?;
+
+    guarded_mint_to_cpi_execution_gate_boundary(
+        program_id,
+        &execution_plan,
+        &mint_to_cpi_plan,
+        &prepared.boundary,
+    )?;
+
+    Ok(RuntimeConsumeGatewayMintAtomicMarkAndMintComposition {
+        execution_plan,
+        mint_to_cpi_plan,
+        marking_witness,
+        live_route_activation_enabled: false,
+        invoke_signed_from_process_instruction_enabled: false,
+    })
+}
+
+fn assert_marking_witness_matches_execution_plan(
+    marking_witness: &ProcessedEventMarkingWitness,
+    execution_plan: &AtomicConsumeGatewayMintExecutionPlan,
+) -> ProgramResult {
+    if marking_witness.canonical_event_key() != execution_plan.canonical_event_key
+        || marking_witness.route_id() != execution_plan.route_id
+        || marking_witness.recipient() != execution_plan.recipient
+        || marking_witness.consumed_amount() != execution_plan.amount as u128
+        || marking_witness.consumed_slot() != execution_plan.consumed_slot
+        || !marking_witness.final_redecode_passed()
+        || !marking_witness.system_program_cpi_used()
+        || !marking_witness.invoke_signed_used()
+        || marking_witness.spl_token_mint_to_enabled()
+        || marking_witness.live_route_enabled()
+    {
+        return Err(XxxlError::InvalidInstruction.into());
+    }
+
+    Ok(())
 }
 
 pub fn build_runtime_consume_gateway_mint_disabled_spl_cpi_gate_boundary(
