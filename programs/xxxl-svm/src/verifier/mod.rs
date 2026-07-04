@@ -18,6 +18,8 @@ pub mod b1c_guardian_membership_validation;
 pub mod b1c_instructions_sysvar_evidence_bridge;
 #[cfg(feature = "phase-41k6-b1c-ed25519-evidence-wiring-test-gate")]
 pub mod b1c_payload_hash_binding;
+#[cfg(feature = "phase-41k6-b1c-ed25519-evidence-wiring-test-gate")]
+pub mod b1c_quorum_counting;
 
 pub mod boundary;
 pub mod canonical_payload;
@@ -44,6 +46,14 @@ pub use b1c_connect_ed25519_evidence_adapter::{
     B1CConnectedEd25519EvidenceParseRejection, B1CConnectedEd25519EvidenceStatus,
     B1C_CONNECT_ED25519_EVIDENCE_ADAPTER_REPORT, PHASE_41K6_B1C_3_CONNECT_ED25519_EVIDENCE_PHASE,
     PHASE_41K6_B1C_3_CONNECT_ED25519_EVIDENCE_VERSION,
+};
+
+#[cfg(feature = "phase-41k6-b1c-ed25519-evidence-wiring-test-gate")]
+pub use b1c_quorum_counting::{
+    b1c_quorum_counting_report, count_b1c_validated_guardian_quorum,
+    B1CQuorumCountingRejectionKind, B1CQuorumCountingReport, B1CQuorumCountingResult,
+    B1CQuorumCountingStatus, B1C_QUORUM_COUNTING_REPORT, PHASE_41K6_B1C_6_QUORUM_COUNTING_PHASE,
+    PHASE_41K6_B1C_6_QUORUM_COUNTING_VERSION,
 };
 
 #[cfg(feature = "phase-41k6-b1c-ed25519-evidence-wiring-test-gate")]
