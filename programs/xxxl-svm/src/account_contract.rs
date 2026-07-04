@@ -2,6 +2,12 @@ use solana_program::{account_info::AccountInfo, program_error::ProgramError};
 
 use crate::error::XxxlError;
 
+#[cfg(all(
+    feature = "phase-41k6-b1-v3-account-contract-test-gate",
+    not(feature = "dangerously-allow-phase-41k6-b1-v3-account-contract-test-gate-sbf-build")
+))]
+compile_error!("phase-41k6-b1-v3-account-contract-test-gate introduces the B1 V3 ConsumeGatewayMint account contract skeleton. It is a non-production integration gate and must never be included in deploy artifacts without the explicit dangerous test allow feature.");
+
 #[derive(Clone, Copy, Debug, PartialEq, Eq)]
 pub enum AccountWriteAccess {
     Readonly,
@@ -23,6 +29,7 @@ pub enum AccountOwnerModel {
     SystemOwnedOrProgramOwnedPda,
     RentPayer,
     SystemProgram,
+    InstructionsSysvar,
 }
 
 #[derive(Clone, Copy, Debug, PartialEq, Eq)]
@@ -118,9 +125,104 @@ pub const CONSUME_GATEWAY_MINT_ACCOUNT_CONTRACT: [ConsumeGatewayMintAccountContr
     },
 ];
 
+#[cfg(feature = "phase-41k6-b1-v3-account-contract-test-gate")]
+pub const CONSUME_GATEWAY_MINT_B1_V3_ACCOUNT_CONTRACT: [ConsumeGatewayMintAccountContractEntry;
+    12] = [
+    ConsumeGatewayMintAccountContractEntry {
+        index: 0,
+        name: "mint_state",
+        write_access: AccountWriteAccess::Readonly,
+        signer_requirement: AccountSignerRequirement::NotSigner,
+        owner_model: AccountOwnerModel::ProgramOwned,
+    },
+    ConsumeGatewayMintAccountContractEntry {
+        index: 1,
+        name: "gateway_config",
+        write_access: AccountWriteAccess::Readonly,
+        signer_requirement: AccountSignerRequirement::NotSigner,
+        owner_model: AccountOwnerModel::ProgramOwned,
+    },
+    ConsumeGatewayMintAccountContractEntry {
+        index: 2,
+        name: "guardian_set",
+        write_access: AccountWriteAccess::Readonly,
+        signer_requirement: AccountSignerRequirement::NotSigner,
+        owner_model: AccountOwnerModel::ProgramOwned,
+    },
+    ConsumeGatewayMintAccountContractEntry {
+        index: 3,
+        name: "processed_event",
+        write_access: AccountWriteAccess::Writable,
+        signer_requirement: AccountSignerRequirement::NotSigner,
+        owner_model: AccountOwnerModel::SystemOwnedOrProgramOwnedPda,
+    },
+    ConsumeGatewayMintAccountContractEntry {
+        index: 4,
+        name: "recipient_balance",
+        write_access: AccountWriteAccess::Writable,
+        signer_requirement: AccountSignerRequirement::NotSigner,
+        owner_model: AccountOwnerModel::ProgramOwned,
+    },
+    ConsumeGatewayMintAccountContractEntry {
+        index: 5,
+        name: "spl_token_mint",
+        write_access: AccountWriteAccess::Writable,
+        signer_requirement: AccountSignerRequirement::NotSigner,
+        owner_model: AccountOwnerModel::SplTokenOwned,
+    },
+    ConsumeGatewayMintAccountContractEntry {
+        index: 6,
+        name: "recipient_token_account",
+        write_access: AccountWriteAccess::Writable,
+        signer_requirement: AccountSignerRequirement::NotSigner,
+        owner_model: AccountOwnerModel::SplTokenOwned,
+    },
+    ConsumeGatewayMintAccountContractEntry {
+        index: 7,
+        name: "mint_authority_pda",
+        write_access: AccountWriteAccess::Readonly,
+        signer_requirement: AccountSignerRequirement::NotSigner,
+        owner_model: AccountOwnerModel::ProgramDerivedAddress,
+    },
+    ConsumeGatewayMintAccountContractEntry {
+        index: 8,
+        name: "token_program",
+        write_access: AccountWriteAccess::Readonly,
+        signer_requirement: AccountSignerRequirement::NotSigner,
+        owner_model: AccountOwnerModel::SplTokenProgram,
+    },
+    ConsumeGatewayMintAccountContractEntry {
+        index: 9,
+        name: "rent_payer",
+        write_access: AccountWriteAccess::Writable,
+        signer_requirement: AccountSignerRequirement::Signer,
+        owner_model: AccountOwnerModel::RentPayer,
+    },
+    ConsumeGatewayMintAccountContractEntry {
+        index: 10,
+        name: "system_program",
+        write_access: AccountWriteAccess::Readonly,
+        signer_requirement: AccountSignerRequirement::NotSigner,
+        owner_model: AccountOwnerModel::SystemProgram,
+    },
+    ConsumeGatewayMintAccountContractEntry {
+        index: 11,
+        name: "instructions_sysvar",
+        write_access: AccountWriteAccess::Readonly,
+        signer_requirement: AccountSignerRequirement::NotSigner,
+        owner_model: AccountOwnerModel::InstructionsSysvar,
+    },
+];
+
 pub fn consume_gateway_mint_account_contract() -> &'static [ConsumeGatewayMintAccountContractEntry]
 {
     &CONSUME_GATEWAY_MINT_ACCOUNT_CONTRACT
+}
+
+#[cfg(feature = "phase-41k6-b1-v3-account-contract-test-gate")]
+pub fn b1_v3_consume_gateway_mint_account_contract(
+) -> &'static [ConsumeGatewayMintAccountContractEntry] {
+    &CONSUME_GATEWAY_MINT_B1_V3_ACCOUNT_CONTRACT
 }
 
 pub fn consume_gateway_mint_account_contract_entry(
@@ -263,6 +365,44 @@ mod tests {
     }
 
     #[test]
+    #[cfg(feature = "phase-41k6-b1-v3-account-contract-test-gate")]
+    #[test]
+    fn b1_v3_account_contract_adds_readonly_non_signer_instructions_sysvar() {
+        use crate::instruction::{
+            CONSUME_GATEWAY_MINT_B1_V3_ACCOUNT_META_COUNT,
+            CONSUME_GATEWAY_MINT_INSTRUCTIONS_SYSVAR_ACCOUNT_INDEX,
+        };
+
+        let contract = b1_v3_consume_gateway_mint_account_contract();
+
+        assert_eq!(
+            contract.len(),
+            CONSUME_GATEWAY_MINT_B1_V3_ACCOUNT_META_COUNT as usize
+        );
+
+        for (expected_index, entry) in contract.iter().enumerate() {
+            assert_eq!(entry.index, expected_index);
+        }
+
+        let sysvar_entry = contract
+            .iter()
+            .find(|entry| {
+                entry.index == CONSUME_GATEWAY_MINT_INSTRUCTIONS_SYSVAR_ACCOUNT_INDEX as usize
+            })
+            .expect("instructions sysvar account entry");
+
+        assert_eq!(sysvar_entry.name, "instructions_sysvar");
+        assert_eq!(sysvar_entry.write_access, AccountWriteAccess::Readonly);
+        assert_eq!(
+            sysvar_entry.signer_requirement,
+            AccountSignerRequirement::NotSigner
+        );
+        assert_eq!(
+            sysvar_entry.owner_model,
+            AccountOwnerModel::InstructionsSysvar
+        );
+    }
+
     fn consume_gateway_mint_account_contract_documents_owner_models() {
         assert_owner_model(ACCOUNT_INDEX_MINT_STATE, AccountOwnerModel::ProgramOwned);
         assert_owner_model(
