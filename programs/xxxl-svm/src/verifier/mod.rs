@@ -1,4 +1,12 @@
 #[cfg(all(
+    feature = "phase-41k6-b1c7-handler-integration-test-gate",
+    not(feature = "dangerously-allow-phase-41k6-b1c7-handler-integration-test-gate-sbf-build")
+))]
+compile_error!(
+    "phase-41k6-b1c7-handler-integration-test-gate wires the B1C authorization pipeline toward ConsumeGatewayMint handler integration. It is a non-production integration gate and must never be included in deploy artifacts without the explicit dangerous test allow feature."
+);
+
+#[cfg(all(
     feature = "phase-41k6-b1c-ed25519-evidence-wiring-test-gate",
     not(feature = "dangerously-allow-phase-41k6-b1c-ed25519-evidence-wiring-test-gate-sbf-build")
 ))]
@@ -6,6 +14,8 @@ compile_error!(
     "phase-41k6-b1c-ed25519-evidence-wiring-test-gate introduces B1C authorization result types and later Ed25519 evidence wiring. It is a non-production integration gate and must never be included in deploy artifacts without the explicit dangerous test allow feature."
 );
 
+#[cfg(feature = "phase-41k6-b1c7-handler-integration-test-gate")]
+pub mod b1c7_handler_authorization_boundary;
 #[cfg(feature = "phase-41k6-b1c-ed25519-evidence-wiring-test-gate")]
 pub mod b1c_connect_ed25519_evidence_adapter;
 #[cfg(feature = "phase-41k6-b1c-ed25519-evidence-wiring-test-gate")]
@@ -37,6 +47,16 @@ pub mod instructions_sysvar_evidence_scanner;
 pub mod instructions_sysvar_live_wiring_boundary;
 pub mod raw_payload;
 pub mod types;
+
+#[cfg(feature = "phase-41k6-b1c7-handler-integration-test-gate")]
+pub use b1c7_handler_authorization_boundary::{
+    b1c7_handler_authorization_boundary_report,
+    establish_b1c7_handler_authorization_before_mark_and_mint,
+    B1C7HandlerAuthorizationBoundaryReport, B1C7HandlerAuthorizationRejectionKind,
+    B1C7HandlerAuthorizationResult, B1C7HandlerAuthorizationStatus,
+    B1C7_HANDLER_AUTHORIZATION_BOUNDARY_REPORT, PHASE_41K6_B1C_7_HANDLER_AUTHORIZATION_PHASE,
+    PHASE_41K6_B1C_7_HANDLER_AUTHORIZATION_VERSION,
+};
 
 #[cfg(feature = "phase-41k6-b1c-ed25519-evidence-wiring-test-gate")]
 pub use b1c_connect_ed25519_evidence_adapter::{

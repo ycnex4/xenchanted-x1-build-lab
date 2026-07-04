@@ -21,6 +21,16 @@ phase-41k6-b1b-guardian-set-loading-test-gate = []
 dangerously-allow-phase-41k6-b1b-guardian-set-loading-test-gate-sbf-build = []
 phase-41k6-b1c-ed25519-evidence-wiring-test-gate = []
 dangerously-allow-phase-41k6-b1c-ed25519-evidence-wiring-test-gate-sbf-build = []
+phase-41k6-b1c7-handler-integration-test-gate = [
+  "phase-41k6-b1-v3-account-contract-test-gate",
+  "phase-41k6-b1b-guardian-set-loading-test-gate",
+  "phase-41k6-b1c-ed25519-evidence-wiring-test-gate",
+]
+dangerously-allow-phase-41k6-b1c7-handler-integration-test-gate-sbf-build = [
+  "dangerously-allow-phase-41k6-b1-v3-account-contract-test-gate-sbf-build",
+  "dangerously-allow-phase-41k6-b1b-guardian-set-loading-test-gate-sbf-build",
+  "dangerously-allow-phase-41k6-b1c-ed25519-evidence-wiring-test-gate-sbf-build",
+]
 
 [dependencies]
 solana-program = "2.3.0"
