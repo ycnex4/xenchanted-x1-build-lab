@@ -18,6 +18,7 @@ pub mod error;
 pub mod execution_plan;
 pub mod instruction;
 pub mod pda;
+pub mod processed_event_marking_boundary;
 pub mod processor;
 pub mod program_id_status;
 pub mod safety_invariants;
