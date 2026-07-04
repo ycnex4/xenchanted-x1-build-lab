@@ -31,6 +31,8 @@ use xxxl_svm::{
 
 const PROGRAM_NAME: &str = "xxxl_svm";
 const TOKEN_PROGRAM_ID: &str = "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA";
+const SYSTEM_PROGRAM_ID: &str = "11111111111111111111111111111111";
+const NATIVE_LOADER_ID: &str = "NativeLoader1111111111111111111111111111111";
 const SPL_MINT_ACCOUNT_INDEX: usize = 5;
 const RECIPIENT_TOKEN_ACCOUNT_INDEX: usize = 6;
 const MINT_AUTHORITY_PDA_ACCOUNT_INDEX: usize = 7;
@@ -1576,6 +1578,11 @@ fn result_and_unchanged_mutable_account_checks<'a>(
             .lamports(accounts[RECIPIENT_TOKEN_ACCOUNT_INDEX].1.lamports)
             .owner(&accounts[RECIPIENT_TOKEN_ACCOUNT_INDEX].1.owner)
             .build(),
+        Check::account(&fixture.keys.rent_payer)
+            .data(&accounts[9].1.data)
+            .lamports(accounts[9].1.lamports)
+            .owner(&accounts[9].1.owner)
+            .build(),
     ]);
     checks
 }
@@ -1625,6 +1632,8 @@ struct FixtureKeys {
     recipient_token_account: Pubkey,
     mint_authority_pda: Pubkey,
     token_program: Pubkey,
+    rent_payer: Pubkey,
+    system_program: Pubkey,
 }
 
 struct FixtureData {
@@ -1643,6 +1652,9 @@ impl ScaffoldFixture {
         let token_program = TOKEN_PROGRAM_ID
             .parse::<Pubkey>()
             .expect("SPL Token program id");
+        let system_program = SYSTEM_PROGRAM_ID
+            .parse::<Pubkey>()
+            .expect("system program id");
         let spl_mint = Pubkey::new_unique();
         let recipient_owner = Pubkey::new_unique();
         let (mint_authority_pda, bump) =
@@ -1664,6 +1676,8 @@ impl ScaffoldFixture {
             recipient_token_account: Pubkey::new_unique(),
             mint_authority_pda,
             token_program,
+            rent_payer: Pubkey::new_unique(),
+            system_program,
         };
 
         let data = FixtureData {
@@ -1724,12 +1738,17 @@ impl ScaffoldFixture {
                 AccountMeta::new(self.keys.recipient_token_account, false),
                 AccountMeta::new_readonly(self.keys.mint_authority_pda, false),
                 AccountMeta::new_readonly(self.keys.token_program, false),
+                AccountMeta::new(self.keys.rent_payer, true),
+                AccountMeta::new_readonly(self.keys.system_program, false),
             ],
         )
     }
 
     fn accounts(&self) -> Vec<(Pubkey, Account)> {
         let token_program_owner = Pubkey::new_unique();
+        let native_loader = NATIVE_LOADER_ID
+            .parse::<Pubkey>()
+            .expect("native loader id");
         let lamports = 10_000_000_000;
 
         vec![
@@ -1803,6 +1822,14 @@ impl ScaffoldFixture {
             (
                 self.keys.token_program,
                 account(1, Vec::new(), token_program_owner, true),
+            ),
+            (
+                self.keys.rent_payer,
+                account(lamports, Vec::new(), self.keys.system_program, false),
+            ),
+            (
+                self.keys.system_program,
+                account(1, Vec::new(), native_loader, true),
             ),
         ]
     }

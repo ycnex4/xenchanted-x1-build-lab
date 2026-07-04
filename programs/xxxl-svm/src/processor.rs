@@ -10,7 +10,7 @@ use crate::execution_plan::apply_atomic_state_mutation_composition_boundary;
 
 use solana_program::{
     account_info::AccountInfo, clock::Clock, entrypoint::ProgramResult, msg,
-    program_error::ProgramError, pubkey::Pubkey, rent::Rent, sysvar::Sysvar,
+    program_error::ProgramError, pubkey::Pubkey, rent::Rent, system_program, sysvar::Sysvar,
 };
 
 use crate::{
@@ -36,7 +36,7 @@ use crate::{
     },
 };
 
-pub const CONSUME_GATEWAY_MINT_REQUIRED_ACCOUNTS: usize = 9;
+pub const CONSUME_GATEWAY_MINT_REQUIRED_ACCOUNTS: usize = 11;
 
 pub const ACCOUNT_INDEX_MINT_STATE: usize = 0;
 pub const ACCOUNT_INDEX_GATEWAY_CONFIG: usize = 1;
@@ -47,6 +47,8 @@ pub const ACCOUNT_INDEX_SPL_TOKEN_MINT: usize = 5;
 pub const ACCOUNT_INDEX_RECIPIENT_TOKEN_ACCOUNT: usize = 6;
 pub const ACCOUNT_INDEX_MINT_AUTHORITY_PDA: usize = 7;
 pub const ACCOUNT_INDEX_TOKEN_PROGRAM: usize = 8;
+pub const ACCOUNT_INDEX_RENT_PAYER: usize = 9;
+pub const ACCOUNT_INDEX_SYSTEM_PROGRAM: usize = 10;
 
 pub const LIVE_ROUTE_ACTIVATION_FROM_PROCESS_INSTRUCTION_ENABLED: bool = false;
 
@@ -292,8 +294,14 @@ pub fn prepare_consume_gateway_mint_cpi_boundary<'a, 'b>(
     let recipient_token_account = account_at(accounts, ACCOUNT_INDEX_RECIPIENT_TOKEN_ACCOUNT)?;
     let mint_authority_pda = account_at(accounts, ACCOUNT_INDEX_MINT_AUTHORITY_PDA)?;
     let token_program = account_at(accounts, ACCOUNT_INDEX_TOKEN_PROGRAM)?;
+    let _rent_payer = account_at(accounts, ACCOUNT_INDEX_RENT_PAYER)?;
+    let system_program_account = account_at(accounts, ACCOUNT_INDEX_SYSTEM_PROGRAM)?;
 
     if token_program.key != &spl_token::id() {
+        return Err(XxxlError::InvalidAccountOwner.into());
+    }
+
+    if system_program_account.key != &system_program::id() {
         return Err(XxxlError::InvalidAccountOwner.into());
     }
 
@@ -1315,6 +1323,56 @@ mod tests {
         );
     }
 
+    #[test]
+    fn runtime_account_contract_rejects_missing_rent_payer_signature() {
+        let mut fixture = HandlerFixture::new();
+
+        let program_id = fixture.program_id;
+        let args = fixture.args;
+        let rent = Rent::default();
+        let mut accounts = fixture.accounts();
+
+        accounts[ACCOUNT_INDEX_RENT_PAYER].is_signer = false;
+
+        assert_custom_error(
+            prepare_consume_gateway_mint_cpi_boundary(&program_id, &accounts, &args, &rent),
+            XxxlError::InvalidInstruction,
+        );
+    }
+
+    #[test]
+    fn runtime_account_contract_rejects_readonly_rent_payer() {
+        let mut fixture = HandlerFixture::new();
+
+        let program_id = fixture.program_id;
+        let args = fixture.args;
+        let rent = Rent::default();
+        let mut accounts = fixture.accounts();
+
+        accounts[ACCOUNT_INDEX_RENT_PAYER].is_writable = false;
+
+        assert_custom_error(
+            prepare_consume_gateway_mint_cpi_boundary(&program_id, &accounts, &args, &rent),
+            XxxlError::InvalidInstruction,
+        );
+    }
+
+    #[test]
+    fn runtime_account_contract_rejects_wrong_system_program_id() {
+        let mut fixture = HandlerFixture::new();
+        fixture.keys.system_program = Pubkey::new_unique();
+
+        let program_id = fixture.program_id;
+        let args = fixture.args;
+        let rent = Rent::default();
+        let accounts = fixture.accounts();
+
+        assert_custom_error(
+            prepare_consume_gateway_mint_cpi_boundary(&program_id, &accounts, &args, &rent),
+            XxxlError::InvalidAccountOwner,
+        );
+    }
+
     struct HandlerFixture {
         program_id: Pubkey,
         owners: FixtureOwners,
@@ -1340,6 +1398,8 @@ mod tests {
         recipient_token_account: Pubkey,
         mint_authority_pda: Pubkey,
         token_program: Pubkey,
+        rent_payer: Pubkey,
+        system_program: Pubkey,
         recipient_owner: Pubkey,
     }
 
@@ -1353,6 +1413,8 @@ mod tests {
         recipient_token_account: u64,
         mint_authority_pda: u64,
         token_program: u64,
+        rent_payer: u64,
+        system_program: u64,
     }
 
     struct FixtureData {
@@ -1365,6 +1427,8 @@ mod tests {
         recipient_token_account: Vec<u8>,
         mint_authority_pda: Vec<u8>,
         token_program: Vec<u8>,
+        rent_payer: Vec<u8>,
+        system_program: Vec<u8>,
     }
 
     impl HandlerFixture {
@@ -1396,6 +1460,8 @@ mod tests {
                 recipient_token_account: Pubkey::new_unique(),
                 mint_authority_pda,
                 token_program: spl_token::id(),
+                rent_payer: Pubkey::new_unique(),
+                system_program: system_program::id(),
                 recipient_owner,
             };
 
@@ -1424,6 +1490,8 @@ mod tests {
                 ),
                 mint_authority_pda: Vec::new(),
                 token_program: Vec::new(),
+                rent_payer: Vec::new(),
+                system_program: Vec::new(),
             };
 
             let rent = Rent::default();
@@ -1438,11 +1506,13 @@ mod tests {
                 recipient_token_account: rent.minimum_balance(data.recipient_token_account.len()),
                 mint_authority_pda: 0,
                 token_program: 0,
+                rent_payer: 10_000_000,
+                system_program: 0,
             };
 
             let args = ConsumeGatewayMintArgs {
                 raw: [0u8; CONSUME_GATEWAY_MINT_INSTRUCTION_LEN],
-                account_meta_count: 9,
+                account_meta_count: 11,
                 route_account_index: 1,
                 guardian_set_account_index: 2,
                 mint_state_account_index: 0,
@@ -1556,6 +1626,26 @@ mod tests {
                     false,
                     &mut self.lamports.token_program,
                     &mut self.data.token_program,
+                    &self.owners.token_program_owner,
+                    true,
+                    0,
+                ),
+                AccountInfo::new(
+                    &self.keys.rent_payer,
+                    true,
+                    true,
+                    &mut self.lamports.rent_payer,
+                    &mut self.data.rent_payer,
+                    &self.owners.token_program_owner,
+                    false,
+                    0,
+                ),
+                AccountInfo::new(
+                    &self.keys.system_program,
+                    false,
+                    false,
+                    &mut self.lamports.system_program,
+                    &mut self.data.system_program,
                     &self.owners.token_program_owner,
                     true,
                     0,
