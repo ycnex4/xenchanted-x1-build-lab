@@ -211,6 +211,152 @@ fn phase_41k5_d3_already_consumed_processed_event_rejected_without_mint() {
     );
 }
 
+#[test]
+fn phase_41k5_d3_wrong_processed_event_pda_rejected_without_mint() {
+    let fixture = ProductionPathFixture::new();
+    let mollusk = mollusk_for_program(&fixture.program_id);
+    let wrong_processed_event = Pubkey::new_unique();
+
+    let mut instruction = fixture.instruction();
+    instruction.accounts[ACCOUNT_INDEX_PROCESSED_EVENT] =
+        AccountMeta::new(wrong_processed_event, false);
+
+    let mut accounts = fixture.accounts();
+    accounts[ACCOUNT_INDEX_PROCESSED_EVENT].0 = wrong_processed_event;
+
+    let checks = result_and_unchanged_mutable_account_checks(
+        &accounts,
+        Check::err(ProgramError::Custom(XxxlError::InvalidInstruction as u32)),
+    );
+
+    mollusk.process_and_validate_instruction(&instruction, &accounts, &checks);
+}
+
+#[test]
+fn phase_41k5_d3_wrong_mint_authority_pda_rejected_without_mint() {
+    let fixture = ProductionPathFixture::new();
+    let mollusk = mollusk_for_program(&fixture.program_id);
+    let wrong_pda = Pubkey::new_unique();
+
+    let mut instruction = fixture.instruction();
+    instruction.accounts[ACCOUNT_INDEX_MINT_AUTHORITY_PDA] =
+        AccountMeta::new_readonly(wrong_pda, false);
+
+    let mut accounts = fixture.accounts();
+    accounts[ACCOUNT_INDEX_MINT_AUTHORITY_PDA].0 = wrong_pda;
+
+    let checks = result_and_unchanged_mutable_account_checks(
+        &accounts,
+        Check::err(ProgramError::Custom(XxxlError::InvalidInstruction as u32)),
+    );
+
+    mollusk.process_and_validate_instruction(&instruction, &accounts, &checks);
+}
+
+#[test]
+fn phase_41k5_d3_wrong_spl_mint_authority_rejected_without_mint() {
+    let fixture = ProductionPathFixture::new();
+    let mollusk = mollusk_for_program(&fixture.program_id);
+
+    let instruction = fixture.instruction();
+    let mut accounts = fixture.accounts();
+    accounts[ACCOUNT_INDEX_SPL_MINT].1.data = packed_mint(Pubkey::new_unique(), true);
+
+    let checks = result_and_unchanged_mutable_account_checks(
+        &accounts,
+        Check::err(ProgramError::Custom(XxxlError::InvalidPda as u32)),
+    );
+
+    mollusk.process_and_validate_instruction(&instruction, &accounts, &checks);
+}
+
+#[test]
+fn phase_41k5_d3_wrong_recipient_token_mint_rejected_without_mint() {
+    let fixture = ProductionPathFixture::new();
+    let mollusk = mollusk_for_program(&fixture.program_id);
+
+    let instruction = fixture.instruction();
+    let mut accounts = fixture.accounts();
+    accounts[ACCOUNT_INDEX_RECIPIENT_TOKEN_ACCOUNT].1.data = packed_token_account(
+        Pubkey::new_unique(),
+        fixture.keys.recipient_owner,
+        AccountState::Initialized,
+    );
+
+    let checks = result_and_unchanged_mutable_account_checks(
+        &accounts,
+        Check::err(ProgramError::Custom(XxxlError::InvalidRecipientAta as u32)),
+    );
+
+    mollusk.process_and_validate_instruction(&instruction, &accounts, &checks);
+}
+
+#[test]
+fn phase_41k5_d3_wrong_recipient_token_owner_rejected_without_mint() {
+    let fixture = ProductionPathFixture::new();
+    let mollusk = mollusk_for_program(&fixture.program_id);
+
+    let instruction = fixture.instruction();
+    let mut accounts = fixture.accounts();
+    accounts[ACCOUNT_INDEX_RECIPIENT_TOKEN_ACCOUNT].1.data = packed_token_account(
+        fixture.keys.spl_mint,
+        Pubkey::new_unique(),
+        AccountState::Initialized,
+    );
+
+    let checks = result_and_unchanged_mutable_account_checks(
+        &accounts,
+        Check::err(ProgramError::Custom(XxxlError::InvalidRecipientAta as u32)),
+    );
+
+    mollusk.process_and_validate_instruction(&instruction, &accounts, &checks);
+}
+
+fn result_and_unchanged_mutable_account_checks<'a>(
+    accounts: &'a [(Pubkey, Account)],
+    result: Check<'a>,
+) -> Vec<Check<'a>> {
+    let processed_event_before = &accounts[ACCOUNT_INDEX_PROCESSED_EVENT].1;
+    let rent_payer_before = &accounts[ACCOUNT_INDEX_RENT_PAYER].1;
+    let spl_mint_before = &accounts[ACCOUNT_INDEX_SPL_MINT].1;
+    let recipient_token_before = &accounts[ACCOUNT_INDEX_RECIPIENT_TOKEN_ACCOUNT].1;
+    let recipient_balance_before = &accounts[ACCOUNT_INDEX_RECIPIENT_BALANCE].1;
+
+    vec![
+        result,
+        Check::account(&accounts[ACCOUNT_INDEX_PROCESSED_EVENT].0)
+            .lamports(processed_event_before.lamports)
+            .owner(&processed_event_before.owner)
+            .space(processed_event_before.data.len())
+            .data(&processed_event_before.data)
+            .build(),
+        Check::account(&accounts[ACCOUNT_INDEX_RENT_PAYER].0)
+            .lamports(rent_payer_before.lamports)
+            .owner(&rent_payer_before.owner)
+            .space(rent_payer_before.data.len())
+            .data(&rent_payer_before.data)
+            .build(),
+        Check::account(&accounts[ACCOUNT_INDEX_SPL_MINT].0)
+            .lamports(spl_mint_before.lamports)
+            .owner(&spl_mint_before.owner)
+            .space(spl_mint_before.data.len())
+            .data(&spl_mint_before.data)
+            .build(),
+        Check::account(&accounts[ACCOUNT_INDEX_RECIPIENT_TOKEN_ACCOUNT].0)
+            .lamports(recipient_token_before.lamports)
+            .owner(&recipient_token_before.owner)
+            .space(recipient_token_before.data.len())
+            .data(&recipient_token_before.data)
+            .build(),
+        Check::account(&accounts[ACCOUNT_INDEX_RECIPIENT_BALANCE].0)
+            .lamports(recipient_balance_before.lamports)
+            .owner(&recipient_balance_before.owner)
+            .space(recipient_balance_before.data.len())
+            .data(&recipient_balance_before.data)
+            .build(),
+    ]
+}
+
 struct ProductionPathFixture {
     program_id: Pubkey,
     keys: FixtureKeys,
