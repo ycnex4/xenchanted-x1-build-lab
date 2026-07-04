@@ -1,3 +1,5 @@
+#[cfg(feature = "phase-41k6-b1-v3-account-contract-test-gate")]
+use solana_program::sysvar;
 use solana_program::{account_info::AccountInfo, program_error::ProgramError};
 
 use crate::error::XxxlError;
@@ -225,6 +227,38 @@ pub fn b1_v3_consume_gateway_mint_account_contract(
     &CONSUME_GATEWAY_MINT_B1_V3_ACCOUNT_CONTRACT
 }
 
+#[cfg(feature = "phase-41k6-b1-v3-account-contract-test-gate")]
+pub fn assert_b1_v3_consume_gateway_mint_account_contract(
+    accounts: &[AccountInfo],
+) -> Result<(), ProgramError> {
+    if accounts.len() != CONSUME_GATEWAY_MINT_B1_V3_ACCOUNT_CONTRACT.len() {
+        return Err(XxxlError::InvalidInstruction.into());
+    }
+
+    for entry in CONSUME_GATEWAY_MINT_B1_V3_ACCOUNT_CONTRACT {
+        let account = accounts
+            .get(entry.index)
+            .ok_or_else(|| ProgramError::from(XxxlError::InvalidInstruction))?;
+
+        let expected_writable = matches!(entry.write_access, AccountWriteAccess::Writable);
+        let expected_signer = matches!(entry.signer_requirement, AccountSignerRequirement::Signer);
+
+        if account.is_writable != expected_writable || account.is_signer != expected_signer {
+            return Err(XxxlError::InvalidInstruction.into());
+        }
+    }
+
+    let instructions_sysvar = accounts
+        .get(11)
+        .ok_or_else(|| ProgramError::from(XxxlError::InvalidInstruction))?;
+
+    if instructions_sysvar.key != &sysvar::instructions::id() {
+        return Err(XxxlError::InvalidInstruction.into());
+    }
+
+    Ok(())
+}
+
 pub fn consume_gateway_mint_account_contract_entry(
     index: usize,
 ) -> Option<ConsumeGatewayMintAccountContractEntry> {
@@ -364,7 +398,129 @@ mod tests {
         }
     }
 
+    #[cfg(feature = "phase-41k6-b1-v3-account-contract-test-gate")]
+    fn b1_v3_test_accounts() -> Vec<TestAccount> {
+        use solana_program::pubkey::Pubkey;
+
+        let mut accounts = Vec::new();
+
+        for index in 0..12 {
+            let key = if index == 11 {
+                sysvar::instructions::id()
+            } else {
+                Pubkey::new_unique()
+            };
+
+            let is_writable = matches!(index, 3 | 4 | 5 | 6 | 9);
+            let is_signer = index == 9;
+
+            accounts.push(TestAccount {
+                key,
+                lamports: 1,
+                data: Vec::new(),
+                owner: Pubkey::new_unique(),
+                is_signer,
+                is_writable,
+                executable: false,
+                rent_epoch: 0,
+            });
+        }
+
+        accounts
+    }
+
+    #[cfg(feature = "phase-41k6-b1-v3-account-contract-test-gate")]
+    struct TestAccount {
+        key: solana_program::pubkey::Pubkey,
+        lamports: u64,
+        data: Vec<u8>,
+        owner: solana_program::pubkey::Pubkey,
+        is_signer: bool,
+        is_writable: bool,
+        executable: bool,
+        rent_epoch: u64,
+    }
+
+    #[cfg(feature = "phase-41k6-b1-v3-account-contract-test-gate")]
+    fn with_account_infos<R>(
+        test_accounts: &mut [TestAccount],
+        f: impl FnOnce(Vec<AccountInfo>) -> R,
+    ) -> R {
+        let infos: Vec<AccountInfo> = test_accounts
+            .iter_mut()
+            .map(|account| {
+                AccountInfo::new(
+                    &account.key,
+                    account.is_signer,
+                    account.is_writable,
+                    &mut account.lamports,
+                    &mut account.data,
+                    &account.owner,
+                    account.executable,
+                    account.rent_epoch,
+                )
+            })
+            .collect();
+
+        f(infos)
+    }
+
+    #[cfg(feature = "phase-41k6-b1-v3-account-contract-test-gate")]
+    fn assert_b1_v3_contract_error(accounts: &mut [TestAccount], expected: XxxlError) {
+        with_account_infos(accounts, |infos| {
+            let result = assert_b1_v3_consume_gateway_mint_account_contract(&infos);
+
+            assert!(matches!(result, Err(ProgramError::Custom(code)) if code == expected as u32));
+        });
+    }
+
+    #[cfg(feature = "phase-41k6-b1-v3-account-contract-test-gate")]
     #[test]
+    fn b1_v3_account_contract_accepts_expected_12_account_shape() {
+        let mut accounts = b1_v3_test_accounts();
+
+        with_account_infos(&mut accounts, |infos| {
+            assert_b1_v3_consume_gateway_mint_account_contract(&infos)
+                .expect("valid B1 V3 account contract");
+        });
+    }
+
+    #[cfg(feature = "phase-41k6-b1-v3-account-contract-test-gate")]
+    #[test]
+    fn b1_v3_account_contract_rejects_missing_instructions_sysvar() {
+        let mut accounts = b1_v3_test_accounts();
+        accounts.pop();
+
+        assert_b1_v3_contract_error(&mut accounts, XxxlError::InvalidInstruction);
+    }
+
+    #[cfg(feature = "phase-41k6-b1-v3-account-contract-test-gate")]
+    #[test]
+    fn b1_v3_account_contract_rejects_wrong_instructions_sysvar_key() {
+        let mut accounts = b1_v3_test_accounts();
+        accounts[11].key = solana_program::pubkey::Pubkey::new_unique();
+
+        assert_b1_v3_contract_error(&mut accounts, XxxlError::InvalidInstruction);
+    }
+
+    #[cfg(feature = "phase-41k6-b1-v3-account-contract-test-gate")]
+    #[test]
+    fn b1_v3_account_contract_rejects_writable_instructions_sysvar() {
+        let mut accounts = b1_v3_test_accounts();
+        accounts[11].is_writable = true;
+
+        assert_b1_v3_contract_error(&mut accounts, XxxlError::InvalidInstruction);
+    }
+
+    #[cfg(feature = "phase-41k6-b1-v3-account-contract-test-gate")]
+    #[test]
+    fn b1_v3_account_contract_rejects_signer_instructions_sysvar() {
+        let mut accounts = b1_v3_test_accounts();
+        accounts[11].is_signer = true;
+
+        assert_b1_v3_contract_error(&mut accounts, XxxlError::InvalidInstruction);
+    }
+
     #[cfg(feature = "phase-41k6-b1-v3-account-contract-test-gate")]
     #[test]
     fn b1_v3_account_contract_adds_readonly_non_signer_instructions_sysvar() {
