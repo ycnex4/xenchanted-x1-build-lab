@@ -312,6 +312,111 @@ fn phase_41k5_d3_wrong_recipient_token_owner_rejected_without_mint() {
     mollusk.process_and_validate_instruction(&instruction, &accounts, &checks);
 }
 
+#[test]
+fn phase_41k5_d3_zero_amount_rejected_without_mint() {
+    let fixture = ProductionPathFixture::new();
+    let mollusk = mollusk_for_program(&fixture.program_id);
+
+    let mut instruction_data = fixture.instruction_data;
+    instruction_data[176..192].copy_from_slice(&0u128.to_le_bytes());
+
+    let instruction = Instruction::new_with_bytes(
+        fixture.program_id,
+        &instruction_data,
+        fixture.instruction().accounts,
+    );
+    let accounts = fixture.accounts();
+
+    let checks = result_and_unchanged_mutable_account_checks(
+        &accounts,
+        Check::err(ProgramError::Custom(XxxlError::InvalidInstruction as u32)),
+    );
+
+    mollusk.process_and_validate_instruction(&instruction, &accounts, &checks);
+}
+
+#[test]
+fn phase_41k5_d3_amount_above_u64_max_rejected_without_mint() {
+    let fixture = ProductionPathFixture::new();
+    let mollusk = mollusk_for_program(&fixture.program_id);
+
+    let mut instruction_data = fixture.instruction_data;
+    instruction_data[176..192].copy_from_slice(&((u64::MAX as u128) + 1).to_le_bytes());
+
+    let instruction = Instruction::new_with_bytes(
+        fixture.program_id,
+        &instruction_data,
+        fixture.instruction().accounts,
+    );
+    let accounts = fixture.accounts();
+
+    let checks = result_and_unchanged_mutable_account_checks(
+        &accounts,
+        Check::err(ProgramError::Custom(XxxlError::InvalidInstruction as u32)),
+    );
+
+    mollusk.process_and_validate_instruction(&instruction, &accounts, &checks);
+}
+
+#[test]
+fn phase_41k5_d3_wrong_token_program_rejected_without_mint() {
+    let fixture = ProductionPathFixture::new();
+    let mollusk = mollusk_for_program(&fixture.program_id);
+    let wrong_token_program = Pubkey::new_unique();
+
+    let mut instruction = fixture.instruction();
+    instruction.accounts[ACCOUNT_INDEX_TOKEN_PROGRAM] =
+        AccountMeta::new_readonly(wrong_token_program, false);
+
+    let mut accounts = fixture.accounts();
+    accounts[ACCOUNT_INDEX_TOKEN_PROGRAM].0 = wrong_token_program;
+
+    let checks = result_and_unchanged_mutable_account_checks(
+        &accounts,
+        Check::err(ProgramError::Custom(XxxlError::InvalidAccountOwner as u32)),
+    );
+
+    mollusk.process_and_validate_instruction(&instruction, &accounts, &checks);
+}
+
+#[test]
+fn phase_41k5_d3_wrong_system_program_rejected_without_mint() {
+    let fixture = ProductionPathFixture::new();
+    let mollusk = mollusk_for_program(&fixture.program_id);
+    let wrong_system_program = Pubkey::new_unique();
+
+    let mut instruction = fixture.instruction();
+    instruction.accounts[ACCOUNT_INDEX_SYSTEM_PROGRAM] =
+        AccountMeta::new_readonly(wrong_system_program, false);
+
+    let mut accounts = fixture.accounts();
+    accounts[ACCOUNT_INDEX_SYSTEM_PROGRAM].0 = wrong_system_program;
+
+    let checks = result_and_unchanged_mutable_account_checks(
+        &accounts,
+        Check::err(ProgramError::Custom(XxxlError::InvalidAccountOwner as u32)),
+    );
+
+    mollusk.process_and_validate_instruction(&instruction, &accounts, &checks);
+}
+
+#[test]
+fn phase_41k5_d3_malformed_recipient_token_account_rejected_without_mint() {
+    let fixture = ProductionPathFixture::new();
+    let mollusk = mollusk_for_program(&fixture.program_id);
+
+    let instruction = fixture.instruction();
+    let mut accounts = fixture.accounts();
+    accounts[ACCOUNT_INDEX_RECIPIENT_TOKEN_ACCOUNT].1.data = vec![0u8; SplTokenAccount::LEN - 1];
+
+    let checks = result_and_unchanged_mutable_account_checks(
+        &accounts,
+        Check::err(ProgramError::Custom(XxxlError::InvalidRecipientAta as u32)),
+    );
+
+    mollusk.process_and_validate_instruction(&instruction, &accounts, &checks);
+}
+
 fn result_and_unchanged_mutable_account_checks<'a>(
     accounts: &'a [(Pubkey, Account)],
     result: Check<'a>,
