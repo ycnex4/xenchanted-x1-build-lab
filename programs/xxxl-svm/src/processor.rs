@@ -41,6 +41,20 @@ use crate::{
     },
 };
 
+#[cfg(all(
+    feature = "phase-41k6-b1b-guardian-set-loading-test-gate",
+    not(feature = "dangerously-allow-phase-41k6-b1b-guardian-set-loading-test-gate-sbf-build")
+))]
+compile_error!(
+    "phase-41k6-b1b-guardian-set-loading-test-gate introduces B1B authoritative guardian set loading. It is a non-production integration gate and must never be included in deploy artifacts without the explicit dangerous test allow feature."
+);
+
+#[cfg(feature = "phase-41k6-b1b-guardian-set-loading-test-gate")]
+use crate::verifier::{
+    load_phase_41k_2_guardian_set_account_info, GuardianPublicKey,
+    Phase41K2GuardianSetAccountLoadingStatus,
+};
+
 pub const CONSUME_GATEWAY_MINT_REQUIRED_ACCOUNTS: usize = 11;
 
 pub const ACCOUNT_INDEX_MINT_STATE: usize = 0;
@@ -84,6 +98,72 @@ pub struct RuntimeConsumeGatewayMintLocalStateMutationComposition {
     pub recipient_balance_after: u128,
     pub live_route_activation_enabled: bool,
     pub invoke_signed_from_process_instruction_enabled: bool,
+}
+
+#[cfg(feature = "phase-41k6-b1b-guardian-set-loading-test-gate")]
+#[derive(Clone, Debug, PartialEq, Eq)]
+pub struct B1BLoadedAuthoritativeGuardianSet {
+    pub guardian_set_id: [u8; 32],
+    pub threshold: u8,
+    pub guardian_count: usize,
+    pub guardians: Vec<GuardianPublicKey>,
+    pub loaded_from_program_controlled_on_chain_pda: bool,
+    pub account_key_checked: bool,
+    pub account_owner_checked: bool,
+    pub pda_checked: bool,
+    pub guardian_set_account_readonly: bool,
+    pub guardian_set_account_non_signer: bool,
+    pub authorization_enabled: bool,
+    pub processed_event_marking_enabled: bool,
+    pub cpi_enabled: bool,
+    pub live_route_enabled: bool,
+}
+
+#[cfg(feature = "phase-41k6-b1b-guardian-set-loading-test-gate")]
+pub fn b1b_load_authoritative_guardian_set_for_consume_gateway_mint(
+    program_id: &Pubkey,
+    accounts: &[AccountInfo],
+    args: &ConsumeGatewayMintArgs,
+) -> Result<B1BLoadedAuthoritativeGuardianSet, ProgramError> {
+    let guardian_set_account = account_at(accounts, args.guardian_set_account_index as usize)?;
+
+    let load = load_phase_41k_2_guardian_set_account_info(
+        Some(guardian_set_account),
+        program_id,
+        &args.guardian_set_id,
+    );
+
+    if load.status != Phase41K2GuardianSetAccountLoadingStatus::GuardianSetAccountDataDecoded {
+        return Err(XxxlError::InvalidInstruction.into());
+    }
+
+    let guardian_set_id = load
+        .guardian_set_id
+        .ok_or_else(|| ProgramError::from(XxxlError::InvalidInstruction))?;
+    let threshold = load
+        .threshold
+        .ok_or_else(|| ProgramError::from(XxxlError::InvalidInstruction))?;
+
+    if guardian_set_id != args.guardian_set_id {
+        return Err(XxxlError::InvalidInstruction.into());
+    }
+
+    Ok(B1BLoadedAuthoritativeGuardianSet {
+        guardian_set_id,
+        threshold,
+        guardian_count: load.guardian_count,
+        guardians: load.guardians,
+        loaded_from_program_controlled_on_chain_pda: load.source_marker_program_controlled_on_chain,
+        account_key_checked: load.account_key_checked,
+        account_owner_checked: load.account_owner_checked,
+        pda_checked: load.pda_checked,
+        guardian_set_account_readonly: load.guardian_set_account_readonly,
+        guardian_set_account_non_signer: load.guardian_set_account_non_signer,
+        authorization_enabled: false,
+        processed_event_marking_enabled: false,
+        cpi_enabled: false,
+        live_route_enabled: false,
+    })
 }
 
 pub fn process_instruction(
@@ -519,6 +599,13 @@ fn account_at<'a, 'b>(
 #[cfg(test)]
 mod tests {
     use super::*;
+    #[cfg(feature = "phase-41k6-b1b-guardian-set-loading-test-gate")]
+    use crate::verifier::{
+        find_phase_41k_2_guardian_set_pda, GUARDIAN_PUBLIC_KEY_LEN,
+        GUARDIAN_SET_ACTIVE_STATUS_OFFSET, GUARDIAN_SET_GUARDIAN_COUNT_OFFSET,
+        GUARDIAN_SET_GUARDIAN_KEYS_OFFSET, GUARDIAN_SET_QUORUM_THRESHOLD_OFFSET,
+        GUARDIAN_SET_STATUS_ACTIVE,
+    };
     use crate::{
         instruction::CONSUME_GATEWAY_MINT_INSTRUCTION_LEN,
         pda::find_gateway_mint_authority,
@@ -1469,6 +1556,161 @@ mod tests {
         assert_custom_error(
             prepare_consume_gateway_mint_cpi_boundary(&program_id, &accounts, &args, &rent),
             XxxlError::InvalidAccountOwner,
+        );
+    }
+
+    #[cfg(feature = "phase-41k6-b1b-guardian-set-loading-test-gate")]
+    #[test]
+    fn b1b_authoritative_guardian_set_loads_valid_program_controlled_pda() {
+        let mut fixture = HandlerFixture::new();
+        b1b_configure_valid_guardian_set(&mut fixture);
+
+        let program_id = fixture.program_id;
+        let args = fixture.args;
+        let accounts = fixture.accounts();
+
+        let loaded = b1b_load_authoritative_guardian_set_for_consume_gateway_mint(
+            &program_id,
+            &accounts,
+            &args,
+        )
+        .expect("B1B guardian set loaded");
+
+        assert_eq!(loaded.guardian_set_id, args.guardian_set_id);
+        assert_eq!(loaded.threshold, 2);
+        assert_eq!(loaded.guardian_count, 3);
+        assert_eq!(loaded.guardians.len(), 3);
+        assert!(loaded.loaded_from_program_controlled_on_chain_pda);
+        assert!(loaded.account_key_checked);
+        assert!(loaded.account_owner_checked);
+        assert!(loaded.pda_checked);
+        assert!(loaded.guardian_set_account_readonly);
+        assert!(loaded.guardian_set_account_non_signer);
+        assert!(!loaded.authorization_enabled);
+        assert!(!loaded.processed_event_marking_enabled);
+        assert!(!loaded.cpi_enabled);
+        assert!(!loaded.live_route_enabled);
+    }
+
+    #[cfg(feature = "phase-41k6-b1b-guardian-set-loading-test-gate")]
+    #[test]
+    fn b1b_authoritative_guardian_set_rejects_wrong_pda() {
+        let mut fixture = HandlerFixture::new();
+        b1b_configure_valid_guardian_set(&mut fixture);
+        fixture.keys.guardian_set = Pubkey::new_unique();
+
+        b1b_assert_guardian_set_load_rejects(&mut fixture);
+    }
+
+    #[cfg(feature = "phase-41k6-b1b-guardian-set-loading-test-gate")]
+    #[test]
+    fn b1b_authoritative_guardian_set_rejects_inactive_set() {
+        let mut fixture = HandlerFixture::new();
+        b1b_configure_valid_guardian_set(&mut fixture);
+        fixture.data.guardian_set[GUARDIAN_SET_ACTIVE_STATUS_OFFSET] = 2;
+
+        b1b_assert_guardian_set_load_rejects(&mut fixture);
+    }
+
+    #[cfg(feature = "phase-41k6-b1b-guardian-set-loading-test-gate")]
+    #[test]
+    fn b1b_authoritative_guardian_set_rejects_zero_threshold() {
+        let mut fixture = HandlerFixture::new();
+        b1b_configure_valid_guardian_set(&mut fixture);
+        fixture.data.guardian_set
+            [GUARDIAN_SET_QUORUM_THRESHOLD_OFFSET..GUARDIAN_SET_QUORUM_THRESHOLD_OFFSET + 2]
+            .copy_from_slice(&0u16.to_le_bytes());
+
+        b1b_assert_guardian_set_load_rejects(&mut fixture);
+    }
+
+    #[cfg(feature = "phase-41k6-b1b-guardian-set-loading-test-gate")]
+    #[test]
+    fn b1b_authoritative_guardian_set_rejects_threshold_above_count() {
+        let mut fixture = HandlerFixture::new();
+        b1b_configure_valid_guardian_set(&mut fixture);
+        fixture.data.guardian_set
+            [GUARDIAN_SET_QUORUM_THRESHOLD_OFFSET..GUARDIAN_SET_QUORUM_THRESHOLD_OFFSET + 2]
+            .copy_from_slice(&4u16.to_le_bytes());
+
+        b1b_assert_guardian_set_load_rejects(&mut fixture);
+    }
+
+    #[cfg(feature = "phase-41k6-b1b-guardian-set-loading-test-gate")]
+    #[test]
+    fn b1b_authoritative_guardian_set_rejects_empty_guardian_set() {
+        let mut fixture = HandlerFixture::new();
+        b1b_configure_valid_guardian_set(&mut fixture);
+        fixture.data.guardian_set[GUARDIAN_SET_GUARDIAN_COUNT_OFFSET] = 0;
+
+        b1b_assert_guardian_set_load_rejects(&mut fixture);
+    }
+
+    #[cfg(feature = "phase-41k6-b1b-guardian-set-loading-test-gate")]
+    #[test]
+    fn b1b_authoritative_guardian_set_rejects_duplicate_guardian_key() {
+        let mut fixture = HandlerFixture::new();
+        b1b_configure_valid_guardian_set(&mut fixture);
+
+        let first_start = GUARDIAN_SET_GUARDIAN_KEYS_OFFSET;
+        let second_start = GUARDIAN_SET_GUARDIAN_KEYS_OFFSET + GUARDIAN_PUBLIC_KEY_LEN;
+        let first =
+            fixture.data.guardian_set[first_start..first_start + GUARDIAN_PUBLIC_KEY_LEN].to_vec();
+        fixture.data.guardian_set[second_start..second_start + GUARDIAN_PUBLIC_KEY_LEN]
+            .copy_from_slice(&first);
+
+        b1b_assert_guardian_set_load_rejects(&mut fixture);
+    }
+
+    #[cfg(feature = "phase-41k6-b1b-guardian-set-loading-test-gate")]
+    fn b1b_configure_valid_guardian_set(fixture: &mut HandlerFixture) {
+        let (guardian_set_pda, _) =
+            find_phase_41k_2_guardian_set_pda(&fixture.program_id, &fixture.args.guardian_set_id);
+
+        let guardians = [[0x01; 32], [0x02; 32], [0x03; 32]];
+
+        fixture.keys.guardian_set = guardian_set_pda;
+        fixture.data.guardian_set =
+            b1b_guardian_set_data(fixture.args.guardian_set_id, 2, &guardians);
+        fixture.lamports.guardian_set =
+            Rent::default().minimum_balance(fixture.data.guardian_set.len());
+    }
+
+    #[cfg(feature = "phase-41k6-b1b-guardian-set-loading-test-gate")]
+    fn b1b_guardian_set_data(
+        guardian_set_id: [u8; 32],
+        threshold: u16,
+        guardians: &[[u8; 32]],
+    ) -> Vec<u8> {
+        let mut data = account_data(GUARDIAN_SET_ACCOUNT_LEN, GUARDIAN_SET_ACCOUNT_DISCRIMINATOR);
+
+        data[GUARDIAN_SET_ACTIVE_STATUS_OFFSET] = GUARDIAN_SET_STATUS_ACTIVE;
+        data[GUARDIAN_SET_QUORUM_THRESHOLD_OFFSET..GUARDIAN_SET_QUORUM_THRESHOLD_OFFSET + 2]
+            .copy_from_slice(&threshold.to_le_bytes());
+        data[GUARDIAN_SET_GUARDIAN_COUNT_OFFSET] = guardians.len() as u8;
+        data[272..304].copy_from_slice(&guardian_set_id);
+
+        for (index, guardian) in guardians.iter().enumerate() {
+            let start = GUARDIAN_SET_GUARDIAN_KEYS_OFFSET + index * GUARDIAN_PUBLIC_KEY_LEN;
+            data[start..start + GUARDIAN_PUBLIC_KEY_LEN].copy_from_slice(guardian);
+        }
+
+        data
+    }
+
+    #[cfg(feature = "phase-41k6-b1b-guardian-set-loading-test-gate")]
+    fn b1b_assert_guardian_set_load_rejects(fixture: &mut HandlerFixture) {
+        let program_id = fixture.program_id;
+        let args = fixture.args;
+        let accounts = fixture.accounts();
+
+        assert_custom_error(
+            b1b_load_authoritative_guardian_set_for_consume_gateway_mint(
+                &program_id,
+                &accounts,
+                &args,
+            ),
+            XxxlError::InvalidInstruction,
         );
     }
 

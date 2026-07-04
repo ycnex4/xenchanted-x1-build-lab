@@ -17,6 +17,8 @@ phase-41k5-d2-production-path-test-gate = []
 dangerously-allow-phase-41k5-d2-production-path-test-gate-sbf-build = []
 phase-41k6-b1-v3-account-contract-test-gate = []
 dangerously-allow-phase-41k6-b1-v3-account-contract-test-gate-sbf-build = []
+phase-41k6-b1b-guardian-set-loading-test-gate = []
+dangerously-allow-phase-41k6-b1b-guardian-set-loading-test-gate-sbf-build = []
 
 [dependencies]
 solana-program = "2.3.0"
