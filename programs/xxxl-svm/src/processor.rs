@@ -104,6 +104,17 @@ pub fn process_instruction(
         }
     }
 
+    #[cfg(feature = "phase-41k5-spl-mint-to-cpi-test-gate")]
+    {
+        if crate::phase_41k5_d15_atomic_mark_and_mint_svm_harness::is_phase_41k5_d15_atomic_mark_and_mint_svm_harness_instruction(instruction_data) {
+            return crate::phase_41k5_d15_atomic_mark_and_mint_svm_harness::process_phase_41k5_d15_atomic_mark_and_mint_svm_harness_instruction(
+                program_id,
+                accounts,
+                instruction_data,
+            );
+        }
+    }
+
     let instruction = XxxlInstruction::unpack(instruction_data)?;
 
     match instruction {
