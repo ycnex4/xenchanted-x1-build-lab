@@ -1,3 +1,11 @@
+#[cfg(not(feature = "dangerously-allow-phase-41k4-svm-test-harness-sbf-build"))]
+compile_error!(
+    "phase-41k4-svm-test-harness is a non-production unsafe SVM test harness. \
+     It bypasses quorum/decode/replay eligibility and must never be included in deploy artifacts. \
+     For Mollusk SBF tests only, explicitly add feature \
+     dangerously-allow-phase-41k4-svm-test-harness-sbf-build."
+);
+
 use core::convert::TryInto;
 
 use solana_program::{

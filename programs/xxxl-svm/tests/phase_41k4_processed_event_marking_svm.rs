@@ -115,7 +115,11 @@ fn with_mollusk(f: impl FnOnce(&Mollusk, Pubkey)) {
 fn ensure_sbf_harness_built() {
     SBF_BUILD.call_once(|| {
         let status = Command::new("cargo")
-            .args(["build-sbf", "--features", "phase-41k4-svm-test-harness"])
+            .args([
+                "build-sbf",
+                "--features",
+                "phase-41k4-svm-test-harness,dangerously-allow-phase-41k4-svm-test-harness-sbf-build",
+            ])
             .current_dir(env!("CARGO_MANIFEST_DIR"))
             .status()
             .expect("spawn cargo build-sbf for phase 41K.4 SVM harness");
