@@ -1,6 +1,14 @@
+#[cfg(feature = "phase-41k6-b1-v3-account-contract-test-gate")]
+use solana_program::sysvar;
 use solana_program::{account_info::AccountInfo, program_error::ProgramError};
 
 use crate::error::XxxlError;
+
+#[cfg(all(
+    feature = "phase-41k6-b1-v3-account-contract-test-gate",
+    not(feature = "dangerously-allow-phase-41k6-b1-v3-account-contract-test-gate-sbf-build")
+))]
+compile_error!("phase-41k6-b1-v3-account-contract-test-gate introduces the B1 V3 ConsumeGatewayMint account contract skeleton. It is a non-production integration gate and must never be included in deploy artifacts without the explicit dangerous test allow feature.");
 
 #[derive(Clone, Copy, Debug, PartialEq, Eq)]
 pub enum AccountWriteAccess {
@@ -23,6 +31,7 @@ pub enum AccountOwnerModel {
     SystemOwnedOrProgramOwnedPda,
     RentPayer,
     SystemProgram,
+    InstructionsSysvar,
 }
 
 #[derive(Clone, Copy, Debug, PartialEq, Eq)]
@@ -118,9 +127,136 @@ pub const CONSUME_GATEWAY_MINT_ACCOUNT_CONTRACT: [ConsumeGatewayMintAccountContr
     },
 ];
 
+#[cfg(feature = "phase-41k6-b1-v3-account-contract-test-gate")]
+pub const CONSUME_GATEWAY_MINT_B1_V3_ACCOUNT_CONTRACT: [ConsumeGatewayMintAccountContractEntry;
+    12] = [
+    ConsumeGatewayMintAccountContractEntry {
+        index: 0,
+        name: "mint_state",
+        write_access: AccountWriteAccess::Readonly,
+        signer_requirement: AccountSignerRequirement::NotSigner,
+        owner_model: AccountOwnerModel::ProgramOwned,
+    },
+    ConsumeGatewayMintAccountContractEntry {
+        index: 1,
+        name: "gateway_config",
+        write_access: AccountWriteAccess::Readonly,
+        signer_requirement: AccountSignerRequirement::NotSigner,
+        owner_model: AccountOwnerModel::ProgramOwned,
+    },
+    ConsumeGatewayMintAccountContractEntry {
+        index: 2,
+        name: "guardian_set",
+        write_access: AccountWriteAccess::Readonly,
+        signer_requirement: AccountSignerRequirement::NotSigner,
+        owner_model: AccountOwnerModel::ProgramOwned,
+    },
+    ConsumeGatewayMintAccountContractEntry {
+        index: 3,
+        name: "processed_event",
+        write_access: AccountWriteAccess::Writable,
+        signer_requirement: AccountSignerRequirement::NotSigner,
+        owner_model: AccountOwnerModel::SystemOwnedOrProgramOwnedPda,
+    },
+    ConsumeGatewayMintAccountContractEntry {
+        index: 4,
+        name: "recipient_balance",
+        write_access: AccountWriteAccess::Writable,
+        signer_requirement: AccountSignerRequirement::NotSigner,
+        owner_model: AccountOwnerModel::ProgramOwned,
+    },
+    ConsumeGatewayMintAccountContractEntry {
+        index: 5,
+        name: "spl_token_mint",
+        write_access: AccountWriteAccess::Writable,
+        signer_requirement: AccountSignerRequirement::NotSigner,
+        owner_model: AccountOwnerModel::SplTokenOwned,
+    },
+    ConsumeGatewayMintAccountContractEntry {
+        index: 6,
+        name: "recipient_token_account",
+        write_access: AccountWriteAccess::Writable,
+        signer_requirement: AccountSignerRequirement::NotSigner,
+        owner_model: AccountOwnerModel::SplTokenOwned,
+    },
+    ConsumeGatewayMintAccountContractEntry {
+        index: 7,
+        name: "mint_authority_pda",
+        write_access: AccountWriteAccess::Readonly,
+        signer_requirement: AccountSignerRequirement::NotSigner,
+        owner_model: AccountOwnerModel::ProgramDerivedAddress,
+    },
+    ConsumeGatewayMintAccountContractEntry {
+        index: 8,
+        name: "token_program",
+        write_access: AccountWriteAccess::Readonly,
+        signer_requirement: AccountSignerRequirement::NotSigner,
+        owner_model: AccountOwnerModel::SplTokenProgram,
+    },
+    ConsumeGatewayMintAccountContractEntry {
+        index: 9,
+        name: "rent_payer",
+        write_access: AccountWriteAccess::Writable,
+        signer_requirement: AccountSignerRequirement::Signer,
+        owner_model: AccountOwnerModel::RentPayer,
+    },
+    ConsumeGatewayMintAccountContractEntry {
+        index: 10,
+        name: "system_program",
+        write_access: AccountWriteAccess::Readonly,
+        signer_requirement: AccountSignerRequirement::NotSigner,
+        owner_model: AccountOwnerModel::SystemProgram,
+    },
+    ConsumeGatewayMintAccountContractEntry {
+        index: 11,
+        name: "instructions_sysvar",
+        write_access: AccountWriteAccess::Readonly,
+        signer_requirement: AccountSignerRequirement::NotSigner,
+        owner_model: AccountOwnerModel::InstructionsSysvar,
+    },
+];
+
 pub fn consume_gateway_mint_account_contract() -> &'static [ConsumeGatewayMintAccountContractEntry]
 {
     &CONSUME_GATEWAY_MINT_ACCOUNT_CONTRACT
+}
+
+#[cfg(feature = "phase-41k6-b1-v3-account-contract-test-gate")]
+pub fn b1_v3_consume_gateway_mint_account_contract(
+) -> &'static [ConsumeGatewayMintAccountContractEntry] {
+    &CONSUME_GATEWAY_MINT_B1_V3_ACCOUNT_CONTRACT
+}
+
+#[cfg(feature = "phase-41k6-b1-v3-account-contract-test-gate")]
+pub fn assert_b1_v3_consume_gateway_mint_account_contract(
+    accounts: &[AccountInfo],
+) -> Result<(), ProgramError> {
+    if accounts.len() != CONSUME_GATEWAY_MINT_B1_V3_ACCOUNT_CONTRACT.len() {
+        return Err(XxxlError::InvalidInstruction.into());
+    }
+
+    for entry in CONSUME_GATEWAY_MINT_B1_V3_ACCOUNT_CONTRACT {
+        let account = accounts
+            .get(entry.index)
+            .ok_or_else(|| ProgramError::from(XxxlError::InvalidInstruction))?;
+
+        let expected_writable = matches!(entry.write_access, AccountWriteAccess::Writable);
+        let expected_signer = matches!(entry.signer_requirement, AccountSignerRequirement::Signer);
+
+        if account.is_writable != expected_writable || account.is_signer != expected_signer {
+            return Err(XxxlError::InvalidInstruction.into());
+        }
+    }
+
+    let instructions_sysvar = accounts
+        .get(11)
+        .ok_or_else(|| ProgramError::from(XxxlError::InvalidInstruction))?;
+
+    if instructions_sysvar.key != &sysvar::instructions::id() {
+        return Err(XxxlError::InvalidInstruction.into());
+    }
+
+    Ok(())
 }
 
 pub fn consume_gateway_mint_account_contract_entry(
@@ -262,7 +398,167 @@ mod tests {
         }
     }
 
+    #[cfg(feature = "phase-41k6-b1-v3-account-contract-test-gate")]
+    fn b1_v3_test_accounts() -> Vec<TestAccount> {
+        use solana_program::pubkey::Pubkey;
+
+        let mut accounts = Vec::new();
+
+        for index in 0..12 {
+            let key = if index == 11 {
+                sysvar::instructions::id()
+            } else {
+                Pubkey::new_unique()
+            };
+
+            let is_writable = matches!(index, 3 | 4 | 5 | 6 | 9);
+            let is_signer = index == 9;
+
+            accounts.push(TestAccount {
+                key,
+                lamports: 1,
+                data: Vec::new(),
+                owner: Pubkey::new_unique(),
+                is_signer,
+                is_writable,
+                executable: false,
+                rent_epoch: 0,
+            });
+        }
+
+        accounts
+    }
+
+    #[cfg(feature = "phase-41k6-b1-v3-account-contract-test-gate")]
+    struct TestAccount {
+        key: solana_program::pubkey::Pubkey,
+        lamports: u64,
+        data: Vec<u8>,
+        owner: solana_program::pubkey::Pubkey,
+        is_signer: bool,
+        is_writable: bool,
+        executable: bool,
+        rent_epoch: u64,
+    }
+
+    #[cfg(feature = "phase-41k6-b1-v3-account-contract-test-gate")]
+    fn with_account_infos<R>(
+        test_accounts: &mut [TestAccount],
+        f: impl FnOnce(Vec<AccountInfo>) -> R,
+    ) -> R {
+        let infos: Vec<AccountInfo> = test_accounts
+            .iter_mut()
+            .map(|account| {
+                AccountInfo::new(
+                    &account.key,
+                    account.is_signer,
+                    account.is_writable,
+                    &mut account.lamports,
+                    &mut account.data,
+                    &account.owner,
+                    account.executable,
+                    account.rent_epoch,
+                )
+            })
+            .collect();
+
+        f(infos)
+    }
+
+    #[cfg(feature = "phase-41k6-b1-v3-account-contract-test-gate")]
+    fn assert_b1_v3_contract_error(accounts: &mut [TestAccount], expected: XxxlError) {
+        with_account_infos(accounts, |infos| {
+            let result = assert_b1_v3_consume_gateway_mint_account_contract(&infos);
+
+            assert!(matches!(result, Err(ProgramError::Custom(code)) if code == expected as u32));
+        });
+    }
+
+    #[cfg(feature = "phase-41k6-b1-v3-account-contract-test-gate")]
     #[test]
+    fn b1_v3_account_contract_accepts_expected_12_account_shape() {
+        let mut accounts = b1_v3_test_accounts();
+
+        with_account_infos(&mut accounts, |infos| {
+            assert_b1_v3_consume_gateway_mint_account_contract(&infos)
+                .expect("valid B1 V3 account contract");
+        });
+    }
+
+    #[cfg(feature = "phase-41k6-b1-v3-account-contract-test-gate")]
+    #[test]
+    fn b1_v3_account_contract_rejects_missing_instructions_sysvar() {
+        let mut accounts = b1_v3_test_accounts();
+        accounts.pop();
+
+        assert_b1_v3_contract_error(&mut accounts, XxxlError::InvalidInstruction);
+    }
+
+    #[cfg(feature = "phase-41k6-b1-v3-account-contract-test-gate")]
+    #[test]
+    fn b1_v3_account_contract_rejects_wrong_instructions_sysvar_key() {
+        let mut accounts = b1_v3_test_accounts();
+        accounts[11].key = solana_program::pubkey::Pubkey::new_unique();
+
+        assert_b1_v3_contract_error(&mut accounts, XxxlError::InvalidInstruction);
+    }
+
+    #[cfg(feature = "phase-41k6-b1-v3-account-contract-test-gate")]
+    #[test]
+    fn b1_v3_account_contract_rejects_writable_instructions_sysvar() {
+        let mut accounts = b1_v3_test_accounts();
+        accounts[11].is_writable = true;
+
+        assert_b1_v3_contract_error(&mut accounts, XxxlError::InvalidInstruction);
+    }
+
+    #[cfg(feature = "phase-41k6-b1-v3-account-contract-test-gate")]
+    #[test]
+    fn b1_v3_account_contract_rejects_signer_instructions_sysvar() {
+        let mut accounts = b1_v3_test_accounts();
+        accounts[11].is_signer = true;
+
+        assert_b1_v3_contract_error(&mut accounts, XxxlError::InvalidInstruction);
+    }
+
+    #[cfg(feature = "phase-41k6-b1-v3-account-contract-test-gate")]
+    #[test]
+    fn b1_v3_account_contract_adds_readonly_non_signer_instructions_sysvar() {
+        use crate::instruction::{
+            CONSUME_GATEWAY_MINT_B1_V3_ACCOUNT_META_COUNT,
+            CONSUME_GATEWAY_MINT_INSTRUCTIONS_SYSVAR_ACCOUNT_INDEX,
+        };
+
+        let contract = b1_v3_consume_gateway_mint_account_contract();
+
+        assert_eq!(
+            contract.len(),
+            CONSUME_GATEWAY_MINT_B1_V3_ACCOUNT_META_COUNT as usize
+        );
+
+        for (expected_index, entry) in contract.iter().enumerate() {
+            assert_eq!(entry.index, expected_index);
+        }
+
+        let sysvar_entry = contract
+            .iter()
+            .find(|entry| {
+                entry.index == CONSUME_GATEWAY_MINT_INSTRUCTIONS_SYSVAR_ACCOUNT_INDEX as usize
+            })
+            .expect("instructions sysvar account entry");
+
+        assert_eq!(sysvar_entry.name, "instructions_sysvar");
+        assert_eq!(sysvar_entry.write_access, AccountWriteAccess::Readonly);
+        assert_eq!(
+            sysvar_entry.signer_requirement,
+            AccountSignerRequirement::NotSigner
+        );
+        assert_eq!(
+            sysvar_entry.owner_model,
+            AccountOwnerModel::InstructionsSysvar
+        );
+    }
+
     fn consume_gateway_mint_account_contract_documents_owner_models() {
         assert_owner_model(ACCOUNT_INDEX_MINT_STATE, AccountOwnerModel::ProgramOwned);
         assert_owner_model(
