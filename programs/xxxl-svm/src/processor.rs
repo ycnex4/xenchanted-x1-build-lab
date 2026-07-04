@@ -1,3 +1,10 @@
+// LEGACY / PRE-41K.4:
+// This processor scaffold validates and plans around an already-initialized
+// program-owned processed_event account. It is intentionally not a Phase
+// 41K.4 atomic marking route and must not be used as live replay protection.
+//
+// Phase 41K.4 must remain isolated until a later mark+mint atomic integration
+// proves quorum + decode + eligibility + mark + SPL mint in one execution path.
 use solana_program::{
     account_info::AccountInfo, clock::Clock, entrypoint::ProgramResult, msg,
     program_error::ProgramError, pubkey::Pubkey, rent::Rent, sysvar::Sysvar,
