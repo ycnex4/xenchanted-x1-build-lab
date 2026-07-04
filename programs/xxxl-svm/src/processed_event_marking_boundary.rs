@@ -193,13 +193,20 @@ pub fn mark_processed_event_atomic<'a>(
     let rent_top_up_lamports = top_up_processed_event_rent_if_needed(
         processed_event_account,
         rent_payer,
+        system_program_account,
         rent_exempt_minimum_lamports,
     )?;
 
-    allocate_processed_event_pda(processed_event_account, canonical_event_key, pda_bump)?;
+    allocate_processed_event_pda(
+        processed_event_account,
+        system_program_account,
+        canonical_event_key,
+        pda_bump,
+    )?;
 
     assign_processed_event_pda_to_program(
         processed_event_account,
+        system_program_account,
         program_id,
         canonical_event_key,
         pda_bump,
@@ -261,6 +268,7 @@ pub fn mark_processed_event_atomic<'a>(
 fn top_up_processed_event_rent_if_needed<'a>(
     processed_event_account: &AccountInfo<'a>,
     rent_payer: &AccountInfo<'a>,
+    system_program_account: &AccountInfo<'a>,
     rent_exempt_minimum_lamports: u64,
 ) -> Result<u64, ProgramError> {
     let current_lamports = **processed_event_account.lamports.borrow();
@@ -282,7 +290,11 @@ fn top_up_processed_event_rent_if_needed<'a>(
 
     invoke_signed(
         &instruction,
-        &[rent_payer.clone(), processed_event_account.clone()],
+        &[
+            rent_payer.clone(),
+            processed_event_account.clone(),
+            system_program_account.clone(),
+        ],
         &[],
     )?;
 
@@ -291,6 +303,7 @@ fn top_up_processed_event_rent_if_needed<'a>(
 
 fn allocate_processed_event_pda<'a>(
     processed_event_account: &AccountInfo<'a>,
+    system_program_account: &AccountInfo<'a>,
     canonical_event_key: &[u8; 32],
     pda_bump: u8,
 ) -> Result<(), ProgramError> {
@@ -302,13 +315,17 @@ fn allocate_processed_event_pda<'a>(
 
     invoke_signed(
         &instruction,
-        &[processed_event_account.clone()],
+        &[
+            processed_event_account.clone(),
+            system_program_account.clone(),
+        ],
         &[&signer_seeds],
     )
 }
 
 fn assign_processed_event_pda_to_program<'a>(
     processed_event_account: &AccountInfo<'a>,
+    system_program_account: &AccountInfo<'a>,
     program_id: &Pubkey,
     canonical_event_key: &[u8; 32],
     pda_bump: u8,
@@ -318,7 +335,10 @@ fn assign_processed_event_pda_to_program<'a>(
 
     invoke_signed(
         &instruction,
-        &[processed_event_account.clone()],
+        &[
+            processed_event_account.clone(),
+            system_program_account.clone(),
+        ],
         &[&signer_seeds],
     )
 }

@@ -203,8 +203,9 @@ impl<'a> RecipientBalanceAccountView<'a> {
 //
 // Do not use this helper for replay protection, 41K.4 marking, or any
 // live burn-to-mint route.
+#[cfg(test)]
 #[deprecated(note = "Use the Phase 41K.4 processed-event marking boundary instead")]
-pub fn mark_processed_event_consumed_legacy_planning_only(
+pub(crate) fn mark_processed_event_consumed_legacy_planning_only(
     data: &mut [u8],
     expected_canonical_event_key: [u8; 32],
     expected_route_id: [u8; 32],

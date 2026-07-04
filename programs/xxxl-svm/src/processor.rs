@@ -5,6 +5,9 @@
 //
 // Phase 41K.4 must remain isolated until a later mark+mint atomic integration
 // proves quorum + decode + eligibility + mark + SPL mint in one execution path.
+#[cfg(test)]
+use crate::execution_plan::apply_atomic_state_mutation_composition_boundary;
+
 use solana_program::{
     account_info::AccountInfo, clock::Clock, entrypoint::ProgramResult, msg,
     program_error::ProgramError, pubkey::Pubkey, rent::Rent, sysvar::Sysvar,
@@ -18,7 +21,6 @@ use crate::{
     },
     error::XxxlError,
     execution_plan::{
-        apply_atomic_state_mutation_composition_boundary,
         build_atomic_consume_gateway_mint_execution_plan, AtomicConsumeGatewayMintExecutionPlan,
     },
     instruction::{
@@ -61,6 +63,7 @@ pub struct RuntimeConsumeGatewayMintPlanningComposition {
     pub invoke_signed_from_process_instruction_enabled: bool,
 }
 
+#[cfg(test)]
 pub struct RuntimeConsumeGatewayMintLocalStateMutationComposition {
     pub planning_composition: RuntimeConsumeGatewayMintPlanningComposition,
     pub recipient_balance_after: u128,
@@ -152,6 +155,7 @@ pub fn build_runtime_consume_gateway_mint_planning_composition_boundary(
     })
 }
 
+#[cfg(test)]
 pub fn build_runtime_consume_gateway_mint_local_state_mutation_composition_boundary(
     program_id: &Pubkey,
     accounts: &[AccountInfo],

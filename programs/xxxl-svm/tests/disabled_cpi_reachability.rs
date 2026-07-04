@@ -15,10 +15,7 @@ use xxxl_svm::{
     },
     instruction::{ConsumeGatewayMintArgs, CONSUME_GATEWAY_MINT_INSTRUCTION_LEN},
     pda::find_gateway_mint_authority,
-    processor::{
-        build_runtime_consume_gateway_mint_disabled_spl_cpi_gate_boundary,
-        build_runtime_consume_gateway_mint_local_state_mutation_composition_boundary,
-    },
+    processor::build_runtime_consume_gateway_mint_disabled_spl_cpi_gate_boundary,
     state::{
         GATEWAY_CONFIG_ACCOUNT_DISCRIMINATOR, GATEWAY_CONFIG_ACCOUNT_LEN,
         GUARDIAN_SET_ACCOUNT_DISCRIMINATOR, GUARDIAN_SET_ACCOUNT_LEN,
@@ -111,72 +108,11 @@ fn guarded_mint_to_cpi_boundary_rejects_planning_boundary_mismatch_after_expecte
     });
 }
 
-#[test]
-fn direct_local_mutation_boundary_is_separate_from_enabled_entrypoint_noop() {
-    let mut fixture = RuntimeFixture::new();
-    let processed_event_before = fixture.data.processed_event.clone();
-    let recipient_balance_before = fixture.data.recipient_balance.clone();
-    let spl_mint_before = fixture.data.spl_mint.clone();
-    let recipient_token_account_before = fixture.data.recipient_token_account.clone();
-    let canonical_event_key = fixture.args.canonical_event_key;
-
-    let program_id = fixture.program_id;
-    let args = fixture.args;
-    let rent = Rent::default();
-    let accounts = fixture.accounts();
-
-    let composition = build_runtime_consume_gateway_mint_local_state_mutation_composition_boundary(
-        &program_id,
-        &accounts,
-        &args,
-        &rent,
-        1919,
-    )
-    .expect("direct local mutation boundary mutates local model state");
-
-    assert_eq!(composition.recipient_balance_after, 1_000);
-    assert!(!composition.live_route_activation_enabled);
-    assert!(!composition.invoke_signed_from_process_instruction_enabled);
-    assert!(
-        !composition
-            .planning_composition
-            .execution_plan
-            .live_route_activation_enabled
-    );
-    assert!(
-        !composition
-            .planning_composition
-            .execution_plan
-            .mint_to_invocation_from_process_instruction_enabled
-    );
-    assert!(
-        !composition
-            .planning_composition
-            .mint_to_cpi_plan
-            .invoke_signed_from_process_instruction_enabled
-    );
-
-    drop(accounts);
-
-    assert_ne!(fixture.data.processed_event, processed_event_before);
-    assert_ne!(fixture.data.recipient_balance, recipient_balance_before);
-    assert_eq!(fixture.data.processed_event[10], 1);
-    assert_eq!(read_u128_le(&fixture.data.processed_event, 112), 1_000);
-    assert_eq!(read_u64_le(&fixture.data.processed_event, 128), 1919);
-    assert_eq!(read_u128_le(&fixture.data.recipient_balance, 80), 1_000);
-    assert_eq!(
-        read_fixed_32(&fixture.data.recipient_balance, 96),
-        canonical_event_key
-    );
-
-    assert_eq!(fixture.data.spl_mint, spl_mint_before);
-    assert_eq!(
-        fixture.data.recipient_token_account,
-        recipient_token_account_before
-    );
-    assert_spl_supply_and_recipient_amount(&fixture, 0, 0);
-}
-
+// The pre-41K.4 direct local mutation boundary is now test-only inside the
+// library crate. Integration tests must not import it as public API; this keeps
+// the legacy ProgramOwned + consumed=false mutation path out of non-test
+// surfaces and forces future live wiring to use the audited 41K.4 marking
+// boundary instead.
 #[test]
 fn disabled_spl_cpi_gate_rejects_before_live_atomicity_mutations() {
     let mut fixture = RuntimeFixture::new();
