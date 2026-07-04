@@ -20,6 +20,9 @@ pub enum AccountOwnerModel {
     SplTokenOwned,
     ProgramDerivedAddress,
     SplTokenProgram,
+    SystemOwnedOrProgramOwnedPda,
+    RentPayer,
+    SystemProgram,
 }
 
 #[derive(Clone, Copy, Debug, PartialEq, Eq)]
@@ -31,7 +34,7 @@ pub struct ConsumeGatewayMintAccountContractEntry {
     pub owner_model: AccountOwnerModel,
 }
 
-pub const CONSUME_GATEWAY_MINT_ACCOUNT_CONTRACT: [ConsumeGatewayMintAccountContractEntry; 9] = [
+pub const CONSUME_GATEWAY_MINT_ACCOUNT_CONTRACT: [ConsumeGatewayMintAccountContractEntry; 11] = [
     ConsumeGatewayMintAccountContractEntry {
         index: 0,
         name: "mint_state",
@@ -53,16 +56,16 @@ pub const CONSUME_GATEWAY_MINT_ACCOUNT_CONTRACT: [ConsumeGatewayMintAccountContr
         signer_requirement: AccountSignerRequirement::NotSigner,
         owner_model: AccountOwnerModel::ProgramOwned,
     },
-    // LEGACY / PRE-41K.4:
-    // This instruction-level scaffold assumes processed_event is already
-    // program-owned. It is not the Phase 41K.4 atomic marking account
-    // manifest, where entry state is a system-owned empty-data PDA.
+    // Phase 41K.5:
+    // The processed_event account is the replay-protection PDA. It may enter
+    // the live path as a system-owned empty/dusted PDA and later become a
+    // program-owned consumed account through the 41K.4 atomic marking boundary.
     ConsumeGatewayMintAccountContractEntry {
         index: 3,
         name: "processed_event",
         write_access: AccountWriteAccess::Writable,
         signer_requirement: AccountSignerRequirement::NotSigner,
-        owner_model: AccountOwnerModel::ProgramOwned,
+        owner_model: AccountOwnerModel::SystemOwnedOrProgramOwnedPda,
     },
     ConsumeGatewayMintAccountContractEntry {
         index: 4,
@@ -98,6 +101,20 @@ pub const CONSUME_GATEWAY_MINT_ACCOUNT_CONTRACT: [ConsumeGatewayMintAccountContr
         write_access: AccountWriteAccess::Readonly,
         signer_requirement: AccountSignerRequirement::NotSigner,
         owner_model: AccountOwnerModel::SplTokenProgram,
+    },
+    ConsumeGatewayMintAccountContractEntry {
+        index: 9,
+        name: "rent_payer",
+        write_access: AccountWriteAccess::Writable,
+        signer_requirement: AccountSignerRequirement::Signer,
+        owner_model: AccountOwnerModel::RentPayer,
+    },
+    ConsumeGatewayMintAccountContractEntry {
+        index: 10,
+        name: "system_program",
+        write_access: AccountWriteAccess::Readonly,
+        signer_requirement: AccountSignerRequirement::NotSigner,
+        owner_model: AccountOwnerModel::SystemProgram,
     },
 ];
 
@@ -154,7 +171,8 @@ mod tests {
             ACCOUNT_INDEX_GATEWAY_CONFIG, ACCOUNT_INDEX_GUARDIAN_SET,
             ACCOUNT_INDEX_MINT_AUTHORITY_PDA, ACCOUNT_INDEX_MINT_STATE,
             ACCOUNT_INDEX_PROCESSED_EVENT, ACCOUNT_INDEX_RECIPIENT_BALANCE,
-            ACCOUNT_INDEX_RECIPIENT_TOKEN_ACCOUNT, ACCOUNT_INDEX_SPL_TOKEN_MINT,
+            ACCOUNT_INDEX_RECIPIENT_TOKEN_ACCOUNT, ACCOUNT_INDEX_RENT_PAYER,
+            ACCOUNT_INDEX_SPL_TOKEN_MINT, ACCOUNT_INDEX_SYSTEM_PROGRAM,
             ACCOUNT_INDEX_TOKEN_PROGRAM, CONSUME_GATEWAY_MINT_REQUIRED_ACCOUNTS,
         },
     };
@@ -188,6 +206,8 @@ mod tests {
         );
         assert_entry(ACCOUNT_INDEX_MINT_AUTHORITY_PDA, "mint_authority_pda");
         assert_entry(ACCOUNT_INDEX_TOKEN_PROGRAM, "token_program");
+        assert_entry(ACCOUNT_INDEX_RENT_PAYER, "rent_payer");
+        assert_entry(ACCOUNT_INDEX_SYSTEM_PROGRAM, "system_program");
     }
 
     #[test]
@@ -225,15 +245,20 @@ mod tests {
         assert_writable(ACCOUNT_INDEX_RECIPIENT_TOKEN_ACCOUNT);
         assert_readonly(ACCOUNT_INDEX_MINT_AUTHORITY_PDA);
         assert_readonly(ACCOUNT_INDEX_TOKEN_PROGRAM);
+        assert_writable(ACCOUNT_INDEX_RENT_PAYER);
+        assert_readonly(ACCOUNT_INDEX_SYSTEM_PROGRAM);
     }
 
     #[test]
-    fn consume_gateway_mint_account_contract_requires_no_external_signers() {
+    fn consume_gateway_mint_account_contract_requires_only_rent_payer_signer() {
         for entry in consume_gateway_mint_account_contract() {
-            assert_eq!(
-                entry.signer_requirement,
+            let expected = if entry.index == ACCOUNT_INDEX_RENT_PAYER {
+                AccountSignerRequirement::Signer
+            } else {
                 AccountSignerRequirement::NotSigner
-            );
+            };
+
+            assert_eq!(entry.signer_requirement, expected);
         }
     }
 
@@ -247,7 +272,7 @@ mod tests {
         assert_owner_model(ACCOUNT_INDEX_GUARDIAN_SET, AccountOwnerModel::ProgramOwned);
         assert_owner_model(
             ACCOUNT_INDEX_PROCESSED_EVENT,
-            AccountOwnerModel::ProgramOwned,
+            AccountOwnerModel::SystemOwnedOrProgramOwnedPda,
         );
         assert_owner_model(
             ACCOUNT_INDEX_RECIPIENT_BALANCE,
@@ -268,6 +293,11 @@ mod tests {
         assert_owner_model(
             ACCOUNT_INDEX_TOKEN_PROGRAM,
             AccountOwnerModel::SplTokenProgram,
+        );
+        assert_owner_model(ACCOUNT_INDEX_RENT_PAYER, AccountOwnerModel::RentPayer);
+        assert_owner_model(
+            ACCOUNT_INDEX_SYSTEM_PROGRAM,
+            AccountOwnerModel::SystemProgram,
         );
     }
 

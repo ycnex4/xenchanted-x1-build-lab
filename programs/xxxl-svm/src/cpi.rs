@@ -3,6 +3,17 @@ use solana_program::{
     program_error::ProgramError, pubkey::Pubkey,
 };
 
+#[cfg(all(
+    feature = "phase-41k5-d2-production-path-test-gate",
+    not(feature = "dangerously-allow-phase-41k5-d2-production-path-test-gate-sbf-build")
+))]
+compile_error!(
+    "phase-41k5-d2-production-path-test-gate opens the production ConsumeGatewayMint SPL CPI path. \
+     It is a non-production integration test gate and must never be included in deploy artifacts. \
+     For D2 Mollusk SBF tests only, explicitly add feature \
+     dangerously-allow-phase-41k5-d2-production-path-test-gate-sbf-build."
+);
+
 use crate::{
     error::XxxlError,
     pda::{
@@ -94,7 +105,21 @@ pub fn plan_mint_to_cpi_boundary(
     })
 }
 
+#[cfg(all(
+    feature = "phase-41k5-d2-production-path-test-gate",
+    feature = "dangerously-allow-phase-41k5-d2-production-path-test-gate-sbf-build"
+))]
 pub fn spl_mint_to_cpi_execution_enabled() -> bool {
+    let _phase_41k5_d2_gate_marker = "PHASE_41K5_D2_SPL_CPI_GATE_OPEN";
+    true
+}
+
+#[cfg(not(all(
+    feature = "phase-41k5-d2-production-path-test-gate",
+    feature = "dangerously-allow-phase-41k5-d2-production-path-test-gate-sbf-build"
+)))]
+pub fn spl_mint_to_cpi_execution_enabled() -> bool {
+    let _phase_41k5_d2_gate_marker = "PHASE_41K5_D2_SPL_CPI_GATE_CLOSED";
     false
 }
 

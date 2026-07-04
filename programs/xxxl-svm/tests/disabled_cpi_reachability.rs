@@ -1,6 +1,6 @@
 use solana_program::{
     account_info::AccountInfo, program_error::ProgramError, program_option::COption,
-    program_pack::Pack, pubkey::Pubkey, rent::Rent,
+    program_pack::Pack, pubkey::Pubkey, rent::Rent, system_program,
 };
 use spl_token::state::{Account as SplTokenAccount, AccountState, Mint as SplTokenMint};
 
@@ -284,6 +284,8 @@ struct RuntimeFixtureKeys {
     recipient_token_account: Pubkey,
     mint_authority_pda: Pubkey,
     token_program: Pubkey,
+    rent_payer: Pubkey,
+    system_program: Pubkey,
 }
 
 struct RuntimeFixtureLamports {
@@ -296,6 +298,8 @@ struct RuntimeFixtureLamports {
     recipient_token_account: u64,
     mint_authority_pda: u64,
     token_program: u64,
+    rent_payer: u64,
+    system_program: u64,
 }
 
 struct RuntimeFixtureData {
@@ -308,6 +312,8 @@ struct RuntimeFixtureData {
     recipient_token_account: Vec<u8>,
     mint_authority_pda: Vec<u8>,
     token_program: Vec<u8>,
+    rent_payer: Vec<u8>,
+    system_program: Vec<u8>,
 }
 
 impl RuntimeFixture {
@@ -320,6 +326,10 @@ impl RuntimeFixture {
         let guardian_set_id = [0x22; 32];
         let canonical_event_key = [0x44; 32];
         let source_chain_id = 1;
+        let (processed_event, _) = Pubkey::find_program_address(
+            &[b"xxxl", b"processed-event", &canonical_event_key],
+            &program_id,
+        );
 
         let owners = RuntimeFixtureOwners {
             program: program_id,
@@ -331,12 +341,14 @@ impl RuntimeFixture {
             mint_state: Pubkey::new_unique(),
             gateway_config: Pubkey::new_unique(),
             guardian_set: Pubkey::new_unique(),
-            processed_event: Pubkey::new_unique(),
+            processed_event,
             recipient_balance: Pubkey::new_unique(),
             spl_mint,
             recipient_token_account: Pubkey::new_unique(),
             mint_authority_pda,
             token_program: spl_token::id(),
+            rent_payer: Pubkey::new_unique(),
+            system_program: system_program::id(),
         };
 
         let data = RuntimeFixtureData {
@@ -349,12 +361,7 @@ impl RuntimeFixture {
                 10_000,
             ),
             guardian_set: guardian_set_data(guardian_set_id),
-            processed_event: processed_event_data(
-                false,
-                canonical_event_key,
-                route_id,
-                recipient_owner,
-            ),
+            processed_event: Vec::new(),
             recipient_balance: recipient_balance_data(recipient_owner, spl_mint),
             spl_mint: packed_mint(mint_authority_pda, true),
             recipient_token_account: packed_token_account(
@@ -364,6 +371,8 @@ impl RuntimeFixture {
             ),
             mint_authority_pda: Vec::new(),
             token_program: Vec::new(),
+            rent_payer: Vec::new(),
+            system_program: Vec::new(),
         };
 
         let rent = Rent::default();
@@ -371,17 +380,19 @@ impl RuntimeFixture {
             mint_state: rent.minimum_balance(data.mint_state.len()),
             gateway_config: rent.minimum_balance(data.gateway_config.len()),
             guardian_set: rent.minimum_balance(data.guardian_set.len()),
-            processed_event: rent.minimum_balance(data.processed_event.len()),
+            processed_event: 1,
             recipient_balance: rent.minimum_balance(data.recipient_balance.len()),
             spl_mint: rent.minimum_balance(data.spl_mint.len()),
             recipient_token_account: rent.minimum_balance(data.recipient_token_account.len()),
             mint_authority_pda: 0,
             token_program: 0,
+            rent_payer: 10_000_000,
+            system_program: 0,
         };
 
         let args = ConsumeGatewayMintArgs {
             raw: [0u8; CONSUME_GATEWAY_MINT_INSTRUCTION_LEN],
-            account_meta_count: 9,
+            account_meta_count: 11,
             route_account_index: 1,
             guardian_set_account_index: 2,
             mint_state_account_index: 0,
@@ -445,7 +456,7 @@ impl RuntimeFixture {
                 true,
                 &mut self.lamports.processed_event,
                 &mut self.data.processed_event,
-                &self.owners.program,
+                &self.keys.system_program,
                 false,
                 0,
             ),
@@ -495,6 +506,26 @@ impl RuntimeFixture {
                 false,
                 &mut self.lamports.token_program,
                 &mut self.data.token_program,
+                &self.owners.token_program_owner,
+                true,
+                0,
+            ),
+            AccountInfo::new(
+                &self.keys.rent_payer,
+                true,
+                true,
+                &mut self.lamports.rent_payer,
+                &mut self.data.rent_payer,
+                &self.owners.token_program_owner,
+                false,
+                0,
+            ),
+            AccountInfo::new(
+                &self.keys.system_program,
+                false,
+                false,
+                &mut self.lamports.system_program,
+                &mut self.data.system_program,
                 &self.owners.token_program_owner,
                 true,
                 0,

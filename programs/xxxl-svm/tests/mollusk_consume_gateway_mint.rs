@@ -31,6 +31,8 @@ use xxxl_svm::{
 
 const PROGRAM_NAME: &str = "xxxl_svm";
 const TOKEN_PROGRAM_ID: &str = "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA";
+const SYSTEM_PROGRAM_ID: &str = "11111111111111111111111111111111";
+const NATIVE_LOADER_ID: &str = "NativeLoader1111111111111111111111111111111";
 const SPL_MINT_ACCOUNT_INDEX: usize = 5;
 const RECIPIENT_TOKEN_ACCOUNT_INDEX: usize = 6;
 const MINT_AUTHORITY_PDA_ACCOUNT_INDEX: usize = 7;
@@ -447,23 +449,33 @@ fn mollusk_rejects_low_rent_guardian_set_without_live_route() {
 }
 
 #[test]
-fn mollusk_rejects_low_rent_processed_event_without_live_route() {
+fn mollusk_accepts_dusted_system_owned_empty_processed_event_without_live_route() {
     let fixture = ScaffoldFixture::new();
     let mollusk = mollusk_for_program(&fixture.program_id);
 
     let instruction = fixture.instruction();
-    let accounts = accounts_with_low_rent(
-        &fixture,
-        CONSUME_GATEWAY_MINT_PROCESSED_EVENT_ACCOUNT_INDEX as usize,
+    let accounts = fixture.accounts();
+
+    assert!(
+        accounts[CONSUME_GATEWAY_MINT_PROCESSED_EVENT_ACCOUNT_INDEX as usize]
+            .1
+            .data
+            .is_empty()
+    );
+    assert_eq!(
+        accounts[CONSUME_GATEWAY_MINT_PROCESSED_EVENT_ACCOUNT_INDEX as usize]
+            .1
+            .lamports,
+        1
     );
 
-    process_rejection_and_assert_mutable_accounts_unchanged(
-        &mollusk,
+    let checks = result_and_unchanged_mutable_account_checks(
         &fixture,
-        &instruction,
         &accounts,
-        XxxlError::InvalidRentExemption,
+        Check::err(ProgramError::Custom(XxxlError::CpiBoundaryNotReady as u32)),
     );
+
+    mollusk.process_and_validate_instruction(&instruction, &accounts, &checks);
 }
 
 #[test]
@@ -748,7 +760,11 @@ fn mollusk_valid_scaffold_entrypoint_leaves_mutable_accounts_unchanged() {
     let accounts = fixture.accounts();
     assert_live_atomicity_accounts_start_unmutated(&accounts);
 
-    let checks = result_and_unchanged_mutable_account_checks(&fixture, &accounts, Check::success());
+    let checks = result_and_unchanged_mutable_account_checks(
+        &fixture,
+        &accounts,
+        Check::err(ProgramError::Custom(XxxlError::CpiBoundaryNotReady as u32)),
+    );
 
     mollusk.process_and_validate_instruction(&instruction, &accounts, &checks);
 }
@@ -775,7 +791,11 @@ fn mollusk_valid_v2_matching_source_chain_id_leaves_mutable_accounts_unchanged()
     );
     assert_live_atomicity_accounts_start_unmutated(&accounts);
 
-    let checks = result_and_unchanged_mutable_account_checks(&fixture, &accounts, Check::success());
+    let checks = result_and_unchanged_mutable_account_checks(
+        &fixture,
+        &accounts,
+        Check::err(ProgramError::Custom(XxxlError::CpiBoundaryNotReady as u32)),
+    );
 
     mollusk.process_and_validate_instruction(&instruction, &accounts, &checks);
 }
@@ -789,7 +809,11 @@ fn process_instruction_v2_still_disabled_plan() {
     let accounts = fixture.accounts();
     assert_live_atomicity_accounts_start_unmutated(&accounts);
 
-    let checks = result_and_unchanged_mutable_account_checks(&fixture, &accounts, Check::success());
+    let checks = result_and_unchanged_mutable_account_checks(
+        &fixture,
+        &accounts,
+        Check::err(ProgramError::Custom(XxxlError::CpiBoundaryNotReady as u32)),
+    );
 
     mollusk.process_and_validate_instruction(&instruction, &accounts, &checks);
 }
@@ -1020,7 +1044,7 @@ fn mollusk_consumed_processed_event_rejection_leaves_mutable_accounts_unchanged(
 
     let instruction = fixture.instruction();
     let mut accounts = fixture.accounts();
-    accounts[3].1.data[10] = 1;
+    set_program_owned_initialized_processed_event(&fixture, &mut accounts, true);
 
     let checks = result_and_unchanged_mutable_account_checks(
         &fixture,
@@ -1252,6 +1276,7 @@ fn mollusk_wrong_processed_event_recipient_rejection_leaves_mutable_accounts_unc
 
     let instruction = fixture.instruction();
     let mut accounts = fixture.accounts();
+    set_program_owned_initialized_processed_event(&fixture, &mut accounts, false);
     accounts[CONSUME_GATEWAY_MINT_PROCESSED_EVENT_ACCOUNT_INDEX as usize]
         .1
         .data[80..112]
@@ -1273,6 +1298,7 @@ fn mollusk_wrong_processed_event_canonical_event_key_rejection_leaves_mutable_ac
 
     let instruction = fixture.instruction();
     let mut accounts = fixture.accounts();
+    set_program_owned_initialized_processed_event(&fixture, &mut accounts, false);
     accounts[CONSUME_GATEWAY_MINT_PROCESSED_EVENT_ACCOUNT_INDEX as usize]
         .1
         .data[16] ^= 0xff;
@@ -1293,6 +1319,7 @@ fn mollusk_wrong_processed_event_route_id_rejection_leaves_mutable_accounts_unch
 
     let instruction = fixture.instruction();
     let mut accounts = fixture.accounts();
+    set_program_owned_initialized_processed_event(&fixture, &mut accounts, false);
     accounts[CONSUME_GATEWAY_MINT_PROCESSED_EVENT_ACCOUNT_INDEX as usize]
         .1
         .data[48] ^= 0xff;
@@ -1313,6 +1340,7 @@ fn mollusk_wrong_processed_event_recipient_bit_flip_rejection_leaves_mutable_acc
 
     let instruction = fixture.instruction();
     let mut accounts = fixture.accounts();
+    set_program_owned_initialized_processed_event(&fixture, &mut accounts, false);
     accounts[CONSUME_GATEWAY_MINT_PROCESSED_EVENT_ACCOUNT_INDEX as usize]
         .1
         .data[80] ^= 0xff;
@@ -1509,6 +1537,22 @@ fn accounts_with_low_rent(
     accounts
 }
 
+fn set_program_owned_initialized_processed_event(
+    fixture: &ScaffoldFixture,
+    accounts: &mut [(Pubkey, Account)],
+    consumed: bool,
+) {
+    let index = CONSUME_GATEWAY_MINT_PROCESSED_EVENT_ACCOUNT_INDEX as usize;
+    let route_id = read_fixed_32(&fixture.instruction_data, 16);
+    let canonical_event_key = read_fixed_32(&fixture.instruction_data, 112);
+    let recipient = Pubkey::new_from_array(read_fixed_32(&fixture.instruction_data, 144));
+
+    accounts[index].1.owner = fixture.program_id;
+    accounts[index].1.lamports = 10_000_000_000;
+    accounts[index].1.data =
+        processed_event_data(consumed, canonical_event_key, route_id, recipient);
+}
+
 fn process_rejection_and_assert_mutable_accounts_unchanged(
     mollusk: &Mollusk,
     fixture: &ScaffoldFixture,
@@ -1576,16 +1620,21 @@ fn result_and_unchanged_mutable_account_checks<'a>(
             .lamports(accounts[RECIPIENT_TOKEN_ACCOUNT_INDEX].1.lamports)
             .owner(&accounts[RECIPIENT_TOKEN_ACCOUNT_INDEX].1.owner)
             .build(),
+        Check::account(&fixture.keys.rent_payer)
+            .data(&accounts[9].1.data)
+            .lamports(accounts[9].1.lamports)
+            .owner(&accounts[9].1.owner)
+            .build(),
     ]);
     checks
 }
 
 fn assert_live_atomicity_accounts_start_unmutated(accounts: &[(Pubkey, Account)]) {
-    assert_eq!(
+    assert!(
         accounts[CONSUME_GATEWAY_MINT_PROCESSED_EVENT_ACCOUNT_INDEX as usize]
             .1
-            .data[10],
-        0
+            .data
+            .is_empty()
     );
     assert_eq!(
         read_u128_le(
@@ -1625,6 +1674,8 @@ struct FixtureKeys {
     recipient_token_account: Pubkey,
     mint_authority_pda: Pubkey,
     token_program: Pubkey,
+    rent_payer: Pubkey,
+    system_program: Pubkey,
 }
 
 struct FixtureData {
@@ -1643,6 +1694,9 @@ impl ScaffoldFixture {
         let token_program = TOKEN_PROGRAM_ID
             .parse::<Pubkey>()
             .expect("SPL Token program id");
+        let system_program = SYSTEM_PROGRAM_ID
+            .parse::<Pubkey>()
+            .expect("system program id");
         let spl_mint = Pubkey::new_unique();
         let recipient_owner = Pubkey::new_unique();
         let (mint_authority_pda, bump) =
@@ -1652,18 +1706,24 @@ impl ScaffoldFixture {
         let guardian_set_id = [0x22; 32];
         let canonical_event_key = [0x44; 32];
         let source_chain_id = 1;
+        let (processed_event, _) = Pubkey::find_program_address(
+            &[b"xxxl", b"processed-event", &canonical_event_key],
+            &program_id,
+        );
 
         let keys = FixtureKeys {
             mint_state: Pubkey::new_unique(),
             gateway_config: Pubkey::new_unique(),
             guardian_set: Pubkey::new_unique(),
-            processed_event: Pubkey::new_unique(),
+            processed_event,
             recipient_balance: Pubkey::new_unique(),
             recipient_owner,
             spl_mint,
             recipient_token_account: Pubkey::new_unique(),
             mint_authority_pda,
             token_program,
+            rent_payer: Pubkey::new_unique(),
+            system_program,
         };
 
         let data = FixtureData {
@@ -1676,12 +1736,7 @@ impl ScaffoldFixture {
                 10_000,
             ),
             guardian_set: guardian_set_data(guardian_set_id),
-            processed_event: processed_event_data(
-                false,
-                canonical_event_key,
-                route_id,
-                recipient_owner,
-            ),
+            processed_event: Vec::new(),
             recipient_balance: recipient_balance_data(recipient_owner, spl_mint),
             spl_mint: packed_mint(mint_authority_pda, true),
             recipient_token_account: packed_token_account(
@@ -1724,12 +1779,17 @@ impl ScaffoldFixture {
                 AccountMeta::new(self.keys.recipient_token_account, false),
                 AccountMeta::new_readonly(self.keys.mint_authority_pda, false),
                 AccountMeta::new_readonly(self.keys.token_program, false),
+                AccountMeta::new(self.keys.rent_payer, true),
+                AccountMeta::new_readonly(self.keys.system_program, false),
             ],
         )
     }
 
     fn accounts(&self) -> Vec<(Pubkey, Account)> {
         let token_program_owner = Pubkey::new_unique();
+        let native_loader = NATIVE_LOADER_ID
+            .parse::<Pubkey>()
+            .expect("native loader id");
         let lamports = 10_000_000_000;
 
         vec![
@@ -1763,9 +1823,9 @@ impl ScaffoldFixture {
             (
                 self.keys.processed_event,
                 account(
-                    lamports,
+                    1,
                     self.data.processed_event.clone(),
-                    self.program_id,
+                    self.keys.system_program,
                     false,
                 ),
             ),
@@ -1803,6 +1863,14 @@ impl ScaffoldFixture {
             (
                 self.keys.token_program,
                 account(1, Vec::new(), token_program_owner, true),
+            ),
+            (
+                self.keys.rent_payer,
+                account(lamports, Vec::new(), self.keys.system_program, false),
+            ),
+            (
+                self.keys.system_program,
+                account(1, Vec::new(), native_loader, true),
             ),
         ]
     }
@@ -1931,6 +1999,12 @@ fn read_u64_le(input: &[u8], offset: usize) -> u64 {
     let mut bytes = [0u8; 8];
     bytes.copy_from_slice(&input[offset..offset + 8]);
     u64::from_le_bytes(bytes)
+}
+
+fn read_fixed_32(input: &[u8], offset: usize) -> [u8; 32] {
+    let mut bytes = [0u8; 32];
+    bytes.copy_from_slice(&input[offset..offset + 32]);
+    bytes
 }
 
 fn instruction_data_from_fields(

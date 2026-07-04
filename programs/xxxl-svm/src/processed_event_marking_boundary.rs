@@ -72,21 +72,83 @@ pub const PHASE_41K_4_PROCESSED_EVENT_MARKING_BOUNDARY_REPORT:
 
 #[derive(Clone, Debug, PartialEq, Eq)]
 pub struct ProcessedEventMarkingWitness {
-    pub expected_processed_event_pda: Pubkey,
-    pub pda_bump: u8,
-    pub canonical_event_key: [u8; 32],
-    pub route_id: [u8; 32],
-    pub recipient: [u8; 32],
-    pub consumed_amount: u128,
-    pub consumed_slot: u64,
-    pub rent_exempt_minimum_lamports: u64,
-    pub rent_top_up_lamports: u64,
-    pub final_redecode_passed: bool,
-    pub system_program_cpi_used: bool,
-    pub invoke_signed_used: bool,
-    pub spl_token_mint_to_enabled: bool,
-    pub process_instruction_handler_added: bool,
-    pub live_route_enabled: bool,
+    expected_processed_event_pda: Pubkey,
+    pda_bump: u8,
+    canonical_event_key: [u8; 32],
+    route_id: [u8; 32],
+    recipient: [u8; 32],
+    consumed_amount: u128,
+    consumed_slot: u64,
+    rent_exempt_minimum_lamports: u64,
+    rent_top_up_lamports: u64,
+    final_redecode_passed: bool,
+    system_program_cpi_used: bool,
+    invoke_signed_used: bool,
+    spl_token_mint_to_enabled: bool,
+    process_instruction_handler_added: bool,
+    live_route_enabled: bool,
+}
+
+impl ProcessedEventMarkingWitness {
+    pub fn expected_processed_event_pda(&self) -> &Pubkey {
+        &self.expected_processed_event_pda
+    }
+
+    pub fn pda_bump(&self) -> u8 {
+        self.pda_bump
+    }
+
+    pub fn canonical_event_key(&self) -> [u8; 32] {
+        self.canonical_event_key
+    }
+
+    pub fn route_id(&self) -> [u8; 32] {
+        self.route_id
+    }
+
+    pub fn recipient(&self) -> [u8; 32] {
+        self.recipient
+    }
+
+    pub fn consumed_amount(&self) -> u128 {
+        self.consumed_amount
+    }
+
+    pub fn consumed_slot(&self) -> u64 {
+        self.consumed_slot
+    }
+
+    pub fn rent_exempt_minimum_lamports(&self) -> u64 {
+        self.rent_exempt_minimum_lamports
+    }
+
+    pub fn rent_top_up_lamports(&self) -> u64 {
+        self.rent_top_up_lamports
+    }
+
+    pub fn final_redecode_passed(&self) -> bool {
+        self.final_redecode_passed
+    }
+
+    pub fn system_program_cpi_used(&self) -> bool {
+        self.system_program_cpi_used
+    }
+
+    pub fn invoke_signed_used(&self) -> bool {
+        self.invoke_signed_used
+    }
+
+    pub fn spl_token_mint_to_enabled(&self) -> bool {
+        self.spl_token_mint_to_enabled
+    }
+
+    pub fn process_instruction_handler_added(&self) -> bool {
+        self.process_instruction_handler_added
+    }
+
+    pub fn live_route_enabled(&self) -> bool {
+        self.live_route_enabled
+    }
 }
 
 pub fn phase_41k_4_processed_event_marking_boundary_report(

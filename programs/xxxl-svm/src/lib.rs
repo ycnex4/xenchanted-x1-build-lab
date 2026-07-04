@@ -18,6 +18,8 @@ pub mod error;
 pub mod execution_plan;
 pub mod instruction;
 pub mod pda;
+#[cfg(feature = "phase-41k5-spl-mint-to-cpi-test-gate")]
+pub mod phase_41k5_d15_atomic_mark_and_mint_svm_harness;
 pub mod processed_event_marking_boundary;
 #[cfg(feature = "phase-41k4-svm-test-harness")]
 pub mod processed_event_marking_svm_harness;

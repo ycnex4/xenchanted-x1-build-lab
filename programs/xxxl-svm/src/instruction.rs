@@ -12,7 +12,7 @@ pub const CONSUME_GATEWAY_MINT_RESERVED_ZERO_END: usize = 208;
 pub const CONSUME_GATEWAY_MINT_DISCRIMINATOR: [u8; INSTRUCTION_DISCRIMINATOR_LEN] =
     [0xf2, 0xf4, 0xa8, 0x68, 0xbb, 0x89, 0xfe, 0x52];
 
-pub const CONSUME_GATEWAY_MINT_ACCOUNT_META_COUNT: u8 = 9;
+pub const CONSUME_GATEWAY_MINT_ACCOUNT_META_COUNT: u8 = 11;
 pub const CONSUME_GATEWAY_MINT_ROUTE_ACCOUNT_INDEX: u8 = 1;
 pub const CONSUME_GATEWAY_MINT_GUARDIAN_SET_ACCOUNT_INDEX: u8 = 2;
 pub const CONSUME_GATEWAY_MINT_MINT_STATE_ACCOUNT_INDEX: u8 = 0;
@@ -146,7 +146,7 @@ mod tests {
         match instruction {
             XxxlInstruction::ConsumeGatewayMint(args) => {
                 assert_eq!(args.raw, bytes);
-                assert_eq!(args.account_meta_count, 9);
+                assert_eq!(args.account_meta_count, 11);
                 assert_eq!(args.route_account_index, 1);
                 assert_eq!(args.guardian_set_account_index, 2);
                 assert_eq!(args.mint_state_account_index, 0);
