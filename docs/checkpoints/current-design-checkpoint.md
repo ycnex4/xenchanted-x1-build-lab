@@ -351,3 +351,25 @@ STRATEGY_2_CLOSURE_READINESS_CHECKPOINT_NO_GO
 Current decision remains:
 
 NO-GO.
+
+## Phase 41K.6 B6.41 local-validator-only GO form design
+
+The local-validator-only GO form design is recorded in:
+
+docs/gateway/phase-41k6-b6-41-local-validator-go-form-design.md
+
+It defines the required future approval fields for a local-validator-only dry-run.
+
+It does not approve local-validator execution.
+
+It does not execute a local validator dry-run.
+
+It does not approve testnet action.
+
+Current status:
+
+LOCAL_VALIDATOR_ONLY_GO_FORM_DESIGN_NOT_APPROVED
+
+Current decision remains:
+
+NO-GO.

@@ -864,6 +864,41 @@ Current decision remains:
 
 NO-GO.
 
+## B6.41 local-validator-only GO form design status
+
+- local_validator_go_form_design_file: docs/gateway/phase-41k6-b6-41-local-validator-go-form-design.md
+- local_validator_go_form_status: LOCAL_VALIDATOR_ONLY_GO_FORM_DESIGN_NOT_APPROVED
+- local_validator_go_form_defined: true
+- local_validator_go_approved: false
+- blocker_h_local_validator_dry_run: open_design_started
+- blocker_h_closed: false
+- local_validator_execution_approved: false
+- local_validator_matrix_defined: true
+- local_validator_matrix_executed: false
+- local_fixture_generator_implemented: skeleton_only
+- fixture_file_emission_enabled: false
+- live_runtime_handler_enabled: false
+- live_route_enabled: false
+- on_chain_state_write_enabled: false
+- account_initialization_enabled: false
+- spl_cpi_minting_enabled: false
+- testnet_submit_enabled: false
+- build_for_upgrade_approved: false
+- upgrade_go_approved: false
+- state_init_go_approved: false
+- submit_go_approved: false
+- production_activation_approved: false
+
+B6.41 records the local-validator-only GO form design.
+
+It does not approve local-validator execution.
+
+It does not approve testnet action.
+
+Current decision remains:
+
+NO-GO.
+
 ## Current decision
 
 Current decision:
