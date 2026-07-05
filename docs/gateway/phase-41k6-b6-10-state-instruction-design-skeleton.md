@@ -537,3 +537,23 @@ It does not approve deploy, upgrade, signing, submit, SOL spend, account initial
 Current decision remains:
 
 NO-GO.
+
+## B6.18 local validated dispatch skeleton
+
+B6.18 local validated dispatch skeleton is implemented in:
+
+programs/xxxl-svm/src/validated_dispatch_skeleton.rs
+
+The module is local-only and explicitly marked:
+
+LOCAL_ONLY_NOT_DEPLOYABLE
+
+It combines typed instruction decoding, account count validation, and signer, writable, owner expectation validation.
+
+It does not implement live runtime handlers.
+
+It does not approve deploy, upgrade, signing, submit, SOL spend, account initialization, SPL mint setup, guardian package construction, or submit rehearsal.
+
+Current decision remains:
+
+NO-GO.
