@@ -72,3 +72,14 @@ This prevents silent future drift in:
 B5.6 closes Claude's mandatory B5 note before B6.1.
 
 After B5.6 is merged, B6.1 may be opened as an explicit no-send/no-sign/no-key/no-submit X1 testnet E2E opening boundary.
+
+## TS follow-up correction
+
+Claude reviewed the first B5.6 delta and confirmed that the Rust known-answer assertions were present, but the TypeScript known-answer assertions had not landed in tests/phase41k6_b5_candidate_payload_hash.test.ts.
+
+This follow-up adds the missing TypeScript assertions for:
+
+- canonical known-answer payload hash,
+- u64::MAX known-answer payload hash.
+
+After this correction, both TypeScript and Rust assert the same hardcoded digests.
