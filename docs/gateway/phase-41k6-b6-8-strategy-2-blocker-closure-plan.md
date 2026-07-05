@@ -260,3 +260,15 @@ Current decision:
 NO-GO.
 
 This Strategy 2 blocker closure plan does not authorize live action.
+
+## B6.9 runtime upgrade target design
+
+B6.9 runtime upgrade target design is recorded in:
+
+docs/gateway/phase-41k6-b6-9-runtime-upgrade-target-design.md
+
+This starts blocker C and blocker D planning, but closes no GO blocker.
+
+Current decision remains:
+
+NO-GO.
