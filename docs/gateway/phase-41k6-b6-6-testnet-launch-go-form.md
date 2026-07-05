@@ -138,6 +138,19 @@ Current decision remains:
 
 NO-GO.
 
+## B6.9 runtime upgrade target design status
+
+- runtime_upgrade_target_design_file: docs/gateway/phase-41k6-b6-9-runtime-upgrade-target-design.md
+- blocker_c_b1c7_handler_presence_verification: open_design_started
+- blocker_d_state_initialization_instruction_design: open_design_started
+- upgrade_go_approved: false
+- state_init_go_approved: false
+- submit_go_approved: false
+
+Current decision remains:
+
+NO-GO.
+
 ## Current decision
 
 Current decision:
