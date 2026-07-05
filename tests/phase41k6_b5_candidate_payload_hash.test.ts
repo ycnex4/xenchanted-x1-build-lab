@@ -6,6 +6,37 @@ import {
   type Phase41K6GatewayMintCandidate,
 } from "../src/gateway/phase41k6PayloadV2.js";
 
+const PHASE_41K6_B2_KNOWN_ANSWER_PAYLOAD_HASH =
+  "0x56a318440e188d864052b8518f41deb7e4f998a975e3b6e19ca63815535ec77d";
+
+const PHASE_41K6_B2_U64_MAX_KNOWN_ANSWER_PAYLOAD_HASH =
+  "0xa6b9e3901a04a6da11d100912cb1f5ebf294464d5b11376f2b7eb71a0cb9f893";
+
+function knownAnswerCandidate(amount = 1_234_567_890n): Phase41K6GatewayMintCandidate {
+  return {
+    sourceObservation: {
+      sourceChainId: 1n,
+      sourceToken: repeatByte32Hex(0x10),
+      sourceSender: repeatByte32Hex(0x11),
+      sourceBurnTxHash: repeatByte32Hex(0x12),
+      sourceBurnEventIndex: 7n,
+      sourceBlockNumber: 123456n,
+      sourceBlockHash: repeatByte32Hex(0x13),
+      sourceFinalityState: "finalized",
+      burnedAmount: amount,
+      canonicalEventKey: repeatByte32Hex(0xb2),
+    },
+    handlerBinding: {
+      processedEvent: repeatByte32Hex(0xb2),
+      routeId: repeatByte32Hex(0x41),
+      mint: repeatByte32Hex(0x51),
+      recipientTokenAccount: repeatByte32Hex(0x61),
+      amount,
+      guardianSetId: repeatByte32Hex(0xc7),
+    },
+  };
+}
+
 function candidate(): Phase41K6GatewayMintCandidate {
   return {
     sourceObservation: {
@@ -32,6 +63,36 @@ function candidate(): Phase41K6GatewayMintCandidate {
 }
 
 describe("Phase 41K.6 B5 candidate payload v2 hash builder", () => {
+  it("matches the Rust B1C payload hash known-answer vector", () => {
+    const result = buildPhase41K6GatewayMintPayloadV2(knownAnswerCandidate());
+
+    expect(result.domain).toBe("consume_gateway_mint_authorization_v2");
+    expect(result.processedEvent).toBe(repeatByte32Hex(0xb2));
+    expect(result.routeId).toBe(repeatByte32Hex(0x41));
+    expect(result.mint).toBe(repeatByte32Hex(0x51));
+    expect(result.recipientTokenAccount).toBe(repeatByte32Hex(0x61));
+    expect(result.amount).toBe(1_234_567_890n);
+    expect(result.amountLeHex).toBe(
+      "0xd202964900000000000000000000000000000000000000000000000000000000",
+    );
+    expect(result.guardianSetId).toBe(repeatByte32Hex(0xc7));
+    expect(result.payloadV2Hash).toBe(PHASE_41K6_B2_KNOWN_ANSWER_PAYLOAD_HASH);
+  });
+
+  it("matches the Rust B1C u64 max known-answer vector", () => {
+    const result = buildPhase41K6GatewayMintPayloadV2(
+      knownAnswerCandidate(0xffff_ffff_ffff_ffffn),
+    );
+
+    expect(result.amount).toBe(0xffff_ffff_ffff_ffffn);
+    expect(result.amountLeHex).toBe(
+      "0xffffffffffffffff000000000000000000000000000000000000000000000000",
+    );
+    expect(result.payloadV2Hash).toBe(
+      PHASE_41K6_B2_U64_MAX_KNOWN_ANSWER_PAYLOAD_HASH,
+    );
+  });
+
   it("builds a deterministic sha256 payload v2 hash from handler-bound fields", () => {
     const first = buildPhase41K6GatewayMintPayloadV2(candidate());
     const second = buildPhase41K6GatewayMintPayloadV2(candidate());
