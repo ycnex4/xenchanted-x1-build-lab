@@ -185,6 +185,44 @@ Current status:
 
 No approval class that enables live action has been issued.
 
+## Discovered public testnet baseline values
+
+Public repository-discovered baseline values are recorded in:
+
+docs/gateway/phase-41k6-b6-5-discovered-public-testnet-baseline-values.md
+
+Discovered public baseline:
+
+- documented_testnet_program_id: D7AQmZNtFFFoJbducz93atteeSZhw3jq6RmsqBvaf1my
+- documented_program_data_address: 9tuesaPoJhrifF49vJewcg6PSWZeHAJiqQ97pq3LMW9T
+- documented_gateway_mint_authority_pda: BLVsQPYXnDsTmfMW9wrXHBFpcmexM47BcAvVcibRtRYG
+- documented_gateway_mint_authority_pda_bump: 252
+- documented_upgrade_authority: DTfvjtRL63u3XYHXQfgRQCdhEanUK1qqawvfEAM9hxAc
+- token_program_id: TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA
+- documented_testnet_status: X1_TESTNET_PROGRAM_DEPLOYED_RUNTIME_LOCKED
+
+Source-level readiness remains blocked:
+
+- source_runtime_status: SCAFFOLD_ONLY_NOT_DEPLOYABLE
+- source_deployable: false
+- source_program_id_boundary: PLACEHOLDER_PROGRAM_ID_BOUNDARY
+- configured_source_placeholder_program_id: XXXLProgram111111111111111111111111111111111
+
+Active blockers remain:
+
+- PLACEHOLDER_PROGRAM_ID
+- LIVE_ROUTE_DISABLED
+- SPL_CPI_EXECUTION_DISABLED
+- PRODUCTION_GUARDIAN_SET_UNSET
+- PRODUCTION_PROOF_LOG_UNSET
+- EXTERNAL_REVIEW_INCOMPLETE
+
+The discovered public baseline does not approve signing, submission, SOL spend, private-key handling, deploy, B1C7 gate removal, feature gate weakening, or production activation.
+
+Current decision remains:
+
+NO-GO.
+
 ## Required transition before GO
 
 Before this packet can support a later GO decision:
