@@ -145,3 +145,13 @@ B6.5 may only move to GO through a later explicit written decision.
 That decision must include exact values, approvals, abort conditions, observation plan, and secret handling policy.
 
 Until that later decision exists, B6.5 remains NO-GO.
+
+## B6.5 boundary review request
+
+A B6.5 boundary review request is prepared in:
+
+docs/gateway/reviews/phase-41k6-b6-5-boundary-review-request.md
+
+The review request does not ask for submit approval.
+
+It asks whether the current NO-GO boundary is strong enough before any later explicit testnet submit rehearsal can be considered.
