@@ -217,3 +217,31 @@ Expected result:
 - no processed_event mark occurs,
 - no SPL Token `MintTo` occurs,
 - all mutation targets remain unchanged.
+
+## B3 closure gates
+
+B3 closure validation passed on the branch `stage-41k6-b3-hostile-live-gated-matrix`.
+
+Validated gates:
+
+- Full `xxxl-svm` lib test suite: `610 passed; 0 failed; 1 ignored`.
+- B1C7 gated lib test suite: `697 passed; 0 failed; 1 ignored`.
+- B2 live-gated valid quorum success test: `1 passed; 0 failed`.
+- B3 hostile live-gated matrix: `8 passed; 0 failed`.
+
+The B3 hostile live-gated matrix covers:
+
+- wrong payload hash evidence,
+- unknown guardian evidence,
+- duplicate guardian evidence,
+- insufficient quorum,
+- processed_event replay,
+- recipient binding mismatch,
+- mint binding mismatch,
+- guardian_set_id binding mismatch.
+
+B3 proves that hostile drift around the B2 positive path rejects before mutation:
+
+`authorization failure -> no processed_event mark -> no SPL Token MintTo -> no recipient token balance increase`
+
+B3 is closed as the hostile live-gated matrix checkpoint. The path remains gated by explicit non-production feature flags and dangerous SBF-build allow features.
