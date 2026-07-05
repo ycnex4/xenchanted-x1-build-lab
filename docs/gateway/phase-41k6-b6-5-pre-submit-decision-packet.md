@@ -280,3 +280,15 @@ The project may not activate production or production-like runtime execution.
 The next valid step is to fill the B6.5 decision packet with exact testnet values and review the go/no-go state.
 
 Until then, B6.5 remains unopened.
+
+## B6.5 go / no-go status snapshot
+
+The current B6.5 go / no-go status is documented in:
+
+docs/gateway/phase-41k6-b6-5-go-no-go-status-snapshot.md
+
+Current decision:
+
+NO-GO.
+
+Testnet signing, submission, SOL spend, private-key handling, deploy, B1C7 gate removal, feature gate weakening, and production activation remain not approved.
