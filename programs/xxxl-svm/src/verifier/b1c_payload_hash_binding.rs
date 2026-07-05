@@ -272,6 +272,90 @@ mod tests {
         assert!(!report.authorizes_handler_execution);
     }
 
+    #[derive(Clone, Copy)]
+    struct Phase41K6B2PayloadV2Fixture {
+        context: B1CAuthorizationPayloadContext,
+        expected_payload_hash: [u8; 32],
+    }
+
+    fn phase_41k6_b2_payload_v2_fixture() -> Phase41K6B2PayloadV2Fixture {
+        let context = B1CAuthorizationPayloadContext {
+            processed_event: Pubkey::new_from_array([0xB2; 32]),
+            route_id: [0x41; 32],
+            mint: Pubkey::new_from_array([0x51; 32]),
+            recipient: Pubkey::new_from_array([0x61; 32]),
+            amount: 1_234_567_890,
+            guardian_set_id: [0xC7; 32],
+        };
+        let expected_payload_hash = compute_b1c_expected_authorization_payload_hash(&context);
+
+        Phase41K6B2PayloadV2Fixture {
+            context,
+            expected_payload_hash,
+        }
+    }
+
+    #[test]
+    fn phase_41k6_b2_payload_v2_fixture_binds_all_success_path_fields() {
+        let fixture = phase_41k6_b2_payload_v2_fixture();
+
+        assert_eq!(
+            B1C_AUTHORIZATION_PAYLOAD_DOMAIN,
+            b"consume_gateway_mint_authorization_v2"
+        );
+        assert_eq!(fixture.expected_payload_hash.len(), B1C_AUTHORIZATION_PAYLOAD_HASH_LEN);
+        assert_ne!(fixture.expected_payload_hash, [0; 32]);
+
+        let mut changed = fixture.context;
+        changed.processed_event = Pubkey::new_from_array([0x01; 32]);
+        assert_ne!(
+            fixture.expected_payload_hash,
+            compute_b1c_expected_authorization_payload_hash(&changed)
+        );
+
+        let mut changed = fixture.context;
+        changed.route_id[0] ^= 0xff;
+        assert_ne!(
+            fixture.expected_payload_hash,
+            compute_b1c_expected_authorization_payload_hash(&changed)
+        );
+
+        let mut changed = fixture.context;
+        changed.mint = Pubkey::new_from_array([0x02; 32]);
+        assert_ne!(
+            fixture.expected_payload_hash,
+            compute_b1c_expected_authorization_payload_hash(&changed)
+        );
+
+        let mut changed = fixture.context;
+        changed.recipient = Pubkey::new_from_array([0x03; 32]);
+        assert_ne!(
+            fixture.expected_payload_hash,
+            compute_b1c_expected_authorization_payload_hash(&changed)
+        );
+
+        let mut changed = fixture.context;
+        changed.amount += 1;
+        assert_ne!(
+            fixture.expected_payload_hash,
+            compute_b1c_expected_authorization_payload_hash(&changed)
+        );
+
+        let mut changed = fixture.context;
+        changed.guardian_set_id[0] ^= 0xff;
+        assert_ne!(
+            fixture.expected_payload_hash,
+            compute_b1c_expected_authorization_payload_hash(&changed)
+        );
+
+        let mut changed = fixture.context;
+        changed.guardian_set_id[31] ^= 0xff;
+        assert_ne!(
+            fixture.expected_payload_hash,
+            compute_b1c_expected_authorization_payload_hash(&changed)
+        );
+    }
+
     #[test]
     fn same_parameters_produce_same_hash() {
         assert_eq!(

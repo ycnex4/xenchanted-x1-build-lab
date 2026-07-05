@@ -1,6 +1,6 @@
 # Phase 41K.6 B2 Valid Quorum Live-Gated Success
 
-Status: planned / B2.0 checkpoint.
+Status: B2.1-B2.3 lib-level fixture implemented; B2.4 Mollusk live-gated success pending.
 
 Base checkpoint:
 
@@ -105,6 +105,16 @@ The fixture must pass the current runtime adapter/parser path and must not rely 
 ### B2.3 Lib-level positive authorization test
 
 Add or extend lib-level tests proving the full B1C7 authorization result becomes Authorized with all required authorization flags true and mutation flags still false.
+
+## B2.1-B2.3 lib-level evidence
+
+Implemented before the Mollusk/SBF live-gated success test:
+
+    - explicit B2 payload v2 fixture
+    - payload hash regression proving all B2 success-path fields are bound
+    - valid prior Ed25519 instruction fixture for threshold guardians
+    - positive B1C7 authorization test proving all success flags before mutation
+    - mutation flags remain false at authorization boundary
 
 ### B2.4 Mollusk live-gated success test
 
