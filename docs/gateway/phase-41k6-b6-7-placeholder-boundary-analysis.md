@@ -187,6 +187,25 @@ It does not record, request, expose, or approve any secret material.
 
 Expected ProgramData hash cannot be closed until a deployable upgrade artifact exists and is hashed.
 
+## Manual resolution update
+
+The automated structural-risk result in this document is superseded by manual review in:
+
+docs/gateway/phase-41k6-b6-7-placeholder-boundary-manual-resolution.md
+
+Manual review found that the placeholder reference in pda.rs is a safety assertion in an ignored candidate dry-run test, not a PDA derivation constant.
+
+Manual conclusion:
+
+- placeholder_boundary_is_readiness_blocker_not_structural_pda_constant
+- Strategy 1: closed_not_viable
+- Strategy 2: viable_for_planning
+- Strategy 3: fallback_if_later_structural_blocker_is_found
+
+Current decision remains:
+
+NO-GO.
+
 ## Current decision
 
 Current decision:

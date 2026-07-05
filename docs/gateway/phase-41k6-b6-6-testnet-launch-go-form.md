@@ -104,6 +104,21 @@ Current decision remains:
 
 NO-GO.
 
+## B6.7 manual placeholder resolution status
+
+- placeholder_manual_resolution_file: docs/gateway/phase-41k6-b6-7-placeholder-boundary-manual-resolution.md
+- placeholder_boundary_manual_resolution: readiness_blocker_not_structural_pda_constant
+- strategy_1_status: closed_not_viable
+- strategy_2_status: viable_for_planning
+- strategy_3_status: fallback_if_later_structural_blocker_is_found
+- upgrade_go_approved: false
+- state_init_go_approved: false
+- submit_go_approved: false
+
+Current decision remains:
+
+NO-GO.
+
 ## Current decision
 
 Current decision:
