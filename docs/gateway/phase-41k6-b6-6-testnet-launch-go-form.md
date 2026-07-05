@@ -980,6 +980,47 @@ Current decision remains:
 
 NO-GO.
 
+## B6.44 local fixture file emitter safety checkpoint status
+
+- local_fixture_file_emitter_safety_checkpoint_file: docs/gateway/phase-41k6-b6-44-local-fixture-file-emitter-safety-checkpoint.md
+- local_fixture_file_emitter_safety_status: LOCAL_FIXTURE_FILE_EMITTER_SAFETY_CHECKPOINT_NO_WRITE
+- local_fixture_file_emission_plan_defined: true
+- local_fixture_file_emission_implemented: skeleton_only
+- local_fixture_file_emitter_safety_checkpoint_recorded: true
+- fixture_file_emission_enabled: false
+- writes_to_disk: false
+- local_validator_go_form_defined: true
+- local_validator_go_approved: false
+- blocker_h_local_validator_dry_run: open_design_started
+- blocker_h_closed: false
+- local_validator_execution_approved: false
+- local_validator_matrix_defined: true
+- local_validator_matrix_executed: false
+- local_fixture_generator_implemented: skeleton_only
+- live_runtime_handler_enabled: false
+- live_route_enabled: false
+- on_chain_state_write_enabled: false
+- account_initialization_enabled: false
+- spl_cpi_minting_enabled: false
+- testnet_submit_enabled: false
+- build_for_upgrade_approved: false
+- upgrade_go_approved: false
+- state_init_go_approved: false
+- submit_go_approved: false
+- production_activation_approved: false
+
+B6.44 records the local fixture file emitter safety checkpoint.
+
+It does not write fixture files.
+
+It does not approve local-validator execution.
+
+It does not approve testnet action.
+
+Current decision remains:
+
+NO-GO.
+
 ## Current decision
 
 Current decision:
