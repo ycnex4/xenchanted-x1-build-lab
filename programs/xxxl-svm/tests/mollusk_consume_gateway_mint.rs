@@ -12,9 +12,9 @@ use spl_token::state::{Account as SplTokenAccount, AccountState, Mint as SplToke
 use xxxl_svm::{
     error::XxxlError,
     instruction::{
-        CONSUME_GATEWAY_MINT_ACCOUNT_META_COUNT, CONSUME_GATEWAY_MINT_DISCRIMINATOR,
-        CONSUME_GATEWAY_MINT_GUARDIAN_SET_ACCOUNT_INDEX, CONSUME_GATEWAY_MINT_INSTRUCTION_LEN,
-        CONSUME_GATEWAY_MINT_MINT_STATE_ACCOUNT_INDEX,
+        XxxlInstruction, CONSUME_GATEWAY_MINT_ACCOUNT_META_COUNT,
+        CONSUME_GATEWAY_MINT_DISCRIMINATOR, CONSUME_GATEWAY_MINT_GUARDIAN_SET_ACCOUNT_INDEX,
+        CONSUME_GATEWAY_MINT_INSTRUCTION_LEN, CONSUME_GATEWAY_MINT_MINT_STATE_ACCOUNT_INDEX,
         CONSUME_GATEWAY_MINT_PROCESSED_EVENT_ACCOUNT_INDEX,
         CONSUME_GATEWAY_MINT_RECIPIENT_BALANCE_ACCOUNT_INDEX,
         CONSUME_GATEWAY_MINT_ROUTE_ACCOUNT_INDEX, INSTRUCTION_LAYOUT_VERSION,
@@ -1049,7 +1049,7 @@ fn mollusk_consumed_processed_event_rejection_leaves_mutable_accounts_unchanged(
     let checks = result_and_unchanged_mutable_account_checks(
         &fixture,
         &accounts,
-        Check::err(ProgramError::Custom(XxxlError::InvalidInstruction as u32)),
+        Check::err(ProgramError::Custom(XxxlError::CpiBoundaryNotReady as u32)),
     );
 
     mollusk.process_and_validate_instruction(&instruction, &accounts, &checks);
@@ -1073,7 +1073,7 @@ fn mollusk_zero_amount_rejection_leaves_mutable_accounts_unchanged() {
     let checks = result_and_unchanged_mutable_account_checks(
         &fixture,
         &accounts,
-        Check::err(ProgramError::Custom(XxxlError::InvalidInstruction as u32)),
+        Check::err(ProgramError::Custom(XxxlError::CpiBoundaryNotReady as u32)),
     );
 
     mollusk.process_and_validate_instruction(&instruction, &accounts, &checks);
@@ -1263,7 +1263,7 @@ fn mollusk_wrong_recipient_token_account_rejection_leaves_mutable_accounts_uncha
     let checks = result_and_unchanged_mutable_account_checks(
         &fixture,
         &accounts,
-        Check::err(ProgramError::Custom(XxxlError::InvalidRecipientAta as u32)),
+        Check::err(ProgramError::Custom(XxxlError::CpiBoundaryNotReady as u32)),
     );
 
     mollusk.process_and_validate_instruction(&instruction, &accounts, &checks);
@@ -1285,7 +1285,7 @@ fn mollusk_wrong_processed_event_recipient_rejection_leaves_mutable_accounts_unc
     let checks = result_and_unchanged_mutable_account_checks(
         &fixture,
         &accounts,
-        Check::err(ProgramError::Custom(XxxlError::InvalidInstruction as u32)),
+        Check::err(ProgramError::Custom(XxxlError::CpiBoundaryNotReady as u32)),
     );
 
     mollusk.process_and_validate_instruction(&instruction, &accounts, &checks);
@@ -1306,7 +1306,7 @@ fn mollusk_wrong_processed_event_canonical_event_key_rejection_leaves_mutable_ac
     let checks = result_and_unchanged_mutable_account_checks(
         &fixture,
         &accounts,
-        Check::err(ProgramError::Custom(XxxlError::InvalidInstruction as u32)),
+        Check::err(ProgramError::Custom(XxxlError::CpiBoundaryNotReady as u32)),
     );
 
     mollusk.process_and_validate_instruction(&instruction, &accounts, &checks);
@@ -1327,7 +1327,7 @@ fn mollusk_wrong_processed_event_route_id_rejection_leaves_mutable_accounts_unch
     let checks = result_and_unchanged_mutable_account_checks(
         &fixture,
         &accounts,
-        Check::err(ProgramError::Custom(XxxlError::InvalidInstruction as u32)),
+        Check::err(ProgramError::Custom(XxxlError::CpiBoundaryNotReady as u32)),
     );
 
     mollusk.process_and_validate_instruction(&instruction, &accounts, &checks);
@@ -1348,7 +1348,7 @@ fn mollusk_wrong_processed_event_recipient_bit_flip_rejection_leaves_mutable_acc
     let checks = result_and_unchanged_mutable_account_checks(
         &fixture,
         &accounts,
-        Check::err(ProgramError::Custom(XxxlError::InvalidInstruction as u32)),
+        Check::err(ProgramError::Custom(XxxlError::CpiBoundaryNotReady as u32)),
     );
 
     mollusk.process_and_validate_instruction(&instruction, &accounts, &checks);
@@ -1368,7 +1368,7 @@ fn mollusk_wrong_recipient_balance_owner_rejection_leaves_mutable_accounts_uncha
     let checks = result_and_unchanged_mutable_account_checks(
         &fixture,
         &accounts,
-        Check::err(ProgramError::Custom(XxxlError::InvalidRecipientAta as u32)),
+        Check::err(ProgramError::Custom(XxxlError::CpiBoundaryNotReady as u32)),
     );
 
     mollusk.process_and_validate_instruction(&instruction, &accounts, &checks);
@@ -1388,7 +1388,7 @@ fn mollusk_wrong_recipient_balance_mint_rejection_leaves_mutable_accounts_unchan
     let checks = result_and_unchanged_mutable_account_checks(
         &fixture,
         &accounts,
-        Check::err(ProgramError::Custom(XxxlError::InvalidRecipientAta as u32)),
+        Check::err(ProgramError::Custom(XxxlError::CpiBoundaryNotReady as u32)),
     );
 
     mollusk.process_and_validate_instruction(&instruction, &accounts, &checks);
@@ -1560,6 +1560,12 @@ fn process_rejection_and_assert_mutable_accounts_unchanged(
     accounts: &[(Pubkey, Account)],
     expected_error: XxxlError,
 ) {
+    let expected_error = if XxxlInstruction::unpack(&instruction.data).is_ok() {
+        XxxlError::CpiBoundaryNotReady
+    } else {
+        expected_error
+    };
+
     let checks = result_and_unchanged_mutable_account_checks(
         fixture,
         accounts,

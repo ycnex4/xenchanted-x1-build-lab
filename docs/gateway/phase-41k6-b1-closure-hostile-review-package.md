@@ -466,3 +466,89 @@ Security result:
 - default/non-B1C7 ConsumeGatewayMint cannot call atomic_mark_and_mint_boundary
 - D2-only mark+mint bypass is removed
 - old exploit test is inverted and must now prove no mutation
+
+
+## Claude final B1 closure verdict
+
+Status: ACCEPT WITH NOTES.
+
+Claude re-audited the B1 closure after the D2 authorization bypass fix.
+
+Accepted:
+
+- D2 mint bypass is closed.
+- No buildable feature combination opens SPL mint CPI without B1C7.
+- non-B1C7 ConsumeGatewayMint rejects before Rent, Clock, prepare, mark, or mint.
+- B1C7 path checks authorization before CPI gate.
+- B1C7 path checks CPI gate before processed_event mark.
+- Guardian set provenance is sound.
+- Ed25519 evidence source is sound.
+- Payload hash binding is sound.
+- Guardian membership validation is sound.
+- Unique quorum counting is sound.
+- No remaining authorization bypass was found.
+- No remaining mint bypass was found.
+- No remaining registry-mark bypass was found.
+- No remaining mutation-before-authorization path was found.
+
+Final closure statement:
+
+Full B1 closure accepted with notes.
+
+The authorization path requires real prior Ed25519 precompile evidence from instructions_sysvar, bound to the exact operation payload, signed by a quorum of unique members of the canonical program-owned guardian-set PDA, and checked before any mutation.
+
+## Claude non-blocking notes
+
+These are not closure blockers.
+
+1. route_id is not currently included in the payload hash.
+
+Current assessment:
+
+This is acceptable because processed_event / canonical_event_key uniquely identifies the source event and replay is blocked by single-consumption processed_event.
+
+Future hardening:
+
+Add route_id to the signed payload hash for explicit route binding.
+
+2. current_slot is intentionally excluded from the payload hash.
+
+Current assessment:
+
+The signature remains valid indefinitely for the same operation, but replay is limited by processed_event consumption.
+
+Future hardening:
+
+Document this explicitly and consider deadline/expiry in a future authorization schema.
+
+3. payload binding currently uses guardian_set_id as u32 while the guardian set account/PDA uses [u8; 32].
+
+Current assessment:
+
+Runtime equality between args.guardian_set_id and loaded guardian_set.guardian_set_id binds the full [u8; 32] account identity before authorization, but the payload hash uses the numeric projection.
+
+Future hardening:
+
+Move payload binding to full [u8; 32] guardian_set_id or document the projection as an interim schema choice.
+
+4. b1c_connect_ed25519_evidence_adapter.rs should remain explicitly covered.
+
+Current assessment:
+
+Claude verified both ends of the chain and the B1C7 orchestrator gates on the adapter status, but noted that the adapter itself should be kept in future focused reviews.
+
+Future hardening:
+
+Add an explicit adapter-focused regression proving discarded non-Ed25519 prior instructions cannot re-enter the authorization pipeline.
+
+## Final B1 closure conclusion
+
+Phase 41K.6 B1 is closed for the default/non-harness runtime path and the B1C7 feature-gated live mark+mint path.
+
+Claude B1 blocker is resolved.
+
+The D2 authorization bypass was fixed by commit d82ad31.
+
+Final accepted branch:
+
+stage-41k6-b1-auth-bypass-fix
