@@ -217,3 +217,23 @@ LOCAL_ONLY_FIXTURE_GENERATOR_SAFETY_CHECKPOINT
 Current decision remains:
 
 NO-GO.
+
+## Phase 41K.6 B6.35 local-validator command boundary map
+
+The local-validator command boundary map is recorded in:
+
+docs/gateway/phase-41k6-b6-35-local-validator-command-boundary-map.md
+
+It defines future command boundaries for a local-validator-only dry-run.
+
+It does not execute a local validator dry-run.
+
+It does not close blocker H.
+
+Current status:
+
+LOCAL_VALIDATOR_COMMAND_BOUNDARY_DESIGN_NOT_EXECUTED
+
+Current decision remains:
+
+NO-GO.
