@@ -153,3 +153,25 @@ LOCAL_VALIDATOR_ONLY_FIXTURE_GENERATOR_DESIGN_NOT_IMPLEMENTED
 Current decision remains:
 
 NO-GO.
+
+## Phase 41K.6 B6.32 local-validator fixture generator schema
+
+The local-validator fixture generator schema is recorded in:
+
+docs/gateway/phase-41k6-b6-32-local-validator-fixture-generator-schema.md
+
+It defines the schema for deterministic local-only fixture generation outputs.
+
+It does not implement a fixture generator.
+
+It does not execute a local validator dry-run.
+
+It does not close blocker H.
+
+Current status:
+
+LOCAL_VALIDATOR_ONLY_FIXTURE_GENERATOR_SCHEMA_DEFINED_NOT_IMPLEMENTED
+
+Current decision remains:
+
+NO-GO.
