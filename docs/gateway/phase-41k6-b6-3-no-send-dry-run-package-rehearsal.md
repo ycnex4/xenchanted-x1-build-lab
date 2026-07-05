@@ -101,3 +101,15 @@ B6.4 target:
 external signer / operator approval boundary.
 
 B6.4 must remain no-send, no-sign, no-key, no-SOL, no-submit, and no-gate-removal unless a later explicit boundary says otherwise.
+
+## B6.4 external signer / operator approval boundary
+
+B6.4 defines the approval boundary required before any later testnet submission rehearsal can be considered.
+
+B6.4 is documented in:
+
+docs/gateway/phase-41k6-b6-4-operator-approval-boundary.md
+
+B6.4 does not approve signing, submission, SOL spend, private-key handling, deploy, gate removal, or production activation.
+
+B6.4 keeps all live-action boundaries closed.
