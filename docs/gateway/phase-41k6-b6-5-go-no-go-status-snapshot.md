@@ -263,3 +263,19 @@ The requirement does not change the B6.5 decision.
 Current decision remains:
 
 NO-GO.
+
+## B6.6 testnet launch execution boundary
+
+B6.6 testnet launch and test execution boundary is recorded in:
+
+docs/gateway/phase-41k6-b6-6-testnet-launch-execution-boundary.md
+
+B6.6 testnet launch GO form is recorded in:
+
+docs/gateway/phase-41k6-b6-6-testnet-launch-go-form.md
+
+The boundary does not change the B6.5 or B6.6 decision.
+
+Current decision remains:
+
+NO-GO.
