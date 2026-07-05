@@ -39,3 +39,19 @@ Production activation:
 Primary spec:
 
     docs/gateway/phase-41k6-b2-valid-quorum-live-gated-success.md
+
+## Phase 41K.6 B6.26 local execution layer checkpoint
+
+The B6.11-B6.25 local execution planning layer is now checkpointed in:
+
+docs/gateway/phase-41k6-b6-26-local-execution-layer-checkpoint.md
+
+Current status remains:
+
+LOCAL_ONLY_NOT_DEPLOYABLE
+
+Current decision remains:
+
+NO-GO.
+
+No deploy, upgrade, signing, submit, SOL spend, account initialization, SPL mint setup, guardian package construction, or submit rehearsal is approved.
