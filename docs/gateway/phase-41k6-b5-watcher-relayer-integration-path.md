@@ -473,3 +473,34 @@ B5.5 defines the B6 entry criteria:
 Ethereum burn -> watcher observation -> guardian quorum -> relayer submission -> X1 testnet mint.
 
 B6 must open explicitly and must not be treated as automatic production activation.
+
+## B5 closure
+
+B5 closure validation passed on the branch stage-41k6-b5-watcher-relayer-integration-path.
+
+Validated gates:
+
+- Full TypeScript test suite: 106 passed; 0 failed.
+- Full TypeScript test count: 954 passed; 0 failed.
+- Full xxxl-svm lib test suite: 610 passed; 0 failed; 1 ignored.
+
+B5 implemented and closed:
+
+- B5.1 watcher/relayer schema reconciliation inventory.
+- B5.2 candidate payload v2 hash conversion.
+- B5.3 quorum package boundary.
+- B5.4 relayer submission package boundary.
+- B5.5 negative matrix and closure checklist.
+
+B5 closure decision:
+
+- The old Stage 2 watcher/relayer evidence chain was reconciled with the new Phase 41K.6 B1-B4 handler boundary.
+- The B5 off-chain preparation path is deterministic and offline.
+- The B5 path remains no-RPC, no-signing, no-submit, no-SOL-spend, and no-private-key-access.
+- The B4 activation gate decision remains preserved.
+- No production activation happens in B5.
+- No handler gates are removed in B5.
+
+The next checkpoint is B6: X1 testnet deploy + end-to-end Ethereum burn -> X1 mint.
+
+B6 must open explicitly and must not be treated as automatic production activation.
