@@ -189,3 +189,17 @@ docs/gateway/reviews/phase-41k6-b6-5-boundary-review-request.md
 The review request does not ask for submit approval.
 
 It asks whether the current NO-GO boundary is strong enough before any later explicit testnet submit rehearsal can be considered.
+
+## B6.5 redacted testnet value packet
+
+A redacted testnet value packet is documented in:
+
+docs/gateway/phase-41k6-b6-5-redacted-testnet-value-packet.md
+
+The packet is preparation only.
+
+It does not approve signing, submission, SOL spend, private-key handling, deploy, B1C7 gate removal, feature gate weakening, or production activation.
+
+Current decision remains:
+
+NO-GO.
