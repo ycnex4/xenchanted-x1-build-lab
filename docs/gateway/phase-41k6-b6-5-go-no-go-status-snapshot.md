@@ -53,6 +53,40 @@ Therefore testnet submit rehearsal remains closed.
 | B1C7 feature gate weakening | not approved |
 | Production activation | not approved |
 
+## B6.4 approval class cross-reference
+
+B6.4 defines five approval classes:
+
+1. Read-only inventory approval.
+2. No-send package approval.
+3. Testnet signing approval.
+4. Testnet submit approval.
+5. Production or production-like activation approval.
+
+Current B6.5 NO-GO status:
+
+| B6.4 approval class | Current status | Live action allowed |
+|---|---|---:|
+| Read-only inventory approval | planning only | no |
+| No-send package approval | no-send only | no |
+| Testnet signing approval | not approved | no |
+| Testnet submit approval | not approved | no |
+| Production or production-like activation approval | not approved | no |
+
+No approval class that enables signing has been issued.
+
+No approval class that enables transaction submission has been issued.
+
+No approval class that enables SOL spend has been issued.
+
+No approval class that enables private-key handling has been issued.
+
+No approval class that enables deploy has been issued.
+
+No approval class that enables B1C7 gate removal or feature gate weakening has been issued.
+
+No approval class that enables production or production-like activation has been issued.
+
 ## Missing exact values
 
 B6.5 cannot move from NO-GO to GO until the following are known and recorded:

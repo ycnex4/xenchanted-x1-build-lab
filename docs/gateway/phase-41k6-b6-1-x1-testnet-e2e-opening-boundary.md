@@ -1,8 +1,8 @@
-# Phase 41K.6 B6.1 — X1 testnet E2E opening boundary
+# Phase 41K.6 B6.1 — X1 testnet E2E simulation-only opening boundary
 
 ## Purpose
 
-B6.1 opens the X1 testnet end-to-end rehearsal track after B5 external review closure.
+B6.1 opens the X1 testnet end-to-end simulation-only rehearsal track after B5 external review closure.
 
 B6.1 is an opening boundary and simulation/dry-run specification.
 
@@ -23,6 +23,24 @@ B6.1 does not weaken the B1C7 feature gate.
 B6.1 does not open production gates.
 
 B6.1 does not activate production runtime execution.
+
+## E2E terminology note
+
+In B6.1, E2E means end-to-end simulation-only rehearsal across the package, inventory, and decision-boundary flow.
+
+E2E in B6.1 does not mean live transaction submission.
+
+E2E in B6.1 does not mean signing.
+
+E2E in B6.1 does not mean SOL spend.
+
+E2E in B6.1 does not mean private-key handling.
+
+E2E in B6.1 does not mean deploy.
+
+E2E in B6.1 does not mean B1C7 gate removal.
+
+E2E in B6.1 does not mean production or production-like activation.
 
 ## Current main checkpoint
 
