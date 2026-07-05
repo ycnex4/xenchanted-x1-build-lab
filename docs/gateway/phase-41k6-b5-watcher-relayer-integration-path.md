@@ -424,3 +424,32 @@ The package validates:
 B5.3 catches duplicate guardians, unknown guardians, insufficient quorum, signed message drift, malformed source instruction indices, malformed signatures, and invalid thresholds before relayer submission.
 
 The handler remains the final authority.
+
+## B5.4 relayer submission package boundary
+
+B5.4 combines the B5.2 payload v2 hash conversion boundary and the B5.3 quorum package boundary into a single no-send relayer submission package.
+
+Files:
+
+- src/gateway/phase41k6RelayerSubmissionPackage.ts
+- tests/phase41k6_b5_relayer_submission_package.test.ts
+- docs/gateway/phase-41k6-b5-4-relayer-submission-package-boundary.md
+
+The package records:
+
+- eventId,
+- journalId,
+- payload v2 hash result,
+- quorum package,
+- processed_event,
+- route_id,
+- mint,
+- recipient token account,
+- amount,
+- guardian_set_id,
+- prior evidence instruction count,
+- no-send/no-sign/no-RPC/no-SOL/no-private-key boundary.
+
+B5.4 rejects empty operational identifiers, guardian_set_id drift between candidate and quorum package, and stale signatures after handler-bound candidate mutation.
+
+B5.4 remains offline, deterministic, no-RPC, no-signing, no-submit, and no-key-access.
