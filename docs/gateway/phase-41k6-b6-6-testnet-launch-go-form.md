@@ -823,6 +823,47 @@ Current decision remains:
 
 NO-GO.
 
+## B6.40 Strategy 2 closure-readiness checkpoint status
+
+- strategy_2_closure_readiness_checkpoint_file: docs/gateway/phase-41k6-b6-40-strategy-2-closure-readiness-checkpoint.md
+- strategy_2_status: STRATEGY_2_CLOSURE_READINESS_CHECKPOINT_NO_GO
+- strategy_2_ready_for_next_decision: true
+- strategy_2_execution_ready: false
+- blocker_a_closed: false
+- blocker_b_closed: false
+- blocker_c_closed: false
+- blocker_d_closed: false
+- blocker_e_closed: false
+- blocker_f_closed: false
+- blocker_g_closed: false
+- blocker_h_closed: false
+- local_validator_execution_approved: false
+- local_fixture_generator_implemented: skeleton_only
+- fixture_file_emission_enabled: false
+- live_runtime_handler_enabled: false
+- live_route_enabled: false
+- on_chain_state_write_enabled: false
+- account_initialization_enabled: false
+- spl_cpi_minting_enabled: false
+- testnet_submit_enabled: false
+- build_for_upgrade_approved: false
+- upgrade_go_approved: false
+- state_init_go_approved: false
+- submit_go_approved: false
+- production_activation_approved: false
+
+B6.40 records Strategy 2 closure-readiness as a planning checkpoint.
+
+It does not close blockers A through H.
+
+It does not approve local-validator execution.
+
+It does not approve testnet action.
+
+Current decision remains:
+
+NO-GO.
+
 ## Current decision
 
 Current decision:
