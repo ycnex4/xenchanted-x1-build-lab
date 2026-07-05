@@ -156,3 +156,19 @@ B3 does not introduce production ungated execution.
 B3 does not remove the existing dangerous feature gates.
 
 B3 does not replace B2. B2 remains the positive proof. B3 is the negative hostile matrix around the B2 path.
+
+## B3.1/B3.2 implementation note
+
+The first hostile live-gated test file is derived from the B2 positive harness and keeps the same transaction-instruction execution model:
+
+- two strictly prior Ed25519 evidence instructions,
+- current `ConsumeGatewayMint` instruction,
+- SPL Token program loaded for CPI,
+- no-op SBF harness stub loaded under the Ed25519 precompile id for Mollusk cache execution.
+
+The initial hostile cases cover:
+
+- B3.1 wrong payload hash evidence,
+- B3.2 unknown guardian evidence.
+
+Both cases must return `InvalidInstruction` and preserve all mutation targets unchanged: processed_event, SPL mint, recipient token account, recipient balance, and rent payer.
