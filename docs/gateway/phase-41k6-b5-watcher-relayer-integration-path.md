@@ -355,3 +355,20 @@ B5.1 should not remove gates.
 B5.1 should not introduce live RPC or signing.
 
 B5.1 should not access local keys or private-key material.
+
+## B5.1 schema reconciliation inventory
+
+B5.1 adds a dedicated schema reconciliation inventory:
+
+docs/gateway/phase-41k6-b5-1-schema-reconciliation-inventory.md
+
+This inventory maps previous Stage 2 watcher/relayer fields onto the new Phase 41K.6 handler boundary.
+
+Key decisions:
+
+- guardianSetVersion must become guardian_set_id bytes32.
+- recipientBase58 must be clarified into recipient owner versus recipient token account.
+- expectedMintedAmountOverride remains test-only unless explicitly reintroduced by later policy.
+- sourceFinalityState remains watcher/finality metadata, not standalone handler authorization.
+- relayer operational ids remain non-payload-bound metadata.
+- payload-bound fields must not drift after guardian signing.
