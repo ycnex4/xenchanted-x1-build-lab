@@ -597,3 +597,25 @@ It does not approve deploy, upgrade, signing, submit, SOL spend, account initial
 Current decision remains:
 
 NO-GO.
+
+## B6.21 local consume state transition skeleton
+
+B6.21 local consume state transition skeleton is implemented in:
+
+programs/xxxl-svm/src/consume_state_transition_skeleton.rs
+
+The module is local-only and explicitly marked:
+
+LOCAL_ONLY_NOT_DEPLOYABLE
+
+It models the local ConsumeGatewayMint state transition by updating mint_state total_minted and constructing processed_event account data.
+
+It does not perform SPL CPI minting.
+
+It does not implement live runtime handlers.
+
+It does not approve deploy, upgrade, signing, submit, SOL spend, account initialization, SPL mint setup, guardian package construction, or submit rehearsal.
+
+Current decision remains:
+
+NO-GO.
