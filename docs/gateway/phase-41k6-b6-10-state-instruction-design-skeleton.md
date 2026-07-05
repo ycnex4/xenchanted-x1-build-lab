@@ -713,3 +713,23 @@ It does not approve deploy, upgrade, signing, submit, SOL spend, account initial
 Current decision remains:
 
 NO-GO.
+
+## B6.33 local-only fixture generator skeleton
+
+B6.33 local-only fixture generator skeleton is implemented in:
+
+programs/xxxl-svm/src/local_fixture_generator_skeleton.rs
+
+The module is local-only and explicitly marked:
+
+LOCAL_ONLY_FIXTURE_GENERATOR_SKELETON_NOT_EXECUTABLE_DRY_RUN
+
+It defines deterministic local fixture manifest, safety report, program fixture, and pubkey fixture skeletons.
+
+It does not run a local validator.
+
+It does not build, deploy, upgrade, sign, submit, spend SOL, initialize testnet accounts, configure SPL mint authority, perform SPL CPI minting, construct guardian packages, or rehearse live submit flow.
+
+Current decision remains:
+
+NO-GO.
