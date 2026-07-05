@@ -239,3 +239,15 @@ The correction does not change the B6.5 decision.
 Current decision remains:
 
 NO-GO.
+
+## B6.5 read-only program-owned account discovery
+
+Read-only program-owned account discovery is recorded in:
+
+docs/gateway/phase-41k6-b6-5-readonly-program-owned-account-discovery.md
+
+This discovery does not change the B6.5 decision.
+
+Current decision remains:
+
+NO-GO.

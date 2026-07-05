@@ -251,6 +251,20 @@ Current decision remains:
 
 NO-GO.
 
+## Read-only program-owned account discovery
+
+Read-only program-owned account discovery is recorded in:
+
+docs/gateway/phase-41k6-b6-5-readonly-program-owned-account-discovery.md
+
+This discovery uses getProgramAccounts only.
+
+It does not approve signing, submission, SOL spend, private-key handling, deploy, B1C7 gate removal, feature gate weakening, or production activation.
+
+Current decision remains:
+
+NO-GO.
+
 ## Required transition before GO
 
 Before this packet can support a later GO decision:
