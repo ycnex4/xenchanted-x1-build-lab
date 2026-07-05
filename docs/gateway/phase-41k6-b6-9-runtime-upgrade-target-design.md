@@ -434,3 +434,15 @@ Current decision:
 NO-GO.
 
 This B6.9 runtime upgrade target design does not authorize live action.
+
+## B6.10 state and instruction design skeleton
+
+B6.10 state and instruction design skeleton is recorded in:
+
+docs/gateway/phase-41k6-b6-10-state-instruction-design-skeleton.md
+
+This advances planning for blockers C, D, E, and F, but closes no GO blocker.
+
+Current decision remains:
+
+NO-GO.
