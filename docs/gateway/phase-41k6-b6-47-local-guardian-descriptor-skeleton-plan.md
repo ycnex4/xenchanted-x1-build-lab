@@ -299,3 +299,28 @@ No testnet action is approved by this checkpoint.
 Current decision remains:
 
 NO-GO.
+
+## B6.48 local guardian descriptor skeleton
+
+B6.48 local guardian descriptor skeleton is implemented in:
+
+programs/xxxl-svm/src/local_guardian_descriptor_skeleton.rs
+
+The module is explicitly marked:
+
+LOCAL_ONLY_GUARDIAN_DESCRIPTOR_SKELETON_NOT_SIGNING
+
+Current safety flags:
+
+- local_only: true
+- testnet_allowed: false
+- live_route_allowed: false
+- signing_enabled: false
+- guardian_package_construction_enabled: false
+- production_keys_allowed: false
+- writes_to_disk: false
+- local_validator_execution_approved: false
+
+Current decision remains:
+
+NO-GO.
