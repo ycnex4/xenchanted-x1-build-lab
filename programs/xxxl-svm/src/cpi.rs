@@ -14,6 +14,15 @@ compile_error!(
      dangerously-allow-phase-41k5-d2-production-path-test-gate-sbf-build."
 );
 
+#[cfg(all(
+    feature = "phase-41k5-d2-production-path-test-gate",
+    feature = "dangerously-allow-phase-41k5-d2-production-path-test-gate-sbf-build",
+    not(feature = "phase-41k6-b1c7-handler-integration-test-gate")
+))]
+compile_error!(
+    "phase-41k5-d2-production-path-test-gate cannot open SPL mint CPI without      phase-41k6-b1c7-handler-integration-test-gate. B1 closure requires guardian      authorization before any live mark+mint path."
+);
+
 use crate::{
     error::XxxlError,
     pda::{
@@ -107,16 +116,20 @@ pub fn plan_mint_to_cpi_boundary(
 
 #[cfg(all(
     feature = "phase-41k5-d2-production-path-test-gate",
-    feature = "dangerously-allow-phase-41k5-d2-production-path-test-gate-sbf-build"
+    feature = "dangerously-allow-phase-41k5-d2-production-path-test-gate-sbf-build",
+    feature = "phase-41k6-b1c7-handler-integration-test-gate",
+    feature = "dangerously-allow-phase-41k6-b1c7-handler-integration-test-gate-sbf-build"
 ))]
 pub fn spl_mint_to_cpi_execution_enabled() -> bool {
-    let _phase_41k5_d2_gate_marker = "PHASE_41K5_D2_SPL_CPI_GATE_OPEN";
+    let _phase_41k5_d2_gate_marker = "PHASE_41K5_D2_SPL_CPI_GATE_OPEN_AFTER_B1C7";
     true
 }
 
 #[cfg(not(all(
     feature = "phase-41k5-d2-production-path-test-gate",
-    feature = "dangerously-allow-phase-41k5-d2-production-path-test-gate-sbf-build"
+    feature = "dangerously-allow-phase-41k5-d2-production-path-test-gate-sbf-build",
+    feature = "phase-41k6-b1c7-handler-integration-test-gate",
+    feature = "dangerously-allow-phase-41k6-b1c7-handler-integration-test-gate-sbf-build"
 )))]
 pub fn spl_mint_to_cpi_execution_enabled() -> bool {
     let _phase_41k5_d2_gate_marker = "PHASE_41K5_D2_SPL_CPI_GATE_CLOSED";

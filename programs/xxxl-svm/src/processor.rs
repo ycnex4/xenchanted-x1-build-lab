@@ -394,17 +394,12 @@ pub fn process_instruction(
 
 #[cfg(not(feature = "phase-41k6-b1c7-handler-integration-test-gate"))]
 fn process_consume_gateway_mint(
-    program_id: &Pubkey,
-    accounts: &[AccountInfo],
-    args: &ConsumeGatewayMintArgs,
+    _program_id: &Pubkey,
+    _accounts: &[AccountInfo],
+    _args: &ConsumeGatewayMintArgs,
 ) -> ProgramResult {
-    let rent = Rent::get()?;
-    let clock = Clock::get()?;
-
-    atomic_mark_and_mint_boundary(program_id, accounts, args, &rent, clock.slot)?;
-
-    msg!("XXXL consume_gateway_mint atomic mark + mint completed");
-    Ok(())
+    msg!("XXXL consume_gateway_mint requires B1C7 guardian authorization before mark + mint");
+    Err(XxxlError::CpiBoundaryNotReady.into())
 }
 
 #[cfg(feature = "phase-41k6-b1c7-handler-integration-test-gate")]

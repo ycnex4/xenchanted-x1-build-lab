@@ -439,3 +439,30 @@ Required production follow-ups remain:
 - explicit policy for deprecating old guardian sets
 - optional future active_until_slot hardening
 - production decision on feature gates and deployment
+
+
+## Claude hostile review BLOCK — authorization bypass fix
+
+Status: BLOCK acknowledged.
+
+Claude identified a real authorization bypass in the previous closure branch:
+
+- non-B1C7 process_consume_gateway_mint called atomic_mark_and_mint_boundary directly
+- atomic_mark_and_mint_boundary marked processed_event before the CPI gate
+- SPL mint CPI execution was controlled by D2 feature gates independent of B1C7
+- the old D2 production-path e2e test proved mark + mint without guardian evidence
+
+Fix strategy:
+
+1. D2 production-path gate now depends on B1C7 handler integration gate.
+2. D2 dangerous allow now depends on B1C7 dangerous allow.
+3. spl_mint_to_cpi_execution_enabled opens only when D2 + D2 dangerous + B1C7 + B1C7 dangerous are all enabled.
+4. non-B1C7 process_consume_gateway_mint now rejects with CpiBoundaryNotReady before Rent, Clock, mark, or mint.
+5. the old D2 success test is rewritten into a rejection-before-mutation regression test.
+
+Security result:
+
+- no feature combination can open SPL mint CPI without B1C7 being enabled
+- default/non-B1C7 ConsumeGatewayMint cannot call atomic_mark_and_mint_boundary
+- D2-only mark+mint bypass is removed
+- old exploit test is inverted and must now prove no mutation
