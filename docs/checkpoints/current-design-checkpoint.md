@@ -441,3 +441,33 @@ LOCAL_FIXTURE_FILE_EMITTER_SAFETY_CHECKPOINT_NO_WRITE
 Current decision remains:
 
 NO-GO.
+
+## Phase 41K.6 B6.45 SPL mint authority architecture map
+
+The SPL mint authority architecture map is recorded in:
+
+docs/gateway/phase-41k6-b6-45-spl-mint-authority-architecture-map.md
+
+It defines the intended gateway mint authority PDA and SPL CPI boundary requirements.
+
+It does not configure SPL mint authority.
+
+It does not enable SPL CPI minting.
+
+It does not approve local-validator execution.
+
+It does not approve testnet action.
+
+Known public baseline:
+
+- gateway mint authority PDA: BLVsQPYXnDsTmfMW9wrXHBFpcmexM47BcAvVcibRtRYG
+- gateway mint authority bump: 252
+- SPL Token program: TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA
+
+Current status:
+
+SPL_MINT_AUTHORITY_ARCHITECTURE_MAP_DESIGN_NOT_EXECUTED
+
+Current decision remains:
+
+NO-GO.
