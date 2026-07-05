@@ -14,6 +14,7 @@ pub mod account_contract;
 pub mod account_order_skeleton;
 pub mod cpi;
 pub mod deployment_status;
+pub mod dispatch_skeleton;
 pub mod entrypoint;
 pub mod error;
 pub mod execution_plan;
