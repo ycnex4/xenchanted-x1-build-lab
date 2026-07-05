@@ -209,6 +209,25 @@ B5 should not remove gates. It should define and test the off-chain flow that pr
 
 ⏭ B6: X1 testnet deploy + end-to-end Ethereum burn -> X1 mint
 
+
+## B4 closure
+
+B4 closure validation passed on the branch stage-41k6-b4-activation-gate-boundary.
+
+Validated gate:
+
+- Full xxxl-svm lib test suite: 610 passed; 0 failed; 1 ignored.
+
+B4 closure decision:
+
+- The B2/B3 handler path remains gated.
+- The dangerous SBF-build allow features remain non-production.
+- The Mollusk Ed25519 no-op harness stub remains test-only.
+- No ungated production handler activation happens in B4.
+- The next checkpoint is B5: watcher/relayer integration path.
+
+B4 is closed as an activation gate decision and production-readiness boundary checkpoint.
+
 ## B4 closure requirements
 
 B4 is closed when:
