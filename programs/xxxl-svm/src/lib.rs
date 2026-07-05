@@ -16,6 +16,7 @@ pub mod account_validation_skeleton;
 pub mod cpi;
 pub mod deployment_status;
 pub mod dispatch_skeleton;
+pub mod validated_dispatch_skeleton;
 pub mod entrypoint;
 pub mod error;
 pub mod execution_plan;
