@@ -175,3 +175,23 @@ LOCAL_VALIDATOR_ONLY_FIXTURE_GENERATOR_SCHEMA_DEFINED_NOT_IMPLEMENTED
 Current decision remains:
 
 NO-GO.
+
+## Phase 41K.6 B6.33 local-only fixture generator skeleton
+
+The local-only fixture generator skeleton is implemented in:
+
+programs/xxxl-svm/src/local_fixture_generator_skeleton.rs
+
+It provides deterministic local fixture manifest, safety report, program fixture, and pubkey fixture skeletons.
+
+It does not execute a local validator dry-run.
+
+It does not close blocker H.
+
+Current status:
+
+LOCAL_ONLY_FIXTURE_GENERATOR_SKELETON_NOT_EXECUTABLE_DRY_RUN
+
+Current decision remains:
+
+NO-GO.

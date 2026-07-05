@@ -599,6 +599,35 @@ Current decision remains:
 
 NO-GO.
 
+## B6.33 local-only fixture generator skeleton status
+
+- local_fixture_generator_skeleton_file: programs/xxxl-svm/src/local_fixture_generator_skeleton.rs
+- local_validator_status: LOCAL_ONLY_FIXTURE_GENERATOR_SKELETON_NOT_EXECUTABLE_DRY_RUN
+- blocker_h_local_validator_dry_run: open_design_started
+- blocker_h_closed: false
+- local_validator_execution_approved: false
+- local_fixture_generator_schema_defined: true
+- local_fixture_generator_implemented: skeleton_only
+- live_runtime_handler_enabled: false
+- live_route_enabled: false
+- on_chain_state_write_enabled: false
+- account_initialization_enabled: false
+- spl_cpi_minting_enabled: false
+- testnet_submit_enabled: false
+- upgrade_go_approved: false
+- state_init_go_approved: false
+- submit_go_approved: false
+
+B6.33 adds a local-only fixture generator skeleton.
+
+It does not execute a local validator dry-run.
+
+It does not close blocker H.
+
+Current decision remains:
+
+NO-GO.
+
 ## Current decision
 
 Current decision:
