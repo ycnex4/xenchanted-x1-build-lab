@@ -151,6 +151,21 @@ Current decision remains:
 
 NO-GO.
 
+## B6.10 state and instruction design skeleton status
+
+- state_instruction_design_skeleton_file: docs/gateway/phase-41k6-b6-10-state-instruction-design-skeleton.md
+- blocker_c_b1c7_handler_presence_verification: open_design_started
+- blocker_d_state_initialization_instruction_design: open_design_started
+- blocker_e_spl_mint_authority_architecture: open_design_started
+- blocker_f_guardian_set_testnet_descriptor: open_design_started
+- upgrade_go_approved: false
+- state_init_go_approved: false
+- submit_go_approved: false
+
+Current decision remains:
+
+NO-GO.
+
 ## Current decision
 
 Current decision:
