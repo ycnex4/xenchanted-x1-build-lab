@@ -345,3 +345,17 @@ B6.5 must still exclude production activation unless a separate later production
 ⏭ B6.6: outcome observation
 
 ⏭ B6.7: B6 closure
+
+## B6.5 pre-submit decision packet
+
+B6.5 requires a separate explicit decision before any testnet submit rehearsal can open.
+
+The pre-submit decision packet is documented in:
+
+docs/gateway/phase-41k6-b6-5-pre-submit-decision-packet.md
+
+Current status:
+
+B6.5 remains closed.
+
+Signing, submission, SOL spend, private-key handling, deploy, B1C7 gate removal, feature gate weakening, and production activation remain not approved.
