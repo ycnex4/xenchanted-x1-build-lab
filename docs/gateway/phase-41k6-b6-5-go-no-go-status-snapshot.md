@@ -251,3 +251,15 @@ This discovery does not change the B6.5 decision.
 Current decision remains:
 
 NO-GO.
+
+## B6.5 account initialization requirement
+
+B6.5 account initialization requirement is recorded in:
+
+docs/gateway/phase-41k6-b6-5-account-initialization-requirement.md
+
+The requirement does not change the B6.5 decision.
+
+Current decision remains:
+
+NO-GO.

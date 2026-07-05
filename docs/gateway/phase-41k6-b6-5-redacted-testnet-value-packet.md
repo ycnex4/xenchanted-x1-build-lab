@@ -265,6 +265,24 @@ Current decision remains:
 
 NO-GO.
 
+## Account initialization requirement
+
+The B6.5 account initialization requirement is recorded in:
+
+docs/gateway/phase-41k6-b6-5-account-initialization-requirement.md
+
+The read-only program-owned account discovery observed zero program-owned accounts for the documented X1 testnet program.
+
+Therefore, the required runtime state accounts cannot be promoted from existing on-chain state at this baseline.
+
+Any future account creation or initialization requires a separate explicit signed boundary.
+
+This requirement does not approve signing, submission, SOL spend, private-key handling, deploy, B1C7 gate removal, feature gate weakening, or production activation.
+
+Current decision remains:
+
+NO-GO.
+
 ## Required transition before GO
 
 Before this packet can support a later GO decision:
