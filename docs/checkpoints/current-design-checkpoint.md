@@ -91,3 +91,23 @@ LOCAL_ONLY_NOT_DEPLOYABLE
 Current decision remains:
 
 NO-GO.
+
+## Phase 41K.6 B6.29 local-validator dry-run design map
+
+The local-validator dry-run design map is recorded in:
+
+docs/gateway/phase-41k6-b6-29-local-validator-dry-run-design-map.md
+
+It defines the future evidence required before blocker H can be considered for closure.
+
+It does not execute a local validator dry-run.
+
+It does not close blocker H.
+
+Current status:
+
+LOCAL_VALIDATOR_ONLY_DESIGN_NOT_EXECUTED
+
+Current decision remains:
+
+NO-GO.
