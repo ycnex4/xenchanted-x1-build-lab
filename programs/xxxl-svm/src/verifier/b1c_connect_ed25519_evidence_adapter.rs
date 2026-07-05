@@ -431,6 +431,65 @@ mod tests {
     }
 
     #[test]
+    fn valid_looking_non_ed25519_instruction_is_discarded_and_cannot_reenter_pipeline() {
+        let source = loaded_source(vec![
+            loaded_prior_instruction(
+                0,
+                Pubkey::new_unique(),
+                valid_ed25519_instruction_data(b"forged-payload", 0xA1, 0xB1),
+            ),
+            loaded_prior_instruction(
+                1,
+                ed25519_program::id(),
+                valid_ed25519_instruction_data(b"real-payload", 0xC1, 0xD1),
+            ),
+        ]);
+
+        let result = connect_b1c_checked_prior_loading_to_parsed_ed25519_evidence(&source);
+
+        assert_eq!(
+            result.status,
+            B1CConnectedEd25519EvidenceStatus::ParsedPriorEd25519Evidence
+        );
+        assert_eq!(result.loaded_prior_instruction_count, 2);
+        assert_eq!(result.inspected_prior_instruction_count, 2);
+        assert_eq!(result.discarded_non_ed25519_prior_instruction_count, 1);
+        assert_eq!(result.prior_ed25519_precompile_count, 1);
+        assert_eq!(result.parsed_evidence_count, 1);
+        assert_eq!(result.rejected_evidence_count, 0);
+        assert_eq!(result.parsed_evidence[0].signed_message, b"real-payload");
+        assert_eq!(result.parsed_evidence[0].signer_public_key, [0xD1; 32]);
+        assert_all_execution_flags_false(&result);
+    }
+
+    #[test]
+    fn valid_looking_non_ed25519_instruction_alone_is_source_rejected() {
+        let source = loaded_source(vec![loaded_prior_instruction(
+            0,
+            Pubkey::new_unique(),
+            valid_ed25519_instruction_data(b"forged-payload", 0xA1, 0xB1),
+        )]);
+
+        let result = connect_b1c_checked_prior_loading_to_parsed_ed25519_evidence(&source);
+
+        assert_eq!(
+            result.status,
+            B1CConnectedEd25519EvidenceStatus::SourceRejected
+        );
+        assert_eq!(
+            result.source_status,
+            Phase41K1InstructionsSysvarLiveWiringStatus::NoPriorEd25519PrecompileInstructions
+        );
+        assert_eq!(result.loaded_prior_instruction_count, 1);
+        assert_eq!(result.inspected_prior_instruction_count, 1);
+        assert_eq!(result.discarded_non_ed25519_prior_instruction_count, 1);
+        assert_eq!(result.prior_ed25519_precompile_count, 0);
+        assert_eq!(result.parsed_evidence_count, 0);
+        assert_eq!(result.rejected_evidence_count, 0);
+        assert_all_execution_flags_false(&result);
+    }
+
+    #[test]
     fn source_rejected_when_missing_instructions_sysvar_boundary_rejects() {
         let source = checked_prior_loading_result(
             Phase41D3_2_2CheckedPriorInstructionLoadingStatus::MissingInstructionsSysvar,

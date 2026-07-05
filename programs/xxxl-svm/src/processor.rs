@@ -284,10 +284,11 @@ pub fn establish_b1c7_consume_gateway_mint_authorization_from_handler_inputs(
 
     let payload_context = B1CAuthorizationPayloadContext {
         processed_event: *processed_event_account.key,
+        route_id: args.route_id,
         mint: *prepared.boundary.accounts.mint.key,
         recipient: *prepared.boundary.accounts.recipient_token_account.key,
         amount: args.amount as u64,
-        guardian_set_id: b1c7_guardian_set_numeric_id(&args.guardian_set_id),
+        guardian_set_id: args.guardian_set_id,
     };
 
     let authorization = establish_b1c7_handler_authorization_before_mark_and_mint(
@@ -342,16 +343,6 @@ pub fn b1c7_atomic_mark_and_mint_after_authorization_boundary(
             live_route_enabled: false,
         },
     )
-}
-
-#[cfg(feature = "phase-41k6-b1c7-handler-integration-test-gate")]
-fn b1c7_guardian_set_numeric_id(guardian_set_id: &[u8; 32]) -> u32 {
-    u32::from_le_bytes([
-        guardian_set_id[0],
-        guardian_set_id[1],
-        guardian_set_id[2],
-        guardian_set_id[3],
-    ])
 }
 
 pub fn process_instruction(

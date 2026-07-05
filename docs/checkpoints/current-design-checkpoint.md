@@ -51736,3 +51736,31 @@ Non-blocking hardening notes:
     - document current_slot exclusion / optional future deadline
     - consider full [u8; 32] guardian_set_id binding in future schema
     - keep b1c_connect adapter covered by focused regression tests
+
+
+## Phase 41K.6 B1 Post-Closure Hardening
+
+Status: implemented.
+
+Branch:
+
+    stage-41k6-b1-post-closure-hardening
+
+Purpose:
+
+    Close Claude non-blocking notes before B2.
+
+Changes:
+
+    - B1C authorization payload domain moved to consume_gateway_mint_authorization_v2
+    - route_id is now included in the signed payload hash
+    - full [u8; 32] guardian_set_id is now included in the signed payload hash
+    - u32 guardian_set_id projection removed from B1C payload binding
+    - adapter regression added for valid-looking non-Ed25519 discarded instructions
+    - current_slot / deadline policy documented
+
+Policy:
+
+    current_slot is intentionally excluded from B1C v2.
+    Authorization is valid for the exact payload until processed_event consumption.
+    Replay remains blocked by canonical_event_key + processed_event single-consumption.
