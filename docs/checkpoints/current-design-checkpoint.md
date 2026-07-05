@@ -497,3 +497,31 @@ GUARDIAN_SET_TESTNET_DESCRIPTOR_MAP_DESIGN_NOT_EXECUTED
 Current decision remains:
 
 NO-GO.
+
+## Phase 41K.6 B6.47 local-only guardian descriptor skeleton plan
+
+The local-only guardian descriptor skeleton plan is recorded in:
+
+docs/gateway/phase-41k6-b6-47-local-guardian-descriptor-skeleton-plan.md
+
+It defines the future local-only descriptor skeleton boundary for guardian_set_id, threshold, local public key fixtures, descriptor integrity, route scope, and no-signing policy.
+
+It does not implement a guardian descriptor skeleton.
+
+It does not create a guardian descriptor.
+
+It does not construct guardian packages.
+
+It does not enable signing.
+
+It does not approve local-validator execution.
+
+It does not approve testnet action.
+
+Current status:
+
+LOCAL_GUARDIAN_DESCRIPTOR_SKELETON_PLAN_DEFINED_NOT_IMPLEMENTED
+
+Current decision remains:
+
+NO-GO.
