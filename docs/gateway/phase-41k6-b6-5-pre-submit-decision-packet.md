@@ -232,6 +232,29 @@ B6.5 must not open if any of the following is true:
 - production activation ambiguity,
 - any request to expose secrets.
 
+## Explicit operator sign-off fields
+
+B6.5 GO decision requires explicit operator sign-off fields.
+
+Current default values:
+
+- testnet_submit_rehearsal_approved_by: null
+- testnet_submit_rehearsal_approval_timestamp: null
+- testnet_submit_rehearsal_approval_scope: null
+- testnet_submit_rehearsal_approval_commit: null
+
+Null means not approved.
+
+Empty means not approved.
+
+Missing means not approved.
+
+These fields must remain null until a later explicit written GO decision is made.
+
+A non-null value must identify the responsible operator role or project decision record.
+
+A non-null value must not expose private keys, key paths, seed phrases, mnemonic phrases, or secrets.
+
 ## B6.5 opening checklist
 
 B6.5 may open only when every item below is checked:
@@ -254,6 +277,9 @@ B6.5 may open only when every item below is checked:
 - [ ] Abort conditions accepted.
 - [ ] Observation plan accepted.
 - [ ] Secret redaction policy accepted.
+- [ ] testnet_submit_rehearsal_approved_by is non-null.
+- [ ] testnet_submit_rehearsal_approval_scope is non-null.
+- [ ] testnet_submit_rehearsal_approval_commit is non-null.
 
 ## Current decision
 

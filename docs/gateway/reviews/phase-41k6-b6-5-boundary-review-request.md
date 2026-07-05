@@ -153,3 +153,19 @@ If approved, the next safe engineering step is not submit.
 The next safe step is a redacted testnet value packet or exact-value inventory draft.
 
 B6.5 remains NO-GO until a later explicit written decision changes it.
+
+## Review closure
+
+Theo returned:
+
+APPROVE WITH NOTES.
+
+The closure is recorded in:
+
+docs/gateway/reviews/phase-41k6-b6-5-boundary-review-closure.md
+
+Mandatory notes were applied:
+
+- B6.1 E2E label qualified as simulation-only / dry-run.
+- B6.5 packet includes explicit null operator sign-off fields.
+- B6.5 NO-GO snapshot cross-references B6.4 approval classes.
