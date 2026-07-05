@@ -181,3 +181,16 @@ The second hostile live-gated test block extends the B3 matrix from payload and 
 - B3.4 insufficient quorum: only one unique valid guardian is supplied while the active guardian set threshold is two.
 
 Both cases must return `InvalidInstruction` and preserve all mutation targets unchanged.
+
+## B3.5 implementation note
+
+B3.5 adds the replay boundary case.
+
+The evidence is otherwise valid: payload hash is correct, both prior Ed25519 evidence instructions are from known guardians, and the unique guardian threshold is met. The hostile mutation is that `processed_event` starts in an already consumed state.
+
+Expected result:
+
+- the handler rejects the replay,
+- no second processed_event mark occurs,
+- no SPL Token `MintTo` occurs,
+- recipient token account, SPL mint, recipient balance, and rent payer remain unchanged.

@@ -107,6 +107,38 @@ fn phase_41k6_b3_unknown_guardian_evidence_rejects_before_mark_and_mint() {
 }
 
 #[test]
+fn phase_41k6_b3_processed_event_replay_rejects_before_second_mark_and_mint() {
+    let fixture = B2LiveGatedSuccessFixture::new();
+    let payload_hash = fixture.payload_hash();
+
+    let mut accounts = fixture.accounts_b1_v3();
+    let consumed_processed_event_data = build_final_consumed_processed_event_account_image(
+        &CANONICAL_EVENT_KEY,
+        &ROUTE_ID,
+        &fixture.keys.recipient_owner.to_bytes(),
+        AMOUNT as u128,
+        0,
+    )
+    .expect("consumed processed_event replay fixture");
+
+    accounts[ACCOUNT_INDEX_PROCESSED_EVENT].1 = account(
+        10_000_000_000,
+        consumed_processed_event_data.to_vec(),
+        fixture.program_id,
+        false,
+    );
+
+    run_b3_hostile_case_with_accounts_before_mutation(
+        fixture,
+        vec![
+            ed25519_precompile_instruction(payload_hash, GUARDIAN_ONE),
+            ed25519_precompile_instruction(payload_hash, GUARDIAN_TWO),
+        ],
+        accounts,
+    );
+}
+
+#[test]
 fn phase_41k6_b3_duplicate_guardian_evidence_rejects_before_mark_and_mint() {
     let fixture = B2LiveGatedSuccessFixture::new();
     let payload_hash = fixture.payload_hash();
@@ -135,9 +167,22 @@ fn run_b3_hostile_case_before_mutation(
     fixture: B2LiveGatedSuccessFixture,
     prior_ed25519_instructions: Vec<Instruction>,
 ) {
+    let accounts = fixture.accounts_b1_v3();
+
+    run_b3_hostile_case_with_accounts_before_mutation(
+        fixture,
+        prior_ed25519_instructions,
+        accounts,
+    );
+}
+
+fn run_b3_hostile_case_with_accounts_before_mutation(
+    fixture: B2LiveGatedSuccessFixture,
+    prior_ed25519_instructions: Vec<Instruction>,
+    accounts: Vec<(Pubkey, Account)>,
+) {
     let mollusk = mollusk_for_program(&fixture.program_id);
     let current_instruction = fixture.instruction_b1_v3();
-    let accounts = fixture.accounts_b1_v3();
 
     let processed_event_before = &accounts[ACCOUNT_INDEX_PROCESSED_EVENT].1;
     let spl_mint_before = &accounts[ACCOUNT_INDEX_SPL_MINT].1;
