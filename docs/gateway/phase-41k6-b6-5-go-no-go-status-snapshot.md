@@ -215,3 +215,15 @@ This discovery does not change the B6.5 decision.
 Current decision remains:
 
 NO-GO.
+
+## B6.5 read-only testnet baseline verification
+
+Read-only X1 testnet baseline verification is recorded in:
+
+docs/gateway/phase-41k6-b6-5-readonly-testnet-baseline-verification.md
+
+This verification does not change the B6.5 decision.
+
+Current decision remains:
+
+NO-GO.

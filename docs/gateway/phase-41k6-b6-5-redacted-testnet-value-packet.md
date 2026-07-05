@@ -223,6 +223,20 @@ Current decision remains:
 
 NO-GO.
 
+## Read-only testnet baseline verification
+
+A read-only X1 testnet baseline verification is recorded in:
+
+docs/gateway/phase-41k6-b6-5-readonly-testnet-baseline-verification.md
+
+This verification uses read-only RPC account queries only.
+
+It does not approve signing, submission, SOL spend, private-key handling, deploy, B1C7 gate removal, feature gate weakening, or production activation.
+
+Current decision remains:
+
+NO-GO.
+
 ## Required transition before GO
 
 Before this packet can support a later GO decision:
