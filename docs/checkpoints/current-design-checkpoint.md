@@ -111,3 +111,23 @@ LOCAL_VALIDATOR_ONLY_DESIGN_NOT_EXECUTED
 Current decision remains:
 
 NO-GO.
+
+## Phase 41K.6 B6.30 local-validator fixture inventory map
+
+The local-validator fixture inventory map is recorded in:
+
+docs/gateway/phase-41k6-b6-30-local-validator-fixture-inventory-map.md
+
+It defines the fixture groups required for a future local-validator-only dry-run.
+
+It does not execute a local validator dry-run.
+
+It does not close blocker H.
+
+Current status:
+
+LOCAL_VALIDATOR_ONLY_FIXTURE_DESIGN_NOT_EXECUTED
+
+Current decision remains:
+
+NO-GO.
