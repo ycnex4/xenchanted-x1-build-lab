@@ -282,3 +282,160 @@ Review target:
 Question:
 
 Does this fully resolve the B1 blocker, or is there any remaining authorization bypass / mutation-before-authorization path?
+
+
+## Hostile review response — Theo vectors
+
+Status: response to Theo B1 closure hostile review.
+
+### Vector 1 — Guardian set account provenance
+
+Conclusion: clean.
+
+The guardian set account is not accepted as an unconstrained caller-provided account.
+
+The loader derives the expected guardian set PDA from:
+
+    seed 0: "xxxl"
+    seed 1: "guardian-set"
+    seed 2: guardian_set_id
+    program id: current program_id
+
+The loader then checks:
+
+- guardian_set_account.owner == expected_program_id
+- guardian_set_account.key == expected_pda
+- account is readonly
+- account is non-signer
+- account discriminator is correct
+- schema version is correct
+- account data guardian_set_id == expected guardian_set_id
+- active status is active
+- threshold and guardian count are sane
+- duplicate guardian public keys are rejected
+
+Therefore an attacker cannot pass an arbitrary account with threshold = 1 and their own key unless that account is also the valid program-derived PDA for the expected guardian_set_id and owned by the program.
+
+The specific fake-account attack described by Theo should fail at the owner/key/PDA checks before B1C.5 membership validation or B1C.6 quorum counting.
+
+### Vector 2 — Threshold sanity
+
+Conclusion: clean.
+
+B1B rejects:
+
+- threshold = 0
+- guardian_count = 0
+- guardian_count > MAX_SUPPORTED_GUARDIAN_COUNT
+- threshold > guardian_count
+- duplicate guardian public keys
+
+This means zero-signature authorization and impossible threshold configurations are rejected at guardian set loading.
+
+### Vector 3 — Guardian set freshness / rotation
+
+Conclusion: partially addressed by current layout; operational follow-up remains.
+
+Current guardian set layout has active status but no active_until_slot / expiry field.
+
+Current enforced freshness mechanism:
+
+- active guardian sets are accepted
+- inactive or deprecated guardian sets are rejected
+
+Therefore rotation safety depends on old guardian sets being marked inactive/deprecated in the current layout.
+
+Future hardening recommendation:
+
+- add active_until_slot or monotonic guardian set generation/version policy
+- enforce current_slot <= active_until_slot if that field is added
+
+This is not an authorization bypass in the current implemented model if rotation correctly deprecates old sets, but it is a production operations requirement.
+
+### Vector 4 — Other mint paths
+
+Conclusion: clean for default/non-harness runtime path.
+
+The SVM entrypoint routes to processor::process_instruction.
+
+The runtime instruction enum currently contains only:
+
+    ConsumeGatewayMint
+
+The normal processor match routes only:
+
+    XxxlInstruction::ConsumeGatewayMint(args) -> process_consume_gateway_mint(...)
+
+There is no admin mint instruction, no config instruction, no emergency mint instruction, and no second normal runtime instruction variant.
+
+There are test/harness paths behind explicit feature gates:
+
+- phase-41k4-svm-test-harness
+- phase-41k5-spl-mint-to-cpi-test-gate
+
+These are non-default test scaffolds and are not default runtime paths.
+
+SPL mint_to is centralized in the CPI boundary. The guarded CPI boundary checks spl_mint_to_cpi_execution_enabled before invoking mint_to. If the CPI gate is closed, it returns CpiBoundaryNotReady.
+
+B1C.7 final wiring additionally checks the CPI gate before calling atomic_mark_and_mint_boundary, so CPI gate failure cannot happen after processed_event mark in the B1C7 path.
+
+Important distinction:
+
+- B1C7 authorization gate alone does not silently open SPL mint CPI.
+- Actual mint execution still requires the explicit CPI execution gate.
+- Default builds remain closed.
+
+### Vector 5 — Processed event registry isolation
+
+Conclusion: clean for default/non-harness runtime path, with test harness caveat.
+
+The processed_event write boundary:
+
+- derives the expected processed_event PDA from canonical_event_key
+- rejects wrong PDA
+- uses the 41K.3 processed registry loader as a gate
+- requires the account to be unprocessed before marking
+- writes final consumed image
+- re-decodes after write
+
+The B1C7 path calls mark only after authorization succeeds and after the CPI gate check.
+
+There is a phase-41k4 test harness for marking, but it is feature-gated and not part of default runtime behavior.
+
+Therefore the default/non-harness runtime does not expose a standalone registry mark instruction.
+
+### Response to Theo's two blocker questions
+
+Question 1: How is the guardian set account address constrained/verified in the handler?
+
+Answer:
+
+The handler path passes the guardian set AccountInfo into B1B loading with program_id and args.guardian_set_id. B1B derives expected PDA from the fixed guardian set seed format and rejects if the provided account key does not match the expected PDA or if owner does not match program_id. It also checks that the account data guardian_set_id matches the expected guardian_set_id.
+
+So the guardian set account is protocol-constrained by PDA + owner + embedded guardian_set_id.
+
+Question 2: Whether any other instruction or path can invoke mint_to or mark the registry?
+
+Answer:
+
+For default/non-harness runtime path, no.
+
+The normal instruction enum has only ConsumeGatewayMint, and the normal processor match routes only to process_consume_gateway_mint.
+
+SPL mint_to is centralized in the CPI boundary and gated by spl_mint_to_cpi_execution_enabled.
+
+Processed event marking is centralized in mark_processed_event_atomic and is called by the B1C7-authorized mark+mint path after authorization and CPI gate checks.
+
+There are test harness paths behind explicit feature gates. These are not default runtime paths and remain outside production closure.
+
+### Updated closure claim
+
+B1 closure should be accepted for the default/non-harness runtime path.
+
+Required production follow-ups remain:
+
+- guardian operations / rotation runbook
+- production guardian set initialization procedure
+- explicit policy for deprecating old guardian sets
+- optional future active_until_slot hardening
+- production decision on feature gates and deployment
