@@ -203,3 +203,15 @@ It does not approve signing, submission, SOL spend, private-key handling, deploy
 Current decision remains:
 
 NO-GO.
+
+## B6.5 discovered public baseline values
+
+Repository-discovered public testnet baseline values are recorded in:
+
+docs/gateway/phase-41k6-b6-5-discovered-public-testnet-baseline-values.md
+
+This discovery does not change the B6.5 decision.
+
+Current decision remains:
+
+NO-GO.
