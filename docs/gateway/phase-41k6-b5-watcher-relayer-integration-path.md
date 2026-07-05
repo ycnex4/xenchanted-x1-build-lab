@@ -535,3 +535,31 @@ B5.6 also locks the u64::MAX amount boundary with expected payload hash:
 0xa6b9e3901a04a6da11d100912cb1f5ebf294464d5b11376f2b7eb71a0cb9f893
 
 B5.6 does not open B6 and does not introduce live RPC, signing, submit, SOL spend, private-key access, or gate removal.
+
+## External review closure
+
+B5 external review closure has been recorded in:
+
+docs/gateway/reviews/phase-41k6-b5-external-review-closure.md
+
+Claude status:
+
+- ACCEPT WITH NOTES.
+- Mandatory Q9.1 parity note confirmed closed after TS and Rust known-answer vectors.
+- B6.1 may open as a no-send/no-sign/no-key/no-submit boundary.
+
+Theo status:
+
+- APPROVE WITH NOTES.
+- B5 is architecturally closed.
+- B6.1 may open.
+
+B6.1 condition:
+
+B6.1 does not remove the B1C7 compile_error guard or feature gate.
+
+B6.1 does not open production gates.
+
+B6.1 is only an opening boundary and simulation/dry-run specification.
+
+Actual relayer submission, testnet transaction execution, production gate opening, or gate removal remain separate deliberate operator/project decisions.
