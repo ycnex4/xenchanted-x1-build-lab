@@ -504,3 +504,34 @@ B5 closure decision:
 The next checkpoint is B6: X1 testnet deploy + end-to-end Ethereum burn -> X1 mint.
 
 B6 must open explicitly and must not be treated as automatic production activation.
+
+## B5.6 cross-language known-answer parity vector
+
+B5.6 responds to Claude's B5 hostile audit note.
+
+Claude accepted B5 with notes, but required that the TypeScript and Rust payload hash parity claim be locked by a shared known-answer vector before B6.1.
+
+B5.6 adds hardcoded known-answer assertions on both sides:
+
+- TypeScript B5 candidate payload hash test,
+- Rust B1C payload hash binding test.
+
+Canonical vector:
+
+- domain: consume_gateway_mint_authorization_v2
+- processed_event: [0xB2; 32]
+- route_id: [0x41; 32]
+- mint: [0x51; 32]
+- recipient token account: [0x61; 32]
+- amount: 1_234_567_890 as u64 little-endian
+- guardian_set_id: [0xC7; 32]
+
+Expected payload hash:
+
+0x56a318440e188d864052b8518f41deb7e4f998a975e3b6e19ca63815535ec77d
+
+B5.6 also locks the u64::MAX amount boundary with expected payload hash:
+
+0xa6b9e3901a04a6da11d100912cb1f5ebf294464d5b11376f2b7eb71a0cb9f893
+
+B5.6 does not open B6 and does not introduce live RPC, signing, submit, SOL spend, private-key access, or gate removal.
