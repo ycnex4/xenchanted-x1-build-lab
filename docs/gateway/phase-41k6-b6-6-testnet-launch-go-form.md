@@ -439,6 +439,33 @@ Current decision remains:
 
 NO-GO.
 
+## B6.27 blocker closure readiness map status
+
+- readiness_map_file: docs/gateway/phase-41k6-b6-27-blocker-closure-readiness-map.md
+- local_skeleton_status: LOCAL_ONLY_NOT_DEPLOYABLE
+- blocker_a_upgrade_authority_custody_map: open
+- blocker_b_expected_post_upgrade_programdata_hash: open
+- blocker_c_b1c7_handler_presence_verification: open_design_started
+- blocker_d_state_initialization_instruction_design: open_design_started
+- blocker_e_spl_mint_authority_architecture: open_design_started
+- blocker_f_guardian_set_testnet_descriptor: open_design_started
+- blocker_g_rollback_recovery_plan: open
+- blocker_h_local_validator_dry_run: open
+- live_runtime_handler_enabled: false
+- on_chain_state_write_enabled: false
+- account_initialization_enabled: false
+- spl_cpi_minting_enabled: false
+- testnet_submit_enabled: false
+- upgrade_go_approved: false
+- state_init_go_approved: false
+- submit_go_approved: false
+
+No GO blocker is closed by this checkpoint.
+
+Current decision remains:
+
+NO-GO.
+
 ## Current decision
 
 Current decision:
