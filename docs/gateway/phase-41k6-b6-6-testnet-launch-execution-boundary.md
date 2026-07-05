@@ -306,6 +306,20 @@ Current decision remains:
 
 NO-GO.
 
+## B6.7 placeholder boundary manual resolution
+
+B6.7 placeholder boundary manual resolution is recorded in:
+
+docs/gateway/phase-41k6-b6-7-placeholder-boundary-manual-resolution.md
+
+Manual review resolved the automated structural-risk result as a false positive for the reviewed PDA derivation path.
+
+Strategy 2 remains viable for planning, but no live action is approved.
+
+Current decision remains:
+
+NO-GO.
+
 ## Current decision
 
 Current decision:
