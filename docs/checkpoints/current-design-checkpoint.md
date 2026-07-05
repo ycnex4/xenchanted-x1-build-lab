@@ -327,3 +327,27 @@ POST_UPGRADE_PROGRAMDATA_HASH_PLAN_DEFINED_HASH_NOT_RECORDED
 Current decision remains:
 
 NO-GO.
+
+## Phase 41K.6 B6.40 Strategy 2 closure-readiness checkpoint
+
+The Strategy 2 closure-readiness checkpoint is recorded in:
+
+docs/gateway/phase-41k6-b6-40-strategy-2-closure-readiness-checkpoint.md
+
+It summarizes B6.27 through B6.39.
+
+It records that Strategy 2 is ready for the next decision, not for execution.
+
+It does not close blockers A through H.
+
+It does not execute a local validator dry-run.
+
+It does not approve testnet action.
+
+Current status:
+
+STRATEGY_2_CLOSURE_READINESS_CHECKPOINT_NO_GO
+
+Current decision remains:
+
+NO-GO.
