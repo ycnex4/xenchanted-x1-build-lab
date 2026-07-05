@@ -643,3 +643,25 @@ It does not approve deploy, upgrade, signing, submit, SOL spend, account initial
 Current decision remains:
 
 NO-GO.
+
+## B6.23 local initialization execution plan skeleton
+
+B6.23 local initialization execution plan skeleton is implemented in:
+
+programs/xxxl-svm/src/initialization_execution_plan_skeleton.rs
+
+The module is local-only and explicitly marked:
+
+LOCAL_ONLY_NOT_DEPLOYABLE
+
+It combines validated dispatch and local initialization state layout planning for gateway_config, guardian_set, and mint_state.
+
+It does not write on-chain state.
+
+It does not implement live runtime handlers.
+
+It does not approve deploy, upgrade, signing, submit, SOL spend, account initialization, SPL mint setup, guardian package construction, or submit rehearsal.
+
+Current decision remains:
+
+NO-GO.
