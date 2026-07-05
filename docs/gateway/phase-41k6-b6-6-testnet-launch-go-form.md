@@ -119,6 +119,25 @@ Current decision remains:
 
 NO-GO.
 
+## B6.8 Strategy 2 blocker closure status
+
+- blocker_closure_plan_file: docs/gateway/phase-41k6-b6-8-strategy-2-blocker-closure-plan.md
+- blocker_a_upgrade_authority_custody_map: open
+- blocker_b_expected_post_upgrade_programdata_hash: open
+- blocker_c_b1c7_handler_presence_verification: open
+- blocker_d_state_initialization_instruction_design: open
+- blocker_e_spl_mint_authority_architecture: open
+- blocker_f_guardian_set_testnet_descriptor: open
+- blocker_g_rollback_or_recovery_plan: open
+- blocker_h_local_validator_dry_run: open
+- upgrade_go_approved: false
+- state_init_go_approved: false
+- submit_go_approved: false
+
+Current decision remains:
+
+NO-GO.
+
 ## Current decision
 
 Current decision:
