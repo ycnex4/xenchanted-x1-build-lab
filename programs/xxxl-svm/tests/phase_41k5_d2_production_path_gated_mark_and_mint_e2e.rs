@@ -17,9 +17,11 @@ use solana_instruction::{AccountMeta, Instruction};
 use solana_program::{
     program_option::COption, program_pack::Pack, pubkey::Pubkey as ProgramPubkey,
 };
+use solana_program_error::ProgramError;
 use solana_pubkey::Pubkey;
 use spl_token::state::{Account as SplTokenAccount, AccountState, Mint as SplTokenMint};
 use xxxl_svm::{
+    error::XxxlError,
     instruction::{
         CONSUME_GATEWAY_MINT_ACCOUNT_META_COUNT, CONSUME_GATEWAY_MINT_DISCRIMINATOR,
         CONSUME_GATEWAY_MINT_GUARDIAN_SET_ACCOUNT_INDEX, CONSUME_GATEWAY_MINT_INSTRUCTION_LEN,
@@ -65,87 +67,53 @@ const ACCOUNT_INDEX_SYSTEM_PROGRAM: usize = 10;
 static SBF_BUILD: Once = Once::new();
 
 #[test]
-fn phase_41k5_d2_production_path_gated_mark_and_mint_e2e_success() {
+fn phase_41k5_d2_production_path_without_b1c7_evidence_rejects_before_mutation() {
     let fixture = ProductionPathFixture::new();
     let mollusk = mollusk_for_program(&fixture.program_id);
 
     let instruction = fixture.instruction();
     let accounts = fixture.accounts();
 
-    let starting_processed_lamports = accounts[ACCOUNT_INDEX_PROCESSED_EVENT].1.lamports;
-    let starting_rent_payer_lamports = accounts[ACCOUNT_INDEX_RENT_PAYER].1.lamports;
-    let rent_min = mollusk
-        .sysvars
-        .rent
-        .minimum_balance(PROCESSED_EVENT_ACCOUNT_LEN);
-    let expected_top_up = rent_min.saturating_sub(starting_processed_lamports);
-    let consumed_slot = mollusk.sysvars.clock.slot;
-
-    let expected_processed_event = build_final_consumed_processed_event_account_image(
-        &CANONICAL_EVENT_KEY,
-        &ROUTE_ID,
-        &fixture.keys.recipient_owner.to_bytes(),
-        AMOUNT as u128,
-        consumed_slot,
-    )
-    .expect("expected processed event final image");
-
-    let mut expected_mint =
-        SplTokenMint::unpack(&accounts[ACCOUNT_INDEX_SPL_MINT].1.data).expect("valid SPL mint");
-    expected_mint.supply = expected_mint
-        .supply
-        .checked_add(AMOUNT)
-        .expect("mint supply add");
-    let mut expected_mint_data = vec![0u8; SplTokenMint::LEN];
-    SplTokenMint::pack(expected_mint, &mut expected_mint_data).expect("pack expected SPL mint");
-
-    let mut expected_recipient_token_account =
-        SplTokenAccount::unpack(&accounts[ACCOUNT_INDEX_RECIPIENT_TOKEN_ACCOUNT].1.data)
-            .expect("valid recipient token account");
-    expected_recipient_token_account.amount = expected_recipient_token_account
-        .amount
-        .checked_add(AMOUNT)
-        .expect("recipient token amount add");
-    let mut expected_recipient_token_data = vec![0u8; SplTokenAccount::LEN];
-    SplTokenAccount::pack(
-        expected_recipient_token_account,
-        &mut expected_recipient_token_data,
-    )
-    .expect("pack expected recipient token account");
-
-    let recipient_balance_before = accounts[ACCOUNT_INDEX_RECIPIENT_BALANCE].1.data.clone();
+    let processed_event_before = &accounts[ACCOUNT_INDEX_PROCESSED_EVENT].1;
+    let rent_payer_before = &accounts[ACCOUNT_INDEX_RENT_PAYER].1;
+    let spl_mint_before = &accounts[ACCOUNT_INDEX_SPL_MINT].1;
+    let recipient_token_account_before = &accounts[ACCOUNT_INDEX_RECIPIENT_TOKEN_ACCOUNT].1;
+    let recipient_balance_before = &accounts[ACCOUNT_INDEX_RECIPIENT_BALANCE].1;
 
     mollusk.process_and_validate_instruction(
         &instruction,
         &accounts,
         &[
-            Check::success(),
+            Check::err(ProgramError::Custom(XxxlError::InvalidInstruction as u32)),
             Check::account(&fixture.keys.processed_event)
-                .lamports(starting_processed_lamports + expected_top_up)
-                .owner(&fixture.program_id)
-                .space(PROCESSED_EVENT_ACCOUNT_LEN)
-                .data(expected_processed_event.as_ref())
+                .lamports(processed_event_before.lamports)
+                .owner(&processed_event_before.owner)
+                .space(processed_event_before.data.len())
+                .data(&processed_event_before.data)
                 .build(),
             Check::account(&fixture.keys.rent_payer)
-                .lamports(starting_rent_payer_lamports - expected_top_up)
-                .owner(&fixture.keys.system_program)
-                .space(0)
-                .data(&[])
+                .lamports(rent_payer_before.lamports)
+                .owner(&rent_payer_before.owner)
+                .space(rent_payer_before.data.len())
+                .data(&rent_payer_before.data)
                 .build(),
             Check::account(&fixture.keys.spl_mint)
-                .data(&expected_mint_data)
-                .lamports(accounts[ACCOUNT_INDEX_SPL_MINT].1.lamports)
-                .owner(&fixture.keys.token_program)
+                .lamports(spl_mint_before.lamports)
+                .owner(&spl_mint_before.owner)
+                .space(spl_mint_before.data.len())
+                .data(&spl_mint_before.data)
                 .build(),
             Check::account(&fixture.keys.recipient_token_account)
-                .data(&expected_recipient_token_data)
-                .lamports(accounts[ACCOUNT_INDEX_RECIPIENT_TOKEN_ACCOUNT].1.lamports)
-                .owner(&fixture.keys.token_program)
+                .lamports(recipient_token_account_before.lamports)
+                .owner(&recipient_token_account_before.owner)
+                .space(recipient_token_account_before.data.len())
+                .data(&recipient_token_account_before.data)
                 .build(),
             Check::account(&fixture.keys.recipient_balance)
-                .data(&recipient_balance_before)
-                .lamports(accounts[ACCOUNT_INDEX_RECIPIENT_BALANCE].1.lamports)
-                .owner(&fixture.program_id)
+                .lamports(recipient_balance_before.lamports)
+                .owner(&recipient_balance_before.owner)
+                .space(recipient_balance_before.data.len())
+                .data(&recipient_balance_before.data)
                 .build(),
         ],
     );

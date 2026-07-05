@@ -51679,3 +51679,60 @@ Still disabled:
 Next gate:
 
 41K.2 real guardian-set account/PDA loading code implementation.
+
+
+## Phase 41K.6 B1 Closure Checkpoint
+
+Status: B1C complete and merged to main.
+
+Merge:
+
+    fce6ddf Merge phase 41K.6 B1C handler integration
+
+Conclusion:
+
+    Claude B1 blocker RESOLVED.
+    Guardian quorum authorization is implemented end-to-end.
+    Default builds remain closed.
+    B1C7 feature-gated builds can execute guardian-authorized mark + mint.
+
+Hostile review package:
+
+    docs/gateway/phase-41k6-b1-closure-hostile-review-package.md
+
+
+## Phase 41K.6 B1 Final Closure
+
+Status: CLOSED.
+
+Final reviewed branch:
+
+    stage-41k6-b1-auth-bypass-fix
+
+Key commits:
+
+    fce6ddf Merge phase 41K.6 B1C handler integration
+    cb2a096 Add phase 41K.6 B1 closure hostile review package
+    b4b667d Respond to B1 closure hostile review vectors
+    d82ad31 Block D2 mint path without B1C7 authorization
+
+Final external review result:
+
+    Claude: ACCEPT WITH NOTES.
+
+Conclusion:
+
+    Claude B1 blocker RESOLVED.
+    D2 mint bypass CLOSED.
+    Guardian quorum authorization gate is real.
+    No remaining authorization bypass found.
+    No remaining mint bypass found.
+    No remaining registry-mark bypass found.
+    No remaining mutation-before-authorization path found.
+
+Non-blocking hardening notes:
+
+    - add route_id to future payload hash schema
+    - document current_slot exclusion / optional future deadline
+    - consider full [u8; 32] guardian_set_id binding in future schema
+    - keep b1c_connect adapter covered by focused regression tests
