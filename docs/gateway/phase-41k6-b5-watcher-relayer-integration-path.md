@@ -397,3 +397,30 @@ The builder mirrors the Rust SVM handler payload binding:
 B5.2 confirms that every handler-bound field changes the payload hash, while watcher-only operational metadata does not.
 
 B5.2 remains offline, deterministic, no-RPC, no-signing, no-submit, and no-key-access.
+
+## B5.3 quorum package boundary
+
+B5.3 adds a pure TypeScript quorum package boundary.
+
+Files:
+
+- src/gateway/phase41k6QuorumPackage.ts
+- tests/phase41k6_b5_quorum_package.test.ts
+- docs/gateway/phase-41k6-b5-3-quorum-package-boundary.md
+
+The package validates:
+
+- payload_v2_hash,
+- guardian_set_id,
+- threshold,
+- guardian set public keys,
+- prior Ed25519 evidence format,
+- source instruction indices,
+- guardian signatures as data,
+- signed message binding to payload_v2_hash,
+- known guardians,
+- unique guardian quorum.
+
+B5.3 catches duplicate guardians, unknown guardians, insufficient quorum, signed message drift, malformed source instruction indices, malformed signatures, and invalid thresholds before relayer submission.
+
+The handler remains the final authority.
