@@ -180,3 +180,23 @@ B2 uses Mollusk transaction-instruction execution rather than a manually supplie
 ### Harness note: Ed25519 execution cache
 
 Mollusk transaction-instruction execution requires every prior instruction program id to exist in the program cache. B2 therefore loads a no-op SBF ELF under the Ed25519 precompile program id for this harness only. The current handler does not trust the no-op program result as production authorization; it reads the prior instruction bytes from the instructions sysvar and routes them through the B1C evidence, payload-binding, membership, and quorum pipeline before any mutation.
+
+## B2 closure gates
+
+B2 closure validation passed on the branch `stage-41k6-b2-valid-quorum-live-gated-success`.
+
+Validated gates:
+
+- Full `xxxl-svm` lib test suite: `610 passed; 0 failed; 1 ignored`.
+- B1C7 gated lib test suite: `697 passed; 0 failed; 1 ignored`.
+- B2 live-gated valid quorum success test: `1 passed; 0 failed`.
+
+The B2 live-gated test confirms the positive runtime path:
+
+`prior Ed25519 evidence -> B1C7 authorization -> processed_event mark -> SPL Token MintTo -> success`
+
+Observed runtime completion log:
+
+`XXXL consume_gateway_mint guardian-authorized atomic mark + mint completed`
+
+B2 is closed as a valid-quorum live-gated success checkpoint. The path remains gated by explicit non-production feature flags and the dangerous SBF-build allow feature.
