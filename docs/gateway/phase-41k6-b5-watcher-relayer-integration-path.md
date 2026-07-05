@@ -453,3 +453,23 @@ The package records:
 B5.4 rejects empty operational identifiers, guardian_set_id drift between candidate and quorum package, and stale signatures after handler-bound candidate mutation.
 
 B5.4 remains offline, deterministic, no-RPC, no-signing, no-submit, and no-key-access.
+
+## B5.5 negative matrix and closure checklist
+
+B5.5 adds the final B5 negative matrix and closure checklist:
+
+docs/gateway/phase-41k6-b5-5-negative-matrix-closure-checklist.md
+
+B5.5 records the covered failure classes across:
+
+- B5.2 candidate payload v2 hash conversion,
+- B5.3 quorum package validation,
+- B5.4 relayer submission package assembly.
+
+B5.5 confirms that B5 remains offline, deterministic, no-RPC, no-signing, no-submit, no-SOL-spend, and no-private-key-access.
+
+B5.5 defines the B6 entry criteria:
+
+Ethereum burn -> watcher observation -> guardian quorum -> relayer submission -> X1 testnet mint.
+
+B6 must open explicitly and must not be treated as automatic production activation.
