@@ -457,3 +457,23 @@ It does not approve deploy, upgrade, signing, submit, SOL spend, account initial
 Current decision remains:
 
 NO-GO.
+
+## B6.14 local typed instruction skeleton
+
+B6.14 local typed instruction skeleton is implemented in:
+
+programs/xxxl-svm/src/typed_instruction_skeleton.rs
+
+The module is local-only and explicitly marked:
+
+LOCAL_ONLY_NOT_DEPLOYABLE
+
+It combines reserved instruction tags with local payload skeletons into typed instruction encode/decode planning.
+
+It does not implement live runtime handlers.
+
+It does not approve deploy, upgrade, signing, submit, SOL spend, account initialization, SPL mint setup, guardian package construction, or submit rehearsal.
+
+Current decision remains:
+
+NO-GO.
