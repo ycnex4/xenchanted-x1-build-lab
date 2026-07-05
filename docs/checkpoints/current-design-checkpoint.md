@@ -55,3 +55,21 @@ Current decision remains:
 NO-GO.
 
 No deploy, upgrade, signing, submit, SOL spend, account initialization, SPL mint setup, guardian package construction, or submit rehearsal is approved.
+
+## Phase 41K.6 B6.27 blocker closure readiness map
+
+The B6 Strategy 2 blocker closure readiness map is recorded in:
+
+docs/gateway/phase-41k6-b6-27-blocker-closure-readiness-map.md
+
+It maps blockers A-H against the B6.11-B6.26 local execution layer.
+
+No GO blocker is closed by this checkpoint.
+
+Current status remains:
+
+LOCAL_ONLY_NOT_DEPLOYABLE
+
+Current decision remains:
+
+NO-GO.
