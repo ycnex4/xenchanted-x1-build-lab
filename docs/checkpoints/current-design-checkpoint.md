@@ -237,3 +237,23 @@ LOCAL_VALIDATOR_COMMAND_BOUNDARY_DESIGN_NOT_EXECUTED
 Current decision remains:
 
 NO-GO.
+
+## Phase 41K.6 B6.36 local-validator success/failure matrix design
+
+The local-validator success/failure matrix design is recorded in:
+
+docs/gateway/phase-41k6-b6-36-local-validator-success-failure-matrix.md
+
+It defines the future success path, failure matrix, and no-mutation evidence requirements.
+
+It does not execute a local validator dry-run.
+
+It does not close blocker H.
+
+Current status:
+
+LOCAL_VALIDATOR_MATRIX_DESIGN_NOT_EXECUTED
+
+Current decision remains:
+
+NO-GO.
