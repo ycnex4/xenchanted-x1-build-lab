@@ -295,6 +295,44 @@ mod tests {
         }
     }
 
+    const PHASE_41K6_B2_KNOWN_ANSWER_PAYLOAD_HASH: [u8; 32] = [
+        0x56, 0xa3, 0x18, 0x44, 0x0e, 0x18, 0x8d, 0x86, 0x40, 0x52, 0xb8, 0x51,
+        0x8f, 0x41, 0xde, 0xb7, 0xe4, 0xf9, 0x98, 0xa9, 0x75, 0xe3, 0xb6, 0xe1,
+        0x9c, 0xa6, 0x38, 0x15, 0x53, 0x5e, 0xc7, 0x7d,
+    ];
+
+    const PHASE_41K6_B2_U64_MAX_KNOWN_ANSWER_PAYLOAD_HASH: [u8; 32] = [
+        0xa6, 0xb9, 0xe3, 0x90, 0x1a, 0x04, 0xa6, 0xda, 0x11, 0xd1, 0x00, 0x91,
+        0x2c, 0xb1, 0xf5, 0xeb, 0xf2, 0x94, 0x46, 0x4d, 0x5b, 0x11, 0x37, 0x6f,
+        0x2b, 0x7e, 0xb7, 0x1a, 0x0c, 0xb9, 0xf8, 0x93,
+    ];
+
+    #[test]
+    fn phase_41k6_b2_payload_v2_fixture_matches_known_answer_hash() {
+        let fixture = phase_41k6_b2_payload_v2_fixture();
+
+        assert_eq!(
+            fixture.expected_payload_hash,
+            PHASE_41K6_B2_KNOWN_ANSWER_PAYLOAD_HASH
+        );
+        assert_eq!(
+            fixture.context.amount.to_le_bytes(),
+            [0xd2, 0x02, 0x96, 0x49, 0x00, 0x00, 0x00, 0x00]
+        );
+    }
+
+    #[test]
+    fn phase_41k6_b2_payload_v2_u64_max_matches_known_answer_hash() {
+        let mut context = phase_41k6_b2_payload_v2_fixture().context;
+        context.amount = u64::MAX;
+
+        assert_eq!(context.amount.to_le_bytes(), [0xff; 8]);
+        assert_eq!(
+            compute_b1c_expected_authorization_payload_hash(&context),
+            PHASE_41K6_B2_U64_MAX_KNOWN_ANSWER_PAYLOAD_HASH
+        );
+    }
+
     #[test]
     fn phase_41k6_b2_payload_v2_fixture_binds_all_success_path_fields() {
         let fixture = phase_41k6_b2_payload_v2_fixture();
