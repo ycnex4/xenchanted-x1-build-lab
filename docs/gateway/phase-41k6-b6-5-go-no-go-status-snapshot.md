@@ -227,3 +227,15 @@ This verification does not change the B6.5 decision.
 Current decision remains:
 
 NO-GO.
+
+## B6.5 read-only decoder correction
+
+Read-only ProgramData decoder correction is recorded in:
+
+docs/gateway/phase-41k6-b6-5-readonly-baseline-decoder-correction.md
+
+The correction does not change the B6.5 decision.
+
+Current decision remains:
+
+NO-GO.
