@@ -303,3 +303,27 @@ UPGRADE_AUTHORITY_CUSTODY_MAP_DESIGN_NOT_EXECUTED
 Current decision remains:
 
 NO-GO.
+
+## Phase 41K.6 B6.39 expected post-upgrade ProgramData hash plan
+
+The expected post-upgrade ProgramData hash plan is recorded in:
+
+docs/gateway/phase-41k6-b6-39-post-upgrade-programdata-hash-plan.md
+
+It defines what must be recorded before blocker B can close.
+
+It does not compute or record the final expected hash.
+
+It does not execute a build.
+
+It does not execute an upgrade.
+
+It does not close blocker B.
+
+Current status:
+
+POST_UPGRADE_PROGRAMDATA_HASH_PLAN_DEFINED_HASH_NOT_RECORDED
+
+Current decision remains:
+
+NO-GO.
