@@ -73,3 +73,21 @@ LOCAL_ONLY_NOT_DEPLOYABLE
 Current decision remains:
 
 NO-GO.
+
+## Phase 41K.6 B6.28 B1C7 handler boundary map
+
+The B1C7 handler boundary map is recorded in:
+
+docs/gateway/phase-41k6-b6-28-b1c7-handler-boundary-map.md
+
+It defines the future evidence required before blocker C can be considered for closure.
+
+It does not close blocker C.
+
+Current status remains:
+
+LOCAL_ONLY_NOT_DEPLOYABLE
+
+Current decision remains:
+
+NO-GO.
