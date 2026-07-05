@@ -257,3 +257,23 @@ LOCAL_VALIDATOR_MATRIX_DESIGN_NOT_EXECUTED
 Current decision remains:
 
 NO-GO.
+
+## Phase 41K.6 B6.37 rollback and recovery plan map
+
+The rollback and recovery plan map is recorded in:
+
+docs/gateway/phase-41k6-b6-37-rollback-recovery-plan-map.md
+
+It defines rollback and recovery requirements for local-validator, upgrade, state initialization, SPL mint authority, guardian set, submit rehearsal, and live route activation.
+
+It does not execute rollback or recovery.
+
+It does not close blocker G.
+
+Current status:
+
+ROLLBACK_RECOVERY_PLAN_DESIGN_NOT_EXECUTED
+
+Current decision remains:
+
+NO-GO.
