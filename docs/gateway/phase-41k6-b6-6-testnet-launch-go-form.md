@@ -418,6 +418,27 @@ Current decision remains:
 
 NO-GO.
 
+## B6.26 local execution layer checkpoint status
+
+- checkpoint_file: docs/gateway/phase-41k6-b6-26-local-execution-layer-checkpoint.md
+- local_skeleton_status: LOCAL_ONLY_NOT_DEPLOYABLE
+- live_runtime_handler_enabled: false
+- on_chain_state_write_enabled: false
+- account_initialization_enabled: false
+- spl_cpi_minting_enabled: false
+- testnet_submit_enabled: false
+- upgrade_go_approved: false
+- state_init_go_approved: false
+- submit_go_approved: false
+
+B6.11 through B6.25 advanced local planning coverage for blockers C, D, E, and F.
+
+No GO blocker is closed by this checkpoint.
+
+Current decision remains:
+
+NO-GO.
+
 ## Current decision
 
 Current decision:
