@@ -172,3 +172,12 @@ The initial hostile cases cover:
 - B3.2 unknown guardian evidence.
 
 Both cases must return `InvalidInstruction` and preserve all mutation targets unchanged: processed_event, SPL mint, recipient token account, recipient balance, and rent payer.
+
+## B3.3/B3.4 implementation note
+
+The second hostile live-gated test block extends the B3 matrix from payload and membership failures into quorum failures:
+
+- B3.3 duplicate guardian evidence: the same valid guardian appears twice and must not count as a unique quorum.
+- B3.4 insufficient quorum: only one unique valid guardian is supplied while the active guardian set threshold is two.
+
+Both cases must return `InvalidInstruction` and preserve all mutation targets unchanged.

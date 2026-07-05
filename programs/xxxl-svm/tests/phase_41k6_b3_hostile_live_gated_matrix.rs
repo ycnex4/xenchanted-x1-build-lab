@@ -85,7 +85,7 @@ fn phase_41k6_b3_wrong_payload_hash_evidence_rejects_before_mark_and_mint() {
 
     run_b3_hostile_case_before_mutation(
         fixture,
-        [
+        vec![
             ed25519_precompile_instruction(wrong_payload_hash, GUARDIAN_ONE),
             ed25519_precompile_instruction(wrong_payload_hash, GUARDIAN_TWO),
         ],
@@ -99,16 +99,41 @@ fn phase_41k6_b3_unknown_guardian_evidence_rejects_before_mark_and_mint() {
 
     run_b3_hostile_case_before_mutation(
         fixture,
-        [
+        vec![
             ed25519_precompile_instruction(payload_hash, GUARDIAN_ONE),
             ed25519_precompile_instruction(payload_hash, UNKNOWN_GUARDIAN),
         ],
     );
 }
 
+#[test]
+fn phase_41k6_b3_duplicate_guardian_evidence_rejects_before_mark_and_mint() {
+    let fixture = B2LiveGatedSuccessFixture::new();
+    let payload_hash = fixture.payload_hash();
+
+    run_b3_hostile_case_before_mutation(
+        fixture,
+        vec![
+            ed25519_precompile_instruction(payload_hash, GUARDIAN_ONE),
+            ed25519_precompile_instruction(payload_hash, GUARDIAN_ONE),
+        ],
+    );
+}
+
+#[test]
+fn phase_41k6_b3_insufficient_quorum_rejects_before_mark_and_mint() {
+    let fixture = B2LiveGatedSuccessFixture::new();
+    let payload_hash = fixture.payload_hash();
+
+    run_b3_hostile_case_before_mutation(
+        fixture,
+        vec![ed25519_precompile_instruction(payload_hash, GUARDIAN_ONE)],
+    );
+}
+
 fn run_b3_hostile_case_before_mutation(
     fixture: B2LiveGatedSuccessFixture,
-    prior_ed25519_instructions: [Instruction; 2],
+    prior_ed25519_instructions: Vec<Instruction>,
 ) {
     let mollusk = mollusk_for_program(&fixture.program_id);
     let current_instruction = fixture.instruction_b1_v3();
@@ -120,12 +145,11 @@ fn run_b3_hostile_case_before_mutation(
     let recipient_balance_before = &accounts[ACCOUNT_INDEX_RECIPIENT_BALANCE].1;
     let rent_payer_before = &accounts[ACCOUNT_INDEX_RENT_PAYER].1;
 
+    let mut transaction_instructions = prior_ed25519_instructions;
+    transaction_instructions.push(current_instruction);
+
     mollusk.process_and_validate_transaction_instructions(
-        &[
-            prior_ed25519_instructions[0].clone(),
-            prior_ed25519_instructions[1].clone(),
-            current_instruction,
-        ],
+        &transaction_instructions,
         &accounts,
         &[
             Check::err(ProgramError::Custom(XxxlError::InvalidInstruction as u32)),
