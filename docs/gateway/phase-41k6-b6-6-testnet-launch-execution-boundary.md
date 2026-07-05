@@ -292,6 +292,20 @@ That next step must not load private keys.
 
 That next step must not deploy.
 
+## B6.7 placeholder program id boundary analysis
+
+B6.7 placeholder program id boundary analysis is recorded in:
+
+docs/gateway/phase-41k6-b6-7-placeholder-boundary-analysis.md
+
+This analysis records the Strategy 1 closure, the Strategy 2 conditional recommendation, and the placeholder boundary question that decides Strategy 2 vs Strategy 3.
+
+It does not approve signing, submission, SOL spend, private-key handling, deploy, upgrade, account initialization, SPL mint setup, guardian package, or submit rehearsal.
+
+Current decision remains:
+
+NO-GO.
+
 ## Current decision
 
 Current decision:
