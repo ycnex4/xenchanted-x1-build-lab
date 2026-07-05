@@ -557,3 +557,23 @@ It does not approve deploy, upgrade, signing, submit, SOL spend, account initial
 Current decision remains:
 
 NO-GO.
+
+## B6.19 local state account layout skeleton
+
+B6.19 local state account layout skeleton is implemented in:
+
+programs/xxxl-svm/src/state_account_layout_skeleton.rs
+
+The module is local-only and explicitly marked:
+
+LOCAL_ONLY_NOT_DEPLOYABLE
+
+It defines local encode and decode boundaries for gateway_config, guardian_set header, mint_state, and processed_event account layout planning.
+
+It does not implement live runtime handlers.
+
+It does not approve deploy, upgrade, signing, submit, SOL spend, account initialization, SPL mint setup, guardian package construction, or submit rehearsal.
+
+Current decision remains:
+
+NO-GO.
