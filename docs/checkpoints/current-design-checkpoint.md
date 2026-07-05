@@ -525,3 +525,29 @@ LOCAL_GUARDIAN_DESCRIPTOR_SKELETON_PLAN_DEFINED_NOT_IMPLEMENTED
 Current decision remains:
 
 NO-GO.
+
+## Phase 41K.6 B6.48 local guardian descriptor skeleton
+
+The local guardian descriptor skeleton is implemented in:
+
+programs/xxxl-svm/src/local_guardian_descriptor_skeleton.rs
+
+It models local guardian descriptor structure, threshold behavior, deterministic local public key fixtures, and no-signing safety checks.
+
+It does not create a testnet guardian descriptor.
+
+It does not construct guardian packages.
+
+It does not enable signing.
+
+It does not approve local-validator execution.
+
+It does not approve testnet action.
+
+Current status:
+
+LOCAL_ONLY_GUARDIAN_DESCRIPTOR_SKELETON_NOT_SIGNING
+
+Current decision remains:
+
+NO-GO.
