@@ -373,3 +373,27 @@ LOCAL_VALIDATOR_ONLY_GO_FORM_DESIGN_NOT_APPROVED
 Current decision remains:
 
 NO-GO.
+
+## Phase 41K.6 B6.42 local fixture file emission plan
+
+The local fixture file emission plan is recorded in:
+
+docs/gateway/phase-41k6-b6-42-local-fixture-file-emission-plan.md
+
+It defines the future local-only fixture output files and safety requirements.
+
+It does not implement fixture file emission.
+
+It does not emit fixture files.
+
+It does not approve local-validator execution.
+
+It does not approve testnet action.
+
+Current status:
+
+LOCAL_FIXTURE_FILE_EMISSION_PLAN_DEFINED_NOT_IMPLEMENTED
+
+Current decision remains:
+
+NO-GO.
