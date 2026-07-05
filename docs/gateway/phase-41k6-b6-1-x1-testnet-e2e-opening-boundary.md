@@ -251,3 +251,19 @@ B6.1 is closed when:
 ⏭ B6.6: outcome observation
 
 ⏭ B6.7: B6 closure
+
+## B6.2 testnet readiness inventory
+
+B6.2 defines the testnet readiness inventory required before no-send dry-run package rehearsal.
+
+B6.2 is documented in:
+
+docs/gateway/phase-41k6-b6-2-testnet-readiness-inventory.md
+
+B6.2 remains no-send, no-sign, no-key, no-SOL, no-submit, and no-gate-removal.
+
+B6.2 does not require live RPC.
+
+B6.2 does not mutate X1 testnet state.
+
+B6.2 preserves the B1C7 compile_error guard and feature gate.
