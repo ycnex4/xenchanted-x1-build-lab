@@ -361,6 +361,24 @@ Current decision remains:
 
 NO-GO.
 
+## B6.23 local initialization execution plan skeleton status
+
+- local_initialization_execution_plan_skeleton_file: programs/xxxl-svm/src/initialization_execution_plan_skeleton.rs
+- local_skeleton_status: LOCAL_ONLY_NOT_DEPLOYABLE
+- live_runtime_handler_enabled: false
+- on_chain_state_write_enabled: false
+- blocker_c_b1c7_handler_presence_verification: open_design_started
+- blocker_d_state_initialization_instruction_design: open_design_started
+- blocker_e_spl_mint_authority_architecture: open_design_started
+- blocker_f_guardian_set_testnet_descriptor: open_design_started
+- upgrade_go_approved: false
+- state_init_go_approved: false
+- submit_go_approved: false
+
+Current decision remains:
+
+NO-GO.
+
 ## Current decision
 
 Current decision:

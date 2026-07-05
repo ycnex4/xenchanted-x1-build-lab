@@ -36,6 +36,7 @@ pub mod safety_invariants;
 pub mod state;
 pub mod state_instruction_skeleton;
 pub mod state_initialization_skeleton;
+pub mod initialization_execution_plan_skeleton;
 pub mod consume_state_transition_skeleton;
 pub mod consume_execution_plan_skeleton;
 pub mod state_account_layout_skeleton;
