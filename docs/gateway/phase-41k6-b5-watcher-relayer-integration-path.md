@@ -372,3 +372,28 @@ Key decisions:
 - sourceFinalityState remains watcher/finality metadata, not standalone handler authorization.
 - relayer operational ids remain non-payload-bound metadata.
 - payload-bound fields must not drift after guardian signing.
+
+## B5.2 candidate payload v2 hash conversion
+
+B5.2 adds a pure TypeScript candidate-to-payload-hash conversion boundary.
+
+Files:
+
+- src/gateway/phase41k6PayloadV2.ts
+- tests/phase41k6_b5_candidate_payload_hash.test.ts
+- docs/gateway/phase-41k6-b5-2-candidate-payload-hash-conversion.md
+
+The builder mirrors the Rust SVM handler payload binding:
+
+- domain: consume_gateway_mint_authorization_v2
+- processed_event
+- route_id
+- mint
+- recipient token account
+- amount as u64 little-endian
+- guardian_set_id
+- sha256 hashv-compatible concatenation
+
+B5.2 confirms that every handler-bound field changes the payload hash, while watcher-only operational metadata does not.
+
+B5.2 remains offline, deterministic, no-RPC, no-signing, no-submit, and no-key-access.
