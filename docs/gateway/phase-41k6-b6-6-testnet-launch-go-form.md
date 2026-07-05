@@ -787,6 +787,42 @@ Current decision remains:
 
 NO-GO.
 
+## B6.39 expected post-upgrade ProgramData hash plan status
+
+- post_upgrade_programdata_hash_plan_file: docs/gateway/phase-41k6-b6-39-post-upgrade-programdata-hash-plan.md
+- post_upgrade_programdata_hash_status: POST_UPGRADE_PROGRAMDATA_HASH_PLAN_DEFINED_HASH_NOT_RECORDED
+- blocker_b_expected_post_upgrade_programdata_hash: open_design_started
+- blocker_b_closed: false
+- expected_post_upgrade_programdata_hash_plan_defined: true
+- expected_post_upgrade_programdata_hash_recorded: false
+- build_for_upgrade_approved: false
+- upgrade_artifact_hash_recorded: false
+- pre_upgrade_programdata_hash_recorded: false
+- post_upgrade_verification_plan_defined: plan_only
+- scoped_upgrade_go_present: false
+- local_validator_execution_approved: false
+- local_validator_matrix_executed: false
+- fixture_file_emission_enabled: false
+- live_runtime_handler_enabled: false
+- live_route_enabled: false
+- on_chain_state_write_enabled: false
+- account_initialization_enabled: false
+- spl_cpi_minting_enabled: false
+- testnet_submit_enabled: false
+- upgrade_go_approved: false
+- state_init_go_approved: false
+- submit_go_approved: false
+
+B6.39 records the expected post-upgrade ProgramData hash plan.
+
+It does not compute or record the final expected hash.
+
+It does not close blocker B.
+
+Current decision remains:
+
+NO-GO.
+
 ## Current decision
 
 Current decision:
