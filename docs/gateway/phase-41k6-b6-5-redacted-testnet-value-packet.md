@@ -298,6 +298,24 @@ Before this packet can support a later GO decision:
 - observation plan must be accepted,
 - full test gate must be considered before submit boundary.
 
+## B6.6 testnet launch execution boundary
+
+The B6.6 testnet launch and test execution boundary is recorded in:
+
+docs/gateway/phase-41k6-b6-6-testnet-launch-execution-boundary.md
+
+The B6.6 testnet launch GO form is recorded in:
+
+docs/gateway/phase-41k6-b6-6-testnet-launch-go-form.md
+
+These documents define what must be approved before any real testnet signing, submission, SOL spend, deploy, upgrade, account initialization, mint setup, guardian package, or submit rehearsal.
+
+They do not approve live action.
+
+Current decision remains:
+
+NO-GO.
+
 ## Current decision
 
 Current decision:
