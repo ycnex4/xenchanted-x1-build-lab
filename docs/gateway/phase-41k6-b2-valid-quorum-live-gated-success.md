@@ -1,6 +1,6 @@
 # Phase 41K.6 B2 Valid Quorum Live-Gated Success
 
-Status: B2.1-B2.3 lib-level fixture implemented; B2.4 Mollusk live-gated success pending.
+Status: B2.4 Mollusk live-gated success implemented; B2.5 regression gates pending.
 
 Base checkpoint:
 
@@ -138,6 +138,23 @@ Expected result:
     SPL mint supply += amount
     recipient token account amount += amount
 
+## B2.4 Mollusk live-gated success evidence
+
+Implemented as:
+
+    programs/xxxl-svm/tests/phase_41k6_b2_valid_quorum_live_gated_success.rs
+
+The B2.4 test builds SBF with both B1C7 and D2 dangerous test gates, injects valid prior Ed25519 precompile evidence through the instructions sysvar, loads a PDA-bound active guardian set, and executes ConsumeGatewayMint through process_instruction.
+
+Expected success checks:
+
+    Check::success()
+    processed_event owner becomes program id
+    processed_event data becomes final consumed image
+    SPL mint supply increases by amount
+    recipient token account amount increases by amount
+    recipient_balance account remains unchanged
+
 ### B2.5 Regression gates
 
 Keep the old safety gates intact:
@@ -155,3 +172,11 @@ Document final B2 evidence and ask for targeted hostile review before merge.
 ## Expected review question
 
 Does B2 prove a valid guardian quorum can execute the gated ConsumeGatewayMint success path without reopening any B1 authorization bypass, replay bypass, or mutation-before-authorization path?
+
+### Harness note: instructions sysvar source
+
+B2 uses Mollusk transaction-instruction execution rather than a manually supplied `instructions_sysvar` account. The positive path requires the current `ConsumeGatewayMint` instruction to observe two strictly prior Ed25519 precompile instructions from the transaction instructions sysvar. A single-instruction Mollusk call makes the current instruction index `0`, which produces an empty prior range and correctly rejects authorization before mutation.
+
+### Harness note: Ed25519 execution cache
+
+Mollusk transaction-instruction execution requires every prior instruction program id to exist in the program cache. B2 therefore loads a no-op SBF ELF under the Ed25519 precompile program id for this harness only. The current handler does not trust the no-op program result as production authorization; it reads the prior instruction bytes from the instructions sysvar and routes them through the B1C evidence, payload-binding, membership, and quorum pipeline before any mutation.
