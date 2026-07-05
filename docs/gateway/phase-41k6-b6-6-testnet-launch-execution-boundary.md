@@ -320,6 +320,29 @@ Current decision remains:
 
 NO-GO.
 
+## B6.8 Strategy 2 blocker closure plan
+
+B6.8 Strategy 2 blocker closure plan is recorded in:
+
+docs/gateway/phase-41k6-b6-8-strategy-2-blocker-closure-plan.md
+
+This plan records the eight blockers that must close before any testnet upgrade GO:
+
+- upgrade authority custody map
+- expected post-upgrade ProgramData hash
+- B1C7 handler presence verification
+- state initialization instruction design
+- SPL mint authority architecture
+- guardian set testnet descriptor
+- rollback or recovery plan
+- local validator dry-run
+
+Strategy 2 remains viable for planning, but no live action is approved.
+
+Current decision remains:
+
+NO-GO.
+
 ## Current decision
 
 Current decision:
