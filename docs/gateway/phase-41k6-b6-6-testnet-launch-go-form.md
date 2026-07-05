@@ -466,6 +466,30 @@ Current decision remains:
 
 NO-GO.
 
+## B6.28 B1C7 handler boundary map status
+
+- b1c7_handler_boundary_map_file: docs/gateway/phase-41k6-b6-28-b1c7-handler-boundary-map.md
+- local_skeleton_status: LOCAL_ONLY_NOT_DEPLOYABLE
+- blocker_c_b1c7_handler_presence_verification: open_design_started
+- b1c7_closed: false
+- live_runtime_handler_enabled: false
+- live_route_enabled: false
+- on_chain_state_write_enabled: false
+- account_initialization_enabled: false
+- spl_cpi_minting_enabled: false
+- testnet_submit_enabled: false
+- upgrade_go_approved: false
+- state_init_go_approved: false
+- submit_go_approved: false
+
+B6.28 defines the future handler boundary and required evidence.
+
+It does not close blocker C.
+
+Current decision remains:
+
+NO-GO.
+
 ## Current decision
 
 Current decision:
