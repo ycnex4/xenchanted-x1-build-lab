@@ -237,6 +237,20 @@ Current decision remains:
 
 NO-GO.
 
+## Read-only decoder correction
+
+A read-only ProgramData decoder correction is recorded in:
+
+docs/gateway/phase-41k6-b6-5-readonly-baseline-decoder-correction.md
+
+The correction supersedes only the upgrade-authority option decoding from the previous baseline verification.
+
+This correction does not approve signing, submission, SOL spend, private-key handling, deploy, B1C7 gate removal, feature gate weakening, or production activation.
+
+Current decision remains:
+
+NO-GO.
+
 ## Required transition before GO
 
 Before this packet can support a later GO decision:

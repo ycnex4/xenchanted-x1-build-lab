@@ -141,3 +141,17 @@ Current decision:
 NO-GO.
 
 This read-only verification does not authorize live action.
+
+## Decoder correction note
+
+The upgrade authority decode in this document is superseded by:
+
+docs/gateway/phase-41k6-b6-5-readonly-baseline-decoder-correction.md
+
+Only the upgrade-authority option decoding is superseded.
+
+The previous value decoded_upgrade_authority_option: 1528936705 is decoder-inconclusive and must not be treated as a real authority option value.
+
+Current decision remains:
+
+NO-GO.
