@@ -577,3 +577,23 @@ It does not approve deploy, upgrade, signing, submit, SOL spend, account initial
 Current decision remains:
 
 NO-GO.
+
+## B6.20 local state initialization skeleton
+
+B6.20 local state initialization skeleton is implemented in:
+
+programs/xxxl-svm/src/state_initialization_skeleton.rs
+
+The module is local-only and explicitly marked:
+
+LOCAL_ONLY_NOT_DEPLOYABLE
+
+It connects initialization payload skeletons and consume payload boundaries to local state account layout skeletons.
+
+It does not implement live runtime handlers.
+
+It does not approve deploy, upgrade, signing, submit, SOL spend, account initialization, SPL mint setup, guardian package construction, or submit rehearsal.
+
+Current decision remains:
+
+NO-GO.
