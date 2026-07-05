@@ -12,6 +12,7 @@
 
 pub mod account_contract;
 pub mod account_order_skeleton;
+pub mod account_validation_skeleton;
 pub mod cpi;
 pub mod deployment_status;
 pub mod dispatch_skeleton;
