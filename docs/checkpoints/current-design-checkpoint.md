@@ -471,3 +471,29 @@ SPL_MINT_AUTHORITY_ARCHITECTURE_MAP_DESIGN_NOT_EXECUTED
 Current decision remains:
 
 NO-GO.
+
+## Phase 41K.6 B6.46 guardian set testnet descriptor map
+
+The guardian set testnet descriptor map is recorded in:
+
+docs/gateway/phase-41k6-b6-46-guardian-set-testnet-descriptor-map.md
+
+It defines the future descriptor requirements for guardian set id, threshold, public keys, descriptor integrity, and runtime mapping.
+
+It does not create a guardian descriptor.
+
+It does not construct guardian packages.
+
+It does not enable signing.
+
+It does not approve local-validator execution.
+
+It does not approve testnet action.
+
+Current status:
+
+GUARDIAN_SET_TESTNET_DESCRIPTOR_MAP_DESIGN_NOT_EXECUTED
+
+Current decision remains:
+
+NO-GO.
