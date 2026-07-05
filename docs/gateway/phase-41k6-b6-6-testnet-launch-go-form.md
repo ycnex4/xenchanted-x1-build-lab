@@ -490,6 +490,31 @@ Current decision remains:
 
 NO-GO.
 
+## B6.29 local-validator dry-run design map status
+
+- local_validator_dry_run_design_map_file: docs/gateway/phase-41k6-b6-29-local-validator-dry-run-design-map.md
+- local_validator_status: LOCAL_VALIDATOR_ONLY_DESIGN_NOT_EXECUTED
+- blocker_h_local_validator_dry_run: open_design_started
+- blocker_h_closed: false
+- local_validator_execution_approved: false
+- live_runtime_handler_enabled: false
+- live_route_enabled: false
+- on_chain_state_write_enabled: false
+- account_initialization_enabled: false
+- spl_cpi_minting_enabled: false
+- testnet_submit_enabled: false
+- upgrade_go_approved: false
+- state_init_go_approved: false
+- submit_go_approved: false
+
+B6.29 defines the future local-validator dry-run boundary and required evidence.
+
+It does not close blocker H.
+
+Current decision remains:
+
+NO-GO.
+
 ## Current decision
 
 Current decision:
