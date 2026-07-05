@@ -27,6 +27,7 @@ pub mod processor;
 pub mod program_id_status;
 pub mod safety_invariants;
 pub mod state;
+pub mod state_instruction_skeleton;
 pub mod validation;
 pub mod verifier;
 
