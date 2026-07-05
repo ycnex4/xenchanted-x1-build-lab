@@ -277,3 +277,29 @@ ROLLBACK_RECOVERY_PLAN_DESIGN_NOT_EXECUTED
 Current decision remains:
 
 NO-GO.
+
+## Phase 41K.6 B6.38 upgrade authority custody map
+
+The upgrade authority custody map is recorded in:
+
+docs/gateway/phase-41k6-b6-38-upgrade-authority-custody-map.md
+
+It records the public authority baseline and the remaining custody requirements before any future upgrade can be considered.
+
+It does not execute an upgrade.
+
+It does not close blocker A.
+
+Known public baseline:
+
+- program id: D7AQmZNtFFFoJbducz93atteeSZhw3jq6RmsqBvaf1my
+- ProgramData account: 9tuesaPoJhrifF49vJewcg6PSWZeHAJiqQ97pq3LMW9T
+- upgrade authority public key: DTfvjtRL63u3XYHXQfgRQCdhEanUK1qqawvfEAM9hxAc
+
+Current status:
+
+UPGRADE_AUTHORITY_CUSTODY_MAP_DESIGN_NOT_EXECUTED
+
+Current decision remains:
+
+NO-GO.
