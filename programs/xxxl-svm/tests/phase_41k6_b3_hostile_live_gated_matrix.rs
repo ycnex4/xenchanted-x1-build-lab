@@ -107,6 +107,70 @@ fn phase_41k6_b3_unknown_guardian_evidence_rejects_before_mark_and_mint() {
 }
 
 #[test]
+fn phase_41k6_b3_recipient_binding_mismatch_rejects_before_mark_and_mint() {
+    let mut fixture = B2LiveGatedSuccessFixture::new();
+    let payload_hash_bound_to_original_recipient = fixture.payload_hash();
+
+    fixture.keys.recipient_token_account = Pubkey::new_unique();
+    fixture.data.recipient_token_account = packed_token_account_with_amount(
+        fixture.keys.spl_mint,
+        fixture.keys.recipient_owner,
+        AccountState::Initialized,
+        0,
+    );
+
+    run_b3_hostile_case_before_mutation(
+        fixture,
+        vec![
+            ed25519_precompile_instruction(payload_hash_bound_to_original_recipient, GUARDIAN_ONE),
+            ed25519_precompile_instruction(payload_hash_bound_to_original_recipient, GUARDIAN_TWO),
+        ],
+    );
+}
+
+#[test]
+fn phase_41k6_b3_mint_binding_mismatch_rejects_before_mark_and_mint() {
+    let mut fixture = B2LiveGatedSuccessFixture::new();
+    let payload_hash_bound_to_original_mint = fixture.payload_hash();
+
+    let new_spl_mint = Pubkey::new_unique();
+    fixture.keys.spl_mint = new_spl_mint;
+    fixture.data.gateway_config = gateway_config_data(
+        ROUTE_ID,
+        SOURCE_CHAIN_ID,
+        GUARDIAN_SET_ID,
+        new_spl_mint,
+        SOURCE_CHAIN_WEIGHT_BPS,
+    );
+    fixture.data.recipient_balance = recipient_balance_data(fixture.keys.recipient_owner, new_spl_mint);
+    fixture.data.spl_mint = packed_mint_with_supply(fixture.keys.mint_authority_pda, true, 0);
+    fixture.data.recipient_token_account = packed_token_account_with_amount(
+        new_spl_mint,
+        fixture.keys.recipient_owner,
+        AccountState::Initialized,
+        0,
+    );
+    fixture.instruction_data = instruction_data_from_fields(
+        ROUTE_ID,
+        GUARDIAN_SET_ID,
+        new_spl_mint,
+        CANONICAL_EVENT_KEY,
+        fixture.keys.recipient_owner,
+        AMOUNT as u128,
+        SOURCE_CHAIN_WEIGHT_BPS,
+        SOURCE_CHAIN_ID,
+    );
+
+    run_b3_hostile_case_before_mutation(
+        fixture,
+        vec![
+            ed25519_precompile_instruction(payload_hash_bound_to_original_mint, GUARDIAN_ONE),
+            ed25519_precompile_instruction(payload_hash_bound_to_original_mint, GUARDIAN_TWO),
+        ],
+    );
+}
+
+#[test]
 fn phase_41k6_b3_processed_event_replay_rejects_before_second_mark_and_mint() {
     let fixture = B2LiveGatedSuccessFixture::new();
     let payload_hash = fixture.payload_hash();

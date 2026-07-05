@@ -194,3 +194,13 @@ Expected result:
 - no second processed_event mark occurs,
 - no SPL Token `MintTo` occurs,
 - recipient token account, SPL mint, recipient balance, and rent payer remain unchanged.
+
+## B3.6/B3.7 implementation note
+
+B3.6 and B3.7 add payload binding mismatch cases around the B2 positive path.
+
+B3.6 keeps otherwise valid prior guardian evidence, but submits a different recipient token account than the one used to compute the evidence payload hash.
+
+B3.7 keeps otherwise valid prior guardian evidence, but submits a different SPL mint than the one used to compute the evidence payload hash. The current instruction, gateway config, mint account, recipient balance, and recipient token account are made internally consistent with the new mint so the rejection proves payload binding rather than a trivial malformed-account fixture.
+
+Both cases must return `InvalidInstruction` and preserve all mutation targets unchanged.
