@@ -551,3 +551,29 @@ LOCAL_ONLY_GUARDIAN_DESCRIPTOR_SKELETON_NOT_SIGNING
 Current decision remains:
 
 NO-GO.
+
+## Phase 41K.6 B6.49 local guardian descriptor safety checkpoint
+
+The local guardian descriptor safety checkpoint is recorded in:
+
+docs/gateway/phase-41k6-b6-49-local-guardian-descriptor-safety-checkpoint.md
+
+It confirms that the B6.48 local guardian descriptor skeleton remains local-only, no-signing, no-package-construction, no-testnet, and non-executing.
+
+It does not create a guardian descriptor.
+
+It does not construct guardian packages.
+
+It does not enable signing.
+
+It does not approve local-validator execution.
+
+It does not approve testnet action.
+
+Current status:
+
+LOCAL_GUARDIAN_DESCRIPTOR_SAFETY_CHECKPOINT_NO_SIGNING
+
+Current decision remains:
+
+NO-GO.
