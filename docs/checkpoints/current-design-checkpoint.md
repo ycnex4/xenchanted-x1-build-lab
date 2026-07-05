@@ -131,3 +131,25 @@ LOCAL_VALIDATOR_ONLY_FIXTURE_DESIGN_NOT_EXECUTED
 Current decision remains:
 
 NO-GO.
+
+## Phase 41K.6 B6.31 local-validator fixture generator design
+
+The local-validator fixture generator design is recorded in:
+
+docs/gateway/phase-41k6-b6-31-local-validator-fixture-generator-design.md
+
+It defines the future design boundary for deterministic local-only fixture generation.
+
+It does not implement a fixture generator.
+
+It does not execute a local validator dry-run.
+
+It does not close blocker H.
+
+Current status:
+
+LOCAL_VALIDATOR_ONLY_FIXTURE_GENERATOR_DESIGN_NOT_IMPLEMENTED
+
+Current decision remains:
+
+NO-GO.
