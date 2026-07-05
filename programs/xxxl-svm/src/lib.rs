@@ -11,6 +11,7 @@
 //! CPI fixtures must be completed before deployment.
 
 pub mod account_contract;
+pub mod account_order_skeleton;
 pub mod cpi;
 pub mod deployment_status;
 pub mod entrypoint;
