@@ -90,6 +90,20 @@ Current decision remains:
 
 NO-GO.
 
+## B6.7 placeholder boundary status
+
+- strategy_1_status: closed_not_viable
+- strategy_2_status: recommended_if_placeholder_boundary_is_not_structural
+- strategy_3_status: fallback_if_strategy_2_structurally_blocked
+- placeholder_boundary_analysis_file: docs/gateway/phase-41k6-b6-7-placeholder-boundary-analysis.md
+- upgrade_go_approved: false
+- state_init_go_approved: false
+- submit_go_approved: false
+
+Current decision remains:
+
+NO-GO.
+
 ## Current decision
 
 Current decision:
