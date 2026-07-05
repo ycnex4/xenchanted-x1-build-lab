@@ -721,6 +721,38 @@ Current decision remains:
 
 NO-GO.
 
+## B6.37 rollback and recovery plan map status
+
+- rollback_recovery_plan_map_file: docs/gateway/phase-41k6-b6-37-rollback-recovery-plan-map.md
+- rollback_recovery_status: ROLLBACK_RECOVERY_PLAN_DESIGN_NOT_EXECUTED
+- blocker_g_rollback_recovery_plan: open_design_started
+- blocker_g_closed: false
+- local_validator_execution_approved: false
+- local_validator_matrix_defined: true
+- local_validator_matrix_executed: false
+- local_fixture_generator_schema_defined: true
+- local_fixture_generator_implemented: skeleton_only
+- fixture_file_emission_enabled: false
+- live_runtime_handler_enabled: false
+- live_route_enabled: false
+- on_chain_state_write_enabled: false
+- account_initialization_enabled: false
+- spl_cpi_minting_enabled: false
+- testnet_submit_enabled: false
+- upgrade_go_approved: false
+- state_init_go_approved: false
+- submit_go_approved: false
+
+B6.37 records the rollback and recovery plan map.
+
+It does not execute rollback or recovery.
+
+It does not close blocker G.
+
+Current decision remains:
+
+NO-GO.
+
 ## Current decision
 
 Current decision:
