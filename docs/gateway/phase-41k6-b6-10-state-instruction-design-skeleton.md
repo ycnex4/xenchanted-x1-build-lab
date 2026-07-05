@@ -689,3 +689,27 @@ It does not approve deploy, upgrade, signing, submit, SOL spend, account initial
 Current decision remains:
 
 NO-GO.
+
+## B6.25 local execution scenario skeleton
+
+B6.25 local execution scenario skeleton is implemented in:
+
+programs/xxxl-svm/src/local_execution_scenario_skeleton.rs
+
+The module is local-only and explicitly marked:
+
+LOCAL_ONLY_NOT_DEPLOYABLE
+
+It runs a local end-to-end planning sequence across gateway_config initialization, guardian_set initialization, mint_state initialization, and ConsumeGatewayMint planning.
+
+It does not perform SPL CPI minting.
+
+It does not write on-chain state.
+
+It does not implement live runtime handlers.
+
+It does not approve deploy, upgrade, signing, submit, SOL spend, account initialization, SPL mint setup, guardian package construction, or submit rehearsal.
+
+Current decision remains:
+
+NO-GO.
