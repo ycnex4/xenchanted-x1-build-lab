@@ -236,10 +236,11 @@ mod tests {
     fn payload_context() -> B1CAuthorizationPayloadContext {
         B1CAuthorizationPayloadContext {
             processed_event: Pubkey::new_from_array([1; 32]),
+            route_id: [0x33; 32],
             mint: Pubkey::new_from_array([2; 32]),
             recipient: Pubkey::new_from_array([3; 32]),
             amount: 123,
-            guardian_set_id: 7,
+            guardian_set_id: GUARDIAN_SET_ID,
         }
     }
 

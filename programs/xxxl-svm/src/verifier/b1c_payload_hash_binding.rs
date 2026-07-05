@@ -4,16 +4,17 @@ use super::b1c_ed25519_evidence_parser::B1CParsedEd25519Evidence;
 
 pub const PHASE_41K6_B1C_4_PAYLOAD_HASH_BINDING_PHASE: &str = "41K.6-B1C.4";
 pub const PHASE_41K6_B1C_4_PAYLOAD_HASH_BINDING_VERSION: &str = "0.1.0";
-pub const B1C_AUTHORIZATION_PAYLOAD_DOMAIN: &[u8] = b"consume_gateway_mint_authorization_v1";
+pub const B1C_AUTHORIZATION_PAYLOAD_DOMAIN: &[u8] = b"consume_gateway_mint_authorization_v2";
 pub const B1C_AUTHORIZATION_PAYLOAD_HASH_LEN: usize = 32;
 
 #[derive(Clone, Copy, Debug, PartialEq, Eq)]
 pub struct B1CAuthorizationPayloadContext {
     pub processed_event: Pubkey,
+    pub route_id: [u8; 32],
     pub mint: Pubkey,
     pub recipient: Pubkey,
     pub amount: u64,
-    pub guardian_set_id: u32,
+    pub guardian_set_id: [u8; 32],
 }
 
 #[derive(Clone, Copy, Debug, PartialEq, Eq)]
@@ -101,15 +102,15 @@ pub fn compute_b1c_expected_authorization_payload_hash(
     context: &B1CAuthorizationPayloadContext,
 ) -> [u8; 32] {
     let amount = context.amount.to_le_bytes();
-    let guardian_set_id = context.guardian_set_id.to_le_bytes();
 
     let hash = hashv(&[
         B1C_AUTHORIZATION_PAYLOAD_DOMAIN,
         context.processed_event.as_ref(),
+        &context.route_id,
         context.mint.as_ref(),
         context.recipient.as_ref(),
         &amount,
-        &guardian_set_id,
+        &context.guardian_set_id,
     ]);
 
     let mut out = [0u8; 32];
@@ -209,10 +210,11 @@ mod tests {
     fn context() -> B1CAuthorizationPayloadContext {
         B1CAuthorizationPayloadContext {
             processed_event: Pubkey::new_from_array([1; 32]),
+            route_id: [4; 32],
             mint: Pubkey::new_from_array([2; 32]),
             recipient: Pubkey::new_from_array([3; 32]),
             amount: 123,
-            guardian_set_id: 7,
+            guardian_set_id: [7; 32],
         }
     }
 
@@ -287,6 +289,10 @@ mod tests {
         assert_ne!(base, compute_b1c_expected_authorization_payload_hash(&c));
 
         let mut c = context();
+        c.route_id = [9; 32];
+        assert_ne!(base, compute_b1c_expected_authorization_payload_hash(&c));
+
+        let mut c = context();
         c.mint = Pubkey::new_from_array([9; 32]);
         assert_ne!(base, compute_b1c_expected_authorization_payload_hash(&c));
 
@@ -299,7 +305,11 @@ mod tests {
         assert_ne!(base, compute_b1c_expected_authorization_payload_hash(&c));
 
         let mut c = context();
-        c.guardian_set_id += 1;
+        c.guardian_set_id[0] ^= 0xff;
+        assert_ne!(base, compute_b1c_expected_authorization_payload_hash(&c));
+
+        let mut c = context();
+        c.guardian_set_id[31] ^= 0xff;
         assert_ne!(base, compute_b1c_expected_authorization_payload_hash(&c));
     }
 
