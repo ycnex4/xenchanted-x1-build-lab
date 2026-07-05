@@ -753,6 +753,40 @@ Current decision remains:
 
 NO-GO.
 
+## B6.38 upgrade authority custody map status
+
+- upgrade_authority_custody_map_file: docs/gateway/phase-41k6-b6-38-upgrade-authority-custody-map.md
+- upgrade_authority_custody_status: UPGRADE_AUTHORITY_CUSTODY_MAP_DESIGN_NOT_EXECUTED
+- blocker_a_upgrade_authority_custody_map: open_design_started
+- blocker_a_closed: false
+- known_program_id: D7AQmZNtFFFoJbducz93atteeSZhw3jq6RmsqBvaf1my
+- known_programdata_account: 9tuesaPoJhrifF49vJewcg6PSWZeHAJiqQ97pq3LMW9T
+- known_upgrade_authority_public_key: DTfvjtRL63u3XYHXQfgRQCdhEanUK1qqawvfEAM9hxAc
+- scoped_upgrade_go_present: false
+- expected_post_upgrade_programdata_hash_recorded: false
+- local_validator_execution_approved: false
+- local_validator_matrix_executed: false
+- fixture_file_emission_enabled: false
+- live_runtime_handler_enabled: false
+- live_route_enabled: false
+- on_chain_state_write_enabled: false
+- account_initialization_enabled: false
+- spl_cpi_minting_enabled: false
+- testnet_submit_enabled: false
+- upgrade_go_approved: false
+- state_init_go_approved: false
+- submit_go_approved: false
+
+B6.38 records the upgrade authority custody map.
+
+It does not execute an upgrade.
+
+It does not close blocker A.
+
+Current decision remains:
+
+NO-GO.
+
 ## Current decision
 
 Current decision:
