@@ -204,3 +204,16 @@ B3.6 keeps otherwise valid prior guardian evidence, but submits a different reci
 B3.7 keeps otherwise valid prior guardian evidence, but submits a different SPL mint than the one used to compute the evidence payload hash. The current instruction, gateway config, mint account, recipient balance, and recipient token account are made internally consistent with the new mint so the rejection proves payload binding rather than a trivial malformed-account fixture.
 
 Both cases must return `InvalidInstruction` and preserve all mutation targets unchanged.
+
+## B3.8 implementation note
+
+B3.8 adds the guardian set id payload-binding mismatch case.
+
+The fixture keeps the current instruction, gateway config, guardian set PDA, and guardian set account data internally consistent with a new guardian set id. The hostile input is that prior Ed25519 evidence remains bound to the original guardian set id.
+
+Expected result:
+
+- the handler rejects before mutation,
+- no processed_event mark occurs,
+- no SPL Token `MintTo` occurs,
+- all mutation targets remain unchanged.
