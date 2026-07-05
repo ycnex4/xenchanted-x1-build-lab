@@ -497,3 +497,23 @@ It does not approve deploy, upgrade, signing, submit, SOL spend, account initial
 Current decision remains:
 
 NO-GO.
+
+## B6.16 local dispatch skeleton
+
+B6.16 local dispatch skeleton is implemented in:
+
+programs/xxxl-svm/src/dispatch_skeleton.rs
+
+The module is local-only and explicitly marked:
+
+LOCAL_ONLY_NOT_DEPLOYABLE
+
+It combines typed instruction decoding with account count validation and account requirement lookup.
+
+It does not implement live runtime handlers.
+
+It does not approve deploy, upgrade, signing, submit, SOL spend, account initialization, SPL mint setup, guardian package construction, or submit rehearsal.
+
+Current decision remains:
+
+NO-GO.
