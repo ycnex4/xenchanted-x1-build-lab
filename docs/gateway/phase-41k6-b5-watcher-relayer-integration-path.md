@@ -282,3 +282,76 @@ B6 must include success and failure/replay cases.
 👉 B5: watcher/relayer integration path
 
 ⏭ B6: X1 testnet deploy + end-to-end Ethereum burn -> X1 mint
+
+## B5 repository reconciliation note
+
+After the B5 checkpoint was opened, the repository inventory showed that watcher/relayer work is not starting from zero.
+
+The repo already contains a previous gateway evidence chain under docs/gateway/evidence, including:
+
+- Stage 2.18 watcher-event normalized task adapter.
+- Stage 2.19 watcher-event full submit pipeline.
+- Stage 2.20 watcher-event submit idempotency / retry.
+- Stage 2.21 ambiguous recovery.
+- Stage 2.22 watcher-event operational submit wrapper.
+- Stage 2.23 watcher-event batch / queue processing.
+- Stage 2.24 durable relayer journal model.
+- Stage 2.25 watcher-to-relayer contract boundary.
+- Stage 4 no-send / no-SOL readiness chain.
+- Stage 5 external wallet live-send path.
+
+Therefore B5 must not duplicate the old watcher/relayer prototype blindly.
+
+B5 must reconcile the old watcher/relayer evidence chain with the new Phase 41K.6 B1-B4 handler boundary.
+
+## B5 reconciliation target
+
+The old Stage 2 watcher/relayer prototype used watcher-style event and normalized task concepts.
+
+The new Phase 41K.6 handler boundary now requires the off-chain path to align with:
+
+- B1C payload v2 hash binding,
+- guardian_set_id as a bytes32 identifier,
+- processed_event PDA identity,
+- route_id binding,
+- target SPL mint binding,
+- recipient token account binding,
+- amount binding as u64 for SPL MintTo,
+- strictly prior Ed25519 evidence instructions,
+- B1C7 authorization before processed_event mark and SPL Token MintTo,
+- B3 hostile rejection behavior for payload, guardian, quorum, replay, recipient, mint, and guardian_set_id drift,
+- B4 decision that the handler path remains gated.
+
+## Reconciliation questions
+
+Before writing new B5 code, the project must classify previous watcher/relayer fields as one of:
+
+- still valid,
+- valid but needs renamed or reshaped,
+- stale because the Phase 41K.6 handler contract changed,
+- out of scope for the current gated handler,
+- later B6/testnet concern.
+
+Important field reconciliation examples:
+
+- guardianSetVersion from old watcher event may need to become guardian_set_id bytes32.
+- recipientBase58 must be clarified as recipient token account versus recipient owner.
+- mintedAmount must map to the handler amount and SPL u64 mint amount boundary.
+- canonicalEventKeyHex must map to processed_event PDA derivation and replay protection.
+- sourceFinalityState must remain watcher/finality metadata, not handler authorization data unless explicitly bound.
+- old relayer task shape must not imply that the relayer can mutate signed payload semantics.
+- old live-send/external-wallet evidence must remain noncustodial and must not bypass B4 gates.
+
+## B5 next implementation step
+
+The next implementation step is B5.1:
+
+B5.1 — watcher/relayer schema reconciliation inventory.
+
+B5.1 should produce a deterministic mapping table from old Stage 2 watcher/relayer fields to the new Phase 41K.6 handler-required fields.
+
+B5.1 should not remove gates.
+
+B5.1 should not introduce live RPC or signing.
+
+B5.1 should not access local keys or private-key material.
