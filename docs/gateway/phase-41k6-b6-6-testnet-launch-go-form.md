@@ -182,6 +182,20 @@ Current decision remains:
 
 NO-GO.
 
+## B6.12 local instruction codec skeleton status
+
+- local_instruction_codec_skeleton_file: programs/xxxl-svm/src/instruction_codec_skeleton.rs
+- local_skeleton_status: LOCAL_ONLY_NOT_DEPLOYABLE
+- blocker_c_b1c7_handler_presence_verification: open_design_started
+- blocker_d_state_initialization_instruction_design: open_design_started
+- upgrade_go_approved: false
+- state_init_go_approved: false
+- submit_go_approved: false
+
+Current decision remains:
+
+NO-GO.
+
 ## Current decision
 
 Current decision:
