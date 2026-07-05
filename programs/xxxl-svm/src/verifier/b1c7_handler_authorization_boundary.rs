@@ -391,6 +391,70 @@ mod tests {
         assert!(!report.live_route_enabled);
     }
 
+    fn phase_41k6_b2_valid_quorum_authorization_fixture() -> (
+        B1CAuthorizationPayloadContext,
+        Phase41K2GuardianSetAccountLoadingResult,
+        Phase41D3_2_2CheckedPriorInstructionLoadingResult,
+        [u8; 32],
+    ) {
+        let context = B1CAuthorizationPayloadContext {
+            processed_event: Pubkey::new_from_array([0xB2; 32]),
+            route_id: [0x41; 32],
+            mint: Pubkey::new_from_array([0x51; 32]),
+            recipient: Pubkey::new_from_array([0x61; 32]),
+            amount: 1_234_567_890,
+            guardian_set_id: GUARDIAN_SET_ID,
+        };
+        let payload_hash = compute_b1c_expected_authorization_payload_hash(&context);
+
+        (
+            context,
+            guardian_set(2, vec![guardian(0xA1), guardian(0xA2), guardian(0xA3)]),
+            checked_prior_loading(&[0xA1, 0xA2], payload_hash),
+            payload_hash,
+        )
+    }
+
+    #[test]
+    fn phase_41k6_b2_valid_prior_ed25519_quorum_authorizes_payload_v2_before_mutation() {
+        let (context, guardian_set, checked_prior_loading, payload_hash) =
+            phase_41k6_b2_valid_quorum_authorization_fixture();
+
+        assert_eq!(
+            payload_hash,
+            compute_b1c_expected_authorization_payload_hash(&context)
+        );
+        assert_eq!(guardian_set.guardian_set_id, Some(GUARDIAN_SET_ID));
+        assert_eq!(guardian_set.threshold, Some(2));
+        assert_eq!(guardian_set.guardian_count, 3);
+        assert_eq!(checked_prior_loading.loaded_instruction_count, 2);
+        assert!(checked_prior_loading
+            .loaded_prior_instructions
+            .iter()
+            .all(|loaded| loaded.instruction.program_id == ed25519_program::id()));
+
+        let result = establish_b1c7_handler_authorization_before_mark_and_mint(
+            &guardian_set,
+            &checked_prior_loading,
+            &context,
+        );
+
+        assert_eq!(result.status, B1C7HandlerAuthorizationStatus::Authorized);
+        assert_eq!(result.rejection_kind, None);
+        assert_eq!(result.parsed_evidence_count, 2);
+        assert_eq!(result.payload_bound_evidence_count, 2);
+        assert_eq!(result.membership_validated_signer_count, 2);
+        assert_eq!(result.unique_guardian_count, 2);
+        assert_eq!(result.threshold, Some(2));
+        assert!(result.fail_fast_before_mutation);
+        assert!(result.evidence_from_prior_ed25519_instructions);
+        assert!(result.payload_hash_bound);
+        assert!(result.guardian_membership_validated);
+        assert!(result.quorum_met);
+        assert!(result.authorization_enabled);
+        assert_no_mutation_flags(&result);
+    }
+
     #[test]
     fn full_pipeline_authorizes_before_mutation_when_quorum_met() {
         let context = payload_context();
