@@ -419,3 +419,17 @@ B6.3 must remain no-send, no-sign, no-key, no-SOL, no-submit, and no-gate-remova
 ⏭ B6.6: outcome observation
 
 ⏭ B6.7: B6 closure
+
+## B6.3 no-send dry-run package rehearsal
+
+B6.3 rehearses the B5 relayer submission package shape using readiness-style values.
+
+B6.3 is documented in:
+
+docs/gateway/phase-41k6-b6-3-no-send-dry-run-package-rehearsal.md
+
+B6.3 adds focused TypeScript coverage in:
+
+tests/phase41k6_b6_no_send_dry_run_package_rehearsal.test.ts
+
+B6.3 remains no-send, no-sign, no-key, no-SOL, no-submit, no-RPC, and no-gate-removal.
