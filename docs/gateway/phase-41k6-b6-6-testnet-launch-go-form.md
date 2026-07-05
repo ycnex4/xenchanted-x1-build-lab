@@ -80,6 +80,16 @@ Before any GO, the following must be filled:
 - explicit statement that private keys must never be printed
 - explicit statement that keypair paths must not be committed
 
+## Local runtime capability inventory status
+
+- local_runtime_capability_inventory: recorded
+- inventory_file: docs/gateway/phase-41k6-b6-6-local-runtime-capability-inventory.md
+- live_action_approved_by_inventory: false
+
+Current decision remains:
+
+NO-GO.
+
 ## Current decision
 
 Current decision:

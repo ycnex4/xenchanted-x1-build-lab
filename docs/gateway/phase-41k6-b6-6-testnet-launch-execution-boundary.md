@@ -257,6 +257,20 @@ Do not run a live testnet sequence yet.
 
 Use B6 findings to redesign the runtime/init/deploy path.
 
+## Local runtime capability inventory
+
+Local runtime capability inventory is recorded in:
+
+docs/gateway/phase-41k6-b6-6-local-runtime-capability-inventory.md
+
+This inventory inspects local source files only.
+
+It does not use RPC, sign, submit, spend SOL, load private keys, deploy, upgrade, or initialize accounts.
+
+Current decision remains:
+
+NO-GO.
+
 ## Recommended next step
 
 The next safe step after this boundary is a local capability inventory:
