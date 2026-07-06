@@ -1,0 +1,71 @@
+# Expected-hash/build-hash evidence package decision matrix
+
+SP3_MODEL_0_NO_EVIDENCE_PACKAGE_MODEL
+status: rejected
+meaning: Do not define a model for expected-hash/build-hash evidence.
+reason_rejected: Blocker B requires expected-hash package and build/hash evidence before any upgrade/write-buffer GO.
+
+SP3_MODEL_1_MONOLITHIC_BUILD_HASH_UPGRADE_PACKAGE
+status: rejected
+meaning: One package authorizes build, hash computation, expected-hash evidence, RPC precheck, upgrade/write-buffer, and post-upgrade verification.
+reason_rejected: violates staged single-operation scoped GO model and bundles local execution, network read-only checks, and mutation.
+
+SP3_MODEL_2_RUNNABLE_PACKAGE_WITHOUT_EXACT_USER_GO
+status: rejected
+meaning: A future evidence package can run build/hash without exact scoped user GO phrase.
+reason_rejected: violates Final GO.5 exact user GO requirement.
+
+SP3_MODEL_3_RPC_TESTNET_INCLUDED_IN_LOCAL_EVIDENCE_PACKAGE
+status: rejected
+meaning: Expected-hash/build-hash evidence package includes RPC/testnet observations.
+reason_rejected: local build/hash evidence and read-only network prechecks are separate operation boundaries.
+
+SP3_MODEL_4_ARTIFACT_HASH_ONLY
+status: rejected
+meaning: Local artifact SHA256 alone is enough as runtime hash evidence.
+reason_rejected: Blocker B requires full hash bundle and canonical ProgramData executable-bytes SHA256 domain.
+
+SP3_MODEL_5_UNBOUND_TOOLCHAIN_OR_FEATURE_FLAGS
+status: rejected
+meaning: Evidence package does not bind toolchain, lockfiles, build command, or feature flags.
+reason_rejected: non-reproducible and incompatible with Blocker B requirements.
+
+SP3_MODEL_6_STRICT_NON_EXECUTING_REQUIREMENTS_PACKAGE
+status: selected
+meaning: This package records the strict model for a future expected-hash/build-hash evidence package without running build/hash.
+reason_selected: keeps current state safe while defining the future package shape.
+
+SP3_MODEL_7_FUTURE_EXECUTION_PACKAGE_WITH_EXACT_GO_ONLY
+status: selected_future_allowed_form
+meaning: A later separate package may execute build/hash only after exact scoped user GO phrase and only inside the selected evidence model.
+reason_selected: preserves staged approval while allowing future evidence generation.
+
+SELECTED_SP3_MODEL
+STRICT_EXPECTED_HASH_BUILD_HASH_EVIDENCE_PACKAGE_MODEL_REQUIRED
+
+SELECTED_SP3_CURRENT_GO_STATE
+FINAL_GO_NOT_GRANTED
+
+SELECTED_SP3_CURRENT_PACKAGE_KIND
+DECISION_MODEL_ONLY_NOT_EXECUTION
+
+SELECTED_SP3_FUTURE_PACKAGE_SHAPE
+TWO_PHASE_REQUIREMENTS_THEN_EXPLICIT_GO_BEFORE_BUILD_HASH_EXECUTION
+
+SELECTED_SP3_REQUIRED_EVIDENCE_BUNDLE
+PACKAGE_ID_REPO_BRANCH_SOURCE_COMMIT_CLEAN_STATUS_BUILD_COMMAND_TOOLCHAIN_LOCKFILES_FEATURE_FLAGS_ARTIFACT_PATH_ARTIFACT_SHA256_CANONICAL_PROGRAMDATA_HASH_DOMAIN_CANONICAL_PROGRAMDATA_SHA256_BASELINE_PROGRAM_ID_PROGRAMDATA_AUTHORITY_STOP_RULE_USER_GO_PHRASE_EVIDENCE_PATH
+
+SELECTED_SP3_CANONICAL_RUNTIME_HASH_DOMAIN
+PROGRAMDATA_EXECUTABLE_BYTES_EXCLUDING_LOADER_METADATA
+
+SELECTED_SP3_HASH_ALGORITHM
+SHA256
+
+SELECTED_SP3_BOUNDARY
+NO_BUILD_NO_HASH_NO_RPC_NO_TESTNET_NO_DEPLOY_NO_UPGRADE_NO_WRITE_BUFFER_NO_STATE_INIT_NO_SPL_SETUP_NO_GUARDIAN_PACKAGE_NO_SIGNING_NO_SUBMIT_NO_MUTATION
+
+SELECTED_SP3_STOP_RULE
+ANY_MISMATCH_REQUIRES_STOP_NO_AUTOMATIC_RETRY
+
+SELECTED_SP3_NEXT_SAFE_STEP
+SCOPED_PACKAGE_4_EXPECTED_HASH_BUILD_HASH_EVIDENCE_MODEL_INVARIANT_REVIEW

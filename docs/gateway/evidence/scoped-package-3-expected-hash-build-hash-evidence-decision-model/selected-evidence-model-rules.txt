@@ -1,0 +1,37 @@
+# Selected evidence model rules
+
+SP3_RULE_01_STRICT_MODEL_REQUIRED
+The future expected-hash/build-hash evidence package must use the strict selected model.
+
+SP3_RULE_02_NO_EXECUTION_IN_MODEL_STEP
+Scoped Package.3 is decision-model only and cannot execute build or hash computation.
+
+SP3_RULE_03_FULL_HASH_BUNDLE_REQUIRED
+The future package must bind both local SBF artifact SHA256 and canonical ProgramData executable-bytes SHA256.
+
+SP3_RULE_04_CANONICAL_DOMAIN_REQUIRED
+Canonical runtime hash domain is ProgramData executable bytes excluding loader metadata.
+
+SP3_RULE_05_SHA256_REQUIRED
+Canonical hash algorithm is SHA256.
+
+SP3_RULE_06_SOURCE_AND_BUILD_BINDING_REQUIRED
+Repo, branch, source commit, clean status, build command, toolchain, lockfiles, and feature flags must be bound.
+
+SP3_RULE_07_BASELINE_BINDING_REQUIRED
+Program id, ProgramData account, and upgrade authority baseline must be bound.
+
+SP3_RULE_08_NO_RPC_TESTNET_IN_LOCAL_EVIDENCE_PACKAGE
+Local build/hash evidence package must not include RPC/testnet; read-only network precheck is separate.
+
+SP3_RULE_09_EXACT_USER_GO_REQUIRED_BEFORE_BUILD_HASH
+No build/hash execution may happen without a later exact scoped user GO phrase.
+
+SP3_RULE_10_NO_UPGRADE_OR_MUTATION
+Expected-hash/build-hash evidence package does not authorize upgrade/write-buffer or mutation.
+
+SP3_RULE_11_NO_SECRETS
+Evidence must not include private keys, seed phrases, or secret material.
+
+SP3_RULE_12_STOP_NO_RETRY
+Any mismatch requires stop. Automatic retry is forbidden.
