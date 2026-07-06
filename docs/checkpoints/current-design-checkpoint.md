@@ -950,3 +950,26 @@ Current decision remains:
 NO-GO FOR VALIDATOR_TESTNET_SIGNING_SPL_UPGRADE_INIT_SUBMIT
 
 The next safe step is B6.60 local-validator dry-run GO form / command boundary.
+
+
+## Phase 41K.6 B6.60 local-validator dry-run GO form / command boundary
+
+The local-validator dry-run GO form and command boundary is recorded in:
+
+docs/gateway/phase-41k6-b6-60-local-validator-dry-run-go-form.md
+
+B6.60 is form-only.
+
+B6.60 does not run a local validator.
+
+B6.60 does not use testnet, live RPC, real signing, real keys, guardian packages, SPL setup, upgrade, state initialization, or submit.
+
+Current status:
+
+LOCAL_VALIDATOR_DRY_RUN_GO_FORM_DEFINED_NOT_APPROVED
+
+Current decision remains:
+
+NO-GO FOR LOCAL_VALIDATOR_TESTNET_SIGNING_SPL_UPGRADE_INIT_SUBMIT
+
+The next safe step is a Sergey decision before any B6.61 local-validator dry-run planning or execution.
