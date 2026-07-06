@@ -577,3 +577,33 @@ LOCAL_GUARDIAN_DESCRIPTOR_SAFETY_CHECKPOINT_NO_SIGNING
 Current decision remains:
 
 NO-GO.
+
+## Phase 41K.6 B6.50 local guardian descriptor fixture integration plan
+
+The local guardian descriptor fixture integration plan is recorded in:
+
+docs/gateway/phase-41k6-b6-50-local-guardian-fixture-integration-plan.md
+
+It defines how the local guardian descriptor skeleton should later integrate with local fixture generation, fixture file emission, guardian_set account fixtures, scenarios, failure matrix, mutation-invariance checks, logs, and safety reports.
+
+It does not implement fixture integration.
+
+It does not emit fixture files.
+
+It does not create descriptor files.
+
+It does not construct guardian packages.
+
+It does not enable signing.
+
+It does not approve local-validator execution.
+
+It does not approve testnet action.
+
+Current status:
+
+LOCAL_GUARDIAN_DESCRIPTOR_FIXTURE_INTEGRATION_PLAN_DEFINED_NOT_IMPLEMENTED
+
+Current decision remains:
+
+NO-GO.
