@@ -2650,3 +2650,47 @@ NO-GO REMAINS_FOR_STATE_INITIALIZATION_EXECUTION_SIGNING_KEYS_PROGRAM_UPGRADE_SP
 Next safe step:
 
 Blocker E.1 — SPL mint authority architecture planning.
+
+
+## Blocker E.1 SPL mint authority architecture planning
+
+The Blocker E.1 planning record is recorded in:
+
+docs/gateway/blocker-e-1-spl-mint-authority-architecture-planning.md
+
+E.1 opens the SPL mint authority architecture track after:
+
+- Blocker A closed narrowly as upgrade authority present but accepted for test phase
+- Blocker C closed narrowly as B1C7 handler boundary / invariants only
+- Blocker D closed narrowly as state initialization design / invariants only
+
+Current repo-grounded SPL facts:
+
+- gateway_mint_authority PDA is inventoried
+- MintToCpi boundary references token_program, mint, recipient_token_account, and mint_authority_pda
+- token_program is asserted as spl_token::id()
+- mint_authority_pda is asserted against gateway_mint_authority PDA derivation
+- SPL mint_to instruction can be built
+- gateway_mint_authority signer seeds exist
+- SPL mint CPI execution remains disabled by default
+- guarded SPL CPI path returns CpiBoundaryNotReady when not enabled
+- deployment_status remains deployable=false
+- Program ID placeholder boundary remains active
+
+E.1 does not close Blocker E.
+
+E.1 does not create an SPL mint, configure mint authority, transfer mint authority, set freeze authority, mint tokens, initialize state, call RPC, use testnet, use keys, sign, deploy, upgrade, construct guardian packages, submit, or mutate.
+
+Current status:
+
+BLOCKER_E_OPEN_SPL_MINT_AUTHORITY_ARCHITECTURE_PLANNING_ONLY_NO_SPL_SETUP_NO_RPC_NO_EXECUTION
+
+Current decision:
+
+BLOCKER_E_NOT_CLOSED
+
+NO-GO REMAINS_FOR_SPL_MINT_SETUP_SPL_AUTHORITY_TRANSFER_SPL_CPI_MINTING_SIGNING_KEYS_PROGRAM_UPGRADE_STATE_INIT_GUARDIAN_PACKAGES_NETWORK_SUBMIT_MUTATION
+
+Next safe step:
+
+Blocker E.2 — repo-grounded SPL mint authority and CPI inventory.
