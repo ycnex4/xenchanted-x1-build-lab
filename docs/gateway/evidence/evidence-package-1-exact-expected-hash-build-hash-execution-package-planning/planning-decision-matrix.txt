@@ -1,0 +1,38 @@
+# Evidence Package.1 planning decision matrix
+
+EP1_MODEL_0_NO_EXECUTION_PACKAGE_PLANNING
+status: rejected
+meaning: Stop without defining the future execution package shape.
+reason_rejected: Scoped Package.5 identifies Evidence Package.1 as next safe planning step.
+
+EP1_MODEL_1_DIRECT_BUILD_HASH_EXECUTION
+status: rejected
+meaning: Execute build/hash now.
+reason_rejected: Current GO state is FINAL_GO_NOT_GRANTED and build/hash is not approved.
+
+EP1_MODEL_2_COMBINED_BUILD_HASH_RPC_UPGRADE_PACKAGE
+status: rejected
+meaning: Combine build/hash, RPC precheck, upgrade/write-buffer, and mutation.
+reason_rejected: Violates single-boundary scoped package model and no-RPC/no-mutation boundary.
+
+EP1_MODEL_3_LOCAL_BUILD_HASH_PLANNING_WITHOUT_GO_GATE
+status: rejected
+meaning: Draft a package that can later run without exact scoped GO.
+reason_rejected: Exact scoped user GO phrase is required before any build/hash execution.
+
+EP1_MODEL_4_STRICT_LOCAL_EXECUTION_PACKAGE_SHAPE_ONLY
+status: selected
+meaning: Define a strict local build/hash execution package shape, but do not fill values and do not execute.
+reason_selected: Allows safe progression toward a future exact package while preserving NO-GO.
+
+SELECTED_EP1_MODEL
+STRICT_LOCAL_EXPECTED_HASH_BUILD_HASH_EXECUTION_PACKAGE_PLANNING_ONLY
+
+SELECTED_EP1_CURRENT_GO_STATE
+FINAL_GO_NOT_GRANTED
+
+SELECTED_EP1_BOUNDARY
+NO_BUILD_NO_HASH_NO_RPC_NO_TESTNET_NO_DEPLOY_NO_UPGRADE_NO_WRITE_BUFFER_NO_STATE_INIT_NO_SPL_SETUP_NO_GUARDIAN_PACKAGE_NO_SIGNING_NO_SUBMIT_NO_MUTATION
+
+SELECTED_EP1_NEXT_SAFE_STEP
+EVIDENCE_PACKAGE_2_EXACT_VALUES_INVENTORY
