@@ -3497,3 +3497,88 @@ NO-GO REMAINS_FOR_BUILD_DEPLOY_UPGRADE_STATE_INIT_SPL_SETUP_GUARDIAN_PACKAGES_SI
 Next safe step:
 
 Blocker G.3 — rollback / recovery decision model.
+
+
+## Blocker G.3 rollback / recovery decision model
+
+The Blocker G.3 decision model is recorded in:
+
+docs/gateway/blocker-g-3-rollback-recovery-decision-model.md
+
+Evidence directory:
+
+docs/gateway/evidence/blocker-g-3-rollback-recovery-decision-model
+
+G.3 decision:
+
+FULL_STAGE_GATED_RECOVERY_NO_AUTOMATIC_RETRY_USER_GO_REQUIRED
+
+Rollback model:
+
+STAGE_GATED_ABORT_OBSERVE_RECOVER_OR_ABANDON_REDEPLOY
+
+Automatic retry policy:
+
+AUTOMATIC_RETRY_REJECTED
+
+Non-reversible action policy:
+
+ABANDON_OR_REDEPLOY_IF_SAFE_ROLLBACK_NOT_POSSIBLE
+
+User GO policy:
+
+EXPLICIT_SCOPED_USER_GO_REQUIRED_BEFORE_ANY_MUTATION_OR_RECOVERY_ACTION
+
+Evidence policy:
+
+EVIDENCE_REQUIRED_BEFORE_NEXT_STAGE_OR_RECOVERY_BRANCH
+
+Execution boundary:
+
+FUTURE_FINAL_SCOPED_GO_REQUIRED_BEFORE_ANY_BUILD_DEPLOY_UPGRADE_STATE_INIT_SPL_SETUP_GUARDIAN_PACKAGE_SIGNING_SUBMIT_OR_RECOVERY_MUTATION
+
+Required stage gates:
+
+- pre-build / pre-artifact gate
+- post-build / pre-deploy gate
+- post-deploy-or-upgrade / pre-state-init gate
+- post-state-init / pre-SPL-setup gate
+- post-SPL-setup / pre-guardian-package gate
+- post-guardian-package / pre-submit gate
+- post-submit observation gate
+- non-reversible action abandon/redeploy gate
+
+Rejected actions:
+
+- automatic retry after failed mutation
+- continuing after missing evidence
+- continuing after ambiguous post-submit state
+- pretending non-reversible mutation can always be rolled back
+- recovery action without explicit scoped user GO
+- build/deploy/upgrade/state-init/SPL/package/signing/submit inside G.3
+
+Remaining open items before G closure:
+
+- rollback / recovery invariant review package
+- closure decision record
+- final scoped GO package after B and G are closed
+- actual future pre-mutation evidence bundle
+- actual future post-submit observation bundle
+
+G.3 does not close Blocker G.
+
+G.3 does not run build, deploy, upgrade, write buffer, change authority, initialize state, configure SPL, construct guardian packages, sign, call RPC, use testnet, submit, or mutate.
+
+Current status:
+
+BLOCKER_G_OPEN_ROLLBACK_RECOVERY_DECISION_MODEL_RECORDED_NO_RPC_NO_EXECUTION
+
+Current decision:
+
+FULL_STAGE_GATED_RECOVERY_NO_AUTOMATIC_RETRY_USER_GO_REQUIRED
+
+NO-GO REMAINS_FOR_BUILD_DEPLOY_UPGRADE_STATE_INIT_SPL_SETUP_GUARDIAN_PACKAGES_SIGNING_RPC_TESTNET_NETWORK_SUBMIT_MUTATION
+
+Next safe step:
+
+Blocker G.4 — rollback / recovery invariant review package.

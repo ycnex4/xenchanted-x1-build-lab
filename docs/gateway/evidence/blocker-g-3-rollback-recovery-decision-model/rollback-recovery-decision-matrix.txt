@@ -1,0 +1,52 @@
+# Rollback / recovery decision matrix
+
+G3_MODEL_0_NO_RECOVERY_PLAN
+status: rejected
+meaning: Proceed toward mutation without documented rollback/recovery.
+reason_rejected: unsafe and incompatible with final scoped GO.
+
+G3_MODEL_1_AUTOMATIC_RETRY_ON_FAILURE
+status: rejected
+meaning: Scripts retry failed mutation steps automatically.
+reason_rejected: unsafe; can cause duplicate or unintended mutation.
+
+G3_MODEL_2_PRE_MUTATION_ABORT_POINTS_ONLY
+status: insufficient
+meaning: Abort points exist before mutation, but post-mutation observation/recovery is incomplete.
+reason_insufficient: does not cover partial/final submit evidence and non-reversible branches.
+
+G3_MODEL_3_FULL_STAGE_GATED_RECOVERY_PLAN
+status: selected
+meaning: Each stage has explicit precondition, abort point, evidence requirement, success condition, failure condition, and next allowed action.
+reason_selected: matches blocker-by-blocker safety model.
+
+G3_MODEL_4_REDEPLOY_OR_ABANDON_IF_NON_REVERSIBLE
+status: selected_required_property
+meaning: If an action cannot be safely rolled back, recovery must explicitly switch to abandon/redeploy decision path.
+reason_selected: avoids fake rollback assumptions.
+
+G3_MODEL_5_USER_FINAL_GO_AND_MANUAL_CONFIRMATION
+status: selected_required_property
+meaning: Any mutation or recovery action requires explicit scoped user GO.
+reason_selected: preserves human authorization boundary.
+
+SELECTED_G3_DECISION
+FULL_STAGE_GATED_RECOVERY_NO_AUTOMATIC_RETRY_USER_GO_REQUIRED
+
+SELECTED_G3_ROLLBACK_MODEL
+STAGE_GATED_ABORT_OBSERVE_RECOVER_OR_ABANDON_REDEPLOY
+
+SELECTED_G3_AUTOMATIC_RETRY_POLICY
+AUTOMATIC_RETRY_REJECTED
+
+SELECTED_G3_NON_REVERSIBLE_POLICY
+ABANDON_OR_REDEPLOY_IF_SAFE_ROLLBACK_NOT_POSSIBLE
+
+SELECTED_G3_USER_GO_POLICY
+EXPLICIT_SCOPED_USER_GO_REQUIRED_BEFORE_ANY_MUTATION_OR_RECOVERY_ACTION
+
+SELECTED_G3_EVIDENCE_POLICY
+EVIDENCE_REQUIRED_BEFORE_NEXT_STAGE_OR_RECOVERY_BRANCH
+
+SELECTED_G3_EXECUTION_BOUNDARY
+FUTURE_FINAL_SCOPED_GO_REQUIRED_BEFORE_ANY_BUILD_DEPLOY_UPGRADE_STATE_INIT_SPL_SETUP_GUARDIAN_PACKAGE_SIGNING_SUBMIT_OR_RECOVERY_MUTATION
