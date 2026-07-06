@@ -1,0 +1,42 @@
+# Evidence Package.5 execution decision closure summary
+
+closure_status: EVIDENCE_PACKAGE_5_CLOSED_NARROW_STRICT_LOCAL_BUILD_HASH_EXECUTION_MODEL_REVIEWED_EXECUTION_NOT_APPROVED
+closure_decision: STRICT_LOCAL_BUILD_HASH_EXECUTION_DECISION_MODEL_CLOSED_NARROW_FINAL_GO_NOT_GRANTED
+selected_execution_model: STRICT_LOCAL_BUILD_HASH_EXECUTION_WITH_EXACT_GO_ONLY
+current_go_state: FINAL_GO_NOT_GRANTED
+closure_scope: narrow_expected_hash_build_hash_execution_decision_model_boundary_only
+
+exact_scoped_go_required: true
+clean_repo_required: true
+exact_source_commit_binding_required: true
+toolchain_capture_required: true
+exact_build_command_binding_required: true
+no_dangerous_features_required: true
+artifact_success_criteria_required: true
+local_artifact_sha256_required: true
+canonical_programdata_executable_bytes_sha256_required: true
+canonical_hash_method_required: true
+no_rpc_testnet_required: true
+no_mutation_required: true
+no_secrets_required: true
+stop_on_mismatch_required: true
+automatic_retry_rejected: true
+future_execution_evidence_file_list_defined: true
+
+execution_approved: false
+build_approved: false
+artifact_hash_computation_approved: false
+programdata_hash_computation_approved: false
+rpc_approved: false
+testnet_approved: false
+deploy_approved: false
+upgrade_approved: false
+write_buffer_approved: false
+authority_change_approved: false
+state_init_approved: false
+spl_setup_approved: false
+guardian_package_approved: false
+signing_approved: false
+submit_approved: false
+mutation_approved: false
+production_activation_approved: false
