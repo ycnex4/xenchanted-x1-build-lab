@@ -2694,3 +2694,99 @@ NO-GO REMAINS_FOR_SPL_MINT_SETUP_SPL_AUTHORITY_TRANSFER_SPL_CPI_MINTING_SIGNING_
 Next safe step:
 
 Blocker E.2 — repo-grounded SPL mint authority and CPI inventory.
+
+
+## Blocker E.2 repo-grounded SPL mint authority and CPI inventory
+
+The Blocker E.2 inventory record is recorded in:
+
+docs/gateway/blocker-e-2-repo-grounded-spl-mint-authority-and-cpi-inventory.md
+
+Evidence directory:
+
+docs/gateway/evidence/blocker-e-2-repo-grounded-spl-mint-authority-and-cpi-inventory
+
+Authority inventory:
+
+- gateway_mint_authority PDA
+  - seeds: xxxl / gateway-mint-authority / v1
+  - depends_on_program_id: true
+  - expected role: SPL Token mint authority for gateway-backed XXXL minting
+  - current status: inventoried, not created, not activated by E.2
+
+CPI inventory:
+
+- token program model: classic SPL Token via spl_token::id()
+- mint instruction model: spl_token::instruction::mint_to
+- signer model: invoke_signed with gateway_mint_authority signer seeds
+- mint authority check: assert_gateway_mint_authority_pda
+- default CPI execution: disabled
+- closed-gate result: CpiBoundaryNotReady
+- open-gate route: requires D2 production-path test gate plus B1C7 handler integration test gate and both dangerous allow features
+- E.2 execution status: no SPL mint setup, no mint authority transfer, no mint_to execution
+
+Account contract inventory:
+
+- spl_token_mint: writable, not signer, SplTokenOwned
+- recipient_token_account: writable, not signer, SplTokenOwned
+- mint_authority_pda: readonly, not signer, ProgramDerivedAddress
+- token_program: readonly, not signer, SplTokenProgram
+
+MintState relationship inventory:
+
+- MintState records mint_pubkey
+- MintState records gateway_mint_authority_pda
+- MintState records gateway_mint_authority_bump
+- MintState records total_supply
+- E.2 does not prove SPL total supply reconciliation; this remains a future E invariant
+
+Inventory checks:
+
+- gateway_mint_authority_pda_inventory_present: true
+- gateway_mint_authority_seeds_present: true
+- gateway_mint_authority_depends_on_program_id: true
+- gateway_mint_authority_derivation_function_present: true
+- mint_to_cpi_accounts_present: true
+- mint_to_cpi_boundary_present: true
+- mint_to_cpi_planning_boundary_present: true
+- classic_spl_token_program_asserted: true
+- spl_token_mint_to_instruction_built: true
+- mint_authority_pda_asserted_against_program_derivation: true
+- gateway_mint_authority_signer_seeds_present: true
+- mint_to_cpi_uses_invoke_signed: true
+- spl_cpi_execution_disabled_by_default: true
+- spl_cpi_gate_open_requires_d2_and_b1c7_dangerous_allows: true
+- guarded_cpi_returns_cpi_boundary_not_ready_when_gate_closed: true
+- account_contract_has_spl_mint: true
+- account_contract_has_recipient_token_account: true
+- account_contract_has_mint_authority_pda: true
+- account_contract_has_token_program: true
+- mint_state_records_mint_pubkey: true
+- mint_state_records_gateway_mint_authority_pda: true
+- mint_state_records_gateway_mint_authority_bump: true
+- mint_state_records_total_supply: true
+- execution_plan_keeps_live_route_flags_explicit: true
+- deployment_status_not_deployable: true
+- program_id_placeholder_boundary_active: true
+
+all_inventory_checks_passed: true
+
+E.2 confirms that the current repo contains a planned gateway_mint_authority PDA, classic SPL Token CPI mint_to boundary, guarded CPI gate, and account contract entries for spl_token_mint, recipient_token_account, mint_authority_pda, and token_program.
+
+E.2 does not close Blocker E.
+
+E.2 does not create an SPL mint, configure mint authority, transfer mint authority, set freeze authority, mint tokens, initialize state, call RPC, use testnet, use keys, sign, deploy, upgrade, construct guardian packages, submit, or mutate.
+
+Current status:
+
+BLOCKER_E_OPEN_REPO_GROUNDED_SPL_MINT_AUTHORITY_AND_CPI_INVENTORY_COMPLETED_NO_SPL_SETUP
+
+Current decision:
+
+BLOCKER_E_NOT_CLOSED
+
+NO-GO REMAINS_FOR_SPL_MINT_SETUP_SPL_AUTHORITY_TRANSFER_SPL_CPI_MINTING_SIGNING_KEYS_PROGRAM_UPGRADE_STATE_INIT_GUARDIAN_PACKAGES_NETWORK_SUBMIT_MUTATION
+
+Next safe step:
+
+Blocker E.3 — SPL mint authority setup decision model.

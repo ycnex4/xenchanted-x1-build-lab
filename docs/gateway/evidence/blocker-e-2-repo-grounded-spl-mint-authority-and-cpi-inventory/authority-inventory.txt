@@ -1,0 +1,5 @@
+- gateway_mint_authority PDA
+  - seeds: xxxl / gateway-mint-authority / v1
+  - depends_on_program_id: true
+  - expected role: SPL Token mint authority for gateway-backed XXXL minting
+  - current status: inventoried, not created, not activated by E.2
