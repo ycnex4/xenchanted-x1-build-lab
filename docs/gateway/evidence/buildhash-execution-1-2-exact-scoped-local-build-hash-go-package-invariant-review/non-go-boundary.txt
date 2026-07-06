@@ -1,0 +1,24 @@
+# BuildHash Execution.1.2 non-GO boundary
+
+BuildHash Execution.1.2 does not grant GO.
+
+BuildHash Execution.1.2 does not approve:
+- build
+- local artifact hash computation
+- ProgramData executable-bytes hash computation
+- RPC
+- testnet
+- deploy
+- upgrade
+- write-buffer
+- authority change
+- state initialization
+- SPL setup
+- guardian package construction
+- signing
+- transaction submit
+- mutation
+- production activation
+
+BuildHash Execution.1.2 is invariant review only.
+Any actual build/hash execution still requires BuildHash Execution.1.3 closure and a later exact scoped user GO phrase.

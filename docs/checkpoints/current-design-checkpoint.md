@@ -5260,3 +5260,77 @@ NO-GO REMAINS_FOR_BUILD_HASH_DEPLOY_UPGRADE_WRITE_BUFFER_STATE_INIT_SPL_SETUP_GU
 Next safe step:
 
 BuildHash Execution.1.2 — exact scoped local build/hash GO package invariant review.
+
+
+## BuildHash Execution.1.2 exact scoped local build/hash GO package invariant review
+
+The BuildHash Execution.1.2 invariant review is recorded in:
+
+docs/gateway/buildhash-execution-1-2-exact-scoped-local-build-hash-go-package-invariant-review.md
+
+Evidence directory:
+
+docs/gateway/evidence/buildhash-execution-1-2-exact-scoped-local-build-hash-go-package-invariant-review
+
+Current status:
+
+BUILDHASH_EXECUTION_1_2_REVIEW_READY_EXACT_SCOPED_LOCAL_BUILD_HASH_GO_PACKAGE_INVARIANTS_RECORDED_NO_BUILD_NO_HASH_NO_RPC_NO_EXECUTION
+
+Current decision:
+
+EXACT_SCOPED_LOCAL_BUILD_HASH_GO_PACKAGE_REVIEWED_FINAL_GO_NOT_GRANTED_PENDING_CLOSURE
+
+Closure candidate prepared:
+
+EXACT_SCOPED_LOCAL_BUILD_HASH_GO_PACKAGE_REVIEWED_EXECUTION_NOT_APPROVED
+
+Selected execution model:
+
+STRICT_LOCAL_BUILD_HASH_EXECUTION_WITH_EXACT_GO_ONLY
+
+Current GO state:
+
+FINAL_GO_NOT_GRANTED
+
+Reviewed invariants:
+
+- current GO is not granted
+- draft package is not executable
+- final source commit is deferred to BuildHash Execution.1.3 closure
+- exact GO phrase is deferred to BuildHash Execution.1.3 closure
+- draft build command is present
+- no dangerous features selected
+- artifact path draft is present
+- evidence path draft is present
+- SHA256 and canonical ProgramData executable-bytes domain are present
+- baseline program id / ProgramData / authority bindings are present
+- success criteria are present
+- stop conditions are present
+- no RPC/testnet boundary is present
+- no mutation boundary is present
+- no secret material boundary is present
+- stop on mismatch is required
+- automatic retry is rejected
+- no execution approved now
+
+Review result:
+
+all_invariants_reviewed: true
+
+go_package_closure_ready: true
+
+closure_type: narrow_exact_scoped_local_build_hash_go_package_boundary_only
+
+exact_go_phrase_selected: false
+
+execution_approved: false
+
+BuildHash Execution.1.2 does not grant GO.
+
+BuildHash Execution.1.2 does not run build, compute artifact hash, compute ProgramData hash, call RPC, use testnet, deploy, upgrade, write buffer, change authority, initialize state, configure SPL, construct guardian packages, sign, submit, or mutate.
+
+NO-GO REMAINS_FOR_BUILD_HASH_DEPLOY_UPGRADE_WRITE_BUFFER_STATE_INIT_SPL_SETUP_GUARDIAN_PACKAGES_SIGNING_RPC_TESTNET_NETWORK_SUBMIT_MUTATION
+
+Next safe step:
+
+BuildHash Execution.1.3 — exact scoped local build/hash GO package closure record.
