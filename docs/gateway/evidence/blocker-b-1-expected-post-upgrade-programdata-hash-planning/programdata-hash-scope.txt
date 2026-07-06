@@ -1,0 +1,27 @@
+# Blocker B.1 scope
+
+IN_SCOPE_FOR_B1_PLANNING:
+- define hash-domain questions
+- define candidate hash models
+- define artifact/source/toolchain binding questions
+- define future pre-upgrade expected-hash evidence requirement
+- define future post-upgrade read-only verification requirement
+- define mismatch/no-automatic-retry questions
+- define relationship to final scoped GO package
+
+OUT_OF_SCOPE_FOR_B1_EXECUTION:
+- running build
+- computing artifact hash
+- computing ProgramData hash
+- writing buffer
+- deploying
+- upgrading
+- changing authority
+- initializing state
+- configuring SPL
+- constructing guardian packages
+- signing
+- calling RPC
+- using testnet
+- submitting transactions
+- mutating any network
