@@ -1,0 +1,56 @@
+# State initialization invariant review matrix
+
+D4_INVARIANT_01_LONG_LIVED_STATE_SCOPE_DEFINED
+status: reviewed
+result: true
+meaning: Long-lived protocol state is MintState, GatewayConfig, and GuardianSet.
+
+D4_INVARIANT_02_LAYOUTS_AND_DISCRIMINATORS_INVENTORIED
+status: reviewed
+result: true
+meaning: D.2 records fixed lengths, fixed discriminators, account views, and runtime layout version.
+
+D4_INVARIANT_03_ONE_TIME_GUARD_REQUIRED
+status: required_future_initializer_property
+result: true
+meaning: Future initializer must reject reinitialization and must not rewrite initialized protocol state.
+
+D4_INVARIANT_04_NO_DIRECT_MANUAL_UNBOUNDED_ADMIN_INIT
+status: rejected_model
+result: true
+meaning: Direct manual state creation with unbounded admin discretion is rejected.
+
+D4_INVARIANT_05_PROCESSED_EVENT_SEPARATED
+status: reviewed
+result: true
+meaning: ProcessedEvent is per-event replay protection and not general protocol initialization.
+
+D4_INVARIANT_06_RECIPIENT_BALANCE_GAP_RECORDED
+status: open_design_gap
+result: true
+meaning: RecipientBalance lazy/precreate model is not closed by D.4 and must remain explicit.
+
+D4_INVARIANT_07_SPL_SETUP_SEPARATED_TO_BLOCKER_E
+status: reviewed
+result: true
+meaning: SPL mint setup and SPL mint authority architecture remain Blocker E.
+
+D4_INVARIANT_08_GATEWAY_MINT_AUTHORITY_PDA_INVENTORIED_BUT_NOT_ACTIVATED
+status: reviewed
+result: true
+meaning: gateway_mint_authority PDA is inventoried but not created or activated by D.4.
+
+D4_INVARIANT_09_NO_ADMIN_MINT_OR_BALANCE_WRITE
+status: required_future_initializer_property
+result: true
+meaning: Future state initialization must not introduce hidden admin mint or recipient-balance write paths.
+
+D4_INVARIANT_10_NO_EXECUTION_APPROVED
+status: reviewed
+result: true
+meaning: D.4 does not approve state init execution, account creation, RPC, testnet, signing, deploy, upgrade, SPL setup, submit, or mutation.
+
+D4_AGGREGATE
+all_invariants_reviewed: true
+blocker_d_closure_ready: true
+closure_type: narrow_design_boundary_only
