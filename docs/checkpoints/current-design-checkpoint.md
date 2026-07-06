@@ -1783,3 +1783,40 @@ AUTHORITY_MODEL_SELECTED_TEMPORARY_UPGRADEABLE_STAGED_FINALIZATION_BLOCKER_A_NOT
 NO-GO REMAINS FOR TESTNET_RPC_LIVE_RPC_SIGNING_KEYS_PROGRAM_UPGRADE_STATE_INIT_SPL_SETUP_NETWORK_SUBMIT
 
 The next safe step is A.4 read-only live ProgramData evidence GO form, still with no RPC execution.
+
+
+## Blocker A.4 read-only live ProgramData evidence GO form
+
+The Blocker A.4 GO form is recorded in:
+
+docs/gateway/blocker-a-4-read-only-programdata-evidence-go-form.md
+
+A.4 defines the explicit scoped GO phrase required before A.5 may perform read-only live ProgramData evidence.
+
+A.4 does not call RPC, does not use testnet, does not use live RPC, does not use keys, does not sign, does not inspect live ProgramData, does not deploy, does not upgrade, does not initialize state, does not configure SPL, does not construct guardian packages, and does not submit to any network.
+
+Future A.5 target:
+
+- network: X1 testnet
+- rpc_url: https://rpc.testnet.x1.xyz
+- program_id: D7AQmZNtFFFoJbducz93atteeSZhw3jq6RmsqBvaf1my
+- programdata_account: 9tuesaPoJhrifF49vJewcg6PSWZeHAJiqQ97pq3LMW9T
+- expected_observed_upgrade_authority: DTfvjtRL63u3XYHXQfgRQCdhEanUK1qqawvfEAM9hxAc
+
+Required explicit GO phrase for A.5:
+
+I approve Blocker A.5 read-only live ProgramData evidence only, scoped to X1 testnet RPC https://rpc.testnet.x1.xyz, program id D7AQmZNtFFFoJbducz93atteeSZhw3jq6RmsqBvaf1my, ProgramData account 9tuesaPoJhrifF49vJewcg6PSWZeHAJiqQ97pq3LMW9T, and expected observed upgrade authority DTfvjtRL63u3XYHXQfgRQCdhEanUK1qqawvfEAM9hxAc, using read-only ProgramData inspection only, with no signing, no keypair use, no deploy, no write-buffer, no set-upgrade-authority, no close, no upgrade, no state initialization, no SPL setup, no guardian package construction, and no submit or mutation.
+
+Current sign-off:
+
+NOT PROVIDED IN A.4
+
+Current status:
+
+BLOCKER_A_OPEN_READ_ONLY_PROGRAMDATA_EVIDENCE_GO_FORM_DEFINED_NO_RPC_NO_EXECUTION
+
+Current decision:
+
+A5_READ_ONLY_LIVE_PROGRAMDATA_EVIDENCE_REQUIRES_EXPLICIT_SCOPED_GO
+
+NO-GO REMAINS_FOR_TESTNET_RPC_EXECUTION_SIGNING_KEYS_PROGRAM_UPGRADE_STATE_INIT_SPL_SETUP_NETWORK_SUBMIT
