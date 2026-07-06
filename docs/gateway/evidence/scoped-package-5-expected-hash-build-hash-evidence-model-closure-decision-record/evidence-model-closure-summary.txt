@@ -1,0 +1,39 @@
+# Expected-hash/build-hash evidence model closure summary
+
+closure_status: SCOPED_PACKAGE_5_CLOSED_NARROW_EXPECTED_HASH_BUILD_HASH_EVIDENCE_MODEL_REVIEWED_EXECUTION_NOT_APPROVED
+closure_decision: EXPECTED_HASH_BUILD_HASH_EVIDENCE_MODEL_CLOSED_NARROW_FINAL_GO_NOT_GRANTED
+selected_model: STRICT_EXPECTED_HASH_BUILD_HASH_EVIDENCE_PACKAGE_MODEL_REQUIRED
+selected_operation_class: EXPECTED_HASH_BUILD_HASH_EVIDENCE_PACKAGE_PLANNING_ONLY
+current_go_state: FINAL_GO_NOT_GRANTED
+closure_scope: narrow_expected_hash_build_hash_evidence_model_boundary_only
+
+strict_model_required: true
+full_hash_bundle_required: true
+canonical_runtime_hash_domain: PROGRAMDATA_EXECUTABLE_BYTES_EXCLUDING_LOADER_METADATA
+hash_algorithm: SHA256
+source_build_toolchain_lockfile_feature_binding_required: true
+baseline_program_programdata_authority_binding_required: true
+local_package_no_rpc_testnet: true
+local_package_no_upgrade_write_buffer_mutation: true
+exact_scoped_user_go_required_before_build_hash: true
+no_secret_material_required: true
+stop_on_mismatch_required: true
+automatic_retry_rejected: true
+
+execution_approved: false
+build_approved: false
+artifact_hash_computation_approved: false
+programdata_hash_computation_approved: false
+rpc_approved: false
+testnet_approved: false
+deploy_approved: false
+upgrade_approved: false
+write_buffer_approved: false
+authority_change_approved: false
+state_init_approved: false
+spl_setup_approved: false
+guardian_package_approved: false
+signing_approved: false
+submit_approved: false
+mutation_approved: false
+production_activation_approved: false
