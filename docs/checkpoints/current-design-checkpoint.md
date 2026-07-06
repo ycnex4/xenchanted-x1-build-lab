@@ -1858,3 +1858,46 @@ NO-GO REMAINS_FOR_SIGNING_KEYS_PROGRAM_UPGRADE_STATE_INIT_SPL_SETUP_GUARDIAN_PAC
 Next safe step:
 
 A.5R review package for Theo / closure assessment
+
+
+## Blocker A.5R read-only evidence review package
+
+The Blocker A.5R review package is recorded in:
+
+docs/gateway/blocker-a-5r-read-only-evidence-review-package.md
+
+A.5R reviews the matched A.5 read-only live ProgramData evidence.
+
+A.5 evidence result:
+
+- evidence_status: READ_ONLY_PROGRAMDATA_EVIDENCE_MATCHED_EXPECTED_AUTHORITY
+- observed_programdata_account: 9tuesaPoJhrifF49vJewcg6PSWZeHAJiqQ97pq3LMW9T
+- observed_upgrade_authority: DTfvjtRL63u3XYHXQfgRQCdhEanUK1qqawvfEAM9hxAc
+- programdata_matches_expected: true
+- authority_matches_expected: true
+- program_show_exit_code: 0
+- program_account_exit_code: 0
+- signing_used: false
+- mutation_executed: false
+
+A.5R does not call RPC, does not use keys, does not sign, does not deploy, does not upgrade, does not initialize state, does not configure SPL, does not construct guardian packages, does not submit, and does not mutate network state.
+
+A.5R prepares the closure assessment for Blocker A.
+
+Candidate closure state:
+
+UPGRADE_AUTHORITY_PRESENT_BUT_ACCEPTED_FOR_TEST_PHASE
+
+Current status:
+
+BLOCKER_A_REVIEW_READY_READ_ONLY_EVIDENCE_MATCHED_EXPECTED_AUTHORITY
+
+Current decision:
+
+BLOCKER_A_NOT_CLOSED_PENDING_CLOSURE_DECISION
+
+NO-GO REMAINS_FOR_SIGNING_KEYS_PROGRAM_UPGRADE_STATE_INIT_SPL_SETUP_GUARDIAN_PACKAGES_NETWORK_SUBMIT_MUTATION
+
+Next safe step:
+
+External review / closure decision for Blocker A.
