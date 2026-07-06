@@ -1901,3 +1901,61 @@ NO-GO REMAINS_FOR_SIGNING_KEYS_PROGRAM_UPGRADE_STATE_INIT_SPL_SETUP_GUARDIAN_PAC
 Next safe step:
 
 External review / closure decision for Blocker A.
+
+
+## Blocker A.6 closure decision record
+
+The Blocker A.6 closure decision record is recorded in:
+
+docs/gateway/blocker-a-6-closure-decision-record.md
+
+Blocker A is now CLOSED narrowly as:
+
+UPGRADE_AUTHORITY_PRESENT_BUT_ACCEPTED_FOR_TEST_PHASE
+
+Closure basis:
+
+- A.1 planning boundary completed
+- A.2 repo-grounded reconciliation completed
+- A.3 selected TEMPORARY_UPGRADEABLE_STAGED_FINALIZATION
+- A.4 defined explicit read-only GO form
+- A.5 executed read-only live ProgramData evidence
+- A.5R reviewed matched evidence
+
+Accepted live read-only evidence:
+
+- rpc_url: https://rpc.testnet.x1.xyz
+- program_id: D7AQmZNtFFFoJbducz93atteeSZhw3jq6RmsqBvaf1my
+- observed_programdata_account: 9tuesaPoJhrifF49vJewcg6PSWZeHAJiqQ97pq3LMW9T
+- observed_upgrade_authority: DTfvjtRL63u3XYHXQfgRQCdhEanUK1qqawvfEAM9hxAc
+- programdata_matches_expected: true
+- authority_matches_expected: true
+- program_show_exit_code: 0
+- program_account_exit_code: 0
+- signing_used: false
+- mutation_executed: false
+
+A.6 does not approve signing, keypair use, deploy, write-buffer, set-upgrade-authority, close, upgrade, state initialization, SPL setup, SPL CPI minting, guardian package construction, transaction submit, mutation, or production activation.
+
+Remaining blockers:
+
+- B — OPEN: expected post-upgrade ProgramData hash
+- C — OPEN: B1C7 handler production/testnet boundary
+- D — OPEN: state initialization design
+- E — OPEN: SPL mint authority architecture
+- F — OPEN: guardian descriptor
+- G — OPEN: rollback / recovery plan
+
+Current status:
+
+BLOCKER_A_CLOSED_AS_UPGRADE_AUTHORITY_PRESENT_BUT_ACCEPTED_FOR_TEST_PHASE
+
+Current decision:
+
+BLOCKER_A_CLOSED_NARROW_AUTHORITY_MODEL_ONLY
+
+NO-GO REMAINS_FOR_SIGNING_KEYS_PROGRAM_UPGRADE_STATE_INIT_SPL_SETUP_GUARDIAN_PACKAGES_NETWORK_SUBMIT_MUTATION
+
+Next safe step:
+
+Blocker C.1 — B1C7 handler production/testnet boundary planning.
