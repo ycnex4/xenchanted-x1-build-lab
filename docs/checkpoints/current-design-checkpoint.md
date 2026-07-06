@@ -1496,3 +1496,44 @@ GO RECORDED FOR H6 LOCAL VALIDATOR DRY-RUN ONLY WITH STRICT LOCAL DISPOSABLE SCO
 NO-GO REMAINS FOR TESTNET_SIGNING_REAL_KEYS_GUARDIAN_PACKAGES_SPL_REAL_SETUP_PROGRAM_UPGRADE_PERSISTENT_INIT_NETWORK_SUBMIT
 
 The next step may be Blocker H.6 actual local-validator dry-run execution, strictly within the recorded H.5R scope and only after preflight verification.
+
+
+## Blocker H.6 actual local-validator dry-run
+
+The Blocker H.6 execution evidence checkpoint is recorded in:
+
+docs/gateway/blocker-h-6-actual-local-validator-dry-run.md
+
+H.6 executed the first actual local-validator dry-run under the H.5R explicit scoped GO.
+
+Execution evidence:
+
+- local validator execution: EXECUTED
+- RPC URL: http://127.0.0.1:8899
+- ledger directory: tmp/local-validator-ledgers/blocker-h-6-disposable-ledger
+- solana-test-validator version: 4.0.0
+- cluster version: 4.0.0
+- health check: OK
+- validator stopped: OK
+- fixture bundle SHA256: 0a3290df47782008f72b441d9b9bf36964003324dde5baaf03f5fb0a04b19da7
+- testnet action: NOT_EXECUTED
+- live RPC action: NOT_EXECUTED
+- signing: NOT_EXECUTED
+- real keys: NOT_USED
+- guardian packages: NOT_CONSTRUCTED
+- SPL setup: NOT_EXECUTED
+- program upgrade: NOT_EXECUTED
+- state initialization: NOT_EXECUTED
+- network submit: NOT_EXECUTED
+
+Current status:
+
+BLOCKER_H_ACTUAL_LOCAL_VALIDATOR_DRY_RUN_EXECUTED_SUCCESSFULLY_LOCAL_ONLY
+
+Current decision:
+
+BLOCKER_H_LOCAL_VALIDATOR_DRY_RUN_EXECUTED_WITHIN_H5R_SCOPED_GO
+
+NO-GO REMAINS FOR TESTNET_SIGNING_REAL_KEYS_GUARDIAN_PACKAGES_SPL_REAL_SETUP_PROGRAM_UPGRADE_PERSISTENT_INIT_NETWORK_SUBMIT
+
+The next safe step is Blocker H.6R execution result review package.
