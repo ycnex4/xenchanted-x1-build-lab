@@ -1,0 +1,58 @@
+# Future expected-hash/build-hash evidence package schema
+
+This schema is for a future package only.
+Scoped Package.3 does not fill runtime values and does not grant GO.
+
+REQUIRED_STATIC_BINDINGS:
+- package_id
+- operation_class
+- repo_full_name
+- branch
+- source_commit
+- repo_clean_status
+- build_command
+- rust_toolchain_version
+- solana_toolchain_version
+- sbf_toolchain_version
+- lockfiles
+- feature_flags
+- dangerous_feature_gate_status
+- local_sbf_artifact_path
+- canonical_runtime_hash_domain
+- canonical_hash_algorithm
+- baseline_program_id
+- baseline_programdata_account
+- baseline_upgrade_authority
+- evidence_directory
+- no_secret_material_statement
+- stop_on_mismatch_statement
+- no_automatic_retry_statement
+- exact_scoped_user_go_phrase_template
+
+REQUIRED_FUTURE_VALUES_AFTER_SEPARATE_EXECUTION_GO:
+- local_sbf_artifact_sha256
+- canonical_programdata_executable_bytes_sha256
+- generated_expected_hash_package_id
+- command_output_evidence_file
+- repo_clean_status_after_execution
+
+EXPLICITLY_OUT_OF_SCOPE_FOR_THIS_LOCAL_EVIDENCE_PACKAGE:
+- RPC
+- testnet
+- deploy
+- upgrade
+- write-buffer
+- authority change
+- state initialization
+- SPL setup
+- guardian package construction
+- signing
+- transaction submit
+- mutation
+- production activation
+
+EXECUTION_RULE:
+Build/hash execution is not allowed unless a later separate scoped package records exact values and the user provides the exact scoped GO phrase.
+
+STOP_RULE:
+Any mismatch requires stop. Automatic retry is forbidden.
