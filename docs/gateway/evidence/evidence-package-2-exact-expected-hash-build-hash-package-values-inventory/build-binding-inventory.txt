@@ -1,0 +1,34 @@
+# Evidence Package.2 build binding inventory
+
+build_command_candidate: cargo build-sbf --manifest-path programs/xxxl-svm/Cargo.toml --no-default-features
+build_command_status: candidate_selected_for_review_not_approved_for_execution
+build_command_executed: false
+
+manifest_path: programs/xxxl-svm/Cargo.toml
+lockfile_path: programs/xxxl-svm/Cargo.lock
+lockfile_present: true
+
+default_features_line: default = []
+feature_policy_candidate: NO_DEFAULT_FEATURES_AND_NO_DANGEROUS_FEATURES
+selected_feature_flags_candidate: --no-default-features
+dangerous_features_present_in_manifest: true
+dangerous_features_selected: false
+
+non_dangerous_features_detected:
+- default
+- phase-41k4-svm-test-harness
+- phase-41k5-spl-mint-to-cpi-test-gate
+- phase-41k5-d2-production-path-test-gate
+- phase-41k6-b1-v3-account-contract-test-gate
+- phase-41k6-b1b-guardian-set-loading-test-gate
+- phase-41k6-b1c-ed25519-evidence-wiring-test-gate
+- phase-41k6-b1c7-handler-integration-test-gate
+
+dangerous_features_detected:
+- dangerously-allow-phase-41k4-svm-test-harness-sbf-build
+- dangerously-allow-phase-41k5-spl-mint-to-cpi-test-gate-sbf-build
+- dangerously-allow-phase-41k5-d2-production-path-test-gate-sbf-build
+- dangerously-allow-phase-41k6-b1-v3-account-contract-test-gate-sbf-build
+- dangerously-allow-phase-41k6-b1b-guardian-set-loading-test-gate-sbf-build
+- dangerously-allow-phase-41k6-b1c-ed25519-evidence-wiring-test-gate-sbf-build
+- dangerously-allow-phase-41k6-b1c7-handler-integration-test-gate-sbf-build

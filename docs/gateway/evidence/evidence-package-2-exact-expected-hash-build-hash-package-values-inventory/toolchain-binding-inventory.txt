@@ -1,0 +1,12 @@
+# Evidence Package.2 toolchain binding inventory
+
+toolchain_version_capture_status: deferred_to_future_execution_package_or_pre_execution_probe
+rust_toolchain_version: UNSET_NOT_CAPTURED
+cargo_version: UNSET_NOT_CAPTURED
+solana_cli_version: UNSET_NOT_CAPTURED
+cargo_build_sbf_version: UNSET_NOT_CAPTURED
+
+reason:
+Evidence Package.2 is repo-only values inventory.
+It does not run toolchain commands.
+Future package must capture these values before build/hash execution.

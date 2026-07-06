@@ -1,0 +1,14 @@
+# Evidence Package.2 remaining gaps
+
+- Evidence Package.3 execution decision model not recorded
+- Evidence Package.4 invariant review not recorded
+- Evidence Package.5 closure decision not recorded
+- exact scoped user GO phrase not selected
+- toolchain versions not captured
+- build command not approved for execution
+- build not executed
+- local SBF artifact SHA256 not computed
+- canonical ProgramData executable-bytes SHA256 not computed
+- RPC/testnet not approved
+- deploy/upgrade/write-buffer not approved
+- mutation not approved

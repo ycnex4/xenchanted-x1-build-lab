@@ -4881,3 +4881,92 @@ NO-GO REMAINS_FOR_BUILD_HASH_DEPLOY_UPGRADE_WRITE_BUFFER_STATE_INIT_SPL_SETUP_GU
 Next safe step:
 
 Evidence Package.2 — exact expected-hash/build-hash package values inventory.
+
+
+## Evidence Package.2 exact expected-hash/build-hash package values inventory
+
+The Evidence Package.2 values inventory is recorded in:
+
+docs/gateway/evidence-package-2-exact-expected-hash-build-hash-package-values-inventory.md
+
+Evidence directory:
+
+docs/gateway/evidence/evidence-package-2-exact-expected-hash-build-hash-package-values-inventory
+
+Current status:
+
+EVIDENCE_PACKAGE_2_OPEN_EXACT_EXPECTED_HASH_BUILD_HASH_VALUES_INVENTORY_COMPLETED_NO_BUILD_NO_HASH_NO_RPC_NO_EXECUTION
+
+Current decision:
+
+CANDIDATE_EXPECTED_HASH_BUILD_HASH_EXECUTION_VALUES_INVENTORIED_FINAL_GO_NOT_GRANTED
+
+Selected package shape:
+
+STRICT_LOCAL_EXPECTED_HASH_BUILD_HASH_EXECUTION_PACKAGE_PLANNING_ONLY
+
+Selected model:
+
+STRICT_EXPECTED_HASH_BUILD_HASH_EVIDENCE_PACKAGE_MODEL_REQUIRED
+
+Current GO state:
+
+FINAL_GO_NOT_GRANTED
+
+Values inventory summary:
+
+# Evidence Package.2 values inventory summary
+
+package_id_candidate: EP2-CANDIDATE-cbb205a0f950
+repo_full_name: ycnex4/xenchanted-x1-build-lab
+branch: evidence-package-2-exact-expected-hash-build-hash-package-values-inventory
+source_commit: cbb205a0f9500608eda70ab533492dbf64f6c69f
+repo_clean_status: false
+
+build_command_candidate: cargo build-sbf --manifest-path programs/xxxl-svm/Cargo.toml --no-default-features
+selected_feature_flags_candidate: --no-default-features
+dangerous_features_selected: false
+
+local_artifact_path_candidate: programs/xxxl-svm/target/deploy/xxxl_svm.so
+evidence_path_candidate: docs/gateway/evidence/evidence-package-2-exact-expected-hash-build-hash-package-values-inventory-execution
+
+local_artifact_sha256: UNSET_NOT_COMPUTED
+canonical_programdata_executable_bytes_sha256: UNSET_NOT_COMPUTED
+
+canonical_runtime_hash_domain: PROGRAMDATA_EXECUTABLE_BYTES_EXCLUDING_LOADER_METADATA
+hash_algorithm: SHA256
+
+baseline_program_id: D7AQmZNtFFFoJbducz93atteeSZhw3jq6RmsqBvaf1my
+baseline_programdata_account: 9tuesaPoJhrifF49vJewcg6PSWZeHAJiqQ97pq3LMW9T
+baseline_upgrade_authority: DTfvjtRL63u3XYHXQfgRQCdhEanUK1qqawvfEAM9hxAc
+
+exact_user_go_phrase_candidate: UNSET_NOT_SELECTED
+current_go_state: FINAL_GO_NOT_GRANTED
+execution_approved: false
+
+Remaining gaps:
+
+# Evidence Package.2 remaining gaps
+
+- Evidence Package.3 execution decision model not recorded
+- Evidence Package.4 invariant review not recorded
+- Evidence Package.5 closure decision not recorded
+- exact scoped user GO phrase not selected
+- toolchain versions not captured
+- build command not approved for execution
+- build not executed
+- local SBF artifact SHA256 not computed
+- canonical ProgramData executable-bytes SHA256 not computed
+- RPC/testnet not approved
+- deploy/upgrade/write-buffer not approved
+- mutation not approved
+
+Evidence Package.2 does not grant GO.
+
+Evidence Package.2 does not run build, compute artifact hash, compute ProgramData hash, call RPC, use testnet, deploy, upgrade, write buffer, change authority, initialize state, configure SPL, construct guardian packages, sign, submit, or mutate.
+
+NO-GO REMAINS_FOR_BUILD_HASH_DEPLOY_UPGRADE_WRITE_BUFFER_STATE_INIT_SPL_SETUP_GUARDIAN_PACKAGES_SIGNING_RPC_TESTNET_NETWORK_SUBMIT_MUTATION
+
+Next safe step:
+
+Evidence Package.3 — expected-hash/build-hash execution decision model.

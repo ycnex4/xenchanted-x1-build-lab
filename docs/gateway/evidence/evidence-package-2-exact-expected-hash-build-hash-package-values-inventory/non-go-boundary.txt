@@ -1,0 +1,21 @@
+# Evidence Package.2 non-GO boundary
+
+Evidence Package.2 does not grant GO.
+
+Evidence Package.2 does not approve:
+- build
+- local artifact hash computation
+- ProgramData executable-bytes hash computation
+- RPC
+- testnet
+- deploy
+- upgrade
+- write-buffer
+- authority change
+- state initialization
+- SPL setup
+- guardian package construction
+- signing
+- transaction submit
+- mutation
+- production activation
