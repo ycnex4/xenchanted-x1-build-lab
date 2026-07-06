@@ -1,0 +1,38 @@
+# BuildHash Execution.1.3 closure summary
+
+closure_status: BUILDHASH_EXECUTION_1_3_CLOSED_EXACT_SCOPED_LOCAL_BUILD_HASH_GO_PACKAGE_READY_FOR_USER_EXACT_GO_NO_BUILD_NO_HASH_NO_RPC_NO_EXECUTION
+closure_decision: EXACT_SCOPED_LOCAL_BUILD_HASH_GO_PACKAGE_CLOSED_FINAL_GO_NOT_GRANTED_UNTIL_USER_EXACT_PHRASE
+selected_execution_model: STRICT_LOCAL_BUILD_HASH_EXECUTION_WITH_EXACT_GO_ONLY
+current_go_state: FINAL_GO_NOT_GRANTED
+
+final_package_id: BHX2_LOCAL_BUILD_HASH_ee0cb44f7d49
+final_program_source_commit: ee0cb44f7d496e010e784608d0c7ccc8e84e7fb6
+final_program_source_short: ee0cb44f7d49
+
+exact_go_phrase_selected: true
+exact_go_phrase: GO_BHX2_LOCAL_BUILD_HASH_ONLY_BHX2_LOCAL_BUILD_HASH_ee0cb44f7d49_SOURCE_ee0cb44f7d49
+user_exact_go_phrase_provided: false
+execution_approved_now: false
+
+repo_full_name: ycnex4/xenchanted-x1-build-lab
+remote_url: https://github.com/ycnex4/xenchanted-x1-build-lab.git
+
+build_command: cargo build-sbf --manifest-path programs/xxxl-svm/Cargo.toml --no-default-features
+feature_flags: --no-default-features
+dangerous_features_selected: false
+artifact_path: programs/xxxl-svm/target/deploy/xxxl_svm.so
+evidence_path: docs/gateway/evidence/buildhash-execution-2-local-build-hash-execution-after-exact-go
+
+hash_algorithm: SHA256
+canonical_runtime_hash_domain: PROGRAMDATA_EXECUTABLE_BYTES_EXCLUDING_LOADER_METADATA
+
+baseline_program_id: D7AQmZNtFFFoJbducz93atteeSZhw3jq6RmsqBvaf1my
+baseline_programdata_account: 9tuesaPoJhrifF49vJewcg6PSWZeHAJiqQ97pq3LMW9T
+baseline_upgrade_authority: DTfvjtRL63u3XYHXQfgRQCdhEanUK1qqawvfEAM9hxAc
+
+program_source_binding_policy:
+Future BuildHash Execution.2 must verify that programs/xxxl-svm source content matches final_program_source_commit before executing build/hash.
+Documentation-only commits after this closure do not change the bound program source if programs/xxxl-svm is unchanged.
+
+execution_authorization_policy:
+BuildHash Execution.2 may execute local build/hash only if the user provides exact_go_phrase verbatim.
