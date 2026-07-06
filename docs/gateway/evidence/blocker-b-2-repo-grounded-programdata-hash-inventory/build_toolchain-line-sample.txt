@@ -1,0 +1,120 @@
+README.md:1: # xEnchanted X1 Build Lab
+README.md:3: Implementation and design lab for the xEnchanted X1 Build model.
+README.md:5: This repository models how verified xEnchanted Crypto / X1 activity can be converted into deterministic Build state through watcher candidates, proof objects, registrar handlers, replay protection, snapshots, and read-only CLI inspection.
+README.md:22: - [X1 Build v1 runtime boundary](docs/build/build-v1-x1-runtime-boundary.md)
+README.md:63: - Build state model
+README.md:84: - Build: passing
+README.md:93: - XC Build validation context
+README.md:152: - Build v1 X1 runtime boundary design
+README.md:194:     npm run build
+README.md:238: - Build state
+README.md:239: - Build registry
+README.md:240: - create build flow
+README.md:267: - XC protocol params build validation
+README.md:268: - XC Build validation context
+README.md:269: - XC Build commitment status model
+README.md:270: - app Build view exposing commitmentStatus
+README.md:297: The current Build model stores durable public contribution history, not live spendable balances.
+README.md:299: Build State distinguishes:
+README.md:308: Build State does not store public spendable balances such as `available_bld` or `available_xbp`.
+README.md:310: Spendable / transferable BLD is a separate token. Build State and Build view do not display, mirror, or cache BLD token balance. Relock must not depend on a public `Build.available_bld` field because that field does not exist.
+README.md:312: Build Identity is separate from protocol accounting:
+README.md:318: Build Identity is owner-controlled display metadata and has no effect on BLD, XBP, XNTD lock, Genesis Origin, fee contribution, or replay protection.
+README.md:327:       build
+README.md:331: `commitmentStatus` is derived from accepted XNTD commitment facts only. It does not mean Build validity and does not erase historical contribution.
+README.md:333: Public Build commitment status does not expose `UNKNOWN`. Missing live external context should be handled by operation-level validation or infrastructure errors, not as public Build state.
+README.md:364: - Build ownership mapping assumption
+README.md:415: Build:
+README.md:417: - [Terminology](docs/build/terminology.md)
+README.md:418: - [Build v1 spec](docs/build/build-v1-spec.md)
+README.md:419: - [Build state fields](docs/build/buildstate-fields.md)
+README.md:420: - [State transitions](docs/build/state-transitions.md)
+README.md:421: - [Program instruction layout](docs/build/program-instruction-layout.md)
+README.md:422: - [PDA account layout](docs/build/pda-account-layout.md)
+README.md:423: - [Program authority model](docs/build/program-authority-model.md)
+README.md:424: - [Build reader interface](docs/build/build-reader-interface.md)
+README.md:535: ## Gateway Build activation boundary
+README.md:537: - [Gateway full-profile Build activation boundary](docs/gateway/build-full-profile-activation-boundary.md)
+README.md:623: 1. current runtime layer checks: TypeScript typecheck/tests/build plus targeted Rust tests
+README.md:625: 3. Rust clippy warning cleanup: `cargo clippy --all-targets --all-features -- -D warnings`
+README.md:645: - `cargo audit` identifies an unresolved Solana dependency-chain blocker:
+README.md:649:   - current blocker path: `solana-program v1.18.26`
+README.md:652: - `cargo deny` advisories intentionally surface the same unresolved Solana dependency-chain blocker
+README.md:658: - no Solana/SPL runtime dependency upgrade inside the baseline stage
+README.md:661: ## XXXL Solana/SPL dependency upgrade audit
+README.md:663: The XXXL SVM dependency audit stage selected the minimal upgrade path that closes the RustSec hard vulnerability in the Solana dependency chain.
+README.md:667: - `solana-program = 2.3.0`
+README.md:673: - Solana 1.18 candidates kept the audit blocker
+README.md:674: - Solana 2 + SPL Token 5 was the first candidate with tests passing and `cargo audit` passing
+README.md:675: - Solana 2 + SPL Token 6 also passed but was not minimal
+README.md:676: - Solana 3 candidates passed audit but failed current tests
+README.md:691: - documented and scoped the Solana `entrypoint!` macro `unexpected_cfgs` exception
+README.md:695: The exception is limited to `unexpected_cfgs` emitted by Solana entrypoint macro expansion under host clippy/check-cfg.
+README.md:820: - builds the SBF program with `cargo build-sbf`
+README.md:828:     cargo build-sbf
+README.md:862:     cargo build-sbf
+docs/assumptions.md:3: This document contains pre-cleanup Build balance terminology such as available_bld,
+docs/assumptions.md:5: For the current authoritative Build State model, use:
+docs/assumptions.md:7: - docs/build/build-state-history-identity-model.md
+docs/assumptions.md:8: - docs/build/build-v1-spec.md
+docs/assumptions.md:9: - docs/checkpoints/build-state-history-identity-cleanup.md
+docs/assumptions.md:12: Build State stores durable public history, not live spendable balances.
+docs/assumptions.md:13: Build Identity stores owner-controlled name/logo metadata.
+docs/assumptions.md:17: # xEnchanted X1 Build Lab — MVP Assumptions and Known Limitations
+docs/assumptions.md:21: This document records explicit MVP assumptions and known limitations for xEnchanted X1 Build Lab.
+docs/assumptions.md:45: - the registrar is expected to map source events to the correct Build
+docs/assumptions.md:50: ## 2. Build ownership mapping assumption
+docs/assumptions.md:52: The MVP assumes that the proof submission layer resolves the correct Build before calling registrar handlers.
+docs/assumptions.md:54: The current focus is on canonical Build identity and accounting correctness after a Build has been selected.
+docs/assumptions.md:76: - these protections prevent old commitment events from regressing Build lock state in the MVP model
+docs/assumptions.md:96: The Build model records:
+docs/build/build-reader-interface.md:3: This document contains pre-cleanup Build balance terminology such as available_bld,
+docs/build/build-reader-interface.md:5: For the current authoritative Build State model, use:
+docs/build/build-reader-interface.md:7: - docs/build/build-state-history-identity-model.md
+docs/build/build-reader-interface.md:8: - docs/build/build-v1-spec.md
+docs/build/build-reader-interface.md:9: - docs/checkpoints/build-state-history-identity-cleanup.md
+docs/build/build-reader-interface.md:12: Build State stores durable public history, not live spendable balances.
+docs/build/build-reader-interface.md:13: Build Identity stores owner-controlled name/logo metadata.
+docs/build/build-reader-interface.md:17: # Build Reader Interface
+docs/build/build-reader-interface.md:21: This document describes the conceptual reader interface for X1 Build.
+docs/build/build-reader-interface.md:23: The goal is to define which Build fields should be easy to read by users, frontends, explorers, and other X1 projects.
+docs/build/build-reader-interface.md:31: The Build reader interface should make Build state easy to interpret without requiring every external project to understand all internal protection accounts.
+docs/build/build-reader-interface.md:35: - Build identity
+docs/build/build-reader-interface.md:53: ## 3. Main Build view
+docs/build/build-reader-interface.md:82: X1 address that owns the Build.
+docs/build/build-reader-interface.md:86: Canonical Build identifier.
+docs/build/build-reader-interface.md:90: Build state version.
+docs/build/build-reader-interface.md:96: Build creation timestamp / slot.
+docs/build/build-reader-interface.md:100: Last Build state update timestamp / slot.
+docs/build/build-reader-interface.md:230: Build was created through burn 11 BLD and has no connected XC history yet.
+docs/build/build-reader-interface.md:234: Build has a canonical Ethereum/XC identity binding.
+docs/build/build-reader-interface.md:264: - native Build creation creates XC history
+docs/build/build-reader-interface.md:272: Other X1 projects may interpret Build fields independently.
+docs/build/build-reader-interface.md:282: - available_bld as spendable Build power
+docs/build/build-reader-interface.md:284: The Build Program should expose readable state, not force one universal score.
+docs/build/build-reader-interface.md:331: - Other projects should be able to read Build state without internal replay-protection details.
+docs/build/build-state-history-identity-model.md:1: # Build State history and identity model
+docs/build/build-state-history-identity-model.md:5: This document is the current authoritative summary for the Build State cleanup introduced on branch `build-state-history-identity-cleanup`.
+docs/build/build-state-history-identity-model.md:7: It supersedes earlier internal Build balance wording in older design notes.
+docs/build/build-state-history-identity-model.md:11:     Build State = durable public protocol history
+docs/build/build-state-history-identity-model.md:12:     Build Identity = owner-controlled name/logo presentation
+docs/build/build-state-history-identity-model.md:13:     Build Actor = future active layer, not current MVP
+docs/build/build-state-history-identity-model.md:15: ## Build State stores
+docs/build/build-state-history-identity-model.md:17: Build State stores durable facts:
+docs/build/build-state-history-identity-model.md:32: ## Build State does not store
+docs/build/build-state-history-identity-model.md:34: Build State does not store live spendable balances:
+docs/build/build-state-history-identity-model.md:41: Spendable or transferable BLD is a separate token. Build State and Build view do not display, mirror, or cache BLD token balance.
+docs/build/build-state-history-identity-model.md:74: Genesis Origin does not mint a public spendable balance inside Build State.
+docs/build/build-state-history-identity-model.md:82: Build State v1 does not expose a public spendable XBP balance.
+docs/build/build-state-history-identity-model.md:100: `UNKNOWN` is not public Build state.
+docs/build/build-state-history-identity-model.md:110: Build State only records stable facts.
+docs/build/build-state-history-identity-model.md:112: ## Build Identity
+docs/build/build-state-history-identity-model.md:114: Build Identity fields:
+docs/build/build-state-history-identity-model.md:126: - no raw logo file is stored in Build State
+docs/build/build-state-history-identity-model.md:130: Build Identity is not Build Actor.
+docs/build/build-state-history-identity-model.md:132: Build Actor remains a future layer.
+docs/build/build-state-history-identity-model.md:136: Build is meant to preserve the participant's verified contribution history.
+docs/build/build-state-history-identity-model.md:144: The gateway must not create an empty Build.
+docs/build/build-state-history-identity-model.md:148: A verified zero history is a valid scan result, but gateway Build activation requires minimum Core redeem history. An unchecked history source is not valid for a gateway state transition.
+docs/build/build-state-history-identity-model.md:154: Preview data is used only to show the participant the currently observed ETH/XC profile before Build creation or update.
+docs/build/build-state-history-identity-model.md:156: Preview data must not be persisted into Build state, registry state, registrar replay sets, or contribution replay sets.

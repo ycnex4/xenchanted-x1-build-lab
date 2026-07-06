@@ -1,0 +1,120 @@
+AGENTS.md:31: Treat the XXXL SVM runtime as scaffold-only, locked, unreleasable, and not deployable by default.
+README.md:820: - builds the SBF program with `cargo build-sbf`
+README.md:826: The integration test is ignored by default because it requires a local SBF artifact:
+README.md:828:     cargo build-sbf
+README.md:845: The Mollusk SBF harness now includes negative instruction decode tests.
+README.md:847: The ignored integration test file verifies four SBF-level cases:
+README.md:860: The tests remain ignored by default because they require a local SBF artifact:
+README.md:862:     cargo build-sbf
+README.md:882: The ignored Mollusk SBF harness now covers 9 cases:
+README.md:894: The valid SBF path emits:
+README.md:907: The real SBF path now reaches:
+README.md:1104: The XXXL runtime account contract enforcement now has SBF/Mollusk negative coverage.
+README.md:1180: - deployable flag
+README.md:1253: - `report.deployable == true`
+README.md:1489: Current deployable path readiness:
+README.md:1551: - runtime deployable: `false`
+README.md:1693: - runtime deployable: `false`
+README.md:2038: - Confirms runtime remains scaffold-only, locked, unreleasable, and not deployable.
+docs/build/build-v1-x1-runtime-boundary.md:513: Therefore the runtime boundary should not require raw per-event proof submission as the only production path.
+docs/checkpoints/current-design-checkpoint.md:14:     D2 mint bypass fix
+docs/checkpoints/current-design-checkpoint.md:28:     -> B1C7 authorization
+docs/checkpoints/current-design-checkpoint.md:77: ## Phase 41K.6 B6.28 B1C7 handler boundary map
+docs/checkpoints/current-design-checkpoint.md:79: The B1C7 handler boundary map is recorded in:
+docs/checkpoints/current-design-checkpoint.md:81: docs/gateway/phase-41k6-b6-28-b1c7-handler-boundary-map.md
+docs/checkpoints/current-design-checkpoint.md:1624: - Blocker C: B1C7 handler
+docs/checkpoints/current-design-checkpoint.md:1706: - deployment status remains deployable=false
+docs/checkpoints/current-design-checkpoint.md:1768: - deployable=false
+docs/checkpoints/current-design-checkpoint.md:1943: - C — OPEN: B1C7 handler production/testnet boundary
+docs/checkpoints/current-design-checkpoint.md:1961: Blocker C.1 — B1C7 handler production/testnet boundary planning.
+docs/checkpoints/current-design-checkpoint.md:1964: ## Blocker C.1 B1C7 handler production/testnet boundary planning
+docs/checkpoints/current-design-checkpoint.md:1968: docs/gateway/blocker-c-1-b1c7-handler-production-testnet-boundary-planning.md
+docs/checkpoints/current-design-checkpoint.md:1970: C.1 opens the B1C7 handler production/testnet boundary track after Blocker A was closed narrowly.
+docs/checkpoints/current-design-checkpoint.md:1974: - B1C7 integration exists behind feature gate: phase-41k6-b1c7-handler-integration-test-gate
+docs/checkpoints/current-design-checkpoint.md:1975: - dangerous SBF build allow feature is separately named and explicit
+docs/checkpoints/current-design-checkpoint.md:1976: - default consume_gateway_mint path rejects with CpiBoundaryNotReady when the B1C7 gate is not enabled
+docs/checkpoints/current-design-checkpoint.md:1978: - deployment_status.rs still records deployable=false
+docs/checkpoints/current-design-checkpoint.md:1998: Blocker C.2 — repo-grounded B1C7 handler inventory.
+docs/checkpoints/current-design-checkpoint.md:2001: ## Blocker C.2 repo-grounded B1C7 handler inventory
+docs/checkpoints/current-design-checkpoint.md:2005: docs/gateway/blocker-c-2-repo-grounded-b1c7-handler-inventory.md
+docs/checkpoints/current-design-checkpoint.md:2009: docs/gateway/evidence/blocker-c-2-repo-grounded-b1c7-handler-inventory
+docs/checkpoints/current-design-checkpoint.md:2011: C.2 inventoried the B1C7 handler path in tracked repository files only.
+docs/checkpoints/current-design-checkpoint.md:2034: - the repo has a meaningful B1C7 handler path
+docs/checkpoints/current-design-checkpoint.md:2039: - deployment_status remains deployable=false
+docs/checkpoints/current-design-checkpoint.md:2058: Blocker C.3 — B1C7 production/testnet activation decision model.
+docs/checkpoints/current-design-checkpoint.md:2087: ## Blocker C.3 B1C7 production/testnet activation decision model
+docs/checkpoints/current-design-checkpoint.md:2091: docs/gateway/blocker-c-3-b1c7-production-testnet-activation-decision-model.md
+docs/checkpoints/current-design-checkpoint.md:2095: docs/gateway/evidence/blocker-c-3-b1c7-production-testnet-activation-decision-model
+docs/checkpoints/current-design-checkpoint.md:2105: C.3 rejects direct activation of the existing dangerous test-gate feature set as a deployable or testnet-intended route.
+docs/checkpoints/current-design-checkpoint.md:2109: The current feature names and compile-error text intentionally describe the path as non-production integration/test-gated and dangerous for deploy artifacts.
+docs/checkpoints/current-design-checkpoint.md:2111: C.3 requires a future reviewed testnet-intended B1C7 handler route/boundary before any deployable artifact can be built or accepted.
+docs/checkpoints/current-design-checkpoint.md:2129: Blocker C.4 — B1C7 invariant review package.
+docs/checkpoints/current-design-checkpoint.md:2132: ## Blocker C.4 B1C7 invariant review package
+docs/checkpoints/current-design-checkpoint.md:2136: docs/gateway/blocker-c-4-b1c7-invariant-review-package.md
+docs/checkpoints/current-design-checkpoint.md:2140: docs/gateway/evidence/blocker-c-4-b1c7-invariant-review-package
+docs/checkpoints/current-design-checkpoint.md:2198: C.4 supports the conclusion that the B1C7 handler boundary has a coherent invariant structure in repo source.
+docs/checkpoints/current-design-checkpoint.md:2200: C.4 does not approve direct dangerous test-gate deployment.
+docs/checkpoints/current-design-checkpoint.md:2202: C.4 does not replace the need for a future reviewed testnet-intended handler route before any deployable artifact.
+docs/checkpoints/current-design-checkpoint.md:2218: Blocker C.5 — B1C7 boundary closure decision record.
+docs/checkpoints/current-design-checkpoint.md:2260: ## Blocker C.5 B1C7 boundary closure decision record
+docs/checkpoints/current-design-checkpoint.md:2264: docs/gateway/blocker-c-5-b1c7-boundary-closure-decision-record.md
+docs/checkpoints/current-design-checkpoint.md:2272: - C.1 opened B1C7 production/testnet boundary planning
+docs/checkpoints/current-design-checkpoint.md:2275: - C.3 rejected direct dangerous test-gate activation
+docs/checkpoints/current-design-checkpoint.md:2277: - C.4 completed B1C7 invariant review
+docs/checkpoints/current-design-checkpoint.md:2284: C.5 does not approve handler activation, live route activation, direct dangerous test-gate deployment, signing, keypair use, deploy, write-buffer, set-upgrade-authority, close, upgrade, state initialization, SPL setup, SPL CPI minting, guardian package constru
+docs/checkpoints/current-design-checkpoint.md:2318: - Blocker C closed narrowly as B1C7 handler boundary / invariants only
+docs/checkpoints/current-design-checkpoint.md:2664: - Blocker C closed narrowly as B1C7 handler boundary / invariants only
+docs/checkpoints/current-design-checkpoint.md:2677: - deployment_status remains deployable=false
+docs/checkpoints/current-design-checkpoint.md:2725: - open-gate route: requires D2 production-path test gate plus B1C7 handler integration test gate and both dangerous allow features
+docs/checkpoints/current-design-checkpoint.md:3020: - Blocker C closed narrowly as B1C7 handler boundary / invariants only
+docs/checkpoints/current-design-checkpoint.md:3399: - Blocker C closed narrowly as B1C7 handler boundary / invariants only
+docs/checkpoints/current-design-checkpoint.md:3736: - feature flag binding
+docs/checkpoints/xxxl-account-contract-blocker-transition.md:51: - not deployable
+docs/checkpoints/xxxl-account-contract-review-boundary.md:77: - not deployable
+docs/checkpoints/xxxl-account-contract-review-closure-boundary.md:70: - Runtime remains not deployable.
+docs/checkpoints/xxxl-account-contract-review-evidence-package.md:30: - not deployable
+docs/checkpoints/xxxl-account-contract-test-gap-closure.md:77: The runtime remains scaffold-only, locked, unreleasable, and not deployable.
+docs/checkpoints/xxxl-activation-safety-consistency-summary-boundary.md:54: The runtime remains scaffold-only and not deployable.
+docs/checkpoints/xxxl-atomic-mutation-planning-notes-boundary.md:64: The runtime remains scaffold-only and not deployable.
+docs/checkpoints/xxxl-atomic-mutation-planning-notes-boundary.md:80: The current runtime remains scaffold-only, locked, unreleasable, and not deployable.
+docs/checkpoints/xxxl-atomic-state-mutation-composition-boundary.md:59: - cargo build-sbf
+docs/checkpoints/xxxl-canonical-event-key-runtime-reference-boundary.md:43: - not deployable
+docs/checkpoints/xxxl-deployment-blocker-evidence-consistency-boundary.md:49: The runtime remains scaffold-only and not deployable.
+docs/checkpoints/xxxl-deployment-blocker-expansion-boundary.md:35: - not deployable
+docs/checkpoints/xxxl-deployment-blocker-lookup-boundary.md:49: The runtime remains scaffold-only and not deployable.
+docs/checkpoints/xxxl-deployment-blocker-lookup-boundary.md:55: - cargo build-sbf
+docs/checkpoints/xxxl-deployment-roadmap-boundary.md:36: - not deployable
+docs/checkpoints/xxxl-final-external-review-closure-boundary.md:18: - not deployable
+docs/checkpoints/xxxl-final-external-review-closure-boundary.md:41: The reviewer reported a local `cargo build-sbf` toolchain or lockfile issue and missing local `cargo audit` / `cargo deny` tools.
+docs/checkpoints/xxxl-first-scaffold-only-mollusk-harness.md:15: - Confirmed `cargo build-sbf` works.
+docs/checkpoints/xxxl-first-scaffold-only-mollusk-harness.md:16: - Confirmed SBF artifact exists:
+docs/checkpoints/xxxl-first-scaffold-only-mollusk-harness.md:18: - Confirmed Mollusk can load and execute the SBF artifact.
+docs/checkpoints/xxxl-first-scaffold-only-mollusk-harness.md:32: - cargo build-sbf
+docs/checkpoints/xxxl-guarded-spl-cpi-execution-gate-boundary.md:44: - cargo build-sbf
+docs/checkpoints/xxxl-live-route-safety-consistency-boundary.md:47: The runtime remains scaffold-only and not deployable.
+docs/checkpoints/xxxl-mollusk-account-contract-negative-coverage.md:9: Add SBF/Mollusk negative coverage for the enforced `consume_gateway_mint` account contract.
+docs/checkpoints/xxxl-mollusk-account-contract-negative-coverage.md:39: - cargo build-sbf
+docs/checkpoints/xxxl-mollusk-account-contract-negative-coverage.md:51: The account contract enforcement path is now covered by unit tests and SBF/Mollusk negative tests.
+docs/checkpoints/xxxl-mollusk-account-meta-order-coverage.md:58: - not deployable
+docs/checkpoints/xxxl-mollusk-coverage-assessment.md:11: The assessment concludes that accumulated direct Mollusk/SBF entrypoint evidence is sufficient to plan a future, separate, narrowly scoped transition of `MOLLUSK_COVERAGE_INCOMPLETE`.
+docs/checkpoints/xxxl-mollusk-coverage-assessment.md:33: The assessment is based on the accumulated direct Mollusk/SBF coverage recorded in the review package:
+docs/checkpoints/xxxl-mollusk-coverage-assessment.md:38: Direct Mollusk/SBF evidence categories assessed:
+docs/checkpoints/xxxl-mollusk-coverage-assessment.md:52: The accumulated direct Mollusk/SBF evidence is sufficient to plan a future `MOLLUSK_COVERAGE_INCOMPLETE` blocker transition.
+docs/checkpoints/xxxl-mollusk-coverage-assessment.md:87: - runtime remains not deployable
+docs/checkpoints/xxxl-mollusk-coverage-assessment.md:102: The runtime remains scaffold-only, locked, unreleasable, and not deployable.
+docs/checkpoints/xxxl-mollusk-coverage-blocker-transition.md:13: This checkpoint does not make the runtime deployable.
+docs/checkpoints/xxxl-mollusk-coverage-blocker-transition.md:63: - runtime not deployable
+docs/checkpoints/xxxl-mollusk-coverage-blocker-transition.md:107: The runtime remains scaffold-only, locked, unreleasable, and not deployable.
+docs/checkpoints/xxxl-mollusk-coverage-gap-analysis.md:61: - not deployable
+docs/checkpoints/xxxl-mollusk-coverage-gap-analysis.md:86: The runtime remains locked, unreleasable, and not deployable.
+docs/checkpoints/xxxl-mollusk-coverage-review-package.md:11: The review consolidates the accumulated Mollusk/SBF entrypoint evidence after the completed Mollusk stages and separates it from Rust-boundary evidence.
+docs/checkpoints/xxxl-mollusk-coverage-review-package.md:37: Covered direct Mollusk/SBF evidence categories:
+docs/checkpoints/xxxl-mollusk-coverage-review-package.md:51: The checkpoint explicitly separates Rust-boundary evidence from direct Mollusk/SBF evidence.
+docs/checkpoints/xxxl-mollusk-coverage-review-package.md:107: The runtime remains scaffold-only, locked, unreleasable, and not deployable.
+docs/checkpoints/xxxl-mollusk-coverage-review-package.md:115: The assessment stage should decide whether the accumulated direct Mollusk/SBF evidence is sufficient for a later `MOLLUSK_COVERAGE_INCOMPLETE` blocker transition.
+docs/checkpoints/xxxl-mollusk-entrypoint-no-mutation-coverage.md:59: - not deployable
+docs/checkpoints/xxxl-mollusk-guarded-account-validation-preflight.md:9: Connect guarded account validation to `process_instruction` and verify it through real SBF/Mollusk execution.
+docs/checkpoints/xxxl-mollusk-guarded-account-validation-preflight.md:16: - Mollusk now verifies account-validation preflight through the real SBF artifact.
+docs/checkpoints/xxxl-mollusk-guarded-account-validation-preflight.md:39: This confirms that the SBF path reaches guarded account validation and then stops before live execution.
+docs/checkpoints/xxxl-mollusk-guarded-account-validation-preflight.md:55: - cargo build-sbf
+docs/checkpoints/xxxl-mollusk-harness-boundary.md:16: The test loads the XXXL SBF artifact through Mollusk and verifies that a

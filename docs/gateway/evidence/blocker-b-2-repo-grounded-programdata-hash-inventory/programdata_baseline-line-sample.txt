@@ -1,0 +1,120 @@
+docs/build/program-authority-model.md:190: - freeze / remove upgrade authority
+docs/build/program-authority-model.md:266: - upgrade authority is removed or heavily constrained
+docs/build/program-authority-model.md:296: - Upgrade authority is a production-risk decision.
+docs/checkpoints/current-design-checkpoint.md:281: ## Phase 41K.6 B6.38 upgrade authority custody map
+docs/checkpoints/current-design-checkpoint.md:283: The upgrade authority custody map is recorded in:
+docs/checkpoints/current-design-checkpoint.md:285: docs/gateway/phase-41k6-b6-38-upgrade-authority-custody-map.md
+docs/checkpoints/current-design-checkpoint.md:295: - program id: D7AQmZNtFFFoJbducz93atteeSZhw3jq6RmsqBvaf1my
+docs/checkpoints/current-design-checkpoint.md:296: - ProgramData account: 9tuesaPoJhrifF49vJewcg6PSWZeHAJiqQ97pq3LMW9T
+docs/checkpoints/current-design-checkpoint.md:297: - upgrade authority public key: DTfvjtRL63u3XYHXQfgRQCdhEanUK1qqawvfEAM9hxAc
+docs/checkpoints/current-design-checkpoint.md:307: ## Phase 41K.6 B6.39 expected post-upgrade ProgramData hash plan
+docs/checkpoints/current-design-checkpoint.md:309: The expected post-upgrade ProgramData hash plan is recorded in:
+docs/checkpoints/current-design-checkpoint.md:311: docs/gateway/phase-41k6-b6-39-post-upgrade-programdata-hash-plan.md
+docs/checkpoints/current-design-checkpoint.md:849: - no real upgrade authority keypair
+docs/checkpoints/current-design-checkpoint.md:1622: - Blocker A: upgrade authority
+docs/checkpoints/current-design-checkpoint.md:1623: - Blocker B: ProgramData hash
+docs/checkpoints/current-design-checkpoint.md:1658: ## Blocker A.1 upgrade authority discovery planning-only
+docs/checkpoints/current-design-checkpoint.md:1662: docs/gateway/blocker-a-1-upgrade-authority-discovery-planning-only.md
+docs/checkpoints/current-design-checkpoint.md:1666: Define the safe discovery and evidence boundary for Blocker A upgrade authority.
+docs/checkpoints/current-design-checkpoint.md:1670: A.1 does not call RPC, does not use testnet, does not use live RPC, does not use keys, does not sign, does not inspect live ProgramData, does not modify state, and does not submit to any network.
+docs/checkpoints/current-design-checkpoint.md:1684: The next safe step is Blocker A.2 repo-only upgrade authority source discovery.
+docs/checkpoints/current-design-checkpoint.md:1687: ## Blocker A.2 repo-grounded upgrade authority status reconciliation
+docs/checkpoints/current-design-checkpoint.md:1691: docs/gateway/blocker-a-2-repo-grounded-upgrade-authority-status-reconciliation.md
+docs/checkpoints/current-design-checkpoint.md:1697: - x1_testnet_program_id: D7AQmZNtFFFoJbducz93atteeSZhw3jq6RmsqBvaf1my
+docs/checkpoints/current-design-checkpoint.md:1698: - x1_testnet_programdata_account: 9tuesaPoJhrifF49vJewcg6PSWZeHAJiqQ97pq3LMW9T
+docs/checkpoints/current-design-checkpoint.md:1752: Upgrade authority is tolerated only as a temporary staged-finalization mechanism, not as mint authority and not as discretionary supply control.
+docs/checkpoints/current-design-checkpoint.md:1756: - x1_testnet_program_id: D7AQmZNtFFFoJbducz93atteeSZhw3jq6RmsqBvaf1my
+docs/checkpoints/current-design-checkpoint.md:1757: - x1_testnet_programdata_account: 9tuesaPoJhrifF49vJewcg6PSWZeHAJiqQ97pq3LMW9T
+docs/checkpoints/current-design-checkpoint.md:1760: A.3 does not call RPC, does not use testnet, does not use live RPC, does not use keys, does not sign, does not inspect live ProgramData, does not deploy, does not upgrade, does not initialize state, does not configure SPL, and does not submit to any network.
+docs/checkpoints/current-design-checkpoint.md:1785: The next safe step is A.4 read-only live ProgramData evidence GO form, still with no RPC execution.
+docs/checkpoints/current-design-checkpoint.md:1788: ## Blocker A.4 read-only live ProgramData evidence GO form
+docs/checkpoints/current-design-checkpoint.md:1792: docs/gateway/blocker-a-4-read-only-programdata-evidence-go-form.md
+docs/checkpoints/current-design-checkpoint.md:1794: A.4 defines the explicit scoped GO phrase required before A.5 may perform read-only live ProgramData evidence.
+docs/checkpoints/current-design-checkpoint.md:1796: A.4 does not call RPC, does not use testnet, does not use live RPC, does not use keys, does not sign, does not inspect live ProgramData, does not deploy, does not upgrade, does not initialize state, does not configure SPL, does not construct guardian packages,
+docs/checkpoints/current-design-checkpoint.md:1802: - program_id: D7AQmZNtFFFoJbducz93atteeSZhw3jq6RmsqBvaf1my
+docs/checkpoints/current-design-checkpoint.md:1803: - programdata_account: 9tuesaPoJhrifF49vJewcg6PSWZeHAJiqQ97pq3LMW9T
+docs/checkpoints/current-design-checkpoint.md:1808: I approve Blocker A.5 read-only live ProgramData evidence only, scoped to X1 testnet RPC https://rpc.testnet.x1.xyz, program id D7AQmZNtFFFoJbducz93atteeSZhw3jq6RmsqBvaf1my, ProgramData account 9tuesaPoJhrifF49vJewcg6PSWZeHAJiqQ97pq3LMW9T, and expected observe
+docs/checkpoints/current-design-checkpoint.md:1825: ## Blocker A.5 read-only live ProgramData evidence
+docs/checkpoints/current-design-checkpoint.md:1827: The Blocker A.5 read-only live ProgramData evidence record is recorded in:
+docs/checkpoints/current-design-checkpoint.md:1829: docs/gateway/blocker-a-5-read-only-live-programdata-evidence.md
+docs/checkpoints/current-design-checkpoint.md:1833: docs/gateway/evidence/blocker-a-5-read-only-live-programdata-evidence
+docs/checkpoints/current-design-checkpoint.md:1837: A.5 did not use signing, did not use keypairs, did not deploy, did not write-buffer, did not set-upgrade-authority, did not close, did not upgrade, did not initialize state, did not configure SPL, did not construct guardian packages, did not submit, and did no
+docs/checkpoints/current-design-checkpoint.md:1839: ProgramData evidence status:
+docs/checkpoints/current-design-checkpoint.md:1845: - observed_programdata_account: 9tuesaPoJhrifF49vJewcg6PSWZeHAJiqQ97pq3LMW9T
+docs/checkpoints/current-design-checkpoint.md:1869: A.5R reviews the matched A.5 read-only live ProgramData evidence.
+docs/checkpoints/current-design-checkpoint.md:1874: - observed_programdata_account: 9tuesaPoJhrifF49vJewcg6PSWZeHAJiqQ97pq3LMW9T
+docs/checkpoints/current-design-checkpoint.md:1922: - A.5 executed read-only live ProgramData evidence
+docs/checkpoints/current-design-checkpoint.md:1928: - program_id: D7AQmZNtFFFoJbducz93atteeSZhw3jq6RmsqBvaf1my
+docs/checkpoints/current-design-checkpoint.md:1929: - observed_programdata_account: 9tuesaPoJhrifF49vJewcg6PSWZeHAJiqQ97pq3LMW9T
+docs/checkpoints/current-design-checkpoint.md:1938: A.6 does not approve signing, keypair use, deploy, write-buffer, set-upgrade-authority, close, upgrade, state initialization, SPL setup, SPL CPI minting, guardian package construction, transaction submit, mutation, or production activation.
+docs/checkpoints/current-design-checkpoint.md:1942: - B — OPEN: expected post-upgrade ProgramData hash
+docs/checkpoints/current-design-checkpoint.md:2284: C.5 does not approve handler activation, live route activation, direct dangerous test-gate deployment, signing, keypair use, deploy, write-buffer, set-upgrade-authority, close, upgrade, state initialization, SPL setup, SPL CPI minting, guardian package constru
+docs/checkpoints/current-design-checkpoint.md:2288: - B — OPEN: expected post-upgrade ProgramData hash
+docs/checkpoints/current-design-checkpoint.md:2317: - Blocker A closed narrowly as upgrade authority present but accepted for test phase
+docs/checkpoints/current-design-checkpoint.md:2571: - expected post-upgrade ProgramData hash in Blocker B
+docs/checkpoints/current-design-checkpoint.md:2631: D.5 does not approve state initialization execution, account creation, PDA creation, initializer execution, SPL mint setup, SPL CPI minting, signing, keypair use, deploy, write-buffer, set-upgrade-authority, close, upgrade, guardian package construction, trans
+docs/checkpoints/current-design-checkpoint.md:2635: - B — OPEN: expected post-upgrade ProgramData hash
+docs/checkpoints/current-design-checkpoint.md:2663: - Blocker A closed narrowly as upgrade authority present but accepted for test phase
+docs/checkpoints/current-design-checkpoint.md:2984: E.5 does not approve SPL mint creation, SPL mint initialization, mint authority assignment, mint authority transfer, freeze authority assignment, freeze authority disablement, SPL CPI minting, state initialization execution, signing, keypair use, deploy, write
+docs/checkpoints/current-design-checkpoint.md:2988: - B — OPEN: expected post-upgrade ProgramData hash
+docs/checkpoints/current-design-checkpoint.md:3019: - Blocker A closed narrowly as upgrade authority present but accepted for test phase
+docs/checkpoints/current-design-checkpoint.md:3364: F.5 does not approve guardian descriptor finalization, guardian public key selection, production key selection, private key handling, signing, guardian package construction, state initialization execution, SPL setup, deploy, write-buffer, set-upgrade-authority
+docs/checkpoints/current-design-checkpoint.md:3368: - B — OPEN: expected post-upgrade ProgramData hash
+docs/checkpoints/current-design-checkpoint.md:3398: - Blocker A closed narrowly as upgrade authority present but accepted for test phase
+docs/checkpoints/current-design-checkpoint.md:3623: - Blocker B expected post-upgrade ProgramData hash
+docs/checkpoints/current-design-checkpoint.md:3700: - B — OPEN: expected post-upgrade ProgramData hash
+docs/checkpoints/current-design-checkpoint.md:3714: Blocker B.1 — expected post-upgrade ProgramData hash planning.
+docs/checkpoints/current-design-checkpoint.md:3717: ## Blocker B.1 expected post-upgrade ProgramData hash planning
+docs/checkpoints/current-design-checkpoint.md:3721: docs/gateway/blocker-b-1-expected-post-upgrade-programdata-hash-planning.md
+docs/checkpoints/current-design-checkpoint.md:3725: docs/gateway/evidence/blocker-b-1-expected-post-upgrade-programdata-hash-planning
+docs/checkpoints/current-design-checkpoint.md:3727: B.1 opens the expected post-upgrade ProgramData hash track after narrow closure of A, C, D, E, F, G, and H.
+docs/checkpoints/current-design-checkpoint.md:3732: - canonical runtime hash over ProgramData executable bytes
+docs/checkpoints/current-design-checkpoint.md:3738: - baseline ProgramData evidence binding
+docs/checkpoints/current-design-checkpoint.md:3746: B.1 does not run build, compute artifact hash, compute ProgramData hash, deploy, upgrade, write buffer, change authority, initialize state, configure SPL, construct guardian packages, sign, call RPC, use testnet, submit, or mutate.
+docs/checkpoints/current-design-checkpoint.md:3760: Blocker B.2 — repo-grounded ProgramData hash inventory.
+docs/checkpoints/implementation-risk-checklist.md:253: - remove upgrade authority
+docs/checkpoints/implementation-risk-checklist.md:254: - keep upgrade authority with disclosure
+docs/checkpoints/xxxl-deployment-readiness-xdex-plan.md:19: - upgrade authority must not create supply rights
+docs/checkpoints/xxxl-deployment-readiness-xdex-plan.md:20: - final goal remains freeze / removal of upgrade authority after X1-native emission mechanics are complete
+docs/checkpoints/xxxl-production-runtime-byte-layout.md:36: - program upgrade authority and SPL Token mint authority remain separate
+docs/checkpoints/xxxl-program-identity-authority-procedure.md:37: - temporary deploy or upgrade authority during development
+docs/checkpoints/xxxl-program-identity-authority-procedure.md:43: - production target is immutable or upgrade authority removed/frozen before real release
+docs/checkpoints/xxxl-program-v1-design-boundary.md:29: - After the planned X1-native emission mechanics are complete, upgrade authority must be removed / frozen.
+docs/checkpoints/xxxl-program-v1-review-summary.md:38: - final goal remains freeze / removal of upgrade authority after planned X1-native emission mechanics are complete
+docs/checkpoints/xxxl-program-v1-theo-approval-runtime-gap-notes.md:30: 3. Upgrade authority vs mint authority distinction.
+docs/checkpoints/xxxl-program-v1-x1-runtime-mapping.md:39: - upgrade authority must not create supply rights
+docs/checkpoints/xxxl-program-v1-x1-runtime-mapping.md:40: - upgrade authority must not bypass gateway authorization
+docs/checkpoints/xxxl-program-v1-x1-runtime-mapping.md:41: - upgrade authority must not rewrite balances
+docs/checkpoints/xxxl-program-v1-x1-runtime-mapping.md:42: - upgrade authority must not clear processed events
+docs/checkpoints/xxxl-program-v1-x1-runtime-mapping.md:43: - final protocol goal remains freeze / removal of upgrade authority after X1-native emission mechanics are complete
+docs/checkpoints/xxxl-runtime-serialization-boundary.md:40: - Program upgrade authority and SPL Token mint authority are distinct authority surfaces.
+docs/checkpoints/xxxl-x1-testnet-blocker-model-transition.md:25: - `D7AQmZNtFFFoJbducz93atteeSZhw3jq6RmsqBvaf1my`
+docs/checkpoints/xxxl-x1-testnet-blocker-model-transition.md:27: ProgramData:
+docs/checkpoints/xxxl-x1-testnet-blocker-model-transition.md:29: - `9tuesaPoJhrifF49vJewcg6PSWZeHAJiqQ97pq3LMW9T`
+docs/checkpoints/xxxl-x1-testnet-blocker-transition-assessment.md:31: - `D7AQmZNtFFFoJbducz93atteeSZhw3jq6RmsqBvaf1my`
+docs/checkpoints/xxxl-x1-testnet-blocker-transition-assessment.md:33: ProgramData:
+docs/checkpoints/xxxl-x1-testnet-blocker-transition-assessment.md:35: - `9tuesaPoJhrifF49vJewcg6PSWZeHAJiqQ97pq3LMW9T`
+docs/checkpoints/xxxl-x1-testnet-build-execution-evidence.md:49: - `D7AQmZNtFFFoJbducz93atteeSZhw3jq6RmsqBvaf1my`
+docs/checkpoints/xxxl-x1-testnet-build-execution-evidence.md:67: - local public key equals `D7AQmZNtFFFoJbducz93atteeSZhw3jq6RmsqBvaf1my`
+docs/checkpoints/xxxl-x1-testnet-deployment-command-plan.md:41: - `D7AQmZNtFFFoJbducz93atteeSZhw3jq6RmsqBvaf1my`
+docs/checkpoints/xxxl-x1-testnet-deployment-execution-evidence.md:24: - `D7AQmZNtFFFoJbducz93atteeSZhw3jq6RmsqBvaf1my`
+docs/checkpoints/xxxl-x1-testnet-deployment-execution-evidence.md:30: ProgramData address:
+docs/checkpoints/xxxl-x1-testnet-deployment-execution-evidence.md:32: - `9tuesaPoJhrifF49vJewcg6PSWZeHAJiqQ97pq3LMW9T`
+docs/checkpoints/xxxl-x1-testnet-deployment-execution-evidence.md:72: Upgrade authority is still present after the testnet deployment.
+docs/checkpoints/xxxl-x1-testnet-deployment-readiness-preflight.md:39: - `D7AQmZNtFFFoJbducz93atteeSZhw3jq6RmsqBvaf1my`
+docs/checkpoints/xxxl-x1-testnet-deployment-toolchain-artifact-preflight.md:43: - `D7AQmZNtFFFoJbducz93atteeSZhw3jq6RmsqBvaf1my`
+docs/checkpoints/xxxl-x1-testnet-final-deployment-checklist.md:25: - `D7AQmZNtFFFoJbducz93atteeSZhw3jq6RmsqBvaf1my`
+docs/checkpoints/xxxl-x1-testnet-local-runtime-skeleton-phase-1-inventory.md:41: It does not claim immutability while upgrade authority exists.
+docs/checkpoints/xxxl-x1-testnet-local-runtime-skeleton-phase-1-inventory.md:276: No final immutability is claimed while upgrade authority exists.
+docs/checkpoints/xxxl-x1-testnet-local-runtime-skeleton-phase-10-disabled-no-mutation-tests.md:209: No final immutability is claimed while upgrade authority exists.
+docs/checkpoints/xxxl-x1-testnet-local-runtime-skeleton-phase-11-disabled-no-mutation-coverage-expansion.md:241: No final immutability is claimed while upgrade authority exists.
+docs/checkpoints/xxxl-x1-testnet-local-runtime-skeleton-phase-12-lamports-owner-invariant-boundary.md:153: No final immutability is claimed while upgrade authority exists.
+docs/checkpoints/xxxl-x1-testnet-local-runtime-skeleton-phase-13-lamports-owner-invariant-tests.md:156: No final immutability is claimed while upgrade authority exists.
+docs/checkpoints/xxxl-x1-testnet-local-runtime-skeleton-phase-14-disabled-cpi-reachability-evidence.md:211: No final immutability is claimed while upgrade authority exists.
+docs/checkpoints/xxxl-x1-testnet-local-runtime-skeleton-phase-15-disabled-cpi-reachability-tests.md:206: No final immutability is claimed while upgrade authority exists.
+docs/checkpoints/xxxl-x1-testnet-local-runtime-skeleton-phase-16-local-mutation-reachability-boundary.md:266: No final immutability is claimed while upgrade authority exists.
+docs/checkpoints/xxxl-x1-testnet-local-runtime-skeleton-phase-17-audit-followup-minor-notes.md:98: No final immutability is claimed while upgrade authority exists.
+docs/checkpoints/xxxl-x1-testnet-local-runtime-skeleton-phase-17-source-chain-id-runtime-boundary.md:250: No final immutability is claimed while upgrade authority exists.
+docs/checkpoints/xxxl-x1-testnet-local-runtime-skeleton-phase-18-u128-u64-spl-amount-boundary.md:244: No final immutability is claimed while upgrade authority exists.
+docs/checkpoints/xxxl-x1-testnet-local-runtime-skeleton-phase-19-live-atomicity-boundary.md:304: No final immutability is claimed while upgrade authority exists.
+docs/checkpoints/xxxl-x1-testnet-local-runtime-skeleton-phase-2-account-layout-reconciliation.md:461: No immutability is claimed while upgrade authority exists.

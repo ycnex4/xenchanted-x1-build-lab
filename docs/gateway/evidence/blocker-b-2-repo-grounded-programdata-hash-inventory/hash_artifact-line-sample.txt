@@ -1,0 +1,120 @@
+README.md:112: - Stage 1 gateway hash, signature, and recipient decisions
+README.md:479: - [Stage 2.4 Message hash binding design](docs/gateway/stage-2-4-message-hash-binding-design.md)
+README.md:480: - [Stage 2.4 runtime message hash binding evidence](docs/gateway/evidence/stage-2-4-runtime-message-hash-binding-evidence.md)
+README.md:515: - [Stage 2.31 Operator report serialization log artifact evidence](docs/gateway/evidence/stage-2-31-operator-report-serialization-log-artifact-evidence.md)
+README.md:517: - [Stage 2.33 Audit log integrity digest model evidence](docs/gateway/evidence/stage-2-33-audit-log-integrity-digest-model-evidence.md)
+README.md:820: - builds the SBF program with `cargo build-sbf`
+README.md:821: - loads `target/deploy/xxxl_svm.so` through Mollusk
+README.md:826: The integration test is ignored by default because it requires a local SBF artifact:
+README.md:828:     cargo build-sbf
+README.md:845: The Mollusk SBF harness now includes negative instruction decode tests.
+README.md:847: The ignored integration test file verifies four SBF-level cases:
+README.md:860: The tests remain ignored by default because they require a local SBF artifact:
+README.md:862:     cargo build-sbf
+README.md:882: The ignored Mollusk SBF harness now covers 9 cases:
+README.md:894: The valid SBF path emits:
+README.md:907: The real SBF path now reaches:
+README.md:1104: The XXXL runtime account contract enforcement now has SBF/Mollusk negative coverage.
+README.md:1310: - expected evidence artifact
+docs/assumptions.md:149: - transaction hash and event index / log index must be part of the event identity
+docs/assumptions.md:191: ## 9. Snapshot content hash is not implemented
+docs/assumptions.md:193: The MVP does not store or verify a separate snapshot content hash.
+docs/assumptions.md:205: - content hash can be added later if needed
+docs/build/build-v1-spec.md:417:     redeem_key = hash(
+docs/build/build-v1-spec.md:427:     xen_burn_key = hash(
+docs/build/buildstate-fields.md:154: redeem_key = hash(
+docs/build/buildstate-fields.md:164: xen_burn_key = hash(
+docs/build/buildstate-fields.md:175: message_id = hash(
+docs/checkpoints/current-design-checkpoint.md:307: ## Phase 41K.6 B6.39 expected post-upgrade ProgramData hash plan
+docs/checkpoints/current-design-checkpoint.md:309: The expected post-upgrade ProgramData hash plan is recorded in:
+docs/checkpoints/current-design-checkpoint.md:311: docs/gateway/phase-41k6-b6-39-post-upgrade-programdata-hash-plan.md
+docs/checkpoints/current-design-checkpoint.md:315: It does not compute or record the final expected hash.
+docs/checkpoints/current-design-checkpoint.md:1296: Theo confirmed that the B6.63/B6.64 fail-closed command-boundary script remains the only runnable artifact and that H.1 through H.3 did not add any new executable path.
+docs/checkpoints/current-design-checkpoint.md:1315: - program binary hash matches expected if testing upgrade path
+docs/checkpoints/current-design-checkpoint.md:1319: - fixture bundle version/hash
+docs/checkpoints/current-design-checkpoint.md:1320: - expected program binary hash if upgrade path is tested
+docs/checkpoints/current-design-checkpoint.md:1360: - fixture bundle SHA256: 0a3290df47782008f72b441d9b9bf36964003324dde5baaf03f5fb0a04b19da7
+docs/checkpoints/current-design-checkpoint.md:1407: H.5 must reference the exact fixture SHA256 above.
+docs/checkpoints/current-design-checkpoint.md:1454: The next safe step is a Sergey decision. Actual Blocker H local-validator dry-run requires a separate explicit scoped GO referencing the fixture SHA256.
+docs/checkpoints/current-design-checkpoint.md:1465: Approved fixture bundle SHA256:
+docs/checkpoints/current-design-checkpoint.md:1518: - fixture bundle SHA256: 0a3290df47782008f72b441d9b9bf36964003324dde5baaf03f5fb0a04b19da7
+docs/checkpoints/current-design-checkpoint.md:1559: - fixture bundle SHA256: 0a3290df47782008f72b441d9b9bf36964003324dde5baaf03f5fb0a04b19da7
+docs/checkpoints/current-design-checkpoint.md:1602: - fixture bundle SHA256 verified: 0a3290df47782008f72b441d9b9bf36964003324dde5baaf03f5fb0a04b19da7
+docs/checkpoints/current-design-checkpoint.md:1623: - Blocker B: ProgramData hash
+docs/checkpoints/current-design-checkpoint.md:1942: - B — OPEN: expected post-upgrade ProgramData hash
+docs/checkpoints/current-design-checkpoint.md:1975: - dangerous SBF build allow feature is separately named and explicit
+docs/checkpoints/current-design-checkpoint.md:2066: This was a tooling artifact, not a runtime gap.
+docs/checkpoints/current-design-checkpoint.md:2111: C.3 requires a future reviewed testnet-intended B1C7 handler route/boundary before any deployable artifact can be built or accepted.
+docs/checkpoints/current-design-checkpoint.md:2202: C.4 does not replace the need for a future reviewed testnet-intended handler route before any deployable artifact.
+docs/checkpoints/current-design-checkpoint.md:2226: This was a tooling artifact, not a runtime gap.
+docs/checkpoints/current-design-checkpoint.md:2274: - C.2R corrected the order-check tooling artifact
+docs/checkpoints/current-design-checkpoint.md:2278: - C.4R corrected the authorization status gate call-graph artifact
+docs/checkpoints/current-design-checkpoint.md:2288: - B — OPEN: expected post-upgrade ProgramData hash
+docs/checkpoints/current-design-checkpoint.md:2571: - expected post-upgrade ProgramData hash in Blocker B
+docs/checkpoints/current-design-checkpoint.md:2635: - B — OPEN: expected post-upgrade ProgramData hash
+docs/checkpoints/current-design-checkpoint.md:2988: - B — OPEN: expected post-upgrade ProgramData hash
+docs/checkpoints/current-design-checkpoint.md:3029: - deterministic descriptor hash/id
+docs/checkpoints/current-design-checkpoint.md:3084: - expected_future_model: static public guardian descriptor in repo, public keys only, deterministic descriptor hash/id, explicit testnet/production label, explicit threshold/quorum rule
+docs/checkpoints/current-design-checkpoint.md:3207: - exact descriptor hash canonicalization rule
+docs/checkpoints/current-design-checkpoint.md:3254: - deterministic descriptor hash/id
+docs/checkpoints/current-design-checkpoint.md:3281: - exact canonical descriptor hash rule
+docs/checkpoints/current-design-checkpoint.md:3287: - future reviewed descriptor artifact
+docs/checkpoints/current-design-checkpoint.md:3368: - B — OPEN: expected post-upgrade ProgramData hash
+docs/checkpoints/current-design-checkpoint.md:3542: - pre-build / pre-artifact gate
+docs/checkpoints/current-design-checkpoint.md:3623: - Blocker B expected post-upgrade ProgramData hash
+docs/checkpoints/current-design-checkpoint.md:3700: - B — OPEN: expected post-upgrade ProgramData hash
+docs/checkpoints/current-design-checkpoint.md:3714: Blocker B.1 — expected post-upgrade ProgramData hash planning.
+docs/checkpoints/current-design-checkpoint.md:3717: ## Blocker B.1 expected post-upgrade ProgramData hash planning
+docs/checkpoints/current-design-checkpoint.md:3721: docs/gateway/blocker-b-1-expected-post-upgrade-programdata-hash-planning.md
+docs/checkpoints/current-design-checkpoint.md:3725: docs/gateway/evidence/blocker-b-1-expected-post-upgrade-programdata-hash-planning
+docs/checkpoints/current-design-checkpoint.md:3727: B.1 opens the expected post-upgrade ProgramData hash track after narrow closure of A, C, D, E, F, G, and H.
+docs/checkpoints/current-design-checkpoint.md:3731: - full hash bundle
+docs/checkpoints/current-design-checkpoint.md:3732: - canonical runtime hash over ProgramData executable bytes
+docs/checkpoints/current-design-checkpoint.md:3737: - artifact hash binding
+docs/checkpoints/current-design-checkpoint.md:3742: - explicit scoped user GO before any build/hash/upgrade step that is outside pure planning
+docs/checkpoints/current-design-checkpoint.md:3746: B.1 does not run build, compute artifact hash, compute ProgramData hash, deploy, upgrade, write buffer, change authority, initialize state, configure SPL, construct guardian packages, sign, call RPC, use testnet, submit, or mutate.
+docs/checkpoints/current-design-checkpoint.md:3760: Blocker B.2 — repo-grounded ProgramData hash inventory.
+docs/checkpoints/xxxl-atomic-state-mutation-composition-boundary.md:59: - cargo build-sbf
+docs/checkpoints/xxxl-deployment-blocker-lookup-boundary.md:55: - cargo build-sbf
+docs/checkpoints/xxxl-deployment-dry-run-model.md:44: - duplicate check / artifact
+docs/checkpoints/xxxl-deployment-dry-run-model.md:50: - missing artifact
+docs/checkpoints/xxxl-final-external-review-closure-boundary.md:41: The reviewer reported a local `cargo build-sbf` toolchain or lockfile issue and missing local `cargo audit` / `cargo deny` tools.
+docs/checkpoints/xxxl-first-scaffold-only-mollusk-harness.md:15: - Confirmed `cargo build-sbf` works.
+docs/checkpoints/xxxl-first-scaffold-only-mollusk-harness.md:16: - Confirmed SBF artifact exists:
+docs/checkpoints/xxxl-first-scaffold-only-mollusk-harness.md:17:   - `target/deploy/xxxl_svm.so`
+docs/checkpoints/xxxl-first-scaffold-only-mollusk-harness.md:18: - Confirmed Mollusk can load and execute the SBF artifact.
+docs/checkpoints/xxxl-first-scaffold-only-mollusk-harness.md:32: - cargo build-sbf
+docs/checkpoints/xxxl-guarded-spl-cpi-execution-gate-boundary.md:44: - cargo build-sbf
+docs/checkpoints/xxxl-mollusk-account-contract-negative-coverage.md:9: Add SBF/Mollusk negative coverage for the enforced `consume_gateway_mint` account contract.
+docs/checkpoints/xxxl-mollusk-account-contract-negative-coverage.md:39: - cargo build-sbf
+docs/checkpoints/xxxl-mollusk-account-contract-negative-coverage.md:51: The account contract enforcement path is now covered by unit tests and SBF/Mollusk negative tests.
+docs/checkpoints/xxxl-mollusk-coverage-assessment.md:11: The assessment concludes that accumulated direct Mollusk/SBF entrypoint evidence is sufficient to plan a future, separate, narrowly scoped transition of `MOLLUSK_COVERAGE_INCOMPLETE`.
+docs/checkpoints/xxxl-mollusk-coverage-assessment.md:33: The assessment is based on the accumulated direct Mollusk/SBF coverage recorded in the review package:
+docs/checkpoints/xxxl-mollusk-coverage-assessment.md:38: Direct Mollusk/SBF evidence categories assessed:
+docs/checkpoints/xxxl-mollusk-coverage-assessment.md:52: The accumulated direct Mollusk/SBF evidence is sufficient to plan a future `MOLLUSK_COVERAGE_INCOMPLETE` blocker transition.
+docs/checkpoints/xxxl-mollusk-coverage-review-package.md:11: The review consolidates the accumulated Mollusk/SBF entrypoint evidence after the completed Mollusk stages and separates it from Rust-boundary evidence.
+docs/checkpoints/xxxl-mollusk-coverage-review-package.md:37: Covered direct Mollusk/SBF evidence categories:
+docs/checkpoints/xxxl-mollusk-coverage-review-package.md:51: The checkpoint explicitly separates Rust-boundary evidence from direct Mollusk/SBF evidence.
+docs/checkpoints/xxxl-mollusk-coverage-review-package.md:115: The assessment stage should decide whether the accumulated direct Mollusk/SBF evidence is sufficient for a later `MOLLUSK_COVERAGE_INCOMPLETE` blocker transition.
+docs/checkpoints/xxxl-mollusk-guarded-account-validation-preflight.md:9: Connect guarded account validation to `process_instruction` and verify it through real SBF/Mollusk execution.
+docs/checkpoints/xxxl-mollusk-guarded-account-validation-preflight.md:16: - Mollusk now verifies account-validation preflight through the real SBF artifact.
+docs/checkpoints/xxxl-mollusk-guarded-account-validation-preflight.md:39: This confirms that the SBF path reaches guarded account validation and then stops before live execution.
+docs/checkpoints/xxxl-mollusk-guarded-account-validation-preflight.md:55: - cargo build-sbf
+docs/checkpoints/xxxl-mollusk-harness-boundary.md:16: The test loads the XXXL SBF artifact through Mollusk and verifies that a
+docs/checkpoints/xxxl-mollusk-instruction-decode-negative-harness.md:9: Extend the real Mollusk SBF harness with negative instruction decode tests.
+docs/checkpoints/xxxl-mollusk-instruction-decode-negative-harness.md:24: The SBF-level negative tests verify:
+docs/checkpoints/xxxl-mollusk-instruction-decode-negative-harness.md:34: - cargo build-sbf
+docs/checkpoints/xxxl-mollusk-rent-lifecycle-coverage.md:10: The stage added direct Mollusk/SBF entrypoint tests proving that low-rent / non-rent-exempt accounts are rejected with:
+docs/checkpoints/xxxl-mollusk-rent-lifecycle-coverage.md:93: This stage adds direct rent-exemption rejection evidence through Mollusk/SBF entrypoint tests.
+docs/checkpoints/xxxl-mollusk-rent-lifecycle-coverage.md:105: It should summarize accumulated direct Mollusk/SBF evidence and clearly separate it from Rust-boundary evidence.
+docs/checkpoints/xxxl-pda-derivation-inventory-boundary.md:64: - cargo build-sbf
+docs/checkpoints/xxxl-pda-fixture-derivation-report-boundary.md:63: - cargo build-sbf
+docs/checkpoints/xxxl-pda-fixture-verification-boundary.md:67: - cargo build-sbf
+docs/checkpoints/xxxl-processed-event-mutation-boundary.md:44: - cargo build-sbf
+docs/checkpoints/xxxl-program-id-and-pda-fixture-readiness-plan.md:60: - cargo build-sbf
+docs/checkpoints/xxxl-program-id-placeholder-status-boundary.md:68: - cargo build-sbf
+docs/checkpoints/xxxl-recipient-balance-mutation-boundary.md:43: - cargo build-sbf
+docs/checkpoints/xxxl-runtime-account-contract-enforcement-boundary.md:64: - cargo build-sbf
+docs/checkpoints/xxxl-runtime-account-contract-manifest-boundary.md:66: - cargo build-sbf
+docs/checkpoints/xxxl-runtime-deployment-blocker-descriptions.md:65: - cargo build-sbf
+docs/checkpoints/xxxl-runtime-deployment-blocker-resolution-guidance.md:56: - cargo build-sbf
