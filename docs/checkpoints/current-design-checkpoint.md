@@ -1146,3 +1146,44 @@ Current decision remains:
 NO-GO FOR BLOCKER_H_LOCAL_VALIDATOR_EXECUTION_TESTNET_SIGNING_SPL_UPGRADE_INIT_SUBMIT
 
 The next safe step is to send B6.64 to Theo for review.
+
+
+## Phase 41K.6 B6.64R Theo verdict record and exit-code comment
+
+Theo's verdict for B6.63/B6.64 is recorded in:
+
+docs/gateway/phase-41k6-b6-64r-theo-verdict-record-exit-code-comment.md
+
+Theo approved B6.63/B6.64 and confirmed that the B6.63 command-boundary script is fail-closed.
+
+Theo requested one documentation comment:
+
+# Exit 63 = BLOCKER_H_NOT_CLOSED
+
+B6.64R adds that comment to:
+
+scripts/gateway/b6_63_local_validator_command_boundary_no_execution.sh
+
+Verification result after the comment:
+
+- syntax check: OK
+- default blocker H gate: OK
+- default local-validator execution: NOT_EXECUTED
+- no testnet fallback: OK
+- --execute refusal: OK
+- --execute refusal exit code: 63
+- exit 63 comment: OK
+- testnet action: NOT_EXECUTED
+- signing: NOT_EXECUTED
+- SPL setup: NOT_EXECUTED
+- upgrade/init/submit: NOT_EXECUTED
+
+Current status:
+
+THEO_VERDICT_RECORDED_B6_63_B6_64_APPROVED_EXIT_63_COMMENT_ADDED_NO_EXECUTION
+
+Current decision remains:
+
+NO-GO FOR BLOCKER_H_LOCAL_VALIDATOR_EXECUTION_TESTNET_SIGNING_SPL_UPGRADE_INIT_SUBMIT
+
+The next safe step is Blocker H.1 local-validator dry-run planning step.
