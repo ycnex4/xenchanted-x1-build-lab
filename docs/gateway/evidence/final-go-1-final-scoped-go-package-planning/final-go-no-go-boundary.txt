@@ -1,0 +1,27 @@
+# Final GO.1 NO-GO boundary
+
+FINAL_GO_1_IS_PLANNING_ONLY=true
+
+FINAL_GO_1_DOES_NOT_APPROVE:
+- build
+- artifact hash computation
+- ProgramData hash computation
+- deploy
+- upgrade
+- write-buffer
+- authority change
+- state initialization
+- SPL setup
+- guardian package construction
+- signing
+- RPC
+- testnet
+- transaction submit
+- mutation
+- production activation
+
+FINAL_GO_1_REQUIRED_FUTURE_RULE:
+No future mutation may happen without an explicit final scoped GO package.
+
+FINAL_GO_1_STOP_RULE:
+If any expected/observed identity, hash, authority, program id, ProgramData, network, or cost boundary mismatches, the required action is stop.

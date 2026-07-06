@@ -4091,3 +4091,46 @@ NO-GO REMAINS_FOR_BUILD_HASH_DEPLOY_UPGRADE_WRITE_BUFFER_STATE_INIT_SPL_SETUP_GU
 Next safe step:
 
 Final GO.1 — final scoped GO package planning.
+
+
+## Final GO.1 final scoped GO package planning
+
+The Final GO.1 planning record is recorded in:
+
+docs/gateway/final-go-1-final-scoped-go-package-planning.md
+
+Evidence directory:
+
+docs/gateway/evidence/final-go-1-final-scoped-go-package-planning
+
+Final GO.1 opens planning for a future final scoped GO package.
+
+Current status:
+
+FINAL_GO_1_OPEN_FINAL_SCOPED_GO_PACKAGE_PLANNING_ONLY_NO_BUILD_NO_HASH_NO_RPC_NO_EXECUTION
+
+Current decision:
+
+FINAL_GO_NOT_GRANTED
+
+Required package sections are recorded in:
+
+docs/gateway/evidence/final-go-1-final-scoped-go-package-planning/final-go-package-required-sections.txt
+
+Planning questions are recorded in:
+
+docs/gateway/evidence/final-go-1-final-scoped-go-package-planning/final-go-planning-questions.txt
+
+NO-GO boundary is recorded in:
+
+docs/gateway/evidence/final-go-1-final-scoped-go-package-planning/final-go-no-go-boundary.txt
+
+Final GO.1 does not grant GO.
+
+Final GO.1 does not run build, compute artifact hash, compute ProgramData hash, deploy, upgrade, write buffer, change authority, initialize state, configure SPL, construct guardian packages, sign, call RPC, use testnet, submit, or mutate.
+
+NO-GO REMAINS_FOR_BUILD_HASH_DEPLOY_UPGRADE_WRITE_BUFFER_STATE_INIT_SPL_SETUP_GUARDIAN_PACKAGES_SIGNING_RPC_TESTNET_NETWORK_SUBMIT_MUTATION
+
+Next safe step:
+
+Final GO.2 — repo-grounded final GO package inventory.

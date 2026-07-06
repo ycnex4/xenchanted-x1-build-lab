@@ -1,0 +1,46 @@
+# Final GO planning questions
+
+FG1_QUESTION_01_OPERATION_SCOPE
+What exact operation would the future GO authorize: build only, hash only, deploy/upgrade, state init, SPL setup, guardian package, or a smaller isolated step?
+
+FG1_QUESTION_02_NETWORK_SCOPE
+Is the operation limited to X1 testnet, and how is the network identity verified?
+
+FG1_QUESTION_03_PROGRAM_ID_SCOPE
+Which exact program id is authorized?
+
+FG1_QUESTION_04_PROGRAMDATA_SCOPE
+Which exact ProgramData account is authorized?
+
+FG1_QUESTION_05_AUTHORITY_SCOPE
+Which public upgrade authority is expected, and how is it checked read-only before mutation?
+
+FG1_QUESTION_06_BUILD_SCOPE
+Which build command, toolchain, lockfiles, and feature flags are allowed?
+
+FG1_QUESTION_07_HASH_SCOPE
+Which expected-hash package must exist before upgrade GO?
+
+FG1_QUESTION_08_COST_SCOPE
+What exact maximum SOL/X1 cost boundary applies?
+
+FG1_QUESTION_09_ABORT_SCOPE
+Which conditions abort before mutation?
+
+FG1_QUESTION_10_RECOVERY_SCOPE
+If something fails after mutation, is the path rollback, abandon, redeploy, or stop for manual review?
+
+FG1_QUESTION_11_NO_AUTOMATIC_RETRY
+How is automatic retry explicitly forbidden?
+
+FG1_QUESTION_12_USER_GO_PHRASE
+What exact user phrase is required to authorize the future scoped action?
+
+FG1_QUESTION_13_POST_VERIFICATION
+What exact read-only post-action verification must pass?
+
+FG1_QUESTION_14_EVIDENCE_BUNDLE
+Where is the evidence bundle stored and what must it include?
+
+FG1_QUESTION_15_SCOPE_LIMIT
+Which future actions remain outside the GO and require separate approval?
