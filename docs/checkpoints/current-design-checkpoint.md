@@ -4716,3 +4716,88 @@ NO-GO REMAINS_FOR_BUILD_HASH_DEPLOY_UPGRADE_WRITE_BUFFER_STATE_INIT_SPL_SETUP_GU
 Next safe step:
 
 Scoped Package.5 — expected-hash/build-hash evidence model closure decision record.
+
+
+## Scoped Package.5 expected-hash/build-hash evidence model closure decision record
+
+The Scoped Package.5 closure decision record is recorded in:
+
+docs/gateway/scoped-package-5-expected-hash-build-hash-evidence-model-closure-decision-record.md
+
+Evidence directory:
+
+docs/gateway/evidence/scoped-package-5-expected-hash-build-hash-evidence-model-closure-decision-record
+
+Current status:
+
+SCOPED_PACKAGE_5_CLOSED_NARROW_EXPECTED_HASH_BUILD_HASH_EVIDENCE_MODEL_REVIEWED_EXECUTION_NOT_APPROVED
+
+Current decision:
+
+EXPECTED_HASH_BUILD_HASH_EVIDENCE_MODEL_CLOSED_NARROW_FINAL_GO_NOT_GRANTED
+
+Selected operation class:
+
+EXPECTED_HASH_BUILD_HASH_EVIDENCE_PACKAGE_PLANNING_ONLY
+
+Selected model:
+
+STRICT_EXPECTED_HASH_BUILD_HASH_EVIDENCE_PACKAGE_MODEL_REQUIRED
+
+Current GO state:
+
+FINAL_GO_NOT_GRANTED
+
+Closed model points:
+
+- Scoped Package.1 selected expected-hash/build-hash evidence package as first future operation class for planning only
+- Scoped Package.2 inventoried requirements
+- Scoped Package.3 selected strict expected-hash/build-hash evidence package model
+- Scoped Package.4 reviewed invariants and prepared closure candidate
+- strict local evidence model required
+- full hash bundle required
+- canonical runtime hash domain is ProgramData executable bytes excluding loader metadata
+- SHA256 required
+- repo/source/build/toolchain/lockfile/feature flag bindings required
+- baseline program id, ProgramData, and authority bindings required
+- local package must not include RPC/testnet
+- local package must not authorize upgrade/write-buffer or mutation
+- exact scoped user GO required before any future build/hash execution
+- no secret material allowed in evidence
+- any mismatch requires stop
+- automatic retry rejected
+- current GO state remains FINAL_GO_NOT_GRANTED
+- no execution approved
+
+Still not approved:
+
+- actual future execution package drafting
+- actual source commit selection
+- actual build command selection
+- actual toolchain version selection
+- actual feature flag selection
+- actual artifact path selection
+- actual local SBF artifact SHA256 computation
+- actual canonical ProgramData executable-bytes SHA256 computation
+- actual expected-hash package id generation
+- actual exact scoped user GO phrase selection
+- build/hash execution
+- RPC/testnet
+- deploy/upgrade/write-buffer
+- state initialization
+- SPL setup
+- guardian package construction
+- signing
+- submit
+- mutation
+- production activation
+
+Scoped Package.5 does not grant GO.
+
+Scoped Package.5 does not run build, compute artifact hash, compute ProgramData hash, call RPC, use testnet, deploy, upgrade, write buffer, change authority, initialize state, configure SPL, construct guardian packages, sign, submit, or mutate.
+
+NO-GO REMAINS_FOR_BUILD_HASH_DEPLOY_UPGRADE_WRITE_BUFFER_STATE_INIT_SPL_SETUP_GUARDIAN_PACKAGES_SIGNING_RPC_TESTNET_NETWORK_SUBMIT_MUTATION
+
+Next safe step:
+
+Evidence Package.1 — exact expected-hash/build-hash execution package planning only.
