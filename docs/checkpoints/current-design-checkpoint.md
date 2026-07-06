@@ -1996,3 +1996,89 @@ NO-GO REMAINS_FOR_HANDLER_ACTIVATION_SIGNING_KEYS_PROGRAM_UPGRADE_STATE_INIT_SPL
 Next safe step:
 
 Blocker C.2 — repo-grounded B1C7 handler inventory.
+
+
+## Blocker C.2 repo-grounded B1C7 handler inventory
+
+The Blocker C.2 inventory record is recorded in:
+
+docs/gateway/blocker-c-2-repo-grounded-b1c7-handler-inventory.md
+
+Evidence directory:
+
+docs/gateway/evidence/blocker-c-2-repo-grounded-b1c7-handler-inventory
+
+C.2 inventoried the B1C7 handler path in tracked repository files only.
+
+Static inventory result:
+
+- cargo_b1c7_feature_present: true
+- cargo_b1c7_dangerous_allow_present: true
+- processor_compile_error_for_b1c7_without_dangerous_allow: true
+- processor_live_route_flag_false: true
+- processor_default_path_fails_cpi_not_ready: true
+- processor_b1c7_handler_boundary_present: true
+- processor_b1c7_authorization_from_inputs_present: true
+- processor_b1c7_atomic_boundary_present: true
+- account_contract_b1_v3_12_account_contract_present: true
+- cpi_execution_false_default_present: true
+- cpi_execution_true_requires_b1c7_and_dangerous_allows: true
+- deployment_still_not_deployable: true
+- program_id_placeholder_active: true
+- handler_calls_authorization_before_atomic_mark_and_mint: true
+- atomic_boundary_checks_cpi_gate_before_atomic_mark_and_mint_call: true
+- atomic_boundary_marks_before_guarded_cpi_inside_atomic_function: true
+
+C.2 interpretation:
+
+- the repo has a meaningful B1C7 handler path
+- the path remains integration/test-gated
+- default consume_gateway_mint fails closed with CpiBoundaryNotReady
+- live route activation remains false
+- SPL CPI execution remains false by default
+- deployment_status remains deployable=false
+- Program ID placeholder boundary remains active
+
+C.2 does not close Blocker C.
+
+C.2 does not activate the handler, does not change code, does not call RPC, does not use testnet, does not use keys, does not sign, does not deploy, does not upgrade, does not initialize state, does not configure SPL, does not construct guardian packages, does not submit, and does not mutate.
+
+Current status:
+
+BLOCKER_C_OPEN_REPO_GROUNDED_B1C7_HANDLER_INVENTORY_COMPLETED_NO_ACTIVATION
+
+Current decision:
+
+BLOCKER_C_NOT_CLOSED
+
+NO-GO REMAINS_FOR_HANDLER_ACTIVATION_SIGNING_KEYS_PROGRAM_UPGRADE_STATE_INIT_SPL_SETUP_GUARDIAN_PACKAGES_NETWORK_SUBMIT_MUTATION
+
+Next safe step:
+
+Blocker C.3 — B1C7 production/testnet activation decision model.
+
+## C.2R order-check correction
+
+The original C.2 static check reported:
+
+atomic_boundary_marks_before_guarded_cpi_inside_atomic_function: false
+
+This was a tooling artifact, not a runtime gap.
+
+Reason:
+
+The check used a whole-file string index and matched the import/use occurrence of guarded_mint_to_cpi_execution_gate_boundary before the function body.
+
+Corrected function-scoped check:
+
+- function: atomic_mark_and_mint_boundary
+- mark_processed_event_atomic_call_line: 556
+- guarded_mint_to_cpi_execution_gate_boundary_call_line: 571
+- mark_before_guarded_cpi_call: true
+
+Corrected status:
+
+atomic_boundary_marks_before_guarded_cpi_inside_atomic_function: true
+
+C.2 remains inventory-only and still does not close Blocker C.
+

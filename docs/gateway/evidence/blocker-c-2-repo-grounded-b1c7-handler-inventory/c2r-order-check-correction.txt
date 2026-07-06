@@ -1,0 +1,30 @@
+# C.2R order-check correction
+
+Status:
+
+C2R_ORDER_CHECK_TOOLING_ARTIFACT_CORRECTED
+
+The original C.2 static check reported:
+
+atomic_boundary_marks_before_guarded_cpi_inside_atomic_function: false
+
+Reason:
+
+The first implementation used a whole-file string index for guarded_mint_to_cpi_execution_gate_boundary. The first whole-file occurrence is the import/use site, not the call inside atomic_mark_and_mint_boundary.
+
+Corrected check:
+
+- function: atomic_mark_and_mint_boundary
+- mark_processed_event_atomic_call_line: 556
+- guarded_mint_to_cpi_execution_gate_boundary_call_line: 571
+- mark_before_guarded_cpi_call: true
+
+Interpretation:
+
+This is not a runtime gap.
+
+Inside atomic_mark_and_mint_boundary, processed_event marking occurs before the guarded SPL CPI boundary call.
+
+C.2 remains inventory-only.
+
+C.2R does not activate the handler, does not change runtime code, does not call RPC, does not use testnet, does not sign, does not deploy, does not upgrade, does not initialize state, does not configure SPL, does not construct guardian packages, does not submit, and does not mutate.
