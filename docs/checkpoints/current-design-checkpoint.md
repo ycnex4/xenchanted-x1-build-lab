@@ -1452,3 +1452,47 @@ Current decision remains:
 NO-GO FOR BLOCKER_H_LOCAL_VALIDATOR_EXECUTION_TESTNET_SIGNING_SPL_UPGRADE_INIT_SUBMIT
 
 The next safe step is a Sergey decision. Actual Blocker H local-validator dry-run requires a separate explicit scoped GO referencing the fixture SHA256.
+
+
+## Blocker H.5R explicit scoped GO record
+
+The Blocker H.5R explicit scoped GO record is recorded in:
+
+docs/gateway/blocker-h-5r-explicit-scoped-go-record.md
+
+Sergey provided the explicit scoped GO phrase for future H.6 local-validator dry-run.
+
+Approved fixture bundle SHA256:
+
+0a3290df47782008f72b441d9b9bf36964003324dde5baaf03f5fb0a04b19da7
+
+Approved future scope:
+
+- Blocker H actual local-validator dry-run only
+- local disposable validator state
+- verified mock fixture bundle only
+- no testnet RPC
+- no live RPC
+- no real signing keys
+- no real guardian packages
+- no SPL mint authority setup against real assets
+- no SPL CPI minting against real assets
+- no program upgrade
+- no persistent state initialization outside the local validator
+- no submit to any network
+
+H.5R does not run a local validator.
+
+H.5R does not add an actual runnable validator execution command.
+
+Current status:
+
+EXPLICIT_SCOPED_GO_RECORDED_FOR_H6_LOCAL_VALIDATOR_DRY_RUN_NO_EXECUTION_IN_H5R
+
+Current decision:
+
+GO RECORDED FOR H6 LOCAL VALIDATOR DRY-RUN ONLY WITH STRICT LOCAL DISPOSABLE SCOPE
+
+NO-GO REMAINS FOR TESTNET_SIGNING_REAL_KEYS_GUARDIAN_PACKAGES_SPL_REAL_SETUP_PROGRAM_UPGRADE_PERSISTENT_INIT_NETWORK_SUBMIT
+
+The next step may be Blocker H.6 actual local-validator dry-run execution, strictly within the recorded H.5R scope and only after preflight verification.
