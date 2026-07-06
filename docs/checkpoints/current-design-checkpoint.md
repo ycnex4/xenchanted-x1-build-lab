@@ -4970,3 +4970,83 @@ NO-GO REMAINS_FOR_BUILD_HASH_DEPLOY_UPGRADE_WRITE_BUFFER_STATE_INIT_SPL_SETUP_GU
 Next safe step:
 
 Evidence Package.3 — expected-hash/build-hash execution decision model.
+
+
+## Evidence Package.3 expected-hash/build-hash execution decision model
+
+The Evidence Package.3 decision model is recorded in:
+
+docs/gateway/evidence-package-3-expected-hash-build-hash-execution-decision-model.md
+
+Evidence directory:
+
+docs/gateway/evidence/evidence-package-3-expected-hash-build-hash-execution-decision-model
+
+Current status:
+
+EVIDENCE_PACKAGE_3_OPEN_EXPECTED_HASH_BUILD_HASH_EXECUTION_DECISION_MODEL_RECORDED_NO_BUILD_NO_HASH_NO_RPC_NO_EXECUTION
+
+Current decision:
+
+STRICT_LOCAL_BUILD_HASH_EXECUTION_WITH_EXACT_GO_ONLY_MODEL_REQUIRED_FINAL_GO_NOT_GRANTED
+
+Selected execution model:
+
+STRICT_LOCAL_BUILD_HASH_EXECUTION_WITH_EXACT_GO_ONLY
+
+Current GO state:
+
+FINAL_GO_NOT_GRANTED
+
+Future actions allowed only after exact GO:
+
+- capture git branch and source commit
+- verify clean working tree before build
+- capture Rust/Cargo/Solana/cargo-build-sbf versions
+- run exact package-bound local build command
+- verify expected local artifact path
+- compute local SBF artifact SHA256
+- compute canonical ProgramData executable-bytes SHA256 using declared local canonicalization method
+- write evidence files
+- capture final git status
+
+Explicitly not allowed:
+
+- RPC
+- testnet
+- deploy
+- upgrade
+- write-buffer
+- authority change
+- state initialization
+- SPL setup
+- guardian package construction
+- signing
+- transaction submit
+- mutation
+- production activation
+- private keys, seed phrases, or secret material
+
+Remaining gaps:
+
+- Evidence Package.4 invariant review not recorded
+- Evidence Package.5 closure decision not recorded
+- exact scoped user GO phrase not selected
+- future execution package not closed
+- toolchain versions not captured
+- build not executed
+- local SBF artifact SHA256 not computed
+- canonical ProgramData executable-bytes SHA256 not computed
+- RPC/testnet not approved
+- deploy/upgrade/write-buffer not approved
+- mutation not approved
+
+Evidence Package.3 does not grant GO.
+
+Evidence Package.3 does not run build, compute artifact hash, compute ProgramData hash, call RPC, use testnet, deploy, upgrade, write buffer, change authority, initialize state, configure SPL, construct guardian packages, sign, submit, or mutate.
+
+NO-GO REMAINS_FOR_BUILD_HASH_DEPLOY_UPGRADE_WRITE_BUFFER_STATE_INIT_SPL_SETUP_GUARDIAN_PACKAGES_SIGNING_RPC_TESTNET_NETWORK_SUBMIT_MUTATION
+
+Next safe step:
+
+Evidence Package.4 — expected-hash/build-hash execution decision invariant review.
