@@ -3002,3 +3002,50 @@ NO-GO REMAINS_FOR_SPL_MINT_SETUP_SPL_AUTHORITY_TRANSFER_SPL_CPI_MINTING_SIGNING_
 Next safe step:
 
 Blocker F.1 — guardian descriptor planning.
+
+
+## Blocker F.1 guardian descriptor planning
+
+The Blocker F.1 planning record is recorded in:
+
+docs/gateway/blocker-f-1-guardian-descriptor-planning.md
+
+Evidence directory:
+
+docs/gateway/evidence/blocker-f-1-guardian-descriptor-planning
+
+F.1 opens the guardian descriptor track after:
+
+- Blocker A closed narrowly as upgrade authority present but accepted for test phase
+- Blocker C closed narrowly as B1C7 handler boundary / invariants only
+- Blocker D closed narrowly as state initialization design / invariants only
+- Blocker E closed narrowly as SPL mint authority architecture / invariants only
+
+Preferred future direction:
+
+- static public guardian descriptor in repo
+- public keys only
+- no private keys
+- deterministic descriptor hash/id
+- explicit testnet vs production labeling
+- explicit quorum rule
+- descriptor binding to route/state/message expectations
+- final scoped GO before any guardian package construction or submit
+
+F.1 does not close Blocker F.
+
+F.1 does not add guardian keys, add private keys, finalize a descriptor, construct guardian packages, sign, initialize state, configure SPL, call RPC, use testnet, deploy, upgrade, submit, or mutate.
+
+Current status:
+
+BLOCKER_F_OPEN_GUARDIAN_DESCRIPTOR_PLANNING_ONLY_NO_KEYS_NO_PACKAGES_NO_RPC_NO_EXECUTION
+
+Current decision:
+
+BLOCKER_F_NOT_CLOSED
+
+NO-GO REMAINS_FOR_GUARDIAN_DESCRIPTOR_FINALIZATION_GUARDIAN_KEYS_PRODUCTION_KEYS_SIGNING_PACKAGES_RPC_TESTNET_NETWORK_SUBMIT_MUTATION
+
+Next safe step:
+
+Blocker F.2 — repo-grounded guardian/quorum inventory.

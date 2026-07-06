@@ -1,0 +1,31 @@
+# Guardian descriptor candidate models
+
+F1_MODEL_0_NO_DESCRIPTOR
+status: rejected_candidate
+meaning: Guardian set is implicit or undocumented.
+reason_rejected: incompatible with deterministic review and safe testnet activation.
+
+F1_MODEL_1_AD_HOC_RELAYER_OR_ADMIN_SIGNATURE
+status: rejected_candidate
+meaning: A relayer/admin signs without a public descriptor and quorum model.
+reason_rejected: incompatible with quorum, replay safety, and no hidden authorization.
+
+F1_MODEL_2_STATIC_PUBLIC_GUARDIAN_DESCRIPTOR_IN_REPO
+status: preferred_candidate
+meaning: Public descriptor records schema, guardian public keys, key type, threshold, route binding, activation boundary, and descriptor hash.
+reason_preferred: reviewable, deterministic, auditable, and compatible with no private keys in repo.
+
+F1_MODEL_3_TESTNET_ONLY_DESCRIPTOR_WITH_EXPLICIT_LABEL
+status: acceptable_testnet_candidate
+meaning: A clearly labeled testnet descriptor can be used for scoped testnet only.
+required_boundary: must not be confused with production; must require final scoped GO before use.
+
+F1_MODEL_4_HIDDEN_OFF_REPO_GUARDIAN_SET
+status: rejected_candidate
+meaning: Guardian set exists only operationally and is not recorded.
+reason_rejected: incompatible with public review and deterministic authorization boundary.
+
+F1_MODEL_5_DESCRIPTOR_HASH_BOUND_TO_STATE_AND_MESSAGES
+status: preferred_future_property
+meaning: Descriptor hash/id is bound to GatewayConfig/GuardianSet and message authorization expectations.
+reason_preferred: reduces key-confusion and descriptor-confusion risk.

@@ -1,0 +1,46 @@
+# Guardian descriptor planning questions
+
+F1_QUESTION_01_DESCRIPTOR_SCHEMA
+What exact fields must the guardian descriptor contain?
+
+F1_QUESTION_02_DESCRIPTOR_ID
+How is the descriptor id/hash derived?
+
+F1_QUESTION_03_GUARDIAN_KEY_TYPE
+What key type is canonical for guardian approvals?
+
+F1_QUESTION_04_PUBLIC_KEYS_ONLY
+How do we ensure only public keys are recorded and no private/signing key material is committed?
+
+F1_QUESTION_05_GUARDIAN_WEIGHTS
+Are guardians equal-weight or weighted?
+
+F1_QUESTION_06_THRESHOLD
+What exact quorum/threshold rule is canonical?
+
+F1_QUESTION_07_GUARDIAN_SET_ID
+How is guardian_set_id represented and bound to verification?
+
+F1_QUESTION_08_ACTIVATION_BOUNDARY
+When does a descriptor become active?
+
+F1_QUESTION_09_ROTATION_BOUNDARY
+How are guardian descriptor rotations handled?
+
+F1_QUESTION_10_TESTNET_VS_PRODUCTION
+How do we separate testnet guardian descriptors from production descriptors?
+
+F1_QUESTION_11_ROUTE_BINDING
+How is the descriptor bound to routeId, source chain, mint token, and canonical message encoding?
+
+F1_QUESTION_12_STATE_BINDING
+How is the descriptor bound to GatewayConfig and GuardianSet state?
+
+F1_QUESTION_13_REPLAY_SAFETY
+How does guardian authorization compose with processed burn replay protection?
+
+F1_QUESTION_14_FAILURE_MODES
+What must fail if a signature is invalid, unknown, duplicated, under-threshold, expired, wrong route, or wrong descriptor?
+
+F1_QUESTION_15_PACKAGE_BOUNDARY
+What evidence must exist before any guardian package is constructed or submitted?
