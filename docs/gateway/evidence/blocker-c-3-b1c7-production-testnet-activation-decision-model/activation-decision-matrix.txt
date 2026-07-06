@@ -1,0 +1,37 @@
+# B1C7 activation decision matrix
+
+C3_MODEL_0_CURRENT_DEFAULT_REMAIN_TEST_GATED
+status: accepted_as_current_default_only
+meaning: B1C7 remains non-production integration/test-gated.
+allows_progress_to_next_review_step: true
+allows_testnet_activation: false
+allows_deployable_artifact: false
+allows_mutation: false
+
+C3_MODEL_1_DIRECT_DANGEROUS_TEST_GATE_DEPLOY
+status: rejected
+meaning: Build/deploy using phase-41k6-b1c7-handler-integration-test-gate plus dangerously-allow-phase-41k6-b1c7-handler-integration-test-gate-sbf-build as if it were the testnet route.
+reason_rejected: the gate names and compile_error text explicitly mark this as non-production integration/test-gated and dangerous for deploy artifacts.
+allows_testnet_activation: false
+allows_deployable_artifact: false
+allows_mutation: false
+
+C3_MODEL_2_REVIEWED_TESTNET_INTENDED_HANDLER_ROUTE
+status: selected_future_model
+meaning: A future reviewed step must introduce or designate an explicit testnet-intended handler route/boundary, with non-dangerous naming, reviewed invariants, artifact hash, local evidence, dependency blockers, and final GO.
+allows_testnet_activation_now: false
+allows_future_testnet_activation_after_required_evidence: true
+allows_mutation_now: false
+
+C3_MODEL_3_PRODUCTION_IMMUTABLE_ACTIVATION
+status: out_of_scope
+meaning: Production/immutable activation is not part of Blocker C.3 and cannot be inferred from testnet boundary planning.
+allows_testnet_activation: false
+allows_production_activation: false
+allows_mutation: false
+
+SELECTED_C3_DECISION
+B1C7_DIRECT_DANGEROUS_TEST_GATE_ACTIVATION_REJECTED
+
+SELECTED_FUTURE_MODEL
+REVIEWED_TESTNET_INTENDED_HANDLER_ROUTE_REQUIRED_BEFORE_ANY_DEPLOYABLE_ARTIFACT

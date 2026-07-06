@@ -2082,3 +2082,48 @@ atomic_boundary_marks_before_guarded_cpi_inside_atomic_function: true
 
 C.2 remains inventory-only and still does not close Blocker C.
 
+
+
+## Blocker C.3 B1C7 production/testnet activation decision model
+
+The Blocker C.3 activation decision model is recorded in:
+
+docs/gateway/blocker-c-3-b1c7-production-testnet-activation-decision-model.md
+
+Evidence directory:
+
+docs/gateway/evidence/blocker-c-3-b1c7-production-testnet-activation-decision-model
+
+C.3 decision:
+
+B1C7_DIRECT_DANGEROUS_TEST_GATE_ACTIVATION_REJECTED
+
+Selected future model:
+
+REVIEWED_TESTNET_INTENDED_HANDLER_ROUTE_REQUIRED_BEFORE_ANY_DEPLOYABLE_ARTIFACT
+
+C.3 rejects direct activation of the existing dangerous test-gate feature set as a deployable or testnet-intended route.
+
+Reason:
+
+The current feature names and compile-error text intentionally describe the path as non-production integration/test-gated and dangerous for deploy artifacts.
+
+C.3 requires a future reviewed testnet-intended B1C7 handler route/boundary before any deployable artifact can be built or accepted.
+
+C.3 does not close Blocker C.
+
+C.3 does not activate the handler, does not change code, does not call RPC, does not use testnet, does not use keys, does not sign, does not deploy, does not upgrade, does not initialize state, does not configure SPL, does not construct guardian packages, does not submit, and does not mutate.
+
+Current status:
+
+BLOCKER_C_OPEN_B1C7_ACTIVATION_DECISION_MODEL_RECORDED_NO_CODE_CHANGE_NO_RPC_NO_EXECUTION
+
+Current decision:
+
+B1C7_DIRECT_DANGEROUS_TEST_GATE_ACTIVATION_REJECTED
+
+NO-GO REMAINS_FOR_HANDLER_ACTIVATION_SIGNING_KEYS_PROGRAM_UPGRADE_STATE_INIT_SPL_SETUP_GUARDIAN_PACKAGES_NETWORK_SUBMIT_MUTATION
+
+Next safe step:
+
+Blocker C.4 — B1C7 invariant review package.
