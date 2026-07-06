@@ -998,3 +998,35 @@ Current decision remains:
 NO-GO FOR LOCAL_VALIDATOR_EXECUTION_TESTNET_SIGNING_SPL_UPGRADE_INIT_SUBMIT
 
 The next safe step is either Theo review of B6.58 through B6.61 or a separate B6.62 command-boundary checkpoint with no execution.
+
+
+## Phase 41K.6 B6.62 Theo review package for B6.58 through B6.61
+
+The Theo review package is recorded in:
+
+docs/gateway/phase-41k6-b6-62-theo-review-package-b6-58-through-b6-61.md
+
+B6.62 prepares a review package covering:
+
+- B6.58 actual local-only fixture file emission
+- B6.59 emitted fixture bundle safety checkpoint
+- B6.60 local-validator dry-run GO form / command boundary
+- B6.61 local-validator dry-run planning-only boundary
+
+B6.62 is review-package only.
+
+B6.62 does not run a local validator.
+
+B6.62 does not provide a runnable validator command.
+
+B6.62 does not use testnet, live RPC, real signing, real keys, guardian packages, SPL setup, upgrade, state initialization, or submit.
+
+Current status:
+
+THEO_REVIEW_PACKAGE_PREPARED_FOR_B6_58_THROUGH_B6_61_NO_EXECUTION
+
+Current decision remains:
+
+NO-GO FOR LOCAL_VALIDATOR_EXECUTION_TESTNET_SIGNING_SPL_UPGRADE_INIT_SUBMIT
+
+The next safe step is to send B6.62 to Theo and wait for review before any B6.63 command-boundary work.
