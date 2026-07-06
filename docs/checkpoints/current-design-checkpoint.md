@@ -2448,3 +2448,78 @@ NO-GO REMAINS_FOR_STATE_INITIALIZATION_EXECUTION_SIGNING_KEYS_PROGRAM_UPGRADE_SP
 Next safe step:
 
 Blocker D.3 — state initialization authority and one-time guard decision model.
+
+
+## Blocker D.3 state initialization authority and one-time guard decision model
+
+The Blocker D.3 decision model is recorded in:
+
+docs/gateway/blocker-d-3-state-initialization-authority-one-time-guard-decision-model.md
+
+Evidence directory:
+
+docs/gateway/evidence/blocker-d-3-state-initialization-authority-one-time-guard-decision-model
+
+D.3 decision:
+
+REVIEWED_TESTNET_INITIALIZER_WITH_ONE_TIME_GUARD_REQUIRED_BEFORE_ANY_STATE_INIT_EXECUTION
+
+Selected boundary:
+
+LONG_LIVED_PROTOCOL_STATE_INIT_SEPARATED_FROM_PROCESSED_EVENT_MARKING_AND_SPL_SETUP
+
+D.3 rejects:
+
+- direct manual state creation with unbounded admin discretion
+- any initializer that can rewrite already-initialized protocol state
+- any hidden admin mint or balance-write pathway
+- treating ProcessedEvent marking as general protocol initialization
+- using Blocker D to approve SPL mint setup
+- executing initialization before a reviewed package and final scoped GO
+
+Long-lived protocol state:
+
+- MintState
+- GatewayConfig
+- GuardianSet
+
+Not part of long-lived protocol initialization in D:
+
+- ProcessedEvent: per-event replay protection, initialized/marked through Phase 41K.4 boundary
+- RecipientBalance: per-recipient accounting state, requires later lazy-init model
+- gateway_mint_authority PDA: derived authority boundary, but SPL authority architecture is Blocker E
+- SPL mint and token accounts: Blocker E scope
+
+Required future initializer properties:
+
+- explicit initializer entrypoint or package
+- explicit long-lived account list
+- fixed account lengths
+- fixed account discriminators
+- runtime_layout_version written and checked
+- one-time initialization guard
+- reinitialization rejection
+- public config values recorded before execution
+- no hidden admin mint authority
+- no admin recipient balance write
+- no processed-event prepopulation as substitute for replay protection
+- no SPL mint setup inside D
+- separate final scoped GO before execution
+
+D.3 does not close Blocker D.
+
+D.3 does not initialize state, create accounts, call RPC, use testnet, use keys, sign, deploy, upgrade, configure SPL, construct guardian packages, submit, or mutate.
+
+Current status:
+
+BLOCKER_D_OPEN_STATE_INITIALIZATION_AUTHORITY_ONE_TIME_GUARD_DECISION_MODEL_RECORDED_NO_EXECUTION
+
+Current decision:
+
+REVIEWED_TESTNET_INITIALIZER_WITH_ONE_TIME_GUARD_REQUIRED_BEFORE_ANY_STATE_INIT_EXECUTION
+
+NO-GO REMAINS_FOR_STATE_INITIALIZATION_EXECUTION_SIGNING_KEYS_PROGRAM_UPGRADE_SPL_SETUP_GUARDIAN_PACKAGES_NETWORK_SUBMIT_MUTATION
+
+Next safe step:
+
+Blocker D.4 — state initialization invariant review package.
