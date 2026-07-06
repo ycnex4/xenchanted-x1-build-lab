@@ -1,0 +1,160 @@
+docs/assumptions.md:46: - the registrar is expected to submit finalized events only
+docs/assumptions.md:47: - the registrar is expected to submit correct lock and checkpoint values
+docs/assumptions.md:233: The registrar mutation ordering has been addressed in the registrar-mutation-order-assumptions branch.
+docs/build/build-v1-x1-runtime-boundary.md:211: The runtime must know which authority is allowed to submit accepted profile checkpoints or proof bundles.
+docs/build/build-v1-x1-runtime-boundary.md:647: 2. What exact signing scheme should X1 runtime verify?
+docs/checkpoints/current-design-checkpoint.md:57: No deploy, upgrade, signing, submit, SOL spend, account initialization, SPL mint setup, guardian package construction, or submit rehearsal is approved.
+docs/checkpoints/current-design-checkpoint.md:247: It defines the future success path, failure matrix, and no-mutation evidence requirements.
+docs/checkpoints/current-design-checkpoint.md:267: It defines rollback and recovery requirements for local-validator, upgrade, state initialization, SPL mint authority, guardian set, submit rehearsal, and live route activation.
+docs/checkpoints/current-design-checkpoint.md:445: ## Phase 41K.6 B6.45 SPL mint authority architecture map
+docs/checkpoints/current-design-checkpoint.md:447: The SPL mint authority architecture map is recorded in:
+docs/checkpoints/current-design-checkpoint.md:451: It defines the intended gateway mint authority PDA and SPL CPI boundary requirements.
+docs/checkpoints/current-design-checkpoint.md:453: It does not configure SPL mint authority.
+docs/checkpoints/current-design-checkpoint.md:463: - gateway mint authority PDA: BLVsQPYXnDsTmfMW9wrXHBFpcmexM47BcAvVcibRtRYG
+docs/checkpoints/current-design-checkpoint.md:464: - gateway mint authority bump: 252
+docs/checkpoints/current-design-checkpoint.md:483: It does not create a guardian descriptor.
+docs/checkpoints/current-design-checkpoint.md:487: It does not enable signing.
+docs/checkpoints/current-design-checkpoint.md:501: ## Phase 41K.6 B6.47 local-only guardian descriptor skeleton plan
+docs/checkpoints/current-design-checkpoint.md:503: The local-only guardian descriptor skeleton plan is recorded in:
+docs/checkpoints/current-design-checkpoint.md:507: It defines the future local-only descriptor skeleton boundary for guardian_set_id, threshold, local public key fixtures, descriptor integrity, route scope, and no-signing policy.
+docs/checkpoints/current-design-checkpoint.md:509: It does not implement a guardian descriptor skeleton.
+docs/checkpoints/current-design-checkpoint.md:511: It does not create a guardian descriptor.
+docs/checkpoints/current-design-checkpoint.md:515: It does not enable signing.
+docs/checkpoints/current-design-checkpoint.md:529: ## Phase 41K.6 B6.48 local guardian descriptor skeleton
+docs/checkpoints/current-design-checkpoint.md:531: The local guardian descriptor skeleton is implemented in:
+docs/checkpoints/current-design-checkpoint.md:535: It models local guardian descriptor structure, threshold behavior, deterministic local public key fixtures, and no-signing safety checks.
+docs/checkpoints/current-design-checkpoint.md:537: It does not create a testnet guardian descriptor.
+docs/checkpoints/current-design-checkpoint.md:541: It does not enable signing.
+docs/checkpoints/current-design-checkpoint.md:555: ## Phase 41K.6 B6.49 local guardian descriptor safety checkpoint
+docs/checkpoints/current-design-checkpoint.md:557: The local guardian descriptor safety checkpoint is recorded in:
+docs/checkpoints/current-design-checkpoint.md:561: It confirms that the B6.48 local guardian descriptor skeleton remains local-only, no-signing, no-package-construction, no-testnet, and non-executing.
+docs/checkpoints/current-design-checkpoint.md:563: It does not create a guardian descriptor.
+docs/checkpoints/current-design-checkpoint.md:567: It does not enable signing.
+docs/checkpoints/current-design-checkpoint.md:581: ## Phase 41K.6 B6.50 local guardian descriptor fixture integration plan
+docs/checkpoints/current-design-checkpoint.md:583: The local guardian descriptor fixture integration plan is recorded in:
+docs/checkpoints/current-design-checkpoint.md:587: It defines how the local guardian descriptor skeleton should later integrate with local fixture generation, fixture file emission, guardian_set account fixtures, scenarios, failure matrix, mutation-invariance checks, logs, and safety reports.
+docs/checkpoints/current-design-checkpoint.md:597: It does not enable signing.
+docs/checkpoints/current-design-checkpoint.md:617: It links the local guardian descriptor skeleton to local fixture set identity, guardian_set account fixture, threshold model, descriptor failure cases, and mutation-invariance policy.
+docs/checkpoints/current-design-checkpoint.md:625: It does not enable signing.
+docs/checkpoints/current-design-checkpoint.md:645: It confirms that the B6.51 local guardian fixture integration skeleton remains local-only, in-memory, no-signing, no-package-construction, no-file-emission, no-validator, and no-testnet.
+docs/checkpoints/current-design-checkpoint.md:653: It does not enable signing.
+docs/checkpoints/current-design-checkpoint.md:673: It maps guardian descriptor and guardian fixture integration failures into future local failure matrix groups, expected no-mutation behavior, log expectations, and safety report expectations.
+docs/checkpoints/current-design-checkpoint.md:683: It does not enable signing.
+docs/checkpoints/current-design-checkpoint.md:703: It models guardian descriptor and guardian fixture integration failure cases in memory, including no-mutation policy, log expectation ids, and safety report expectation ids.
+docs/checkpoints/current-design-checkpoint.md:713: It does not enable signing.
+docs/checkpoints/current-design-checkpoint.md:733: It consolidates B6.45 through B6.54 and records that the guardian descriptor, guardian fixture integration, and guardian failure matrix skeleton work has reached a safe decision boundary.
+docs/checkpoints/current-design-checkpoint.md:745: It does not enable signing.
+docs/checkpoints/current-design-checkpoint.md:779: It does not enable signing.
+docs/checkpoints/current-design-checkpoint.md:785: It does not approve submit, upgrade, state initialization, SPL mint authority setup, or SPL CPI minting.
+docs/checkpoints/current-design-checkpoint.md:817: It does not enable signing.
+docs/checkpoints/current-design-checkpoint.md:823: It does not approve submit, upgrade, state initialization, SPL mint authority setup, or SPL CPI minting.
+docs/checkpoints/current-design-checkpoint.md:854: - no signing
+docs/checkpoints/current-design-checkpoint.md:855: - no guardian package construction
+docs/checkpoints/current-design-checkpoint.md:856: - no SPL mint authority setup
+docs/checkpoints/current-design-checkpoint.md:860: - no submit
+docs/checkpoints/current-design-checkpoint.md:898: B6.58 does not enable signing.
+docs/checkpoints/current-design-checkpoint.md:904: B6.58 does not configure SPL mint authority.
+docs/checkpoints/current-design-checkpoint.md:908: B6.58 does not execute upgrade, state initialization, or submit.
+docs/checkpoints/current-design-checkpoint.md:940: - signing: NOT_EXECUTED
+docs/checkpoints/current-design-checkpoint.md:941: - SPL setup: NOT_EXECUTED
+docs/checkpoints/current-design-checkpoint.md:942: - upgrade/init/submit: NOT_EXECUTED
+docs/checkpoints/current-design-checkpoint.md:965: B6.60 does not use testnet, live RPC, real signing, real keys, guardian packages, SPL setup, upgrade, state initialization, or submit.
+docs/checkpoints/current-design-checkpoint.md:990: B6.61 does not use testnet, live RPC, real signing, real keys, guardian packages, SPL setup, upgrade, state initialization, or submit.
+docs/checkpoints/current-design-checkpoint.md:1022: B6.62 does not use testnet, live RPC, real signing, real keys, guardian packages, SPL setup, upgrade, state initialization, or submit.
+docs/checkpoints/current-design-checkpoint.md:1047: - no signing
+docs/checkpoints/current-design-checkpoint.md:1050: - no SPL setup
+docs/checkpoints/current-design-checkpoint.md:1051: - no upgrade/init/submit
+docs/checkpoints/current-design-checkpoint.md:1136: - signing: NOT_EXECUTED
+docs/checkpoints/current-design-checkpoint.md:1137: - SPL setup: NOT_EXECUTED
+docs/checkpoints/current-design-checkpoint.md:1138: - upgrade/init/submit: NOT_EXECUTED
+docs/checkpoints/current-design-checkpoint.md:1177: - signing: NOT_EXECUTED
+docs/checkpoints/current-design-checkpoint.md:1178: - SPL setup: NOT_EXECUTED
+docs/checkpoints/current-design-checkpoint.md:1179: - upgrade/init/submit: NOT_EXECUTED
+docs/checkpoints/current-design-checkpoint.md:1204: H.1 does not use testnet, live RPC, signing, real keys, guardian packages, SPL setup, upgrade, state initialization, or submit.
+docs/checkpoints/current-design-checkpoint.md:1244: - signing: NOT_EXECUTED
+docs/checkpoints/current-design-checkpoint.md:1245: - SPL setup: NOT_EXECUTED
+docs/checkpoints/current-design-checkpoint.md:1246: - upgrade/init/submit: NOT_EXECUTED
+docs/checkpoints/current-design-checkpoint.md:1271: H.3 does not use testnet, live RPC, signing, real keys, guardian packages, SPL setup, upgrade, state initialization, or submit.
+docs/checkpoints/current-design-checkpoint.md:1275: I approve Blocker H actual local-validator dry-run only, scoped to local disposable validator state and the verified mock fixture bundle, with no testnet RPC, no live RPC, no real signing keys, no real guardian packages, no SPL mint authority setup against rea
+docs/checkpoints/current-design-checkpoint.md:1350: H.4 does not use testnet, live RPC, signing, real keys, guardian packages, SPL setup, upgrade, state initialization, or submit.
+docs/checkpoints/current-design-checkpoint.md:1370: - signing: NOT_EXECUTED
+docs/checkpoints/current-design-checkpoint.md:1371: - SPL setup: NOT_EXECUTED
+docs/checkpoints/current-design-checkpoint.md:1372: - upgrade/init/submit: NOT_EXECUTED
+docs/checkpoints/current-design-checkpoint.md:1476: - no real signing keys
+docs/checkpoints/current-design-checkpoint.md:1478: - no SPL mint authority setup against real assets
+docs/checkpoints/current-design-checkpoint.md:1482: - no submit to any network
+docs/checkpoints/current-design-checkpoint.md:1521: - signing: NOT_EXECUTED
+docs/checkpoints/current-design-checkpoint.md:1524: - SPL setup: NOT_EXECUTED
+docs/checkpoints/current-design-checkpoint.md:1527: - network submit: NOT_EXECUTED
+docs/checkpoints/current-design-checkpoint.md:1562: - signing: NOT_EXECUTED
+docs/checkpoints/current-design-checkpoint.md:1565: - SPL setup: NOT_EXECUTED
+docs/checkpoints/current-design-checkpoint.md:1568: - network submit: NOT_EXECUTED
+docs/checkpoints/current-design-checkpoint.md:1605: - no signing
+docs/checkpoints/current-design-checkpoint.md:1607: - no state mutation
+docs/checkpoints/current-design-checkpoint.md:1627: - Blocker F: guardian descriptor
+docs/checkpoints/current-design-checkpoint.md:1630: Future program-load testing, state initialization simulation, fixture consumption testing, SPL testing, signing, or testnet work must be opened as separately scoped work with its own GO boundary.
+docs/checkpoints/current-design-checkpoint.md:1655: NO-GO remains for testnet, signing, SPL setup, program upgrade, persistent initialization, and network submit.
+docs/checkpoints/current-design-checkpoint.md:1670: A.1 does not call RPC, does not use testnet, does not use live RPC, does not use keys, does not sign, does not inspect live ProgramData, does not modify state, and does not submit to any network.
+docs/checkpoints/current-design-checkpoint.md:1715: Blocker H is closed only for narrow local-validator health dry-run. It does not approve program-load testing, state initialization simulation, fixture consumption, SPL testing, signing, testnet RPC, live RPC, upgrade, persistent initialization, or submit.
+docs/checkpoints/current-design-checkpoint.md:1752: Upgrade authority is tolerated only as a temporary staged-finalization mechanism, not as mint authority and not as discretionary supply control.
+docs/checkpoints/current-design-checkpoint.md:1760: A.3 does not call RPC, does not use testnet, does not use live RPC, does not use keys, does not sign, does not inspect live ProgramData, does not deploy, does not upgrade, does not initialize state, does not configure SPL, and does not submit to any network.
+docs/checkpoints/current-design-checkpoint.md:1796: A.4 does not call RPC, does not use testnet, does not use live RPC, does not use keys, does not sign, does not inspect live ProgramData, does not deploy, does not upgrade, does not initialize state, does not configure SPL, does not construct guardian packages,
+docs/checkpoints/current-design-checkpoint.md:1808: I approve Blocker A.5 read-only live ProgramData evidence only, scoped to X1 testnet RPC https://rpc.testnet.x1.xyz, program id D7AQmZNtFFFoJbducz93atteeSZhw3jq6RmsqBvaf1my, ProgramData account 9tuesaPoJhrifF49vJewcg6PSWZeHAJiqQ97pq3LMW9T, and expected observe
+docs/checkpoints/current-design-checkpoint.md:1837: A.5 did not use signing, did not use keypairs, did not deploy, did not write-buffer, did not set-upgrade-authority, did not close, did not upgrade, did not initialize state, did not configure SPL, did not construct guardian packages, did not submit, and did no
+docs/checkpoints/current-design-checkpoint.md:1883: A.5R does not call RPC, does not use keys, does not sign, does not deploy, does not upgrade, does not initialize state, does not configure SPL, does not construct guardian packages, does not submit, and does not mutate network state.
+docs/checkpoints/current-design-checkpoint.md:1938: A.6 does not approve signing, keypair use, deploy, write-buffer, set-upgrade-authority, close, upgrade, state initialization, SPL setup, SPL CPI minting, guardian package construction, transaction submit, mutation, or production activation.
+docs/checkpoints/current-design-checkpoint.md:1945: - E — OPEN: SPL mint authority architecture
+docs/checkpoints/current-design-checkpoint.md:1946: - F — OPEN: guardian descriptor
+docs/checkpoints/current-design-checkpoint.md:1982: C.1 does not activate the handler, does not change code, does not call RPC, does not use testnet, does not use keys, does not sign, does not deploy, does not upgrade, does not initialize state, does not configure SPL, does not construct guardian packages, does
+docs/checkpoints/current-design-checkpoint.md:2044: C.2 does not activate the handler, does not change code, does not call RPC, does not use testnet, does not use keys, does not sign, does not deploy, does not upgrade, does not initialize state, does not configure SPL, does not construct guardian packages, does
+docs/checkpoints/current-design-checkpoint.md:2115: C.3 does not activate the handler, does not change code, does not call RPC, does not use testnet, does not use keys, does not sign, does not deploy, does not upgrade, does not initialize state, does not configure SPL, does not construct guardian packages, does
+docs/checkpoints/current-design-checkpoint.md:2284: C.5 does not approve handler activation, live route activation, direct dangerous test-gate deployment, signing, keypair use, deploy, write-buffer, set-upgrade-authority, close, upgrade, state initialization, SPL setup, SPL CPI minting, guardian package constru
+docs/checkpoints/current-design-checkpoint.md:2290: - E — OPEN: SPL mint authority architecture
+docs/checkpoints/current-design-checkpoint.md:2291: - F — OPEN: guardian descriptor
+docs/checkpoints/current-design-checkpoint.md:2341: D.1 does not initialize state, does not create accounts, does not call RPC, does not use testnet, does not use keys, does not sign, does not deploy, does not upgrade, does not configure SPL, does not construct guardian packages, does not submit, and does not m
+docs/checkpoints/current-design-checkpoint.md:2389:   - purpose: SPL Token mint authority for gateway-backed XXXL minting
+docs/checkpoints/current-design-checkpoint.md:2436: D.2 does not initialize state, create accounts, call RPC, use testnet, use keys, sign, deploy, upgrade, configure SPL, construct guardian packages, submit, or mutate.
+docs/checkpoints/current-design-checkpoint.md:2503: - no hidden admin mint authority
+docs/checkpoints/current-design-checkpoint.md:2511: D.3 does not initialize state, create accounts, call RPC, use testnet, use keys, sign, deploy, upgrade, configure SPL, construct guardian packages, submit, or mutate.
+docs/checkpoints/current-design-checkpoint.md:2547: - SPL mint setup and SPL mint authority architecture remain Blocker E
+docs/checkpoints/current-design-checkpoint.md:2550: - D.4 approves no execution, no account creation, no RPC, no signing, no deploy, no upgrade, no SPL setup, no submit, no mutation
+docs/checkpoints/current-design-checkpoint.md:2570: - SPL mint authority architecture in Blocker E
+docs/checkpoints/current-design-checkpoint.md:2572: - guardian descriptor in Blocker F
+docs/checkpoints/current-design-checkpoint.md:2577: D.4 does not initialize state, create accounts, call RPC, use testnet, use keys, sign, deploy, upgrade, configure SPL, construct guardian packages, submit, or mutate.
+docs/checkpoints/current-design-checkpoint.md:2631: D.5 does not approve state initialization execution, account creation, PDA creation, initializer execution, SPL mint setup, SPL CPI minting, signing, keypair use, deploy, write-buffer, set-upgrade-authority, close, upgrade, guardian package construction, trans
+docs/checkpoints/current-design-checkpoint.md:2636: - E — OPEN: SPL mint authority architecture
+docs/checkpoints/current-design-checkpoint.md:2637: - F — OPEN: guardian descriptor
+docs/checkpoints/current-design-checkpoint.md:2652: Blocker E.1 — SPL mint authority architecture planning.
+docs/checkpoints/current-design-checkpoint.md:2655: ## Blocker E.1 SPL mint authority architecture planning
+docs/checkpoints/current-design-checkpoint.md:2661: E.1 opens the SPL mint authority architecture track after:
+docs/checkpoints/current-design-checkpoint.md:2682: E.1 does not create an SPL mint, configure mint authority, transfer mint authority, set freeze authority, mint tokens, initialize state, call RPC, use testnet, use keys, sign, deploy, upgrade, construct guardian packages, submit, or mutate.
+docs/checkpoints/current-design-checkpoint.md:2696: Blocker E.2 — repo-grounded SPL mint authority and CPI inventory.
+docs/checkpoints/current-design-checkpoint.md:2699: ## Blocker E.2 repo-grounded SPL mint authority and CPI inventory
+docs/checkpoints/current-design-checkpoint.md:2714:   - expected role: SPL Token mint authority for gateway-backed XXXL minting
+docs/checkpoints/current-design-checkpoint.md:2722: - mint authority check: assert_gateway_mint_authority_pda
+docs/checkpoints/current-design-checkpoint.md:2726: - E.2 execution status: no SPL mint setup, no mint authority transfer, no mint_to execution
+docs/checkpoints/current-design-checkpoint.md:2778: E.2 does not create an SPL mint, configure mint authority, transfer mint authority, set freeze authority, mint tokens, initialize state, call RPC, use testnet, use keys, sign, deploy, upgrade, construct guardian packages, submit, or mutate.
+docs/checkpoints/current-design-checkpoint.md:2792: Blocker E.3 — SPL mint authority setup decision model.
+docs/checkpoints/current-design-checkpoint.md:2795: ## Blocker E.3 SPL mint authority setup decision model
+docs/checkpoints/current-design-checkpoint.md:2831: - retained human/admin mint authority
+docs/checkpoints/current-design-checkpoint.md:2834: - SPL setup execution before reviewed setup package and final scoped GO
+docs/checkpoints/current-design-checkpoint.md:2842: - exact mint authority proof
+docs/checkpoints/current-design-checkpoint.md:2849: E.3 does not create an SPL mint, configure mint authority, transfer mint authority, set/disable freeze authority, mint tokens, initialize state, call RPC, use testnet, use keys, sign, deploy, upgrade, construct guardian packages, submit, or mutate.
+docs/checkpoints/current-design-checkpoint.md:2863: Blocker E.4 — SPL mint authority invariant review package.
+docs/checkpoints/current-design-checkpoint.md:2866: ## Blocker E.4 SPL mint authority invariant review package
+docs/checkpoints/current-design-checkpoint.md:2879: - gateway_mint_authority PDA is the canonical mint authority
+docs/checkpoints/current-design-checkpoint.md:2880: - no retained human/admin mint authority is allowed after canonical setup
+docs/checkpoints/current-design-checkpoint.md:2888: - no SPL setup execution is approved
+docs/checkpoints/current-design-checkpoint.md:2906: - exact future SPL setup package
+docs/checkpoints/current-design-checkpoint.md:2910: - final scoped GO before any SPL setup execution
+docs/checkpoints/current-design-checkpoint.md:2914: E.4 does not create an SPL mint, configure mint authority, transfer mint authority, set/disable freeze authority, mint tokens, initialize state, call RPC, use testnet, use keys, sign, deploy, upgrade, construct guardian packages, submit, or mutate.
+docs/checkpoints/current-design-checkpoint.md:2928: Blocker E.5 — SPL mint authority architecture closure decision record.
+docs/checkpoints/current-design-checkpoint.md:2931: ## Blocker E.5 SPL mint authority architecture closure decision record
+docs/checkpoints/current-design-checkpoint.md:2943: - E.1 opened SPL mint authority architecture planning
+docs/checkpoints/current-design-checkpoint.md:2944: - E.2 completed repo-grounded SPL mint authority and CPI inventory
+docs/checkpoints/current-design-checkpoint.md:2945: - E.3 recorded the SPL mint authority setup decision model
+docs/checkpoints/current-design-checkpoint.md:2946: - E.4 completed SPL mint authority invariant review
+docs/checkpoints/current-design-checkpoint.md:2984: E.5 does not approve SPL mint creation, SPL mint initialization, mint authority assignment, mint authority transfer, freeze authority assignment, freeze authority disablement, SPL CPI minting, state initialization execution, signing, keypair use, deploy, write
+docs/checkpoints/current-design-checkpoint.md:2989: - F — OPEN: guardian descriptor
+docs/checkpoints/current-design-checkpoint.md:3004: Blocker F.1 — guardian descriptor planning.
+docs/checkpoints/current-design-checkpoint.md:3007: ## Blocker F.1 guardian descriptor planning

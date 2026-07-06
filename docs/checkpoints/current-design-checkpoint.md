@@ -3428,3 +3428,72 @@ NO-GO REMAINS_FOR_BUILD_DEPLOY_UPGRADE_STATE_INIT_SPL_SETUP_GUARDIAN_PACKAGES_SI
 Next safe step:
 
 Blocker G.2 — repo-grounded rollback / recovery inventory.
+
+
+## Blocker G.2 repo-grounded rollback / recovery inventory
+
+The Blocker G.2 inventory record is recorded in:
+
+docs/gateway/blocker-g-2-repo-grounded-rollback-recovery-inventory.md
+
+Evidence directory:
+
+docs/gateway/evidence/blocker-g-2-repo-grounded-rollback-recovery-inventory
+
+Inventory summary:
+
+- g1_planning_recorded: true
+- stage_gated_recovery_candidate_present: true
+- abandon_redeploy_candidate_present: true
+- user_final_go_candidate_present: true
+- no_automatic_retry_scope_present: true
+- pre_mutation_abort_scope_present: true
+- post_submit_observation_scope_present: true
+- rollback_recovery_references_found: true
+- deploy_upgrade_references_found: true
+- state_spl_guardian_references_found: true
+- final_go_no_go_references_found: true
+- evidence_observation_references_found: true
+- g2_no_execution: true
+
+all_inventory_checks_passed: true
+
+Inventory counts:
+
+- rollback_recovery: files=193, sampled_lines=160
+- deploy_upgrade: files=490, sampled_lines=160
+- state_spl_guardian: files=700, sampled_lines=160
+- final_go_no_go: files=108, sampled_lines=160
+- evidence_observation: files=959, sampled_lines=160
+
+Stage-gated recovery inventory:
+
+- pre_build_abort: required future recovery branch
+- post_build_pre_deploy_abort: required future recovery branch
+- post_deploy_pre_state_init_observation: required future recovery branch
+- post_state_init_stop_condition: required future recovery branch
+- post_spl_setup_stop_condition: required future recovery branch
+- post_guardian_descriptor_pre_package_abort: required future recovery branch
+- post_package_pre_submit_abort: required future recovery branch
+- post_submit_observation: required future evidence branch
+- non_reversible_action_policy: abandon/redeploy decision path required
+- automatic_retry_policy: automatic retry rejected
+- user_go_policy: explicit scoped user GO required before mutation/recovery action
+
+G.2 does not close Blocker G.
+
+G.2 does not run build, deploy, upgrade, write buffer, change authority, initialize state, configure SPL, construct guardian packages, sign, call RPC, use testnet, submit, or mutate.
+
+Current status:
+
+BLOCKER_G_OPEN_REPO_GROUNDED_ROLLBACK_RECOVERY_INVENTORY_COMPLETED_NO_RPC_NO_EXECUTION
+
+Current decision:
+
+BLOCKER_G_NOT_CLOSED
+
+NO-GO REMAINS_FOR_BUILD_DEPLOY_UPGRADE_STATE_INIT_SPL_SETUP_GUARDIAN_PACKAGES_SIGNING_RPC_TESTNET_NETWORK_SUBMIT_MUTATION
+
+Next safe step:
+
+Blocker G.3 — rollback / recovery decision model.

@@ -1,0 +1,11 @@
+- pre_build_abort: required future recovery branch
+- post_build_pre_deploy_abort: required future recovery branch
+- post_deploy_pre_state_init_observation: required future recovery branch
+- post_state_init_stop_condition: required future recovery branch
+- post_spl_setup_stop_condition: required future recovery branch
+- post_guardian_descriptor_pre_package_abort: required future recovery branch
+- post_package_pre_submit_abort: required future recovery branch
+- post_submit_observation: required future evidence branch
+- non_reversible_action_policy: abandon/redeploy decision path required
+- automatic_retry_policy: automatic retry rejected
+- user_go_policy: explicit scoped user GO required before mutation/recovery action
