@@ -4283,3 +4283,73 @@ NO-GO REMAINS_FOR_BUILD_HASH_DEPLOY_UPGRADE_WRITE_BUFFER_STATE_INIT_SPL_SETUP_GU
 Next safe step:
 
 Final GO.4 — final scoped GO package invariant review.
+
+
+## Final GO.4 final scoped GO package invariant review
+
+The Final GO.4 invariant review package is recorded in:
+
+docs/gateway/final-go-4-final-scoped-go-package-invariant-review.md
+
+Evidence directory:
+
+docs/gateway/evidence/final-go-4-final-scoped-go-package-invariant-review
+
+Reviewed invariants:
+
+- Final GO is not granted
+- staged single-operation scoped GO model required
+- general GO and broad multi-action GO rejected
+- one future GO package authorizes exactly one operation class only
+- exact bindings required
+- expected-hash package required before upgrade/write-buffer GO
+- read-only baseline precheck required before network mutation GO
+- stop on identity/hash/authority/network/cost/verification mismatch
+- automatic retry rejected
+- exact scoped user GO phrase required
+- post-action read-only verification required after mutation
+- separate GO required for separate execution boundary
+- no execution approved
+
+Review result:
+
+all_invariants_reviewed: true
+
+final_go_model_closure_ready: true
+
+closure_type: narrow_final_scoped_go_model_boundary_only
+
+current_go_state: FINAL_GO_NOT_GRANTED
+
+Prepared closure candidate:
+
+FINAL_SCOPED_GO_MODEL_REVIEWED_EXECUTION_NOT_APPROVED
+
+Remaining gaps:
+
+- Final GO closure decision record
+- actual future scoped GO package not drafted
+- actual expected-hash package not generated
+- actual build/hash evidence not generated
+- actual read-only network precheck not executed
+- actual network mutation not approved
+- actual user GO phrase not selected
+- actual post-action verification bundle not generated
+
+Final GO.4 does not grant GO.
+
+Final GO.4 does not run build, compute artifact hash, compute ProgramData hash, deploy, upgrade, write buffer, change authority, initialize state, configure SPL, construct guardian packages, sign, call RPC, use testnet, submit, or mutate.
+
+Current status:
+
+FINAL_GO_4_REVIEW_READY_FINAL_SCOPED_GO_INVARIANTS_RECORDED_NO_BUILD_NO_HASH_NO_RPC_NO_EXECUTION
+
+Current decision:
+
+FINAL_GO_NOT_GRANTED_PENDING_CLOSURE_DECISION
+
+NO-GO REMAINS_FOR_BUILD_HASH_DEPLOY_UPGRADE_WRITE_BUFFER_STATE_INIT_SPL_SETUP_GUARDIAN_PACKAGES_SIGNING_RPC_TESTNET_NETWORK_SUBMIT_MUTATION
+
+Next safe step:
+
+Final GO.5 — final scoped GO model closure decision record.

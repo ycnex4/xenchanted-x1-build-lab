@@ -1,0 +1,72 @@
+# Final scoped GO invariant review matrix
+
+FG4_INVARIANT_01_FINAL_GO_NOT_GRANTED
+status: reviewed
+result: true
+meaning: Final GO.3 records a decision model only and does not grant GO.
+
+FG4_INVARIANT_02_STAGED_SINGLE_OPERATION_MODEL
+status: reviewed
+result: true
+meaning: Future GO packages must use staged single-operation scoped GO.
+
+FG4_INVARIANT_03_GENERAL_GO_REJECTED
+status: reviewed
+result: true
+meaning: General GO and broad multi-action approvals are rejected.
+
+FG4_INVARIANT_04_ONE_OPERATION_CLASS_ONLY
+status: reviewed
+result: true
+meaning: One future GO package may authorize exactly one operation class only.
+
+FG4_INVARIANT_05_EXACT_BINDINGS_REQUIRED
+status: reviewed
+result: true
+meaning: Operation, network, program id, ProgramData, authority, source commit, build/hash evidence, cost, abort, post-verify, and user phrase must be exact.
+
+FG4_INVARIANT_06_EXPECTED_HASH_GATE
+status: reviewed
+result: true
+meaning: Expected-hash package is required before any upgrade or write-buffer GO.
+
+FG4_INVARIANT_07_READ_ONLY_PRECHECK_GATE
+status: reviewed
+result: true
+meaning: Read-only baseline precheck is required before any network mutation GO.
+
+FG4_INVARIANT_08_STOP_ON_MISMATCH
+status: reviewed
+result: true
+meaning: Any identity, hash, authority, network, cost, or verification mismatch requires stop.
+
+FG4_INVARIANT_09_NO_AUTOMATIC_RETRY
+status: reviewed
+result: true
+meaning: Automatic retry remains rejected.
+
+FG4_INVARIANT_10_EXACT_USER_GO_PHRASE_REQUIRED
+status: reviewed
+result: true
+meaning: Exact scoped user GO phrase is required for each future scoped GO.
+
+FG4_INVARIANT_11_POST_ACTION_VERIFICATION_REQUIRED
+status: reviewed
+result: true
+meaning: Post-action read-only verification is required after any mutation.
+
+FG4_INVARIANT_12_SEPARATE_GO_FOR_SEPARATE_BOUNDARY
+status: reviewed
+result: true
+meaning: Build/hash, read-only RPC, upgrade/write-buffer, state init, SPL setup, guardian package/signing/submit, and production activation require separate scoped approval if ever pursued.
+
+FG4_INVARIANT_13_NO_EXECUTION_APPROVED
+status: reviewed
+result: true
+meaning: Final GO.4 does not approve build, hash computation, deploy, upgrade, write-buffer, state init, SPL setup, guardian package construction, signing, RPC, testnet, submit, or mutation.
+
+FG4_AGGREGATE
+all_invariants_reviewed: true
+final_go_model_closure_ready: true
+closure_type: narrow_final_scoped_go_model_boundary_only
+current_go_state: FINAL_GO_NOT_GRANTED
