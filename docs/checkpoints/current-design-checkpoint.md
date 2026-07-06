@@ -3832,3 +3832,114 @@ NO-GO REMAINS_FOR_BUILD_HASH_DEPLOY_UPGRADE_WRITE_BUFFER_STATE_INIT_SPL_SETUP_GU
 Next safe step:
 
 Blocker B.3 — expected post-upgrade ProgramData hash decision model.
+
+
+## Blocker B.3 expected post-upgrade ProgramData hash decision model
+
+The Blocker B.3 decision model is recorded in:
+
+docs/gateway/blocker-b-3-expected-post-upgrade-programdata-hash-decision-model.md
+
+Evidence directory:
+
+docs/gateway/evidence/blocker-b-3-expected-post-upgrade-programdata-hash-decision-model
+
+B.3 decision:
+
+FULL_HASH_BUNDLE_WITH_PROGRAMDATA_EXECUTABLE_BYTES_SHA256_AS_CANONICAL_RUNTIME_HASH
+
+Canonical hash domain:
+
+PROGRAMDATA_EXECUTABLE_BYTES_EXCLUDING_LOADER_METADATA
+
+Canonical hash algorithm:
+
+SHA256
+
+Local artifact hash policy:
+
+LOCAL_SBF_ARTIFACT_SHA256_REQUIRED_AS_FUTURE_PRE_UPGRADE_EVIDENCE
+
+Build binding policy:
+
+SOURCE_COMMIT_BUILD_COMMAND_TOOLCHAIN_LOCKFILES_AND_FEATURE_FLAGS_REQUIRED
+
+Baseline binding:
+
+BASELINE_PROGRAM_ID_AND_PROGRAMDATA_ACCOUNT_REQUIRED
+
+Pre-upgrade policy:
+
+EXPECTED_HASH_PACKAGE_REQUIRED_BEFORE_ANY_UPGRADE_GO
+
+Post-upgrade policy:
+
+READ_ONLY_PROGRAMDATA_EXECUTABLE_BYTES_SHA256_VERIFICATION_REQUIRED_AFTER_UPGRADE
+
+Mismatch policy:
+
+HASH_MISMATCH_IS_STOP_CONDITION_NO_AUTOMATIC_RETRY
+
+User GO policy:
+
+EXPLICIT_SCOPED_USER_GO_REQUIRED_BEFORE_ANY_BUILD_HASH_UPGRADE_OR_RECOVERY_ACTION
+
+Execution boundary:
+
+FUTURE_FINAL_SCOPED_GO_REQUIRED_BEFORE_ANY_BUILD_HASH_DEPLOY_UPGRADE_WRITE_BUFFER_STATE_INIT_SPL_SETUP_GUARDIAN_PACKAGE_SIGNING_SUBMIT_OR_MUTATION
+
+Required future hash bundle fields:
+
+- source commit
+- repo clean status
+- build command
+- toolchain versions
+- lockfiles
+- feature flags
+- dangerous feature gate status
+- local SBF artifact path
+- local SBF artifact sha256
+- canonical ProgramData executable-bytes sha256
+- baseline program id
+- baseline ProgramData account
+- baseline upgrade authority observation
+- pre-upgrade expected hash package
+- post-upgrade read-only verification procedure
+- mismatch stop condition
+- explicit scoped user GO reference
+
+Rejected shortcuts:
+
+- source commit only
+- local artifact hash only
+- raw ProgramData account hash as canonical runtime hash
+- upgrade without expected post-upgrade hash
+- automatic retry after hash mismatch
+- continuing after missing post-upgrade read-only verification
+- build/hash/upgrade/submit inside B.3
+
+Remaining open items before B closure:
+
+- ProgramData hash invariant review package
+- Blocker B closure decision record
+- future actual expected-hash package
+- future actual build/hash execution with explicit scoped GO
+- future final scoped GO package before any network mutation
+
+B.3 does not close Blocker B.
+
+B.3 does not run build, compute artifact hash, compute ProgramData hash, deploy, upgrade, write buffer, change authority, initialize state, configure SPL, construct guardian packages, sign, call RPC, use testnet, submit, or mutate.
+
+Current status:
+
+BLOCKER_B_OPEN_EXPECTED_POST_UPGRADE_PROGRAMDATA_HASH_DECISION_MODEL_RECORDED_NO_BUILD_NO_HASH_NO_RPC_NO_EXECUTION
+
+Current decision:
+
+FULL_HASH_BUNDLE_WITH_PROGRAMDATA_EXECUTABLE_BYTES_SHA256_AS_CANONICAL_RUNTIME_HASH
+
+NO-GO REMAINS_FOR_BUILD_HASH_DEPLOY_UPGRADE_WRITE_BUFFER_STATE_INIT_SPL_SETUP_GUARDIAN_PACKAGES_SIGNING_RPC_TESTNET_NETWORK_SUBMIT_MUTATION
+
+Next safe step:
+
+Blocker B.4 — ProgramData hash invariant review package.
