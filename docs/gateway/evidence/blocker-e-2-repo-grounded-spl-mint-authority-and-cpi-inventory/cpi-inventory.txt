@@ -1,0 +1,8 @@
+- token program model: classic SPL Token via spl_token::id()
+- mint instruction model: spl_token::instruction::mint_to
+- signer model: invoke_signed with gateway_mint_authority signer seeds
+- mint authority check: assert_gateway_mint_authority_pda
+- default CPI execution: disabled
+- closed-gate result: CpiBoundaryNotReady
+- open-gate route: requires D2 production-path test gate plus B1C7 handler integration test gate and both dangerous allow features
+- E.2 execution status: no SPL mint setup, no mint authority transfer, no mint_to execution

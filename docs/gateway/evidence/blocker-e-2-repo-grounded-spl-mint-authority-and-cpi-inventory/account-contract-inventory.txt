@@ -1,0 +1,4 @@
+- spl_token_mint: writable, not signer, SplTokenOwned
+- recipient_token_account: writable, not signer, SplTokenOwned
+- mint_authority_pda: readonly, not signer, ProgramDerivedAddress
+- token_program: readonly, not signer, SplTokenProgram

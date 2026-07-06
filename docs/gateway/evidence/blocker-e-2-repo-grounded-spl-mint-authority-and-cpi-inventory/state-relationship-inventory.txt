@@ -1,0 +1,5 @@
+- MintState records mint_pubkey
+- MintState records gateway_mint_authority_pda
+- MintState records gateway_mint_authority_bump
+- MintState records total_supply
+- E.2 does not prove SPL total supply reconciliation; this remains a future E invariant

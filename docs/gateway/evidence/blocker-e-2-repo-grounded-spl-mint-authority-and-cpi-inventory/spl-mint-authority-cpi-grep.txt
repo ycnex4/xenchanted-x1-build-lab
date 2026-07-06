@@ -1,0 +1,947 @@
+programs/xxxl-svm/src/account_contract.rs:28:    SplTokenOwned,
+programs/xxxl-svm/src/account_contract.rs:29:    ProgramDerivedAddress,
+programs/xxxl-svm/src/account_contract.rs:30:    SplTokenProgram,
+programs/xxxl-svm/src/account_contract.rs:88:        name: "spl_token_mint",
+programs/xxxl-svm/src/account_contract.rs:91:        owner_model: AccountOwnerModel::SplTokenOwned,
+programs/xxxl-svm/src/account_contract.rs:95:        name: "recipient_token_account",
+programs/xxxl-svm/src/account_contract.rs:98:        owner_model: AccountOwnerModel::SplTokenOwned,
+programs/xxxl-svm/src/account_contract.rs:102:        name: "mint_authority_pda",
+programs/xxxl-svm/src/account_contract.rs:105:        owner_model: AccountOwnerModel::ProgramDerivedAddress,
+programs/xxxl-svm/src/account_contract.rs:109:        name: "token_program",
+programs/xxxl-svm/src/account_contract.rs:112:        owner_model: AccountOwnerModel::SplTokenProgram,
+programs/xxxl-svm/src/account_contract.rs:170:        name: "spl_token_mint",
+programs/xxxl-svm/src/account_contract.rs:173:        owner_model: AccountOwnerModel::SplTokenOwned,
+programs/xxxl-svm/src/account_contract.rs:177:        name: "recipient_token_account",
+programs/xxxl-svm/src/account_contract.rs:180:        owner_model: AccountOwnerModel::SplTokenOwned,
+programs/xxxl-svm/src/account_contract.rs:184:        name: "mint_authority_pda",
+programs/xxxl-svm/src/account_contract.rs:187:        owner_model: AccountOwnerModel::ProgramDerivedAddress,
+programs/xxxl-svm/src/account_contract.rs:191:        name: "token_program",
+programs/xxxl-svm/src/account_contract.rs:194:        owner_model: AccountOwnerModel::SplTokenProgram,
+programs/xxxl-svm/src/account_contract.rs:338:        assert_entry(ACCOUNT_INDEX_SPL_TOKEN_MINT, "spl_token_mint");
+programs/xxxl-svm/src/account_contract.rs:341:            "recipient_token_account",
+programs/xxxl-svm/src/account_contract.rs:343:        assert_entry(ACCOUNT_INDEX_MINT_AUTHORITY_PDA, "mint_authority_pda");
+programs/xxxl-svm/src/account_contract.rs:344:        assert_entry(ACCOUNT_INDEX_TOKEN_PROGRAM, "token_program");
+programs/xxxl-svm/src/account_contract.rs:579:            AccountOwnerModel::SplTokenOwned,
+programs/xxxl-svm/src/account_contract.rs:583:            AccountOwnerModel::SplTokenOwned,
+programs/xxxl-svm/src/account_contract.rs:587:            AccountOwnerModel::ProgramDerivedAddress,
+programs/xxxl-svm/src/account_contract.rs:591:            AccountOwnerModel::SplTokenProgram,
+programs/xxxl-svm/src/account_order_skeleton.rs:25:    ProgramDerivedAddress,
+programs/xxxl-svm/src/account_order_skeleton.rs:28:    SplTokenProgram,
+programs/xxxl-svm/src/account_order_skeleton.rs:146:        name: "gateway_mint_authority_pda",
+programs/xxxl-svm/src/account_order_skeleton.rs:149:        owner_expectation: XxxlAccountOwnerExpectationSkeleton::ProgramDerivedAddress,
+programs/xxxl-svm/src/account_order_skeleton.rs:154:        name: "token_program",
+programs/xxxl-svm/src/account_order_skeleton.rs:157:        owner_expectation: XxxlAccountOwnerExpectationSkeleton::SplTokenProgram,
+programs/xxxl-svm/src/account_order_skeleton.rs:229:        name: "recipient_token_account",
+programs/xxxl-svm/src/account_order_skeleton.rs:237:        name: "gateway_mint_authority_pda",
+programs/xxxl-svm/src/account_order_skeleton.rs:240:        owner_expectation: XxxlAccountOwnerExpectationSkeleton::ProgramDerivedAddress,
+programs/xxxl-svm/src/account_order_skeleton.rs:245:        name: "token_program",
+programs/xxxl-svm/src/account_order_skeleton.rs:248:        owner_expectation: XxxlAccountOwnerExpectationSkeleton::SplTokenProgram,
+programs/xxxl-svm/src/account_validation_skeleton.rs:214:                expected: XxxlAccountOwnerExpectationSkeleton::SplTokenProgram,
+programs/xxxl-svm/src/account_validation_skeleton.rs:242:            XxxlAccountOwnerExpectationSkeleton::ProgramDerivedAddress
+programs/xxxl-svm/src/account_validation_skeleton.rs:246:            XxxlAccountOwnerExpectationSkeleton::SplTokenProgram
+programs/xxxl-svm/src/consume_execution_plan_skeleton.rs:121:            mint_authority_pda: Pubkey::new_unique(),
+programs/xxxl-svm/src/consume_execution_plan_skeleton.rs:123:            token_program: Pubkey::new_unique(),
+programs/xxxl-svm/src/consume_state_transition_skeleton.rs:119:            mint_authority_pda: Pubkey::new_unique(),
+programs/xxxl-svm/src/consume_state_transition_skeleton.rs:121:            token_program: Pubkey::new_unique(),
+programs/xxxl-svm/src/consume_state_transition_skeleton.rs:163:            output.next_mint_state.mint_authority_pda,
+programs/xxxl-svm/src/consume_state_transition_skeleton.rs:164:            mint_state.mint_authority_pda
+programs/xxxl-svm/src/cpi.rs:2:    account_info::AccountInfo, instruction::Instruction, program::invoke_signed,
+programs/xxxl-svm/src/cpi.rs:29:        find_gateway_mint_authority, GATEWAY_MINT_AUTHORITY_SEED_0, GATEWAY_MINT_AUTHORITY_SEED_1,
+programs/xxxl-svm/src/cpi.rs:30:        GATEWAY_MINT_AUTHORITY_SEED_2,
+programs/xxxl-svm/src/cpi.rs:34:pub struct MintToCpiAccounts<'a, 'b> {
+programs/xxxl-svm/src/cpi.rs:35:    pub token_program: &'a AccountInfo<'b>,
+programs/xxxl-svm/src/cpi.rs:37:    pub recipient_token_account: &'a AccountInfo<'b>,
+programs/xxxl-svm/src/cpi.rs:38:    pub mint_authority_pda: &'a AccountInfo<'b>,
+programs/xxxl-svm/src/cpi.rs:41:pub struct MintToCpiBoundary<'a, 'b> {
+programs/xxxl-svm/src/cpi.rs:42:    pub accounts: MintToCpiAccounts<'a, 'b>,
+programs/xxxl-svm/src/cpi.rs:48:pub struct MintToCpiPlanningBoundary {
+programs/xxxl-svm/src/cpi.rs:49:    pub token_program: Pubkey,
+programs/xxxl-svm/src/cpi.rs:51:    pub recipient_token_account: Pubkey,
+programs/xxxl-svm/src/cpi.rs:52:    pub mint_authority_pda: Pubkey,
+programs/xxxl-svm/src/cpi.rs:55:    pub live_route_activation_enabled: bool,
+programs/xxxl-svm/src/cpi.rs:56:    pub invoke_signed_from_process_instruction_enabled: bool,
+programs/xxxl-svm/src/cpi.rs:59:pub fn plan_mint_to_cpi_boundary(
+programs/xxxl-svm/src/cpi.rs:62:    boundary: &MintToCpiBoundary<'_, '_>,
+programs/xxxl-svm/src/cpi.rs:63:) -> Result<MintToCpiPlanningBoundary, ProgramError> {
+programs/xxxl-svm/src/cpi.rs:64:    if execution_plan.live_route_activation_enabled
+programs/xxxl-svm/src/cpi.rs:65:        || execution_plan.mint_to_invocation_from_process_instruction_enabled
+programs/xxxl-svm/src/cpi.rs:73:    if boundary.accounts.token_program.key != &spl_token::id() {
+programs/xxxl-svm/src/cpi.rs:81:    assert_gateway_mint_authority_pda(
+programs/xxxl-svm/src/cpi.rs:83:        boundary.accounts.mint_authority_pda.key,
+programs/xxxl-svm/src/cpi.rs:88:        boundary.accounts.token_program.key,
+programs/xxxl-svm/src/cpi.rs:90:        boundary.accounts.recipient_token_account.key,
+programs/xxxl-svm/src/cpi.rs:91:        boundary.accounts.mint_authority_pda.key,
+programs/xxxl-svm/src/cpi.rs:95:    let signer_seeds = gateway_mint_authority_signer_seeds(&boundary.mint_authority_bump);
+programs/xxxl-svm/src/cpi.rs:97:    if signer_seeds[0] != GATEWAY_MINT_AUTHORITY_SEED_0
+programs/xxxl-svm/src/cpi.rs:98:        || signer_seeds[1] != GATEWAY_MINT_AUTHORITY_SEED_1
+programs/xxxl-svm/src/cpi.rs:99:        || signer_seeds[2] != GATEWAY_MINT_AUTHORITY_SEED_2
+programs/xxxl-svm/src/cpi.rs:105:    Ok(MintToCpiPlanningBoundary {
+programs/xxxl-svm/src/cpi.rs:106:        token_program: *boundary.accounts.token_program.key,
+programs/xxxl-svm/src/cpi.rs:108:        recipient_token_account: *boundary.accounts.recipient_token_account.key,
+programs/xxxl-svm/src/cpi.rs:109:        mint_authority_pda: *boundary.accounts.mint_authority_pda.key,
+programs/xxxl-svm/src/cpi.rs:112:        live_route_activation_enabled: false,
+programs/xxxl-svm/src/cpi.rs:113:        invoke_signed_from_process_instruction_enabled: false,
+programs/xxxl-svm/src/cpi.rs:123:pub fn spl_mint_to_cpi_execution_enabled() -> bool {
+programs/xxxl-svm/src/cpi.rs:124:    let _phase_41k5_d2_gate_marker = "PHASE_41K5_D2_SPL_CPI_GATE_OPEN_AFTER_B1C7";
+programs/xxxl-svm/src/cpi.rs:134:pub fn spl_mint_to_cpi_execution_enabled() -> bool {
+programs/xxxl-svm/src/cpi.rs:135:    let _phase_41k5_d2_gate_marker = "PHASE_41K5_D2_SPL_CPI_GATE_CLOSED";
+programs/xxxl-svm/src/cpi.rs:142:    planning_boundary: &MintToCpiPlanningBoundary,
+programs/xxxl-svm/src/cpi.rs:143:    boundary: &MintToCpiBoundary<'_, '_>,
+programs/xxxl-svm/src/cpi.rs:145:    if execution_plan.live_route_activation_enabled
+programs/xxxl-svm/src/cpi.rs:146:        || execution_plan.mint_to_invocation_from_process_instruction_enabled
+programs/xxxl-svm/src/cpi.rs:147:        || planning_boundary.live_route_activation_enabled
+programs/xxxl-svm/src/cpi.rs:148:        || planning_boundary.invoke_signed_from_process_instruction_enabled
+programs/xxxl-svm/src/cpi.rs:150:        return Err(XxxlError::CpiBoundaryNotReady.into());
+programs/xxxl-svm/src/cpi.rs:154:        plan_mint_to_cpi_boundary(program_id, execution_plan, boundary)?;
+programs/xxxl-svm/src/cpi.rs:160:    if !spl_mint_to_cpi_execution_enabled() {
+programs/xxxl-svm/src/cpi.rs:161:        return Err(XxxlError::CpiBoundaryNotReady.into());
+programs/xxxl-svm/src/cpi.rs:166:        MintToCpiBoundary {
+programs/xxxl-svm/src/cpi.rs:167:            accounts: MintToCpiAccounts {
+programs/xxxl-svm/src/cpi.rs:168:                token_program: boundary.accounts.token_program,
+programs/xxxl-svm/src/cpi.rs:170:                recipient_token_account: boundary.accounts.recipient_token_account,
+programs/xxxl-svm/src/cpi.rs:171:                mint_authority_pda: boundary.accounts.mint_authority_pda,
+programs/xxxl-svm/src/cpi.rs:180:    token_program_id: &Pubkey,
+programs/xxxl-svm/src/cpi.rs:182:    recipient_token_account: &Pubkey,
+programs/xxxl-svm/src/cpi.rs:183:    mint_authority_pda: &Pubkey,
+programs/xxxl-svm/src/cpi.rs:190:    spl_token::instruction::mint_to(
+programs/xxxl-svm/src/cpi.rs:191:        token_program_id,
+programs/xxxl-svm/src/cpi.rs:193:        recipient_token_account,
+programs/xxxl-svm/src/cpi.rs:194:        mint_authority_pda,
+programs/xxxl-svm/src/cpi.rs:200:pub fn gateway_mint_authority_signer_seeds(bump: &u8) -> [&[u8]; 4] {
+programs/xxxl-svm/src/cpi.rs:202:        GATEWAY_MINT_AUTHORITY_SEED_0,
+programs/xxxl-svm/src/cpi.rs:203:        GATEWAY_MINT_AUTHORITY_SEED_1,
+programs/xxxl-svm/src/cpi.rs:204:        GATEWAY_MINT_AUTHORITY_SEED_2,
+programs/xxxl-svm/src/cpi.rs:209:pub fn assert_gateway_mint_authority_pda(
+programs/xxxl-svm/src/cpi.rs:211:    mint_authority_pda: &Pubkey,
+programs/xxxl-svm/src/cpi.rs:214:    let (expected_pda, expected_bump) = find_gateway_mint_authority(program_id);
+programs/xxxl-svm/src/cpi.rs:216:    if mint_authority_pda != &expected_pda || mint_authority_bump != expected_bump {
+programs/xxxl-svm/src/cpi.rs:225:    boundary: MintToCpiBoundary<'_, '_>,
+programs/xxxl-svm/src/cpi.rs:227:    assert_gateway_mint_authority_pda(
+programs/xxxl-svm/src/cpi.rs:229:        boundary.accounts.mint_authority_pda.key,
+programs/xxxl-svm/src/cpi.rs:234:        boundary.accounts.token_program.key,
+programs/xxxl-svm/src/cpi.rs:236:        boundary.accounts.recipient_token_account.key,
+programs/xxxl-svm/src/cpi.rs:237:        boundary.accounts.mint_authority_pda.key,
+programs/xxxl-svm/src/cpi.rs:241:    let signer_seeds = gateway_mint_authority_signer_seeds(&boundary.mint_authority_bump);
+programs/xxxl-svm/src/cpi.rs:243:    invoke_signed(
+programs/xxxl-svm/src/cpi.rs:246:            boundary.accounts.token_program.clone(),
+programs/xxxl-svm/src/cpi.rs:248:            boundary.accounts.recipient_token_account.clone(),
+programs/xxxl-svm/src/cpi.rs:249:            boundary.accounts.mint_authority_pda.clone(),
+programs/xxxl-svm/src/cpi.rs:265:        token_program_key: Pubkey,
+programs/xxxl-svm/src/cpi.rs:267:        recipient_token_account_key: Pubkey,
+programs/xxxl-svm/src/cpi.rs:268:        mint_authority_pda_key: Pubkey,
+programs/xxxl-svm/src/cpi.rs:275:        f: impl FnOnce(&MintToCpiBoundary<'_, '_>) -> T,
+programs/xxxl-svm/src/cpi.rs:278:        let token_program_key = params.token_program_key;
+programs/xxxl-svm/src/cpi.rs:280:        let recipient_token_account_key = params.recipient_token_account_key;
+programs/xxxl-svm/src/cpi.rs:281:        let mint_authority_pda_key = params.mint_authority_pda_key;
+programs/xxxl-svm/src/cpi.rs:284:        let mut token_program_lamports = 0;
+programs/xxxl-svm/src/cpi.rs:289:        let mut token_program_data = [];
+programs/xxxl-svm/src/cpi.rs:294:        let token_program_owner = Pubkey::new_unique();
+programs/xxxl-svm/src/cpi.rs:296:        let token_program = AccountInfo::new(
+programs/xxxl-svm/src/cpi.rs:297:            &token_program_key,
+programs/xxxl-svm/src/cpi.rs:300:            &mut token_program_lamports,
+programs/xxxl-svm/src/cpi.rs:301:            &mut token_program_data,
+programs/xxxl-svm/src/cpi.rs:302:            &token_program_owner,
+programs/xxxl-svm/src/cpi.rs:312:            &token_program_key,
+programs/xxxl-svm/src/cpi.rs:316:        let recipient_token_account = AccountInfo::new(
+programs/xxxl-svm/src/cpi.rs:317:            &recipient_token_account_key,
+programs/xxxl-svm/src/cpi.rs:322:            &token_program_key,
+programs/xxxl-svm/src/cpi.rs:326:        let mint_authority_pda = AccountInfo::new(
+programs/xxxl-svm/src/cpi.rs:327:            &mint_authority_pda_key,
+programs/xxxl-svm/src/cpi.rs:337:        let boundary = MintToCpiBoundary {
+programs/xxxl-svm/src/cpi.rs:338:            accounts: MintToCpiAccounts {
+programs/xxxl-svm/src/cpi.rs:339:                token_program: &token_program,
+programs/xxxl-svm/src/cpi.rs:341:                recipient_token_account: &recipient_token_account,
+programs/xxxl-svm/src/cpi.rs:342:                mint_authority_pda: &mint_authority_pda,
+programs/xxxl-svm/src/cpi.rs:363:            live_route_activation_enabled: false,
+programs/xxxl-svm/src/cpi.rs:364:            mint_to_invocation_from_process_instruction_enabled: false,
+programs/xxxl-svm/src/cpi.rs:375:        let (pda, bump) = find_gateway_mint_authority(&program_id);
+programs/xxxl-svm/src/cpi.rs:377:        let recipient_token_account_key = Pubkey::new_unique();
+programs/xxxl-svm/src/cpi.rs:380:        assert!(!spl_mint_to_cpi_execution_enabled());
+programs/xxxl-svm/src/cpi.rs:385:                token_program_key: spl_token::id(),
+programs/xxxl-svm/src/cpi.rs:387:                recipient_token_account_key,
+programs/xxxl-svm/src/cpi.rs:388:                mint_authority_pda_key: pda,
+programs/xxxl-svm/src/cpi.rs:394:                    plan_mint_to_cpi_boundary(&program_id, &execution_plan, boundary)
+programs/xxxl-svm/src/cpi.rs:404:                    XxxlError::CpiBoundaryNotReady,
+programs/xxxl-svm/src/cpi.rs:413:        let (pda, bump) = find_gateway_mint_authority(&program_id);
+programs/xxxl-svm/src/cpi.rs:415:        let recipient_token_account_key = Pubkey::new_unique();
+programs/xxxl-svm/src/cpi.rs:421:                token_program_key: spl_token::id(),
+programs/xxxl-svm/src/cpi.rs:423:                recipient_token_account_key,
+programs/xxxl-svm/src/cpi.rs:424:                mint_authority_pda_key: pda,
+programs/xxxl-svm/src/cpi.rs:430:                    plan_mint_to_cpi_boundary(&program_id, &execution_plan, boundary)
+programs/xxxl-svm/src/cpi.rs:450:        let (pda, bump) = find_gateway_mint_authority(&program_id);
+programs/xxxl-svm/src/cpi.rs:452:        let recipient_token_account_key = Pubkey::new_unique();
+programs/xxxl-svm/src/cpi.rs:458:                token_program_key: spl_token::id(),
+programs/xxxl-svm/src/cpi.rs:460:                recipient_token_account_key,
+programs/xxxl-svm/src/cpi.rs:461:                mint_authority_pda_key: pda,
+programs/xxxl-svm/src/cpi.rs:467:                    plan_mint_to_cpi_boundary(&program_id, &execution_plan, boundary)
+programs/xxxl-svm/src/cpi.rs:469:                planning_boundary.live_route_activation_enabled = true;
+programs/xxxl-svm/src/cpi.rs:478:                    XxxlError::CpiBoundaryNotReady,
+programs/xxxl-svm/src/cpi.rs:487:        let (_pda, bump) = find_gateway_mint_authority(&program_id);
+programs/xxxl-svm/src/cpi.rs:490:        let fake_planning_boundary = MintToCpiPlanningBoundary {
+programs/xxxl-svm/src/cpi.rs:491:            token_program: spl_token::id(),
+programs/xxxl-svm/src/cpi.rs:493:            recipient_token_account: Pubkey::new_unique(),
+programs/xxxl-svm/src/cpi.rs:494:            mint_authority_pda: Pubkey::new_unique(),
+programs/xxxl-svm/src/cpi.rs:497:            live_route_activation_enabled: false,
+programs/xxxl-svm/src/cpi.rs:498:            invoke_signed_from_process_instruction_enabled: false,
+programs/xxxl-svm/src/cpi.rs:504:                token_program_key: spl_token::id(),
+programs/xxxl-svm/src/cpi.rs:506:                recipient_token_account_key: fake_planning_boundary.recipient_token_account,
+programs/xxxl-svm/src/cpi.rs:507:                mint_authority_pda_key: Pubkey::new_unique(),
+programs/xxxl-svm/src/cpi.rs:526:    fn mint_to_cpi_planning_boundary_builds_plan_without_invoke_signed() {
+programs/xxxl-svm/src/cpi.rs:528:        let (pda, bump) = find_gateway_mint_authority(&program_id);
+programs/xxxl-svm/src/cpi.rs:530:        let recipient_token_account_key = Pubkey::new_unique();
+programs/xxxl-svm/src/cpi.rs:536:                token_program_key: spl_token::id(),
+programs/xxxl-svm/src/cpi.rs:538:                recipient_token_account_key,
+programs/xxxl-svm/src/cpi.rs:539:                mint_authority_pda_key: pda,
+programs/xxxl-svm/src/cpi.rs:544:                let plan = plan_mint_to_cpi_boundary(&program_id, &execution_plan, boundary)
+programs/xxxl-svm/src/cpi.rs:547:                assert_eq!(plan.token_program, spl_token::id());
+programs/xxxl-svm/src/cpi.rs:549:                assert_eq!(plan.recipient_token_account, recipient_token_account_key);
+programs/xxxl-svm/src/cpi.rs:550:                assert_eq!(plan.mint_authority_pda, pda);
+programs/xxxl-svm/src/cpi.rs:553:                assert!(!plan.live_route_activation_enabled);
+programs/xxxl-svm/src/cpi.rs:554:                assert!(!plan.invoke_signed_from_process_instruction_enabled);
+programs/xxxl-svm/src/cpi.rs:562:        let (pda, bump) = find_gateway_mint_authority(&program_id);
+programs/xxxl-svm/src/cpi.rs:569:                token_program_key: spl_token::id(),
+programs/xxxl-svm/src/cpi.rs:571:                recipient_token_account_key: Pubkey::new_unique(),
+programs/xxxl-svm/src/cpi.rs:572:                mint_authority_pda_key: pda,
+programs/xxxl-svm/src/cpi.rs:578:                    plan_mint_to_cpi_boundary(&program_id, &execution_plan, boundary),
+programs/xxxl-svm/src/cpi.rs:588:        let (pda, bump) = find_gateway_mint_authority(&program_id);
+programs/xxxl-svm/src/cpi.rs:595:                token_program_key: spl_token::id(),
+programs/xxxl-svm/src/cpi.rs:597:                recipient_token_account_key: Pubkey::new_unique(),
+programs/xxxl-svm/src/cpi.rs:598:                mint_authority_pda_key: pda,
+programs/xxxl-svm/src/cpi.rs:604:                    plan_mint_to_cpi_boundary(&program_id, &execution_plan, boundary),
+programs/xxxl-svm/src/cpi.rs:614:        let (pda, bump) = find_gateway_mint_authority(&program_id);
+programs/xxxl-svm/src/cpi.rs:617:        execution_plan.live_route_activation_enabled = true;
+programs/xxxl-svm/src/cpi.rs:622:                token_program_key: spl_token::id(),
+programs/xxxl-svm/src/cpi.rs:624:                recipient_token_account_key: Pubkey::new_unique(),
+programs/xxxl-svm/src/cpi.rs:625:                mint_authority_pda_key: pda,
+programs/xxxl-svm/src/cpi.rs:631:                    plan_mint_to_cpi_boundary(&program_id, &execution_plan, boundary),
+programs/xxxl-svm/src/cpi.rs:641:        let (pda, bump) = find_gateway_mint_authority(&program_id);
+programs/xxxl-svm/src/cpi.rs:644:        execution_plan.mint_to_invocation_from_process_instruction_enabled = true;
+programs/xxxl-svm/src/cpi.rs:649:                token_program_key: spl_token::id(),
+programs/xxxl-svm/src/cpi.rs:651:                recipient_token_account_key: Pubkey::new_unique(),
+programs/xxxl-svm/src/cpi.rs:652:                mint_authority_pda_key: pda,
+programs/xxxl-svm/src/cpi.rs:658:                    plan_mint_to_cpi_boundary(&program_id, &execution_plan, boundary),
+programs/xxxl-svm/src/cpi.rs:666:    fn mint_to_cpi_planning_boundary_rejects_wrong_token_program() {
+programs/xxxl-svm/src/cpi.rs:668:        let (pda, bump) = find_gateway_mint_authority(&program_id);
+programs/xxxl-svm/src/cpi.rs:675:                token_program_key: Pubkey::new_unique(),
+programs/xxxl-svm/src/cpi.rs:677:                recipient_token_account_key: Pubkey::new_unique(),
+programs/xxxl-svm/src/cpi.rs:678:                mint_authority_pda_key: pda,
+programs/xxxl-svm/src/cpi.rs:684:                    plan_mint_to_cpi_boundary(&program_id, &execution_plan, boundary),
+programs/xxxl-svm/src/cpi.rs:694:        let (pda, bump) = find_gateway_mint_authority(&program_id);
+programs/xxxl-svm/src/cpi.rs:701:                token_program_key: spl_token::id(),
+programs/xxxl-svm/src/cpi.rs:703:                recipient_token_account_key: Pubkey::new_unique(),
+programs/xxxl-svm/src/cpi.rs:704:                mint_authority_pda_key: pda,
+programs/xxxl-svm/src/cpi.rs:710:                    plan_mint_to_cpi_boundary(&program_id, &execution_plan, boundary),
+programs/xxxl-svm/src/cpi.rs:720:        let (_pda, bump) = find_gateway_mint_authority(&program_id);
+programs/xxxl-svm/src/cpi.rs:727:                token_program_key: spl_token::id(),
+programs/xxxl-svm/src/cpi.rs:729:                recipient_token_account_key: Pubkey::new_unique(),
+programs/xxxl-svm/src/cpi.rs:730:                mint_authority_pda_key: Pubkey::new_unique(),
+programs/xxxl-svm/src/cpi.rs:736:                    plan_mint_to_cpi_boundary(&program_id, &execution_plan, boundary),
+programs/xxxl-svm/src/cpi.rs:746:        let (pda, bump) = find_gateway_mint_authority(&program_id);
+programs/xxxl-svm/src/cpi.rs:753:                token_program_key: spl_token::id(),
+programs/xxxl-svm/src/cpi.rs:755:                recipient_token_account_key: Pubkey::new_unique(),
+programs/xxxl-svm/src/cpi.rs:756:                mint_authority_pda_key: pda,
+programs/xxxl-svm/src/cpi.rs:762:                    plan_mint_to_cpi_boundary(&program_id, &execution_plan, boundary),
+programs/xxxl-svm/src/cpi.rs:770:    fn mint_to_instruction_uses_spl_token_program_and_expected_accounts() {
+programs/xxxl-svm/src/cpi.rs:772:        let recipient_token_account = Pubkey::new_unique();
+programs/xxxl-svm/src/cpi.rs:773:        let mint_authority_pda = Pubkey::new_unique();
+programs/xxxl-svm/src/cpi.rs:776:            &spl_token::id(),
+programs/xxxl-svm/src/cpi.rs:778:            &recipient_token_account,
+programs/xxxl-svm/src/cpi.rs:779:            &mint_authority_pda,
+programs/xxxl-svm/src/cpi.rs:784:        assert_eq!(instruction.program_id, spl_token::id());
+programs/xxxl-svm/src/cpi.rs:787:        assert_eq!(instruction.accounts[1].pubkey, recipient_token_account);
+programs/xxxl-svm/src/cpi.rs:788:        assert_eq!(instruction.accounts[2].pubkey, mint_authority_pda);
+programs/xxxl-svm/src/cpi.rs:797:            &spl_token::id(),
+programs/xxxl-svm/src/cpi.rs:812:        let seeds = gateway_mint_authority_signer_seeds(&bump);
+programs/xxxl-svm/src/cpi.rs:821:    fn gateway_mint_authority_pda_accepts_real_derived_fixture() {
+programs/xxxl-svm/src/cpi.rs:823:        let (pda, bump) = find_gateway_mint_authority(&program_id);
+programs/xxxl-svm/src/cpi.rs:825:        assert_gateway_mint_authority_pda(&program_id, &pda, bump)
+programs/xxxl-svm/src/cpi.rs:830:    fn gateway_mint_authority_pda_rejects_wrong_pda() {
+programs/xxxl-svm/src/cpi.rs:832:        let (_pda, bump) = find_gateway_mint_authority(&program_id);
+programs/xxxl-svm/src/cpi.rs:835:        let result = assert_gateway_mint_authority_pda(&program_id, &wrong_pda, bump);
+programs/xxxl-svm/src/cpi.rs:843:    fn gateway_mint_authority_pda_rejects_wrong_bump() {
+programs/xxxl-svm/src/cpi.rs:845:        let (pda, bump) = find_gateway_mint_authority(&program_id);
+programs/xxxl-svm/src/cpi.rs:847:        let result = assert_gateway_mint_authority_pda(&program_id, &pda, bump.wrapping_add(1));
+programs/xxxl-svm/src/cpi.rs:855:    fn mint_to_boundary_rejects_wrong_pda_before_invoke_signed() {
+programs/xxxl-svm/src/cpi.rs:857:        let (_pda, bump) = find_gateway_mint_authority(&program_id);
+programs/xxxl-svm/src/cpi.rs:859:        let token_program_key = spl_token::id();
+programs/xxxl-svm/src/cpi.rs:864:        let mut token_program_lamports = 0;
+programs/xxxl-svm/src/cpi.rs:869:        let mut token_program_data = [];
+programs/xxxl-svm/src/cpi.rs:874:        let token_program_owner = Pubkey::new_unique();
+programs/xxxl-svm/src/cpi.rs:875:        let token_program = AccountInfo::new(
+programs/xxxl-svm/src/cpi.rs:876:            &token_program_key,
+programs/xxxl-svm/src/cpi.rs:879:            &mut token_program_lamports,
+programs/xxxl-svm/src/cpi.rs:880:            &mut token_program_data,
+programs/xxxl-svm/src/cpi.rs:881:            &token_program_owner,
+programs/xxxl-svm/src/cpi.rs:891:            &token_program_key,
+programs/xxxl-svm/src/cpi.rs:895:        let recipient_token_account = AccountInfo::new(
+programs/xxxl-svm/src/cpi.rs:901:            &token_program_key,
+programs/xxxl-svm/src/cpi.rs:905:        let mint_authority_pda = AccountInfo::new(
+programs/xxxl-svm/src/cpi.rs:916:        let boundary = MintToCpiBoundary {
+programs/xxxl-svm/src/cpi.rs:917:            accounts: MintToCpiAccounts {
+programs/xxxl-svm/src/cpi.rs:918:                token_program: &token_program,
+programs/xxxl-svm/src/cpi.rs:920:                recipient_token_account: &recipient_token_account,
+programs/xxxl-svm/src/cpi.rs:921:                mint_authority_pda: &mint_authority_pda,
+programs/xxxl-svm/src/deployment_status.rs:97:        deployable: false,
+programs/xxxl-svm/src/deployment_status.rs:266:    crate::cpi::spl_mint_to_cpi_execution_enabled()
+programs/xxxl-svm/src/error.rs:12:    CpiBoundaryNotReady = 8,
+programs/xxxl-svm/src/execution_plan.rs:44:    pub live_route_activation_enabled: bool,
+programs/xxxl-svm/src/execution_plan.rs:45:    pub mint_to_invocation_from_process_instruction_enabled: bool,
+programs/xxxl-svm/src/execution_plan.rs:80:        live_route_activation_enabled: false,
+programs/xxxl-svm/src/execution_plan.rs:81:        mint_to_invocation_from_process_instruction_enabled: false,
+programs/xxxl-svm/src/execution_plan.rs:93:    if execution_plan.live_route_activation_enabled
+programs/xxxl-svm/src/execution_plan.rs:94:        || execution_plan.mint_to_invocation_from_process_instruction_enabled
+programs/xxxl-svm/src/execution_plan.rs:116:    if execution_plan.live_route_activation_enabled
+programs/xxxl-svm/src/execution_plan.rs:117:        || execution_plan.mint_to_invocation_from_process_instruction_enabled
+programs/xxxl-svm/src/execution_plan.rs:140:    if execution_plan.live_route_activation_enabled
+programs/xxxl-svm/src/execution_plan.rs:141:        || execution_plan.mint_to_invocation_from_process_instruction_enabled
+programs/xxxl-svm/src/execution_plan.rs:237:        cpi::{MintToCpiAccounts, MintToCpiBoundary},
+programs/xxxl-svm/src/execution_plan.rs:275:        let token_program_key = spl_token::id();
+programs/xxxl-svm/src/execution_plan.rs:277:        let recipient_token_account_key = Pubkey::new_unique();
+programs/xxxl-svm/src/execution_plan.rs:278:        let mint_authority_pda_key = Pubkey::new_unique();
+programs/xxxl-svm/src/execution_plan.rs:281:        let mut token_program_lamports = 0;
+programs/xxxl-svm/src/execution_plan.rs:286:        let mut token_program_data = [];
+programs/xxxl-svm/src/execution_plan.rs:291:        let token_program = AccountInfo::new(
+programs/xxxl-svm/src/execution_plan.rs:292:            &token_program_key,
+programs/xxxl-svm/src/execution_plan.rs:295:            &mut token_program_lamports,
+programs/xxxl-svm/src/execution_plan.rs:296:            &mut token_program_data,
+programs/xxxl-svm/src/execution_plan.rs:307:            &token_program_key,
+programs/xxxl-svm/src/execution_plan.rs:311:        let recipient_token_account = AccountInfo::new(
+programs/xxxl-svm/src/execution_plan.rs:312:            &recipient_token_account_key,
+programs/xxxl-svm/src/execution_plan.rs:317:            &token_program_key,
+programs/xxxl-svm/src/execution_plan.rs:321:        let mint_authority_pda = AccountInfo::new(
+programs/xxxl-svm/src/execution_plan.rs:322:            &mint_authority_pda_key,
+programs/xxxl-svm/src/execution_plan.rs:333:            boundary: MintToCpiBoundary {
+programs/xxxl-svm/src/execution_plan.rs:334:                accounts: MintToCpiAccounts {
+programs/xxxl-svm/src/execution_plan.rs:335:                    token_program: &token_program,
+programs/xxxl-svm/src/execution_plan.rs:337:                    recipient_token_account: &recipient_token_account,
+programs/xxxl-svm/src/execution_plan.rs:338:                    mint_authority_pda: &mint_authority_pda,
+programs/xxxl-svm/src/execution_plan.rs:356:        assert!(!plan.live_route_activation_enabled);
+programs/xxxl-svm/src/execution_plan.rs:357:        assert!(!plan.mint_to_invocation_from_process_instruction_enabled);
+programs/xxxl-svm/src/execution_plan.rs:364:        let token_program_key = spl_token::id();
+programs/xxxl-svm/src/execution_plan.rs:366:        let recipient_token_account_key = Pubkey::new_unique();
+programs/xxxl-svm/src/execution_plan.rs:367:        let mint_authority_pda_key = Pubkey::new_unique();
+programs/xxxl-svm/src/execution_plan.rs:370:        let mut token_program_lamports = 0;
+programs/xxxl-svm/src/execution_plan.rs:375:        let mut token_program_data = [];
+programs/xxxl-svm/src/execution_plan.rs:380:        let token_program = AccountInfo::new(
+programs/xxxl-svm/src/execution_plan.rs:381:            &token_program_key,
+programs/xxxl-svm/src/execution_plan.rs:384:            &mut token_program_lamports,
+programs/xxxl-svm/src/execution_plan.rs:385:            &mut token_program_data,
+programs/xxxl-svm/src/execution_plan.rs:396:            &token_program_key,
+programs/xxxl-svm/src/execution_plan.rs:400:        let recipient_token_account = AccountInfo::new(
+programs/xxxl-svm/src/execution_plan.rs:401:            &recipient_token_account_key,
+programs/xxxl-svm/src/execution_plan.rs:406:            &token_program_key,
+programs/xxxl-svm/src/execution_plan.rs:410:        let mint_authority_pda = AccountInfo::new(
+programs/xxxl-svm/src/execution_plan.rs:411:            &mint_authority_pda_key,
+programs/xxxl-svm/src/execution_plan.rs:422:            boundary: MintToCpiBoundary {
+programs/xxxl-svm/src/execution_plan.rs:423:                accounts: MintToCpiAccounts {
+programs/xxxl-svm/src/execution_plan.rs:424:                    token_program: &token_program,
+programs/xxxl-svm/src/execution_plan.rs:426:                    recipient_token_account: &recipient_token_account,
+programs/xxxl-svm/src/execution_plan.rs:427:                    mint_authority_pda: &mint_authority_pda,
+programs/xxxl-svm/src/execution_plan.rs:543:        plan.live_route_activation_enabled = true;
+programs/xxxl-svm/src/execution_plan.rs:560:        plan.mint_to_invocation_from_process_instruction_enabled = true;
+programs/xxxl-svm/src/execution_plan.rs:684:        plan.live_route_activation_enabled = true;
+programs/xxxl-svm/src/execution_plan.rs:701:        plan.mint_to_invocation_from_process_instruction_enabled = true;
+programs/xxxl-svm/src/execution_plan.rs:908:        plan.live_route_activation_enabled = true;
+programs/xxxl-svm/src/execution_plan.rs:932:        plan.mint_to_invocation_from_process_instruction_enabled = true;
+programs/xxxl-svm/src/execution_plan.rs:1104:            live_route_activation_enabled: false,
+programs/xxxl-svm/src/execution_plan.rs:1105:            mint_to_invocation_from_process_instruction_enabled: false,
+programs/xxxl-svm/src/initialization_execution_plan_skeleton.rs:58:    pub gateway_mint_authority_pda: Pubkey,
+programs/xxxl-svm/src/initialization_execution_plan_skeleton.rs:74:    pub mint_authority_pda: Pubkey,
+programs/xxxl-svm/src/initialization_execution_plan_skeleton.rs:76:    pub token_program: Pubkey,
+programs/xxxl-svm/src/initialization_execution_plan_skeleton.rs:143:        gateway_mint_authority_pda: input.gateway_mint_authority_pda,
+programs/xxxl-svm/src/initialization_execution_plan_skeleton.rs:225:        mint_authority_pda: input.mint_authority_pda,
+programs/xxxl-svm/src/initialization_execution_plan_skeleton.rs:227:        token_program: input.token_program,
+programs/xxxl-svm/src/initialization_execution_plan_skeleton.rs:292:                gateway_mint_authority_pda: mint_authority,
+programs/xxxl-svm/src/initialization_execution_plan_skeleton.rs:304:        assert_eq!(output.account.gateway_mint_authority_pda, mint_authority);
+programs/xxxl-svm/src/initialization_execution_plan_skeleton.rs:352:        let token_program = Pubkey::new_unique();
+programs/xxxl-svm/src/initialization_execution_plan_skeleton.rs:366:                mint_authority_pda: mint_authority,
+programs/xxxl-svm/src/initialization_execution_plan_skeleton.rs:368:                token_program,
+programs/xxxl-svm/src/initialization_execution_plan_skeleton.rs:380:        assert_eq!(output.account.mint_authority_pda, mint_authority);
+programs/xxxl-svm/src/initialization_execution_plan_skeleton.rs:381:        assert_eq!(output.account.token_program, token_program);
+programs/xxxl-svm/src/initialization_execution_plan_skeleton.rs:408:                    gateway_mint_authority_pda: Pubkey::new_unique(),
+programs/xxxl-svm/src/initialization_execution_plan_skeleton.rs:441:                gateway_mint_authority_pda: Pubkey::new_unique(),
+programs/xxxl-svm/src/local_execution_plan_skeleton.rs:35:        gateway_mint_authority_pda: Pubkey,
+programs/xxxl-svm/src/local_execution_plan_skeleton.rs:43:        mint_authority_pda: Pubkey,
+programs/xxxl-svm/src/local_execution_plan_skeleton.rs:45:        token_program: Pubkey,
+programs/xxxl-svm/src/local_execution_plan_skeleton.rs:141:            gateway_mint_authority_pda,
+programs/xxxl-svm/src/local_execution_plan_skeleton.rs:148:                    gateway_mint_authority_pda,
+programs/xxxl-svm/src/local_execution_plan_skeleton.rs:166:            mint_authority_pda,
+programs/xxxl-svm/src/local_execution_plan_skeleton.rs:168:            token_program,
+programs/xxxl-svm/src/local_execution_plan_skeleton.rs:177:                    mint_authority_pda,
+programs/xxxl-svm/src/local_execution_plan_skeleton.rs:179:                    token_program,
+programs/xxxl-svm/src/local_execution_plan_skeleton.rs:228:            mint_authority_pda: Pubkey::new_unique(),
+programs/xxxl-svm/src/local_execution_plan_skeleton.rs:230:            token_program: Pubkey::new_unique(),
+programs/xxxl-svm/src/local_execution_plan_skeleton.rs:268:                gateway_mint_authority_pda: mint_authority,
+programs/xxxl-svm/src/local_execution_plan_skeleton.rs:279:                assert_eq!(output.account.gateway_mint_authority_pda, mint_authority);
+programs/xxxl-svm/src/local_execution_plan_skeleton.rs:326:        let token_program = Pubkey::new_unique();
+programs/xxxl-svm/src/local_execution_plan_skeleton.rs:340:                mint_authority_pda: mint_authority,
+programs/xxxl-svm/src/local_execution_plan_skeleton.rs:342:                token_program,
+programs/xxxl-svm/src/local_execution_plan_skeleton.rs:352:                assert_eq!(output.account.mint_authority_pda, mint_authority);
+programs/xxxl-svm/src/local_execution_plan_skeleton.rs:353:                assert_eq!(output.account.token_program, token_program);
+programs/xxxl-svm/src/local_execution_scenario_skeleton.rs:47:    pub gateway_mint_authority_pda: Pubkey,
+programs/xxxl-svm/src/local_execution_scenario_skeleton.rs:49:    pub mint_authority_pda: Pubkey,
+programs/xxxl-svm/src/local_execution_scenario_skeleton.rs:51:    pub token_program: Pubkey,
+programs/xxxl-svm/src/local_execution_scenario_skeleton.rs:99:                gateway_mint_authority_pda: input.gateway_mint_authority_pda,
+programs/xxxl-svm/src/local_execution_scenario_skeleton.rs:155:                mint_authority_pda: input.mint_authority_pda,
+programs/xxxl-svm/src/local_execution_scenario_skeleton.rs:157:                token_program: input.token_program,
+programs/xxxl-svm/src/local_execution_scenario_skeleton.rs:227:            gateway_mint_authority_pda: Pubkey::new_unique(),
+programs/xxxl-svm/src/local_execution_scenario_skeleton.rs:229:            mint_authority_pda: Pubkey::new_unique(),
+programs/xxxl-svm/src/local_execution_scenario_skeleton.rs:231:            token_program: Pubkey::new_unique(),
+programs/xxxl-svm/src/local_execution_scenario_skeleton.rs:265:            output.gateway_config.gateway_mint_authority_pda,
+programs/xxxl-svm/src/local_execution_scenario_skeleton.rs:266:            input.gateway_mint_authority_pda
+programs/xxxl-svm/src/local_execution_scenario_skeleton.rs:277:            output.initial_mint_state.mint_authority_pda,
+programs/xxxl-svm/src/local_execution_scenario_skeleton.rs:278:            input.mint_authority_pda
+programs/xxxl-svm/src/local_fixture_file_emitter_skeleton.rs:105:        fixture_set.pubkeys.recipient_token_account
+programs/xxxl-svm/src/local_fixture_generator_skeleton.rs:74:    pub recipient_token_account: Pubkey,
+programs/xxxl-svm/src/local_fixture_generator_skeleton.rs:75:    pub token_program: Pubkey,
+programs/xxxl-svm/src/local_fixture_generator_skeleton.rs:173:            format!("{}_recipient_token_account", fixture_set_id),
+programs/xxxl-svm/src/local_fixture_generator_skeleton.rs:236:        recipient_token_account: deterministic_pubkey(seed_byte, 0x08),
+programs/xxxl-svm/src/local_fixture_generator_skeleton.rs:237:        token_program: deterministic_pubkey(seed_byte, 0x09),
+programs/xxxl-svm/src/local_fixture_generator_skeleton.rs:394:        assert_ne!(a.recipient_token_account, b.recipient_token_account);
+programs/xxxl-svm/src/local_guardian_failure_matrix_skeleton.rs:230:        "recipient_token_account_future_fixture_if_present".to_string(),
+programs/xxxl-svm/src/pda.rs:3:pub const GATEWAY_MINT_AUTHORITY_SEED_0: &[u8] = b"xxxl";
+programs/xxxl-svm/src/pda.rs:4:pub const GATEWAY_MINT_AUTHORITY_SEED_1: &[u8] = b"gateway-mint-authority";
+programs/xxxl-svm/src/pda.rs:5:pub const GATEWAY_MINT_AUTHORITY_SEED_2: &[u8] = b"v1";
+programs/xxxl-svm/src/pda.rs:41:pub const GATEWAY_MINT_AUTHORITY_SEEDS: [&[u8]; 3] = [
+programs/xxxl-svm/src/pda.rs:42:    GATEWAY_MINT_AUTHORITY_SEED_0,
+programs/xxxl-svm/src/pda.rs:43:    GATEWAY_MINT_AUTHORITY_SEED_1,
+programs/xxxl-svm/src/pda.rs:44:    GATEWAY_MINT_AUTHORITY_SEED_2,
+programs/xxxl-svm/src/pda.rs:50:        name: "gateway_mint_authority",
+programs/xxxl-svm/src/pda.rs:51:        seeds: GATEWAY_MINT_AUTHORITY_SEEDS,
+programs/xxxl-svm/src/pda.rs:58:pub fn gateway_mint_authority_seeds() -> [&'static [u8]; 3] {
+programs/xxxl-svm/src/pda.rs:59:    GATEWAY_MINT_AUTHORITY_SEEDS
+programs/xxxl-svm/src/pda.rs:62:pub fn find_gateway_mint_authority(program_id: &Pubkey) -> (Pubkey, u8) {
+programs/xxxl-svm/src/pda.rs:63:    Pubkey::find_program_address(&gateway_mint_authority_seeds(), program_id)
+programs/xxxl-svm/src/pda.rs:66:pub fn derive_gateway_mint_authority_fixture_report(
+programs/xxxl-svm/src/pda.rs:69:    let (pda, bump) = find_gateway_mint_authority(program_id);
+programs/xxxl-svm/src/pda.rs:73:        name: "gateway_mint_authority",
+programs/xxxl-svm/src/pda.rs:81:    [derive_gateway_mint_authority_fixture_report(program_id)]
+programs/xxxl-svm/src/pda.rs:142:    fn gateway_mint_authority_seeds_are_exact() {
+programs/xxxl-svm/src/pda.rs:143:        let seeds = gateway_mint_authority_seeds();
+programs/xxxl-svm/src/pda.rs:158:        assert_eq!(entry.name, "gateway_mint_authority");
+programs/xxxl-svm/src/pda.rs:161:        assert_eq!(entry.seeds, gateway_mint_authority_seeds());
+programs/xxxl-svm/src/pda.rs:171:        assert_eq!(entry.name, "gateway_mint_authority");
+programs/xxxl-svm/src/pda.rs:172:        assert_eq!(entry.seeds[0], GATEWAY_MINT_AUTHORITY_SEED_0);
+programs/xxxl-svm/src/pda.rs:173:        assert_eq!(entry.seeds[1], GATEWAY_MINT_AUTHORITY_SEED_1);
+programs/xxxl-svm/src/pda.rs:174:        assert_eq!(entry.seeds[2], GATEWAY_MINT_AUTHORITY_SEED_2);
+programs/xxxl-svm/src/pda.rs:185:            .find(|entry| entry.name == "mint_authority_pda")
+programs/xxxl-svm/src/pda.rs:194:            AccountOwnerModel::ProgramDerivedAddress
+programs/xxxl-svm/src/pda.rs:199:    fn gateway_mint_authority_fixture_report_matches_derivation() {
+programs/xxxl-svm/src/pda.rs:201:        let report = derive_gateway_mint_authority_fixture_report(&program_id);
+programs/xxxl-svm/src/pda.rs:202:        let (expected_pda, expected_bump) = find_gateway_mint_authority(&program_id);
+programs/xxxl-svm/src/pda.rs:205:        assert_eq!(report.name, "gateway_mint_authority");
+programs/xxxl-svm/src/pda.rs:264:        reports[0].name = "wrong_gateway_mint_authority";
+programs/xxxl-svm/src/pda.rs:313:    fn gateway_mint_authority_uses_real_find_program_address() {
+programs/xxxl-svm/src/pda.rs:315:        let (pda, bump) = find_gateway_mint_authority(&program_id);
+programs/xxxl-svm/src/pda.rs:317:            Pubkey::find_program_address(&gateway_mint_authority_seeds(), &program_id);
+programs/xxxl-svm/src/pda.rs:324:    fn gateway_mint_authority_derivation_is_deterministic() {
+programs/xxxl-svm/src/pda.rs:326:        let left = find_gateway_mint_authority(&program_id);
+programs/xxxl-svm/src/pda.rs:327:        let right = find_gateway_mint_authority(&program_id);
+programs/xxxl-svm/src/pda.rs:333:    fn gateway_mint_authority_changes_with_program_id() {
+programs/xxxl-svm/src/pda.rs:339:        let first = find_gateway_mint_authority(&first_program_id);
+programs/xxxl-svm/src/pda.rs:340:        let second = find_gateway_mint_authority(&second_program_id);
+programs/xxxl-svm/src/pda.rs:346:    fn gateway_mint_authority_fixture_is_not_placeholder_program_id() {
+programs/xxxl-svm/src/pda.rs:348:        let (pda, _bump) = find_gateway_mint_authority(&program_id);
+programs/xxxl-svm/src/pda.rs:380:        assert_eq!(report.name, "gateway_mint_authority");
+programs/xxxl-svm/src/pda.rs:383:        let (expected_pda, expected_bump) = find_gateway_mint_authority(&program_id);
+programs/xxxl-svm/src/pda.rs:413:        println!("GATEWAY_MINT_AUTHORITY_PDA={}", report.pda);
+programs/xxxl-svm/src/pda.rs:414:        println!("GATEWAY_MINT_AUTHORITY_BUMP={}", report.bump);
+programs/xxxl-svm/src/phase_41k5_d15_atomic_mark_and_mint_svm_harness.rs:22:    cpi::{mint_to_cpi_boundary, MintToCpiAccounts, MintToCpiBoundary},
+programs/xxxl-svm/src/phase_41k5_d15_atomic_mark_and_mint_svm_harness.rs:64:    let spl_token_mint_account = next_account_info(account_info_iter)?;
+programs/xxxl-svm/src/phase_41k5_d15_atomic_mark_and_mint_svm_harness.rs:65:    let recipient_token_account = next_account_info(account_info_iter)?;
+programs/xxxl-svm/src/phase_41k5_d15_atomic_mark_and_mint_svm_harness.rs:66:    let mint_authority_pda = next_account_info(account_info_iter)?;
+programs/xxxl-svm/src/phase_41k5_d15_atomic_mark_and_mint_svm_harness.rs:67:    let token_program = next_account_info(account_info_iter)?;
+programs/xxxl-svm/src/phase_41k5_d15_atomic_mark_and_mint_svm_harness.rs:89:        MintToCpiBoundary {
+programs/xxxl-svm/src/phase_41k5_d15_atomic_mark_and_mint_svm_harness.rs:90:            accounts: MintToCpiAccounts {
+programs/xxxl-svm/src/phase_41k5_d15_atomic_mark_and_mint_svm_harness.rs:91:                token_program,
+programs/xxxl-svm/src/phase_41k5_d15_atomic_mark_and_mint_svm_harness.rs:92:                mint: spl_token_mint_account,
+programs/xxxl-svm/src/phase_41k5_d15_atomic_mark_and_mint_svm_harness.rs:93:                recipient_token_account,
+programs/xxxl-svm/src/phase_41k5_d15_atomic_mark_and_mint_svm_harness.rs:94:                mint_authority_pda,
+programs/xxxl-svm/src/processed_event_marking_boundary.rs:2:    account_info::AccountInfo, program::invoke_signed, program_error::ProgramError, pubkey::Pubkey,
+programs/xxxl-svm/src/processed_event_marking_boundary.rs:42:    pub invoke_signed_enabled: bool,
+programs/xxxl-svm/src/processed_event_marking_boundary.rs:43:    pub spl_token_mint_to_enabled: bool,
+programs/xxxl-svm/src/processed_event_marking_boundary.rs:66:    invoke_signed_enabled: true,
+programs/xxxl-svm/src/processed_event_marking_boundary.rs:67:    spl_token_mint_to_enabled: false,
+programs/xxxl-svm/src/processed_event_marking_boundary.rs:86:    invoke_signed_used: bool,
+programs/xxxl-svm/src/processed_event_marking_boundary.rs:87:    spl_token_mint_to_enabled: bool,
+programs/xxxl-svm/src/processed_event_marking_boundary.rs:137:    pub fn invoke_signed_used(&self) -> bool {
+programs/xxxl-svm/src/processed_event_marking_boundary.rs:138:        self.invoke_signed_used
+programs/xxxl-svm/src/processed_event_marking_boundary.rs:141:    pub fn spl_token_mint_to_enabled(&self) -> bool {
+programs/xxxl-svm/src/processed_event_marking_boundary.rs:142:        self.spl_token_mint_to_enabled
+programs/xxxl-svm/src/processed_event_marking_boundary.rs:323:        invoke_signed_used: true,
+programs/xxxl-svm/src/processed_event_marking_boundary.rs:324:        spl_token_mint_to_enabled: false,
+programs/xxxl-svm/src/processed_event_marking_boundary.rs:353:    invoke_signed(
+programs/xxxl-svm/src/processed_event_marking_boundary.rs:378:    invoke_signed(
+programs/xxxl-svm/src/processed_event_marking_boundary.rs:398:    invoke_signed(
+programs/xxxl-svm/src/processed_event_marking_boundary.rs:440:        assert!(report.invoke_signed_enabled);
+programs/xxxl-svm/src/processed_event_marking_boundary.rs:441:        assert!(!report.spl_token_mint_to_enabled);
+programs/xxxl-svm/src/processor.rs:37:        assert_gateway_mint_authority_pda, guarded_mint_to_cpi_execution_gate_boundary,
+programs/xxxl-svm/src/processor.rs:38:        plan_mint_to_cpi_boundary, MintToCpiAccounts, MintToCpiBoundary, MintToCpiPlanningBoundary,
+programs/xxxl-svm/src/processor.rs:101:    pub boundary: MintToCpiBoundary<'a, 'b>,
+programs/xxxl-svm/src/processor.rs:108:    pub mint_to_cpi_plan: MintToCpiPlanningBoundary,
+programs/xxxl-svm/src/processor.rs:109:    pub live_route_activation_enabled: bool,
+programs/xxxl-svm/src/processor.rs:110:    pub invoke_signed_from_process_instruction_enabled: bool,
+programs/xxxl-svm/src/processor.rs:115:    pub mint_to_cpi_plan: MintToCpiPlanningBoundary,
+programs/xxxl-svm/src/processor.rs:117:    pub live_route_activation_enabled: bool,
+programs/xxxl-svm/src/processor.rs:118:    pub invoke_signed_from_process_instruction_enabled: bool,
+programs/xxxl-svm/src/processor.rs:125:    pub live_route_activation_enabled: bool,
+programs/xxxl-svm/src/processor.rs:126:    pub invoke_signed_from_process_instruction_enabled: bool,
+programs/xxxl-svm/src/processor.rs:289:        recipient: *prepared.boundary.accounts.recipient_token_account.key,
+programs/xxxl-svm/src/processor.rs:329:    if !crate::cpi::spl_mint_to_cpi_execution_enabled() {
+programs/xxxl-svm/src/processor.rs:330:        return Err(XxxlError::CpiBoundaryNotReady.into());
+programs/xxxl-svm/src/processor.rs:393:    Err(XxxlError::CpiBoundaryNotReady.into())
+programs/xxxl-svm/src/processor.rs:424:    if execution_plan.live_route_activation_enabled
+programs/xxxl-svm/src/processor.rs:425:        || execution_plan.mint_to_invocation_from_process_instruction_enabled
+programs/xxxl-svm/src/processor.rs:427:        return Err(XxxlError::CpiBoundaryNotReady.into());
+programs/xxxl-svm/src/processor.rs:444:    if execution_plan.live_route_activation_enabled
+programs/xxxl-svm/src/processor.rs:445:        || execution_plan.mint_to_invocation_from_process_instruction_enabled
+programs/xxxl-svm/src/processor.rs:447:        return Err(XxxlError::CpiBoundaryNotReady.into());
+programs/xxxl-svm/src/processor.rs:451:        plan_mint_to_cpi_boundary(program_id, &execution_plan, &prepared.boundary)?;
+programs/xxxl-svm/src/processor.rs:453:    if mint_to_cpi_plan.live_route_activation_enabled
+programs/xxxl-svm/src/processor.rs:454:        || mint_to_cpi_plan.invoke_signed_from_process_instruction_enabled
+programs/xxxl-svm/src/processor.rs:456:        return Err(XxxlError::CpiBoundaryNotReady.into());
+programs/xxxl-svm/src/processor.rs:462:        live_route_activation_enabled: false,
+programs/xxxl-svm/src/processor.rs:463:        invoke_signed_from_process_instruction_enabled: false,
+programs/xxxl-svm/src/processor.rs:483:    if planning_composition.live_route_activation_enabled
+programs/xxxl-svm/src/processor.rs:484:        || planning_composition.invoke_signed_from_process_instruction_enabled
+programs/xxxl-svm/src/processor.rs:487:            .live_route_activation_enabled
+programs/xxxl-svm/src/processor.rs:490:            .mint_to_invocation_from_process_instruction_enabled
+programs/xxxl-svm/src/processor.rs:493:            .live_route_activation_enabled
+programs/xxxl-svm/src/processor.rs:496:            .invoke_signed_from_process_instruction_enabled
+programs/xxxl-svm/src/processor.rs:498:        return Err(XxxlError::CpiBoundaryNotReady.into());
+programs/xxxl-svm/src/processor.rs:520:        live_route_activation_enabled: false,
+programs/xxxl-svm/src/processor.rs:521:        invoke_signed_from_process_instruction_enabled: false,
+programs/xxxl-svm/src/processor.rs:536:    if execution_plan.live_route_activation_enabled
+programs/xxxl-svm/src/processor.rs:537:        || execution_plan.mint_to_invocation_from_process_instruction_enabled
+programs/xxxl-svm/src/processor.rs:539:        return Err(XxxlError::CpiBoundaryNotReady.into());
+programs/xxxl-svm/src/processor.rs:543:        plan_mint_to_cpi_boundary(program_id, &execution_plan, &prepared.boundary)?;
+programs/xxxl-svm/src/processor.rs:545:    if mint_to_cpi_plan.live_route_activation_enabled
+programs/xxxl-svm/src/processor.rs:546:        || mint_to_cpi_plan.invoke_signed_from_process_instruction_enabled
+programs/xxxl-svm/src/processor.rs:548:        return Err(XxxlError::CpiBoundaryNotReady.into());
+programs/xxxl-svm/src/processor.rs:582:        live_route_activation_enabled: false,
+programs/xxxl-svm/src/processor.rs:583:        invoke_signed_from_process_instruction_enabled: false,
+programs/xxxl-svm/src/processor.rs:598:        || !marking_witness.invoke_signed_used()
+programs/xxxl-svm/src/processor.rs:599:        || marking_witness.spl_token_mint_to_enabled()
+programs/xxxl-svm/src/processor.rs:670:    let spl_token_mint_account = account_at(accounts, ACCOUNT_INDEX_SPL_TOKEN_MINT)?;
+programs/xxxl-svm/src/processor.rs:671:    let recipient_token_account = account_at(accounts, ACCOUNT_INDEX_RECIPIENT_TOKEN_ACCOUNT)?;
+programs/xxxl-svm/src/processor.rs:672:    let mint_authority_pda = account_at(accounts, ACCOUNT_INDEX_MINT_AUTHORITY_PDA)?;
+programs/xxxl-svm/src/processor.rs:673:    let token_program = account_at(accounts, ACCOUNT_INDEX_TOKEN_PROGRAM)?;
+programs/xxxl-svm/src/processor.rs:677:    if token_program.key != &spl_token::id() {
+programs/xxxl-svm/src/processor.rs:695:    assert_rent_exempt(spl_token_mint_account, rent)?;
+programs/xxxl-svm/src/processor.rs:696:    assert_rent_exempt(recipient_token_account, rent)?;
+programs/xxxl-svm/src/processor.rs:708:    if mint_state.mint_pubkey() != args.mint_id
+programs/xxxl-svm/src/processor.rs:709:        || mint_state.gateway_mint_authority_pda() != mint_authority_pda.key.to_bytes()
+programs/xxxl-svm/src/processor.rs:714:    assert_gateway_mint_authority_pda(
+programs/xxxl-svm/src/processor.rs:716:        mint_authority_pda.key,
+programs/xxxl-svm/src/processor.rs:717:        mint_state.gateway_mint_authority_bump(),
+programs/xxxl-svm/src/processor.rs:754:    let mint_pubkey = Pubkey::new_from_array(args.mint_id);
+programs/xxxl-svm/src/processor.rs:758:        assert_initialized_mint_account(spl_token_mint_account, mint_authority_pda.key)?;
+programs/xxxl-svm/src/processor.rs:760:    assert_recipient_ata_boundary(recipient_token_account, &recipient_owner, &mint_pubkey)?;
+programs/xxxl-svm/src/processor.rs:767:        boundary: MintToCpiBoundary {
+programs/xxxl-svm/src/processor.rs:768:            accounts: MintToCpiAccounts {
+programs/xxxl-svm/src/processor.rs:769:                token_program,
+programs/xxxl-svm/src/processor.rs:770:                mint: spl_token_mint_account,
+programs/xxxl-svm/src/processor.rs:771:                recipient_token_account,
+programs/xxxl-svm/src/processor.rs:772:                mint_authority_pda,
+programs/xxxl-svm/src/processor.rs:774:            mint_authority_bump: mint_state.gateway_mint_authority_bump(),
+programs/xxxl-svm/src/processor.rs:805:        pda::find_gateway_mint_authority,
+programs/xxxl-svm/src/processor.rs:844:            prepared.boundary.accounts.token_program.key,
+programs/xxxl-svm/src/processor.rs:845:            &spl_token::id()
+programs/xxxl-svm/src/processor.rs:915:    fn handler_integration_rejects_wrong_mint_authority_pda() {
+programs/xxxl-svm/src/processor.rs:917:        fixture.keys.mint_authority_pda = Pubkey::new_unique();
+programs/xxxl-svm/src/processor.rs:949:        fixture.data.recipient_token_account = packed_token_account(
+programs/xxxl-svm/src/processor.rs:1007:    fn handler_integration_rejects_wrong_spl_token_program_id() {
+programs/xxxl-svm/src/processor.rs:1009:        fixture.keys.token_program = Pubkey::new_unique();
+programs/xxxl-svm/src/processor.rs:1161:        assert!(!plan.live_route_activation_enabled);
+programs/xxxl-svm/src/processor.rs:1162:        assert!(!plan.mint_to_invocation_from_process_instruction_enabled);
+programs/xxxl-svm/src/processor.rs:1211:        assert!(!execution_plan.live_route_activation_enabled);
+programs/xxxl-svm/src/processor.rs:1212:        assert!(!execution_plan.mint_to_invocation_from_process_instruction_enabled);
+programs/xxxl-svm/src/processor.rs:1220:        let expected_mint_authority_pda = fixture.keys.mint_authority_pda;
+programs/xxxl-svm/src/processor.rs:1246:        assert!(!composition.execution_plan.live_route_activation_enabled);
+programs/xxxl-svm/src/processor.rs:1250:                .mint_to_invocation_from_process_instruction_enabled
+programs/xxxl-svm/src/processor.rs:1253:        assert_eq!(composition.mint_to_cpi_plan.token_program, spl_token::id());
+programs/xxxl-svm/src/processor.rs:1257:            composition.mint_to_cpi_plan.mint_authority_pda,
+programs/xxxl-svm/src/processor.rs:1258:            expected_mint_authority_pda
+programs/xxxl-svm/src/processor.rs:1260:        assert!(!composition.mint_to_cpi_plan.live_route_activation_enabled);
+programs/xxxl-svm/src/processor.rs:1264:                .invoke_signed_from_process_instruction_enabled
+programs/xxxl-svm/src/processor.rs:1267:        assert!(!composition.live_route_activation_enabled);
+programs/xxxl-svm/src/processor.rs:1268:        assert!(!composition.invoke_signed_from_process_instruction_enabled);
+programs/xxxl-svm/src/processor.rs:1338:    fn runtime_planning_composition_boundary_rejects_wrong_recipient_token_account_without_mutation(
+programs/xxxl-svm/src/processor.rs:1341:        fixture.data.recipient_token_account = packed_token_account(
+programs/xxxl-svm/src/processor.rs:1467:    fn runtime_local_state_mutation_composition_boundary_rejects_wrong_recipient_token_account_without_mutation(
+programs/xxxl-svm/src/processor.rs:1470:        fixture.data.recipient_token_account = packed_token_account(
+programs/xxxl-svm/src/processor.rs:1508:        let recipient_token_account_before = fixture.data.recipient_token_account.clone();
+programs/xxxl-svm/src/processor.rs:1523:            XxxlError::CpiBoundaryNotReady,
+programs/xxxl-svm/src/processor.rs:1532:            fixture.data.recipient_token_account,
+programs/xxxl-svm/src/processor.rs:1533:            recipient_token_account_before
+programs/xxxl-svm/src/processor.rs:1547:        let recipient_token_account_before = fixture.data.recipient_token_account.clone();
+programs/xxxl-svm/src/processor.rs:1571:            fixture.data.recipient_token_account,
+programs/xxxl-svm/src/processor.rs:1572:            recipient_token_account_before
+programs/xxxl-svm/src/processor.rs:1577:    fn runtime_disabled_spl_cpi_gate_boundary_rejects_wrong_recipient_token_account_without_mutation(
+programs/xxxl-svm/src/processor.rs:1580:        fixture.data.recipient_token_account = packed_token_account(
+programs/xxxl-svm/src/processor.rs:1589:        let recipient_token_account_before = fixture.data.recipient_token_account.clone();
+programs/xxxl-svm/src/processor.rs:1613:            fixture.data.recipient_token_account,
+programs/xxxl-svm/src/processor.rs:1614:            recipient_token_account_before
+programs/xxxl-svm/src/processor.rs:1626:        let recipient_token_account_before = fixture.data.recipient_token_account.clone();
+programs/xxxl-svm/src/processor.rs:1650:            fixture.data.recipient_token_account,
+programs/xxxl-svm/src/processor.rs:1651:            recipient_token_account_before
+programs/xxxl-svm/src/processor.rs:1924:        token_program_owner: Pubkey,
+programs/xxxl-svm/src/processor.rs:1934:        recipient_token_account: Pubkey,
+programs/xxxl-svm/src/processor.rs:1935:        mint_authority_pda: Pubkey,
+programs/xxxl-svm/src/processor.rs:1936:        token_program: Pubkey,
+programs/xxxl-svm/src/processor.rs:1949:        recipient_token_account: u64,
+programs/xxxl-svm/src/processor.rs:1950:        mint_authority_pda: u64,
+programs/xxxl-svm/src/processor.rs:1951:        token_program: u64,
+programs/xxxl-svm/src/processor.rs:1963:        recipient_token_account: Vec<u8>,
+programs/xxxl-svm/src/processor.rs:1964:        mint_authority_pda: Vec<u8>,
+programs/xxxl-svm/src/processor.rs:1965:        token_program: Vec<u8>,
+programs/xxxl-svm/src/processor.rs:1974:            let (mint_authority_pda, bump) = find_gateway_mint_authority(&program_id);
+programs/xxxl-svm/src/processor.rs:1988:                spl_token: spl_token::id(),
+programs/xxxl-svm/src/processor.rs:1989:                token_program_owner: Pubkey::new_unique(),
+programs/xxxl-svm/src/processor.rs:1999:                recipient_token_account: Pubkey::new_unique(),
+programs/xxxl-svm/src/processor.rs:2000:                mint_authority_pda,
+programs/xxxl-svm/src/processor.rs:2001:                token_program: spl_token::id(),
+programs/xxxl-svm/src/processor.rs:2008:                mint_state: mint_state_data(spl_mint, mint_authority_pda, bump),
+programs/xxxl-svm/src/processor.rs:2019:                spl_mint: packed_mint(mint_authority_pda, true),
+programs/xxxl-svm/src/processor.rs:2020:                recipient_token_account: packed_token_account(
+programs/xxxl-svm/src/processor.rs:2025:                mint_authority_pda: Vec::new(),
+programs/xxxl-svm/src/processor.rs:2026:                token_program: Vec::new(),
+programs/xxxl-svm/src/processor.rs:2040:                recipient_token_account: rent.minimum_balance(data.recipient_token_account.len()),
+programs/xxxl-svm/src/processor.rs:2041:                mint_authority_pda: 0,
+programs/xxxl-svm/src/processor.rs:2042:                token_program: 0,
+programs/xxxl-svm/src/processor.rs:2150:                    &self.keys.recipient_token_account,
+programs/xxxl-svm/src/processor.rs:2153:                    &mut self.lamports.recipient_token_account,
+programs/xxxl-svm/src/processor.rs:2154:                    &mut self.data.recipient_token_account,
+programs/xxxl-svm/src/processor.rs:2160:                    &self.keys.mint_authority_pda,
+programs/xxxl-svm/src/processor.rs:2163:                    &mut self.lamports.mint_authority_pda,
+programs/xxxl-svm/src/processor.rs:2164:                    &mut self.data.mint_authority_pda,
+programs/xxxl-svm/src/processor.rs:2170:                    &self.keys.token_program,
+programs/xxxl-svm/src/processor.rs:2173:                    &mut self.lamports.token_program,
+programs/xxxl-svm/src/processor.rs:2174:                    &mut self.data.token_program,
+programs/xxxl-svm/src/processor.rs:2175:                    &self.owners.token_program_owner,
+programs/xxxl-svm/src/processor.rs:2185:                    &self.owners.token_program_owner,
+programs/xxxl-svm/src/processor.rs:2195:                    &self.owners.token_program_owner,
+programs/xxxl-svm/src/processor.rs:2322:        let (_pda, bump) = find_gateway_mint_authority(&program_id);
+programs/xxxl-svm/src/processor.rs:2394:        let recipient_token_account_before = fixture.data.recipient_token_account.clone();
+programs/xxxl-svm/src/processor.rs:2419:            fixture.data.recipient_token_account,
+programs/xxxl-svm/src/processor.rs:2420:            recipient_token_account_before
+programs/xxxl-svm/src/processor.rs:2432:        let recipient_token_account_before = fixture.data.recipient_token_account.clone();
+programs/xxxl-svm/src/processor.rs:2448:            XxxlError::CpiBoundaryNotReady,
+programs/xxxl-svm/src/processor.rs:2457:            fixture.data.recipient_token_account,
+programs/xxxl-svm/src/processor.rs:2458:            recipient_token_account_before
+programs/xxxl-svm/src/program_id_status.rs:29:        status_code: "PLACEHOLDER_PROGRAM_ID_BOUNDARY",
+programs/xxxl-svm/src/program_id_status.rs:41:            XxxlProgramIdReadinessStatus::Placeholder => "PLACEHOLDER_PROGRAM_ID_BOUNDARY",
+programs/xxxl-svm/src/program_id_status.rs:86:        assert_eq!(status.code(), "PLACEHOLDER_PROGRAM_ID_BOUNDARY");
+programs/xxxl-svm/src/program_id_status.rs:98:        assert_eq!(report.status_code, "PLACEHOLDER_PROGRAM_ID_BOUNDARY");
+programs/xxxl-svm/src/safety_invariants.rs:22:    pub live_route_activation_enabled: bool,
+programs/xxxl-svm/src/safety_invariants.rs:32:            && !self.live_route_activation_enabled
+programs/xxxl-svm/src/safety_invariants.rs:44:        live_route_activation_enabled:
+programs/xxxl-svm/src/safety_invariants.rs:78:    pub live_route_activation_enabled: bool,
+programs/xxxl-svm/src/safety_invariants.rs:87:        live_route_activation_enabled: summary.live_route_activation_enabled,
+programs/xxxl-svm/src/safety_invariants.rs:88:        consistent: !(summary.blocking_invariants_hold() && summary.live_route_activation_enabled),
+programs/xxxl-svm/src/safety_invariants.rs:211:    let live_route_disabled = !safety_summary.live_route_activation_enabled;
+programs/xxxl-svm/src/safety_invariants.rs:423:        assert!(!summary.live_route_activation_enabled);
+programs/xxxl-svm/src/safety_invariants.rs:452:        assert!(!report.live_route_activation_enabled);
+programs/xxxl-svm/src/state.rs:66:    pub fn gateway_mint_authority_bump(&self) -> u8 {
+programs/xxxl-svm/src/state.rs:70:    pub fn total_supply(&self) -> u128 {
+programs/xxxl-svm/src/state.rs:74:    pub fn mint_pubkey(&self) -> [u8; 32] {
+programs/xxxl-svm/src/state.rs:78:    pub fn gateway_mint_authority_pda(&self) -> [u8; 32] {
+programs/xxxl-svm/src/state.rs:378:        assert_eq!(view.gateway_mint_authority_bump(), 201);
+programs/xxxl-svm/src/state.rs:379:        assert_eq!(view.total_supply(), 500);
+programs/xxxl-svm/src/state_account_layout_skeleton.rs:30:    pub gateway_mint_authority_pda: Pubkey,
+programs/xxxl-svm/src/state_account_layout_skeleton.rs:49:    pub mint_authority_pda: Pubkey,
+programs/xxxl-svm/src/state_account_layout_skeleton.rs:51:    pub token_program: Pubkey,
+programs/xxxl-svm/src/state_account_layout_skeleton.rs:142:    output.extend_from_slice(account.gateway_mint_authority_pda.as_ref());
+programs/xxxl-svm/src/state_account_layout_skeleton.rs:159:        gateway_mint_authority_pda: Pubkey::new_from_array(read_array::<32>(input, 58)?),
+programs/xxxl-svm/src/state_account_layout_skeleton.rs:218:    output.extend_from_slice(account.mint_authority_pda.as_ref());
+programs/xxxl-svm/src/state_account_layout_skeleton.rs:220:    output.extend_from_slice(account.token_program.as_ref());
+programs/xxxl-svm/src/state_account_layout_skeleton.rs:237:        mint_authority_pda: Pubkey::new_from_array(read_array::<32>(input, 42)?),
+programs/xxxl-svm/src/state_account_layout_skeleton.rs:239:        token_program: Pubkey::new_from_array(read_array::<32>(input, 75)?),
+programs/xxxl-svm/src/state_account_layout_skeleton.rs:310:            gateway_mint_authority_pda: Pubkey::new_unique(),
+programs/xxxl-svm/src/state_account_layout_skeleton.rs:346:            mint_authority_pda: Pubkey::new_unique(),
+programs/xxxl-svm/src/state_account_layout_skeleton.rs:348:            token_program: Pubkey::new_unique(),
+programs/xxxl-svm/src/state_account_layout_skeleton.rs:402:            gateway_mint_authority_pda: Pubkey::new_unique(),
+programs/xxxl-svm/src/state_account_layout_skeleton.rs:423:            gateway_mint_authority_pda: Pubkey::new_unique(),
+programs/xxxl-svm/src/state_initialization_skeleton.rs:41:    pub gateway_mint_authority_pda: Pubkey,
+programs/xxxl-svm/src/state_initialization_skeleton.rs:55:    pub mint_authority_pda: Pubkey,
+programs/xxxl-svm/src/state_initialization_skeleton.rs:57:    pub token_program: Pubkey,
+programs/xxxl-svm/src/state_initialization_skeleton.rs:81:        gateway_mint_authority_pda: input.gateway_mint_authority_pda,
+programs/xxxl-svm/src/state_initialization_skeleton.rs:111:        mint_authority_pda: input.mint_authority_pda,
+programs/xxxl-svm/src/state_initialization_skeleton.rs:113:        token_program: input.token_program,
+programs/xxxl-svm/src/state_initialization_skeleton.rs:227:            gateway_mint_authority_pda: mint_authority,
+programs/xxxl-svm/src/state_initialization_skeleton.rs:237:        assert_eq!(account.gateway_mint_authority_pda, mint_authority);
+programs/xxxl-svm/src/state_initialization_skeleton.rs:251:            gateway_mint_authority_pda: Pubkey::new_unique(),
+programs/xxxl-svm/src/state_initialization_skeleton.rs:302:        let token_program = Pubkey::new_unique();
+programs/xxxl-svm/src/state_initialization_skeleton.rs:307:            mint_authority_pda: mint_authority,
+programs/xxxl-svm/src/state_initialization_skeleton.rs:309:            token_program,
+programs/xxxl-svm/src/state_initialization_skeleton.rs:322:        assert_eq!(decoded.mint_authority_pda, mint_authority);
+programs/xxxl-svm/src/state_initialization_skeleton.rs:323:        assert_eq!(decoded.token_program, token_program);
+programs/xxxl-svm/src/validated_dispatch_skeleton.rs:236:        metas[2].owner_expectation = XxxlAccountOwnerExpectationSkeleton::SplTokenProgram;
+programs/xxxl-svm/src/validated_dispatch_skeleton.rs:244:                    actual: XxxlAccountOwnerExpectationSkeleton::SplTokenProgram
+programs/xxxl-svm/src/validation.rs:29:    assert_account_owner(account, &spl_token::id())
+programs/xxxl-svm/src/validation.rs:53:    recipient_token_account: &AccountInfo,
+programs/xxxl-svm/src/validation.rs:57:    assert_spl_token_owned_account(recipient_token_account)?;
+programs/xxxl-svm/src/validation.rs:59:    let data = recipient_token_account.try_borrow_data()?;
+programs/xxxl-svm/src/validation.rs:176:    fn initialized_mint_check_accepts_spl_token_mint_with_expected_authority() {
+programs/xxxl-svm/src/validation.rs:179:        let token_program = spl_token::id();
+programs/xxxl-svm/src/validation.rs:189:            &token_program,
+programs/xxxl-svm/src/validation.rs:230:        let token_program = spl_token::id();
+programs/xxxl-svm/src/validation.rs:240:            &token_program,
+programs/xxxl-svm/src/validation.rs:257:        let token_program = spl_token::id();
+programs/xxxl-svm/src/validation.rs:267:            &token_program,
+programs/xxxl-svm/src/validation.rs:284:        let token_program = spl_token::id();
+programs/xxxl-svm/src/validation.rs:294:            &token_program,
+programs/xxxl-svm/src/validation.rs:309:        let token_program = spl_token::id();
+programs/xxxl-svm/src/validation.rs:319:            &token_program,
+programs/xxxl-svm/src/validation.rs:337:        let token_program = spl_token::id();
+programs/xxxl-svm/src/validation.rs:347:            &token_program,
+programs/xxxl-svm/src/validation.rs:364:        let token_program = spl_token::id();
+programs/xxxl-svm/src/validation.rs:374:            &token_program,
+programs/xxxl-svm/src/verifier/b1c7_handler_authorization_boundary.rs:291:            invoke_signed_enabled: false,
+programs/xxxl-svm/src/verifier/b1c7_handler_authorization_boundary.rs:292:            spl_token_mint_to_enabled: false,
+programs/xxxl-svm/src/verifier/b1c_guardian_membership_validation.rs:257:            invoke_signed_enabled: false,
+programs/xxxl-svm/src/verifier/b1c_guardian_membership_validation.rs:258:            spl_token_mint_to_enabled: false,
+programs/xxxl-svm/src/verifier/b1c_instructions_sysvar_evidence_bridge.rs:321:            invoke_signed_enabled: false,
+programs/xxxl-svm/src/verifier/b1c_instructions_sysvar_evidence_bridge.rs:322:            spl_token_mint_to_enabled: false,
+programs/xxxl-svm/src/verifier/b1c_quorum_counting.rs:311:            invoke_signed_enabled: false,
+programs/xxxl-svm/src/verifier/b1c_quorum_counting.rs:312:            spl_token_mint_to_enabled: false,
+programs/xxxl-svm/src/verifier/boundary.rs:106:    pub invoke_signed_enabled: bool,
+programs/xxxl-svm/src/verifier/boundary.rs:119:            || self.invoke_signed_enabled
+programs/xxxl-svm/src/verifier/boundary.rs:153:    invoke_signed_enabled: false,
+programs/xxxl-svm/src/verifier/boundary.rs:303:        assert!(!boundary.invoke_signed_enabled);
+programs/xxxl-svm/src/verifier/canonical_payload.rs:58:    pub invoke_signed_enabled: bool,
+programs/xxxl-svm/src/verifier/canonical_payload.rs:87:        invoke_signed_enabled: false,
+programs/xxxl-svm/src/verifier/canonical_payload.rs:323:        assert!(!report.invoke_signed_enabled);
+programs/xxxl-svm/src/verifier/canonical_payload.rs:344:        assert!(!boundary.invoke_signed_enabled);
+programs/xxxl-svm/src/verifier/checked_ed25519_byte_extraction_boundary.rs:71:    pub spl_token_mint_to_enabled: bool,
+programs/xxxl-svm/src/verifier/checked_ed25519_byte_extraction_boundary.rs:102:    pub spl_token_mint_to_enabled: bool,
+programs/xxxl-svm/src/verifier/checked_ed25519_byte_extraction_boundary.rs:123:    invoke_signed_enabled: false,
+programs/xxxl-svm/src/verifier/checked_ed25519_byte_extraction_boundary.rs:124:    spl_token_mint_to_enabled: false,
+programs/xxxl-svm/src/verifier/checked_ed25519_byte_extraction_boundary.rs:156:    spl_token_mint_to_enabled: false,
+programs/xxxl-svm/src/verifier/checked_ed25519_byte_extraction_boundary.rs:354:        spl_token_mint_to_enabled: false,
+programs/xxxl-svm/src/verifier/checked_ed25519_byte_extraction_boundary.rs:394:        spl_token_mint_to_enabled: false,
+programs/xxxl-svm/src/verifier/checked_ed25519_byte_extraction_boundary.rs:761:        assert!(!report.spl_token_mint_to_enabled);
+programs/xxxl-svm/src/verifier/checked_ed25519_byte_extraction_boundary.rs:771:        assert!(!report.safety_flags.invoke_signed_enabled);
+programs/xxxl-svm/src/verifier/checked_ed25519_byte_extraction_boundary.rs:772:        assert!(!report.safety_flags.spl_token_mint_to_enabled);
+programs/xxxl-svm/src/verifier/checked_prior_instruction_loading_runtime_boundary.rs:120:    invoke_signed_enabled: false,
+programs/xxxl-svm/src/verifier/checked_prior_instruction_loading_runtime_boundary.rs:121:    spl_token_mint_to_enabled: false,
+programs/xxxl-svm/src/verifier/checked_prior_instruction_loading_runtime_boundary.rs:636:        assert!(!flags.invoke_signed_enabled);
+programs/xxxl-svm/src/verifier/checked_prior_instruction_loading_runtime_boundary.rs:637:        assert!(!flags.spl_token_mint_to_enabled);
+programs/xxxl-svm/src/verifier/checked_prior_instruction_loading_runtime_boundary.rs:665:        assert!(!report.safety_flags.spl_token_mint_to_enabled);
+programs/xxxl-svm/src/verifier/current_instruction_identity_boundary.rs:74:    invoke_signed_enabled: false,
+programs/xxxl-svm/src/verifier/current_instruction_identity_boundary.rs:75:    spl_token_mint_to_enabled: false,
+programs/xxxl-svm/src/verifier/current_instruction_identity_boundary.rs:277:        assert!(!flags.invoke_signed_enabled);
+programs/xxxl-svm/src/verifier/current_instruction_identity_boundary.rs:278:        assert!(!flags.spl_token_mint_to_enabled);
+programs/xxxl-svm/src/verifier/current_instruction_identity_boundary.rs:311:        assert!(!report.safety_flags.spl_token_mint_to_enabled);
+programs/xxxl-svm/src/verifier/current_instruction_identity_runtime_boundary.rs:80:    invoke_signed_enabled: false,
+programs/xxxl-svm/src/verifier/current_instruction_identity_runtime_boundary.rs:81:    spl_token_mint_to_enabled: false,
+programs/xxxl-svm/src/verifier/current_instruction_identity_runtime_boundary.rs:436:        assert!(!flags.invoke_signed_enabled);
+programs/xxxl-svm/src/verifier/current_instruction_identity_runtime_boundary.rs:437:        assert!(!flags.spl_token_mint_to_enabled);
+programs/xxxl-svm/src/verifier/current_instruction_index_runtime_boundary.rs:77:    invoke_signed_enabled: false,
+programs/xxxl-svm/src/verifier/current_instruction_index_runtime_boundary.rs:78:    spl_token_mint_to_enabled: false,
+programs/xxxl-svm/src/verifier/current_instruction_index_runtime_boundary.rs:348:        assert!(!flags.invoke_signed_enabled);
+programs/xxxl-svm/src/verifier/current_instruction_index_runtime_boundary.rs:349:        assert!(!flags.spl_token_mint_to_enabled);
+programs/xxxl-svm/src/verifier/current_instruction_index_runtime_boundary.rs:376:        assert!(!report.safety_flags.spl_token_mint_to_enabled);
+programs/xxxl-svm/src/verifier/ed25519_evidence_layout.rs:140:    pub invoke_signed_enabled: bool,
+programs/xxxl-svm/src/verifier/ed25519_evidence_layout.rs:184:        invoke_signed_enabled: false,
+programs/xxxl-svm/src/verifier/ed25519_evidence_layout.rs:591:        assert!(!report.invoke_signed_enabled);
+programs/xxxl-svm/src/verifier/ed25519_evidence_layout.rs:612:        assert!(!boundary.invoke_signed_enabled);
+programs/xxxl-svm/src/verifier/ed25519_instruction_byte_parsing_boundary.rs:102:    pub spl_token_mint_to_enabled: bool,
+programs/xxxl-svm/src/verifier/ed25519_instruction_byte_parsing_boundary.rs:133:    pub spl_token_mint_to_enabled: bool,
+programs/xxxl-svm/src/verifier/ed25519_instruction_byte_parsing_boundary.rs:154:    invoke_signed_enabled: false,
+programs/xxxl-svm/src/verifier/ed25519_instruction_byte_parsing_boundary.rs:155:    spl_token_mint_to_enabled: false,
+programs/xxxl-svm/src/verifier/ed25519_instruction_byte_parsing_boundary.rs:187:    spl_token_mint_to_enabled: false,
+programs/xxxl-svm/src/verifier/ed25519_instruction_byte_parsing_boundary.rs:639:        spl_token_mint_to_enabled: false,
+programs/xxxl-svm/src/verifier/ed25519_instruction_byte_parsing_boundary.rs:699:        spl_token_mint_to_enabled: false,
+programs/xxxl-svm/src/verifier/ed25519_instruction_byte_parsing_boundary.rs:966:        assert!(!result.spl_token_mint_to_enabled);
+programs/xxxl-svm/src/verifier/ed25519_instruction_byte_parsing_boundary.rs:1431:        assert!(!report.spl_token_mint_to_enabled);
+programs/xxxl-svm/src/verifier/ed25519_instruction_byte_parsing_boundary.rs:1441:        assert!(!report.safety_flags.spl_token_mint_to_enabled);
+programs/xxxl-svm/src/verifier/ed25519_instruction_data_parser.rs:81:    pub invoke_signed_enabled: bool,
+programs/xxxl-svm/src/verifier/ed25519_instruction_data_parser.rs:117:        invoke_signed_enabled: false,
+programs/xxxl-svm/src/verifier/ed25519_instruction_data_parser.rs:731:        assert!(!report.invoke_signed_enabled);
+programs/xxxl-svm/src/verifier/ed25519_instruction_data_parser.rs:799:        assert!(!boundary.invoke_signed_enabled);
+programs/xxxl-svm/src/verifier/ed25519_prior_instruction_ordering.rs:45:    pub invoke_signed_enabled: bool,
+programs/xxxl-svm/src/verifier/ed25519_prior_instruction_ordering.rs:75:    pub invoke_signed_enabled: bool,
+programs/xxxl-svm/src/verifier/ed25519_prior_instruction_ordering.rs:107:    invoke_signed_enabled: false,
+programs/xxxl-svm/src/verifier/ed25519_prior_instruction_ordering.rs:196:        invoke_signed_enabled: false,
+programs/xxxl-svm/src/verifier/ed25519_prior_instruction_ordering.rs:271:            invoke_signed_enabled: false,
+programs/xxxl-svm/src/verifier/ed25519_prior_instruction_ordering.rs:420:        assert!(!result.invoke_signed_enabled);
+programs/xxxl-svm/src/verifier/ed25519_prior_instruction_ordering.rs:441:        assert!(!report.invoke_signed_enabled);
+programs/xxxl-svm/src/verifier/ed25519_prior_instruction_ordering.rs:500:        assert!(!boundary.invoke_signed_enabled);
+programs/xxxl-svm/src/verifier/ed25519_signature_verification_boundary.rs:80:    pub spl_token_mint_to_enabled: bool,
+programs/xxxl-svm/src/verifier/ed25519_signature_verification_boundary.rs:114:    pub spl_token_mint_to_enabled: bool,
+programs/xxxl-svm/src/verifier/ed25519_signature_verification_boundary.rs:135:    invoke_signed_enabled: false,
+programs/xxxl-svm/src/verifier/ed25519_signature_verification_boundary.rs:136:    spl_token_mint_to_enabled: false,
+programs/xxxl-svm/src/verifier/ed25519_signature_verification_boundary.rs:172:        spl_token_mint_to_enabled: false,
+programs/xxxl-svm/src/verifier/ed25519_signature_verification_boundary.rs:369:        spl_token_mint_to_enabled: false,
+programs/xxxl-svm/src/verifier/ed25519_signature_verification_boundary.rs:412:        spl_token_mint_to_enabled: false,
+programs/xxxl-svm/src/verifier/ed25519_signature_verification_boundary.rs:611:        assert!(!result.spl_token_mint_to_enabled);
+programs/xxxl-svm/src/verifier/ed25519_signature_verification_boundary.rs:868:        assert!(!report.spl_token_mint_to_enabled);
+programs/xxxl-svm/src/verifier/ed25519_signature_verification_boundary.rs:878:        assert!(!report.safety_flags.invoke_signed_enabled);
+programs/xxxl-svm/src/verifier/ed25519_signature_verification_boundary.rs:879:        assert!(!report.safety_flags.spl_token_mint_to_enabled);
+programs/xxxl-svm/src/verifier/ed25519_verification_evidence.rs:25:    pub invoke_signed_enabled: bool,
+programs/xxxl-svm/src/verifier/ed25519_verification_evidence.rs:73:    pub invoke_signed_enabled: bool,
+programs/xxxl-svm/src/verifier/ed25519_verification_evidence.rs:105:        invoke_signed_enabled: false,
+programs/xxxl-svm/src/verifier/ed25519_verification_evidence.rs:179:        || scanned_evidence.invoke_signed_enabled
+programs/xxxl-svm/src/verifier/ed25519_verification_evidence.rs:204:        invoke_signed_enabled: false,
+programs/xxxl-svm/src/verifier/ed25519_verification_evidence.rs:272:            invoke_signed_enabled: false,
+programs/xxxl-svm/src/verifier/ed25519_verification_evidence.rs:466:        assert!(!report.invoke_signed_enabled);
+programs/xxxl-svm/src/verifier/ed25519_verification_evidence.rs:566:        assert!(!boundary.invoke_signed_enabled);
+programs/xxxl-svm/src/verifier/ed25519_verification_evidence_coverage_matrix.rs:66:    pub invoke_signed_enabled: bool,
+programs/xxxl-svm/src/verifier/ed25519_verification_evidence_coverage_matrix.rs:180:        invoke_signed_enabled: false,
+programs/xxxl-svm/src/verifier/ed25519_verification_evidence_coverage_matrix.rs:453:        assert!(!report.invoke_signed_enabled);
+programs/xxxl-svm/src/verifier/ed25519_verification_evidence_coverage_matrix.rs:487:        assert!(!boundary.invoke_signed_enabled);
+programs/xxxl-svm/src/verifier/ed25519_verification_evidence_integration_design.rs:80:    pub invoke_signed_enabled: bool,
+programs/xxxl-svm/src/verifier/ed25519_verification_evidence_integration_design.rs:163:        invoke_signed_enabled: false,
+programs/xxxl-svm/src/verifier/ed25519_verification_evidence_integration_design.rs:302:        assert!(!report.invoke_signed_enabled);
+programs/xxxl-svm/src/verifier/ed25519_verification_evidence_integration_design.rs:344:        assert!(!boundary.invoke_signed_enabled);
+programs/xxxl-svm/src/verifier/guardian_membership_validation_boundary.rs:116:    pub invoke_signed_enabled: bool,
+programs/xxxl-svm/src/verifier/guardian_membership_validation_boundary.rs:117:    pub spl_token_mint_to_enabled: bool,
+programs/xxxl-svm/src/verifier/guardian_membership_validation_boundary.rs:202:    pub invoke_signed_enabled: bool,
+programs/xxxl-svm/src/verifier/guardian_membership_validation_boundary.rs:203:    pub spl_token_mint_to_enabled: bool,
+programs/xxxl-svm/src/verifier/guardian_membership_validation_boundary.rs:249:    invoke_signed_enabled: false,
+programs/xxxl-svm/src/verifier/guardian_membership_validation_boundary.rs:250:    spl_token_mint_to_enabled: false,
+programs/xxxl-svm/src/verifier/guardian_membership_validation_boundary.rs:489:        invoke_signed_enabled: false,
+programs/xxxl-svm/src/verifier/guardian_membership_validation_boundary.rs:490:        spl_token_mint_to_enabled: false,
+programs/xxxl-svm/src/verifier/guardian_membership_validation_boundary.rs:790:            spl_token_mint_to_enabled: false,
+programs/xxxl-svm/src/verifier/guardian_membership_validation_boundary.rs:869:            spl_token_mint_to_enabled: false,
+programs/xxxl-svm/src/verifier/guardian_membership_validation_boundary.rs:1533:        assert!(!result.invoke_signed_enabled);
+programs/xxxl-svm/src/verifier/guardian_membership_validation_boundary.rs:1534:        assert!(!result.spl_token_mint_to_enabled);
+programs/xxxl-svm/src/verifier/guardian_membership_validation_boundary.rs:1580:        assert!(!report.invoke_signed_enabled);
+programs/xxxl-svm/src/verifier/guardian_membership_validation_boundary.rs:1581:        assert!(!report.spl_token_mint_to_enabled);
+programs/xxxl-svm/src/verifier/guardian_quorum.rs:89:    pub invoke_signed_enabled: bool,
+programs/xxxl-svm/src/verifier/guardian_quorum.rs:128:        invoke_signed_enabled: false,
+programs/xxxl-svm/src/verifier/guardian_quorum.rs:580:        assert!(!report.invoke_signed_enabled);
+programs/xxxl-svm/src/verifier/guardian_quorum.rs:601:        assert!(!boundary.invoke_signed_enabled);
+programs/xxxl-svm/src/verifier/guardian_set_account_loading_boundary.rs:97:    pub invoke_signed_enabled: bool,
+programs/xxxl-svm/src/verifier/guardian_set_account_loading_boundary.rs:98:    pub spl_token_mint_to_enabled: bool,
+programs/xxxl-svm/src/verifier/guardian_set_account_loading_boundary.rs:138:    pub invoke_signed_enabled: bool,
+programs/xxxl-svm/src/verifier/guardian_set_account_loading_boundary.rs:139:    pub spl_token_mint_to_enabled: bool,
+programs/xxxl-svm/src/verifier/guardian_set_account_loading_boundary.rs:180:        invoke_signed_enabled: false,
+programs/xxxl-svm/src/verifier/guardian_set_account_loading_boundary.rs:181:        spl_token_mint_to_enabled: false,
+programs/xxxl-svm/src/verifier/guardian_set_account_loading_boundary.rs:661:        invoke_signed_enabled: false,
+programs/xxxl-svm/src/verifier/guardian_set_account_loading_boundary.rs:662:        spl_token_mint_to_enabled: false,
+programs/xxxl-svm/src/verifier/guardian_set_account_loading_boundary.rs:715:        invoke_signed_enabled: false,
+programs/xxxl-svm/src/verifier/guardian_set_account_loading_boundary.rs:716:        spl_token_mint_to_enabled: false,
+programs/xxxl-svm/src/verifier/guardian_set_account_loading_boundary.rs:842:        assert!(!report.invoke_signed_enabled);
+programs/xxxl-svm/src/verifier/guardian_set_account_loading_boundary.rs:843:        assert!(!report.spl_token_mint_to_enabled);
+programs/xxxl-svm/src/verifier/guardian_set_account_loading_boundary.rs:879:        assert!(!result.invoke_signed_enabled);
+programs/xxxl-svm/src/verifier/guardian_set_account_loading_boundary.rs:880:        assert!(!result.spl_token_mint_to_enabled);
+programs/xxxl-svm/src/verifier/guardian_set_account_loading_boundary.rs:937:        assert!(!result.invoke_signed_enabled);
+programs/xxxl-svm/src/verifier/guardian_set_account_loading_boundary.rs:938:        assert!(!result.spl_token_mint_to_enabled);
+programs/xxxl-svm/src/verifier/guardian_set_account_loading_boundary.rs:1056:        assert!(!result.invoke_signed_enabled);
+programs/xxxl-svm/src/verifier/guardian_set_account_loading_boundary.rs:1057:        assert!(!result.spl_token_mint_to_enabled);
+programs/xxxl-svm/src/verifier/guardian_set_account_loading_boundary.rs:1197:        assert!(!result.invoke_signed_enabled);
+programs/xxxl-svm/src/verifier/guardian_set_account_loading_boundary.rs:1198:        assert!(!result.spl_token_mint_to_enabled);
+programs/xxxl-svm/src/verifier/guardian_set_account_loading_boundary.rs:1392:        assert!(!result.invoke_signed_enabled);
+programs/xxxl-svm/src/verifier/guardian_set_account_loading_boundary.rs:1393:        assert!(!result.spl_token_mint_to_enabled);
+programs/xxxl-svm/src/verifier/instructions_sysvar_access_contract_model.rs:73:    pub invoke_signed_enabled: bool,
+programs/xxxl-svm/src/verifier/instructions_sysvar_access_contract_model.rs:74:    pub spl_token_mint_to_enabled: bool,
+programs/xxxl-svm/src/verifier/instructions_sysvar_access_contract_model.rs:296:    invoke_signed_enabled: false,
+programs/xxxl-svm/src/verifier/instructions_sysvar_access_contract_model.rs:297:    spl_token_mint_to_enabled: false,
+programs/xxxl-svm/src/verifier/instructions_sysvar_access_contract_model.rs:442:        assert!(!flags.invoke_signed_enabled);
+programs/xxxl-svm/src/verifier/instructions_sysvar_access_contract_model.rs:443:        assert!(!flags.spl_token_mint_to_enabled);
+programs/xxxl-svm/src/verifier/instructions_sysvar_access_contract_model.rs:463:        assert!(!report.safety_flags.spl_token_mint_to_enabled);
+programs/xxxl-svm/src/verifier/instructions_sysvar_accountinfo_presence_readability_runtime_boundary.rs:52:    invoke_signed_enabled: false,
+programs/xxxl-svm/src/verifier/instructions_sysvar_accountinfo_presence_readability_runtime_boundary.rs:53:    spl_token_mint_to_enabled: false,
+programs/xxxl-svm/src/verifier/instructions_sysvar_accountinfo_presence_readability_runtime_boundary.rs:251:        assert!(!flags.invoke_signed_enabled);
+programs/xxxl-svm/src/verifier/instructions_sysvar_accountinfo_presence_readability_runtime_boundary.rs:252:        assert!(!flags.spl_token_mint_to_enabled);
+programs/xxxl-svm/src/verifier/instructions_sysvar_evidence_scanner.rs:34:    pub invoke_signed_enabled: bool,
+programs/xxxl-svm/src/verifier/instructions_sysvar_evidence_scanner.rs:86:    pub invoke_signed_enabled: bool,
+programs/xxxl-svm/src/verifier/instructions_sysvar_evidence_scanner.rs:119:        invoke_signed_enabled: false,
+programs/xxxl-svm/src/verifier/instructions_sysvar_evidence_scanner.rs:217:            invoke_signed_enabled: false,
+programs/xxxl-svm/src/verifier/instructions_sysvar_evidence_scanner.rs:505:        assert!(!result.invoke_signed_enabled);
+programs/xxxl-svm/src/verifier/instructions_sysvar_evidence_scanner.rs:538:        assert!(!report.invoke_signed_enabled);
+programs/xxxl-svm/src/verifier/instructions_sysvar_evidence_scanner.rs:623:        assert!(!boundary.invoke_signed_enabled);
+programs/xxxl-svm/src/verifier/instructions_sysvar_live_wiring_boundary.rs:80:    pub invoke_signed_enabled: bool,
+programs/xxxl-svm/src/verifier/instructions_sysvar_live_wiring_boundary.rs:81:    pub spl_token_mint_to_enabled: bool,
+programs/xxxl-svm/src/verifier/instructions_sysvar_live_wiring_boundary.rs:109:    pub invoke_signed_enabled: bool,
+programs/xxxl-svm/src/verifier/instructions_sysvar_live_wiring_boundary.rs:110:    pub spl_token_mint_to_enabled: bool,
+programs/xxxl-svm/src/verifier/instructions_sysvar_live_wiring_boundary.rs:139:        invoke_signed_enabled: false,
+programs/xxxl-svm/src/verifier/instructions_sysvar_live_wiring_boundary.rs:140:        spl_token_mint_to_enabled: false,
+programs/xxxl-svm/src/verifier/instructions_sysvar_live_wiring_boundary.rs:473:        invoke_signed_enabled: false,
+programs/xxxl-svm/src/verifier/instructions_sysvar_live_wiring_boundary.rs:474:        spl_token_mint_to_enabled: false,
+programs/xxxl-svm/src/verifier/instructions_sysvar_live_wiring_boundary.rs:583:        assert!(!report.invoke_signed_enabled);
+programs/xxxl-svm/src/verifier/instructions_sysvar_live_wiring_boundary.rs:584:        assert!(!report.spl_token_mint_to_enabled);
+programs/xxxl-svm/src/verifier/instructions_sysvar_live_wiring_boundary.rs:676:        assert!(!result.spl_token_mint_to_enabled);
+programs/xxxl-svm/src/verifier/instructions_sysvar_presence_readability_boundary.rs:79:    invoke_signed_enabled: false,
+programs/xxxl-svm/src/verifier/instructions_sysvar_presence_readability_boundary.rs:80:    spl_token_mint_to_enabled: false,
+programs/xxxl-svm/src/verifier/instructions_sysvar_presence_readability_boundary.rs:244:        assert!(!flags.invoke_signed_enabled);
+programs/xxxl-svm/src/verifier/instructions_sysvar_presence_readability_boundary.rs:245:        assert!(!flags.spl_token_mint_to_enabled);
+programs/xxxl-svm/src/verifier/instructions_sysvar_presence_readability_boundary.rs:280:        assert!(!report.safety_flags.spl_token_mint_to_enabled);
+programs/xxxl-svm/src/verifier/payload_hash_binding_boundary.rs:59:    pub invoke_signed_enabled: bool,
+programs/xxxl-svm/src/verifier/payload_hash_binding_boundary.rs:60:    pub spl_token_mint_to_enabled: bool,
+programs/xxxl-svm/src/verifier/payload_hash_binding_boundary.rs:84:        invoke_signed_enabled: false,
+programs/xxxl-svm/src/verifier/payload_hash_binding_boundary.rs:85:        spl_token_mint_to_enabled: false,
+programs/xxxl-svm/src/verifier/payload_hash_binding_boundary.rs:277:            spl_token_mint_to_enabled: false,
+programs/xxxl-svm/src/verifier/payload_hash_binding_boundary.rs:419:        assert!(!report.invoke_signed_enabled);
+programs/xxxl-svm/src/verifier/payload_hash_binding_boundary.rs:420:        assert!(!report.spl_token_mint_to_enabled);
+programs/xxxl-svm/src/verifier/payload_hash_binding_boundary.rs:431:        assert!(!PHASE_41B_SAFETY_FLAGS.invoke_signed_enabled);
+programs/xxxl-svm/src/verifier/payload_hash_binding_boundary.rs:432:        assert!(!PHASE_41B_SAFETY_FLAGS.spl_token_mint_to_enabled);
+programs/xxxl-svm/src/verifier/prefilter_phase_41c3_candidate_descriptor_runtime_boundary.rs:99:    invoke_signed_enabled: false,
+programs/xxxl-svm/src/verifier/prefilter_phase_41c3_candidate_descriptor_runtime_boundary.rs:100:    spl_token_mint_to_enabled: false,
+programs/xxxl-svm/src/verifier/prefilter_phase_41c3_candidate_descriptor_runtime_boundary.rs:692:        assert!(!flags.invoke_signed_enabled);
+programs/xxxl-svm/src/verifier/prefilter_phase_41c3_candidate_descriptor_runtime_boundary.rs:693:        assert!(!flags.spl_token_mint_to_enabled);
+programs/xxxl-svm/src/verifier/prefilter_phase_41c3_candidate_descriptor_runtime_boundary.rs:723:        assert!(!report.safety_flags.spl_token_mint_to_enabled);
+programs/xxxl-svm/src/verifier/prior_ed25519_lookup_ordering_boundary.rs:88:    invoke_signed_enabled: false,
+programs/xxxl-svm/src/verifier/prior_ed25519_lookup_ordering_boundary.rs:89:    spl_token_mint_to_enabled: false,
+programs/xxxl-svm/src/verifier/prior_ed25519_lookup_ordering_boundary.rs:536:        assert!(!flags.invoke_signed_enabled);
+programs/xxxl-svm/src/verifier/prior_ed25519_lookup_ordering_boundary.rs:537:        assert!(!flags.spl_token_mint_to_enabled);
+programs/xxxl-svm/src/verifier/prior_ed25519_lookup_ordering_boundary.rs:570:        assert!(!report.safety_flags.spl_token_mint_to_enabled);
+programs/xxxl-svm/src/verifier/prior_instruction_index_range_runtime_boundary.rs:81:    invoke_signed_enabled: false,
+programs/xxxl-svm/src/verifier/prior_instruction_index_range_runtime_boundary.rs:82:    spl_token_mint_to_enabled: false,
+programs/xxxl-svm/src/verifier/prior_instruction_index_range_runtime_boundary.rs:386:        assert!(!flags.invoke_signed_enabled);
+programs/xxxl-svm/src/verifier/prior_instruction_index_range_runtime_boundary.rs:387:        assert!(!flags.spl_token_mint_to_enabled);
+programs/xxxl-svm/src/verifier/prior_instruction_index_range_runtime_boundary.rs:414:        assert!(!report.safety_flags.spl_token_mint_to_enabled);
+programs/xxxl-svm/src/verifier/processed_registry_account_loading_boundary.rs:128:    pub invoke_signed_enabled: bool,
+programs/xxxl-svm/src/verifier/processed_registry_account_loading_boundary.rs:129:    pub spl_token_mint_to_enabled: bool,
+programs/xxxl-svm/src/verifier/processed_registry_account_loading_boundary.rs:169:    pub invoke_signed_enabled: bool,
+programs/xxxl-svm/src/verifier/processed_registry_account_loading_boundary.rs:170:    pub spl_token_mint_to_enabled: bool,
+programs/xxxl-svm/src/verifier/processed_registry_account_loading_boundary.rs:211:        invoke_signed_enabled: false,
+programs/xxxl-svm/src/verifier/processed_registry_account_loading_boundary.rs:212:        spl_token_mint_to_enabled: false,
+programs/xxxl-svm/src/verifier/processed_registry_account_loading_boundary.rs:703:        invoke_signed_enabled: false,
+programs/xxxl-svm/src/verifier/processed_registry_account_loading_boundary.rs:704:        spl_token_mint_to_enabled: false,
+programs/xxxl-svm/src/verifier/processed_registry_account_loading_boundary.rs:760:        invoke_signed_enabled: false,
+programs/xxxl-svm/src/verifier/processed_registry_account_loading_boundary.rs:761:        spl_token_mint_to_enabled: false,
+programs/xxxl-svm/src/verifier/processed_registry_account_loading_boundary.rs:834:        invoke_signed_enabled: false,
+programs/xxxl-svm/src/verifier/processed_registry_account_loading_boundary.rs:835:        spl_token_mint_to_enabled: false,
+programs/xxxl-svm/src/verifier/processed_registry_account_loading_boundary.rs:1005:        assert!(!report.invoke_signed_enabled);
+programs/xxxl-svm/src/verifier/processed_registry_account_loading_boundary.rs:1006:        assert!(!report.spl_token_mint_to_enabled);
+programs/xxxl-svm/src/verifier/processed_registry_account_loading_boundary.rs:1596:        assert!(!result.invoke_signed_enabled);
+programs/xxxl-svm/src/verifier/processed_registry_account_loading_boundary.rs:1597:        assert!(!result.spl_token_mint_to_enabled);
+programs/xxxl-svm/src/verifier/quorum_authorization_boundary.rs:57:    pub invoke_signed_enabled: bool,
+programs/xxxl-svm/src/verifier/quorum_authorization_boundary.rs:58:    pub spl_token_mint_to_enabled: bool,
+programs/xxxl-svm/src/verifier/quorum_authorization_boundary.rs:88:    pub invoke_signed_enabled: bool,
+programs/xxxl-svm/src/verifier/quorum_authorization_boundary.rs:89:    pub spl_token_mint_to_enabled: bool,
+programs/xxxl-svm/src/verifier/quorum_authorization_boundary.rs:119:    pub invoke_signed_enabled: bool,
+programs/xxxl-svm/src/verifier/quorum_authorization_boundary.rs:120:    pub spl_token_mint_to_enabled: bool,
+programs/xxxl-svm/src/verifier/quorum_authorization_boundary.rs:150:        invoke_signed_enabled: false,
+programs/xxxl-svm/src/verifier/quorum_authorization_boundary.rs:151:        spl_token_mint_to_enabled: false,
+programs/xxxl-svm/src/verifier/quorum_authorization_boundary.rs:259:        invoke_signed_enabled: false,
+programs/xxxl-svm/src/verifier/quorum_authorization_boundary.rs:260:        spl_token_mint_to_enabled: false,
+programs/xxxl-svm/src/verifier/quorum_authorization_boundary.rs:303:        invoke_signed_enabled: false,
+programs/xxxl-svm/src/verifier/quorum_authorization_boundary.rs:304:        spl_token_mint_to_enabled: false,
+programs/xxxl-svm/src/verifier/quorum_authorization_boundary.rs:457:            spl_token_mint_to_enabled: false,
+programs/xxxl-svm/src/verifier/quorum_authorization_boundary.rs:502:            spl_token_mint_to_enabled: false,
+programs/xxxl-svm/src/verifier/quorum_authorization_boundary.rs:545:        assert!(!report.invoke_signed_enabled);
+programs/xxxl-svm/src/verifier/quorum_authorization_boundary.rs:546:        assert!(!report.spl_token_mint_to_enabled);
+programs/xxxl-svm/src/verifier/raw_payload.rs:93:    pub invoke_signed_enabled: bool,
+programs/xxxl-svm/src/verifier/raw_payload.rs:115:    invoke_signed_enabled: false,
+programs/xxxl-svm/src/verifier/raw_payload.rs:550:        assert!(!report.invoke_signed_enabled);
+programs/xxxl-svm/src/verifier/raw_payload.rs:565:        assert!(!boundary.invoke_signed_enabled);
+programs/xxxl-svm/src/verifier/replay_protection_boundary.rs:103:    pub invoke_signed_enabled: bool,
+programs/xxxl-svm/src/verifier/replay_protection_boundary.rs:104:    pub spl_token_mint_to_enabled: bool,
+programs/xxxl-svm/src/verifier/replay_protection_boundary.rs:139:    pub invoke_signed_enabled: bool,
+programs/xxxl-svm/src/verifier/replay_protection_boundary.rs:140:    pub spl_token_mint_to_enabled: bool,
+programs/xxxl-svm/src/verifier/replay_protection_boundary.rs:172:    pub invoke_signed_enabled: bool,
+programs/xxxl-svm/src/verifier/replay_protection_boundary.rs:173:    pub spl_token_mint_to_enabled: bool,
+programs/xxxl-svm/src/verifier/replay_protection_boundary.rs:205:        invoke_signed_enabled: false,
+programs/xxxl-svm/src/verifier/replay_protection_boundary.rs:206:        spl_token_mint_to_enabled: false,
+programs/xxxl-svm/src/verifier/replay_protection_boundary.rs:302:        invoke_signed_enabled: false,
+programs/xxxl-svm/src/verifier/replay_protection_boundary.rs:303:        spl_token_mint_to_enabled: false,
+programs/xxxl-svm/src/verifier/replay_protection_boundary.rs:391:        invoke_signed_enabled: false,
+programs/xxxl-svm/src/verifier/replay_protection_boundary.rs:392:        spl_token_mint_to_enabled: false,
+programs/xxxl-svm/src/verifier/replay_protection_boundary.rs:548:            spl_token_mint_to_enabled: false,
+programs/xxxl-svm/src/verifier/replay_protection_boundary.rs:593:            spl_token_mint_to_enabled: false,
+programs/xxxl-svm/src/verifier/replay_protection_boundary.rs:644:        assert!(!report.invoke_signed_enabled);
+programs/xxxl-svm/src/verifier/replay_protection_boundary.rs:645:        assert!(!report.spl_token_mint_to_enabled);
