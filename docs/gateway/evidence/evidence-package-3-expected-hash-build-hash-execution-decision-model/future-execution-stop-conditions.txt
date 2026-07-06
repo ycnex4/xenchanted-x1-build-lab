@@ -1,0 +1,52 @@
+# Future build/hash execution stop conditions
+
+STOP_01_MISSING_OR_WRONG_GO_PHRASE
+Exact scoped user GO phrase is missing or does not match.
+
+STOP_02_DIRTY_REPO_BEFORE_EXECUTION
+Working tree is dirty before execution.
+
+STOP_03_SOURCE_COMMIT_MISMATCH
+Current source commit differs from package-bound source commit.
+
+STOP_04_TOOLCHAIN_MISSING
+Required toolchain or version capture fails.
+
+STOP_05_BUILD_COMMAND_MISMATCH
+The command to be run differs from the package-bound command.
+
+STOP_06_DANGEROUS_FEATURE_SELECTED
+A dangerous feature is selected.
+
+STOP_07_BUILD_FAILURE
+The build command fails.
+
+STOP_08_ARTIFACT_MISSING_OR_EMPTY
+Expected local artifact is missing or empty.
+
+STOP_09_LOCAL_HASH_FAILURE
+Local artifact SHA256 computation fails.
+
+STOP_10_CANONICAL_HASH_METHOD_MISSING
+Canonical ProgramData executable-bytes method is missing or ambiguous.
+
+STOP_11_CANONICAL_HASH_FAILURE
+Canonical ProgramData executable-bytes SHA256 computation fails.
+
+STOP_12_RPC_OR_TESTNET_ATTEMPT
+Any RPC or testnet call is attempted.
+
+STOP_13_MUTATION_ATTEMPT
+Deploy, upgrade, write-buffer, authority change, state init, SPL setup, guardian construction, signing, submit, or mutation is attempted.
+
+STOP_14_SECRET_MATERIAL
+Private keys, seed phrases, or secret material are requested, printed, or required.
+
+STOP_15_UNEXPECTED_OUTPUT
+Unexpected artifact path, unexpected feature set, or unexpected output appears.
+
+STOP_16_POST_STATUS_UNEXPLAINED
+Final git status contains unexplained changes.
+
+stop_policy: any_stop_condition_requires_stop
+automatic_retry: rejected

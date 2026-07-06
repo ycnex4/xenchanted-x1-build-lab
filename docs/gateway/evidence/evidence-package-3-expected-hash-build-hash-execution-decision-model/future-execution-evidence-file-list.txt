@@ -1,0 +1,29 @@
+# Future execution evidence file list
+
+Required future execution evidence files:
+- metadata.txt
+- source-binding.txt
+- pre-execution-git-status.txt
+- toolchain-versions.txt
+- build-command.txt
+- build-output.txt
+- artifact-info.txt
+- local-artifact-sha256.txt
+- canonical-programdata-executable-bytes-sha256.txt
+- hash-method.txt
+- success-criteria-report.txt
+- stop-condition-report.txt
+- post-execution-git-status.txt
+- non-go-boundary.txt
+
+Required future values:
+- exact package id
+- exact source commit
+- exact build command
+- exact toolchain versions
+- exact feature flags
+- exact artifact path
+- exact evidence path
+- exact user GO phrase
+- local SBF artifact SHA256
+- canonical ProgramData executable-bytes SHA256
