@@ -346,3 +346,29 @@ No testnet action is approved by this checkpoint.
 Current decision remains:
 
 NO-GO.
+
+## B6.51 local guardian fixture integration skeleton
+
+B6.51 local guardian fixture integration skeleton is implemented in:
+
+programs/xxxl-svm/src/local_guardian_fixture_integration_skeleton.rs
+
+The module is explicitly marked:
+
+LOCAL_GUARDIAN_DESCRIPTOR_FIXTURE_INTEGRATION_SKELETON_NOT_EXECUTING
+
+Current safety flags:
+
+- local_only: true
+- testnet_allowed: false
+- live_route_allowed: false
+- signing_enabled: false
+- guardian_package_construction_enabled: false
+- production_keys_allowed: false
+- writes_to_disk: false
+- fixture_file_emission_enabled: false
+- local_validator_execution_approved: false
+
+Current decision remains:
+
+NO-GO.

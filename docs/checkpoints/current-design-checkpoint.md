@@ -607,3 +607,31 @@ LOCAL_GUARDIAN_DESCRIPTOR_FIXTURE_INTEGRATION_PLAN_DEFINED_NOT_IMPLEMENTED
 Current decision remains:
 
 NO-GO.
+
+## Phase 41K.6 B6.51 local guardian fixture integration skeleton
+
+The local guardian fixture integration skeleton is implemented in:
+
+programs/xxxl-svm/src/local_guardian_fixture_integration_skeleton.rs
+
+It links the local guardian descriptor skeleton to local fixture set identity, guardian_set account fixture, threshold model, descriptor failure cases, and mutation-invariance policy.
+
+It does not emit fixture files.
+
+It does not create descriptor files.
+
+It does not construct guardian packages.
+
+It does not enable signing.
+
+It does not approve local-validator execution.
+
+It does not approve testnet action.
+
+Current status:
+
+LOCAL_GUARDIAN_DESCRIPTOR_FIXTURE_INTEGRATION_SKELETON_NOT_EXECUTING
+
+Current decision remains:
+
+NO-GO.
