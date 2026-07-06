@@ -870,3 +870,53 @@ Current decision remains:
 NO-GO UNTIL SERGEY EXPLICIT B6.58 GO.
 
 The next safe step is a Sergey decision.
+
+## Phase 41K.6 B6.58 actual local-only fixture file emission
+
+The actual local-only fixture file emission checkpoint is recorded in:
+
+docs/gateway/phase-41k6-b6-58-actual-local-only-fixture-file-emission.md
+
+B6.58 adds a host-only local fixture emitter example:
+
+programs/xxxl-svm/examples/emit_local_fixtures_b6_58.rs
+
+B6.58 emits the approved local-only mock fixture bundle to:
+
+tmp/local-validator-fixtures/phase-41k6-b6-local-only
+
+The emitted bundle contains exactly the approved 10 fixture files.
+
+The emitted data is mock/deterministic only.
+
+B6.58 does not run a local validator.
+
+B6.58 does not use testnet.
+
+B6.58 does not use live RPC.
+
+B6.58 does not enable signing.
+
+B6.58 does not construct guardian packages.
+
+B6.58 does not create testnet descriptor files.
+
+B6.58 does not configure SPL mint authority.
+
+B6.58 does not perform SPL CPI minting.
+
+B6.58 does not execute upgrade, state initialization, or submit.
+
+Current status:
+
+LOCAL_ONLY_FIXTURE_FILE_EMISSION_COMPLETED_MOCK_DATA_ONLY_NO_EXECUTION
+
+B6.58 scoped decision:
+
+GO EXECUTED FOR LOCAL MOCK FIXTURE FILE EMISSION ONLY
+
+Global execution decision remains:
+
+NO-GO FOR VALIDATOR_TESTNET_SIGNING_SPL_UPGRADE_INIT_SUBMIT
+
+The next safe step is B6.59 emitted fixture bundle safety checkpoint.
