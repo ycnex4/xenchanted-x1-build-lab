@@ -4801,3 +4801,83 @@ NO-GO REMAINS_FOR_BUILD_HASH_DEPLOY_UPGRADE_WRITE_BUFFER_STATE_INIT_SPL_SETUP_GU
 Next safe step:
 
 Evidence Package.1 — exact expected-hash/build-hash execution package planning only.
+
+
+## Evidence Package.1 exact expected-hash/build-hash execution package planning
+
+The Evidence Package.1 planning record is recorded in:
+
+docs/gateway/evidence-package-1-exact-expected-hash-build-hash-execution-package-planning.md
+
+Evidence directory:
+
+docs/gateway/evidence/evidence-package-1-exact-expected-hash-build-hash-execution-package-planning
+
+Current status:
+
+EVIDENCE_PACKAGE_1_OPEN_EXACT_EXPECTED_HASH_BUILD_HASH_EXECUTION_PACKAGE_PLANNING_ONLY_NO_BUILD_NO_HASH_NO_RPC_NO_EXECUTION
+
+Current decision:
+
+STRICT_LOCAL_EXPECTED_HASH_BUILD_HASH_EXECUTION_PACKAGE_SHAPE_SELECTED_FINAL_GO_NOT_GRANTED
+
+Selected package shape:
+
+STRICT_LOCAL_EXPECTED_HASH_BUILD_HASH_EXECUTION_PACKAGE_PLANNING_ONLY
+
+Selected model:
+
+STRICT_EXPECTED_HASH_BUILD_HASH_EVIDENCE_PACKAGE_MODEL_REQUIRED
+
+Current GO state:
+
+FINAL_GO_NOT_GRANTED
+
+Required future fields:
+
+- package id
+- operation class
+- repo full name
+- branch
+- source commit
+- clean working tree status
+- build command
+- Rust toolchain version
+- Solana/SBF toolchain version
+- lockfiles
+- feature flags
+- local artifact path
+- local SBF artifact SHA256 output field
+- canonical ProgramData executable-bytes SHA256 output field
+- canonical hash domain
+- SHA256 algorithm
+- baseline program id
+- baseline ProgramData account
+- baseline upgrade authority
+- evidence directory
+- no secret material statement
+- exact scoped user GO phrase gate
+- stop-on-mismatch rule
+- no automatic retry rule
+
+Values not selected yet:
+
+- exact source commit
+- exact build command
+- exact toolchain versions
+- exact feature flags
+- exact artifact path
+- exact evidence path
+- exact user GO phrase
+- local SBF artifact SHA256
+- canonical ProgramData executable-bytes SHA256
+
+Evidence Package.1 does not grant GO.
+
+Evidence Package.1 does not run build, compute artifact hash, compute ProgramData hash, call RPC, use testnet, deploy, upgrade, write buffer, change authority, initialize state, configure SPL, construct guardian packages, sign, submit, or mutate.
+
+NO-GO REMAINS_FOR_BUILD_HASH_DEPLOY_UPGRADE_WRITE_BUFFER_STATE_INIT_SPL_SETUP_GUARDIAN_PACKAGES_SIGNING_RPC_TESTNET_NETWORK_SUBMIT_MUTATION
+
+Next safe step:
+
+Evidence Package.2 — exact expected-hash/build-hash package values inventory.
