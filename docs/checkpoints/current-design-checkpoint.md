@@ -663,3 +663,33 @@ LOCAL_GUARDIAN_FIXTURE_INTEGRATION_SAFETY_CHECKPOINT_NO_EXECUTION
 Current decision remains:
 
 NO-GO.
+
+## Phase 41K.6 B6.53 local guardian failure matrix integration map
+
+The local guardian failure matrix integration map is recorded in:
+
+docs/gateway/phase-41k6-b6-53-local-guardian-failure-matrix-integration-map.md
+
+It maps guardian descriptor and guardian fixture integration failures into future local failure matrix groups, expected no-mutation behavior, log expectations, and safety report expectations.
+
+It does not execute the failure matrix.
+
+It does not emit fixture files.
+
+It does not create descriptor files.
+
+It does not construct guardian packages.
+
+It does not enable signing.
+
+It does not approve local-validator execution.
+
+It does not approve testnet action.
+
+Current status:
+
+LOCAL_GUARDIAN_FAILURE_MATRIX_INTEGRATION_MAP_DESIGN_NOT_EXECUTED
+
+Current decision remains:
+
+NO-GO.
