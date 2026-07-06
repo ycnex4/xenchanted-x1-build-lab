@@ -1653,3 +1653,32 @@ This safety step does not run the validator, does not modify fixtures, and does 
 Blocker H remains closed.
 
 NO-GO remains for testnet, signing, SPL setup, program upgrade, persistent initialization, and network submit.
+
+
+## Blocker A.1 upgrade authority discovery planning-only
+
+The Blocker A.1 planning record is recorded in:
+
+docs/gateway/blocker-a-1-upgrade-authority-discovery-planning-only.md
+
+Purpose:
+
+Define the safe discovery and evidence boundary for Blocker A upgrade authority.
+
+A.1 is planning-only.
+
+A.1 does not call RPC, does not use testnet, does not use live RPC, does not use keys, does not sign, does not inspect live ProgramData, does not modify state, and does not submit to any network.
+
+Blocker A remains open.
+
+Current status:
+
+BLOCKER_A_OPEN_DISCOVERY_PLANNING_ONLY_NO_RPC_NO_KEYS_NO_EXECUTION
+
+Current decision:
+
+BLOCKER_A_NOT_CLOSED
+
+NO-GO REMAINS FOR TESTNET_RPC_LIVE_RPC_SIGNING_KEYS_PROGRAM_UPGRADE_STATE_INIT_SPL_SETUP_NETWORK_SUBMIT
+
+The next safe step is Blocker A.2 repo-only upgrade authority source discovery.
