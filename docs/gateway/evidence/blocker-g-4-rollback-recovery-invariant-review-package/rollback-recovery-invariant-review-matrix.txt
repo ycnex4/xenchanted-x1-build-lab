@@ -1,0 +1,46 @@
+# Rollback / recovery invariant review matrix
+
+G4_INVARIANT_01_FULL_STAGE_GATED_RECOVERY
+status: reviewed
+result: true
+meaning: Recovery must be stage-gated across build, deploy/upgrade, state init, SPL setup, guardian package, submit, and observation boundaries.
+
+G4_INVARIANT_02_PRE_MUTATION_ABORT_POINTS
+status: reviewed
+result: true
+meaning: Every mutation stage must have an explicit pre-mutation abort point.
+
+G4_INVARIANT_03_POST_SUBMIT_OBSERVATION
+status: reviewed
+result: true
+meaning: Post-submit observation evidence is required before declaring success/failure or continuing.
+
+G4_INVARIANT_04_NO_AUTOMATIC_RETRY
+status: reviewed
+result: true
+meaning: Automatic retry after failure is rejected.
+
+G4_INVARIANT_05_EXPLICIT_SCOPED_USER_GO
+status: reviewed
+result: true
+meaning: Any mutation or recovery action requires explicit scoped user GO.
+
+G4_INVARIANT_06_NON_REVERSIBLE_ABANDON_OR_REDEPLOY
+status: reviewed
+result: true
+meaning: If safe rollback is not possible, the required path is abandon/redeploy decision, not fake rollback.
+
+G4_INVARIANT_07_EVIDENCE_BEFORE_NEXT_STAGE
+status: reviewed
+result: true
+meaning: Evidence is required before moving to the next stage or recovery branch.
+
+G4_INVARIANT_08_NO_EXECUTION_APPROVED
+status: reviewed
+result: true
+meaning: G.4 does not approve build, deploy, upgrade, state init, SPL setup, guardian package construction, signing, RPC, testnet, submit, or mutation.
+
+G4_AGGREGATE
+all_invariants_reviewed: true
+blocker_g_closure_ready: true
+closure_type: narrow_recovery_boundary_only

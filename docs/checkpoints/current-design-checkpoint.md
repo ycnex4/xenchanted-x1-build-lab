@@ -3582,3 +3582,63 @@ NO-GO REMAINS_FOR_BUILD_DEPLOY_UPGRADE_STATE_INIT_SPL_SETUP_GUARDIAN_PACKAGES_SI
 Next safe step:
 
 Blocker G.4 — rollback / recovery invariant review package.
+
+
+## Blocker G.4 rollback / recovery invariant review package
+
+The Blocker G.4 invariant review package is recorded in:
+
+docs/gateway/blocker-g-4-rollback-recovery-invariant-review-package.md
+
+Evidence directory:
+
+docs/gateway/evidence/blocker-g-4-rollback-recovery-invariant-review-package
+
+Reviewed invariants:
+
+- full stage-gated recovery model
+- explicit pre-mutation abort points
+- post-submit observation evidence required
+- automatic retry rejected
+- explicit scoped user GO required before any mutation or recovery action
+- abandon/redeploy path required when safe rollback is not possible
+- evidence required before next stage or recovery branch
+- no build/deploy/upgrade/state-init/SPL/package/signing/RPC/testnet/submit/mutation approved
+
+Review result:
+
+all_invariants_reviewed: true
+
+blocker_g_closure_ready: true
+
+closure_type: narrow_recovery_boundary_only
+
+Prepared closure candidate:
+
+ROLLBACK_RECOVERY_PLAN_REVIEWED_EXECUTION_NOT_APPROVED
+
+Remaining open items outside G closure:
+
+- Blocker G closure decision record
+- Blocker B expected post-upgrade ProgramData hash
+- future final scoped GO package
+- future pre-mutation evidence bundle
+- future post-submit observation bundle
+
+G.4 does not close Blocker G.
+
+G.4 does not run build, deploy, upgrade, write buffer, change authority, initialize state, configure SPL, construct guardian packages, sign, call RPC, use testnet, submit, or mutate.
+
+Current status:
+
+BLOCKER_G_REVIEW_READY_ROLLBACK_RECOVERY_INVARIANTS_RECORDED_NO_RPC_NO_EXECUTION
+
+Current decision:
+
+BLOCKER_G_NOT_CLOSED_PENDING_CLOSURE_DECISION
+
+NO-GO REMAINS_FOR_BUILD_DEPLOY_UPGRADE_STATE_INIT_SPL_SETUP_GUARDIAN_PACKAGES_SIGNING_RPC_TESTNET_NETWORK_SUBMIT_MUTATION
+
+Next safe step:
+
+Blocker G.5 — rollback / recovery closure decision record.
