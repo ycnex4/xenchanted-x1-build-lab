@@ -1,0 +1,42 @@
+# Expected post-upgrade ProgramData hash candidate models
+
+B1_MODEL_0_NO_EXPECTED_HASH
+status: rejected_candidate
+meaning: Proceed toward upgrade without a recorded expected post-upgrade hash.
+reason_rejected: unsafe and incompatible with final scoped GO.
+
+B1_MODEL_1_SOURCE_COMMIT_ONLY
+status: rejected_candidate
+meaning: Use only git commit hash as expected upgrade identity.
+reason_rejected: source commit does not prove build artifact bytes or ProgramData bytes.
+
+B1_MODEL_2_LOCAL_ARTIFACT_SHA_ONLY
+status: partial_candidate
+meaning: Record sha256 of local SBF artifact only.
+limitation: Does not prove buffer bytes or post-upgrade ProgramData bytes.
+
+B1_MODEL_3_PROGRAMDATA_EXECUTABLE_BYTES_HASH
+status: preferred_candidate
+meaning: Expected post-upgrade hash is computed over the executable program bytes stored in ProgramData, excluding loader metadata.
+reason_preferred: closer to what the program actually runs while avoiding mutable loader metadata.
+
+B1_MODEL_4_FULL_HASH_BUNDLE
+status: preferred_required_property
+meaning: Record source commit, build command, toolchain, feature flags, artifact hash, expected ProgramData executable bytes hash, baseline ProgramData, and post-upgrade read-only verification plan.
+reason_preferred: gives deterministic evidence before and after upgrade.
+
+B1_MODEL_5_RAW_PROGRAMDATA_ACCOUNT_HASH
+status: open_question
+meaning: Hash the full raw ProgramData account data including loader metadata.
+open_issue: metadata may include deployment-specific fields and may not be stable before upgrade.
+
+B1_MODEL_6_BUFFER_HASH_PLUS_POST_UPGRADE_PROGRAMDATA_HASH
+status: open_question
+meaning: Use buffer data hash before upgrade and ProgramData executable bytes hash after upgrade.
+open_issue: requires future scoped procedure for buffer observation without unsafe mutation.
+
+PREFERRED_DIRECTION_FOR_LATER_B_STEPS
+FULL_HASH_BUNDLE_WITH_PROGRAMDATA_EXECUTABLE_BYTES_HASH_AS_CANONICAL_RUNTIME_HASH
+
+B1_EXECUTION_BOUNDARY
+B1_DOES_NOT_BUILD_HASH_DEPLOY_UPGRADE_CALL_RPC_USE_TESTNET_SUBMIT_OR_MUTATE

@@ -1,0 +1,46 @@
+# Expected post-upgrade ProgramData hash planning questions
+
+B1_QUESTION_01_HASH_DOMAIN
+What exactly is the expected hash domain: local SBF artifact bytes, buffer account data, ProgramData executable bytes, raw ProgramData account data, or a bundle of several hashes?
+
+B1_QUESTION_02_HASH_ALGORITHM
+Which hash algorithm is canonical for this blocker: sha256, keccak256, or another repo-standard hash?
+
+B1_QUESTION_03_PROGRAMDATA_METADATA
+Should ProgramData loader metadata be included in the expected hash or excluded?
+
+B1_QUESTION_04_ARTIFACT_SOURCE
+Which artifact path is authoritative for the future expected post-upgrade hash?
+
+B1_QUESTION_05_BUILD_REPRODUCIBILITY
+Which build command, toolchain, features, environment, lockfiles, and source commit must be bound to the expected hash?
+
+B1_QUESTION_06_FEATURE_FLAGS
+Which feature flags are allowed or forbidden for the expected post-upgrade artifact?
+
+B1_QUESTION_07_DANGEROUS_GATES
+How are dangerous feature gates represented in the hash evidence bundle?
+
+B1_QUESTION_08_CURRENT_PROGRAMDATA_BASELINE
+Which observed ProgramData account and current deployed program id are used as baseline evidence?
+
+B1_QUESTION_09_PRE_UPGRADE_EXPECTED_HASH
+What evidence must exist before any upgrade is allowed?
+
+B1_QUESTION_10_POST_UPGRADE_READ_ONLY_VERIFICATION
+What read-only observation must verify that the post-upgrade ProgramData matches the expected hash?
+
+B1_QUESTION_11_MISMATCH_POLICY
+What happens if local artifact hash, buffer hash, expected ProgramData hash, or observed post-upgrade hash mismatch?
+
+B1_QUESTION_12_NO_AUTOMATIC_RETRY
+How does the no-automatic-retry policy from Blocker G apply to hash mismatch?
+
+B1_QUESTION_13_FINAL_GO_BOUNDARY
+How does the expected hash package compose with the final scoped GO package?
+
+B1_QUESTION_14_NON_REVERSIBLE_PATH
+If an upgrade has occurred and the post-upgrade hash is wrong, when is the path rollback, abandon, or redeploy?
+
+B1_QUESTION_15_SCOPE_LIMIT
+Which B steps may run build/hash locally, and which steps remain strictly repo-only planning?

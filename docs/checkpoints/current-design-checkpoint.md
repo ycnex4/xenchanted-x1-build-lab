@@ -3712,3 +3712,49 @@ NO-GO REMAINS_FOR_BUILD_DEPLOY_UPGRADE_STATE_INIT_SPL_SETUP_GUARDIAN_PACKAGES_SI
 Next safe step:
 
 Blocker B.1 — expected post-upgrade ProgramData hash planning.
+
+
+## Blocker B.1 expected post-upgrade ProgramData hash planning
+
+The Blocker B.1 planning record is recorded in:
+
+docs/gateway/blocker-b-1-expected-post-upgrade-programdata-hash-planning.md
+
+Evidence directory:
+
+docs/gateway/evidence/blocker-b-1-expected-post-upgrade-programdata-hash-planning
+
+B.1 opens the expected post-upgrade ProgramData hash track after narrow closure of A, C, D, E, F, G, and H.
+
+Preferred future direction:
+
+- full hash bundle
+- canonical runtime hash over ProgramData executable bytes
+- source commit binding
+- build command binding
+- toolchain/version binding
+- feature flag binding
+- artifact hash binding
+- baseline ProgramData evidence binding
+- post-upgrade read-only verification plan
+- mismatch stop condition
+- no automatic retry
+- explicit scoped user GO before any build/hash/upgrade step that is outside pure planning
+
+B.1 does not close Blocker B.
+
+B.1 does not run build, compute artifact hash, compute ProgramData hash, deploy, upgrade, write buffer, change authority, initialize state, configure SPL, construct guardian packages, sign, call RPC, use testnet, submit, or mutate.
+
+Current status:
+
+BLOCKER_B_OPEN_EXPECTED_POST_UPGRADE_PROGRAMDATA_HASH_PLANNING_ONLY_NO_BUILD_NO_RPC_NO_EXECUTION
+
+Current decision:
+
+BLOCKER_B_NOT_CLOSED
+
+NO-GO REMAINS_FOR_BUILD_HASH_DEPLOY_UPGRADE_WRITE_BUFFER_STATE_INIT_SPL_SETUP_GUARDIAN_PACKAGES_SIGNING_RPC_TESTNET_NETWORK_SUBMIT_MUTATION
+
+Next safe step:
+
+Blocker B.2 — repo-grounded ProgramData hash inventory.
