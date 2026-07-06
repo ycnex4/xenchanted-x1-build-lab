@@ -1,0 +1,13 @@
+- source_commit_binding: required future evidence
+- build_command_binding: required future evidence
+- toolchain_version_binding: required future evidence
+- feature_flag_binding: required future evidence
+- local_artifact_hash: required future evidence
+- canonical_runtime_hash_domain: ProgramData executable bytes preferred
+- baseline_program_id: D7AQmZNtFFFoJbducz93atteeSZhw3jq6RmsqBvaf1my
+- baseline_programdata_account: 9tuesaPoJhrifF49vJewcg6PSWZeHAJiqQ97pq3LMW9T
+- pre_upgrade_expected_hash_package: required future evidence
+- post_upgrade_read_only_verification: required future evidence
+- mismatch_policy: stop condition required
+- automatic_retry_policy: automatic retry rejected
+- user_go_policy: explicit scoped user GO required before any build/hash/upgrade step outside pure planning

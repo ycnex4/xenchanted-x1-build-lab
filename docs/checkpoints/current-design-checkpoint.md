@@ -3758,3 +3758,77 @@ NO-GO REMAINS_FOR_BUILD_HASH_DEPLOY_UPGRADE_WRITE_BUFFER_STATE_INIT_SPL_SETUP_GU
 Next safe step:
 
 Blocker B.2 — repo-grounded ProgramData hash inventory.
+
+
+## Blocker B.2 repo-grounded ProgramData hash inventory
+
+The Blocker B.2 inventory record is recorded in:
+
+docs/gateway/blocker-b-2-repo-grounded-programdata-hash-inventory.md
+
+Evidence directory:
+
+docs/gateway/evidence/blocker-b-2-repo-grounded-programdata-hash-inventory
+
+Inventory summary:
+
+- b1_planning_recorded: true
+- preferred_full_hash_bundle_present: true
+- b1_no_execution_boundary_present: true
+- baseline_program_id_present: true
+- baseline_programdata_present: true
+- expected_programdata_hash_requirement_present: true
+- runtime_scaffold_not_deployable_present: true
+- dangerous_feature_gates_present: true
+- spl_cpi_closed_marker_present: true
+- live_route_disabled_present: true
+- programdata_baseline_references_found: true
+- hash_artifact_references_found: true
+- build_toolchain_references_found: true
+- feature_gate_references_found: true
+- final_go_no_go_references_found: true
+- b2_no_build_no_hash_no_rpc_no_execution: true
+
+all_inventory_checks_passed: true
+
+Inventory counts:
+
+- programdata_baseline: files=231, sampled_lines=120
+- hash_artifact: files=548, sampled_lines=120
+- build_toolchain: files=765, sampled_lines=120
+- feature_gates: files=418, sampled_lines=120
+- final_go_no_go: files=123, sampled_lines=120
+
+Hash bundle inventory:
+
+- source_commit_binding: required future evidence
+- build_command_binding: required future evidence
+- toolchain_version_binding: required future evidence
+- feature_flag_binding: required future evidence
+- local_artifact_hash: required future evidence
+- canonical_runtime_hash_domain: ProgramData executable bytes preferred
+- baseline_program_id: D7AQmZNtFFFoJbducz93atteeSZhw3jq6RmsqBvaf1my
+- baseline_programdata_account: 9tuesaPoJhrifF49vJewcg6PSWZeHAJiqQ97pq3LMW9T
+- pre_upgrade_expected_hash_package: required future evidence
+- post_upgrade_read_only_verification: required future evidence
+- mismatch_policy: stop condition required
+- automatic_retry_policy: automatic retry rejected
+- user_go_policy: explicit scoped user GO required before any build/hash/upgrade step outside pure planning
+
+B.2 does not close Blocker B.
+
+B.2 does not run build, compute artifact hash, compute ProgramData hash, deploy, upgrade, write buffer, change authority, initialize state, configure SPL, construct guardian packages, sign, call RPC, use testnet, submit, or mutate.
+
+Current status:
+
+BLOCKER_B_OPEN_REPO_GROUNDED_PROGRAMDATA_HASH_INVENTORY_COMPLETED_NO_BUILD_NO_HASH_NO_RPC_NO_EXECUTION
+
+Current decision:
+
+BLOCKER_B_NOT_CLOSED
+
+NO-GO REMAINS_FOR_BUILD_HASH_DEPLOY_UPGRADE_WRITE_BUFFER_STATE_INIT_SPL_SETUP_GUARDIAN_PACKAGES_SIGNING_RPC_TESTNET_NETWORK_SUBMIT_MUTATION
+
+Next safe step:
+
+Blocker B.3 — expected post-upgrade ProgramData hash decision model.

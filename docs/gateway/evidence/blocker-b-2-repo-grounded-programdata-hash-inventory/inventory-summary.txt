@@ -1,0 +1,16 @@
+- b1_planning_recorded: true
+- preferred_full_hash_bundle_present: true
+- b1_no_execution_boundary_present: true
+- baseline_program_id_present: true
+- baseline_programdata_present: true
+- expected_programdata_hash_requirement_present: true
+- runtime_scaffold_not_deployable_present: true
+- dangerous_feature_gates_present: true
+- spl_cpi_closed_marker_present: true
+- live_route_disabled_present: true
+- programdata_baseline_references_found: true
+- hash_artifact_references_found: true
+- build_toolchain_references_found: true
+- feature_gate_references_found: true
+- final_go_no_go_references_found: true
+- b2_no_build_no_hash_no_rpc_no_execution: true
