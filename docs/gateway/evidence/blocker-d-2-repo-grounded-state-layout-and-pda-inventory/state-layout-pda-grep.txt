@@ -1,0 +1,267 @@
+programs/xxxl-svm/src/account_contract.rs:29:    ProgramDerivedAddress,
+programs/xxxl-svm/src/account_contract.rs:31:    SystemOwnedOrProgramOwnedPda,
+programs/xxxl-svm/src/account_contract.rs:32:    RentPayer,
+programs/xxxl-svm/src/account_contract.rs:77:        owner_model: AccountOwnerModel::SystemOwnedOrProgramOwnedPda,
+programs/xxxl-svm/src/account_contract.rs:105:        owner_model: AccountOwnerModel::ProgramDerivedAddress,
+programs/xxxl-svm/src/account_contract.rs:119:        owner_model: AccountOwnerModel::RentPayer,
+programs/xxxl-svm/src/account_contract.rs:159:        owner_model: AccountOwnerModel::SystemOwnedOrProgramOwnedPda,
+programs/xxxl-svm/src/account_contract.rs:187:        owner_model: AccountOwnerModel::ProgramDerivedAddress,
+programs/xxxl-svm/src/account_contract.rs:201:        owner_model: AccountOwnerModel::RentPayer,
+programs/xxxl-svm/src/account_contract.rs:571:            AccountOwnerModel::SystemOwnedOrProgramOwnedPda,
+programs/xxxl-svm/src/account_contract.rs:587:            AccountOwnerModel::ProgramDerivedAddress,
+programs/xxxl-svm/src/account_contract.rs:593:        assert_owner_model(ACCOUNT_INDEX_RENT_PAYER, AccountOwnerModel::RentPayer);
+programs/xxxl-svm/src/account_order_skeleton.rs:25:    ProgramDerivedAddress,
+programs/xxxl-svm/src/account_order_skeleton.rs:149:        owner_expectation: XxxlAccountOwnerExpectationSkeleton::ProgramDerivedAddress,
+programs/xxxl-svm/src/account_order_skeleton.rs:240:        owner_expectation: XxxlAccountOwnerExpectationSkeleton::ProgramDerivedAddress,
+programs/xxxl-svm/src/account_validation_skeleton.rs:242:            XxxlAccountOwnerExpectationSkeleton::ProgramDerivedAddress
+programs/xxxl-svm/src/cpi.rs:29:        find_gateway_mint_authority, GATEWAY_MINT_AUTHORITY_SEED_0, GATEWAY_MINT_AUTHORITY_SEED_1,
+programs/xxxl-svm/src/cpi.rs:30:        GATEWAY_MINT_AUTHORITY_SEED_2,
+programs/xxxl-svm/src/cpi.rs:97:    if signer_seeds[0] != GATEWAY_MINT_AUTHORITY_SEED_0
+programs/xxxl-svm/src/cpi.rs:98:        || signer_seeds[1] != GATEWAY_MINT_AUTHORITY_SEED_1
+programs/xxxl-svm/src/cpi.rs:99:        || signer_seeds[2] != GATEWAY_MINT_AUTHORITY_SEED_2
+programs/xxxl-svm/src/cpi.rs:202:        GATEWAY_MINT_AUTHORITY_SEED_0,
+programs/xxxl-svm/src/cpi.rs:203:        GATEWAY_MINT_AUTHORITY_SEED_1,
+programs/xxxl-svm/src/cpi.rs:204:        GATEWAY_MINT_AUTHORITY_SEED_2,
+programs/xxxl-svm/src/cpi.rs:214:    let (expected_pda, expected_bump) = find_gateway_mint_authority(program_id);
+programs/xxxl-svm/src/cpi.rs:375:        let (pda, bump) = find_gateway_mint_authority(&program_id);
+programs/xxxl-svm/src/cpi.rs:413:        let (pda, bump) = find_gateway_mint_authority(&program_id);
+programs/xxxl-svm/src/cpi.rs:450:        let (pda, bump) = find_gateway_mint_authority(&program_id);
+programs/xxxl-svm/src/cpi.rs:487:        let (_pda, bump) = find_gateway_mint_authority(&program_id);
+programs/xxxl-svm/src/cpi.rs:528:        let (pda, bump) = find_gateway_mint_authority(&program_id);
+programs/xxxl-svm/src/cpi.rs:562:        let (pda, bump) = find_gateway_mint_authority(&program_id);
+programs/xxxl-svm/src/cpi.rs:588:        let (pda, bump) = find_gateway_mint_authority(&program_id);
+programs/xxxl-svm/src/cpi.rs:614:        let (pda, bump) = find_gateway_mint_authority(&program_id);
+programs/xxxl-svm/src/cpi.rs:641:        let (pda, bump) = find_gateway_mint_authority(&program_id);
+programs/xxxl-svm/src/cpi.rs:668:        let (pda, bump) = find_gateway_mint_authority(&program_id);
+programs/xxxl-svm/src/cpi.rs:694:        let (pda, bump) = find_gateway_mint_authority(&program_id);
+programs/xxxl-svm/src/cpi.rs:720:        let (_pda, bump) = find_gateway_mint_authority(&program_id);
+programs/xxxl-svm/src/cpi.rs:746:        let (pda, bump) = find_gateway_mint_authority(&program_id);
+programs/xxxl-svm/src/cpi.rs:823:        let (pda, bump) = find_gateway_mint_authority(&program_id);
+programs/xxxl-svm/src/cpi.rs:832:        let (_pda, bump) = find_gateway_mint_authority(&program_id);
+programs/xxxl-svm/src/cpi.rs:845:        let (pda, bump) = find_gateway_mint_authority(&program_id);
+programs/xxxl-svm/src/cpi.rs:857:        let (_pda, bump) = find_gateway_mint_authority(&program_id);
+programs/xxxl-svm/src/deployment_status.rs:97:        deployable: false,
+programs/xxxl-svm/src/execution_plan.rs:16:    state::{credit_recipient_balance, ProcessedEventAccountView, RecipientBalanceAccountView},
+programs/xxxl-svm/src/execution_plan.rs:148:        let processed_event = ProcessedEventAccountView::new(processed_event_data)?;
+programs/xxxl-svm/src/execution_plan.rs:160:        let recipient_balance = RecipientBalanceAccountView::new(recipient_balance_data)?;
+programs/xxxl-svm/src/execution_plan.rs:191:        let processed_event = ProcessedEventAccountView::new(processed_event_data)?;
+programs/xxxl-svm/src/execution_plan.rs:203:        let recipient_balance = RecipientBalanceAccountView::new(recipient_balance_data)?;
+programs/xxxl-svm/src/execution_plan.rs:241:            GATEWAY_CONFIG_ACCOUNT_DISCRIMINATOR, PROCESSED_EVENT_ACCOUNT_DISCRIMINATOR,
+programs/xxxl-svm/src/execution_plan.rs:242:            PROCESSED_EVENT_ACCOUNT_LEN, RECIPIENT_BALANCE_ACCOUNT_DISCRIMINATOR,
+programs/xxxl-svm/src/execution_plan.rs:243:            RECIPIENT_BALANCE_ACCOUNT_LEN, RUNTIME_LAYOUT_VERSION,
+programs/xxxl-svm/src/execution_plan.rs:452:            ProcessedEventAccountView::new(&processed_event_data).expect("processed event");
+programs/xxxl-svm/src/execution_plan.rs:606:            RecipientBalanceAccountView::new(&recipient_balance_data).expect("recipient balance");
+programs/xxxl-svm/src/execution_plan.rs:751:            ProcessedEventAccountView::new(&processed_event_data).expect("processed event");
+programs/xxxl-svm/src/execution_plan.rs:753:            RecipientBalanceAccountView::new(&recipient_balance_data).expect("recipient balance");
+programs/xxxl-svm/src/execution_plan.rs:996:            ProcessedEventAccountView::new(&processed_event_data).expect("processed event");
+programs/xxxl-svm/src/execution_plan.rs:998:            RecipientBalanceAccountView::new(&recipient_balance_data).expect("recipient balance");
+programs/xxxl-svm/src/execution_plan.rs:1027:            RecipientBalanceAccountView::new(&recipient_balance_data).expect("recipient balance");
+programs/xxxl-svm/src/execution_plan.rs:1049:            ProcessedEventAccountView::new(&processed_event_data).expect("processed event");
+programs/xxxl-svm/src/execution_plan.rs:1111:            PROCESSED_EVENT_ACCOUNT_LEN,
+programs/xxxl-svm/src/execution_plan.rs:1112:            PROCESSED_EVENT_ACCOUNT_DISCRIMINATOR,
+programs/xxxl-svm/src/execution_plan.rs:1125:            RECIPIENT_BALANCE_ACCOUNT_LEN,
+programs/xxxl-svm/src/execution_plan.rs:1126:            RECIPIENT_BALANCE_ACCOUNT_DISCRIMINATOR,
+programs/xxxl-svm/src/execution_plan.rs:1140:        data[8..10].copy_from_slice(&RUNTIME_LAYOUT_VERSION.to_le_bytes());
+programs/xxxl-svm/src/execution_plan.rs:1170:        assert_eq!(GATEWAY_CONFIG_ACCOUNT_DISCRIMINATOR.len(), 8);
+programs/xxxl-svm/src/pda.rs:3:pub const GATEWAY_MINT_AUTHORITY_SEED_0: &[u8] = b"xxxl";
+programs/xxxl-svm/src/pda.rs:4:pub const GATEWAY_MINT_AUTHORITY_SEED_1: &[u8] = b"gateway-mint-authority";
+programs/xxxl-svm/src/pda.rs:5:pub const GATEWAY_MINT_AUTHORITY_SEED_2: &[u8] = b"v1";
+programs/xxxl-svm/src/pda.rs:41:pub const GATEWAY_MINT_AUTHORITY_SEEDS: [&[u8]; 3] = [
+programs/xxxl-svm/src/pda.rs:42:    GATEWAY_MINT_AUTHORITY_SEED_0,
+programs/xxxl-svm/src/pda.rs:43:    GATEWAY_MINT_AUTHORITY_SEED_1,
+programs/xxxl-svm/src/pda.rs:44:    GATEWAY_MINT_AUTHORITY_SEED_2,
+programs/xxxl-svm/src/pda.rs:47:pub const XXXL_PDA_DERIVATION_INVENTORY: [XxxlPdaDerivationInventoryEntry; 1] =
+programs/xxxl-svm/src/pda.rs:51:        seeds: GATEWAY_MINT_AUTHORITY_SEEDS,
+programs/xxxl-svm/src/pda.rs:59:    GATEWAY_MINT_AUTHORITY_SEEDS
+programs/xxxl-svm/src/pda.rs:62:pub fn find_gateway_mint_authority(program_id: &Pubkey) -> (Pubkey, u8) {
+programs/xxxl-svm/src/pda.rs:69:    let (pda, bump) = find_gateway_mint_authority(program_id);
+programs/xxxl-svm/src/pda.rs:120:    &XXXL_PDA_DERIVATION_INVENTORY
+programs/xxxl-svm/src/pda.rs:126:    XXXL_PDA_DERIVATION_INVENTORY
+programs/xxxl-svm/src/pda.rs:172:        assert_eq!(entry.seeds[0], GATEWAY_MINT_AUTHORITY_SEED_0);
+programs/xxxl-svm/src/pda.rs:173:        assert_eq!(entry.seeds[1], GATEWAY_MINT_AUTHORITY_SEED_1);
+programs/xxxl-svm/src/pda.rs:174:        assert_eq!(entry.seeds[2], GATEWAY_MINT_AUTHORITY_SEED_2);
+programs/xxxl-svm/src/pda.rs:194:            AccountOwnerModel::ProgramDerivedAddress
+programs/xxxl-svm/src/pda.rs:202:        let (expected_pda, expected_bump) = find_gateway_mint_authority(&program_id);
+programs/xxxl-svm/src/pda.rs:315:        let (pda, bump) = find_gateway_mint_authority(&program_id);
+programs/xxxl-svm/src/pda.rs:326:        let left = find_gateway_mint_authority(&program_id);
+programs/xxxl-svm/src/pda.rs:327:        let right = find_gateway_mint_authority(&program_id);
+programs/xxxl-svm/src/pda.rs:339:        let first = find_gateway_mint_authority(&first_program_id);
+programs/xxxl-svm/src/pda.rs:340:        let second = find_gateway_mint_authority(&second_program_id);
+programs/xxxl-svm/src/pda.rs:348:        let (pda, _bump) = find_gateway_mint_authority(&program_id);
+programs/xxxl-svm/src/pda.rs:383:        let (expected_pda, expected_bump) = find_gateway_mint_authority(&program_id);
+programs/xxxl-svm/src/pda.rs:413:        println!("GATEWAY_MINT_AUTHORITY_PDA={}", report.pda);
+programs/xxxl-svm/src/pda.rs:414:        println!("GATEWAY_MINT_AUTHORITY_BUMP={}", report.bump);
+programs/xxxl-svm/src/phase_41k5_d15_atomic_mark_and_mint_svm_harness.rs:24:    processed_event_marking_boundary::mark_processed_event_atomic,
+programs/xxxl-svm/src/phase_41k5_d15_atomic_mark_and_mint_svm_harness.rs:74:    mark_processed_event_atomic(
+programs/xxxl-svm/src/processed_event_marking_boundary.rs:9:        ACCOUNT_DISCRIMINATOR_LEN, PROCESSED_EVENT_ACCOUNT_DISCRIMINATOR,
+programs/xxxl-svm/src/processed_event_marking_boundary.rs:10:        PROCESSED_EVENT_ACCOUNT_LEN, RUNTIME_LAYOUT_VERSION,
+programs/xxxl-svm/src/processed_event_marking_boundary.rs:32:    pub requires_system_owned_empty_data_entry: bool,
+programs/xxxl-svm/src/processed_event_marking_boundary.rs:33:    pub accepts_lamport_dusted_empty_pda: bool,
+programs/xxxl-svm/src/processed_event_marking_boundary.rs:38:    pub writes_final_consumed_image: bool,
+programs/xxxl-svm/src/processed_event_marking_boundary.rs:49:pub const PHASE_41K_4_PROCESSED_EVENT_MARKING_BOUNDARY_REPORT:
+programs/xxxl-svm/src/processed_event_marking_boundary.rs:56:    requires_system_owned_empty_data_entry: true,
+programs/xxxl-svm/src/processed_event_marking_boundary.rs:57:    accepts_lamport_dusted_empty_pda: true,
+programs/xxxl-svm/src/processed_event_marking_boundary.rs:62:    writes_final_consumed_image: true,
+programs/xxxl-svm/src/processed_event_marking_boundary.rs:156:    &PHASE_41K_4_PROCESSED_EVENT_MARKING_BOUNDARY_REPORT
+programs/xxxl-svm/src/processed_event_marking_boundary.rs:159:pub fn processed_event_signer_seeds<'a>(
+programs/xxxl-svm/src/processed_event_marking_boundary.rs:177:) -> Result<[u8; PROCESSED_EVENT_ACCOUNT_LEN], ProgramError> {
+programs/xxxl-svm/src/processed_event_marking_boundary.rs:182:    let mut data = [0u8; PROCESSED_EVENT_ACCOUNT_LEN];
+programs/xxxl-svm/src/processed_event_marking_boundary.rs:184:    data[0..ACCOUNT_DISCRIMINATOR_LEN].copy_from_slice(&PROCESSED_EVENT_ACCOUNT_DISCRIMINATOR);
+programs/xxxl-svm/src/processed_event_marking_boundary.rs:185:    data[8..10].copy_from_slice(&RUNTIME_LAYOUT_VERSION.to_le_bytes());
+programs/xxxl-svm/src/processed_event_marking_boundary.rs:202:pub fn mark_processed_event_atomic<'a>(
+programs/xxxl-svm/src/processed_event_marking_boundary.rs:254:    let rent_exempt_minimum_lamports = rent.minimum_balance(PROCESSED_EVENT_ACCOUNT_LEN);
+programs/xxxl-svm/src/processed_event_marking_boundary.rs:288:        if data.len() != PROCESSED_EVENT_ACCOUNT_LEN {
+programs/xxxl-svm/src/processed_event_marking_boundary.rs:374:        PROCESSED_EVENT_ACCOUNT_LEN as u64,
+programs/xxxl-svm/src/processed_event_marking_boundary.rs:376:    let signer_seeds = processed_event_signer_seeds(canonical_event_key, &pda_bump);
+programs/xxxl-svm/src/processed_event_marking_boundary.rs:396:    let signer_seeds = processed_event_signer_seeds(canonical_event_key, &pda_bump);
+programs/xxxl-svm/src/processed_event_marking_boundary.rs:430:        assert!(report.requires_system_owned_empty_data_entry);
+programs/xxxl-svm/src/processed_event_marking_boundary.rs:431:        assert!(report.accepts_lamport_dusted_empty_pda);
+programs/xxxl-svm/src/processed_event_marking_boundary.rs:436:        assert!(report.writes_final_consumed_image);
+programs/xxxl-svm/src/processed_event_marking_boundary.rs:450:        let seeds = processed_event_signer_seeds(&CANONICAL_EVENT_KEY, &bump);
+programs/xxxl-svm/src/processed_event_marking_boundary.rs:720:            mark_processed_event_atomic(
+programs/xxxl-svm/src/processed_event_marking_svm_harness.rs:20:use crate::{error::XxxlError, processed_event_marking_boundary::mark_processed_event_atomic};
+programs/xxxl-svm/src/processed_event_marking_svm_harness.rs:61:    mark_processed_event_atomic(
+programs/xxxl-svm/src/processor.rs:47:    processed_event_marking_boundary::{mark_processed_event_atomic, ProcessedEventMarkingWitness},
+programs/xxxl-svm/src/processor.rs:49:        GatewayConfigAccountView, GuardianSetAccountView, MintStateAccountView,
+programs/xxxl-svm/src/processor.rs:50:        RecipientBalanceAccountView,
+programs/xxxl-svm/src/processor.rs:556:    let marking_witness = mark_processed_event_atomic(
+programs/xxxl-svm/src/processor.rs:703:    let mint_state = MintStateAccountView::new(&mint_state_data)?;
+programs/xxxl-svm/src/processor.rs:704:    let gateway_config = GatewayConfigAccountView::new(&gateway_config_data)?;
+programs/xxxl-svm/src/processor.rs:705:    let guardian_set = GuardianSetAccountView::new(&guardian_set_data)?;
+programs/xxxl-svm/src/processor.rs:706:    let recipient_balance = RecipientBalanceAccountView::new(&recipient_balance_data)?;
+programs/xxxl-svm/src/processor.rs:805:        pda::find_gateway_mint_authority,
+programs/xxxl-svm/src/processor.rs:807:            GATEWAY_CONFIG_ACCOUNT_DISCRIMINATOR, GATEWAY_CONFIG_ACCOUNT_LEN,
+programs/xxxl-svm/src/processor.rs:808:            GUARDIAN_SET_ACCOUNT_DISCRIMINATOR, GUARDIAN_SET_ACCOUNT_LEN,
+programs/xxxl-svm/src/processor.rs:809:            MINT_STATE_ACCOUNT_DISCRIMINATOR, MINT_STATE_ACCOUNT_LEN,
+programs/xxxl-svm/src/processor.rs:810:            PROCESSED_EVENT_ACCOUNT_DISCRIMINATOR, PROCESSED_EVENT_ACCOUNT_LEN,
+programs/xxxl-svm/src/processor.rs:811:            RECIPIENT_BALANCE_ACCOUNT_DISCRIMINATOR, RECIPIENT_BALANCE_ACCOUNT_LEN,
+programs/xxxl-svm/src/processor.rs:812:            RUNTIME_LAYOUT_VERSION,
+programs/xxxl-svm/src/processor.rs:1879:        let mut data = account_data(GUARDIAN_SET_ACCOUNT_LEN, GUARDIAN_SET_ACCOUNT_DISCRIMINATOR);
+programs/xxxl-svm/src/processor.rs:1974:            let (mint_authority_pda, bump) = find_gateway_mint_authority(&program_id);
+programs/xxxl-svm/src/processor.rs:2204:        let mut data = account_data(MINT_STATE_ACCOUNT_LEN, MINT_STATE_ACCOUNT_DISCRIMINATOR);
+programs/xxxl-svm/src/processor.rs:2220:            GATEWAY_CONFIG_ACCOUNT_LEN,
+programs/xxxl-svm/src/processor.rs:2221:            GATEWAY_CONFIG_ACCOUNT_DISCRIMINATOR,
+programs/xxxl-svm/src/processor.rs:2232:        let mut data = account_data(GUARDIAN_SET_ACCOUNT_LEN, GUARDIAN_SET_ACCOUNT_DISCRIMINATOR);
+programs/xxxl-svm/src/processor.rs:2244:            PROCESSED_EVENT_ACCOUNT_LEN,
+programs/xxxl-svm/src/processor.rs:2245:            PROCESSED_EVENT_ACCOUNT_DISCRIMINATOR,
+programs/xxxl-svm/src/processor.rs:2256:            RECIPIENT_BALANCE_ACCOUNT_LEN,
+programs/xxxl-svm/src/processor.rs:2257:            RECIPIENT_BALANCE_ACCOUNT_DISCRIMINATOR,
+programs/xxxl-svm/src/processor.rs:2267:        data[8..10].copy_from_slice(&RUNTIME_LAYOUT_VERSION.to_le_bytes());
+programs/xxxl-svm/src/processor.rs:2322:        let (_pda, bump) = find_gateway_mint_authority(&program_id);
+programs/xxxl-svm/src/program_id_status.rs:29:        status_code: "PLACEHOLDER_PROGRAM_ID_BOUNDARY",
+programs/xxxl-svm/src/program_id_status.rs:41:            XxxlProgramIdReadinessStatus::Placeholder => "PLACEHOLDER_PROGRAM_ID_BOUNDARY",
+programs/xxxl-svm/src/program_id_status.rs:86:        assert_eq!(status.code(), "PLACEHOLDER_PROGRAM_ID_BOUNDARY");
+programs/xxxl-svm/src/program_id_status.rs:98:        assert_eq!(report.status_code, "PLACEHOLDER_PROGRAM_ID_BOUNDARY");
+programs/xxxl-svm/src/state.rs:5:pub const MINT_STATE_ACCOUNT_LEN: usize = 176;
+programs/xxxl-svm/src/state.rs:6:pub const GATEWAY_CONFIG_ACCOUNT_LEN: usize = 256;
+programs/xxxl-svm/src/state.rs:7:pub const GUARDIAN_SET_ACCOUNT_LEN: usize = 320;
+programs/xxxl-svm/src/state.rs:8:pub const PROCESSED_EVENT_ACCOUNT_LEN: usize = 144;
+programs/xxxl-svm/src/state.rs:9:pub const RECIPIENT_BALANCE_ACCOUNT_LEN: usize = 144;
+programs/xxxl-svm/src/state.rs:11:pub const ACCOUNT_DISCRIMINATOR_LEN: usize = 8;
+programs/xxxl-svm/src/state.rs:13:pub const RUNTIME_LAYOUT_VERSION: u16 = 1;
+programs/xxxl-svm/src/state.rs:15:pub const MINT_STATE_ACCOUNT_DISCRIMINATOR: [u8; ACCOUNT_DISCRIMINATOR_LEN] =
+programs/xxxl-svm/src/state.rs:17:pub const GATEWAY_CONFIG_ACCOUNT_DISCRIMINATOR: [u8; ACCOUNT_DISCRIMINATOR_LEN] =
+programs/xxxl-svm/src/state.rs:19:pub const GUARDIAN_SET_ACCOUNT_DISCRIMINATOR: [u8; ACCOUNT_DISCRIMINATOR_LEN] =
+programs/xxxl-svm/src/state.rs:21:pub const PROCESSED_EVENT_ACCOUNT_DISCRIMINATOR: [u8; ACCOUNT_DISCRIMINATOR_LEN] =
+programs/xxxl-svm/src/state.rs:23:pub const RECIPIENT_BALANCE_ACCOUNT_DISCRIMINATOR: [u8; ACCOUNT_DISCRIMINATOR_LEN] =
+programs/xxxl-svm/src/state.rs:27:pub struct MintStateAccountView<'a> {
+programs/xxxl-svm/src/state.rs:32:pub struct GatewayConfigAccountView<'a> {
+programs/xxxl-svm/src/state.rs:37:pub struct GuardianSetAccountView<'a> {
+programs/xxxl-svm/src/state.rs:42:pub struct ProcessedEventAccountView<'a> {
+programs/xxxl-svm/src/state.rs:47:pub struct RecipientBalanceAccountView<'a> {
+programs/xxxl-svm/src/state.rs:51:impl<'a> MintStateAccountView<'a> {
+programs/xxxl-svm/src/state.rs:55:            MINT_STATE_ACCOUNT_LEN,
+programs/xxxl-svm/src/state.rs:56:            &MINT_STATE_ACCOUNT_DISCRIMINATOR,
+programs/xxxl-svm/src/state.rs:83:impl<'a> GatewayConfigAccountView<'a> {
+programs/xxxl-svm/src/state.rs:87:            GATEWAY_CONFIG_ACCOUNT_LEN,
+programs/xxxl-svm/src/state.rs:88:            &GATEWAY_CONFIG_ACCOUNT_DISCRIMINATOR,
+programs/xxxl-svm/src/state.rs:115:impl<'a> GuardianSetAccountView<'a> {
+programs/xxxl-svm/src/state.rs:119:            GUARDIAN_SET_ACCOUNT_LEN,
+programs/xxxl-svm/src/state.rs:120:            &GUARDIAN_SET_ACCOUNT_DISCRIMINATOR,
+programs/xxxl-svm/src/state.rs:139:impl<'a> ProcessedEventAccountView<'a> {
+programs/xxxl-svm/src/state.rs:143:            PROCESSED_EVENT_ACCOUNT_LEN,
+programs/xxxl-svm/src/state.rs:144:            &PROCESSED_EVENT_ACCOUNT_DISCRIMINATOR,
+programs/xxxl-svm/src/state.rs:171:impl<'a> RecipientBalanceAccountView<'a> {
+programs/xxxl-svm/src/state.rs:175:            RECIPIENT_BALANCE_ACCOUNT_LEN,
+programs/xxxl-svm/src/state.rs:176:            &RECIPIENT_BALANCE_ACCOUNT_DISCRIMINATOR,
+programs/xxxl-svm/src/state.rs:195:// LEGACY: Pre-41K.4 planning helper.
+programs/xxxl-svm/src/state.rs:217:        let view = ProcessedEventAccountView::new(data)?;
+programs/xxxl-svm/src/state.rs:244:        let view = RecipientBalanceAccountView::new(data)?;
+programs/xxxl-svm/src/state.rs:266:    expected_discriminator: &[u8; ACCOUNT_DISCRIMINATOR_LEN],
+programs/xxxl-svm/src/state.rs:272:    if &data[0..ACCOUNT_DISCRIMINATOR_LEN] != expected_discriminator {
+programs/xxxl-svm/src/state.rs:276:    if read_u16_le(data, 8) != RUNTIME_LAYOUT_VERSION {
+programs/xxxl-svm/src/state.rs:312:        assert_eq!(MINT_STATE_ACCOUNT_LEN, 176);
+programs/xxxl-svm/src/state.rs:313:        assert_eq!(GATEWAY_CONFIG_ACCOUNT_LEN, 256);
+programs/xxxl-svm/src/state.rs:314:        assert_eq!(GUARDIAN_SET_ACCOUNT_LEN, 320);
+programs/xxxl-svm/src/state.rs:315:        assert_eq!(PROCESSED_EVENT_ACCOUNT_LEN, 144);
+programs/xxxl-svm/src/state.rs:316:        assert_eq!(RECIPIENT_BALANCE_ACCOUNT_LEN, 144);
+programs/xxxl-svm/src/state.rs:370:        let mut data = valid_account(MINT_STATE_ACCOUNT_LEN, MINT_STATE_ACCOUNT_DISCRIMINATOR);
+programs/xxxl-svm/src/state.rs:375:        let view = MintStateAccountView::new(&data).expect("valid mint state");
+programs/xxxl-svm/src/state.rs:385:            GATEWAY_CONFIG_ACCOUNT_LEN,
+programs/xxxl-svm/src/state.rs:386:            GATEWAY_CONFIG_ACCOUNT_DISCRIMINATOR,
+programs/xxxl-svm/src/state.rs:392:        let view = GatewayConfigAccountView::new(&data).expect("valid gateway config");
+programs/xxxl-svm/src/state.rs:401:        let mut data = valid_account(GUARDIAN_SET_ACCOUNT_LEN, GUARDIAN_SET_ACCOUNT_DISCRIMINATOR);
+programs/xxxl-svm/src/state.rs:405:        let view = GuardianSetAccountView::new(&data).expect("valid guardian set");
+programs/xxxl-svm/src/state.rs:414:            PROCESSED_EVENT_ACCOUNT_LEN,
+programs/xxxl-svm/src/state.rs:415:            PROCESSED_EVENT_ACCOUNT_DISCRIMINATOR,
+programs/xxxl-svm/src/state.rs:421:        let view = ProcessedEventAccountView::new(&data).expect("valid processed event");
+programs/xxxl-svm/src/state.rs:431:            RECIPIENT_BALANCE_ACCOUNT_LEN,
+programs/xxxl-svm/src/state.rs:432:            RECIPIENT_BALANCE_ACCOUNT_DISCRIMINATOR,
+programs/xxxl-svm/src/state.rs:438:        let view = RecipientBalanceAccountView::new(&data).expect("valid recipient balance");
+programs/xxxl-svm/src/state.rs:447:        let mut data = valid_account(MINT_STATE_ACCOUNT_LEN, MINT_STATE_ACCOUNT_DISCRIMINATOR);
+programs/xxxl-svm/src/state.rs:451:            MintStateAccountView::new(&data),
+programs/xxxl-svm/src/state.rs:458:        let mut data = valid_account(MINT_STATE_ACCOUNT_LEN, MINT_STATE_ACCOUNT_DISCRIMINATOR);
+programs/xxxl-svm/src/state.rs:461:        assert_custom_error(MintStateAccountView::new(&data), XxxlError::InvalidVersion);
+programs/xxxl-svm/src/state.rs:466:        let data = valid_account(MINT_STATE_ACCOUNT_LEN - 1, MINT_STATE_ACCOUNT_DISCRIMINATOR);
+programs/xxxl-svm/src/state.rs:469:            MintStateAccountView::new(&data),
+programs/xxxl-svm/src/state.rs:480:            PROCESSED_EVENT_ACCOUNT_LEN,
+programs/xxxl-svm/src/state.rs:481:            PROCESSED_EVENT_ACCOUNT_DISCRIMINATOR,
+programs/xxxl-svm/src/state.rs:498:        let view = ProcessedEventAccountView::new(&data).expect("valid processed event");
+programs/xxxl-svm/src/state.rs:511:            PROCESSED_EVENT_ACCOUNT_LEN,
+programs/xxxl-svm/src/state.rs:512:            PROCESSED_EVENT_ACCOUNT_DISCRIMINATOR,
+programs/xxxl-svm/src/state.rs:539:            PROCESSED_EVENT_ACCOUNT_LEN,
+programs/xxxl-svm/src/state.rs:540:            PROCESSED_EVENT_ACCOUNT_DISCRIMINATOR,
+programs/xxxl-svm/src/state.rs:561:            RECIPIENT_BALANCE_ACCOUNT_LEN,
+programs/xxxl-svm/src/state.rs:562:            RECIPIENT_BALANCE_ACCOUNT_DISCRIMINATOR,
+programs/xxxl-svm/src/state.rs:573:        let view = RecipientBalanceAccountView::new(&data).expect("valid recipient balance");
+programs/xxxl-svm/src/state.rs:586:            RECIPIENT_BALANCE_ACCOUNT_LEN,
+programs/xxxl-svm/src/state.rs:587:            RECIPIENT_BALANCE_ACCOUNT_DISCRIMINATOR,
+programs/xxxl-svm/src/state.rs:605:            RECIPIENT_BALANCE_ACCOUNT_LEN,
+programs/xxxl-svm/src/state.rs:606:            RECIPIENT_BALANCE_ACCOUNT_DISCRIMINATOR,
+programs/xxxl-svm/src/state.rs:619:    fn valid_account(len: usize, discriminator: [u8; ACCOUNT_DISCRIMINATOR_LEN]) -> Vec<u8> {
+programs/xxxl-svm/src/state.rs:622:        if len >= ACCOUNT_DISCRIMINATOR_LEN {
+programs/xxxl-svm/src/state.rs:623:            data[0..ACCOUNT_DISCRIMINATOR_LEN].copy_from_slice(&discriminator);
+programs/xxxl-svm/src/state.rs:627:            data[8..10].copy_from_slice(&RUNTIME_LAYOUT_VERSION.to_le_bytes());
+programs/xxxl-svm/src/verifier/guardian_set_account_loading_boundary.rs:4:    ACCOUNT_DISCRIMINATOR_LEN, GUARDIAN_SET_ACCOUNT_DISCRIMINATOR, GUARDIAN_SET_ACCOUNT_LEN,
+programs/xxxl-svm/src/verifier/guardian_set_account_loading_boundary.rs:5:    RUNTIME_LAYOUT_VERSION,
+programs/xxxl-svm/src/verifier/guardian_set_account_loading_boundary.rs:357:    if data.len() < ACCOUNT_DISCRIMINATOR_LEN {
+programs/xxxl-svm/src/verifier/guardian_set_account_loading_boundary.rs:369:    if data.len() != GUARDIAN_SET_ACCOUNT_LEN {
+programs/xxxl-svm/src/verifier/guardian_set_account_loading_boundary.rs:381:    let Some(discriminator) = read_fixed::<ACCOUNT_DISCRIMINATOR_LEN>(data, 0) else {
+programs/xxxl-svm/src/verifier/guardian_set_account_loading_boundary.rs:393:    if discriminator == [0u8; ACCOUNT_DISCRIMINATOR_LEN] {
+programs/xxxl-svm/src/verifier/guardian_set_account_loading_boundary.rs:405:    if discriminator != GUARDIAN_SET_ACCOUNT_DISCRIMINATOR {
+programs/xxxl-svm/src/verifier/guardian_set_account_loading_boundary.rs:429:    if version != RUNTIME_LAYOUT_VERSION {
+programs/xxxl-svm/src/verifier/guardian_set_account_loading_boundary.rs:859:        assert_eq!(result.account_data_len, GUARDIAN_SET_ACCOUNT_LEN);
+programs/xxxl-svm/src/verifier/guardian_set_account_loading_boundary.rs:950:        data[0..ACCOUNT_DISCRIMINATOR_LEN].copy_from_slice(&[0u8; ACCOUNT_DISCRIMINATOR_LEN]);
+programs/xxxl-svm/src/verifier/guardian_set_account_loading_boundary.rs:993:        data[0..ACCOUNT_DISCRIMINATOR_LEN].copy_from_slice(&[0u8; ACCOUNT_DISCRIMINATOR_LEN]);
+programs/xxxl-svm/src/verifier/guardian_set_account_loading_boundary.rs:1162:        data[0..ACCOUNT_DISCRIMINATOR_LEN].copy_from_slice(&[0u8; ACCOUNT_DISCRIMINATOR_LEN]);
+programs/xxxl-svm/src/verifier/guardian_set_account_loading_boundary.rs:1205:        let data = vec![0u8; ACCOUNT_DISCRIMINATOR_LEN - 1];
+programs/xxxl-svm/src/verifier/guardian_set_account_loading_boundary.rs:1215:        let data = vec![0u8; GUARDIAN_SET_ACCOUNT_LEN - 1];
+programs/xxxl-svm/src/verifier/guardian_set_account_loading_boundary.rs:1226:        data[0..ACCOUNT_DISCRIMINATOR_LEN].copy_from_slice(&[0u8; ACCOUNT_DISCRIMINATOR_LEN]);
+programs/xxxl-svm/src/verifier/guardian_set_account_loading_boundary.rs:1352:        let mut data = vec![0u8; GUARDIAN_SET_ACCOUNT_LEN];
+programs/xxxl-svm/src/verifier/guardian_set_account_loading_boundary.rs:1354:        data[0..ACCOUNT_DISCRIMINATOR_LEN].copy_from_slice(&GUARDIAN_SET_ACCOUNT_DISCRIMINATOR);
+programs/xxxl-svm/src/verifier/guardian_set_account_loading_boundary.rs:1355:        data[8..10].copy_from_slice(&RUNTIME_LAYOUT_VERSION.to_le_bytes());
+programs/xxxl-svm/src/verifier/processed_registry_account_loading_boundary.rs:4:    ACCOUNT_DISCRIMINATOR_LEN, PROCESSED_EVENT_ACCOUNT_DISCRIMINATOR,
+programs/xxxl-svm/src/verifier/processed_registry_account_loading_boundary.rs:5:    PROCESSED_EVENT_ACCOUNT_LEN, RUNTIME_LAYOUT_VERSION,
+programs/xxxl-svm/src/verifier/processed_registry_account_loading_boundary.rs:432:    if data.len() < ACCOUNT_DISCRIMINATOR_LEN {
+programs/xxxl-svm/src/verifier/processed_registry_account_loading_boundary.rs:444:    if data.len() != PROCESSED_EVENT_ACCOUNT_LEN {
+programs/xxxl-svm/src/verifier/processed_registry_account_loading_boundary.rs:456:    let Some(discriminator) = read_fixed::<ACCOUNT_DISCRIMINATOR_LEN>(data, 0) else {
+programs/xxxl-svm/src/verifier/processed_registry_account_loading_boundary.rs:468:    if discriminator == [0u8; ACCOUNT_DISCRIMINATOR_LEN] {
+programs/xxxl-svm/src/verifier/processed_registry_account_loading_boundary.rs:480:    if discriminator != PROCESSED_EVENT_ACCOUNT_DISCRIMINATOR {
+programs/xxxl-svm/src/verifier/processed_registry_account_loading_boundary.rs:504:    if version != RUNTIME_LAYOUT_VERSION {
+programs/xxxl-svm/src/verifier/processed_registry_account_loading_boundary.rs:1290:        data[0..ACCOUNT_DISCRIMINATOR_LEN].copy_from_slice(&[0u8; ACCOUNT_DISCRIMINATOR_LEN]);
+programs/xxxl-svm/src/verifier/processed_registry_account_loading_boundary.rs:1508:        let data = vec![0u8; PROCESSED_EVENT_ACCOUNT_LEN - 1];
+programs/xxxl-svm/src/verifier/processed_registry_account_loading_boundary.rs:1525:        let data = vec![0u8; ACCOUNT_DISCRIMINATOR_LEN - 1];
+programs/xxxl-svm/src/verifier/processed_registry_account_loading_boundary.rs:1541:        let mut data = vec![0u8; PROCESSED_EVENT_ACCOUNT_LEN];
+programs/xxxl-svm/src/verifier/processed_registry_account_loading_boundary.rs:1542:        data[0..ACCOUNT_DISCRIMINATOR_LEN]
+programs/xxxl-svm/src/verifier/processed_registry_account_loading_boundary.rs:1543:            .copy_from_slice(&PROCESSED_EVENT_ACCOUNT_DISCRIMINATOR);
+programs/xxxl-svm/src/verifier/processed_registry_account_loading_boundary.rs:1544:        data[8..10].copy_from_slice(&RUNTIME_LAYOUT_VERSION.to_le_bytes());

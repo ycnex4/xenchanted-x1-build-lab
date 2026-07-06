@@ -1,0 +1,7 @@
+- MintState: long-lived protocol state
+- GatewayConfig: long-lived route/config state
+- GuardianSet: long-lived guardian quorum state
+- ProcessedEvent: per-event replay/consumption state
+- RecipientBalance: per-recipient accounting state
+- gateway_mint_authority: derived authority PDA
+- SPL mint and token accounts: Blocker E scope
