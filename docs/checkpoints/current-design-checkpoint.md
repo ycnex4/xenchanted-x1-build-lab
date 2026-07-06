@@ -3943,3 +3943,67 @@ NO-GO REMAINS_FOR_BUILD_HASH_DEPLOY_UPGRADE_WRITE_BUFFER_STATE_INIT_SPL_SETUP_GU
 Next safe step:
 
 Blocker B.4 — ProgramData hash invariant review package.
+
+
+## Blocker B.4 ProgramData hash invariant review package
+
+The Blocker B.4 invariant review package is recorded in:
+
+docs/gateway/blocker-b-4-programdata-hash-invariant-review-package.md
+
+Evidence directory:
+
+docs/gateway/evidence/blocker-b-4-programdata-hash-invariant-review-package
+
+Reviewed invariants:
+
+- full hash bundle required
+- canonical runtime hash domain is ProgramData executable bytes excluding loader metadata
+- canonical hash algorithm is SHA256
+- local SBF artifact sha256 required but insufficient alone
+- source commit / repo clean status / build command / toolchain / lockfiles / feature flags binding required
+- baseline program id / ProgramData account / upgrade authority observation binding required
+- expected hash package required before any upgrade GO
+- post-upgrade read-only ProgramData executable-bytes sha256 verification required
+- hash mismatch is a stop condition
+- automatic retry after hash mismatch rejected
+- explicit scoped user GO required before build/hash/upgrade/recovery action
+- no execution approved
+
+Review result:
+
+all_invariants_reviewed: true
+
+blocker_b_closure_ready: true
+
+closure_type: narrow_programdata_hash_model_boundary_only
+
+Prepared closure candidate:
+
+EXPECTED_PROGRAMDATA_HASH_MODEL_REVIEWED_EXECUTION_NOT_APPROVED
+
+Remaining open items outside B closure:
+
+- Blocker B closure decision record
+- future actual expected-hash package
+- future actual build/hash execution with explicit scoped GO
+- future post-upgrade read-only verification bundle
+- future final scoped GO package before any network mutation
+
+B.4 does not close Blocker B.
+
+B.4 does not run build, compute artifact hash, compute ProgramData hash, deploy, upgrade, write buffer, change authority, initialize state, configure SPL, construct guardian packages, sign, call RPC, use testnet, submit, or mutate.
+
+Current status:
+
+BLOCKER_B_REVIEW_READY_PROGRAMDATA_HASH_INVARIANTS_RECORDED_NO_BUILD_NO_HASH_NO_RPC_NO_EXECUTION
+
+Current decision:
+
+BLOCKER_B_NOT_CLOSED_PENDING_CLOSURE_DECISION
+
+NO-GO REMAINS_FOR_BUILD_HASH_DEPLOY_UPGRADE_WRITE_BUFFER_STATE_INIT_SPL_SETUP_GUARDIAN_PACKAGES_SIGNING_RPC_TESTNET_NETWORK_SUBMIT_MUTATION
+
+Next safe step:
+
+Blocker B.5 — expected post-upgrade ProgramData hash closure decision record.
