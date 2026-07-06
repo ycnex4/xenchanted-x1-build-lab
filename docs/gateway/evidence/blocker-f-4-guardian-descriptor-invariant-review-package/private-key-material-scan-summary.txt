@@ -1,0 +1,2 @@
+private_key_scan_match_count: 0
+private_key_material_scan_result: NO_PRIVATE_KEY_MATERIAL_PATTERNS_FOUND

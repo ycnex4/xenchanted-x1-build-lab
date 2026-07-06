@@ -1,0 +1,61 @@
+# Guardian descriptor invariant review matrix
+
+F4_INVARIANT_01_STATIC_PUBLIC_DESCRIPTOR_MODEL
+status: reviewed
+result: true
+meaning: Future guardian descriptor must be a public tracked repo artifact.
+
+F4_INVARIANT_02_PUBLIC_KEYS_ONLY
+status: reviewed
+result: true
+meaning: Descriptor may contain public keys only.
+
+F4_INVARIANT_03_PRIVATE_KEYS_NEVER_COMMITTED_REQUESTED_PRINTED
+status: reviewed
+result: true
+meaning: Private keys must never be committed, requested, printed, or stored in repo.
+
+F4_INVARIANT_04_ED25519_PUBLIC_KEY_MODEL
+status: reviewed
+result: true
+meaning: Descriptor model is ed25519 public key based.
+
+F4_INVARIANT_05_EXPLICIT_THRESHOLD
+status: reviewed
+result: true
+meaning: Threshold/quorum must be explicit.
+
+F4_INVARIANT_06_DISTINCT_GUARDIAN_APPROVALS
+status: reviewed
+result: true
+meaning: Quorum must be over distinct guardian approvals.
+
+F4_INVARIANT_07_DETERMINISTIC_DESCRIPTOR_HASH_ID
+status: reviewed
+result: true
+meaning: Descriptor id/hash must be deterministic.
+
+F4_INVARIANT_08_ROUTE_STATE_MESSAGE_BINDING
+status: reviewed
+result: true
+meaning: Descriptor must bind guardian_set_id, route_id, source chain, mint token, message schema, and canonical encoding.
+
+F4_INVARIANT_09_ROTATION_REQUIRES_NEW_DESCRIPTOR_ID
+status: reviewed
+result: true
+meaning: Rotation requires a new descriptor id and separate review.
+
+F4_INVARIANT_10_NO_PACKAGE_CONSTRUCTION_OR_SIGNING_APPROVED
+status: reviewed
+result: true
+meaning: Guardian package construction and signing remain blocked until future reviewed descriptor and final scoped GO.
+
+F4_INVARIANT_11_NO_RPC_TESTNET_MUTATION
+status: reviewed
+result: true
+meaning: F.4 does not approve RPC, testnet, submit, or mutation.
+
+F4_AGGREGATE
+all_invariants_reviewed: true
+blocker_f_closure_ready: true
+closure_type: narrow_descriptor_boundary_only

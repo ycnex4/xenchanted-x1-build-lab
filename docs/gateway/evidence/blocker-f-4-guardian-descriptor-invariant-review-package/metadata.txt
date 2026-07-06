@@ -1,0 +1,14 @@
+phase=blocker-f-4-guardian-descriptor-invariant-review-package
+timestamp_utc=2026-07-06T19:51:26Z
+repo_only=true
+rpc_used=false
+testnet_used=false
+keys_added=false
+private_keys_added=false
+guardian_descriptor_finalized=false
+guardian_package_constructed=false
+signing_executed=false
+state_initialized=false
+spl_setup_executed=false
+deployable_artifact_created=false
+mutation_executed=false

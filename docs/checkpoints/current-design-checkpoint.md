@@ -3231,3 +3231,76 @@ NO-GO REMAINS_FOR_GUARDIAN_DESCRIPTOR_FINALIZATION_GUARDIAN_KEYS_PRODUCTION_KEYS
 Next safe step:
 
 Blocker F.4 — guardian descriptor invariant review package.
+
+
+## Blocker F.4 guardian descriptor invariant review package
+
+The Blocker F.4 invariant review package is recorded in:
+
+docs/gateway/blocker-f-4-guardian-descriptor-invariant-review-package.md
+
+Evidence directory:
+
+docs/gateway/evidence/blocker-f-4-guardian-descriptor-invariant-review-package
+
+Reviewed invariants:
+
+- static public descriptor model
+- public keys only
+- private keys never committed, requested, printed, or stored in repo
+- ed25519 public key descriptor model
+- explicit threshold/quorum rule
+- distinct guardian approvals
+- deterministic descriptor hash/id
+- guardian_set_id / route / source chain / mint token / message schema / canonical encoding binding
+- rotation requires new descriptor id and separate review
+- guardian package construction and signing remain blocked
+- no RPC, testnet, submit, or mutation approved
+
+Private key material scan summary:
+
+private_key_scan_match_count: 0
+
+private_key_material_scan_result: NO_PRIVATE_KEY_MATERIAL_PATTERNS_FOUND
+
+Review result:
+
+all_invariants_reviewed: true
+
+blocker_f_closure_ready: true
+
+closure_type: narrow_descriptor_boundary_only
+
+Prepared closure candidate:
+
+GUARDIAN_DESCRIPTOR_MODEL_REVIEWED_KEYS_AND_PACKAGES_NOT_APPROVED
+
+Remaining open items outside F closure:
+
+- exact descriptor schema file path
+- exact canonical descriptor hash rule
+- exact testnet guardian public key list
+- exact threshold value
+- exact guardian_set_id value
+- exact route/state/message binding values
+- exact invalid/duplicate/unknown/under-threshold failure matrix
+- future reviewed descriptor artifact
+- final scoped GO before package construction or signing
+
+F.4 does not close Blocker F.
+
+F.4 does not add guardian keys, add private keys, finalize a live descriptor, construct guardian packages, sign, initialize state, configure SPL, call RPC, use testnet, deploy, upgrade, submit, or mutate.
+
+Current status:
+
+BLOCKER_F_REVIEW_READY_GUARDIAN_DESCRIPTOR_INVARIANTS_RECORDED_NO_KEYS_NO_PACKAGES_NO_EXECUTION
+
+Current decision:
+
+BLOCKER_F_NOT_CLOSED_PENDING_CLOSURE_DECISION
+
+NO-GO REMAINS_FOR_GUARDIAN_DESCRIPTOR_FINALIZATION_GUARDIAN_KEYS_PRODUCTION_KEYS_SIGNING_PACKAGES_RPC_TESTNET_NETWORK_SUBMIT_MUTATION
+
+Next safe step:
+
+Blocker F.5 — guardian descriptor closure decision record.
