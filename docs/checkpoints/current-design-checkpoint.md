@@ -2255,3 +2255,52 @@ all_invariants_passed: true
 
 C.4 remains repo-only invariant review evidence and still does not close Blocker C.
 
+
+
+## Blocker C.5 B1C7 boundary closure decision record
+
+The Blocker C.5 closure decision record is recorded in:
+
+docs/gateway/blocker-c-5-b1c7-boundary-closure-decision-record.md
+
+Blocker C is now CLOSED narrowly as:
+
+B1C7_HANDLER_BOUNDARY_REVIEWED_DIRECT_DANGEROUS_ACTIVATION_REJECTED_FUTURE_TESTNET_ROUTE_REQUIRED
+
+Closure basis:
+
+- C.1 opened B1C7 production/testnet boundary planning
+- C.2 completed repo-grounded handler inventory
+- C.2R corrected the order-check tooling artifact
+- C.3 rejected direct dangerous test-gate activation
+- C.3 selected future model REVIEWED_TESTNET_INTENDED_HANDLER_ROUTE_REQUIRED_BEFORE_ANY_DEPLOYABLE_ARTIFACT
+- C.4 completed B1C7 invariant review
+- C.4R corrected the authorization status gate call-graph artifact
+
+Accepted C.4 invariant result:
+
+all_invariants_passed: true
+
+C.5 does not approve handler activation, live route activation, direct dangerous test-gate deployment, signing, keypair use, deploy, write-buffer, set-upgrade-authority, close, upgrade, state initialization, SPL setup, SPL CPI minting, guardian package construction, transaction submit, mutation, or production activation.
+
+Remaining blockers:
+
+- B — OPEN: expected post-upgrade ProgramData hash
+- D — OPEN: state initialization design
+- E — OPEN: SPL mint authority architecture
+- F — OPEN: guardian descriptor
+- G — OPEN: rollback / recovery plan
+
+Current status:
+
+BLOCKER_C_CLOSED_NARROW_B1C7_HANDLER_BOUNDARY_REVIEWED_DIRECT_DANGEROUS_ACTIVATION_REJECTED_FUTURE_TESTNET_ROUTE_REQUIRED
+
+Current decision:
+
+BLOCKER_C_CLOSED_NARROW_BOUNDARY_INVARIANTS_ONLY
+
+NO-GO REMAINS_FOR_HANDLER_ACTIVATION_SIGNING_KEYS_PROGRAM_UPGRADE_STATE_INIT_SPL_SETUP_GUARDIAN_PACKAGES_NETWORK_SUBMIT_MUTATION
+
+Next safe step:
+
+Blocker D.1 — state initialization design planning.
