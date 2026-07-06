@@ -973,3 +973,28 @@ Current decision remains:
 NO-GO FOR LOCAL_VALIDATOR_TESTNET_SIGNING_SPL_UPGRADE_INIT_SUBMIT
 
 The next safe step is a Sergey decision before any B6.61 local-validator dry-run planning or execution.
+
+
+## Phase 41K.6 B6.61 local-validator dry-run planning-only
+
+The local-validator dry-run planning-only boundary is recorded in:
+
+docs/gateway/phase-41k6-b6-61-local-validator-dry-run-planning-only.md
+
+B6.61 converts the B6.60 GO form into a planning-only boundary.
+
+B6.61 does not provide a runnable validator command.
+
+B6.61 does not run a local validator.
+
+B6.61 does not use testnet, live RPC, real signing, real keys, guardian packages, SPL setup, upgrade, state initialization, or submit.
+
+Current status:
+
+LOCAL_VALIDATOR_DRY_RUN_PLANNING_ONLY_DEFINED_NO_EXECUTION
+
+Current decision remains:
+
+NO-GO FOR LOCAL_VALIDATOR_EXECUTION_TESTNET_SIGNING_SPL_UPGRADE_INIT_SUBMIT
+
+The next safe step is either Theo review of B6.58 through B6.61 or a separate B6.62 command-boundary checkpoint with no execution.
