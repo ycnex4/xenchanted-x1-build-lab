@@ -1283,3 +1283,51 @@ Current decision remains:
 NO-GO FOR BLOCKER_H_LOCAL_VALIDATOR_EXECUTION_TESTNET_SIGNING_SPL_UPGRADE_INIT_SUBMIT
 
 The next safe step is either Theo review of H.1 through H.3 or Blocker H.4 execution-readiness review package with no execution.
+
+
+## Blocker H.3R Theo verdict record for H.1 through H.3
+
+Theo's verdict for Blocker H.1 through H.3 is recorded in:
+
+docs/gateway/blocker-h-3r-theo-verdict-record-h1-through-h3.md
+
+Theo approved H.1 through H.3 and confirmed that each H sub-blocker is planning-only, correctly scoped, and preserves the execution gate.
+
+Theo confirmed that the B6.63/B6.64 fail-closed command-boundary script remains the only runnable artifact and that H.1 through H.3 did not add any new executable path.
+
+Theo approved proceeding to:
+
+Blocker H.4 execution-readiness review package with no execution.
+
+H.4 scope expectation:
+
+- readiness assessment against the H.2 preflight checklist
+- no execution
+- not a GO decision
+
+Items to carry into H.4:
+
+- solana-test-validator binary present and correct version
+- fixture bundle loaded and JSON-valid
+- mock accounts deterministically generated
+- no real private keys in fixture directory
+- no testnet RPC endpoints in config
+- program binary hash matches expected if testing upgrade path
+- SPL Token program present in validator genesis
+- requester identity
+- specific execution scope: local validator dry-run only
+- fixture bundle version/hash
+- expected program binary hash if upgrade path is tested
+- Blocker A through G status: still open, noted
+- rollback plan if dry-run produces unexpected state
+- sign-off field: empty until explicit GO
+
+Current status:
+
+THEO_VERDICT_RECORDED_H1_THROUGH_H3_APPROVED_H4_REVIEW_PACKAGE_ALLOWED_NO_EXECUTION
+
+Current decision remains:
+
+NO-GO FOR BLOCKER_H_LOCAL_VALIDATOR_EXECUTION_TESTNET_SIGNING_SPL_UPGRADE_INIT_SUBMIT
+
+The next safe step is Blocker H.4 execution-readiness review package with no execution.
