@@ -1072,3 +1072,42 @@ Current decision remains:
 NO-GO FOR BLOCKER_H_LOCAL_VALIDATOR_EXECUTION_TESTNET_SIGNING_SPL_UPGRADE_INIT_SUBMIT
 
 The next safe step is B6.63 command-boundary definition with no execution.
+
+
+## Phase 41K.6 B6.63 command-boundary no-execution
+
+The B6.63 command-boundary no-execution checkpoint is recorded in:
+
+docs/gateway/phase-41k6-b6-63-command-boundary-no-execution.md
+
+B6.63 adds the command-boundary script:
+
+scripts/gateway/b6_63_local_validator_command_boundary_no_execution.sh
+
+B6.63 carries Theo's mandatory guards:
+
+- execution prevention by default
+- mock data only from tmp/local-validator-fixtures/
+- Blocker H gate preserved with BLOCKER_H_NOT_CLOSED
+- no implicit testnet fallback; fail closed, not open
+
+Verification result:
+
+- bash syntax check: OK
+- default no-execution run: OK
+- fixture file count: 10
+- JSON check: OK
+- forbidden-material taxonomy scan: OK
+- fixture boundary: LOCAL_TMP_ONLY
+- --execute refusal: OK
+- --execute refusal exit code: 63
+
+Current status:
+
+COMMAND_BOUNDARY_DEFINED_NO_EXECUTION_BLOCKER_H_STILL_GATED
+
+Current decision remains:
+
+NO-GO FOR BLOCKER_H_LOCAL_VALIDATOR_EXECUTION_TESTNET_SIGNING_SPL_UPGRADE_INIT_SUBMIT
+
+The next safe step is B6.64 command-boundary safety checkpoint / Theo review package for B6.63.
