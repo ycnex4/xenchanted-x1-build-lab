@@ -2304,3 +2304,52 @@ NO-GO REMAINS_FOR_HANDLER_ACTIVATION_SIGNING_KEYS_PROGRAM_UPGRADE_STATE_INIT_SPL
 Next safe step:
 
 Blocker D.1 — state initialization design planning.
+
+
+## Blocker D.1 state initialization design planning
+
+The Blocker D.1 planning record is recorded in:
+
+docs/gateway/blocker-d-1-state-initialization-design-planning.md
+
+D.1 opens the state initialization design track after:
+
+- Blocker A closed narrowly as upgrade authority present but accepted for test phase
+- Blocker C closed narrowly as B1C7 handler boundary / invariants only
+
+Current repo-grounded state facts:
+
+- MINT_STATE_ACCOUNT_LEN = 176
+- GATEWAY_CONFIG_ACCOUNT_LEN = 256
+- GUARDIAN_SET_ACCOUNT_LEN = 320
+- PROCESSED_EVENT_ACCOUNT_LEN = 144
+- RECIPIENT_BALANCE_ACCOUNT_LEN = 144
+- fixed discriminators exist for MintState, GatewayConfig, GuardianSet, ProcessedEvent, and RecipientBalance
+- gateway_mint_authority PDA is explicitly inventoried with seeds xxxl / gateway-mint-authority / v1
+- legacy pre-41K.4 processed-event helper is not a live replay-protection initialization model
+
+D.1 separates state into:
+
+- long-lived protocol state
+- derived authority state
+- per-event replay state
+- per-recipient accounting state
+- SPL token state
+
+D.1 does not close Blocker D.
+
+D.1 does not initialize state, does not create accounts, does not call RPC, does not use testnet, does not use keys, does not sign, does not deploy, does not upgrade, does not configure SPL, does not construct guardian packages, does not submit, and does not mutate.
+
+Current status:
+
+BLOCKER_D_OPEN_STATE_INITIALIZATION_DESIGN_PLANNING_ONLY_NO_RPC_NO_EXECUTION
+
+Current decision:
+
+BLOCKER_D_NOT_CLOSED
+
+NO-GO REMAINS_FOR_STATE_INITIALIZATION_EXECUTION_SIGNING_KEYS_PROGRAM_UPGRADE_SPL_SETUP_GUARDIAN_PACKAGES_NETWORK_SUBMIT_MUTATION
+
+Next safe step:
+
+Blocker D.2 — repo-grounded state layout and PDA inventory.
