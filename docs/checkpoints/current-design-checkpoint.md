@@ -3115,3 +3115,119 @@ NO-GO REMAINS_FOR_GUARDIAN_DESCRIPTOR_FINALIZATION_GUARDIAN_KEYS_PRODUCTION_KEYS
 Next safe step:
 
 Blocker F.3 — guardian descriptor decision model.
+
+
+## Blocker F.3 guardian descriptor decision model
+
+The Blocker F.3 decision model is recorded in:
+
+docs/gateway/blocker-f-3-guardian-descriptor-decision-model.md
+
+Evidence directory:
+
+docs/gateway/evidence/blocker-f-3-guardian-descriptor-decision-model
+
+F.3 decision:
+
+STATIC_PUBLIC_GUARDIAN_DESCRIPTOR_PUBLIC_KEYS_ONLY_EXPLICIT_THRESHOLD_NO_PRIVATE_KEYS_NO_PACKAGES_NO_SIGNING
+
+Descriptor model:
+
+STATIC_PUBLIC_GUARDIAN_DESCRIPTOR_IN_REPO_PUBLIC_KEYS_ONLY_NO_PRIVATE_KEYS
+
+Descriptor scope:
+
+TESTNET_DESCRIPTOR_ALLOWED_ONLY_AS_EXPLICIT_TESTNET_ARTIFACT_AFTER_FURTHER_REVIEW
+
+Key material boundary:
+
+PUBLIC_KEYS_ONLY_PRIVATE_KEYS_NEVER_COMMITTED_NEVER_REQUESTED_NEVER_PRINTED
+
+Key type model:
+
+ED25519_PUBLIC_KEY_DESCRIPTOR_MODEL
+
+Quorum model:
+
+EXPLICIT_THRESHOLD_OVER_DISTINCT_GUARDIAN_APPROVALS
+
+Descriptor id model:
+
+DETERMINISTIC_DESCRIPTOR_HASH_ID_REQUIRED
+
+Binding model:
+
+DESCRIPTOR_BOUND_TO_GUARDIAN_SET_ID_ROUTE_ID_SOURCE_CHAIN_MINT_TOKEN_MESSAGE_SCHEMA_AND_CANONICAL_ENCODING
+
+Rotation model:
+
+ROTATION_REQUIRES_NEW_DESCRIPTOR_ID_AND_SEPARATE_REVIEW
+
+Package boundary:
+
+GUARDIAN_PACKAGE_CONSTRUCTION_REQUIRES_FUTURE_REVIEWED_DESCRIPTOR_AND_FINAL_SCOPED_GO
+
+Execution boundary:
+
+FUTURE_REVIEWED_GUARDIAN_DESCRIPTOR_AND_FINAL_SCOPED_GO_REQUIRED_BEFORE_ANY_GUARDIAN_PACKAGE_CONSTRUCTION_OR_SIGNING
+
+Required future descriptor fields:
+
+- descriptor_version
+- descriptor_scope
+- network_label
+- guardian_set_id
+- descriptor_id_or_hash
+- key_type
+- guardian_public_keys
+- threshold
+- distinct_approval_rule
+- route_id
+- source_chain_id
+- mint_token
+- message_schema_version
+- canonical_encoding_id
+- activation_boundary
+- rotation_boundary
+- expiry_or_supersession_rule
+
+Rejected models:
+
+- implicit or undocumented guardian set
+- ad hoc relayer/admin signature model
+- hidden off-repo guardian set
+- production descriptor finalization in current phase
+- private keys in repo
+- guardian package construction before final scoped GO
+- signing before final scoped GO
+
+Remaining open items before F closure:
+
+- exact descriptor schema file path
+- exact descriptor hash canonicalization rule
+- exact testnet guardian public key list
+- exact threshold value
+- exact guardian_set_id value
+- exact route/state/message binding fields
+- exact failure matrix for invalid/duplicate/unknown/under-threshold approvals
+- no-private-key repo scan evidence
+- guardian descriptor invariant review package
+- final scoped GO before package construction or signing
+
+F.3 does not close Blocker F.
+
+F.3 does not add guardian keys, add private keys, finalize a live descriptor, construct guardian packages, sign, initialize state, configure SPL, call RPC, use testnet, deploy, upgrade, submit, or mutate.
+
+Current status:
+
+BLOCKER_F_OPEN_GUARDIAN_DESCRIPTOR_DECISION_MODEL_RECORDED_NO_KEYS_NO_PACKAGES_NO_EXECUTION
+
+Current decision:
+
+STATIC_PUBLIC_GUARDIAN_DESCRIPTOR_PUBLIC_KEYS_ONLY_EXPLICIT_THRESHOLD_NO_PRIVATE_KEYS_NO_PACKAGES_NO_SIGNING
+
+NO-GO REMAINS_FOR_GUARDIAN_DESCRIPTOR_FINALIZATION_GUARDIAN_KEYS_PRODUCTION_KEYS_SIGNING_PACKAGES_RPC_TESTNET_NETWORK_SUBMIT_MUTATION
+
+Next safe step:
+
+Blocker F.4 — guardian descriptor invariant review package.
