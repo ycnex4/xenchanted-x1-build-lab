@@ -1,0 +1,35 @@
+# BuildHash Execution.1.1 preconditions draft
+
+required_before_future_execution:
+- BuildHash Execution.1.2 invariant review completed
+- BuildHash Execution.1.3 closure record completed
+- exact scoped user GO phrase selected in closure
+- user provides exact scoped GO phrase
+- repo is clean before execution
+- current source commit equals closure-bound source commit
+- build command equals closure-bound command
+- feature flags equal closure-bound feature flags
+- no dangerous features selected
+- artifact path equals closure-bound path
+- evidence path equals closure-bound path
+- hash algorithm equals closure-bound algorithm
+- canonical hash domain equals closure-bound domain
+
+stop_if:
+- exact GO phrase is missing or differs
+- repo is dirty before execution
+- source commit differs
+- toolchain capture fails
+- build command differs
+- dangerous feature is selected
+- build fails
+- artifact is missing or empty
+- local artifact SHA256 fails
+- canonical hash method is missing or ambiguous
+- canonical ProgramData executable-bytes SHA256 fails
+- RPC/testnet is attempted
+- mutation is attempted
+- secret material is requested, printed, or required
+- final git status has unexplained changes
+
+automatic_retry: rejected

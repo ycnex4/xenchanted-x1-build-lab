@@ -5215,3 +5215,48 @@ NO-GO REMAINS_FOR_BUILD_HASH_DEPLOY_UPGRADE_WRITE_BUFFER_STATE_INIT_SPL_SETUP_GU
 Next safe step:
 
 BuildHash Execution.1 — exact scoped local build/hash execution GO package.
+
+
+## BuildHash Execution.1.1 exact scoped local build/hash GO package draft
+
+The BuildHash Execution.1.1 draft is recorded in:
+
+docs/gateway/buildhash-execution-1-1-exact-scoped-local-build-hash-go-package-draft.md
+
+Evidence directory:
+
+docs/gateway/evidence/buildhash-execution-1-1-exact-scoped-local-build-hash-go-package-draft
+
+Current status:
+
+BUILDHASH_EXECUTION_1_1_OPEN_EXACT_SCOPED_LOCAL_BUILD_HASH_GO_PACKAGE_DRAFT_NO_BUILD_NO_HASH_NO_RPC_NO_EXECUTION
+
+Current decision:
+
+EXACT_SCOPED_LOCAL_BUILD_HASH_GO_PACKAGE_DRAFT_RECORDED_FINAL_GO_NOT_GRANTED
+
+Package id draft:
+
+BHX1-DRAFT-876787edc8c9
+
+Selected execution model:
+
+STRICT_LOCAL_BUILD_HASH_EXECUTION_WITH_EXACT_GO_ONLY
+
+Current GO state:
+
+FINAL_GO_NOT_GRANTED
+
+Exact GO phrase status:
+
+UNSET_PENDING_BUILDHASH_EXECUTION_1_3_CLOSURE
+
+BuildHash Execution.1.1 does not grant GO.
+
+BuildHash Execution.1.1 does not run build, compute artifact hash, compute ProgramData hash, call RPC, use testnet, deploy, upgrade, write buffer, change authority, initialize state, configure SPL, construct guardian packages, sign, submit, or mutate.
+
+NO-GO REMAINS_FOR_BUILD_HASH_DEPLOY_UPGRADE_WRITE_BUFFER_STATE_INIT_SPL_SETUP_GUARDIAN_PACKAGES_SIGNING_RPC_TESTNET_NETWORK_SUBMIT_MUTATION
+
+Next safe step:
+
+BuildHash Execution.1.2 — exact scoped local build/hash GO package invariant review.
