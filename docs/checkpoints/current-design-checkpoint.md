@@ -757,3 +757,39 @@ Current decision remains:
 NO-GO.
 
 The next safe step is a decision, not another automatic guardian skeleton.
+
+## Phase 41K.6 B6.56 local-only fixture emission readiness decision map
+
+The local-only fixture emission readiness decision map is recorded in:
+
+docs/gateway/phase-41k6-b6-56-local-only-fixture-emission-readiness-decision-map.md
+
+It defines the future local-only fixture bundle inventory, selected output directory, naming policy, determinism policy, safety checks, cleanup policy, and explicit GO boundary.
+
+It does not implement fixture file emission.
+
+It does not emit fixture files.
+
+It does not create an output directory.
+
+It does not run a local validator.
+
+It does not approve testnet action.
+
+It does not enable signing.
+
+It does not construct guardian packages.
+
+It does not create descriptor files.
+
+It does not approve submit, upgrade, state initialization, SPL mint authority setup, or SPL CPI minting.
+
+Current status:
+
+LOCAL_ONLY_FIXTURE_EMISSION_READINESS_DECISION_MAP_READY_FOR_GO_FORM_NOT_EXECUTION
+
+Current decision remains:
+
+NO-GO.
+
+The next safe step is B6.57 local-only fixture emission GO form, still unapproved.
