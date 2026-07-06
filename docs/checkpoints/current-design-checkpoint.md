@@ -3642,3 +3642,73 @@ NO-GO REMAINS_FOR_BUILD_DEPLOY_UPGRADE_STATE_INIT_SPL_SETUP_GUARDIAN_PACKAGES_SI
 Next safe step:
 
 Blocker G.5 — rollback / recovery closure decision record.
+
+
+## Blocker G.5 rollback / recovery closure decision record
+
+The Blocker G.5 closure decision record is recorded in:
+
+docs/gateway/blocker-g-5-rollback-recovery-closure-decision-record.md
+
+Blocker G is now CLOSED narrowly as:
+
+ROLLBACK_RECOVERY_PLAN_REVIEWED_EXECUTION_NOT_APPROVED
+
+Closure basis:
+
+- G.1 opened rollback / recovery planning
+- G.2 completed repo-grounded rollback / recovery inventory
+- G.3 recorded the rollback / recovery decision model
+- G.4 completed rollback / recovery invariant review
+
+Accepted G.3 decision:
+
+FULL_STAGE_GATED_RECOVERY_NO_AUTOMATIC_RETRY_USER_GO_REQUIRED
+
+Accepted rollback model:
+
+STAGE_GATED_ABORT_OBSERVE_RECOVER_OR_ABANDON_REDEPLOY
+
+Accepted automatic retry policy:
+
+AUTOMATIC_RETRY_REJECTED
+
+Accepted non-reversible action policy:
+
+ABANDON_OR_REDEPLOY_IF_SAFE_ROLLBACK_NOT_POSSIBLE
+
+Accepted user GO policy:
+
+EXPLICIT_SCOPED_USER_GO_REQUIRED_BEFORE_ANY_MUTATION_OR_RECOVERY_ACTION
+
+Accepted evidence policy:
+
+EVIDENCE_REQUIRED_BEFORE_NEXT_STAGE_OR_RECOVERY_BRANCH
+
+Accepted G.4 invariant result:
+
+all_invariants_reviewed: true
+
+blocker_g_closure_ready: true
+
+closure_type: narrow_recovery_boundary_only
+
+G.5 does not approve build, deploy, upgrade, write buffer, authority change, state initialization execution, SPL setup, guardian package construction, signing, RPC, testnet, transaction submit, mutation, or production activation.
+
+Remaining blockers:
+
+- B — OPEN: expected post-upgrade ProgramData hash
+
+Current status:
+
+BLOCKER_G_CLOSED_NARROW_ROLLBACK_RECOVERY_PLAN_REVIEWED_EXECUTION_NOT_APPROVED
+
+Current decision:
+
+BLOCKER_G_CLOSED_NARROW_RECOVERY_INVARIANTS_ONLY
+
+NO-GO REMAINS_FOR_BUILD_DEPLOY_UPGRADE_STATE_INIT_SPL_SETUP_GUARDIAN_PACKAGES_SIGNING_RPC_TESTNET_NETWORK_SUBMIT_MUTATION
+
+Next safe step:
+
+Blocker B.1 — expected post-upgrade ProgramData hash planning.
