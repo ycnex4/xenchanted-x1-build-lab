@@ -1,0 +1,66 @@
+# ProgramData hash invariant review matrix
+
+B4_INVARIANT_01_FULL_HASH_BUNDLE
+status: reviewed
+result: true
+meaning: Future expected-hash package must be a full hash bundle, not a single weak identifier.
+
+B4_INVARIANT_02_CANONICAL_RUNTIME_HASH_DOMAIN
+status: reviewed
+result: true
+meaning: Canonical runtime hash domain is ProgramData executable bytes excluding loader metadata.
+
+B4_INVARIANT_03_CANONICAL_HASH_ALGORITHM
+status: reviewed
+result: true
+meaning: Canonical hash algorithm is SHA256.
+
+B4_INVARIANT_04_LOCAL_ARTIFACT_HASH_REQUIRED_BUT_INSUFFICIENT_ALONE
+status: reviewed
+result: true
+meaning: Local SBF artifact sha256 is required as future pre-upgrade evidence but is not sufficient alone.
+
+B4_INVARIANT_05_BUILD_BINDING_REQUIRED
+status: reviewed
+result: true
+meaning: Source commit, repo clean status, build command, toolchain, lockfiles, and feature flags must be bound.
+
+B4_INVARIANT_06_BASELINE_BINDING_REQUIRED
+status: reviewed
+result: true
+meaning: Baseline program id, ProgramData account, and upgrade authority observation must be bound.
+
+B4_INVARIANT_07_EXPECTED_HASH_PACKAGE_BEFORE_UPGRADE_GO
+status: reviewed
+result: true
+meaning: Expected hash package is required before any upgrade GO.
+
+B4_INVARIANT_08_POST_UPGRADE_READ_ONLY_VERIFICATION
+status: reviewed
+result: true
+meaning: Post-upgrade read-only ProgramData executable-bytes sha256 verification is required.
+
+B4_INVARIANT_09_HASH_MISMATCH_STOP_CONDITION
+status: reviewed
+result: true
+meaning: Hash mismatch is a stop condition.
+
+B4_INVARIANT_10_NO_AUTOMATIC_RETRY
+status: reviewed
+result: true
+meaning: Automatic retry after hash mismatch remains rejected.
+
+B4_INVARIANT_11_EXPLICIT_SCOPED_USER_GO
+status: reviewed
+result: true
+meaning: Explicit scoped user GO is required before any build, hash, upgrade, or recovery action.
+
+B4_INVARIANT_12_NO_EXECUTION_APPROVED
+status: reviewed
+result: true
+meaning: B.4 does not approve build, hash computation, deploy, upgrade, write-buffer, state init, SPL setup, guardian package construction, signing, RPC, testnet, submit, or mutation.
+
+B4_AGGREGATE
+all_invariants_reviewed: true
+blocker_b_closure_ready: true
+closure_type: narrow_programdata_hash_model_boundary_only
