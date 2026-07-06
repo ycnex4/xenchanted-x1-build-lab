@@ -793,3 +793,41 @@ Current decision remains:
 NO-GO.
 
 The next safe step is B6.57 local-only fixture emission GO form, still unapproved.
+
+## Phase 41K.6 B6.57 local-only fixture emission GO form
+
+The local-only fixture emission GO form is recorded in:
+
+docs/gateway/phase-41k6-b6-57-local-only-fixture-emission-go-form.md
+
+It defines the exact future approval form required before actual local-only fixture file emission can be implemented or executed.
+
+It does not grant approval.
+
+It does not implement fixture file emission.
+
+It does not emit fixture files.
+
+It does not create an output directory.
+
+It does not run a local validator.
+
+It does not approve testnet action.
+
+It does not enable signing.
+
+It does not construct guardian packages.
+
+It does not create descriptor files.
+
+It does not approve submit, upgrade, state initialization, SPL mint authority setup, or SPL CPI minting.
+
+Current status:
+
+LOCAL_ONLY_FIXTURE_EMISSION_GO_FORM_DEFINED_NOT_APPROVED
+
+Current decision remains:
+
+NO-GO.
+
+The next safe step is a decision from Sergey. Actual fixture emission remains forbidden without a separate explicit scoped GO.
