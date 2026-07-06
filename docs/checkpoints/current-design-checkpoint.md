@@ -4431,3 +4431,44 @@ NO-GO REMAINS_FOR_BUILD_HASH_DEPLOY_UPGRADE_WRITE_BUFFER_STATE_INIT_SPL_SETUP_GU
 Next safe step:
 
 Scoped Package.1 — select the first future operation class for planning only.
+
+
+## Scoped Package.1 first future operation class selection planning
+
+The Scoped Package.1 planning record is recorded in:
+
+docs/gateway/scoped-package-1-first-operation-class-selection-planning.md
+
+Evidence directory:
+
+docs/gateway/evidence/scoped-package-1-first-operation-class-selection-planning
+
+Current status:
+
+SCOPED_PACKAGE_1_OPEN_FIRST_OPERATION_CLASS_SELECTED_FOR_PLANNING_ONLY_NO_BUILD_NO_HASH_NO_RPC_NO_EXECUTION
+
+Current decision:
+
+EXPECTED_HASH_BUILD_HASH_EVIDENCE_PACKAGE_SELECTED_FOR_PLANNING_ONLY_FINAL_GO_NOT_GRANTED
+
+Selected operation class:
+
+EXPECTED_HASH_BUILD_HASH_EVIDENCE_PACKAGE_PLANNING_ONLY
+
+Current GO state:
+
+FINAL_GO_NOT_GRANTED
+
+Scoped Package.1 selects the first future operation class for planning only.
+
+It does not grant GO.
+
+It does not draft a runnable package.
+
+It does not run build, compute artifact hash, compute ProgramData hash, call RPC, use testnet, deploy, upgrade, write buffer, change authority, initialize state, configure SPL, construct guardian packages, sign, submit, or mutate.
+
+NO-GO REMAINS_FOR_BUILD_HASH_DEPLOY_UPGRADE_WRITE_BUFFER_STATE_INIT_SPL_SETUP_GUARDIAN_PACKAGES_SIGNING_RPC_TESTNET_NETWORK_SUBMIT_MUTATION
+
+Next safe step:
+
+Scoped Package.2 — expected-hash/build-hash evidence package requirements inventory.
