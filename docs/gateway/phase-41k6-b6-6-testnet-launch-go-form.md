@@ -1554,6 +1554,71 @@ Current decision remains:
 
 NO-GO.
 
+## B6.55 guardian local safety lane consolidation status
+
+- guardian_local_safety_lane_consolidation_file: docs/gateway/phase-41k6-b6-55-guardian-local-safety-lane-consolidation.md
+- guardian_local_safety_lane_status: GUARDIAN_LOCAL_SAFETY_LANE_CONSOLIDATED_READY_FOR_DECISION_NOT_EXECUTION
+- guardian_local_safety_lane_consolidated: true
+- no_more_guardian_skeletons_before_decision: true
+- local_guardian_failure_matrix_implemented: skeleton_only
+- local_guardian_failure_matrix_executed: false
+- local_guardian_descriptor_fixture_integration_implemented: skeleton_only
+- local_guardian_descriptor_skeleton_implemented: skeleton_only
+- guardian_descriptor_created: false
+- guardian_set_initialized_on_testnet: false
+- guardian_package_construction_enabled: false
+- guardian_signing_enabled: false
+- production_keys_allowed: false
+- blocker_e_spl_mint_authority_architecture: open_design_started
+- blocker_e_closed: false
+- blocker_f_guardian_set_testnet_descriptor: open_design_started
+- blocker_f_closed: false
+- blocker_h_local_validator_dry_run: open_design_started
+- blocker_h_closed: false
+- spl_mint_authority_configured: false
+- spl_cpi_minting_enabled: false
+- local_validator_go_form_defined: true
+- local_validator_go_approved: false
+- local_validator_execution_approved: false
+- local_validator_matrix_defined: true
+- local_validator_matrix_executed: false
+- fixture_file_emission_enabled: false
+- writes_to_disk: false
+- live_runtime_handler_enabled: false
+- live_route_enabled: false
+- on_chain_state_write_enabled: false
+- account_initialization_enabled: false
+- testnet_submit_enabled: false
+- build_for_upgrade_approved: false
+- upgrade_go_approved: false
+- state_init_go_approved: false
+- submit_go_approved: false
+- production_activation_approved: false
+
+B6.55 consolidates the guardian/local-safety lane.
+
+It does not add another Rust skeleton.
+
+It does not execute the failure matrix.
+
+It does not emit fixture files.
+
+It does not create descriptor files.
+
+It does not construct guardian packages.
+
+It does not enable signing.
+
+It does not approve local-validator execution.
+
+It does not approve testnet action.
+
+The next safe step is a decision, not another automatic guardian skeleton.
+
+Current decision remains:
+
+NO-GO.
+
 ## Current decision
 
 Current decision:
