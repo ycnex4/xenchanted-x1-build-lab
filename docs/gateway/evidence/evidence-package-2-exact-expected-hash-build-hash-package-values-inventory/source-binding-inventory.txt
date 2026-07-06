@@ -1,0 +1,13 @@
+# Evidence Package.2 source binding inventory
+
+package_id_candidate: EP2-CANDIDATE-cbb205a0f950
+repo_full_name: ycnex4/xenchanted-x1-build-lab
+remote_url: https://github.com/ycnex4/xenchanted-x1-build-lab.git
+branch: evidence-package-2-exact-expected-hash-build-hash-package-values-inventory
+source_commit: cbb205a0f9500608eda70ab533492dbf64f6c69f
+repo_clean_status: false
+selected_package_shape: STRICT_LOCAL_EXPECTED_HASH_BUILD_HASH_EXECUTION_PACKAGE_PLANNING_ONLY
+selected_model: STRICT_EXPECTED_HASH_BUILD_HASH_EVIDENCE_PACKAGE_MODEL_REQUIRED
+operation_class: EXPECTED_HASH_BUILD_HASH_EVIDENCE_PACKAGE_PLANNING_ONLY
+current_go_state: FINAL_GO_NOT_GRANTED
+execution_approved: false

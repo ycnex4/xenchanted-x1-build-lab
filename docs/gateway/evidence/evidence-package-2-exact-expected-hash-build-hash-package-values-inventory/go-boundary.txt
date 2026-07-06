@@ -1,0 +1,15 @@
+# Evidence Package.2 exact GO boundary
+
+exact_user_go_phrase_candidate: UNSET_NOT_SELECTED
+
+future_go_rule:
+Any actual build/hash execution requires a later exact scoped user GO phrase.
+
+current_go_state: FINAL_GO_NOT_GRANTED
+execution_approved: false
+build_approved: false
+artifact_hash_computation_approved: false
+programdata_hash_computation_approved: false
+rpc_approved: false
+testnet_approved: false
+mutation_approved: false

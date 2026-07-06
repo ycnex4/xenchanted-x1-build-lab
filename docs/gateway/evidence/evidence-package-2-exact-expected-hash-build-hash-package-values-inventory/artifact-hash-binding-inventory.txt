@@ -1,0 +1,15 @@
+# Evidence Package.2 artifact/hash binding inventory
+
+local_artifact_path_candidate: programs/xxxl-svm/target/deploy/xxxl_svm.so
+local_artifact_sha256: UNSET_NOT_COMPUTED
+canonical_programdata_executable_bytes_sha256: UNSET_NOT_COMPUTED
+
+canonical_runtime_hash_domain: PROGRAMDATA_EXECUTABLE_BYTES_EXCLUDING_LOADER_METADATA
+hash_algorithm: SHA256
+
+baseline_program_id: D7AQmZNtFFFoJbducz93atteeSZhw3jq6RmsqBvaf1my
+baseline_programdata_account: 9tuesaPoJhrifF49vJewcg6PSWZeHAJiqQ97pq3LMW9T
+baseline_upgrade_authority: DTfvjtRL63u3XYHXQfgRQCdhEanUK1qqawvfEAM9hxAc
+
+artifact_hash_computed: false
+programdata_hash_computed: false
