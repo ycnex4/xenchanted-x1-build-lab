@@ -2926,3 +2926,79 @@ NO-GO REMAINS_FOR_SPL_MINT_SETUP_SPL_AUTHORITY_TRANSFER_SPL_CPI_MINTING_SIGNING_
 Next safe step:
 
 Blocker E.5 — SPL mint authority architecture closure decision record.
+
+
+## Blocker E.5 SPL mint authority architecture closure decision record
+
+The Blocker E.5 closure decision record is recorded in:
+
+docs/gateway/blocker-e-5-spl-mint-authority-architecture-closure-decision-record.md
+
+Blocker E is now CLOSED narrowly as:
+
+SPL_MINT_AUTHORITY_ARCHITECTURE_REVIEWED_EXECUTION_NOT_APPROVED
+
+Closure basis:
+
+- E.1 opened SPL mint authority architecture planning
+- E.2 completed repo-grounded SPL mint authority and CPI inventory
+- E.3 recorded the SPL mint authority setup decision model
+- E.4 completed SPL mint authority invariant review
+
+Accepted E.2 inventory result:
+
+all_inventory_checks_passed: true
+
+Accepted E.3 decision:
+
+GATEWAY_MINT_AUTHORITY_PDA_CANONICAL_MINT_AUTHORITY_NO_RETAINED_HUMAN_ADMIN_MINT_AUTHORITY
+
+Accepted token program model:
+
+CLASSIC_SPL_TOKEN_CURRENT_REPO_MODEL
+
+Accepted setup path:
+
+PREFER_INITIALIZE_MINT_WITH_GATEWAY_MINT_AUTHORITY_PDA_AS_AUTHORITY_ELSE_REVIEWED_TEMP_SETUP_AUTHORITY_HANDOFF_TO_PDA
+
+Accepted freeze authority direction:
+
+FREEZE_AUTHORITY_NONE_PREFERRED
+
+Accepted initial supply rule:
+
+ZERO_INITIAL_SUPPLY_REQUIRED
+
+Accepted execution boundary:
+
+FUTURE_REVIEWED_SPL_SETUP_PACKAGE_AND_FINAL_SCOPED_GO_REQUIRED_BEFORE_ANY_SPL_MINT_SETUP_EXECUTION
+
+Accepted E.4 invariant result:
+
+all_invariants_reviewed: true
+
+blocker_e_closure_ready: true
+
+closure_type: narrow_architecture_boundary_only
+
+E.5 does not approve SPL mint creation, SPL mint initialization, mint authority assignment, mint authority transfer, freeze authority assignment, freeze authority disablement, SPL CPI minting, state initialization execution, signing, keypair use, deploy, write-buffer, set-upgrade-authority, close, upgrade, guardian package construction, transaction submit, mutation, or production activation.
+
+Remaining blockers:
+
+- B — OPEN: expected post-upgrade ProgramData hash
+- F — OPEN: guardian descriptor
+- G — OPEN: rollback / recovery plan
+
+Current status:
+
+BLOCKER_E_CLOSED_NARROW_SPL_MINT_AUTHORITY_ARCHITECTURE_REVIEWED_EXECUTION_NOT_APPROVED
+
+Current decision:
+
+BLOCKER_E_CLOSED_NARROW_ARCHITECTURE_INVARIANTS_ONLY
+
+NO-GO REMAINS_FOR_SPL_MINT_SETUP_SPL_AUTHORITY_TRANSFER_SPL_CPI_MINTING_SIGNING_KEYS_PROGRAM_UPGRADE_STATE_INIT_GUARDIAN_PACKAGES_NETWORK_SUBMIT_MUTATION
+
+Next safe step:
+
+Blocker F.1 — guardian descriptor planning.
