@@ -1,0 +1,24 @@
+# Evidence Package.4 non-GO boundary
+
+Evidence Package.4 does not grant GO.
+
+Evidence Package.4 does not approve:
+- build
+- local artifact hash computation
+- ProgramData executable-bytes hash computation
+- RPC
+- testnet
+- deploy
+- upgrade
+- write-buffer
+- authority change
+- state initialization
+- SPL setup
+- guardian package construction
+- signing
+- transaction submit
+- mutation
+- production activation
+
+Evidence Package.4 is invariant review only.
+Any actual build/hash execution still requires a later exact scoped user GO phrase.
