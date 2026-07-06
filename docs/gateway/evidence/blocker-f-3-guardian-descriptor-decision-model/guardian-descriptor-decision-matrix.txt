@@ -1,0 +1,68 @@
+# Guardian descriptor decision matrix
+
+F3_MODEL_0_NO_DESCRIPTOR
+status: rejected
+meaning: Guardian set is implicit or undocumented.
+reason_rejected: incompatible with deterministic authorization review.
+
+F3_MODEL_1_AD_HOC_RELAYER_OR_ADMIN_SIGNATURE
+status: rejected
+meaning: A relayer/admin signs without public descriptor, key list, and quorum rule.
+reason_rejected: incompatible with no hidden authorization and replay-safe gateway design.
+
+F3_MODEL_2_HIDDEN_OFF_REPO_GUARDIAN_SET
+status: rejected
+meaning: Guardian set is operational/off-repo only.
+reason_rejected: incompatible with public review and reproducible authorization boundary.
+
+F3_MODEL_3_STATIC_PUBLIC_GUARDIAN_DESCRIPTOR_IN_REPO
+status: selected
+meaning: Guardian descriptor is a tracked public repo artifact.
+required_boundary: public keys only, no private keys, deterministic descriptor hash/id, explicit testnet/production label.
+
+F3_MODEL_4_TESTNET_ONLY_DESCRIPTOR_WITH_EXPLICIT_LABEL
+status: selected_for_future_testnet_scope
+meaning: A testnet descriptor may be created later only with explicit testnet label and final scoped GO before use.
+required_boundary: must not be confused with production descriptor.
+
+F3_MODEL_5_PRODUCTION_DESCRIPTOR_NOW
+status: rejected_for_current_phase
+meaning: Production guardian descriptor is finalized now.
+reason_rejected: production activation is out of scope.
+
+F3_MODEL_6_DESCRIPTOR_HASH_BOUND_TO_ROUTE_STATE_AND_MESSAGE
+status: selected_required_property
+meaning: Descriptor id/hash must bind descriptor content and must be referenced by route/state/message verification expectations.
+
+SELECTED_F3_DESCRIPTOR_MODEL
+STATIC_PUBLIC_GUARDIAN_DESCRIPTOR_IN_REPO_PUBLIC_KEYS_ONLY_NO_PRIVATE_KEYS
+
+SELECTED_F3_DESCRIPTOR_SCOPE
+TESTNET_DESCRIPTOR_ALLOWED_ONLY_AS_EXPLICIT_TESTNET_ARTIFACT_AFTER_FURTHER_REVIEW
+
+SELECTED_F3_KEY_MATERIAL_BOUNDARY
+PUBLIC_KEYS_ONLY_PRIVATE_KEYS_NEVER_COMMITTED_NEVER_REQUESTED_NEVER_PRINTED
+
+SELECTED_F3_KEY_TYPE_MODEL
+ED25519_PUBLIC_KEY_DESCRIPTOR_MODEL
+
+SELECTED_F3_QUORUM_MODEL
+EXPLICIT_THRESHOLD_OVER_DISTINCT_GUARDIAN_APPROVALS
+
+SELECTED_F3_DESCRIPTOR_ID_MODEL
+DETERMINISTIC_DESCRIPTOR_HASH_ID_REQUIRED
+
+SELECTED_F3_BINDING_MODEL
+DESCRIPTOR_BOUND_TO_GUARDIAN_SET_ID_ROUTE_ID_SOURCE_CHAIN_MINT_TOKEN_MESSAGE_SCHEMA_AND_CANONICAL_ENCODING
+
+SELECTED_F3_ROTATION_MODEL
+ROTATION_REQUIRES_NEW_DESCRIPTOR_ID_AND_SEPARATE_REVIEW
+
+SELECTED_F3_PACKAGE_BOUNDARY
+GUARDIAN_PACKAGE_CONSTRUCTION_REQUIRES_FUTURE_REVIEWED_DESCRIPTOR_AND_FINAL_SCOPED_GO
+
+SELECTED_F3_DECISION
+STATIC_PUBLIC_GUARDIAN_DESCRIPTOR_PUBLIC_KEYS_ONLY_EXPLICIT_THRESHOLD_NO_PRIVATE_KEYS_NO_PACKAGES_NO_SIGNING
+
+SELECTED_F3_EXECUTION_BOUNDARY
+FUTURE_REVIEWED_GUARDIAN_DESCRIPTOR_AND_FINAL_SCOPED_GO_REQUIRED_BEFORE_ANY_GUARDIAN_PACKAGE_CONSTRUCTION_OR_SIGNING
