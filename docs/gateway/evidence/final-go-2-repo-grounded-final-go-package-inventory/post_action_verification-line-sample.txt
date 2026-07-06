@@ -1,0 +1,80 @@
+README.md:98: - CLI snapshot verification and recovery commands
+README.md:99: - snapshot verification / backup / recovery helpers
+README.md:256: - snapshot verification
+README.md:292: - snapshot serialization / verification / recovery
+README.md:342: - snapshot verification through the same decode / deserialize path
+README.md:343: - backup-enabled save with verification
+README.md:388: - trustless proof verification
+README.md:476: - [Stage 2 guardian signature verification compile evidence](docs/gateway/evidence/stage-2-guardian-signature-verification-compile-evidence.md)
+README.md:560: - gateway mint authority PDA/bump verification
+README.md:569: The XXXL X1/SVM port now has a handler integration fixture that connects decoded `consume_gateway_mint` instruction data, canonical account indexes, runtime account views, owner/rent checks, SPL Mint validation, recipient token account validation, gateway PDA/
+README.md:678: Verification:
+README.md:731: Verification:
+README.md:795: Verification:
+README.md:1436: ## XXXL PDA fixture verification boundary
+README.md:1438: A deterministic PDA fixture verification boundary has been added.
+docs/assumptions.md:41: It does not yet implement a trustless proof verification layer.
+docs/assumptions.md:199: - verification through the same load path
+docs/assumptions.md:219: - trustless proof verification
+docs/build/build-v1-x1-runtime-boundary.md:636: - trustless Ethereum proof verification;
+docs/checkpoints/build-v1-x1-runtime-boundary.md:150: - trustless Ethereum proof verification.
+docs/checkpoints/current-design-checkpoint.md:307: ## Phase 41K.6 B6.39 expected post-upgrade ProgramData hash plan
+docs/checkpoints/current-design-checkpoint.md:309: The expected post-upgrade ProgramData hash plan is recorded in:
+docs/checkpoints/current-design-checkpoint.md:311: docs/gateway/phase-41k6-b6-39-post-upgrade-programdata-hash-plan.md
+docs/checkpoints/current-design-checkpoint.md:933: Verification result:
+docs/checkpoints/current-design-checkpoint.md:1094: Verification result:
+docs/checkpoints/current-design-checkpoint.md:1126: Verification result:
+docs/checkpoints/current-design-checkpoint.md:1167: Verification result after the comment:
+docs/checkpoints/current-design-checkpoint.md:1229: Verification result:
+docs/checkpoints/current-design-checkpoint.md:1498: The next step may be Blocker H.6 actual local-validator dry-run execution, strictly within the recorded H.5R scope and only after preflight verification.
+docs/checkpoints/current-design-checkpoint.md:1942: - B — OPEN: expected post-upgrade ProgramData hash
+docs/checkpoints/current-design-checkpoint.md:2288: - B — OPEN: expected post-upgrade ProgramData hash
+docs/checkpoints/current-design-checkpoint.md:2571: - expected post-upgrade ProgramData hash in Blocker B
+docs/checkpoints/current-design-checkpoint.md:2635: - B — OPEN: expected post-upgrade ProgramData hash
+docs/checkpoints/current-design-checkpoint.md:2988: - B — OPEN: expected post-upgrade ProgramData hash
+docs/checkpoints/current-design-checkpoint.md:3368: - B — OPEN: expected post-upgrade ProgramData hash
+docs/checkpoints/current-design-checkpoint.md:3409: - explicit post-submit observation requirements
+docs/checkpoints/current-design-checkpoint.md:3548: - post-submit observation gate
+docs/checkpoints/current-design-checkpoint.md:3555: - continuing after ambiguous post-submit state
+docs/checkpoints/current-design-checkpoint.md:3565: - actual future pre-mutation evidence bundle
+docs/checkpoints/current-design-checkpoint.md:3566: - actual future post-submit observation bundle
+docs/checkpoints/current-design-checkpoint.md:3601: - post-submit observation evidence required
+docs/checkpoints/current-design-checkpoint.md:3605: - evidence required before next stage or recovery branch
+docs/checkpoints/current-design-checkpoint.md:3623: - Blocker B expected post-upgrade ProgramData hash
+docs/checkpoints/current-design-checkpoint.md:3625: - future pre-mutation evidence bundle
+docs/checkpoints/current-design-checkpoint.md:3626: - future post-submit observation bundle
+docs/checkpoints/current-design-checkpoint.md:3700: - B — OPEN: expected post-upgrade ProgramData hash
+docs/checkpoints/current-design-checkpoint.md:3714: Blocker B.1 — expected post-upgrade ProgramData hash planning.
+docs/checkpoints/current-design-checkpoint.md:3717: ## Blocker B.1 expected post-upgrade ProgramData hash planning
+docs/checkpoints/current-design-checkpoint.md:3721: docs/gateway/blocker-b-1-expected-post-upgrade-programdata-hash-planning.md
+docs/checkpoints/current-design-checkpoint.md:3725: docs/gateway/evidence/blocker-b-1-expected-post-upgrade-programdata-hash-planning
+docs/checkpoints/current-design-checkpoint.md:3727: B.1 opens the expected post-upgrade ProgramData hash track after narrow closure of A, C, D, E, F, G, and H.
+docs/checkpoints/current-design-checkpoint.md:3739: - post-upgrade read-only verification plan
+docs/checkpoints/current-design-checkpoint.md:3834: Blocker B.3 — expected post-upgrade ProgramData hash decision model.
+docs/checkpoints/current-design-checkpoint.md:3837: ## Blocker B.3 expected post-upgrade ProgramData hash decision model
+docs/checkpoints/current-design-checkpoint.md:3841: docs/gateway/blocker-b-3-expected-post-upgrade-programdata-hash-decision-model.md
+docs/checkpoints/current-design-checkpoint.md:3845: docs/gateway/evidence/blocker-b-3-expected-post-upgrade-programdata-hash-decision-model
+docs/checkpoints/current-design-checkpoint.md:3875: Post-upgrade policy:
+docs/checkpoints/current-design-checkpoint.md:3907: - post-upgrade read-only verification procedure
+docs/checkpoints/current-design-checkpoint.md:3916: - upgrade without expected post-upgrade hash
+docs/checkpoints/current-design-checkpoint.md:3918: - continuing after missing post-upgrade read-only verification
+docs/checkpoints/current-design-checkpoint.md:3967: - post-upgrade read-only ProgramData executable-bytes sha256 verification required
+docs/checkpoints/current-design-checkpoint.md:3990: - future post-upgrade read-only verification bundle
+docs/checkpoints/current-design-checkpoint.md:4009: Blocker B.5 — expected post-upgrade ProgramData hash closure decision record.
+docs/checkpoints/current-design-checkpoint.md:4012: ## Blocker B.5 expected post-upgrade ProgramData hash closure decision record
+docs/checkpoints/current-design-checkpoint.md:4016: docs/gateway/blocker-b-5-expected-post-upgrade-programdata-hash-closure-decision-record.md
+docs/checkpoints/current-design-checkpoint.md:4024: - B.1 opened expected post-upgrade ProgramData hash planning
+docs/checkpoints/current-design-checkpoint.md:4026: - B.3 recorded the expected post-upgrade ProgramData hash decision model
+docs/checkpoints/current-design-checkpoint.md:4057: Accepted post-upgrade policy:
+docs/checkpoints/documentation-consistency-review.md:202: - full bridge proof verification
+docs/checkpoints/mvp-implementation-sequence.md:359: - full bridge proof verification
+docs/checkpoints/xxxl-activation-safety-consistency-summary-boundary.md:56: ## Verification
+docs/checkpoints/xxxl-add-mollusk-dev-dependency.md:28: ## Verification
+docs/checkpoints/xxxl-atomic-mutation-planning-notes-boundary.md:66: ## Verification
+docs/checkpoints/xxxl-atomic-state-mutation-composition-boundary.md:55: ## Verification
+docs/checkpoints/xxxl-deployment-blocker-evidence-consistency-boundary.md:51: ## Verification
+docs/checkpoints/xxxl-deployment-blocker-lookup-boundary.md:51: ## Verification
+docs/checkpoints/xxxl-first-scaffold-only-mollusk-harness.md:28: ## Verification
+docs/checkpoints/xxxl-guarded-live-handler-wiring-fixture.md:25: ## Verification
+docs/checkpoints/xxxl-guarded-live-handler-wiring-fixture.md:53: Do not move guardian signature verification into runtime.
+docs/checkpoints/xxxl-guarded-spl-cpi-execution-gate-boundary.md:40: ## Verification

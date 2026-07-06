@@ -1,0 +1,80 @@
+README.md:1909: - forbidden changes for this boundary
+docs/checkpoints/current-design-checkpoint.md:55: NO-GO.
+docs/checkpoints/current-design-checkpoint.md:75: NO-GO.
+docs/checkpoints/current-design-checkpoint.md:93: NO-GO.
+docs/checkpoints/current-design-checkpoint.md:113: NO-GO.
+docs/checkpoints/current-design-checkpoint.md:133: NO-GO.
+docs/checkpoints/current-design-checkpoint.md:155: NO-GO.
+docs/checkpoints/current-design-checkpoint.md:177: NO-GO.
+docs/checkpoints/current-design-checkpoint.md:197: NO-GO.
+docs/checkpoints/current-design-checkpoint.md:219: NO-GO.
+docs/checkpoints/current-design-checkpoint.md:239: NO-GO.
+docs/checkpoints/current-design-checkpoint.md:259: NO-GO.
+docs/checkpoints/current-design-checkpoint.md:279: NO-GO.
+docs/checkpoints/current-design-checkpoint.md:305: NO-GO.
+docs/checkpoints/current-design-checkpoint.md:329: NO-GO.
+docs/checkpoints/current-design-checkpoint.md:345: It does not approve testnet action.
+docs/checkpoints/current-design-checkpoint.md:353: NO-GO.
+docs/checkpoints/current-design-checkpoint.md:363: It does not approve local-validator execution.
+docs/checkpoints/current-design-checkpoint.md:367: It does not approve testnet action.
+docs/checkpoints/current-design-checkpoint.md:375: NO-GO.
+docs/checkpoints/current-design-checkpoint.md:389: It does not approve local-validator execution.
+docs/checkpoints/current-design-checkpoint.md:391: It does not approve testnet action.
+docs/checkpoints/current-design-checkpoint.md:399: NO-GO.
+docs/checkpoints/current-design-checkpoint.md:411: It does not approve local-validator execution.
+docs/checkpoints/current-design-checkpoint.md:413: It does not approve testnet action.
+docs/checkpoints/current-design-checkpoint.md:421: NO-GO.
+docs/checkpoints/current-design-checkpoint.md:433: It does not approve local-validator execution.
+docs/checkpoints/current-design-checkpoint.md:435: It does not approve testnet action.
+docs/checkpoints/current-design-checkpoint.md:443: NO-GO.
+docs/checkpoints/current-design-checkpoint.md:457: It does not approve local-validator execution.
+docs/checkpoints/current-design-checkpoint.md:459: It does not approve testnet action.
+docs/checkpoints/current-design-checkpoint.md:473: NO-GO.
+docs/checkpoints/current-design-checkpoint.md:489: It does not approve local-validator execution.
+docs/checkpoints/current-design-checkpoint.md:491: It does not approve testnet action.
+docs/checkpoints/current-design-checkpoint.md:499: NO-GO.
+docs/checkpoints/current-design-checkpoint.md:517: It does not approve local-validator execution.
+docs/checkpoints/current-design-checkpoint.md:519: It does not approve testnet action.
+docs/checkpoints/current-design-checkpoint.md:527: NO-GO.
+docs/checkpoints/current-design-checkpoint.md:543: It does not approve local-validator execution.
+docs/checkpoints/current-design-checkpoint.md:545: It does not approve testnet action.
+docs/checkpoints/current-design-checkpoint.md:553: NO-GO.
+docs/checkpoints/current-design-checkpoint.md:569: It does not approve local-validator execution.
+docs/checkpoints/current-design-checkpoint.md:571: It does not approve testnet action.
+docs/checkpoints/current-design-checkpoint.md:579: NO-GO.
+docs/checkpoints/current-design-checkpoint.md:599: It does not approve local-validator execution.
+docs/checkpoints/current-design-checkpoint.md:601: It does not approve testnet action.
+docs/checkpoints/current-design-checkpoint.md:609: NO-GO.
+docs/checkpoints/current-design-checkpoint.md:627: It does not approve local-validator execution.
+docs/checkpoints/current-design-checkpoint.md:629: It does not approve testnet action.
+docs/checkpoints/current-design-checkpoint.md:637: NO-GO.
+docs/checkpoints/current-design-checkpoint.md:655: It does not approve local-validator execution.
+docs/checkpoints/current-design-checkpoint.md:657: It does not approve testnet action.
+docs/checkpoints/current-design-checkpoint.md:665: NO-GO.
+docs/checkpoints/current-design-checkpoint.md:685: It does not approve local-validator execution.
+docs/checkpoints/current-design-checkpoint.md:687: It does not approve testnet action.
+docs/checkpoints/current-design-checkpoint.md:695: NO-GO.
+docs/checkpoints/current-design-checkpoint.md:715: It does not approve local-validator execution.
+docs/checkpoints/current-design-checkpoint.md:717: It does not approve testnet action.
+docs/checkpoints/current-design-checkpoint.md:725: NO-GO.
+docs/checkpoints/current-design-checkpoint.md:747: It does not approve local-validator execution.
+docs/checkpoints/current-design-checkpoint.md:749: It does not approve testnet action.
+docs/checkpoints/current-design-checkpoint.md:757: NO-GO.
+docs/checkpoints/current-design-checkpoint.md:777: It does not approve testnet action.
+docs/checkpoints/current-design-checkpoint.md:785: It does not approve submit, upgrade, state initialization, SPL mint authority setup, or SPL CPI minting.
+docs/checkpoints/current-design-checkpoint.md:793: NO-GO.
+docs/checkpoints/current-design-checkpoint.md:815: It does not approve testnet action.
+docs/checkpoints/current-design-checkpoint.md:823: It does not approve submit, upgrade, state initialization, SPL mint authority setup, or SPL CPI minting.
+docs/checkpoints/current-design-checkpoint.md:831: NO-GO.
+docs/checkpoints/current-design-checkpoint.md:833: The next safe step is a decision from Sergey. Actual fixture emission remains forbidden without a separate explicit scoped GO.
+docs/checkpoints/current-design-checkpoint.md:841: Theo confirmed that the NO-GO boundary after B6.7 through B6.57 remains clean.
+docs/checkpoints/current-design-checkpoint.md:870: NO-GO UNTIL SERGEY EXPLICIT B6.58 GO.
+docs/checkpoints/current-design-checkpoint.md:920: NO-GO FOR VALIDATOR_TESTNET_SIGNING_SPL_UPGRADE_INIT_SUBMIT
+docs/checkpoints/current-design-checkpoint.md:937: - forbidden material scan: OK
+docs/checkpoints/current-design-checkpoint.md:950: NO-GO FOR VALIDATOR_TESTNET_SIGNING_SPL_UPGRADE_INIT_SUBMIT
+docs/checkpoints/current-design-checkpoint.md:973: NO-GO FOR LOCAL_VALIDATOR_TESTNET_SIGNING_SPL_UPGRADE_INIT_SUBMIT
+docs/checkpoints/current-design-checkpoint.md:998: NO-GO FOR LOCAL_VALIDATOR_EXECUTION_TESTNET_SIGNING_SPL_UPGRADE_INIT_SUBMIT
+docs/checkpoints/current-design-checkpoint.md:1030: NO-GO FOR LOCAL_VALIDATOR_EXECUTION_TESTNET_SIGNING_SPL_UPGRADE_INIT_SUBMIT
+docs/checkpoints/current-design-checkpoint.md:1057: Theo also noted a non-blocking B6.59 documentation gap: the forbidden-material scan taxonomy should be documented more explicitly.
+docs/checkpoints/current-design-checkpoint.md:1072: NO-GO FOR BLOCKER_H_LOCAL_VALIDATOR_EXECUTION_TESTNET_SIGNING_SPL_UPGRADE_INIT_SUBMIT
+docs/checkpoints/current-design-checkpoint.md:1100: - forbidden-material taxonomy scan: OK

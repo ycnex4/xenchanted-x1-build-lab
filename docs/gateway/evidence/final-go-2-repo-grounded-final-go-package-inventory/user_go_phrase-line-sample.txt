@@ -1,0 +1,80 @@
+docs/checkpoints/current-design-checkpoint.md:833: The next safe step is a decision from Sergey. Actual fixture emission remains forbidden without a separate explicit scoped GO.
+docs/checkpoints/current-design-checkpoint.md:862: Theo's approval does not replace Sergey explicit scoped GO.
+docs/checkpoints/current-design-checkpoint.md:1273: Future explicit GO phrase:
+docs/checkpoints/current-design-checkpoint.md:1454: The next safe step is a Sergey decision. Actual Blocker H local-validator dry-run requires a separate explicit scoped GO referencing the fixture SHA256.
+docs/checkpoints/current-design-checkpoint.md:1457: ## Blocker H.5R explicit scoped GO record
+docs/checkpoints/current-design-checkpoint.md:1459: The Blocker H.5R explicit scoped GO record is recorded in:
+docs/checkpoints/current-design-checkpoint.md:1463: Sergey provided the explicit scoped GO phrase for future H.6 local-validator dry-run.
+docs/checkpoints/current-design-checkpoint.md:1507: H.6 executed the first actual local-validator dry-run under the H.5R explicit scoped GO.
+docs/checkpoints/current-design-checkpoint.md:1794: A.4 defines the explicit scoped GO phrase required before A.5 may perform read-only live ProgramData evidence.
+docs/checkpoints/current-design-checkpoint.md:1806: Required explicit GO phrase for A.5:
+docs/checkpoints/current-design-checkpoint.md:3410: - explicit user GO before any mutation or recovery action
+docs/checkpoints/current-design-checkpoint.md:3481: - user_go_policy: explicit scoped user GO required before mutation/recovery action
+docs/checkpoints/current-design-checkpoint.md:3528: User GO policy:
+docs/checkpoints/current-design-checkpoint.md:3557: - recovery action without explicit scoped user GO
+docs/checkpoints/current-design-checkpoint.md:3603: - explicit scoped user GO required before any mutation or recovery action
+docs/checkpoints/current-design-checkpoint.md:3680: Accepted user GO policy:
+docs/checkpoints/current-design-checkpoint.md:3742: - explicit scoped user GO before any build/hash/upgrade step that is outside pure planning
+docs/checkpoints/current-design-checkpoint.md:3816: - user_go_policy: explicit scoped user GO required before any build/hash/upgrade step outside pure planning
+docs/checkpoints/current-design-checkpoint.md:3883: User GO policy:
+docs/checkpoints/current-design-checkpoint.md:3909: - explicit scoped user GO reference
+docs/checkpoints/current-design-checkpoint.md:3926: - future actual build/hash execution with explicit scoped GO
+docs/checkpoints/current-design-checkpoint.md:3970: - explicit scoped user GO required before build/hash/upgrade/recovery action
+docs/checkpoints/current-design-checkpoint.md:3989: - future actual build/hash execution with explicit scoped GO
+docs/checkpoints/current-design-checkpoint.md:4065: Accepted user GO policy:
+docs/checkpoints/xxxl-account-contract-review-closure-boundary.md:118: This checkpoint does not authorize production deployment or runtime unlock.
+docs/checkpoints/xxxl-mollusk-implementation-roadmap.md:85: This roadmap does not authorize deployment.
+docs/checkpoints/xxxl-mollusk-implementation-roadmap.md:87: This roadmap does not authorize runtime unlock.
+docs/checkpoints/xxxl-mollusk-implementation-roadmap.md:89: This roadmap does not authorize live route execution.
+docs/checkpoints/xxxl-mollusk-implementation-roadmap.md:91: This roadmap does not authorize SPL CPI execution.
+docs/checkpoints/xxxl-mollusk-implementation-roadmap.md:93: This roadmap does not authorize `invoke_signed`.
+docs/checkpoints/xxxl-mollusk-implementation-roadmap.md:95: This roadmap does not authorize SPL Token `mint_to`.
+docs/checkpoints/xxxl-remaining-deployment-blockers-inventory.md:71: This checkpoint does not authorize deployment.
+docs/checkpoints/xxxl-remaining-deployment-blockers-inventory.md:73: This checkpoint does not authorize runtime unlock.
+docs/checkpoints/xxxl-remaining-deployment-blockers-inventory.md:75: This checkpoint does not authorize live route execution.
+docs/checkpoints/xxxl-remaining-deployment-blockers-inventory.md:77: This checkpoint does not authorize SPL CPI execution.
+docs/checkpoints/xxxl-remaining-deployment-blockers-inventory.md:79: This checkpoint does not authorize `invoke_signed`.
+docs/checkpoints/xxxl-remaining-deployment-blockers-inventory.md:81: This checkpoint does not authorize SPL Token `mint_to`.
+docs/checkpoints/xxxl-x1-testnet-local-runtime-skeleton-phase-35-rust-svm-guardian-quorum-structural-verifier.md:99: A structurally valid quorum is not enough to authorize minting.
+docs/checkpoints/xxxl-x1-testnet-local-runtime-skeleton-phase-36-ed25519-signature-evidence-boundary-spec.md:101: A structurally valid quorum without Ed25519 evidence is not enough to authorize
+docs/checkpoints/xxxl-x1-testnet-local-runtime-skeleton-phase-38-ed25519-instruction-data-parser.md:37: It does not authorize minting.
+docs/checkpoints/xxxl-x1-testnet-local-runtime-skeleton-phase-38-ed25519-instruction-data-parser.md:146: Phase 38 does not authorize minting.
+docs/checkpoints/xxxl-x1-testnet-local-runtime-skeleton-phase-38-ed25519-instruction-data-parser.md:187: Phase 38 does not authorize minting.
+docs/checkpoints/xxxl-x1-testnet-local-runtime-skeleton-phase-39-instructions-sysvar-evidence-scanner.md:34: It does not authorize minting.
+docs/checkpoints/xxxl-x1-testnet-local-runtime-skeleton-phase-39-instructions-sysvar-evidence-scanner.md:149: Phase 39 does not authorize minting.
+docs/checkpoints/xxxl-x1-testnet-local-runtime-skeleton-phase-39-instructions-sysvar-evidence-scanner.md:193: Phase 39 does not authorize minting.
+docs/checkpoints/xxxl-x1-testnet-local-runtime-skeleton-phase-40a-ed25519-verification-evidence-boundary-spec.md:40: It does not authorize minting.
+docs/checkpoints/xxxl-x1-testnet-local-runtime-skeleton-phase-40a-ed25519-verification-evidence-boundary-spec.md:141: Phase 40A does not authorize minting.
+docs/checkpoints/xxxl-x1-testnet-local-runtime-skeleton-phase-40b-ed25519-verification-evidence-model.md:30: It does not authorize minting.
+docs/checkpoints/xxxl-x1-testnet-local-runtime-skeleton-phase-40c-ed25519-verification-evidence-integration-design.md:40: It does not authorize minting.
+docs/checkpoints/xxxl-x1-testnet-local-runtime-skeleton-phase-40d-ed25519-verification-evidence-integration-design-surface.md:29: It does not authorize minting.
+docs/checkpoints/xxxl-x1-testnet-local-runtime-skeleton-phase-40e-ed25519-prior-instruction-ordering-model.md:29: It does not authorize minting.
+docs/checkpoints/xxxl-x1-testnet-local-runtime-skeleton-phase-40f-ed25519-verification-evidence-coverage-matrix.md:27: It does not authorize minting.
+docs/checkpoints/xxxl-x1-testnet-local-runtime-skeleton-phase-40g-ed25519-verification-evidence-series-closure.md:34: It does not authorize minting.
+docs/checkpoints/xxxl-x1-testnet-local-runtime-skeleton-phase-41a-svm-instructions-sysvar-runtime-integration-plan.md:35: It does not authorize minting.
+docs/checkpoints/xxxl-x1-testnet-local-runtime-skeleton-phase-41c0-real-instructions-sysvar-implementation-boundary.md:40: It does not authorize minting.
+docs/checkpoints/xxxl-x1-testnet-local-runtime-skeleton-phase-41d3-2-2-0-checked-loading-plan.md:42: - do not authorize;
+docs/checkpoints/xxxl-x1-testnet-local-runtime-skeleton-phase-41d3-closure.md:30: The pipeline cannot verify signatures, accept evidence, count quorum, authorize execution, write replay state, mutate accounts, CPI, mint, add a handler, or unlock a live route.
+docs/checkpoints/xxxl-x1-testnet-local-runtime-skeleton-phase-41e-0-ed25519-byte-parsing-plan.md:29: - do not authorize execution.
+docs/checkpoints/xxxl-x1-testnet-local-runtime-skeleton-phase-41g-1-payload-evidence-shape-plan.md:40: 41G.1 must not accept proof, validate guardian membership, count quorum, authorize minting, mark replay, mutate state, CPI, mint, handle live instruction flow, or unlock live route.
+docs/checkpoints/xxxl-x1-testnet-local-runtime-skeleton-phase-41g-2-payload-hash-binding-plan.md:43: 41G.2 must not validate guardian membership, count quorum, authorize minting, write replay state, mutate state, CPI, mint, handle live instruction flow, or unlock live route.
+docs/checkpoints/xxxl-x1-testnet-local-runtime-skeleton-phase-7-replay-processed-event-local-model-reconciliation.md:343: event is final enough to authorize.
+docs/gateway/blocker-a-3-repo-only-authority-model-decision-record.md:100: - no upgrade unless separately approved with explicit scoped GO
+docs/gateway/blocker-a-4-read-only-programdata-evidence-go-form.md:39: A.4 records the exact future A.5 read-only scope and the explicit approval phrase that must be provided before A.5 can run.
+docs/gateway/blocker-a-4-read-only-programdata-evidence-go-form.md:65: They do not prove fresh live ProgramData state until A.5 runs under explicit scoped GO.
+docs/gateway/blocker-a-4-read-only-programdata-evidence-go-form.md:122: ## Required explicit GO phrase for A.5
+docs/gateway/blocker-a-4-read-only-programdata-evidence-go-form.md:124: A.5 may proceed only if Sergey provides the following explicit scoped GO phrase:
+docs/gateway/blocker-a-4-read-only-programdata-evidence-go-form.md:160: The next step may be A.5 only after Sergey provides the exact explicit scoped GO phrase.
+docs/gateway/blocker-a-5-read-only-live-programdata-evidence.md:23: ## Approved GO phrase
+docs/gateway/blocker-b-1-expected-post-upgrade-programdata-hash-planning.md:204: - explicit scoped user GO before any build/hash/upgrade step that is outside pure planning
+docs/gateway/blocker-b-2-repo-grounded-programdata-hash-inventory.md:107: - user_go_policy: explicit scoped user GO required before any build/hash/upgrade step outside pure planning
+docs/gateway/blocker-b-3-expected-post-upgrade-programdata-hash-decision-model.md:43: User GO policy:
+docs/gateway/blocker-b-3-expected-post-upgrade-programdata-hash-decision-model.md:129: - explicit scoped user GO reference
+docs/gateway/blocker-b-3-expected-post-upgrade-programdata-hash-decision-model.md:215: - future actual build/hash execution with explicit scoped GO
+docs/gateway/blocker-b-3-expected-post-upgrade-programdata-hash-decision-model.md:260: B.4 should review canonical hash domain, sha256 algorithm, full hash bundle, baseline binding, mismatch stop condition, no automatic retry, explicit scoped user GO, and no-execution boundary.
+docs/gateway/blocker-b-4-programdata-hash-invariant-review-package.md:71: - explicit scoped user GO required before build/hash/upgrade/recovery action
+docs/gateway/blocker-b-4-programdata-hash-invariant-review-package.md:132: meaning: Explicit scoped user GO is required before any build, hash, upgrade, or recovery action.
+docs/gateway/blocker-b-4-programdata-hash-invariant-review-package.md:168: - explicit scoped user GO is required
+docs/gateway/blocker-b-4-programdata-hash-invariant-review-package.md:175: - future actual build/hash execution with explicit scoped GO
+docs/gateway/blocker-b-5-expected-post-upgrade-programdata-hash-closure-decision-record.md:70: - explicit scoped user GO is required before any build, hash, upgrade, or recovery action
+docs/gateway/blocker-b-5-expected-post-upgrade-programdata-hash-closure-decision-record.md:139: Accepted user GO policy:

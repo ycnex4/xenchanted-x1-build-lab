@@ -1,0 +1,80 @@
+AGENTS.md:13: - Do not print or request secrets, private keys, mnemonics, RPC keys, API keys, or environment values.
+AGENTS.md:36: - Never enable SPL CPI execution unless a separate reviewed boundary explicitly allows it.
+AGENTS.md:38: - Never enable SPL Token mint_to unless a separate reviewed boundary explicitly allows it.
+README.md:222: The RPC smoke commands require local environment variables and must not print RPC URLs, API keys, private keys, mnemonics, seed phrases, or `.env` contents.
+README.md:483: - [Stage 2.5 SPL Token decision](docs/gateway/stage-2-5-spl-token-decision.md)
+README.md:485: - [Stage 2.5 Mint authority PDA decision](docs/gateway/stage-2-5-mint-authority-pda-decision.md)
+README.md:550: This stage does not add SPL Token CPI, deployment, route activation, or authority freeze execution.
+README.md:552: ## XXXL SPL Token mint_to CPI fixture
+README.md:554: The XXXL X1/SVM port now has a native SPL Token `mint_to` CPI fixture boundary.
+README.md:560: - gateway mint authority PDA/bump verification
+README.md:561: - initialized SPL Mint validation
+README.md:569: The XXXL X1/SVM port now has a handler integration fixture that connects decoded `consume_gateway_mint` instruction data, canonical account indexes, runtime account views, owner/rent checks, SPL Mint validation, recipient token account validation, gateway PDA/
+README.md:658: - no Solana/SPL runtime dependency upgrade inside the baseline stage
+README.md:661: ## XXXL Solana/SPL dependency upgrade audit
+README.md:668: - `spl-token = 5.0.2`
+README.md:674: - Solana 2 + SPL Token 5 was the first candidate with tests passing and `cargo audit` passing
+README.md:675: - Solana 2 + SPL Token 6 also passed but was not minimal
+README.md:707: - SPL Token program check
+README.md:708: - initialized SPL mint and recipient token account checks
+README.md:709: - gateway mint authority PDA and invoke_signed seed policy
+README.md:755: - SPL mint cases
+README.md:836: - SPL mint supply remains unchanged
+README.md:840: No SPL Token `mint_to` is invoked.
+README.md:866: No SPL Token `mint_to` is invoked.
+README.md:878: - validates account count, owners, rent exemption, PDA, processed event, recipient balance, SPL mint, recipient token account, and amount bounds
+README.md:899: No SPL Token `mint_to` is invoked.
+README.md:918: No SPL Token `mint_to` is invoked.
+README.md:931: No SPL Token `mint_to` is invoked.
+README.md:944: No SPL Token `mint_to` is invoked.
+README.md:963: No SPL Token `mint_to` is invoked.
+README.md:965: No SPL mint supply mutation is enabled.
+README.md:967: ## XXXL SPL mint_to CPI planning boundary
+README.md:969: The XXXL runtime model now has a planning-only SPL Token `mint_to` CPI boundary.
+README.md:976: No SPL Token `mint_to` is invoked.
+README.md:982: The XXXL runtime model now composes execution planning with SPL Token `mint_to` CPI planning.
+README.md:989: No SPL Token `mint_to` is invoked.
+README.md:998: The new boundary accepts accounts and decoded consume-gateway-mint args, performs guarded validation, builds the execution plan, builds the planning-only SPL `mint_to` CPI plan, and then mutates only local program-owned state:
+README.md:1008: No SPL Token `mint_to` is invoked.
+README.md:1010: No SPL mint supply mutation is enabled.
+README.md:1011: No recipient SPL token account mutation is enabled.
+README.md:1014: ## XXXL guarded SPL CPI execution gate boundary
+README.md:1016: The XXXL runtime model now has an explicit disabled gate before real SPL Token `mint_to` CPI execution.
+README.md:1023: No SPL Token `mint_to` is invoked.
+README.md:1025: No SPL mint supply mutation is enabled.
+README.md:1026: No recipient SPL token account mutation is enabled.
+README.md:1029: ## XXXL runtime disabled SPL CPI gate integration boundary
+README.md:1031: The XXXL runtime model now has a boundary that composes runtime validation, execution planning, CPI planning, and the guarded SPL CPI execution gate.
+README.md:1033: The gate remains disabled. The boundary reaches the gate and returns `CpiBoundaryNotReady` before real SPL CPI.
+README.md:1035: This stage proves that the runtime can fail closed at the disabled CPI gate without mutating local processed-event state, recipient-balance state, SPL mint supply, or recipient token account state.
+README.md:1039: No SPL Token `mint_to` is invoked.
+README.md:1076: No SPL CPI behavior was changed.
+README.md:1095: - mutable state/SPL accounts remain writable
+README.md:1098: No SPL CPI behavior was enabled.
+README.md:1115: No SPL CPI behavior was enabled.
+README.md:1135: - SPL CPI execution disabled
+README.md:1141: No SPL CPI behavior was enabled.
+README.md:1166: No SPL CPI behavior was enabled.
+README.md:1203: No SPL CPI behavior was enabled.
+README.md:1222: - enable SPL Token mint_to CPI execution only after live route, PDA authority, account contract, and Mollusk coverage are complete
+README.md:1228: No SPL CPI behavior was enabled.
+README.md:1259: No SPL CPI behavior was enabled.
+README.md:1297: No SPL CPI behavior was enabled.
+README.md:1335: No SPL CPI behavior was enabled.
+README.md:1363: No SPL CPI behavior was enabled.
+README.md:1400: No SPL CPI behavior was enabled.
+README.md:1430: No SPL CPI behavior was enabled.
+README.md:1462: No SPL CPI behavior was enabled.
+README.md:1501: No SPL CPI behavior was enabled.
+README.md:1529: No SPL CPI behavior was enabled.
+README.md:1556: - SPL CPI execution enabled: `false`
+README.md:1562: No SPL CPI behavior was enabled.
+README.md:1588: No SPL CPI behavior was enabled.
+README.md:1614: No SPL CPI behavior was enabled.
+README.md:1620: ## XXXL SPL CPI safety consistency boundary
+README.md:1622: An SPL CPI safety consistency boundary has been added.
+README.md:1633: - SPL CPI execution enabled: `false`
+README.md:1640: No SPL CPI behavior was enabled.
+README.md:1660: - SPL CPI consistency
+README.md:1666: - SPL CPI consistent: `true`
+README.md:1673: No SPL CPI behavior was enabled.

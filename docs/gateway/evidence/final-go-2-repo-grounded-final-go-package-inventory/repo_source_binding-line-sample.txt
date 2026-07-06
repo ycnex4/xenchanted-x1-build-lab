@@ -1,0 +1,80 @@
+AGENTS.md:50: git diff --check
+AGENTS.md:51: git status --short
+README.md:148: - Stage 2.6 X1 runtime evidence collection plan
+README.md:475: - [Stage 2 direct mint gateway skeleton testnet evidence](docs/gateway/evidence/stage-2-direct-mint-skeleton-testnet-evidence.md)
+README.md:476: - [Stage 2 guardian signature verification compile evidence](docs/gateway/evidence/stage-2-guardian-signature-verification-compile-evidence.md)
+README.md:477: - [Stage 2 guardian signature parser reference tests](docs/gateway/evidence/stage-2-guardian-signature-parser-reference-tests.md)
+README.md:478: - [Stage 2 Theo guardian signature refinements](docs/gateway/evidence/stage-2-theo-guardian-signature-refinements.md)
+README.md:480: - [Stage 2.4 runtime message hash binding evidence](docs/gateway/evidence/stage-2-4-runtime-message-hash-binding-evidence.md)
+README.md:481: - [Stage 2.4 runtime binding X1 testnet evidence](docs/gateway/evidence/stage-2-4-runtime-binding-testnet-evidence.md)
+README.md:489: - [Stage 2.5 Token mint CPI testnet evidence](docs/gateway/evidence/stage-2-5-token-mint-cpi-testnet-evidence.md)
+README.md:490: - [Stage 2.6 CPI failure rollback matrix evidence](docs/gateway/evidence/stage-2-6-cpi-failure-rollback-matrix-evidence.md)
+README.md:491: - [Stage 2.7 Runtime account hygiene evidence](docs/gateway/evidence/stage-2-7-runtime-account-hygiene-evidence.md)
+README.md:493: - [Stage 2.9 TypeScript relayer prototype evidence](docs/gateway/evidence/stage-2-9-typescript-relayer-prototype-evidence.md)
+README.md:494: - [Stage 2.10 Relayer idempotency / retry evidence](docs/gateway/evidence/stage-2-10-relayer-idempotency-retry-evidence.md)
+README.md:495: - [Stage 2.11 Ambiguous confirmation recovery evidence](docs/gateway/evidence/stage-2-11-ambiguous-confirmation-recovery-evidence.md)
+README.md:496: - [Stage 2.12 Inconsistent recovery state evidence](docs/gateway/evidence/stage-2-12-inconsistent-recovery-state-evidence.md)
+README.md:497: - [Stage 2.13 Relayer operational state machine evidence](docs/gateway/evidence/stage-2-13-relayer-operational-state-machine-evidence.md)
+README.md:498: - [Stage 2.14 Relayer input preflight guard evidence](docs/gateway/evidence/stage-2-14-relayer-input-preflight-guard-evidence.md)
+README.md:499: - [Stage 2.15 Preflight integrated submit path evidence](docs/gateway/evidence/stage-2-15-preflight-integrated-submit-path-evidence.md)
+README.md:500: - [Stage 2.16 Relayer task normalization evidence](docs/gateway/evidence/stage-2-16-relayer-task-normalization-evidence.md)
+README.md:501: - [Stage 2.17 Normalized task submit wrapper evidence](docs/gateway/evidence/stage-2-17-normalized-task-submit-wrapper-evidence.md)
+README.md:502: - [Stage 2.18 Watcher event normalized task adapter evidence](docs/gateway/evidence/stage-2-18-watcher-event-normalized-task-adapter-evidence.md)
+README.md:503: - [Stage 2.19 Watcher event full submit pipeline evidence](docs/gateway/evidence/stage-2-19-watcher-event-full-submit-pipeline-evidence.md)
+README.md:504: - [Stage 2.20 Watcher event submit idempotency retry evidence](docs/gateway/evidence/stage-2-20-watcher-event-submit-idempotency-retry-evidence.md)
+README.md:505: - [Stage 2.21 Watcher event ambiguous recovery evidence](docs/gateway/evidence/stage-2-21-watcher-event-ambiguous-recovery-evidence.md)
+README.md:506: - [Stage 2.22 Watcher event operational submit wrapper evidence](docs/gateway/evidence/stage-2-22-watcher-event-operational-submit-wrapper-evidence.md)
+README.md:507: - [Stage 2.23 Watcher event batch queue processing evidence](docs/gateway/evidence/stage-2-23-watcher-event-batch-queue-processing-evidence.md)
+README.md:508: - [Stage 2.24 Durable relayer journal model evidence](docs/gateway/evidence/stage-2-24-durable-relayer-journal-model-evidence.md)
+README.md:509: - [Stage 2.25 Watcher-to-relayer contract boundary evidence](docs/gateway/evidence/stage-2-25-watcher-to-relayer-contract-boundary-evidence.md)
+README.md:510: - [Stage 2.26 Relayer dedupe journal replay guard evidence](docs/gateway/evidence/stage-2-26-relayer-dedupe-journal-replay-guard-evidence.md)
+README.md:511: - [Stage 2.27 Relayer import pipeline evidence](docs/gateway/evidence/stage-2-27-relayer-import-pipeline-evidence.md)
+README.md:512: - [Stage 2.28 Import pipeline durable resume plan evidence](docs/gateway/evidence/stage-2-28-import-pipeline-durable-resume-plan-evidence.md)
+README.md:513: - [Stage 2.29 Resume plan execution model evidence](docs/gateway/evidence/stage-2-29-resume-plan-execution-model-evidence.md)
+README.md:514: - [Stage 2.30 Relayer operator report run summary evidence](docs/gateway/evidence/stage-2-30-relayer-operator-report-run-summary-evidence.md)
+README.md:515: - [Stage 2.31 Operator report serialization log artifact evidence](docs/gateway/evidence/stage-2-31-operator-report-serialization-log-artifact-evidence.md)
+README.md:516: - [Stage 2.32 Operator report audit log append model evidence](docs/gateway/evidence/stage-2-32-operator-report-audit-log-append-model-evidence.md)
+README.md:517: - [Stage 2.33 Audit log integrity digest model evidence](docs/gateway/evidence/stage-2-33-audit-log-integrity-digest-model-evidence.md)
+README.md:524: - [Stage 2.6 X1 runtime evidence collection plan](docs/gateway/stage-2-6-x1-runtime-evidence-plan.md)
+README.md:527: - [EV-01 / EV-02 Atomic rollback prototype evidence plan](docs/gateway/evidence/ev-01-ev-02-atomic-rollback-prototype.md)
+README.md:528: - [EV-01 / EV-02 X1 testnet atomic rollback evidence](docs/gateway/evidence/ev-01-ev-02-x1-testnet-atomic-rollback-evidence.md)
+README.md:533: The next recommended step is the first prototype-only evidence branch for EV-01 transaction-level atomicity and EV-02 account write rollback, or collecting official X1 runtime documentation if available.
+README.md:771: - `mollusk-svm = 0.13.4` can be added in a temporary repo copy
+README.md:1273: - required evidence before removal
+README.md:1303: ## XXXL runtime predeploy evidence matrix
+README.md:1305: A predeploy evidence matrix has been added for future XXXL runtime blocker-removal work.
+README.md:1309: - required evidence
+README.md:1310: - expected evidence artifact
+README.md:1349: - required evidence before blocker removal
+README.md:1732: ## XXXL runtime safety lock evidence summary boundary
+README.md:1734: A runtime safety lock evidence summary has been added.
+README.md:1742: Current evidence state:
+README.md:1750: - evidence complete: `true`
+README.md:1762: ## XXXL deployment blocker evidence consistency boundary
+README.md:1764: A deployment blocker evidence consistency boundary has been added.
+README.md:1774: - safety lock evidence complete: `true`
+README.md:1778: - evidence consistent: `true`
+README.md:1837: - deployment blocker evidence consistent: `true`
+README.md:1867: - safety lock evidence summary
+README.md:1868: - deployment blocker evidence consistency
+README.md:1905: - safety lock evidence
+README.md:1906: - deployment blocker evidence consistency
+README.md:2058: - The `ACCOUNT_CONTRACT_UNREVIEWED` blocker remains active until separate review and required test evidence are complete.
+docs/assumptions.md:233: The registrar mutation ordering has been addressed in the registrar-mutation-order-assumptions branch.
+docs/build/build-state-history-identity-model.md:5: This document is the current authoritative summary for the Build State cleanup introduced on branch `build-state-history-identity-cleanup`.
+docs/checkpoints/build-state-history-identity-cleanup.md:3: ## Branch
+docs/checkpoints/build-v1-x1-runtime-boundary.md:3: ## Branch
+docs/checkpoints/current-design-checkpoint.md:3: Current branch target:
+docs/checkpoints/current-design-checkpoint.md:24:     valid prior Ed25519 evidence
+docs/checkpoints/current-design-checkpoint.md:65: It maps blockers A-H against the B6.11-B6.26 local execution layer.
+docs/checkpoints/current-design-checkpoint.md:83: It defines the future evidence required before blocker C can be considered for closure.
+docs/checkpoints/current-design-checkpoint.md:101: It defines the future evidence required before blocker H can be considered for closure.
+docs/checkpoints/current-design-checkpoint.md:247: It defines the future success path, failure matrix, and no-mutation evidence requirements.
+docs/checkpoints/current-design-checkpoint.md:1352: Readiness evidence:
+docs/checkpoints/current-design-checkpoint.md:1503: The Blocker H.6 execution evidence checkpoint is recorded in:
+docs/checkpoints/current-design-checkpoint.md:1509: Execution evidence:
+docs/checkpoints/current-design-checkpoint.md:1643: Git ignore rule:
+docs/checkpoints/current-design-checkpoint.md:1666: Define the safe discovery and evidence boundary for Blocker A upgrade authority.
+docs/checkpoints/current-design-checkpoint.md:1684: The next safe step is Blocker A.2 repo-only upgrade authority source discovery.
+docs/checkpoints/current-design-checkpoint.md:1687: ## Blocker A.2 repo-grounded upgrade authority status reconciliation
+docs/checkpoints/current-design-checkpoint.md:1689: The Blocker A.2 repo-grounded reconciliation record is recorded in:

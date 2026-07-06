@@ -1,0 +1,80 @@
+AGENTS.md:39: - Never change Program ID unless a separate reviewed boundary explicitly allows it.
+README.md:463: MVP implementation lab scope is complete.
+README.md:1133: - placeholder Program ID
+README.md:1220: - set/review the real Program ID and regenerate Program-ID-dependent PDA fixtures
+README.md:1341: ## XXXL Program ID and PDA fixture readiness plan
+README.md:1354: No real Program ID was selected.
+README.md:1392: Current Program ID dependency:
+README.md:1396: No real Program ID was selected.
+README.md:1422: - input Program ID
+README.md:1426: No real Program ID was selected.
+README.md:1450: - input Program ID
+README.md:1458: No real Program ID was selected.
+README.md:1468: ## XXXL Program ID placeholder status boundary
+README.md:1470: An explicit Program ID placeholder status boundary has been added.
+README.md:1485: Current Program ID readiness status:
+README.md:1497: No real Program ID was selected.
+README.md:1521: Current Program ID linked blocker:
+README.md:1525: No real Program ID was selected.
+README.md:1553: - Program ID placeholder boundary active: `true`
+README.md:1554: - Program ID placeholder blocker active in deployment report: `true`
+README.md:1558: No real Program ID was selected.
+README.md:1584: No real Program ID was selected.
+README.md:1610: No real Program ID was selected.
+README.md:1636: No real Program ID was selected.
+README.md:1669: No real Program ID was selected.
+README.md:1696: No real Program ID was selected.
+README.md:1722: No real Program ID was selected.
+README.md:1745: - Program ID placeholder boundary active: `true`
+README.md:1752: No real Program ID was selected.
+README.md:1775: - placeholder Program ID blocker present: `true`
+README.md:1780: No real Program ID was selected.
+README.md:1803: - real Program ID selected: `false`
+README.md:1812: No real Program ID was selected.
+README.md:1842: No real Program ID was selected.
+README.md:1863: - Program ID / PDA fixture boundaries
+README.md:1879: No real Program ID was selected.
+README.md:1900: - Program ID boundary
+README.md:1918: No real Program ID was selected.
+README.md:1941: - Program ID status code
+README.md:1951: No real Program ID was selected.
+README.md:1989: No real Program ID was selected.
+docs/assumptions.md:25: ## Scope
+docs/build/build-v1-spec.md:329: ### 8.2 Scope
+docs/checkpoints/current-design-checkpoint.md:295: - program id: D7AQmZNtFFFoJbducz93atteeSZhw3jq6RmsqBvaf1my
+docs/checkpoints/current-design-checkpoint.md:296: - ProgramData account: 9tuesaPoJhrifF49vJewcg6PSWZeHAJiqQ97pq3LMW9T
+docs/checkpoints/current-design-checkpoint.md:307: ## Phase 41K.6 B6.39 expected post-upgrade ProgramData hash plan
+docs/checkpoints/current-design-checkpoint.md:309: The expected post-upgrade ProgramData hash plan is recorded in:
+docs/checkpoints/current-design-checkpoint.md:311: docs/gateway/phase-41k6-b6-39-post-upgrade-programdata-hash-plan.md
+docs/checkpoints/current-design-checkpoint.md:507: It defines the future local-only descriptor skeleton boundary for guardian_set_id, threshold, local public key fixtures, descriptor integrity, route scope, and no-signing policy.
+docs/checkpoints/current-design-checkpoint.md:1302: H.4 scope expectation:
+docs/checkpoints/current-design-checkpoint.md:1318: - specific execution scope: local validator dry-run only
+docs/checkpoints/current-design-checkpoint.md:1469: Approved future scope:
+docs/checkpoints/current-design-checkpoint.md:1494: GO RECORDED FOR H6 LOCAL VALIDATOR DRY-RUN ONLY WITH STRICT LOCAL DISPOSABLE SCOPE
+docs/checkpoints/current-design-checkpoint.md:1498: The next step may be Blocker H.6 actual local-validator dry-run execution, strictly within the recorded H.5R scope and only after preflight verification.
+docs/checkpoints/current-design-checkpoint.md:1597: Closed scope:
+docs/checkpoints/current-design-checkpoint.md:1623: - Blocker B: ProgramData hash
+docs/checkpoints/current-design-checkpoint.md:1670: A.1 does not call RPC, does not use testnet, does not use live RPC, does not use keys, does not sign, does not inspect live ProgramData, does not modify state, and does not submit to any network.
+docs/checkpoints/current-design-checkpoint.md:1704: - Program ID placeholder boundary remains active
+docs/checkpoints/current-design-checkpoint.md:1760: A.3 does not call RPC, does not use testnet, does not use live RPC, does not use keys, does not sign, does not inspect live ProgramData, does not deploy, does not upgrade, does not initialize state, does not configure SPL, and does not submit to any network.
+docs/checkpoints/current-design-checkpoint.md:1785: The next safe step is A.4 read-only live ProgramData evidence GO form, still with no RPC execution.
+docs/checkpoints/current-design-checkpoint.md:1788: ## Blocker A.4 read-only live ProgramData evidence GO form
+docs/checkpoints/current-design-checkpoint.md:1792: docs/gateway/blocker-a-4-read-only-programdata-evidence-go-form.md
+docs/checkpoints/current-design-checkpoint.md:1794: A.4 defines the explicit scoped GO phrase required before A.5 may perform read-only live ProgramData evidence.
+docs/checkpoints/current-design-checkpoint.md:1796: A.4 does not call RPC, does not use testnet, does not use live RPC, does not use keys, does not sign, does not inspect live ProgramData, does not deploy, does not upgrade, does not initialize state, does not configure SPL, does not construct guardian packages,
+docs/checkpoints/current-design-checkpoint.md:1808: I approve Blocker A.5 read-only live ProgramData evidence only, scoped to X1 testnet RPC https://rpc.testnet.x1.xyz, program id D7AQmZNtFFFoJbducz93atteeSZhw3jq6RmsqBvaf1my, ProgramData account 9tuesaPoJhrifF49vJewcg6PSWZeHAJiqQ97pq3LMW9T, and expected observe
+docs/checkpoints/current-design-checkpoint.md:1825: ## Blocker A.5 read-only live ProgramData evidence
+docs/checkpoints/current-design-checkpoint.md:1827: The Blocker A.5 read-only live ProgramData evidence record is recorded in:
+docs/checkpoints/current-design-checkpoint.md:1829: docs/gateway/blocker-a-5-read-only-live-programdata-evidence.md
+docs/checkpoints/current-design-checkpoint.md:1833: docs/gateway/evidence/blocker-a-5-read-only-live-programdata-evidence
+docs/checkpoints/current-design-checkpoint.md:1839: ProgramData evidence status:
+docs/checkpoints/current-design-checkpoint.md:1869: A.5R reviews the matched A.5 read-only live ProgramData evidence.
+docs/checkpoints/current-design-checkpoint.md:1922: - A.5 executed read-only live ProgramData evidence
+docs/checkpoints/current-design-checkpoint.md:1942: - B — OPEN: expected post-upgrade ProgramData hash
+docs/checkpoints/current-design-checkpoint.md:2040: - Program ID placeholder boundary remains active
+docs/checkpoints/current-design-checkpoint.md:2288: - B — OPEN: expected post-upgrade ProgramData hash
+docs/checkpoints/current-design-checkpoint.md:2399: - SPL mint and token accounts: Blocker E scope
+docs/checkpoints/current-design-checkpoint.md:2491: - SPL mint and token accounts: Blocker E scope
+docs/checkpoints/current-design-checkpoint.md:2540: - long-lived state scope is limited to MintState, GatewayConfig, and GuardianSet
+docs/checkpoints/current-design-checkpoint.md:2571: - expected post-upgrade ProgramData hash in Blocker B
+docs/checkpoints/current-design-checkpoint.md:2635: - B — OPEN: expected post-upgrade ProgramData hash
