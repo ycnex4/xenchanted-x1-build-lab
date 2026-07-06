@@ -1,0 +1,1 @@
+solana-cli 4.0.0 (src:8de42dc0; feat:dda54cf7, client:Agave)

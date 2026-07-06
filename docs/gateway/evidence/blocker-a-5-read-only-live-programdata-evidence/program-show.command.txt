@@ -1,0 +1,1 @@
+COMMAND: solana program show "D7AQmZNtFFFoJbducz93atteeSZhw3jq6RmsqBvaf1my" --url "https://rpc.testnet.x1.xyz"

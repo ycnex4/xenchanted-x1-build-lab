@@ -1820,3 +1820,41 @@ Current decision:
 A5_READ_ONLY_LIVE_PROGRAMDATA_EVIDENCE_REQUIRES_EXPLICIT_SCOPED_GO
 
 NO-GO REMAINS_FOR_TESTNET_RPC_EXECUTION_SIGNING_KEYS_PROGRAM_UPGRADE_STATE_INIT_SPL_SETUP_NETWORK_SUBMIT
+
+
+## Blocker A.5 read-only live ProgramData evidence
+
+The Blocker A.5 read-only live ProgramData evidence record is recorded in:
+
+docs/gateway/blocker-a-5-read-only-live-programdata-evidence.md
+
+Evidence directory:
+
+docs/gateway/evidence/blocker-a-5-read-only-live-programdata-evidence
+
+A.5 executed only read-only RPC inspection using explicit --url.
+
+A.5 did not use signing, did not use keypairs, did not deploy, did not write-buffer, did not set-upgrade-authority, did not close, did not upgrade, did not initialize state, did not configure SPL, did not construct guardian packages, did not submit, and did not mutate network state.
+
+ProgramData evidence status:
+
+READ_ONLY_PROGRAMDATA_EVIDENCE_MATCHED_EXPECTED_AUTHORITY
+
+Observed:
+
+- observed_programdata_account: 9tuesaPoJhrifF49vJewcg6PSWZeHAJiqQ97pq3LMW9T
+- observed_upgrade_authority: DTfvjtRL63u3XYHXQfgRQCdhEanUK1qqawvfEAM9hxAc
+- programdata_matches_expected: true
+- authority_matches_expected: true
+- program_show_exit_code: 0
+- program_account_exit_code: 0
+
+Current decision:
+
+BLOCKER_A_NOT_CLOSED_PENDING_REVIEW
+
+NO-GO REMAINS_FOR_SIGNING_KEYS_PROGRAM_UPGRADE_STATE_INIT_SPL_SETUP_GUARDIAN_PACKAGES_NETWORK_SUBMIT_MUTATION
+
+Next safe step:
+
+A.5R review package for Theo / closure assessment
