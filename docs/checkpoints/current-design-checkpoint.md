@@ -5334,3 +5334,58 @@ NO-GO REMAINS_FOR_BUILD_HASH_DEPLOY_UPGRADE_WRITE_BUFFER_STATE_INIT_SPL_SETUP_GU
 Next safe step:
 
 BuildHash Execution.1.3 — exact scoped local build/hash GO package closure record.
+
+
+## BuildHash Execution.1.3 exact scoped local build/hash GO package closure record
+
+The BuildHash Execution.1.3 closure record is recorded in:
+
+docs/gateway/buildhash-execution-1-3-exact-scoped-local-build-hash-go-package-closure-record.md
+
+Evidence directory:
+
+docs/gateway/evidence/buildhash-execution-1-3-exact-scoped-local-build-hash-go-package-closure-record
+
+Current status:
+
+BUILDHASH_EXECUTION_1_3_CLOSED_EXACT_SCOPED_LOCAL_BUILD_HASH_GO_PACKAGE_READY_FOR_USER_EXACT_GO_NO_BUILD_NO_HASH_NO_RPC_NO_EXECUTION
+
+Current decision:
+
+EXACT_SCOPED_LOCAL_BUILD_HASH_GO_PACKAGE_CLOSED_FINAL_GO_NOT_GRANTED_UNTIL_USER_EXACT_PHRASE
+
+Final package id:
+
+BHX2_LOCAL_BUILD_HASH_ee0cb44f7d49
+
+Final program source commit:
+
+ee0cb44f7d496e010e784608d0c7ccc8e84e7fb6
+
+Exact GO phrase selected:
+
+true
+
+Exact GO phrase:
+
+GO_BHX2_LOCAL_BUILD_HASH_ONLY_BHX2_LOCAL_BUILD_HASH_ee0cb44f7d49_SOURCE_ee0cb44f7d49
+
+User exact GO phrase provided:
+
+false
+
+Current GO state:
+
+FINAL_GO_NOT_GRANTED
+
+Execution approved now:
+
+false
+
+BuildHash Execution.1.3 does not run build, compute artifact hash, compute ProgramData hash, call RPC, use testnet, deploy, upgrade, write buffer, change authority, initialize state, configure SPL, construct guardian packages, sign, submit, or mutate.
+
+Actual local build/hash execution still requires the user to provide the exact GO phrase verbatim.
+
+Next safe step:
+
+BuildHash Execution.2 — local build/hash execution after exact GO.

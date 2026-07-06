@@ -1,0 +1,31 @@
+# BuildHash Execution.1.3 allowed next block
+
+next_block: BuildHash Execution.2 — local build/hash execution after exact GO
+
+BuildHash Execution.2 may only:
+- verify exact GO phrase
+- verify clean repo
+- verify bound program source content
+- capture toolchain versions
+- run the exact local build command
+- verify artifact exists and is non-empty
+- compute local SBF artifact SHA256
+- compute canonical ProgramData executable-bytes SHA256
+- write local evidence
+- capture final git status
+
+BuildHash Execution.2 must not:
+- call RPC
+- use testnet
+- deploy
+- upgrade
+- write buffer
+- change authority
+- initialize state
+- configure SPL
+- construct guardian packages
+- sign
+- submit transaction
+- mutate network/state
+- activate production
+- request, print, or require secret material

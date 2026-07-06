@@ -1,0 +1,16 @@
+# BuildHash Execution.1.3 exact GO phrase
+
+final_package_id: BHX2_LOCAL_BUILD_HASH_ee0cb44f7d49
+final_program_source_commit: ee0cb44f7d496e010e784608d0c7ccc8e84e7fb6
+final_program_source_short: ee0cb44f7d49
+
+exact_go_phrase_selected: true
+exact_go_phrase: GO_BHX2_LOCAL_BUILD_HASH_ONLY_BHX2_LOCAL_BUILD_HASH_ee0cb44f7d49_SOURCE_ee0cb44f7d49
+
+user_exact_go_phrase_provided: false
+current_go_state: FINAL_GO_NOT_GRANTED
+execution_approved_now: false
+
+meaning:
+This phrase is selected for a future BuildHash Execution.2 local build/hash execution only.
+It does not authorize RPC, testnet, deploy, upgrade, write-buffer, authority change, state initialization, SPL setup, guardian package construction, signing, transaction submit, mutation, or production activation.
