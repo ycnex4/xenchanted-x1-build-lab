@@ -3381,3 +3381,50 @@ NO-GO REMAINS_FOR_GUARDIAN_DESCRIPTOR_FINALIZATION_GUARDIAN_KEYS_PRODUCTION_KEYS
 Next safe step:
 
 Blocker G.1 — rollback / recovery plan planning.
+
+
+## Blocker G.1 rollback / recovery plan planning
+
+The Blocker G.1 planning record is recorded in:
+
+docs/gateway/blocker-g-1-rollback-recovery-plan-planning.md
+
+Evidence directory:
+
+docs/gateway/evidence/blocker-g-1-rollback-recovery-plan-planning
+
+G.1 opens rollback / recovery planning after:
+
+- Blocker A closed narrowly as upgrade authority present but accepted for test phase
+- Blocker C closed narrowly as B1C7 handler boundary / invariants only
+- Blocker D closed narrowly as state initialization design / invariants only
+- Blocker E closed narrowly as SPL mint authority architecture / invariants only
+- Blocker F closed narrowly as guardian descriptor model / invariants only
+
+Preferred future direction:
+
+- full stage-gated recovery plan
+- explicit pre-mutation abort points
+- no automatic retry after failure
+- explicit post-submit observation requirements
+- explicit user GO before any mutation or recovery action
+- explicit abandon/redeploy path when rollback is not possible
+- evidence saved for every branch
+
+G.1 does not close Blocker G.
+
+G.1 does not run build, deploy, upgrade, write buffer, change authority, initialize state, configure SPL, construct guardian packages, sign, call RPC, use testnet, submit, or mutate.
+
+Current status:
+
+BLOCKER_G_OPEN_ROLLBACK_RECOVERY_PLAN_PLANNING_ONLY_NO_RPC_NO_EXECUTION
+
+Current decision:
+
+BLOCKER_G_NOT_CLOSED
+
+NO-GO REMAINS_FOR_BUILD_DEPLOY_UPGRADE_STATE_INIT_SPL_SETUP_GUARDIAN_PACKAGES_SIGNING_RPC_TESTNET_NETWORK_SUBMIT_MUTATION
+
+Next safe step:
+
+Blocker G.2 — repo-grounded rollback / recovery inventory.

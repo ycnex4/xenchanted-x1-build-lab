@@ -1,0 +1,31 @@
+# Rollback / recovery candidate models
+
+G1_MODEL_0_NO_RECOVERY_PLAN
+status: rejected_candidate
+meaning: Proceed to mutation without documented rollback/recovery.
+reason_rejected: incompatible with safe testnet activation.
+
+G1_MODEL_1_AUTOMATIC_RETRY_ON_FAILURE
+status: rejected_candidate
+meaning: Scripts retry mutation steps automatically after failure.
+reason_rejected: unsafe; risks duplicate or unintended mutation.
+
+G1_MODEL_2_PRE_MUTATION_ABORT_POINTS_ONLY
+status: partial_candidate
+meaning: Define explicit abort points before deploy/state init/SPL setup/package submit.
+limitation: Does not cover post-mutation observation and recovery.
+
+G1_MODEL_3_FULL_STAGE_GATED_RECOVERY_PLAN
+status: preferred_candidate
+meaning: Define pre-mutation abort points, post-build recovery, post-upgrade observation, state-init stop conditions, SPL setup stop conditions, guardian package stop conditions, and post-submit evidence.
+reason_preferred: matches current blocker-by-blocker safety model.
+
+G1_MODEL_4_REDEPLOY_OR_ABANDON_IF_NON_REVERSIBLE
+status: required_future_property
+meaning: If an action is irreversible or not safely reversible, the recovery plan must explicitly say so and switch to abandon/redeploy decision path.
+reason_required: avoids pretending that every mutation is reversible.
+
+G1_MODEL_5_USER_FINAL_GO_AND_MANUAL_CONFIRMATION
+status: required_future_property
+meaning: Any mutation or recovery branch requires explicit user GO and no automatic retries.
+reason_required: preserves scoped authorization boundary.

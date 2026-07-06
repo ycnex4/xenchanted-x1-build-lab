@@ -1,0 +1,46 @@
+# Rollback / recovery planning questions
+
+G1_QUESTION_01_SCOPE
+What exactly must rollback / recovery cover: bad build, bad deploy artifact, bad upgrade, bad state init, bad SPL setup, bad guardian descriptor, bad submit, or bad post-submit observation?
+
+G1_QUESTION_02_PRE_MUTATION_ABORT
+What are the abort points before any network mutation?
+
+G1_QUESTION_03_POST_BUILD_RECOVERY
+What happens if a build artifact is wrong before deploy?
+
+G1_QUESTION_04_POST_DEPLOY_PRE_STATE_INIT_RECOVERY
+What happens if a program upgrade/deploy is wrong before state initialization?
+
+G1_QUESTION_05_POST_STATE_INIT_RECOVERY
+What happens if state initialization is wrong?
+
+G1_QUESTION_06_POST_SPL_SETUP_RECOVERY
+What happens if SPL mint authority setup is wrong?
+
+G1_QUESTION_07_POST_GUARDIAN_DESCRIPTOR_RECOVERY
+What happens if guardian descriptor data is wrong before package construction?
+
+G1_QUESTION_08_POST_PACKAGE_CONSTRUCTION_ABORT
+What happens if guardian packages are constructed but not submitted?
+
+G1_QUESTION_09_POST_SUBMIT_OBSERVATION
+What evidence is required after a submit to decide success/failure?
+
+G1_QUESTION_10_STOP_CONDITIONS
+What conditions force stop / no further actions?
+
+G1_QUESTION_11_OWNER_ACTIONS
+Which actions require the user's explicit GO?
+
+G1_QUESTION_12_NO_AUTOMATIC_RETRY
+Which steps must never be retried automatically?
+
+G1_QUESTION_13_EVIDENCE_REQUIREMENTS
+What evidence must be saved for each recovery branch?
+
+G1_QUESTION_14_COMMUNICATION
+What status wording should be used when rollback is impossible and only abandonment/redeploy is possible?
+
+G1_QUESTION_15_FINAL_GO_BOUNDARY
+How does the recovery plan compose with the final scoped GO package?
