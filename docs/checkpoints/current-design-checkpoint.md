@@ -2589,3 +2589,64 @@ NO-GO REMAINS_FOR_STATE_INITIALIZATION_EXECUTION_SIGNING_KEYS_PROGRAM_UPGRADE_SP
 Next safe step:
 
 Blocker D.5 — state initialization design closure decision record.
+
+
+## Blocker D.5 state initialization design closure decision record
+
+The Blocker D.5 closure decision record is recorded in:
+
+docs/gateway/blocker-d-5-state-initialization-design-closure-decision-record.md
+
+Blocker D is now CLOSED narrowly as:
+
+STATE_INITIALIZATION_DESIGN_REVIEWED_EXECUTION_NOT_APPROVED
+
+Closure basis:
+
+- D.1 opened state initialization design planning
+- D.2 completed repo-grounded state layout and PDA inventory
+- D.3 recorded the state initialization authority and one-time guard decision model
+- D.4 completed state initialization invariant review
+
+Accepted D.2 inventory result:
+
+all_inventory_checks_passed: true
+
+Accepted D.3 decision:
+
+REVIEWED_TESTNET_INITIALIZER_WITH_ONE_TIME_GUARD_REQUIRED_BEFORE_ANY_STATE_INIT_EXECUTION
+
+Accepted D.3 boundary:
+
+LONG_LIVED_PROTOCOL_STATE_INIT_SEPARATED_FROM_PROCESSED_EVENT_MARKING_AND_SPL_SETUP
+
+Accepted D.4 invariant result:
+
+all_invariants_reviewed: true
+
+blocker_d_closure_ready: true
+
+closure_type: narrow_design_boundary_only
+
+D.5 does not approve state initialization execution, account creation, PDA creation, initializer execution, SPL mint setup, SPL CPI minting, signing, keypair use, deploy, write-buffer, set-upgrade-authority, close, upgrade, guardian package construction, transaction submit, mutation, or production activation.
+
+Remaining blockers:
+
+- B — OPEN: expected post-upgrade ProgramData hash
+- E — OPEN: SPL mint authority architecture
+- F — OPEN: guardian descriptor
+- G — OPEN: rollback / recovery plan
+
+Current status:
+
+BLOCKER_D_CLOSED_NARROW_STATE_INITIALIZATION_DESIGN_REVIEWED_EXECUTION_NOT_APPROVED
+
+Current decision:
+
+BLOCKER_D_CLOSED_NARROW_DESIGN_INVARIANTS_ONLY
+
+NO-GO REMAINS_FOR_STATE_INITIALIZATION_EXECUTION_SIGNING_KEYS_PROGRAM_UPGRADE_SPL_SETUP_GUARDIAN_PACKAGES_NETWORK_SUBMIT_MUTATION
+
+Next safe step:
+
+Blocker E.1 — SPL mint authority architecture planning.
