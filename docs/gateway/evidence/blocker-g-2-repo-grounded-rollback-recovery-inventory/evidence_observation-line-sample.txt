@@ -1,0 +1,160 @@
+docs/build/build-reader-interface.md:40: - status fields
+docs/build/build-reader-interface.md:198: ## 9. Derived status fields
+docs/build/build-reader-interface.md:312: - derived status fields
+docs/build/build-reader-interface.md:316: - genesis_origin_claimed status
+docs/build/build-state-history-identity-model.md:3: ## Status
+docs/build/build-state-history-identity-model.md:84: ## XNTD commitment status
+docs/build/build-state-history-identity-model.md:86: Public commitment status is derived from stored facts only.
+docs/build/build-state-history-identity-model.md:142: - XNTD lock facts for accepted commitment status
+docs/build/build-v1-spec.md:101: - external runtime RPC status
+docs/build/build-v1-spec.md:102: - public UNKNOWN commitment status
+docs/build/build-v1-spec.md:293: ### 7.4 Public commitment status
+docs/build/build-v1-spec.md:295: Public Build view derives commitment status from stored facts only.
+docs/build/build-v1-spec.md:297: Allowed public status values:
+docs/build/build-v1-x1-runtime-boundary.md:3: ## Status
+docs/build/build-v1-x1-runtime-boundary.md:115: - live RPC status;
+docs/build/build-v1-x1-runtime-boundary.md:383: - update does not downgrade accepted commitment due to infrastructure failure.
+docs/build/build-v1-x1-runtime-boundary.md:573: - owner may update identity regardless of commitment status;
+docs/build/build-v1-x1-runtime-boundary.md:606: - commitment is not a live RPC-derived status.
+docs/build/build-v1-x1-runtime-boundary.md:610: - accepted commitment should not be downgraded by infrastructure failure;
+docs/checkpoints/build-state-history-identity-cleanup.md:72: ### 5. Public Build commitment status no longer exposes UNKNOWN
+docs/checkpoints/build-state-history-identity-cleanup.md:74: Public commitment status is now derived from accepted XNTD commitment facts only.
+docs/checkpoints/build-v1-x1-runtime-boundary.md:59: - RPC status;
+docs/checkpoints/current-design-checkpoint.md:5:     stage-41k6-b2-valid-quorum-live-gated-success
+docs/checkpoints/current-design-checkpoint.md:19:     B2: valid quorum live-gated success test
+docs/checkpoints/current-design-checkpoint.md:24:     valid prior Ed25519 evidence
+docs/checkpoints/current-design-checkpoint.md:41:     docs/gateway/phase-41k6-b2-valid-quorum-live-gated-success.md
+docs/checkpoints/current-design-checkpoint.md:49: Current status remains:
+docs/checkpoints/current-design-checkpoint.md:69: Current status remains:
+docs/checkpoints/current-design-checkpoint.md:83: It defines the future evidence required before blocker C can be considered for closure.
+docs/checkpoints/current-design-checkpoint.md:87: Current status remains:
+docs/checkpoints/current-design-checkpoint.md:101: It defines the future evidence required before blocker H can be considered for closure.
+docs/checkpoints/current-design-checkpoint.md:107: Current status:
+docs/checkpoints/current-design-checkpoint.md:127: Current status:
+docs/checkpoints/current-design-checkpoint.md:149: Current status:
+docs/checkpoints/current-design-checkpoint.md:171: Current status:
+docs/checkpoints/current-design-checkpoint.md:191: Current status:
+docs/checkpoints/current-design-checkpoint.md:213: Current status:
+docs/checkpoints/current-design-checkpoint.md:233: Current status:
+docs/checkpoints/current-design-checkpoint.md:241: ## Phase 41K.6 B6.36 local-validator success/failure matrix design
+docs/checkpoints/current-design-checkpoint.md:243: The local-validator success/failure matrix design is recorded in:
+docs/checkpoints/current-design-checkpoint.md:245: docs/gateway/phase-41k6-b6-36-local-validator-success-failure-matrix.md
+docs/checkpoints/current-design-checkpoint.md:247: It defines the future success path, failure matrix, and no-mutation evidence requirements.
+docs/checkpoints/current-design-checkpoint.md:253: Current status:
+docs/checkpoints/current-design-checkpoint.md:273: Current status:
+docs/checkpoints/current-design-checkpoint.md:299: Current status:
+docs/checkpoints/current-design-checkpoint.md:323: Current status:
+docs/checkpoints/current-design-checkpoint.md:347: Current status:
+docs/checkpoints/current-design-checkpoint.md:369: Current status:
+docs/checkpoints/current-design-checkpoint.md:393: Current status:
+docs/checkpoints/current-design-checkpoint.md:415: Current status:
+docs/checkpoints/current-design-checkpoint.md:437: Current status:
+docs/checkpoints/current-design-checkpoint.md:467: Current status:
+docs/checkpoints/current-design-checkpoint.md:493: Current status:
+docs/checkpoints/current-design-checkpoint.md:521: Current status:
+docs/checkpoints/current-design-checkpoint.md:547: Current status:
+docs/checkpoints/current-design-checkpoint.md:573: Current status:
+docs/checkpoints/current-design-checkpoint.md:587: It defines how the local guardian descriptor skeleton should later integrate with local fixture generation, fixture file emission, guardian_set account fixtures, scenarios, failure matrix, mutation-invariance checks, logs, and safety reports.
+docs/checkpoints/current-design-checkpoint.md:603: Current status:
+docs/checkpoints/current-design-checkpoint.md:617: It links the local guardian descriptor skeleton to local fixture set identity, guardian_set account fixture, threshold model, descriptor failure cases, and mutation-invariance policy.
+docs/checkpoints/current-design-checkpoint.md:631: Current status:
+docs/checkpoints/current-design-checkpoint.md:659: Current status:
+docs/checkpoints/current-design-checkpoint.md:667: ## Phase 41K.6 B6.53 local guardian failure matrix integration map
+docs/checkpoints/current-design-checkpoint.md:669: The local guardian failure matrix integration map is recorded in:
+docs/checkpoints/current-design-checkpoint.md:671: docs/gateway/phase-41k6-b6-53-local-guardian-failure-matrix-integration-map.md
+docs/checkpoints/current-design-checkpoint.md:673: It maps guardian descriptor and guardian fixture integration failures into future local failure matrix groups, expected no-mutation behavior, log expectations, and safety report expectations.
+docs/checkpoints/current-design-checkpoint.md:675: It does not execute the failure matrix.
+docs/checkpoints/current-design-checkpoint.md:689: Current status:
+docs/checkpoints/current-design-checkpoint.md:697: ## Phase 41K.6 B6.54 local guardian failure matrix skeleton
+docs/checkpoints/current-design-checkpoint.md:699: The local guardian failure matrix skeleton is implemented in:
+docs/checkpoints/current-design-checkpoint.md:703: It models guardian descriptor and guardian fixture integration failure cases in memory, including no-mutation policy, log expectation ids, and safety report expectation ids.
+docs/checkpoints/current-design-checkpoint.md:705: It does not execute the failure matrix.
+docs/checkpoints/current-design-checkpoint.md:719: Current status:
+docs/checkpoints/current-design-checkpoint.md:733: It consolidates B6.45 through B6.54 and records that the guardian descriptor, guardian fixture integration, and guardian failure matrix skeleton work has reached a safe decision boundary.
+docs/checkpoints/current-design-checkpoint.md:737: It does not execute the failure matrix.
+docs/checkpoints/current-design-checkpoint.md:751: Current status:
+docs/checkpoints/current-design-checkpoint.md:787: Current status:
+docs/checkpoints/current-design-checkpoint.md:825: Current status:
+docs/checkpoints/current-design-checkpoint.md:864: Current status:
+docs/checkpoints/current-design-checkpoint.md:910: Current status:
+docs/checkpoints/current-design-checkpoint.md:944: Current status:
+docs/checkpoints/current-design-checkpoint.md:967: Current status:
+docs/checkpoints/current-design-checkpoint.md:992: Current status:
+docs/checkpoints/current-design-checkpoint.md:1024: Current status:
+docs/checkpoints/current-design-checkpoint.md:1066: Current status:
+docs/checkpoints/current-design-checkpoint.md:1105: Current status:
+docs/checkpoints/current-design-checkpoint.md:1140: Current status:
+docs/checkpoints/current-design-checkpoint.md:1181: Current status:
+docs/checkpoints/current-design-checkpoint.md:1210: Current status:
+docs/checkpoints/current-design-checkpoint.md:1248: Current status:
+docs/checkpoints/current-design-checkpoint.md:1277: Current status:
+docs/checkpoints/current-design-checkpoint.md:1321: - Blocker A through G status: still open, noted
+docs/checkpoints/current-design-checkpoint.md:1325: Current status:
+docs/checkpoints/current-design-checkpoint.md:1352: Readiness evidence:
+docs/checkpoints/current-design-checkpoint.md:1374: Current status:
+docs/checkpoints/current-design-checkpoint.md:1409: Current status:
+docs/checkpoints/current-design-checkpoint.md:1446: Current status:
+docs/checkpoints/current-design-checkpoint.md:1488: Current status:
+docs/checkpoints/current-design-checkpoint.md:1503: The Blocker H.6 execution evidence checkpoint is recorded in:
+docs/checkpoints/current-design-checkpoint.md:1509: Execution evidence:
+docs/checkpoints/current-design-checkpoint.md:1516: - health check: OK
+docs/checkpoints/current-design-checkpoint.md:1529: Current status:
+docs/checkpoints/current-design-checkpoint.md:1555: - health check: OK
+docs/checkpoints/current-design-checkpoint.md:1570: Current status:
+docs/checkpoints/current-design-checkpoint.md:1591: Blocker H local-validator health dry-run is complete.
+docs/checkpoints/current-design-checkpoint.md:1600: - local validator responded to health check
+docs/checkpoints/current-design-checkpoint.md:1610: Current status:
+docs/checkpoints/current-design-checkpoint.md:1647: Rule status:
+docs/checkpoints/current-design-checkpoint.md:1666: Define the safe discovery and evidence boundary for Blocker A upgrade authority.
+docs/checkpoints/current-design-checkpoint.md:1674: Current status:
+docs/checkpoints/current-design-checkpoint.md:1687: ## Blocker A.2 repo-grounded upgrade authority status reconciliation
+docs/checkpoints/current-design-checkpoint.md:1691: docs/gateway/blocker-a-2-repo-grounded-upgrade-authority-status-reconciliation.md
+docs/checkpoints/current-design-checkpoint.md:1701: Repo-grounded runtime status:
+docs/checkpoints/current-design-checkpoint.md:1706: - deployment status remains deployable=false
+docs/checkpoints/current-design-checkpoint.md:1715: Blocker H is closed only for narrow local-validator health dry-run. It does not approve program-load testing, state initialization simulation, fixture consumption, SPL testing, signing, testnet RPC, live RPC, upgrade, persistent initialization, or submit.
+docs/checkpoints/current-design-checkpoint.md:1721: Current status:
+docs/checkpoints/current-design-checkpoint.md:1746: Candidate future Blocker A closure state after live read-only evidence:
+docs/checkpoints/current-design-checkpoint.md:1775: Current status:
+docs/checkpoints/current-design-checkpoint.md:1785: The next safe step is A.4 read-only live ProgramData evidence GO form, still with no RPC execution.
+docs/checkpoints/current-design-checkpoint.md:1788: ## Blocker A.4 read-only live ProgramData evidence GO form
+docs/checkpoints/current-design-checkpoint.md:1792: docs/gateway/blocker-a-4-read-only-programdata-evidence-go-form.md
+docs/checkpoints/current-design-checkpoint.md:1794: A.4 defines the explicit scoped GO phrase required before A.5 may perform read-only live ProgramData evidence.
+docs/checkpoints/current-design-checkpoint.md:1808: I approve Blocker A.5 read-only live ProgramData evidence only, scoped to X1 testnet RPC https://rpc.testnet.x1.xyz, program id D7AQmZNtFFFoJbducz93atteeSZhw3jq6RmsqBvaf1my, ProgramData account 9tuesaPoJhrifF49vJewcg6PSWZeHAJiqQ97pq3LMW9T, and expected observe
+docs/checkpoints/current-design-checkpoint.md:1814: Current status:
+docs/checkpoints/current-design-checkpoint.md:1825: ## Blocker A.5 read-only live ProgramData evidence
+docs/checkpoints/current-design-checkpoint.md:1827: The Blocker A.5 read-only live ProgramData evidence record is recorded in:
+docs/checkpoints/current-design-checkpoint.md:1829: docs/gateway/blocker-a-5-read-only-live-programdata-evidence.md
+docs/checkpoints/current-design-checkpoint.md:1831: Evidence directory:
+docs/checkpoints/current-design-checkpoint.md:1833: docs/gateway/evidence/blocker-a-5-read-only-live-programdata-evidence
+docs/checkpoints/current-design-checkpoint.md:1839: ProgramData evidence status:
+docs/checkpoints/current-design-checkpoint.md:1863: ## Blocker A.5R read-only evidence review package
+docs/checkpoints/current-design-checkpoint.md:1867: docs/gateway/blocker-a-5r-read-only-evidence-review-package.md
+docs/checkpoints/current-design-checkpoint.md:1869: A.5R reviews the matched A.5 read-only live ProgramData evidence.
+docs/checkpoints/current-design-checkpoint.md:1871: A.5 evidence result:
+docs/checkpoints/current-design-checkpoint.md:1891: Current status:
+docs/checkpoints/current-design-checkpoint.md:1922: - A.5 executed read-only live ProgramData evidence
+docs/checkpoints/current-design-checkpoint.md:1923: - A.5R reviewed matched evidence
+docs/checkpoints/current-design-checkpoint.md:1925: Accepted live read-only evidence:
+docs/checkpoints/current-design-checkpoint.md:1949: Current status:
+docs/checkpoints/current-design-checkpoint.md:1972: Current repo-grounded C status:
+docs/checkpoints/current-design-checkpoint.md:1986: Current status:
+docs/checkpoints/current-design-checkpoint.md:2007: Evidence directory:
+docs/checkpoints/current-design-checkpoint.md:2009: docs/gateway/evidence/blocker-c-2-repo-grounded-b1c7-handler-inventory
+docs/checkpoints/current-design-checkpoint.md:2046: Current status:
+docs/checkpoints/current-design-checkpoint.md:2079: Corrected status:
+docs/checkpoints/current-design-checkpoint.md:2093: Evidence directory:
+docs/checkpoints/current-design-checkpoint.md:2095: docs/gateway/evidence/blocker-c-3-b1c7-production-testnet-activation-decision-model
+docs/checkpoints/current-design-checkpoint.md:2117: Current status:
+docs/checkpoints/current-design-checkpoint.md:2138: Evidence directory:
+docs/checkpoints/current-design-checkpoint.md:2140: docs/gateway/evidence/blocker-c-4-b1c7-invariant-review-package
+docs/checkpoints/current-design-checkpoint.md:2206: Current status:
+docs/checkpoints/current-design-checkpoint.md:2220: ## C.4R authorization status gate call-graph correction
+docs/checkpoints/current-design-checkpoint.md:2230: The check compared source line numbers across different functions. It compared the authorization status gate inside establish_b1c7_consume_gateway_mint_authorization_from_handler_inputs with the atomic boundary call inside b1c7_authorized_consume_gateway_mint_
+docs/checkpoints/current-design-checkpoint.md:2256: C.4 remains repo-only invariant review evidence and still does not close Blocker C.
+docs/checkpoints/current-design-checkpoint.md:2278: - C.4R corrected the authorization status gate call-graph artifact
+docs/checkpoints/current-design-checkpoint.md:2294: Current status:
+docs/checkpoints/current-design-checkpoint.md:2343: Current status:
+docs/checkpoints/current-design-checkpoint.md:2364: Evidence directory:
+docs/checkpoints/current-design-checkpoint.md:2366: docs/gateway/evidence/blocker-d-2-repo-grounded-state-layout-and-pda-inventory
+docs/checkpoints/current-design-checkpoint.md:2438: Current status:
+docs/checkpoints/current-design-checkpoint.md:2459: Evidence directory:

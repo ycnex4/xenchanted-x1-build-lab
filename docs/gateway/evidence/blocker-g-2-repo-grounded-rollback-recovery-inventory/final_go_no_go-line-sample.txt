@@ -1,0 +1,160 @@
+docs/checkpoints/current-design-checkpoint.md:55: NO-GO.
+docs/checkpoints/current-design-checkpoint.md:75: NO-GO.
+docs/checkpoints/current-design-checkpoint.md:93: NO-GO.
+docs/checkpoints/current-design-checkpoint.md:113: NO-GO.
+docs/checkpoints/current-design-checkpoint.md:133: NO-GO.
+docs/checkpoints/current-design-checkpoint.md:155: NO-GO.
+docs/checkpoints/current-design-checkpoint.md:177: NO-GO.
+docs/checkpoints/current-design-checkpoint.md:197: NO-GO.
+docs/checkpoints/current-design-checkpoint.md:219: NO-GO.
+docs/checkpoints/current-design-checkpoint.md:239: NO-GO.
+docs/checkpoints/current-design-checkpoint.md:259: NO-GO.
+docs/checkpoints/current-design-checkpoint.md:279: NO-GO.
+docs/checkpoints/current-design-checkpoint.md:305: NO-GO.
+docs/checkpoints/current-design-checkpoint.md:329: NO-GO.
+docs/checkpoints/current-design-checkpoint.md:353: NO-GO.
+docs/checkpoints/current-design-checkpoint.md:375: NO-GO.
+docs/checkpoints/current-design-checkpoint.md:399: NO-GO.
+docs/checkpoints/current-design-checkpoint.md:421: NO-GO.
+docs/checkpoints/current-design-checkpoint.md:443: NO-GO.
+docs/checkpoints/current-design-checkpoint.md:473: NO-GO.
+docs/checkpoints/current-design-checkpoint.md:499: NO-GO.
+docs/checkpoints/current-design-checkpoint.md:527: NO-GO.
+docs/checkpoints/current-design-checkpoint.md:553: NO-GO.
+docs/checkpoints/current-design-checkpoint.md:579: NO-GO.
+docs/checkpoints/current-design-checkpoint.md:609: NO-GO.
+docs/checkpoints/current-design-checkpoint.md:637: NO-GO.
+docs/checkpoints/current-design-checkpoint.md:665: NO-GO.
+docs/checkpoints/current-design-checkpoint.md:695: NO-GO.
+docs/checkpoints/current-design-checkpoint.md:725: NO-GO.
+docs/checkpoints/current-design-checkpoint.md:757: NO-GO.
+docs/checkpoints/current-design-checkpoint.md:793: NO-GO.
+docs/checkpoints/current-design-checkpoint.md:831: NO-GO.
+docs/checkpoints/current-design-checkpoint.md:833: The next safe step is a decision from Sergey. Actual fixture emission remains forbidden without a separate explicit scoped GO.
+docs/checkpoints/current-design-checkpoint.md:841: Theo confirmed that the NO-GO boundary after B6.7 through B6.57 remains clean.
+docs/checkpoints/current-design-checkpoint.md:862: Theo's approval does not replace Sergey explicit scoped GO.
+docs/checkpoints/current-design-checkpoint.md:870: NO-GO UNTIL SERGEY EXPLICIT B6.58 GO.
+docs/checkpoints/current-design-checkpoint.md:920: NO-GO FOR VALIDATOR_TESTNET_SIGNING_SPL_UPGRADE_INIT_SUBMIT
+docs/checkpoints/current-design-checkpoint.md:950: NO-GO FOR VALIDATOR_TESTNET_SIGNING_SPL_UPGRADE_INIT_SUBMIT
+docs/checkpoints/current-design-checkpoint.md:973: NO-GO FOR LOCAL_VALIDATOR_TESTNET_SIGNING_SPL_UPGRADE_INIT_SUBMIT
+docs/checkpoints/current-design-checkpoint.md:998: NO-GO FOR LOCAL_VALIDATOR_EXECUTION_TESTNET_SIGNING_SPL_UPGRADE_INIT_SUBMIT
+docs/checkpoints/current-design-checkpoint.md:1030: NO-GO FOR LOCAL_VALIDATOR_EXECUTION_TESTNET_SIGNING_SPL_UPGRADE_INIT_SUBMIT
+docs/checkpoints/current-design-checkpoint.md:1072: NO-GO FOR BLOCKER_H_LOCAL_VALIDATOR_EXECUTION_TESTNET_SIGNING_SPL_UPGRADE_INIT_SUBMIT
+docs/checkpoints/current-design-checkpoint.md:1111: NO-GO FOR BLOCKER_H_LOCAL_VALIDATOR_EXECUTION_TESTNET_SIGNING_SPL_UPGRADE_INIT_SUBMIT
+docs/checkpoints/current-design-checkpoint.md:1146: NO-GO FOR BLOCKER_H_LOCAL_VALIDATOR_EXECUTION_TESTNET_SIGNING_SPL_UPGRADE_INIT_SUBMIT
+docs/checkpoints/current-design-checkpoint.md:1187: NO-GO FOR BLOCKER_H_LOCAL_VALIDATOR_EXECUTION_TESTNET_SIGNING_SPL_UPGRADE_INIT_SUBMIT
+docs/checkpoints/current-design-checkpoint.md:1216: NO-GO FOR BLOCKER_H_LOCAL_VALIDATOR_EXECUTION_TESTNET_SIGNING_SPL_UPGRADE_INIT_SUBMIT
+docs/checkpoints/current-design-checkpoint.md:1254: NO-GO FOR BLOCKER_H_LOCAL_VALIDATOR_EXECUTION_TESTNET_SIGNING_SPL_UPGRADE_INIT_SUBMIT
+docs/checkpoints/current-design-checkpoint.md:1283: NO-GO FOR BLOCKER_H_LOCAL_VALIDATOR_EXECUTION_TESTNET_SIGNING_SPL_UPGRADE_INIT_SUBMIT
+docs/checkpoints/current-design-checkpoint.md:1331: NO-GO FOR BLOCKER_H_LOCAL_VALIDATOR_EXECUTION_TESTNET_SIGNING_SPL_UPGRADE_INIT_SUBMIT
+docs/checkpoints/current-design-checkpoint.md:1380: NO-GO FOR BLOCKER_H_LOCAL_VALIDATOR_EXECUTION_TESTNET_SIGNING_SPL_UPGRADE_INIT_SUBMIT
+docs/checkpoints/current-design-checkpoint.md:1415: NO-GO FOR BLOCKER_H_LOCAL_VALIDATOR_EXECUTION_TESTNET_SIGNING_SPL_UPGRADE_INIT_SUBMIT
+docs/checkpoints/current-design-checkpoint.md:1452: NO-GO FOR BLOCKER_H_LOCAL_VALIDATOR_EXECUTION_TESTNET_SIGNING_SPL_UPGRADE_INIT_SUBMIT
+docs/checkpoints/current-design-checkpoint.md:1454: The next safe step is a Sergey decision. Actual Blocker H local-validator dry-run requires a separate explicit scoped GO referencing the fixture SHA256.
+docs/checkpoints/current-design-checkpoint.md:1457: ## Blocker H.5R explicit scoped GO record
+docs/checkpoints/current-design-checkpoint.md:1459: The Blocker H.5R explicit scoped GO record is recorded in:
+docs/checkpoints/current-design-checkpoint.md:1463: Sergey provided the explicit scoped GO phrase for future H.6 local-validator dry-run.
+docs/checkpoints/current-design-checkpoint.md:1496: NO-GO REMAINS FOR TESTNET_SIGNING_REAL_KEYS_GUARDIAN_PACKAGES_SPL_REAL_SETUP_PROGRAM_UPGRADE_PERSISTENT_INIT_NETWORK_SUBMIT
+docs/checkpoints/current-design-checkpoint.md:1507: H.6 executed the first actual local-validator dry-run under the H.5R explicit scoped GO.
+docs/checkpoints/current-design-checkpoint.md:1537: NO-GO REMAINS FOR TESTNET_SIGNING_REAL_KEYS_GUARDIAN_PACKAGES_SPL_REAL_SETUP_PROGRAM_UPGRADE_PERSISTENT_INIT_NETWORK_SUBMIT
+docs/checkpoints/current-design-checkpoint.md:1578: NO-GO REMAINS FOR TESTNET_SIGNING_REAL_KEYS_GUARDIAN_PACKAGES_SPL_REAL_SETUP_PROGRAM_UPGRADE_PERSISTENT_INIT_NETWORK_SUBMIT
+docs/checkpoints/current-design-checkpoint.md:1618: NO-GO REMAINS FOR TESTNET_SIGNING_REAL_KEYS_GUARDIAN_PACKAGES_SPL_REAL_SETUP_PROGRAM_UPGRADE_PERSISTENT_INIT_NETWORK_SUBMIT
+docs/checkpoints/current-design-checkpoint.md:1655: NO-GO remains for testnet, signing, SPL setup, program upgrade, persistent initialization, and network submit.
+docs/checkpoints/current-design-checkpoint.md:1682: NO-GO REMAINS FOR TESTNET_RPC_LIVE_RPC_SIGNING_KEYS_PROGRAM_UPGRADE_STATE_INIT_SPL_SETUP_NETWORK_SUBMIT
+docs/checkpoints/current-design-checkpoint.md:1729: NO-GO REMAINS FOR TESTNET_RPC_LIVE_RPC_SIGNING_KEYS_PROGRAM_UPGRADE_STATE_INIT_SPL_SETUP_NETWORK_SUBMIT
+docs/checkpoints/current-design-checkpoint.md:1783: NO-GO REMAINS FOR TESTNET_RPC_LIVE_RPC_SIGNING_KEYS_PROGRAM_UPGRADE_STATE_INIT_SPL_SETUP_NETWORK_SUBMIT
+docs/checkpoints/current-design-checkpoint.md:1794: A.4 defines the explicit scoped GO phrase required before A.5 may perform read-only live ProgramData evidence.
+docs/checkpoints/current-design-checkpoint.md:1822: NO-GO REMAINS_FOR_TESTNET_RPC_EXECUTION_SIGNING_KEYS_PROGRAM_UPGRADE_STATE_INIT_SPL_SETUP_NETWORK_SUBMIT
+docs/checkpoints/current-design-checkpoint.md:1856: NO-GO REMAINS_FOR_SIGNING_KEYS_PROGRAM_UPGRADE_STATE_INIT_SPL_SETUP_GUARDIAN_PACKAGES_NETWORK_SUBMIT_MUTATION
+docs/checkpoints/current-design-checkpoint.md:1899: NO-GO REMAINS_FOR_SIGNING_KEYS_PROGRAM_UPGRADE_STATE_INIT_SPL_SETUP_GUARDIAN_PACKAGES_NETWORK_SUBMIT_MUTATION
+docs/checkpoints/current-design-checkpoint.md:1957: NO-GO REMAINS_FOR_SIGNING_KEYS_PROGRAM_UPGRADE_STATE_INIT_SPL_SETUP_GUARDIAN_PACKAGES_NETWORK_SUBMIT_MUTATION
+docs/checkpoints/current-design-checkpoint.md:1994: NO-GO REMAINS_FOR_HANDLER_ACTIVATION_SIGNING_KEYS_PROGRAM_UPGRADE_STATE_INIT_SPL_SETUP_GUARDIAN_PACKAGES_NETWORK_SUBMIT_MUTATION
+docs/checkpoints/current-design-checkpoint.md:2054: NO-GO REMAINS_FOR_HANDLER_ACTIVATION_SIGNING_KEYS_PROGRAM_UPGRADE_STATE_INIT_SPL_SETUP_GUARDIAN_PACKAGES_NETWORK_SUBMIT_MUTATION
+docs/checkpoints/current-design-checkpoint.md:2125: NO-GO REMAINS_FOR_HANDLER_ACTIVATION_SIGNING_KEYS_PROGRAM_UPGRADE_STATE_INIT_SPL_SETUP_GUARDIAN_PACKAGES_NETWORK_SUBMIT_MUTATION
+docs/checkpoints/current-design-checkpoint.md:2214: NO-GO REMAINS_FOR_HANDLER_ACTIVATION_SIGNING_KEYS_PROGRAM_UPGRADE_STATE_INIT_SPL_SETUP_GUARDIAN_PACKAGES_NETWORK_SUBMIT_MUTATION
+docs/checkpoints/current-design-checkpoint.md:2302: NO-GO REMAINS_FOR_HANDLER_ACTIVATION_SIGNING_KEYS_PROGRAM_UPGRADE_STATE_INIT_SPL_SETUP_GUARDIAN_PACKAGES_NETWORK_SUBMIT_MUTATION
+docs/checkpoints/current-design-checkpoint.md:2351: NO-GO REMAINS_FOR_STATE_INITIALIZATION_EXECUTION_SIGNING_KEYS_PROGRAM_UPGRADE_SPL_SETUP_GUARDIAN_PACKAGES_NETWORK_SUBMIT_MUTATION
+docs/checkpoints/current-design-checkpoint.md:2446: NO-GO REMAINS_FOR_STATE_INITIALIZATION_EXECUTION_SIGNING_KEYS_PROGRAM_UPGRADE_SPL_SETUP_GUARDIAN_PACKAGES_NETWORK_SUBMIT_MUTATION
+docs/checkpoints/current-design-checkpoint.md:2478: - executing initialization before a reviewed package and final scoped GO
+docs/checkpoints/current-design-checkpoint.md:2507: - separate final scoped GO before execution
+docs/checkpoints/current-design-checkpoint.md:2521: NO-GO REMAINS_FOR_STATE_INITIALIZATION_EXECUTION_SIGNING_KEYS_PROGRAM_UPGRADE_SPL_SETUP_GUARDIAN_PACKAGES_NETWORK_SUBMIT_MUTATION
+docs/checkpoints/current-design-checkpoint.md:2587: NO-GO REMAINS_FOR_STATE_INITIALIZATION_EXECUTION_SIGNING_KEYS_PROGRAM_UPGRADE_SPL_SETUP_GUARDIAN_PACKAGES_NETWORK_SUBMIT_MUTATION
+docs/checkpoints/current-design-checkpoint.md:2648: NO-GO REMAINS_FOR_STATE_INITIALIZATION_EXECUTION_SIGNING_KEYS_PROGRAM_UPGRADE_SPL_SETUP_GUARDIAN_PACKAGES_NETWORK_SUBMIT_MUTATION
+docs/checkpoints/current-design-checkpoint.md:2692: NO-GO REMAINS_FOR_SPL_MINT_SETUP_SPL_AUTHORITY_TRANSFER_SPL_CPI_MINTING_SIGNING_KEYS_PROGRAM_UPGRADE_STATE_INIT_GUARDIAN_PACKAGES_NETWORK_SUBMIT_MUTATION
+docs/checkpoints/current-design-checkpoint.md:2788: NO-GO REMAINS_FOR_SPL_MINT_SETUP_SPL_AUTHORITY_TRANSFER_SPL_CPI_MINTING_SIGNING_KEYS_PROGRAM_UPGRADE_STATE_INIT_GUARDIAN_PACKAGES_NETWORK_SUBMIT_MUTATION
+docs/checkpoints/current-design-checkpoint.md:2834: - SPL setup execution before reviewed setup package and final scoped GO
+docs/checkpoints/current-design-checkpoint.md:2845: - final scoped GO before execution
+docs/checkpoints/current-design-checkpoint.md:2859: NO-GO REMAINS_FOR_SPL_MINT_SETUP_SPL_AUTHORITY_TRANSFER_SPL_CPI_MINTING_SIGNING_KEYS_PROGRAM_UPGRADE_STATE_INIT_GUARDIAN_PACKAGES_NETWORK_SUBMIT_MUTATION
+docs/checkpoints/current-design-checkpoint.md:2910: - final scoped GO before any SPL setup execution
+docs/checkpoints/current-design-checkpoint.md:2924: NO-GO REMAINS_FOR_SPL_MINT_SETUP_SPL_AUTHORITY_TRANSFER_SPL_CPI_MINTING_SIGNING_KEYS_PROGRAM_UPGRADE_STATE_INIT_GUARDIAN_PACKAGES_NETWORK_SUBMIT_MUTATION
+docs/checkpoints/current-design-checkpoint.md:3000: NO-GO REMAINS_FOR_SPL_MINT_SETUP_SPL_AUTHORITY_TRANSFER_SPL_CPI_MINTING_SIGNING_KEYS_PROGRAM_UPGRADE_STATE_INIT_GUARDIAN_PACKAGES_NETWORK_SUBMIT_MUTATION
+docs/checkpoints/current-design-checkpoint.md:3033: - final scoped GO before any guardian package construction or submit
+docs/checkpoints/current-design-checkpoint.md:3047: NO-GO REMAINS_FOR_GUARDIAN_DESCRIPTOR_FINALIZATION_GUARDIAN_KEYS_PRODUCTION_KEYS_SIGNING_PACKAGES_RPC_TESTNET_NETWORK_SUBMIT_MUTATION
+docs/checkpoints/current-design-checkpoint.md:3113: NO-GO REMAINS_FOR_GUARDIAN_DESCRIPTOR_FINALIZATION_GUARDIAN_KEYS_PRODUCTION_KEYS_SIGNING_PACKAGES_RPC_TESTNET_NETWORK_SUBMIT_MUTATION
+docs/checkpoints/current-design-checkpoint.md:3201: - guardian package construction before final scoped GO
+docs/checkpoints/current-design-checkpoint.md:3202: - signing before final scoped GO
+docs/checkpoints/current-design-checkpoint.md:3215: - final scoped GO before package construction or signing
+docs/checkpoints/current-design-checkpoint.md:3229: NO-GO REMAINS_FOR_GUARDIAN_DESCRIPTOR_FINALIZATION_GUARDIAN_KEYS_PRODUCTION_KEYS_SIGNING_PACKAGES_RPC_TESTNET_NETWORK_SUBMIT_MUTATION
+docs/checkpoints/current-design-checkpoint.md:3288: - final scoped GO before package construction or signing
+docs/checkpoints/current-design-checkpoint.md:3302: NO-GO REMAINS_FOR_GUARDIAN_DESCRIPTOR_FINALIZATION_GUARDIAN_KEYS_PRODUCTION_KEYS_SIGNING_PACKAGES_RPC_TESTNET_NETWORK_SUBMIT_MUTATION
+docs/checkpoints/current-design-checkpoint.md:3379: NO-GO REMAINS_FOR_GUARDIAN_DESCRIPTOR_FINALIZATION_GUARDIAN_KEYS_PRODUCTION_KEYS_SIGNING_PACKAGES_RPC_TESTNET_NETWORK_SUBMIT_MUTATION
+docs/checkpoints/current-design-checkpoint.md:3410: - explicit user GO before any mutation or recovery action
+docs/checkpoints/current-design-checkpoint.md:3426: NO-GO REMAINS_FOR_BUILD_DEPLOY_UPGRADE_STATE_INIT_SPL_SETUP_GUARDIAN_PACKAGES_SIGNING_RPC_TESTNET_NETWORK_SUBMIT_MUTATION
+docs/checkpoints/xxxl-x1-testnet-local-runtime-skeleton-phase-9-local-tests-implementation-boundary.md:332: - complete formal Mollusk/SVM go/no-go coverage criteria remain undefined
+docs/gateway/blocker-a-1-upgrade-authority-discovery-planning-only.md:11: NO-GO REMAINS FOR TESTNET_RPC_LIVE_RPC_SIGNING_KEYS_PROGRAM_UPGRADE_STATE_INIT_SPL_SETUP_NETWORK_SUBMIT
+docs/gateway/blocker-a-1-upgrade-authority-discovery-planning-only.md:141: NO-GO REMAINS FOR TESTNET_RPC_LIVE_RPC_SIGNING_KEYS_PROGRAM_UPGRADE_STATE_INIT_SPL_SETUP_NETWORK_SUBMIT
+docs/gateway/blocker-a-2-repo-grounded-upgrade-authority-status-reconciliation.md:11: NO-GO REMAINS FOR TESTNET_RPC_LIVE_RPC_SIGNING_KEYS_PROGRAM_UPGRADE_STATE_INIT_SPL_SETUP_NETWORK_SUBMIT
+docs/gateway/blocker-a-2-repo-grounded-upgrade-authority-status-reconciliation.md:191: NO-GO REMAINS FOR TESTNET_RPC_LIVE_RPC_SIGNING_KEYS_PROGRAM_UPGRADE_STATE_INIT_SPL_SETUP_NETWORK_SUBMIT
+docs/gateway/blocker-a-3-repo-only-authority-model-decision-record.md:11: NO-GO REMAINS FOR TESTNET_RPC_LIVE_RPC_SIGNING_KEYS_PROGRAM_UPGRADE_STATE_INIT_SPL_SETUP_NETWORK_SUBMIT
+docs/gateway/blocker-a-3-repo-only-authority-model-decision-record.md:100: - no upgrade unless separately approved with explicit scoped GO
+docs/gateway/blocker-a-3-repo-only-authority-model-decision-record.md:167: NO-GO REMAINS FOR TESTNET_RPC_LIVE_RPC_SIGNING_KEYS_PROGRAM_UPGRADE_STATE_INIT_SPL_SETUP_NETWORK_SUBMIT
+docs/gateway/blocker-a-4-read-only-programdata-evidence-go-form.md:11: NO-GO REMAINS_FOR_TESTNET_RPC_EXECUTION_SIGNING_KEYS_PROGRAM_UPGRADE_STATE_INIT_SPL_SETUP_NETWORK_SUBMIT
+docs/gateway/blocker-a-4-read-only-programdata-evidence-go-form.md:65: They do not prove fresh live ProgramData state until A.5 runs under explicit scoped GO.
+docs/gateway/blocker-a-4-read-only-programdata-evidence-go-form.md:124: A.5 may proceed only if Sergey provides the following explicit scoped GO phrase:
+docs/gateway/blocker-a-4-read-only-programdata-evidence-go-form.md:156: NO-GO REMAINS_FOR_TESTNET_RPC_EXECUTION_SIGNING_KEYS_PROGRAM_UPGRADE_STATE_INIT_SPL_SETUP_NETWORK_SUBMIT
+docs/gateway/blocker-a-4-read-only-programdata-evidence-go-form.md:160: The next step may be A.5 only after Sergey provides the exact explicit scoped GO phrase.
+docs/gateway/blocker-a-5-read-only-live-programdata-evidence.md:11: NO-GO REMAINS_FOR_SIGNING_KEYS_PROGRAM_UPGRADE_STATE_INIT_SPL_SETUP_GUARDIAN_PACKAGES_NETWORK_SUBMIT_MUTATION
+docs/gateway/blocker-a-5-read-only-live-programdata-evidence.md:152: NO-GO REMAINS_FOR_SIGNING_KEYS_PROGRAM_UPGRADE_STATE_INIT_SPL_SETUP_GUARDIAN_PACKAGES_NETWORK_SUBMIT_MUTATION
+docs/gateway/blocker-a-5r-read-only-evidence-review-package.md:11: NO-GO REMAINS_FOR_SIGNING_KEYS_PROGRAM_UPGRADE_STATE_INIT_SPL_SETUP_GUARDIAN_PACKAGES_NETWORK_SUBMIT_MUTATION
+docs/gateway/blocker-a-5r-read-only-evidence-review-package.md:199: NO-GO REMAINS_FOR_SIGNING_KEYS_PROGRAM_UPGRADE_STATE_INIT_SPL_SETUP_GUARDIAN_PACKAGES_NETWORK_SUBMIT_MUTATION
+docs/gateway/blocker-a-6-closure-decision-record.md:11: NO-GO REMAINS_FOR_SIGNING_KEYS_PROGRAM_UPGRADE_STATE_INIT_SPL_SETUP_GUARDIAN_PACKAGES_NETWORK_SUBMIT_MUTATION
+docs/gateway/blocker-a-6-closure-decision-record.md:113: Closing Blocker A must not weaken the overall NO-GO boundary.
+docs/gateway/blocker-a-6-closure-decision-record.md:115: Overall testnet mutation remains NO-GO until B, C, D, E, F, and G are closed and a final scoped GO package is recorded.
+docs/gateway/blocker-a-6-closure-decision-record.md:127: NO-GO REMAINS_FOR_SIGNING_KEYS_PROGRAM_UPGRADE_STATE_INIT_SPL_SETUP_GUARDIAN_PACKAGES_NETWORK_SUBMIT_MUTATION
+docs/gateway/blocker-c-1-b1c7-handler-production-testnet-boundary-planning.md:11: NO-GO REMAINS_FOR_HANDLER_ACTIVATION_SIGNING_KEYS_PROGRAM_UPGRADE_STATE_INIT_SPL_SETUP_GUARDIAN_PACKAGES_NETWORK_SUBMIT_MUTATION
+docs/gateway/blocker-c-1-b1c7-handler-production-testnet-boundary-planning.md:102: - no final testnet GO package
+docs/gateway/blocker-c-1-b1c7-handler-production-testnet-boundary-planning.md:170: NO-GO REMAINS_FOR_HANDLER_ACTIVATION_SIGNING_KEYS_PROGRAM_UPGRADE_STATE_INIT_SPL_SETUP_GUARDIAN_PACKAGES_NETWORK_SUBMIT_MUTATION
+docs/gateway/blocker-c-2-repo-grounded-b1c7-handler-inventory.md:11: NO-GO REMAINS_FOR_HANDLER_ACTIVATION_SIGNING_KEYS_PROGRAM_UPGRADE_STATE_INIT_SPL_SETUP_GUARDIAN_PACKAGES_NETWORK_SUBMIT_MUTATION
+docs/gateway/blocker-c-2-repo-grounded-b1c7-handler-inventory.md:132: - no final testnet GO package
+docs/gateway/blocker-c-2-repo-grounded-b1c7-handler-inventory.md:167: NO-GO REMAINS_FOR_HANDLER_ACTIVATION_SIGNING_KEYS_PROGRAM_UPGRADE_STATE_INIT_SPL_SETUP_GUARDIAN_PACKAGES_NETWORK_SUBMIT_MUTATION
+docs/gateway/blocker-c-3-b1c7-production-testnet-activation-decision-model.md:15: NO-GO REMAINS_FOR_HANDLER_ACTIVATION_SIGNING_KEYS_PROGRAM_UPGRADE_STATE_INIT_SPL_SETUP_GUARDIAN_PACKAGES_NETWORK_SUBMIT_MUTATION
+docs/gateway/blocker-c-3-b1c7-production-testnet-activation-decision-model.md:81: It must be separately reviewed, bounded, and tied to a final scoped GO package.
+docs/gateway/blocker-c-3-b1c7-production-testnet-activation-decision-model.md:99: - exact final scoped GO before any submit/mutation
+docs/gateway/blocker-c-3-b1c7-production-testnet-activation-decision-model.md:198: NO-GO REMAINS_FOR_HANDLER_ACTIVATION_SIGNING_KEYS_PROGRAM_UPGRADE_STATE_INIT_SPL_SETUP_GUARDIAN_PACKAGES_NETWORK_SUBMIT_MUTATION
+docs/gateway/blocker-c-4-b1c7-invariant-review-package.md:11: NO-GO REMAINS_FOR_HANDLER_ACTIVATION_SIGNING_KEYS_PROGRAM_UPGRADE_STATE_INIT_SPL_SETUP_GUARDIAN_PACKAGES_NETWORK_SUBMIT_MUTATION
+docs/gateway/blocker-c-4-b1c7-invariant-review-package.md:189: NO-GO REMAINS_FOR_HANDLER_ACTIVATION_SIGNING_KEYS_PROGRAM_UPGRADE_STATE_INIT_SPL_SETUP_GUARDIAN_PACKAGES_NETWORK_SUBMIT_MUTATION
+docs/gateway/blocker-c-5-b1c7-boundary-closure-decision-record.md:11: NO-GO REMAINS_FOR_HANDLER_ACTIVATION_SIGNING_KEYS_PROGRAM_UPGRADE_STATE_INIT_SPL_SETUP_GUARDIAN_PACKAGES_NETWORK_SUBMIT_MUTATION
+docs/gateway/blocker-c-5-b1c7-boundary-closure-decision-record.md:143: Closing Blocker C must not weaken the overall NO-GO boundary.
+docs/gateway/blocker-c-5-b1c7-boundary-closure-decision-record.md:145: Overall testnet mutation remains NO-GO until B, D, E, F, and G are closed and a final scoped GO package is recorded.
+docs/gateway/blocker-c-5-b1c7-boundary-closure-decision-record.md:159: NO-GO REMAINS_FOR_HANDLER_ACTIVATION_SIGNING_KEYS_PROGRAM_UPGRADE_STATE_INIT_SPL_SETUP_GUARDIAN_PACKAGES_NETWORK_SUBMIT_MUTATION
+docs/gateway/blocker-d-1-state-initialization-design-planning.md:11: NO-GO REMAINS_FOR_STATE_INITIALIZATION_EXECUTION_SIGNING_KEYS_PROGRAM_UPGRADE_SPL_SETUP_GUARDIAN_PACKAGES_NETWORK_SUBMIT_MUTATION
+docs/gateway/blocker-d-1-state-initialization-design-planning.md:171: NO-GO REMAINS_FOR_STATE_INITIALIZATION_EXECUTION_SIGNING_KEYS_PROGRAM_UPGRADE_SPL_SETUP_GUARDIAN_PACKAGES_NETWORK_SUBMIT_MUTATION
+docs/gateway/blocker-d-2-repo-grounded-state-layout-and-pda-inventory.md:11: NO-GO REMAINS_FOR_STATE_INITIALIZATION_EXECUTION_SIGNING_KEYS_PROGRAM_UPGRADE_SPL_SETUP_GUARDIAN_PACKAGES_NETWORK_SUBMIT_MUTATION
+docs/gateway/blocker-d-2-repo-grounded-state-layout-and-pda-inventory.md:183: NO-GO REMAINS_FOR_STATE_INITIALIZATION_EXECUTION_SIGNING_KEYS_PROGRAM_UPGRADE_SPL_SETUP_GUARDIAN_PACKAGES_NETWORK_SUBMIT_MUTATION
+docs/gateway/blocker-d-3-state-initialization-authority-one-time-guard-decision-model.md:15: NO-GO REMAINS_FOR_STATE_INITIALIZATION_EXECUTION_SIGNING_KEYS_PROGRAM_UPGRADE_SPL_SETUP_GUARDIAN_PACKAGES_NETWORK_SUBMIT_MUTATION
+docs/gateway/blocker-d-3-state-initialization-authority-one-time-guard-decision-model.md:53: This means no long-lived protocol state can be initialized until a later reviewed initializer package exists and a final scoped GO is recorded.
+docs/gateway/blocker-d-3-state-initialization-authority-one-time-guard-decision-model.md:81: - executing initialization before a reviewed package and final scoped GO
+docs/gateway/blocker-d-3-state-initialization-authority-one-time-guard-decision-model.md:97: - separate final scoped GO before execution
+docs/gateway/blocker-d-3-state-initialization-authority-one-time-guard-decision-model.md:155: meaning: A future reviewed initializer package may initialize long-lived protocol state once, with explicit account list, fixed layouts, fixed discriminators, reinitialization rejection, public config values, and final scoped GO.
+docs/gateway/blocker-d-3-state-initialization-authority-one-time-guard-decision-model.md:218: NO-GO REMAINS_FOR_STATE_INITIALIZATION_EXECUTION_SIGNING_KEYS_PROGRAM_UPGRADE_SPL_SETUP_GUARDIAN_PACKAGES_NETWORK_SUBMIT_MUTATION
+docs/gateway/blocker-d-4-state-initialization-invariant-review-package.md:11: NO-GO REMAINS_FOR_STATE_INITIALIZATION_EXECUTION_SIGNING_KEYS_PROGRAM_UPGRADE_SPL_SETUP_GUARDIAN_PACKAGES_NETWORK_SUBMIT_MUTATION
+docs/gateway/blocker-d-4-state-initialization-invariant-review-package.md:186: NO-GO REMAINS_FOR_STATE_INITIALIZATION_EXECUTION_SIGNING_KEYS_PROGRAM_UPGRADE_SPL_SETUP_GUARDIAN_PACKAGES_NETWORK_SUBMIT_MUTATION
+docs/gateway/blocker-d-5-state-initialization-design-closure-decision-record.md:11: NO-GO REMAINS_FOR_STATE_INITIALIZATION_EXECUTION_SIGNING_KEYS_PROGRAM_UPGRADE_SPL_SETUP_GUARDIAN_PACKAGES_NETWORK_SUBMIT_MUTATION
+docs/gateway/blocker-d-5-state-initialization-design-closure-decision-record.md:161: Closing Blocker D must not weaken the overall NO-GO boundary.
+docs/gateway/blocker-d-5-state-initialization-design-closure-decision-record.md:163: Overall testnet mutation remains NO-GO until B, E, F, and G are closed and a final scoped GO package is recorded.
+docs/gateway/blocker-d-5-state-initialization-design-closure-decision-record.md:179: NO-GO REMAINS_FOR_STATE_INITIALIZATION_EXECUTION_SIGNING_KEYS_PROGRAM_UPGRADE_SPL_SETUP_GUARDIAN_PACKAGES_NETWORK_SUBMIT_MUTATION
+docs/gateway/blocker-e-1-spl-mint-authority-architecture-planning.md:11: NO-GO REMAINS_FOR_SPL_MINT_SETUP_SPL_AUTHORITY_TRANSFER_SPL_CPI_MINTING_SIGNING_KEYS_PROGRAM_UPGRADE_STATE_INIT_GUARDIAN_PACKAGES_NETWORK_SUBMIT_MUTATION
+docs/gateway/blocker-e-1-spl-mint-authority-architecture-planning.md:192: NO-GO REMAINS_FOR_SPL_MINT_SETUP_SPL_AUTHORITY_TRANSFER_SPL_CPI_MINTING_SIGNING_KEYS_PROGRAM_UPGRADE_STATE_INIT_GUARDIAN_PACKAGES_NETWORK_SUBMIT_MUTATION
+docs/gateway/blocker-e-2-repo-grounded-spl-mint-authority-and-cpi-inventory.md:11: NO-GO REMAINS_FOR_SPL_MINT_SETUP_SPL_AUTHORITY_TRANSFER_SPL_CPI_MINTING_SIGNING_KEYS_PROGRAM_UPGRADE_STATE_INIT_GUARDIAN_PACKAGES_NETWORK_SUBMIT_MUTATION
+docs/gateway/blocker-e-2-repo-grounded-spl-mint-authority-and-cpi-inventory.md:182: NO-GO REMAINS_FOR_SPL_MINT_SETUP_SPL_AUTHORITY_TRANSFER_SPL_CPI_MINTING_SIGNING_KEYS_PROGRAM_UPGRADE_STATE_INIT_GUARDIAN_PACKAGES_NETWORK_SUBMIT_MUTATION
+docs/gateway/blocker-e-3-spl-mint-authority-setup-decision-model.md:31: NO-GO REMAINS_FOR_SPL_MINT_SETUP_SPL_AUTHORITY_TRANSFER_SPL_CPI_MINTING_SIGNING_KEYS_PROGRAM_UPGRADE_STATE_INIT_GUARDIAN_PACKAGES_NETWORK_SUBMIT_MUTATION

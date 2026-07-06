@@ -1,0 +1,13 @@
+- g1_planning_recorded: true
+- stage_gated_recovery_candidate_present: true
+- abandon_redeploy_candidate_present: true
+- user_final_go_candidate_present: true
+- no_automatic_retry_scope_present: true
+- pre_mutation_abort_scope_present: true
+- post_submit_observation_scope_present: true
+- rollback_recovery_references_found: true
+- deploy_upgrade_references_found: true
+- state_spl_guardian_references_found: true
+- final_go_no_go_references_found: true
+- evidence_observation_references_found: true
+- g2_no_execution: true

@@ -1,0 +1,160 @@
+docs/assumptions.md:168: ## 8. Snapshot recovery is read-only
+docs/assumptions.md:170: CLI snapshot recovery is intentionally read-only.
+docs/assumptions.md:189: - this prevents accidental destructive recovery behavior in the MVP
+docs/assumptions.md:201: - recovery load checks
+docs/checkpoints/current-design-checkpoint.md:261: ## Phase 41K.6 B6.37 rollback and recovery plan map
+docs/checkpoints/current-design-checkpoint.md:263: The rollback and recovery plan map is recorded in:
+docs/checkpoints/current-design-checkpoint.md:265: docs/gateway/phase-41k6-b6-37-rollback-recovery-plan-map.md
+docs/checkpoints/current-design-checkpoint.md:267: It defines rollback and recovery requirements for local-validator, upgrade, state initialization, SPL mint authority, guardian set, submit rehearsal, and live route activation.
+docs/checkpoints/current-design-checkpoint.md:269: It does not execute rollback or recovery.
+docs/checkpoints/current-design-checkpoint.md:1322: - rollback plan if dry-run produces unexpected state
+docs/checkpoints/current-design-checkpoint.md:1628: - Blocker G: rollback plan
+docs/checkpoints/current-design-checkpoint.md:1947: - G — OPEN: rollback / recovery plan
+docs/checkpoints/current-design-checkpoint.md:2292: - G — OPEN: rollback / recovery plan
+docs/checkpoints/current-design-checkpoint.md:2573: - rollback/recovery plan in Blocker G
+docs/checkpoints/current-design-checkpoint.md:2638: - G — OPEN: rollback / recovery plan
+docs/checkpoints/current-design-checkpoint.md:2990: - G — OPEN: rollback / recovery plan
+docs/checkpoints/current-design-checkpoint.md:3369: - G — OPEN: rollback / recovery plan
+docs/checkpoints/current-design-checkpoint.md:3383: Blocker G.1 — rollback / recovery plan planning.
+docs/checkpoints/current-design-checkpoint.md:3386: ## Blocker G.1 rollback / recovery plan planning
+docs/checkpoints/current-design-checkpoint.md:3390: docs/gateway/blocker-g-1-rollback-recovery-plan-planning.md
+docs/checkpoints/current-design-checkpoint.md:3394: docs/gateway/evidence/blocker-g-1-rollback-recovery-plan-planning
+docs/checkpoints/current-design-checkpoint.md:3396: G.1 opens rollback / recovery planning after:
+docs/checkpoints/current-design-checkpoint.md:3406: - full stage-gated recovery plan
+docs/checkpoints/current-design-checkpoint.md:3407: - explicit pre-mutation abort points
+docs/checkpoints/current-design-checkpoint.md:3408: - no automatic retry after failure
+docs/checkpoints/current-design-checkpoint.md:3410: - explicit user GO before any mutation or recovery action
+docs/checkpoints/current-design-checkpoint.md:3411: - explicit abandon/redeploy path when rollback is not possible
+docs/checkpoints/current-design-checkpoint.md:3430: Blocker G.2 — repo-grounded rollback / recovery inventory.
+docs/checkpoints/xxxl-rust-quality-security-baseline.md:42: - Retry/interpret unsafe reporting in a later audit stage; do not claim `cargo geiger` as a green hard gate from this baseline.
+docs/checkpoints/xxxl-x1-testnet-local-runtime-skeleton-phase-10-disabled-no-mutation-tests.md:136: - future SPL CPI rollback
+docs/checkpoints/xxxl-x1-testnet-local-runtime-skeleton-phase-10-disabled-no-mutation-tests.md:137: - future processed mark rollback
+docs/checkpoints/xxxl-x1-testnet-local-runtime-skeleton-phase-10-disabled-no-mutation-tests.md:138: - future recipient accounting rollback
+docs/checkpoints/xxxl-x1-testnet-local-runtime-skeleton-phase-10-disabled-no-mutation-tests.md:139: - future supply accounting rollback
+docs/checkpoints/xxxl-x1-testnet-local-runtime-skeleton-phase-11-disabled-no-mutation-coverage-expansion.md:166: - future SPL CPI rollback
+docs/checkpoints/xxxl-x1-testnet-local-runtime-skeleton-phase-11-disabled-no-mutation-coverage-expansion.md:167: - future processed mark rollback
+docs/checkpoints/xxxl-x1-testnet-local-runtime-skeleton-phase-11-disabled-no-mutation-coverage-expansion.md:168: - future recipient accounting rollback
+docs/checkpoints/xxxl-x1-testnet-local-runtime-skeleton-phase-11-disabled-no-mutation-coverage-expansion.md:169: - future supply accounting rollback
+docs/checkpoints/xxxl-x1-testnet-local-runtime-skeleton-phase-14-disabled-cpi-reachability-evidence.md:128: - rollback behavior after SPL CPI failure
+docs/checkpoints/xxxl-x1-testnet-local-runtime-skeleton-phase-14-disabled-cpi-reachability-evidence.md:129: - rollback behavior after local state mutation failure
+docs/checkpoints/xxxl-x1-testnet-local-runtime-skeleton-phase-15-disabled-cpi-reachability-tests.md:169: - rollback behavior after SPL CPI failure
+docs/checkpoints/xxxl-x1-testnet-local-runtime-skeleton-phase-15-disabled-cpi-reachability-tests.md:170: - rollback behavior after local state mutation failure
+docs/checkpoints/xxxl-x1-testnet-local-runtime-skeleton-phase-16-local-mutation-reachability-boundary.md:178: - rollback behavior after SPL CPI failure
+docs/checkpoints/xxxl-x1-testnet-local-runtime-skeleton-phase-16-local-mutation-reachability-boundary.md:179: - rollback behavior after local state mutation failure
+docs/checkpoints/xxxl-x1-testnet-local-runtime-skeleton-phase-18-u128-u64-spl-amount-boundary.md:175: - rollback after local mutation failure
+docs/checkpoints/xxxl-x1-testnet-local-runtime-skeleton-phase-18-u128-u64-spl-amount-boundary.md:176: - rollback after SPL CPI failure
+docs/checkpoints/xxxl-x1-testnet-local-runtime-skeleton-phase-19-live-atomicity-boundary.md:238: - rollback after SPL CPI failure
+docs/checkpoints/xxxl-x1-testnet-local-runtime-skeleton-phase-20-invalid-vector-runtime-coverage-boundary.md:133: - rollback after live SPL CPI failure
+docs/checkpoints/xxxl-x1-testnet-local-runtime-skeleton-phase-21-source-chain-id-binding.md:161: - rollback after live SPL CPI failure
+docs/checkpoints/xxxl-x1-testnet-local-runtime-skeleton-phase-22-guardian-payload-structure-boundary.md:336: - rollback after live SPL CPI failure
+docs/checkpoints/xxxl-x1-testnet-local-runtime-skeleton-phase-41d3-0-prior-instruction-enumeration-plan.md:42: ## Stop Line
+docs/checkpoints/xxxl-x1-testnet-local-runtime-skeleton-phase-41d3-0-prior-instruction-enumeration-plan.md:44: Phase 41D3 must stop before:
+docs/checkpoints/xxxl-x1-testnet-local-runtime-skeleton-phase-41f-focused-crypto-boundary-audit.md:37: - Model A abort-before-current soundness;
+docs/checkpoints/xxxl-x1-testnet-local-runtime-skeleton-phase-41h-2-signed-message-binding-hardening-plan.md:29: 41H must stop accepting free `signed_message_bytes`.
+docs/checkpoints/xxxl-x1-testnet-local-runtime-skeleton-phase-6-disabled-processor-control-flow-reconciliation.md:248: where the processor may decode and validate, but must stop before any live mint
+docs/checkpoints/xxxl-x1-testnet-local-runtime-skeleton-phase-6-disabled-processor-control-flow-reconciliation.md:280: - disabled route must stop before mutation
+docs/checkpoints/xxxl-x1-testnet-local-runtime-skeleton-phase-6-disabled-processor-control-flow-reconciliation.md:281: - disabled route must stop before SPL CPI
+docs/checkpoints/xxxl-x1-testnet-local-runtime-skeleton-phase-6-disabled-processor-control-flow-reconciliation.md:282: - disabled route must stop before `invoke_signed`
+docs/checkpoints/xxxl-x1-testnet-local-runtime-skeleton-phase-6-disabled-processor-control-flow-reconciliation.md:283: - disabled route must stop before SPL Token `mint_to`
+docs/checkpoints/xxxl-x1-testnet-local-runtime-skeleton-phase-6-disabled-processor-control-flow-reconciliation.md:292: - processor must stop before live mint path
+docs/checkpoints/xxxl-x1-testnet-local-runtime-skeleton-phase-6-disabled-processor-control-flow-reconciliation.md:293: - no account writes before disabled-route stop
+docs/checkpoints/xxxl-x1-testnet-local-runtime-skeleton-phase-6-disabled-processor-control-flow-reconciliation.md:294: - no SPL CPI before disabled-route stop
+docs/checkpoints/xxxl-x1-testnet-local-runtime-skeleton-phase-6-disabled-processor-control-flow-reconciliation.md:295: - no `invoke_signed` before disabled-route stop
+docs/checkpoints/xxxl-x1-testnet-local-runtime-skeleton-phase-6-disabled-processor-control-flow-reconciliation.md:296: - no SPL Token `mint_to` before disabled-route stop
+docs/checkpoints/xxxl-x1-testnet-local-runtime-skeleton-phase-7-replay-processed-event-local-model-reconciliation.md:359: correction, the recovery / incident model must be a separate reviewed design
+docs/checkpoints/xxxl-x1-testnet-local-runtime-skeleton-phase-7-replay-processed-event-local-model-reconciliation.md:590: - Solana / SVM transaction-level atomicity is the expected rollback mechanism
+docs/checkpoints/xxxl-x1-testnet-local-runtime-skeleton-phase-8-local-tests-coverage-checkpoint.md:266: | single-transaction Solana / SVM rollback assumption | deferred-gap | Expected platform rollback; future design must stay within or explicitly review alternatives |
+docs/checkpoints/xxxl-x1-testnet-local-runtime-skeleton-phase-8-local-tests-coverage-checkpoint.md:318: - future SPL CPI failure rollback tests
+docs/checkpoints/xxxl-x1-testnet-local-runtime-skeleton-phase-8-local-tests-coverage-checkpoint.md:319: - future processed mark failure rollback tests
+docs/checkpoints/xxxl-x1-testnet-local-runtime-skeleton-phase-9-local-tests-implementation-boundary.md:171: - SPL CPI failure rollback
+docs/checkpoints/xxxl-x1-testnet-local-runtime-skeleton-phase-9-local-tests-implementation-boundary.md:244: - future SPL CPI failure rollback
+docs/checkpoints/xxxl-x1-testnet-local-runtime-skeleton-phase-9-local-tests-implementation-boundary.md:245: - future processed mark failure rollback
+docs/deployment-readiness.md:44: - snapshot serialization / recovery helpers
+docs/deployment-readiness.md:89:     npm run cli -- snapshot:recover --file <path> [--backup <path>]
+docs/deployment-readiness.md:239: - deployment rollback procedure
+docs/final-mvp-readiness-checkpoint.md:101: - snapshot recovery load
+docs/final-mvp-readiness-checkpoint.md:106: - CLI snapshot recover
+docs/final-mvp-readiness-checkpoint.md:250: - recovery load from canonical or backup snapshot
+docs/final-mvp-readiness-checkpoint.md:251: - read-only recovery reporting
+docs/final-mvp-readiness-checkpoint.md:253: Snapshot recovery does not:
+docs/final-mvp-readiness-checkpoint.md:269: - snapshot:recover
+docs/final-mvp-readiness-checkpoint.md:291: - read-only CLI recovery behavior
+docs/gateway/blocker-a-5r-read-only-evidence-review-package.md:94: - rollback blocker is closed
+docs/gateway/blocker-a-5r-read-only-evidence-review-package.md:110: - G — rollback / recovery plan
+docs/gateway/blocker-a-6-closure-decision-record.md:77: - G — rollback / recovery plan
+docs/gateway/blocker-a-6-closure-decision-record.md:108: - Blocker G — OPEN: rollback / recovery plan
+docs/gateway/blocker-c-1-b1c7-handler-production-testnet-boundary-planning.md:101: - no rollback closure
+docs/gateway/blocker-c-3-b1c7-production-testnet-activation-decision-model.md:117: - G — rollback / recovery plan
+docs/gateway/blocker-c-4-b1c7-invariant-review-package.md:154: - G — rollback / recovery plan
+docs/gateway/blocker-c-5-b1c7-boundary-closure-decision-record.md:104: - G — rollback / recovery plan
+docs/gateway/blocker-c-5-b1c7-boundary-closure-decision-record.md:138: - Blocker G — OPEN: rollback / recovery plan
+docs/gateway/blocker-d-4-state-initialization-invariant-review-package.md:151: - rollback/recovery plan in Blocker G
+docs/gateway/blocker-d-5-state-initialization-design-closure-decision-record.md:122: - G — rollback / recovery plan
+docs/gateway/blocker-d-5-state-initialization-design-closure-decision-record.md:156: - Blocker G — OPEN: rollback / recovery plan
+docs/gateway/blocker-e-5-spl-mint-authority-architecture-closure-decision-record.md:143: - G — rollback / recovery plan
+docs/gateway/blocker-e-5-spl-mint-authority-architecture-closure-decision-record.md:179: - Blocker G — OPEN: rollback / recovery plan
+docs/gateway/blocker-f-2-repo-grounded-guardian-quorum-inventory.md:368: docs/checkpoints/current-design-checkpoint.md:267:It defines rollback and recovery requirements for local-validator, upgrade, state initialization, SPL mint authority, guardian set, submit rehearsal, and live route activation.
+docs/gateway/blocker-f-5-guardian-descriptor-closure-decision-record.md:143: - G — rollback / recovery plan
+docs/gateway/blocker-f-5-guardian-descriptor-closure-decision-record.md:177: - Blocker G — OPEN: rollback / recovery plan
+docs/gateway/blocker-f-5-guardian-descriptor-closure-decision-record.md:208: Blocker G.1 — rollback / recovery plan planning.
+docs/gateway/blocker-g-1-rollback-recovery-plan-planning.md:1: # Blocker G.1 — Rollback / recovery plan planning
+docs/gateway/blocker-g-1-rollback-recovery-plan-planning.md:15: Blocker G.1 opens the rollback / recovery plan track.
+docs/gateway/blocker-g-1-rollback-recovery-plan-planning.md:49: Before any final GO package can be considered, rollback / recovery expectations must be explicit.
+docs/gateway/blocker-g-1-rollback-recovery-plan-planning.md:54: # Rollback / recovery planning questions
+docs/gateway/blocker-g-1-rollback-recovery-plan-planning.md:57: What exactly must rollback / recovery cover: bad build, bad deploy artifact, bad upgrade, bad state init, bad SPL setup, bad guardian descriptor, bad submit, or bad post-submit observation?
+docs/gateway/blocker-g-1-rollback-recovery-plan-planning.md:60: What are the abort points before any network mutation?
+docs/gateway/blocker-g-1-rollback-recovery-plan-planning.md:84: What conditions force stop / no further actions?
+docs/gateway/blocker-g-1-rollback-recovery-plan-planning.md:93: What evidence must be saved for each recovery branch?
+docs/gateway/blocker-g-1-rollback-recovery-plan-planning.md:96: What status wording should be used when rollback is impossible and only abandonment/redeploy is possible?
+docs/gateway/blocker-g-1-rollback-recovery-plan-planning.md:99: How does the recovery plan compose with the final scoped GO package?
+docs/gateway/blocker-g-1-rollback-recovery-plan-planning.md:105: # Rollback / recovery candidate models
+docs/gateway/blocker-g-1-rollback-recovery-plan-planning.md:109: meaning: Proceed to mutation without documented rollback/recovery.
+docs/gateway/blocker-g-1-rollback-recovery-plan-planning.md:114: meaning: Scripts retry mutation steps automatically after failure.
+docs/gateway/blocker-g-1-rollback-recovery-plan-planning.md:119: meaning: Define explicit abort points before deploy/state init/SPL setup/package submit.
+docs/gateway/blocker-g-1-rollback-recovery-plan-planning.md:120: limitation: Does not cover post-mutation observation and recovery.
+docs/gateway/blocker-g-1-rollback-recovery-plan-planning.md:124: meaning: Define pre-mutation abort points, post-build recovery, post-upgrade observation, state-init stop conditions, SPL setup stop conditions, guardian package stop conditions, and post-submit evidence.
+docs/gateway/blocker-g-1-rollback-recovery-plan-planning.md:129: meaning: If an action is irreversible or not safely reversible, the recovery plan must explicitly say so and switch to abandon/redeploy decision path.
+docs/gateway/blocker-g-1-rollback-recovery-plan-planning.md:134: meaning: Any mutation or recovery branch requires explicit user GO and no automatic retries.
+docs/gateway/blocker-g-1-rollback-recovery-plan-planning.md:141: # Rollback / recovery planning scope
+docs/gateway/blocker-g-1-rollback-recovery-plan-planning.md:153: - stop conditions
+docs/gateway/blocker-g-1-rollback-recovery-plan-planning.md:154: - no-automatic-retry policy
+docs/gateway/blocker-g-1-rollback-recovery-plan-planning.md:176: G.1 does not select a final recovery plan.
+docs/gateway/blocker-g-1-rollback-recovery-plan-planning.md:180: - full stage-gated recovery plan
+docs/gateway/blocker-g-1-rollback-recovery-plan-planning.md:181: - explicit pre-mutation abort points
+docs/gateway/blocker-g-1-rollback-recovery-plan-planning.md:182: - no automatic retry after failure
+docs/gateway/blocker-g-1-rollback-recovery-plan-planning.md:184: - explicit user GO before any mutation or recovery action
+docs/gateway/blocker-g-1-rollback-recovery-plan-planning.md:185: - explicit abandon/redeploy path when rollback is not possible
+docs/gateway/blocker-g-1-rollback-recovery-plan-planning.md:223: Blocker G.2 — repo-grounded rollback / recovery inventory.
+docs/gateway/blocker-g-1-rollback-recovery-plan-planning.md:234: phase=blocker-g-1-rollback-recovery-plan-planning
+docs/gateway/blocker-h-3-local-validator-dry-run-go-form-no-execution.md:82: ## Required abort checks before future execution
+docs/gateway/blocker-h-3-local-validator-dry-run-go-form-no-execution.md:84: Before any future actual local-validator dry-run command is allowed to run, it must abort unless all of the following are true:
+docs/gateway/blocker-h-3r-theo-verdict-record-h1-through-h3.md:78: - rollback plan if dry-run produces unexpected state
+docs/gateway/blocker-h-4-execution-readiness-review-package-no-execution.md:128: - rollback plan applied during actual dry-run
+docs/gateway/blocker-h-4-execution-readiness-review-package-no-execution.md:131: ## Rollback plan for future dry-run
+docs/gateway/blocker-h-4-execution-readiness-review-package-no-execution.md:135: If unexpected state is produced, rollback is defined as:
+docs/gateway/blocker-h-4-execution-readiness-review-package-no-execution.md:137: - stop the local validator process
+docs/gateway/blocker-h-5-go-decision-step-no-execution.md:113: - Blocker G: rollback/recovery plan
+docs/gateway/blocker-h-5-go-decision-step-no-execution.md:119: ## Rollback plan for future actual local-validator dry-run
+docs/gateway/blocker-h-5-go-decision-step-no-execution.md:121: If a future actual local-validator dry-run is separately approved and produces unexpected state, rollback is:
+docs/gateway/blocker-h-5-go-decision-step-no-execution.md:123: - stop the local validator process
+docs/gateway/blocker-h-5r-explicit-scoped-go-record.md:107: - rollback cleanup path is defined before execution
+docs/gateway/blocker-h-6rv-theo-verdict-close-blocker-h.md:131: - Blocker G: rollback plan
+docs/gateway/evidence/blocker-f-2-repo-grounded-guardian-quorum-inventory/tracked-files.txt:354: docs/gateway/evidence/ev-01-ev-02-atomic-rollback-prototype.md
+docs/gateway/evidence/blocker-f-2-repo-grounded-guardian-quorum-inventory/tracked-files.txt:355: docs/gateway/evidence/ev-01-ev-02-x1-testnet-atomic-rollback-evidence.md
+docs/gateway/evidence/blocker-f-2-repo-grounded-guardian-quorum-inventory/tracked-files.txt:356: docs/gateway/evidence/stage-2-10-relayer-idempotency-retry-evidence.md
+docs/gateway/evidence/blocker-f-2-repo-grounded-guardian-quorum-inventory/tracked-files.txt:357: docs/gateway/evidence/stage-2-11-ambiguous-confirmation-recovery-evidence.md
+docs/gateway/evidence/blocker-f-2-repo-grounded-guardian-quorum-inventory/tracked-files.txt:358: docs/gateway/evidence/stage-2-12-inconsistent-recovery-state-evidence.md
+docs/gateway/evidence/blocker-f-2-repo-grounded-guardian-quorum-inventory/tracked-files.txt:366: docs/gateway/evidence/stage-2-20-watcher-event-submit-idempotency-retry-evidence.md
+docs/gateway/evidence/blocker-f-2-repo-grounded-guardian-quorum-inventory/tracked-files.txt:367: docs/gateway/evidence/stage-2-21-watcher-event-ambiguous-recovery-evidence.md
+docs/gateway/evidence/blocker-f-2-repo-grounded-guardian-quorum-inventory/tracked-files.txt:388: docs/gateway/evidence/stage-2-6-cpi-failure-rollback-matrix-evidence.md
+docs/gateway/evidence/blocker-f-2-repo-grounded-guardian-quorum-inventory/tracked-files.txt:492: docs/gateway/phase-41k6-b6-37-rollback-recovery-plan-map.md
+docs/gateway/evidence/blocker-f-2-repo-grounded-guardian-quorum-inventory/tracked-files.txt:928: implementation/cli-snapshot-recovery-command-notes.md
+docs/gateway/evidence/blocker-f-2-repo-grounded-guardian-quorum-inventory/tracked-files.txt:955: implementation/snapshot-recovery-load-notes.md
+docs/gateway/evidence/blocker-f-2-repo-grounded-guardian-quorum-inventory/tracked-files.txt:1206: src/prototypes/atomic-rollback-reference.ts
+docs/gateway/evidence/blocker-f-2-repo-grounded-guardian-quorum-inventory/tracked-files.txt:1284: tests/prototypes/atomic-rollback-reference.test.ts
+docs/gateway/evidence/blocker-g-1-rollback-recovery-plan-planning/metadata.txt:1: phase=blocker-g-1-rollback-recovery-plan-planning
+docs/gateway/evidence/blocker-g-1-rollback-recovery-plan-planning/rollback-recovery-candidate-models.txt:1: # Rollback / recovery candidate models
+docs/gateway/evidence/blocker-g-1-rollback-recovery-plan-planning/rollback-recovery-candidate-models.txt:5: meaning: Proceed to mutation without documented rollback/recovery.
+docs/gateway/evidence/blocker-g-1-rollback-recovery-plan-planning/rollback-recovery-candidate-models.txt:10: meaning: Scripts retry mutation steps automatically after failure.
+docs/gateway/evidence/blocker-g-1-rollback-recovery-plan-planning/rollback-recovery-candidate-models.txt:15: meaning: Define explicit abort points before deploy/state init/SPL setup/package submit.
+docs/gateway/evidence/blocker-g-1-rollback-recovery-plan-planning/rollback-recovery-candidate-models.txt:16: limitation: Does not cover post-mutation observation and recovery.
