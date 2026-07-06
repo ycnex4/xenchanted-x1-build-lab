@@ -1254,3 +1254,32 @@ Current decision remains:
 NO-GO FOR BLOCKER_H_LOCAL_VALIDATOR_EXECUTION_TESTNET_SIGNING_SPL_UPGRADE_INIT_SUBMIT
 
 The next safe step is Blocker H.3 dry-run execution plan / GO form, still no execution unless separately approved.
+
+
+## Blocker H.3 local-validator dry-run GO form, no execution
+
+The Blocker H.3 dry-run GO form checkpoint is recorded in:
+
+docs/gateway/blocker-h-3-local-validator-dry-run-go-form-no-execution.md
+
+H.3 defines the future explicit GO form and execution boundary for a possible actual local-validator dry-run.
+
+H.3 does not run a local validator.
+
+H.3 does not add an actual runnable validator execution command.
+
+H.3 does not use testnet, live RPC, signing, real keys, guardian packages, SPL setup, upgrade, state initialization, or submit.
+
+Future explicit GO phrase:
+
+I approve Blocker H actual local-validator dry-run only, scoped to local disposable validator state and the verified mock fixture bundle, with no testnet RPC, no live RPC, no real signing keys, no real guardian packages, no SPL mint authority setup against real assets, no SPL CPI minting against real assets, no program upgrade, no persistent state initialization outside the local validator, and no submit to any network.
+
+Current status:
+
+BLOCKER_H_LOCAL_VALIDATOR_DRY_RUN_GO_FORM_DEFINED_NO_EXECUTION
+
+Current decision remains:
+
+NO-GO FOR BLOCKER_H_LOCAL_VALIDATOR_EXECUTION_TESTNET_SIGNING_SPL_UPGRADE_INIT_SUBMIT
+
+The next safe step is either Theo review of H.1 through H.3 or Blocker H.4 execution-readiness review package with no execution.
