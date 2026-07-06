@@ -1187,3 +1187,32 @@ Current decision remains:
 NO-GO FOR BLOCKER_H_LOCAL_VALIDATOR_EXECUTION_TESTNET_SIGNING_SPL_UPGRADE_INIT_SUBMIT
 
 The next safe step is Blocker H.1 local-validator dry-run planning step.
+
+
+## Blocker H.1 local-validator dry-run planning-only
+
+The Blocker H.1 planning-only checkpoint is recorded in:
+
+docs/gateway/blocker-h-1-local-validator-dry-run-planning-only.md
+
+H.1 opens the Blocker H local-validator dry-run lane as planning-only.
+
+H.1 does not run a local validator.
+
+H.1 does not provide an actual runnable validator command.
+
+H.1 does not use testnet, live RPC, signing, real keys, guardian packages, SPL setup, upgrade, state initialization, or submit.
+
+H.1 records that B6.63/B6.64/B6.64R are ready and that the B6.63 command-boundary script is fail-closed.
+
+Blocker H remains OPEN and GATED.
+
+Current status:
+
+BLOCKER_H_LOCAL_VALIDATOR_DRY_RUN_PLANNING_ONLY_NO_EXECUTION
+
+Current decision remains:
+
+NO-GO FOR BLOCKER_H_LOCAL_VALIDATOR_EXECUTION_TESTNET_SIGNING_SPL_UPGRADE_INIT_SUBMIT
+
+The next safe step is Blocker H.2 preflight checklist definition with no execution.
