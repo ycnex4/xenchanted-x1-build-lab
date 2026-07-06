@@ -1,0 +1,78 @@
+# Expected-hash/build-hash evidence model invariant review matrix
+
+SP4_INVARIANT_01_CURRENT_GO_NOT_GRANTED
+status: reviewed
+result: true
+meaning: Scoped Package.3 records a decision model only and current GO remains not granted.
+
+SP4_INVARIANT_02_STRICT_MODEL_REQUIRED
+status: reviewed
+result: true
+meaning: Future expected-hash/build-hash evidence package must use the strict model.
+
+SP4_INVARIANT_03_DECISION_MODEL_ONLY
+status: reviewed
+result: true
+meaning: Scoped Package.4 is review-only and does not execute build/hash.
+
+SP4_INVARIANT_04_FULL_HASH_BUNDLE_REQUIRED
+status: reviewed
+result: true
+meaning: Future package must bind both local SBF artifact SHA256 and canonical ProgramData executable-bytes SHA256.
+
+SP4_INVARIANT_05_CANONICAL_PROGRAMDATA_DOMAIN
+status: reviewed
+result: true
+meaning: Canonical runtime hash domain is ProgramData executable bytes excluding loader metadata.
+
+SP4_INVARIANT_06_SHA256_REQUIRED
+status: reviewed
+result: true
+meaning: SHA256 is the selected hash algorithm.
+
+SP4_INVARIANT_07_SOURCE_BUILD_TOOLCHAIN_BINDINGS
+status: reviewed
+result: true
+meaning: Repo, branch, source commit, clean status, build command, toolchain, lockfiles, and feature flags must be bound.
+
+SP4_INVARIANT_08_BASELINE_BINDINGS
+status: reviewed
+result: true
+meaning: Program id, ProgramData account, and upgrade authority baseline must be bound.
+
+SP4_INVARIANT_09_NO_RPC_TESTNET_LOCAL_PACKAGE
+status: reviewed
+result: true
+meaning: Local expected-hash/build-hash evidence package must not include RPC/testnet.
+
+SP4_INVARIANT_10_NO_UPGRADE_WRITE_BUFFER_MUTATION
+status: reviewed
+result: true
+meaning: Expected-hash/build-hash evidence package does not authorize upgrade/write-buffer or mutation.
+
+SP4_INVARIANT_11_EXACT_USER_GO_BEFORE_BUILD_HASH
+status: reviewed
+result: true
+meaning: Future build/hash execution requires later exact scoped user GO phrase.
+
+SP4_INVARIANT_12_NO_SECRETS
+status: reviewed
+result: true
+meaning: Evidence must not include private keys, seed phrases, or secret material.
+
+SP4_INVARIANT_13_STOP_NO_RETRY
+status: reviewed
+result: true
+meaning: Any mismatch requires stop. Automatic retry is forbidden.
+
+SP4_INVARIANT_14_NO_EXECUTION_APPROVED
+status: reviewed
+result: true
+meaning: Scoped Package.4 does not approve build, hash computation, RPC, testnet, deploy, upgrade, write-buffer, state init, SPL setup, guardian package construction, signing, submit, or mutation.
+
+SP4_AGGREGATE
+all_invariants_reviewed: true
+evidence_model_closure_ready: true
+closure_type: narrow_expected_hash_build_hash_evidence_model_boundary_only
+current_go_state: FINAL_GO_NOT_GRANTED
+execution_approved: false

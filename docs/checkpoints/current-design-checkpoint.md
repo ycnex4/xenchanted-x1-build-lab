@@ -4629,3 +4629,90 @@ NO-GO REMAINS_FOR_BUILD_HASH_DEPLOY_UPGRADE_WRITE_BUFFER_STATE_INIT_SPL_SETUP_GU
 Next safe step:
 
 Scoped Package.4 — expected-hash/build-hash evidence package invariant review.
+
+
+## Scoped Package.4 expected-hash/build-hash evidence package invariant review
+
+The Scoped Package.4 invariant review is recorded in:
+
+docs/gateway/scoped-package-4-expected-hash-build-hash-evidence-invariant-review.md
+
+Evidence directory:
+
+docs/gateway/evidence/scoped-package-4-expected-hash-build-hash-evidence-invariant-review
+
+Current status:
+
+SCOPED_PACKAGE_4_REVIEW_READY_EXPECTED_HASH_BUILD_HASH_EVIDENCE_INVARIANTS_RECORDED_NO_BUILD_NO_HASH_NO_RPC_NO_EXECUTION
+
+Current decision:
+
+EXPECTED_HASH_BUILD_HASH_EVIDENCE_MODEL_REVIEWED_FINAL_GO_NOT_GRANTED_PENDING_CLOSURE_DECISION
+
+Closure candidate prepared:
+
+STRICT_EXPECTED_HASH_BUILD_HASH_EVIDENCE_MODEL_REVIEWED_EXECUTION_NOT_APPROVED
+
+Selected model:
+
+STRICT_EXPECTED_HASH_BUILD_HASH_EVIDENCE_PACKAGE_MODEL_REQUIRED
+
+Current GO state:
+
+FINAL_GO_NOT_GRANTED
+
+Reviewed invariants:
+
+- current GO is not granted
+- strict expected-hash/build-hash evidence model required
+- Scoped Package.4 is invariant review only
+- full hash bundle required
+- canonical runtime hash domain is ProgramData executable bytes excluding loader metadata
+- SHA256 required
+- repo/source/build/toolchain/lockfile/feature flag bindings required
+- baseline program id, ProgramData, and authority bindings required
+- local package must not include RPC/testnet
+- local package must not authorize upgrade/write-buffer or mutation
+- exact scoped user GO required before future build/hash execution
+- no secret material in evidence
+- any mismatch requires stop
+- automatic retry rejected
+- no execution approved
+
+Review result:
+
+all_invariants_reviewed: true
+
+evidence_model_closure_ready: true
+
+closure_type: narrow_expected_hash_build_hash_evidence_model_boundary_only
+
+execution_approved: false
+
+Remaining gaps:
+
+- Scoped Package.5 closure decision not recorded
+- actual future execution package not drafted
+- exact source commit not selected
+- exact build command not selected
+- exact toolchain versions not selected
+- exact feature flags not selected
+- exact artifact path not selected
+- local SBF artifact SHA256 not computed
+- canonical ProgramData executable-bytes SHA256 not computed
+- expected-hash package id not generated
+- exact scoped user GO phrase not selected
+- build/hash execution remains not approved
+- RPC/testnet remains not approved
+- deploy/upgrade/write-buffer remains not approved
+- mutation remains not approved
+
+Scoped Package.4 does not grant GO.
+
+Scoped Package.4 does not run build, compute artifact hash, compute ProgramData hash, call RPC, use testnet, deploy, upgrade, write buffer, change authority, initialize state, configure SPL, construct guardian packages, sign, submit, or mutate.
+
+NO-GO REMAINS_FOR_BUILD_HASH_DEPLOY_UPGRADE_WRITE_BUFFER_STATE_INIT_SPL_SETUP_GUARDIAN_PACKAGES_SIGNING_RPC_TESTNET_NETWORK_SUBMIT_MUTATION
+
+Next safe step:
+
+Scoped Package.5 — expected-hash/build-hash evidence model closure decision record.
