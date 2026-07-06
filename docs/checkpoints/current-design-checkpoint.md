@@ -1731,3 +1731,55 @@ NO-GO REMAINS FOR TESTNET_RPC_LIVE_RPC_SIGNING_KEYS_PROGRAM_UPGRADE_STATE_INIT_S
 Corrected next safe step:
 
 A.3 repo-only authority model decision record.
+
+
+## Blocker A.3 repo-only authority model decision record
+
+The Blocker A.3 authority model decision record is recorded in:
+
+docs/gateway/blocker-a-3-repo-only-authority-model-decision-record.md
+
+Selected repo-grounded authority model:
+
+TEMPORARY_UPGRADEABLE_STAGED_FINALIZATION
+
+Candidate future Blocker A closure state after live read-only evidence:
+
+UPGRADE_AUTHORITY_PRESENT_BUT_ACCEPTED_FOR_TEST_PHASE
+
+Meaning:
+
+Upgrade authority is tolerated only as a temporary staged-finalization mechanism, not as mint authority and not as discretionary supply control.
+
+Carried-forward public baseline:
+
+- x1_testnet_program_id: D7AQmZNtFFFoJbducz93atteeSZhw3jq6RmsqBvaf1my
+- x1_testnet_programdata_account: 9tuesaPoJhrifF49vJewcg6PSWZeHAJiqQ97pq3LMW9T
+- observed_upgrade_authority_public_key: DTfvjtRL63u3XYHXQfgRQCdhEanUK1qqawvfEAM9hxAc
+
+A.3 does not call RPC, does not use testnet, does not use live RPC, does not use keys, does not sign, does not inspect live ProgramData, does not deploy, does not upgrade, does not initialize state, does not configure SPL, and does not submit to any network.
+
+A.3 does not close Blocker A.
+
+Runtime blockers remain active:
+
+- PLACEHOLDER_PROGRAM_ID
+- deployable_path_ready=false
+- deployable=false
+- live route disabled
+- SPL CPI execution disabled
+- production guardian set unset
+- production proof log unset
+- external review incomplete
+
+Current status:
+
+BLOCKER_A_OPEN_REPO_ONLY_AUTHORITY_MODEL_SELECTED_NO_RPC_NO_KEYS_NO_EXECUTION
+
+Current decision:
+
+AUTHORITY_MODEL_SELECTED_TEMPORARY_UPGRADEABLE_STAGED_FINALIZATION_BLOCKER_A_NOT_CLOSED
+
+NO-GO REMAINS FOR TESTNET_RPC_LIVE_RPC_SIGNING_KEYS_PROGRAM_UPGRADE_STATE_INIT_SPL_SETUP_NETWORK_SUBMIT
+
+The next safe step is A.4 read-only live ProgramData evidence GO form, still with no RPC execution.
