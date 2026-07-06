@@ -1,0 +1,5 @@
+- F.2 inventories repo references to quorum, threshold, approval, signature, and ed25519.
+- F.2 does not select final guardian public keys.
+- F.2 does not select production guardian keys.
+- F.2 does not construct approvals or packages.
+- F.2 does not sign anything.
