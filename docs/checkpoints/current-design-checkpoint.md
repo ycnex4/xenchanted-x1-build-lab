@@ -1682,3 +1682,52 @@ BLOCKER_A_NOT_CLOSED
 NO-GO REMAINS FOR TESTNET_RPC_LIVE_RPC_SIGNING_KEYS_PROGRAM_UPGRADE_STATE_INIT_SPL_SETUP_NETWORK_SUBMIT
 
 The next safe step is Blocker A.2 repo-only upgrade authority source discovery.
+
+
+## Blocker A.2 repo-grounded upgrade authority status reconciliation
+
+The Blocker A.2 repo-grounded reconciliation record is recorded in:
+
+docs/gateway/blocker-a-2-repo-grounded-upgrade-authority-status-reconciliation.md
+
+A.2 reviewed existing tracked repository anchors instead of doing a blind scan.
+
+Repo-grounded public baseline from B6.38:
+
+- x1_testnet_program_id: D7AQmZNtFFFoJbducz93atteeSZhw3jq6RmsqBvaf1my
+- x1_testnet_programdata_account: 9tuesaPoJhrifF49vJewcg6PSWZeHAJiqQ97pq3LMW9T
+- observed_upgrade_authority_public_key: DTfvjtRL63u3XYHXQfgRQCdhEanUK1qqawvfEAM9hxAc
+
+Repo-grounded runtime status:
+
+- runtime remains scaffold-only
+- Program ID placeholder boundary remains active
+- deployable_path_ready is false
+- deployment status remains deployable=false
+- live route remains disabled
+- SPL CPI execution remains disabled
+- production guardian set remains unset
+- production proof log remains unset
+- external review remains incomplete
+
+Relationship to Blocker H:
+
+Blocker H is closed only for narrow local-validator health dry-run. It does not approve program-load testing, state initialization simulation, fixture consumption, SPL testing, signing, testnet RPC, live RPC, upgrade, persistent initialization, or submit.
+
+A.2 conclusion:
+
+Blocker A remains open.
+
+Current status:
+
+BLOCKER_A_OPEN_REPO_GROUNDED_RECONCILIATION_COMPLETED_NO_RPC_NO_KEYS_NO_EXECUTION
+
+Current decision:
+
+BLOCKER_A_NOT_CLOSED
+
+NO-GO REMAINS FOR TESTNET_RPC_LIVE_RPC_SIGNING_KEYS_PROGRAM_UPGRADE_STATE_INIT_SPL_SETUP_NETWORK_SUBMIT
+
+Corrected next safe step:
+
+A.3 repo-only authority model decision record.
