@@ -1,0 +1,31 @@
+# Rollback / recovery planning scope
+
+IN_SCOPE_FOR_PLANNING:
+- bad local build artifact
+- bad deploy artifact
+- wrong expected ProgramData hash
+- wrong upgrade authority observation
+- wrong state initialization package
+- wrong SPL mint authority setup package
+- wrong guardian descriptor/package
+- failed or partial submit observation
+- post-submit evidence collection
+- stop conditions
+- no-automatic-retry policy
+- explicit user GO boundary
+
+OUT_OF_SCOPE_FOR_G1_EXECUTION:
+- running build
+- deploying
+- upgrading
+- writing buffers
+- changing authority
+- initializing state
+- creating SPL mint
+- setting SPL authority
+- constructing guardian packages
+- signing
+- calling RPC
+- using testnet
+- submitting transactions
+- mutating any network
