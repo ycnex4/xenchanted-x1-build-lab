@@ -1537,3 +1537,44 @@ BLOCKER_H_LOCAL_VALIDATOR_DRY_RUN_EXECUTED_WITHIN_H5R_SCOPED_GO
 NO-GO REMAINS FOR TESTNET_SIGNING_REAL_KEYS_GUARDIAN_PACKAGES_SPL_REAL_SETUP_PROGRAM_UPGRADE_PERSISTENT_INIT_NETWORK_SUBMIT
 
 The next safe step is Blocker H.6R execution result review package.
+
+
+## Blocker H.6R execution result review package
+
+The Blocker H.6R execution result review package is recorded in:
+
+docs/gateway/blocker-h-6r-execution-result-review-package.md
+
+H.6R reviews and records the H.6 actual local-validator dry-run result.
+
+H.6R does not run the validator again.
+
+Reviewed result:
+
+- local validator execution: EXECUTED in H.6
+- health check: OK
+- validator stopped: OK
+- solana-test-validator version: 4.0.0
+- cluster version: 4.0.0
+- fixture bundle SHA256: 0a3290df47782008f72b441d9b9bf36964003324dde5baaf03f5fb0a04b19da7
+- testnet action: NOT_EXECUTED
+- live RPC action: NOT_EXECUTED
+- signing: NOT_EXECUTED
+- real keys: NOT_USED
+- guardian packages: NOT_CONSTRUCTED
+- SPL setup: NOT_EXECUTED
+- program upgrade: NOT_EXECUTED
+- state initialization: NOT_EXECUTED
+- network submit: NOT_EXECUTED
+
+Current status:
+
+BLOCKER_H6_EXECUTION_RESULT_REVIEW_PACKAGE_COMPLETED_NO_FURTHER_EXECUTION
+
+Current decision:
+
+H6_LOCAL_VALIDATOR_HEALTH_DRY_RUN_COMPLETED_SUCCESSFULLY_WITHIN_H5R_SCOPE
+
+NO-GO REMAINS FOR TESTNET_SIGNING_REAL_KEYS_GUARDIAN_PACKAGES_SPL_REAL_SETUP_PROGRAM_UPGRADE_PERSISTENT_INIT_NETWORK_SUBMIT
+
+The next safe step is to send H.6/H.6R to Theo for review.
