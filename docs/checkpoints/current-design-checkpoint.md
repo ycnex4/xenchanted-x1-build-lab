@@ -2861,3 +2861,68 @@ NO-GO REMAINS_FOR_SPL_MINT_SETUP_SPL_AUTHORITY_TRANSFER_SPL_CPI_MINTING_SIGNING_
 Next safe step:
 
 Blocker E.4 — SPL mint authority invariant review package.
+
+
+## Blocker E.4 SPL mint authority invariant review package
+
+The Blocker E.4 invariant review package is recorded in:
+
+docs/gateway/blocker-e-4-spl-mint-authority-invariant-review-package.md
+
+Evidence directory:
+
+docs/gateway/evidence/blocker-e-4-spl-mint-authority-invariant-review-package
+
+Reviewed invariants:
+
+- classic SPL Token is the current repo model
+- gateway_mint_authority PDA is the canonical mint authority
+- no retained human/admin mint authority is allowed after canonical setup
+- zero initial supply is required
+- freeze authority none / disabled is preferred
+- retained human/admin freeze authority is rejected as default
+- SPL CPI minting remains fail-closed by default
+- SPL CPI minting must remain downstream of gateway authorization
+- MintState relationship fields are recorded
+- SPL total supply reconciliation proof remains future execution evidence
+- no SPL setup execution is approved
+
+Review result:
+
+all_invariants_reviewed: true
+
+blocker_e_closure_ready: true
+
+closure_type: narrow_architecture_boundary_only
+
+Prepared closure candidate:
+
+SPL_MINT_AUTHORITY_ARCHITECTURE_REVIEWED_EXECUTION_NOT_APPROVED
+
+Remaining open items outside E closure:
+
+- exact decimals value
+- exact canonical mint account address/model
+- exact future SPL setup package
+- exact future authority handoff proof if a temporary setup authority is used
+- exact future freeze authority proof
+- exact future total supply reconciliation evidence
+- final scoped GO before any SPL setup execution
+
+E.4 does not close Blocker E.
+
+E.4 does not create an SPL mint, configure mint authority, transfer mint authority, set/disable freeze authority, mint tokens, initialize state, call RPC, use testnet, use keys, sign, deploy, upgrade, construct guardian packages, submit, or mutate.
+
+Current status:
+
+BLOCKER_E_REVIEW_READY_SPL_MINT_AUTHORITY_INVARIANTS_RECORDED_NO_SPL_SETUP_NO_EXECUTION
+
+Current decision:
+
+BLOCKER_E_NOT_CLOSED_PENDING_CLOSURE_DECISION
+
+NO-GO REMAINS_FOR_SPL_MINT_SETUP_SPL_AUTHORITY_TRANSFER_SPL_CPI_MINTING_SIGNING_KEYS_PROGRAM_UPGRADE_STATE_INIT_GUARDIAN_PACKAGES_NETWORK_SUBMIT_MUTATION
+
+Next safe step:
+
+Blocker E.5 — SPL mint authority architecture closure decision record.
