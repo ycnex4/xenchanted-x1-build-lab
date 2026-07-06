@@ -1216,3 +1216,41 @@ Current decision remains:
 NO-GO FOR BLOCKER_H_LOCAL_VALIDATOR_EXECUTION_TESTNET_SIGNING_SPL_UPGRADE_INIT_SUBMIT
 
 The next safe step is Blocker H.2 preflight checklist definition with no execution.
+
+
+## Blocker H.2 local-validator preflight checklist, no execution
+
+The Blocker H.2 preflight checklist checkpoint is recorded in:
+
+docs/gateway/blocker-h-2-local-validator-preflight-checklist-no-execution.md
+
+H.2 defines and verifies the preflight checklist required before any future actual Blocker H local-validator dry-run can be considered.
+
+Verification result:
+
+- fixture directory: OK
+- fixture file count: 10
+- JSON parse: OK
+- forbidden-material taxonomy scan: OK
+- B6.63 script exists: OK
+- B6.63 script syntax: OK
+- default blocker H gate: OK
+- default local-validator execution: NOT_EXECUTED
+- no testnet fallback: OK
+- --execute refusal: OK
+- --execute exit code: 63
+- exit 63 comment: OK
+- testnet action: NOT_EXECUTED
+- signing: NOT_EXECUTED
+- SPL setup: NOT_EXECUTED
+- upgrade/init/submit: NOT_EXECUTED
+
+Current status:
+
+BLOCKER_H_PREFLIGHT_CHECKLIST_DEFINED_AND_VERIFIED_NO_EXECUTION
+
+Current decision remains:
+
+NO-GO FOR BLOCKER_H_LOCAL_VALIDATOR_EXECUTION_TESTNET_SIGNING_SPL_UPGRADE_INIT_SUBMIT
+
+The next safe step is Blocker H.3 dry-run execution plan / GO form, still no execution unless separately approved.
