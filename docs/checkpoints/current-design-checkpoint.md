@@ -1380,3 +1380,38 @@ Current decision remains:
 NO-GO FOR BLOCKER_H_LOCAL_VALIDATOR_EXECUTION_TESTNET_SIGNING_SPL_UPGRADE_INIT_SUBMIT
 
 The next safe step is to send H.4 to Theo for review.
+
+
+## Blocker H.4R Theo verdict record for H.4 execution-readiness
+
+Theo's verdict for Blocker H.4 is recorded in:
+
+docs/gateway/blocker-h-4r-theo-verdict-record-h4-readiness.md
+
+Theo approved H.4 as an execution-readiness review package.
+
+Theo confirmed H.4 covers the H.2 preflight checklist and adds a fixture bundle fingerprint.
+
+Integrity anchor:
+
+0a3290df47782008f72b441d9b9bf36964003324dde5baaf03f5fb0a04b19da7
+
+Theo stated that any fixture modification between H.4 and actual execution requires a new H.4 cycle.
+
+Theo approved proceeding to:
+
+Blocker H.5 GO decision step, separately gated.
+
+H.5 is not automatic execution.
+
+H.5 must reference the exact fixture SHA256 above.
+
+Current status:
+
+THEO_VERDICT_RECORDED_H4_READINESS_APPROVED_H5_GO_DECISION_STEP_ALLOWED_NO_EXECUTION
+
+Current decision remains:
+
+NO-GO FOR BLOCKER_H_LOCAL_VALIDATOR_EXECUTION_TESTNET_SIGNING_SPL_UPGRADE_INIT_SUBMIT
+
+The next safe step is Blocker H.5 GO decision step.
