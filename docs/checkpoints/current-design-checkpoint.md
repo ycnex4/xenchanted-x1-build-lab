@@ -4007,3 +4007,87 @@ NO-GO REMAINS_FOR_BUILD_HASH_DEPLOY_UPGRADE_WRITE_BUFFER_STATE_INIT_SPL_SETUP_GU
 Next safe step:
 
 Blocker B.5 — expected post-upgrade ProgramData hash closure decision record.
+
+
+## Blocker B.5 expected post-upgrade ProgramData hash closure decision record
+
+The Blocker B.5 closure decision record is recorded in:
+
+docs/gateway/blocker-b-5-expected-post-upgrade-programdata-hash-closure-decision-record.md
+
+Blocker B is now CLOSED narrowly as:
+
+EXPECTED_PROGRAMDATA_HASH_MODEL_REVIEWED_EXECUTION_NOT_APPROVED
+
+Closure basis:
+
+- B.1 opened expected post-upgrade ProgramData hash planning
+- B.2 completed repo-grounded ProgramData hash inventory
+- B.3 recorded the expected post-upgrade ProgramData hash decision model
+- B.4 completed ProgramData hash invariant review
+
+Accepted B.3 decision:
+
+FULL_HASH_BUNDLE_WITH_PROGRAMDATA_EXECUTABLE_BYTES_SHA256_AS_CANONICAL_RUNTIME_HASH
+
+Accepted canonical hash domain:
+
+PROGRAMDATA_EXECUTABLE_BYTES_EXCLUDING_LOADER_METADATA
+
+Accepted canonical hash algorithm:
+
+SHA256
+
+Accepted local artifact hash policy:
+
+LOCAL_SBF_ARTIFACT_SHA256_REQUIRED_AS_FUTURE_PRE_UPGRADE_EVIDENCE
+
+Accepted build binding policy:
+
+SOURCE_COMMIT_BUILD_COMMAND_TOOLCHAIN_LOCKFILES_AND_FEATURE_FLAGS_REQUIRED
+
+Accepted baseline binding:
+
+BASELINE_PROGRAM_ID_AND_PROGRAMDATA_ACCOUNT_REQUIRED
+
+Accepted pre-upgrade policy:
+
+EXPECTED_HASH_PACKAGE_REQUIRED_BEFORE_ANY_UPGRADE_GO
+
+Accepted post-upgrade policy:
+
+READ_ONLY_PROGRAMDATA_EXECUTABLE_BYTES_SHA256_VERIFICATION_REQUIRED_AFTER_UPGRADE
+
+Accepted mismatch policy:
+
+HASH_MISMATCH_IS_STOP_CONDITION_NO_AUTOMATIC_RETRY
+
+Accepted user GO policy:
+
+EXPLICIT_SCOPED_USER_GO_REQUIRED_BEFORE_ANY_BUILD_HASH_UPGRADE_OR_RECOVERY_ACTION
+
+Accepted B.4 invariant result:
+
+all_invariants_reviewed: true
+
+blocker_b_closure_ready: true
+
+closure_type: narrow_programdata_hash_model_boundary_only
+
+B.5 does not approve actual expected-hash package generation, build, local artifact hash computation, ProgramData executable-bytes hash computation, deploy, upgrade, write buffer, authority change, state initialization execution, SPL setup, guardian package construction, signing, RPC, testnet, transaction submit, mutation, or production activation.
+
+After B.5, all named blockers A-H are closed narrowly, but execution remains NO-GO.
+
+Current status:
+
+BLOCKER_B_CLOSED_NARROW_EXPECTED_PROGRAMDATA_HASH_MODEL_REVIEWED_EXECUTION_NOT_APPROVED
+
+Current decision:
+
+BLOCKER_B_CLOSED_NARROW_PROGRAMDATA_HASH_INVARIANTS_ONLY
+
+NO-GO REMAINS_FOR_BUILD_HASH_DEPLOY_UPGRADE_WRITE_BUFFER_STATE_INIT_SPL_SETUP_GUARDIAN_PACKAGES_SIGNING_RPC_TESTNET_NETWORK_SUBMIT_MUTATION
+
+Next safe step:
+
+Final GO.1 — final scoped GO package planning.
