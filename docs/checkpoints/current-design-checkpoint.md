@@ -3049,3 +3049,69 @@ NO-GO REMAINS_FOR_GUARDIAN_DESCRIPTOR_FINALIZATION_GUARDIAN_KEYS_PRODUCTION_KEYS
 Next safe step:
 
 Blocker F.2 — repo-grounded guardian/quorum inventory.
+
+
+## Blocker F.2 repo-grounded guardian/quorum inventory
+
+The Blocker F.2 inventory record is recorded in:
+
+docs/gateway/blocker-f-2-repo-grounded-guardian-quorum-inventory.md
+
+Evidence directory:
+
+docs/gateway/evidence/blocker-f-2-repo-grounded-guardian-quorum-inventory
+
+Inventory summary:
+
+- guardian_set_account_len_present: true
+- guardian_set_discriminator_or_view_present: true
+- guardian_set_account_contract_entry_present: true
+- repo_has_guardian_or_quorum_references: true
+- repo_has_quorum_approval_signature_references: true
+- deployment_status_not_deployable: true
+- program_id_placeholder_boundary_active: true
+- f2_no_keys_no_packages_no_execution: true
+
+all_inventory_checks_passed: true
+
+Descriptor inventory:
+
+- descriptor_status: not finalized
+- keys_added_by_f2: false
+- private_keys_added_by_f2: false
+- package_constructed_by_f2: false
+- signing_executed_by_f2: false
+- expected_future_model: static public guardian descriptor in repo, public keys only, deterministic descriptor hash/id, explicit testnet/production label, explicit threshold/quorum rule
+
+State inventory summary:
+
+- GuardianSet is part of the state/account inventory.
+- guardian_set is part of the consume-gateway-mint account contract.
+- F.2 records inventory only and does not initialize GuardianSet state.
+- F.2 does not activate a guardian descriptor.
+
+Quorum inventory summary:
+
+- F.2 inventories repo references to quorum, threshold, approval, signature, and ed25519.
+- F.2 does not select final guardian public keys.
+- F.2 does not select production guardian keys.
+- F.2 does not construct approvals or packages.
+- F.2 does not sign anything.
+
+F.2 does not close Blocker F.
+
+F.2 does not add guardian keys, add private keys, finalize a descriptor, construct guardian packages, sign, initialize state, configure SPL, call RPC, use testnet, deploy, upgrade, submit, or mutate.
+
+Current status:
+
+BLOCKER_F_OPEN_REPO_GROUNDED_GUARDIAN_QUORUM_INVENTORY_COMPLETED_NO_KEYS_NO_PACKAGES
+
+Current decision:
+
+BLOCKER_F_NOT_CLOSED
+
+NO-GO REMAINS_FOR_GUARDIAN_DESCRIPTOR_FINALIZATION_GUARDIAN_KEYS_PRODUCTION_KEYS_SIGNING_PACKAGES_RPC_TESTNET_NETWORK_SUBMIT_MUTATION
+
+Next safe step:
+
+Blocker F.3 — guardian descriptor decision model.

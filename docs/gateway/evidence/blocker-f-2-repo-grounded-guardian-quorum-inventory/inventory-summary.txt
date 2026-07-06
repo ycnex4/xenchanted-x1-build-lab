@@ -1,0 +1,8 @@
+- guardian_set_account_len_present: true
+- guardian_set_discriminator_or_view_present: true
+- guardian_set_account_contract_entry_present: true
+- repo_has_guardian_or_quorum_references: true
+- repo_has_quorum_approval_signature_references: true
+- deployment_status_not_deployable: true
+- program_id_placeholder_boundary_active: true
+- f2_no_keys_no_packages_no_execution: true

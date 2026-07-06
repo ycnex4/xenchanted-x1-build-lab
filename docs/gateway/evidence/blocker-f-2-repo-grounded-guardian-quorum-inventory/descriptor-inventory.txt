@@ -1,0 +1,6 @@
+- descriptor_status: not finalized
+- keys_added_by_f2: false
+- private_keys_added_by_f2: false
+- package_constructed_by_f2: false
+- signing_executed_by_f2: false
+- expected_future_model: static public guardian descriptor in repo, public keys only, deterministic descriptor hash/id, explicit testnet/production label, explicit threshold/quorum rule

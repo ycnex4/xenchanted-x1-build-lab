@@ -1,0 +1,4 @@
+- GuardianSet is part of the state/account inventory.
+- guardian_set is part of the consume-gateway-mint account contract.
+- F.2 records inventory only and does not initialize GuardianSet state.
+- F.2 does not activate a guardian descriptor.

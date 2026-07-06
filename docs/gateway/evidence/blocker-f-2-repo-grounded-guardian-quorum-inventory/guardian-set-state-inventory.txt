@@ -1,0 +1,1163 @@
+programs/xxxl-svm/src/account_contract.rs:63:        name: "guardian_set",
+programs/xxxl-svm/src/account_contract.rs:149:        name: "guardian_set",
+programs/xxxl-svm/src/account_contract.rs:335:        assert_entry(ACCOUNT_INDEX_GUARDIAN_SET, "guardian_set");
+programs/xxxl-svm/src/account_order_skeleton.rs:10:    GuardianSet,
+programs/xxxl-svm/src/account_order_skeleton.rs:94:        role: XxxlAccountRoleSkeleton::GuardianSet,
+programs/xxxl-svm/src/account_order_skeleton.rs:95:        name: "guardian_set",
+programs/xxxl-svm/src/account_order_skeleton.rs:196:        role: XxxlAccountRoleSkeleton::GuardianSet,
+programs/xxxl-svm/src/account_order_skeleton.rs:197:        name: "guardian_set",
+programs/xxxl-svm/src/account_order_skeleton.rs:273:        XxxlGatewayInstructionTag::InitializeGuardianSet => &INITIALIZE_GUARDIAN_SET_ACCOUNTS,
+programs/xxxl-svm/src/account_order_skeleton.rs:321:    fn initialize_guardian_set_account_order_is_stable() {
+programs/xxxl-svm/src/account_order_skeleton.rs:323:            account_requirements_for_tag(XxxlGatewayInstructionTag::InitializeGuardianSet);
+programs/xxxl-svm/src/account_order_skeleton.rs:327:        assert_eq!(accounts[1].role, XxxlAccountRoleSkeleton::GuardianSet);
+programs/xxxl-svm/src/account_order_skeleton.rs:358:        assert_eq!(accounts[2].role, XxxlAccountRoleSkeleton::GuardianSet);
+programs/xxxl-svm/src/account_order_skeleton.rs:412:            XxxlGatewayInstructionTag::InitializeGuardianSet,
+programs/xxxl-svm/src/consume_execution_plan_skeleton.rs:193:                    guardian_set_id: 7,
+programs/xxxl-svm/src/deployment_status.rs:13:    ProductionGuardianSetUnset,
+programs/xxxl-svm/src/deployment_status.rs:48:    XxxlRuntimeDeploymentBlocker::ProductionGuardianSetUnset,
+programs/xxxl-svm/src/deployment_status.rs:73:        blocker: XxxlRuntimeDeploymentBlocker::ProductionGuardianSetUnset,
+programs/xxxl-svm/src/deployment_status.rs:131:            XxxlRuntimeDeploymentBlocker::ProductionGuardianSetUnset => {
+programs/xxxl-svm/src/deployment_status.rs:156:            XxxlRuntimeDeploymentBlocker::ProductionGuardianSetUnset => {
+programs/xxxl-svm/src/deployment_status.rs:185:            XxxlRuntimeDeploymentBlocker::ProductionGuardianSetUnset => {
+programs/xxxl-svm/src/deployment_status.rs:306:        assert!(blockers.contains(&XxxlRuntimeDeploymentBlocker::ProductionGuardianSetUnset));
+programs/xxxl-svm/src/deployment_status.rs:352:            XxxlRuntimeDeploymentBlocker::ProductionGuardianSetUnset.resolution(),
+programs/xxxl-svm/src/dispatch_skeleton.rs:47:        XxxlTypedInstructionSkeleton::InitializeGuardianSetHeader(_) => {
+programs/xxxl-svm/src/dispatch_skeleton.rs:48:            XxxlGatewayInstructionTag::InitializeGuardianSet
+programs/xxxl-svm/src/dispatch_skeleton.rs:81:            InitializeGuardianSetHeaderPayloadSkeleton, InitializeMintStatePayloadSkeleton,
+programs/xxxl-svm/src/dispatch_skeleton.rs:99:                    guardian_set_id: 7,
+programs/xxxl-svm/src/dispatch_skeleton.rs:113:    fn dispatch_plans_initialize_guardian_set_with_expected_accounts() {
+programs/xxxl-svm/src/dispatch_skeleton.rs:115:            XxxlTypedInstructionSkeleton::InitializeGuardianSetHeader(
+programs/xxxl-svm/src/dispatch_skeleton.rs:116:                InitializeGuardianSetHeaderPayloadSkeleton {
+programs/xxxl-svm/src/dispatch_skeleton.rs:117:                    guardian_set_id: 7,
+programs/xxxl-svm/src/dispatch_skeleton.rs:126:        assert_eq!(plan.tag, XxxlGatewayInstructionTag::InitializeGuardianSet);
+programs/xxxl-svm/src/dispatch_skeleton.rs:186:                    guardian_set_id: 7,
+programs/xxxl-svm/src/execution_plan.rs:1077:            guardian_set_account_index: 2,
+programs/xxxl-svm/src/execution_plan.rs:1082:            guardian_set_id: [0x22; 32],
+programs/xxxl-svm/src/initialization_execution_plan_skeleton.rs:4:        GatewayConfigAccountLayoutSkeleton, GuardianSetHeaderAccountLayoutSkeleton,
+programs/xxxl-svm/src/initialization_execution_plan_skeleton.rs:9:        build_guardian_set_header_account_layout_skeleton,
+programs/xxxl-svm/src/initialization_execution_plan_skeleton.rs:12:        encode_and_verify_guardian_set_header_initialization_skeleton,
+programs/xxxl-svm/src/initialization_execution_plan_skeleton.rs:15:        GuardianSetHeaderInitializationSkeletonInput,
+programs/xxxl-svm/src/initialization_execution_plan_skeleton.rs:62:pub struct InitializeGuardianSetExecutionPlanSkeletonInput<'a> {
+programs/xxxl-svm/src/initialization_execution_plan_skeleton.rs:89:pub struct InitializeGuardianSetExecutionPlanSkeletonOutput {
+programs/xxxl-svm/src/initialization_execution_plan_skeleton.rs:91:    pub account: GuardianSetHeaderAccountLayoutSkeleton,
+programs/xxxl-svm/src/initialization_execution_plan_skeleton.rs:157:pub fn plan_initialize_guardian_set_execution_skeleton(
+programs/xxxl-svm/src/initialization_execution_plan_skeleton.rs:158:    input: InitializeGuardianSetExecutionPlanSkeletonInput<'_>,
+programs/xxxl-svm/src/initialization_execution_plan_skeleton.rs:160:    InitializeGuardianSetExecutionPlanSkeletonOutput,
+programs/xxxl-svm/src/initialization_execution_plan_skeleton.rs:168:        XxxlGatewayInstructionTag::InitializeGuardianSet,
+programs/xxxl-svm/src/initialization_execution_plan_skeleton.rs:172:        XxxlTypedInstructionSkeleton::InitializeGuardianSetHeader(payload) => payload,
+programs/xxxl-svm/src/initialization_execution_plan_skeleton.rs:175:                expected: XxxlGatewayInstructionTag::InitializeGuardianSet,
+programs/xxxl-svm/src/initialization_execution_plan_skeleton.rs:181:    let initialization_input = GuardianSetHeaderInitializationSkeletonInput {
+programs/xxxl-svm/src/initialization_execution_plan_skeleton.rs:187:    let account = build_guardian_set_header_account_layout_skeleton(initialization_input)?;
+programs/xxxl-svm/src/initialization_execution_plan_skeleton.rs:189:        encode_and_verify_guardian_set_header_initialization_skeleton(initialization_input)?;
+programs/xxxl-svm/src/initialization_execution_plan_skeleton.rs:191:    Ok(InitializeGuardianSetExecutionPlanSkeletonOutput {
+programs/xxxl-svm/src/initialization_execution_plan_skeleton.rs:250:            InitializeGuardianSetHeaderPayloadSkeleton, InitializeMintStatePayloadSkeleton,
+programs/xxxl-svm/src/initialization_execution_plan_skeleton.rs:278:                    guardian_set_id: 7,
+programs/xxxl-svm/src/initialization_execution_plan_skeleton.rs:303:        assert_eq!(output.account.guardian_set_id, 7);
+programs/xxxl-svm/src/initialization_execution_plan_skeleton.rs:310:    fn initialize_guardian_set_execution_plan_accepts_valid_instruction() {
+programs/xxxl-svm/src/initialization_execution_plan_skeleton.rs:312:            XxxlTypedInstructionSkeleton::InitializeGuardianSetHeader(
+programs/xxxl-svm/src/initialization_execution_plan_skeleton.rs:313:                InitializeGuardianSetHeaderPayloadSkeleton {
+programs/xxxl-svm/src/initialization_execution_plan_skeleton.rs:314:                    guardian_set_id: 7,
+programs/xxxl-svm/src/initialization_execution_plan_skeleton.rs:322:            expected_account_metas_for_tag(XxxlGatewayInstructionTag::InitializeGuardianSet);
+programs/xxxl-svm/src/initialization_execution_plan_skeleton.rs:324:        let output = plan_initialize_guardian_set_execution_skeleton(
+programs/xxxl-svm/src/initialization_execution_plan_skeleton.rs:325:            InitializeGuardianSetExecutionPlanSkeletonInput {
+programs/xxxl-svm/src/initialization_execution_plan_skeleton.rs:336:            XxxlGatewayInstructionTag::InitializeGuardianSet
+programs/xxxl-svm/src/initialization_execution_plan_skeleton.rs:338:        assert_eq!(output.account.guardian_set_id, 7);
+programs/xxxl-svm/src/initialization_execution_plan_skeleton.rs:425:                    guardian_set_id: 7,
+programs/xxxl-svm/src/instruction.rs:35:    pub guardian_set_account_index: u8,
+programs/xxxl-svm/src/instruction.rs:40:    pub guardian_set_id: [u8; 32],
+programs/xxxl-svm/src/instruction.rs:70:        let guardian_set_account_index = input[12];
+programs/xxxl-svm/src/instruction.rs:77:            || guardian_set_account_index != CONSUME_GATEWAY_MINT_GUARDIAN_SET_ACCOUNT_INDEX
+programs/xxxl-svm/src/instruction.rs:100:            guardian_set_account_index,
+programs/xxxl-svm/src/instruction.rs:105:            guardian_set_id: read_fixed_32(input, 48),
+programs/xxxl-svm/src/instruction.rs:154:                assert_eq!(args.guardian_set_account_index, 2);
+programs/xxxl-svm/src/instruction.rs:159:                assert_eq!(args.guardian_set_id, [0x22; 32]);
+programs/xxxl-svm/src/instruction_codec_skeleton.rs:94:            XxxlGatewayInstructionTag::InitializeGuardianSet,
+programs/xxxl-svm/src/instruction_payload_skeleton.rs:22:    pub guardian_set_id: u64,
+programs/xxxl-svm/src/instruction_payload_skeleton.rs:27:pub struct InitializeGuardianSetHeaderPayloadSkeleton {
+programs/xxxl-svm/src/instruction_payload_skeleton.rs:28:    pub guardian_set_id: u64,
+programs/xxxl-svm/src/instruction_payload_skeleton.rs:97:    output.extend_from_slice(&payload.guardian_set_id.to_le_bytes());
+programs/xxxl-svm/src/instruction_payload_skeleton.rs:110:        guardian_set_id: read_u64_le(input, 40)?,
+programs/xxxl-svm/src/instruction_payload_skeleton.rs:115:pub fn encode_initialize_guardian_set_header_payload_skeleton(
+programs/xxxl-svm/src/instruction_payload_skeleton.rs:116:    payload: InitializeGuardianSetHeaderPayloadSkeleton,
+programs/xxxl-svm/src/instruction_payload_skeleton.rs:119:    output.extend_from_slice(&payload.guardian_set_id.to_le_bytes());
+programs/xxxl-svm/src/instruction_payload_skeleton.rs:125:pub fn decode_initialize_guardian_set_header_payload_skeleton(
+programs/xxxl-svm/src/instruction_payload_skeleton.rs:127:) -> Result<InitializeGuardianSetHeaderPayloadSkeleton, XxxlInstructionPayloadSkeletonError> {
+programs/xxxl-svm/src/instruction_payload_skeleton.rs:130:    let payload = InitializeGuardianSetHeaderPayloadSkeleton {
+programs/xxxl-svm/src/instruction_payload_skeleton.rs:131:        guardian_set_id: read_u64_le(input, 0)?,
+programs/xxxl-svm/src/instruction_payload_skeleton.rs:136:    validate_guardian_set_header_payload_skeleton(payload)?;
+programs/xxxl-svm/src/instruction_payload_skeleton.rs:141:pub fn validate_guardian_set_header_payload_skeleton(
+programs/xxxl-svm/src/instruction_payload_skeleton.rs:142:    payload: InitializeGuardianSetHeaderPayloadSkeleton,
+programs/xxxl-svm/src/instruction_payload_skeleton.rs:214:            guardian_set_id: 7,
+programs/xxxl-svm/src/instruction_payload_skeleton.rs:232:                guardian_set_id: 1,
+programs/xxxl-svm/src/instruction_payload_skeleton.rs:245:    fn guardian_set_header_round_trip_preserves_fields() {
+programs/xxxl-svm/src/instruction_payload_skeleton.rs:246:        let payload = InitializeGuardianSetHeaderPayloadSkeleton {
+programs/xxxl-svm/src/instruction_payload_skeleton.rs:247:            guardian_set_id: 42,
+programs/xxxl-svm/src/instruction_payload_skeleton.rs:252:        let encoded = encode_initialize_guardian_set_header_payload_skeleton(payload);
+programs/xxxl-svm/src/instruction_payload_skeleton.rs:254:            decode_initialize_guardian_set_header_payload_skeleton(&encoded).expect("decode ok");
+programs/xxxl-svm/src/instruction_payload_skeleton.rs:261:    fn guardian_set_header_rejects_zero_guardian_count() {
+programs/xxxl-svm/src/instruction_payload_skeleton.rs:262:        let payload = InitializeGuardianSetHeaderPayloadSkeleton {
+programs/xxxl-svm/src/instruction_payload_skeleton.rs:263:            guardian_set_id: 42,
+programs/xxxl-svm/src/instruction_payload_skeleton.rs:269:            validate_guardian_set_header_payload_skeleton(payload),
+programs/xxxl-svm/src/instruction_payload_skeleton.rs:275:    fn guardian_set_header_rejects_invalid_threshold() {
+programs/xxxl-svm/src/instruction_payload_skeleton.rs:276:        let zero_threshold = InitializeGuardianSetHeaderPayloadSkeleton {
+programs/xxxl-svm/src/instruction_payload_skeleton.rs:277:            guardian_set_id: 42,
+programs/xxxl-svm/src/instruction_payload_skeleton.rs:282:        let too_high_threshold = InitializeGuardianSetHeaderPayloadSkeleton {
+programs/xxxl-svm/src/instruction_payload_skeleton.rs:283:            guardian_set_id: 42,
+programs/xxxl-svm/src/instruction_payload_skeleton.rs:289:            validate_guardian_set_header_payload_skeleton(zero_threshold),
+programs/xxxl-svm/src/instruction_payload_skeleton.rs:294:            validate_guardian_set_header_payload_skeleton(too_high_threshold),
+programs/xxxl-svm/src/instruction_payload_skeleton.rs:336:            decode_initialize_guardian_set_header_payload_skeleton(&[0; 9]),
+programs/xxxl-svm/src/local_execution_plan_skeleton.rs:11:        plan_initialize_guardian_set_execution_skeleton,
+programs/xxxl-svm/src/local_execution_plan_skeleton.rs:15:        InitializeGuardianSetExecutionPlanSkeletonInput,
+programs/xxxl-svm/src/local_execution_plan_skeleton.rs:16:        InitializeGuardianSetExecutionPlanSkeletonOutput,
+programs/xxxl-svm/src/local_execution_plan_skeleton.rs:37:    InitializeGuardianSet {
+programs/xxxl-svm/src/local_execution_plan_skeleton.rs:62:    InitializeGuardianSet(InitializeGuardianSetExecutionPlanSkeletonOutput),
+programs/xxxl-svm/src/local_execution_plan_skeleton.rs:110:        XxxlLocalExecutionContextSkeleton::InitializeGuardianSet { .. } => {
+programs/xxxl-svm/src/local_execution_plan_skeleton.rs:111:            XxxlGatewayInstructionTag::InitializeGuardianSet
+programs/xxxl-svm/src/local_execution_plan_skeleton.rs:152:        XxxlLocalExecutionContextSkeleton::InitializeGuardianSet { bump, status } => {
+programs/xxxl-svm/src/local_execution_plan_skeleton.rs:153:            Ok(XxxlLocalExecutionPlanSkeleton::InitializeGuardianSet(
+programs/xxxl-svm/src/local_execution_plan_skeleton.rs:154:                plan_initialize_guardian_set_execution_skeleton(
+programs/xxxl-svm/src/local_execution_plan_skeleton.rs:155:                    InitializeGuardianSetExecutionPlanSkeletonInput {
+programs/xxxl-svm/src/local_execution_plan_skeleton.rs:216:            InitializeGuardianSetHeaderPayloadSkeleton, InitializeMintStatePayloadSkeleton,
+programs/xxxl-svm/src/local_execution_plan_skeleton.rs:254:                    guardian_set_id: 7,
+programs/xxxl-svm/src/local_execution_plan_skeleton.rs:287:    fn local_execution_plans_initialize_guardian_set() {
+programs/xxxl-svm/src/local_execution_plan_skeleton.rs:289:            XxxlTypedInstructionSkeleton::InitializeGuardianSetHeader(
+programs/xxxl-svm/src/local_execution_plan_skeleton.rs:290:                InitializeGuardianSetHeaderPayloadSkeleton {
+programs/xxxl-svm/src/local_execution_plan_skeleton.rs:291:                    guardian_set_id: 7,
+programs/xxxl-svm/src/local_execution_plan_skeleton.rs:299:            expected_account_metas_for_tag(XxxlGatewayInstructionTag::InitializeGuardianSet);
+programs/xxxl-svm/src/local_execution_plan_skeleton.rs:304:            context: XxxlLocalExecutionContextSkeleton::InitializeGuardianSet {
+programs/xxxl-svm/src/local_execution_plan_skeleton.rs:312:            XxxlLocalExecutionPlanSkeleton::InitializeGuardianSet(output) => {
+programs/xxxl-svm/src/local_execution_plan_skeleton.rs:313:                assert_eq!(output.account.guardian_set_id, 7);
+programs/xxxl-svm/src/local_execution_plan_skeleton.rs:415:                    guardian_set_id: 7,
+programs/xxxl-svm/src/local_execution_scenario_skeleton.rs:5:        InitializeGuardianSetHeaderPayloadSkeleton, InitializeMintStatePayloadSkeleton,
+programs/xxxl-svm/src/local_execution_scenario_skeleton.rs:13:        GatewayConfigAccountLayoutSkeleton, GuardianSetHeaderAccountLayoutSkeleton,
+programs/xxxl-svm/src/local_execution_scenario_skeleton.rs:42:    pub guardian_set_id: u64,
+programs/xxxl-svm/src/local_execution_scenario_skeleton.rs:44:    pub guardian_set_bump: u8,
+programs/xxxl-svm/src/local_execution_scenario_skeleton.rs:70:    pub guardian_set: GuardianSetHeaderAccountLayoutSkeleton,
+programs/xxxl-svm/src/local_execution_scenario_skeleton.rs:84:                guardian_set_id: input.guardian_set_id,
+programs/xxxl-svm/src/local_execution_scenario_skeleton.rs:109:    let guardian_set_instruction =
+programs/xxxl-svm/src/local_execution_scenario_skeleton.rs:110:        XxxlTypedInstructionSkeleton::InitializeGuardianSetHeader(
+programs/xxxl-svm/src/local_execution_scenario_skeleton.rs:111:            InitializeGuardianSetHeaderPayloadSkeleton {
+programs/xxxl-svm/src/local_execution_scenario_skeleton.rs:112:                guardian_set_id: input.guardian_set_id,
+programs/xxxl-svm/src/local_execution_scenario_skeleton.rs:118:    let guardian_set_data = encode_typed_instruction_skeleton(guardian_set_instruction);
+programs/xxxl-svm/src/local_execution_scenario_skeleton.rs:119:    let guardian_set_metas =
+programs/xxxl-svm/src/local_execution_scenario_skeleton.rs:120:        expected_account_metas_for_tag(XxxlGatewayInstructionTag::InitializeGuardianSet);
+programs/xxxl-svm/src/local_execution_scenario_skeleton.rs:122:    let guardian_set_plan = plan_local_execution_skeleton(
+programs/xxxl-svm/src/local_execution_scenario_skeleton.rs:124:            instruction_data: &guardian_set_data,
+programs/xxxl-svm/src/local_execution_scenario_skeleton.rs:125:            account_metas: &guardian_set_metas,
+programs/xxxl-svm/src/local_execution_scenario_skeleton.rs:126:            context: XxxlLocalExecutionContextSkeleton::InitializeGuardianSet {
+programs/xxxl-svm/src/local_execution_scenario_skeleton.rs:127:                bump: input.guardian_set_bump,
+programs/xxxl-svm/src/local_execution_scenario_skeleton.rs:133:    let guardian_set = match guardian_set_plan {
+programs/xxxl-svm/src/local_execution_scenario_skeleton.rs:134:        XxxlLocalExecutionPlanSkeleton::InitializeGuardianSet(output) => output.account,
+programs/xxxl-svm/src/local_execution_scenario_skeleton.rs:207:        guardian_set,
+programs/xxxl-svm/src/local_execution_scenario_skeleton.rs:222:            guardian_set_id: 7,
+programs/xxxl-svm/src/local_execution_scenario_skeleton.rs:224:            guardian_set_bump: 251,
+programs/xxxl-svm/src/local_execution_scenario_skeleton.rs:263:        assert_eq!(output.gateway_config.guardian_set_id, input.guardian_set_id);
+programs/xxxl-svm/src/local_execution_scenario_skeleton.rs:270:        assert_eq!(output.guardian_set.guardian_set_id, input.guardian_set_id);
+programs/xxxl-svm/src/local_execution_scenario_skeleton.rs:271:        assert_eq!(output.guardian_set.threshold, input.guardian_threshold);
+programs/xxxl-svm/src/local_execution_scenario_skeleton.rs:272:        assert_eq!(output.guardian_set.guardian_count, input.guardian_count);
+programs/xxxl-svm/src/local_execution_scenario_skeleton.rs:273:        assert_eq!(output.guardian_set.status, input.guardian_status);
+programs/xxxl-svm/src/local_fixture_file_emitter_skeleton.rs:101:        fixture_set.pubkeys.guardian_set,
+programs/xxxl-svm/src/local_fixture_generator_skeleton.rs:70:    pub guardian_set: Pubkey,
+programs/xxxl-svm/src/local_fixture_generator_skeleton.rs:169:            format!("{}_guardian_set", fixture_set_id),
+programs/xxxl-svm/src/local_fixture_generator_skeleton.rs:177:            format!("{}_initialize_guardian_set", fixture_set_id),
+programs/xxxl-svm/src/local_fixture_generator_skeleton.rs:232:        guardian_set: deterministic_pubkey(seed_byte, 0x04),
+programs/xxxl-svm/src/local_fixture_generator_skeleton.rs:383:        assert_ne!(a.gateway_config, a.guardian_set);
+programs/xxxl-svm/src/local_guardian_descriptor_skeleton.rs:27:    EmptyGuardianSetId,
+programs/xxxl-svm/src/local_guardian_descriptor_skeleton.rs:57:    pub guardian_set_id: String,
+programs/xxxl-svm/src/local_guardian_descriptor_skeleton.rs:200:    guardian_set_id: &str,
+programs/xxxl-svm/src/local_guardian_descriptor_skeleton.rs:221:    if guardian_set_id.trim().is_empty() {
+programs/xxxl-svm/src/local_guardian_descriptor_skeleton.rs:222:        return Err(XxxlLocalGuardianDescriptorSkeletonError::EmptyGuardianSetId);
+programs/xxxl-svm/src/local_guardian_descriptor_skeleton.rs:246:        guardian_set_id,
+programs/xxxl-svm/src/local_guardian_descriptor_skeleton.rs:263:        guardian_set_id,
+programs/xxxl-svm/src/local_guardian_descriptor_skeleton.rs:278:        guardian_set_id: guardian_set_id.to_string(),
+programs/xxxl-svm/src/local_guardian_descriptor_skeleton.rs:447:                "guardian_set_1",
+programs/xxxl-svm/src/local_guardian_descriptor_skeleton.rs:461:                "guardian_set_1",
+programs/xxxl-svm/src/local_guardian_descriptor_skeleton.rs:478:                "guardian_set_1",
+programs/xxxl-svm/src/local_guardian_descriptor_skeleton.rs:492:                "guardian_set_1",
+programs/xxxl-svm/src/local_guardian_descriptor_skeleton.rs:509:                "guardian_set_1",
+programs/xxxl-svm/src/local_guardian_descriptor_skeleton.rs:523:                "guardian_set_1",
+programs/xxxl-svm/src/local_guardian_descriptor_skeleton.rs:539:            "guardian_set_1",
+programs/xxxl-svm/src/local_guardian_descriptor_skeleton.rs:575:            "guardian_set_1",
+programs/xxxl-svm/src/local_guardian_descriptor_skeleton.rs:593:            "guardian_set_1",
+programs/xxxl-svm/src/local_guardian_descriptor_skeleton.rs:614:            "guardian_set_1",
+programs/xxxl-svm/src/local_guardian_descriptor_skeleton.rs:626:            "guardian_set_1",
+programs/xxxl-svm/src/local_guardian_failure_matrix_skeleton.rs:67:    pub descriptor_guardian_set_id: String,
+programs/xxxl-svm/src/local_guardian_failure_matrix_skeleton.rs:82:        "guardian_set_mapping",
+programs/xxxl-svm/src/local_guardian_failure_matrix_skeleton.rs:119:    } else if failure_case_id.contains("guardian_set")
+programs/xxxl-svm/src/local_guardian_failure_matrix_skeleton.rs:121:        "guardian_set_mapping"
+programs/xxxl-svm/src/local_guardian_failure_matrix_skeleton.rs:226:        integration.guardian_set_account_fixture.clone(),
+programs/xxxl-svm/src/local_guardian_failure_matrix_skeleton.rs:269:        descriptor_guardian_set_id: integration.descriptor_guardian_set_id.clone(),
+programs/xxxl-svm/src/local_guardian_failure_matrix_skeleton.rs:292:    guardian_set_id: &str,
+programs/xxxl-svm/src/local_guardian_failure_matrix_skeleton.rs:307:        guardian_set_id,
+programs/xxxl-svm/src/local_guardian_failure_matrix_skeleton.rs:386:        assert!(groups.contains(&"guardian_set_mapping"));
+programs/xxxl-svm/src/local_guardian_failure_matrix_skeleton.rs:438:            "guardian_set_1",
+programs/xxxl-svm/src/local_guardian_failure_matrix_skeleton.rs:475:            "guardian_set_1",
+programs/xxxl-svm/src/local_guardian_failure_matrix_skeleton.rs:508:            "guardian_set_1",
+programs/xxxl-svm/src/local_guardian_failure_matrix_skeleton.rs:531:            "guardian_set_1",
+programs/xxxl-svm/src/local_guardian_failure_matrix_skeleton.rs:559:            "guardian_set_1",
+programs/xxxl-svm/src/local_guardian_failure_matrix_skeleton.rs:585:            "guardian_set_1",
+programs/xxxl-svm/src/local_guardian_fixture_integration_skeleton.rs:51:    pub guardian_set_account_fixture: String,
+programs/xxxl-svm/src/local_guardian_fixture_integration_skeleton.rs:57:    pub descriptor_guardian_set_id: String,
+programs/xxxl-svm/src/local_guardian_fixture_integration_skeleton.rs:105:        "guardian_set_id_mismatch".to_string(),
+programs/xxxl-svm/src/local_guardian_fixture_integration_skeleton.rs:143:    guardian_set_id: &str,
+programs/xxxl-svm/src/local_guardian_fixture_integration_skeleton.rs:166:        guardian_set_id,
+programs/xxxl-svm/src/local_guardian_fixture_integration_skeleton.rs:204:        guardian_set_account_fixture: fixture_set.pubkeys.guardian_set.to_string(),
+programs/xxxl-svm/src/local_guardian_fixture_integration_skeleton.rs:210:        descriptor_guardian_set_id: descriptor.guardian_set_id.clone(),
+programs/xxxl-svm/src/local_guardian_fixture_integration_skeleton.rs:319:            "guardian_set_1",
+programs/xxxl-svm/src/local_guardian_fixture_integration_skeleton.rs:333:        assert_eq!(integration.descriptor_guardian_set_id, "guardian_set_1");
+programs/xxxl-svm/src/local_guardian_fixture_integration_skeleton.rs:358:            "guardian_set_1",
+programs/xxxl-svm/src/local_guardian_fixture_integration_skeleton.rs:381:            "guardian_set_1",
+programs/xxxl-svm/src/local_guardian_fixture_integration_skeleton.rs:408:            "guardian_set_1",
+programs/xxxl-svm/src/local_guardian_fixture_integration_skeleton.rs:435:            "guardian_set_1",
+programs/xxxl-svm/src/local_guardian_fixture_integration_skeleton.rs:462:            "guardian_set_1",
+programs/xxxl-svm/src/processor.rs:49:        GatewayConfigAccountView, GuardianSetAccountView, MintStateAccountView,
+programs/xxxl-svm/src/processor.rs:72:    load_phase_41k_2_guardian_set_account_info, GuardianPublicKey,
+programs/xxxl-svm/src/processor.rs:73:    Phase41K2GuardianSetAccountLoadingStatus,
+programs/xxxl-svm/src/processor.rs:131:pub struct B1BLoadedAuthoritativeGuardianSet {
+programs/xxxl-svm/src/processor.rs:132:    pub guardian_set_id: [u8; 32],
+programs/xxxl-svm/src/processor.rs:140:    pub guardian_set_account_readonly: bool,
+programs/xxxl-svm/src/processor.rs:141:    pub guardian_set_account_non_signer: bool,
+programs/xxxl-svm/src/processor.rs:149:pub fn b1b_load_authoritative_guardian_set_for_consume_gateway_mint(
+programs/xxxl-svm/src/processor.rs:153:) -> Result<B1BLoadedAuthoritativeGuardianSet, ProgramError> {
+programs/xxxl-svm/src/processor.rs:154:    let guardian_set_account = account_at(accounts, args.guardian_set_account_index as usize)?;
+programs/xxxl-svm/src/processor.rs:156:    let load = load_phase_41k_2_guardian_set_account_info(
+programs/xxxl-svm/src/processor.rs:157:        Some(guardian_set_account),
+programs/xxxl-svm/src/processor.rs:159:        &args.guardian_set_id,
+programs/xxxl-svm/src/processor.rs:162:    if load.status != Phase41K2GuardianSetAccountLoadingStatus::GuardianSetAccountDataDecoded {
+programs/xxxl-svm/src/processor.rs:166:    let guardian_set_id = load
+programs/xxxl-svm/src/processor.rs:167:        .guardian_set_id
+programs/xxxl-svm/src/processor.rs:173:    if guardian_set_id != args.guardian_set_id {
+programs/xxxl-svm/src/processor.rs:177:    Ok(B1BLoadedAuthoritativeGuardianSet {
+programs/xxxl-svm/src/processor.rs:178:        guardian_set_id,
+programs/xxxl-svm/src/processor.rs:186:        guardian_set_account_readonly: load.guardian_set_account_readonly,
+programs/xxxl-svm/src/processor.rs:187:        guardian_set_account_non_signer: load.guardian_set_account_non_signer,
+programs/xxxl-svm/src/processor.rs:251:    let guardian_set_account = account_at(accounts, args.guardian_set_account_index as usize)?;
+programs/xxxl-svm/src/processor.rs:254:    let guardian_set = load_phase_41k_2_guardian_set_account_info(
+programs/xxxl-svm/src/processor.rs:255:        Some(guardian_set_account),
+programs/xxxl-svm/src/processor.rs:257:        &args.guardian_set_id,
+programs/xxxl-svm/src/processor.rs:260:    if guardian_set.status
+programs/xxxl-svm/src/processor.rs:261:        != Phase41K2GuardianSetAccountLoadingStatus::GuardianSetAccountDataDecoded
+programs/xxxl-svm/src/processor.rs:291:        guardian_set_id: args.guardian_set_id,
+programs/xxxl-svm/src/processor.rs:295:        &guardian_set,
+programs/xxxl-svm/src/processor.rs:665:    let guardian_set_account = account_at(accounts, args.guardian_set_account_index as usize)?;
+programs/xxxl-svm/src/processor.rs:688:        guardian_set_account,
+programs/xxxl-svm/src/processor.rs:700:    let guardian_set_data = guardian_set_account.try_borrow_data()?;
+programs/xxxl-svm/src/processor.rs:705:    let guardian_set = GuardianSetAccountView::new(&guardian_set_data)?;
+programs/xxxl-svm/src/processor.rs:721:        || gateway_config.guardian_set_id() != args.guardian_set_id
+programs/xxxl-svm/src/processor.rs:732:    if guardian_set.guardian_set_id() != args.guardian_set_id {
+programs/xxxl-svm/src/processor.rs:798:        find_phase_41k_2_guardian_set_pda, GUARDIAN_PUBLIC_KEY_LEN,
+programs/xxxl-svm/src/processor.rs:808:            GUARDIAN_SET_ACCOUNT_DISCRIMINATOR, GUARDIAN_SET_ACCOUNT_LEN,
+programs/xxxl-svm/src/processor.rs:1031:    fn handler_integration_rejects_gateway_config_guardian_set_id_mismatch() {
+programs/xxxl-svm/src/processor.rs:1079:    fn handler_integration_rejects_wrong_guardian_set_id() {
+programs/xxxl-svm/src/processor.rs:1081:        fixture.data.guardian_set[272] ^= 0xff;
+programs/xxxl-svm/src/processor.rs:1758:    fn b1b_authoritative_guardian_set_loads_valid_program_controlled_pda() {
+programs/xxxl-svm/src/processor.rs:1760:        b1b_configure_valid_guardian_set(&mut fixture);
+programs/xxxl-svm/src/processor.rs:1766:        let loaded = b1b_load_authoritative_guardian_set_for_consume_gateway_mint(
+programs/xxxl-svm/src/processor.rs:1773:        assert_eq!(loaded.guardian_set_id, args.guardian_set_id);
+programs/xxxl-svm/src/processor.rs:1781:        assert!(loaded.guardian_set_account_readonly);
+programs/xxxl-svm/src/processor.rs:1782:        assert!(loaded.guardian_set_account_non_signer);
+programs/xxxl-svm/src/processor.rs:1791:    fn b1b_authoritative_guardian_set_rejects_wrong_pda() {
+programs/xxxl-svm/src/processor.rs:1793:        b1b_configure_valid_guardian_set(&mut fixture);
+programs/xxxl-svm/src/processor.rs:1794:        fixture.keys.guardian_set = Pubkey::new_unique();
+programs/xxxl-svm/src/processor.rs:1796:        b1b_assert_guardian_set_load_rejects(&mut fixture);
+programs/xxxl-svm/src/processor.rs:1801:    fn b1b_authoritative_guardian_set_rejects_inactive_set() {
+programs/xxxl-svm/src/processor.rs:1803:        b1b_configure_valid_guardian_set(&mut fixture);
+programs/xxxl-svm/src/processor.rs:1804:        fixture.data.guardian_set[GUARDIAN_SET_ACTIVE_STATUS_OFFSET] = 2;
+programs/xxxl-svm/src/processor.rs:1806:        b1b_assert_guardian_set_load_rejects(&mut fixture);
+programs/xxxl-svm/src/processor.rs:1811:    fn b1b_authoritative_guardian_set_rejects_zero_threshold() {
+programs/xxxl-svm/src/processor.rs:1813:        b1b_configure_valid_guardian_set(&mut fixture);
+programs/xxxl-svm/src/processor.rs:1814:        fixture.data.guardian_set
+programs/xxxl-svm/src/processor.rs:1818:        b1b_assert_guardian_set_load_rejects(&mut fixture);
+programs/xxxl-svm/src/processor.rs:1823:    fn b1b_authoritative_guardian_set_rejects_threshold_above_count() {
+programs/xxxl-svm/src/processor.rs:1825:        b1b_configure_valid_guardian_set(&mut fixture);
+programs/xxxl-svm/src/processor.rs:1826:        fixture.data.guardian_set
+programs/xxxl-svm/src/processor.rs:1830:        b1b_assert_guardian_set_load_rejects(&mut fixture);
+programs/xxxl-svm/src/processor.rs:1835:    fn b1b_authoritative_guardian_set_rejects_empty_guardian_set() {
+programs/xxxl-svm/src/processor.rs:1837:        b1b_configure_valid_guardian_set(&mut fixture);
+programs/xxxl-svm/src/processor.rs:1838:        fixture.data.guardian_set[GUARDIAN_SET_GUARDIAN_COUNT_OFFSET] = 0;
+programs/xxxl-svm/src/processor.rs:1840:        b1b_assert_guardian_set_load_rejects(&mut fixture);
+programs/xxxl-svm/src/processor.rs:1845:    fn b1b_authoritative_guardian_set_rejects_duplicate_guardian_key() {
+programs/xxxl-svm/src/processor.rs:1847:        b1b_configure_valid_guardian_set(&mut fixture);
+programs/xxxl-svm/src/processor.rs:1852:            fixture.data.guardian_set[first_start..first_start + GUARDIAN_PUBLIC_KEY_LEN].to_vec();
+programs/xxxl-svm/src/processor.rs:1853:        fixture.data.guardian_set[second_start..second_start + GUARDIAN_PUBLIC_KEY_LEN]
+programs/xxxl-svm/src/processor.rs:1856:        b1b_assert_guardian_set_load_rejects(&mut fixture);
+programs/xxxl-svm/src/processor.rs:1860:    fn b1b_configure_valid_guardian_set(fixture: &mut HandlerFixture) {
+programs/xxxl-svm/src/processor.rs:1861:        let (guardian_set_pda, _) =
+programs/xxxl-svm/src/processor.rs:1862:            find_phase_41k_2_guardian_set_pda(&fixture.program_id, &fixture.args.guardian_set_id);
+programs/xxxl-svm/src/processor.rs:1866:        fixture.keys.guardian_set = guardian_set_pda;
+programs/xxxl-svm/src/processor.rs:1867:        fixture.data.guardian_set =
+programs/xxxl-svm/src/processor.rs:1868:            b1b_guardian_set_data(fixture.args.guardian_set_id, 2, &guardians);
+programs/xxxl-svm/src/processor.rs:1869:        fixture.lamports.guardian_set =
+programs/xxxl-svm/src/processor.rs:1870:            Rent::default().minimum_balance(fixture.data.guardian_set.len());
+programs/xxxl-svm/src/processor.rs:1874:    fn b1b_guardian_set_data(
+programs/xxxl-svm/src/processor.rs:1875:        guardian_set_id: [u8; 32],
+programs/xxxl-svm/src/processor.rs:1879:        let mut data = account_data(GUARDIAN_SET_ACCOUNT_LEN, GUARDIAN_SET_ACCOUNT_DISCRIMINATOR);
+programs/xxxl-svm/src/processor.rs:1885:        data[272..304].copy_from_slice(&guardian_set_id);
+programs/xxxl-svm/src/processor.rs:1896:    fn b1b_assert_guardian_set_load_rejects(fixture: &mut HandlerFixture) {
+programs/xxxl-svm/src/processor.rs:1902:            b1b_load_authoritative_guardian_set_for_consume_gateway_mint(
+programs/xxxl-svm/src/processor.rs:1930:        guardian_set: Pubkey,
+programs/xxxl-svm/src/processor.rs:1945:        guardian_set: u64,
+programs/xxxl-svm/src/processor.rs:1959:        guardian_set: Vec<u8>,
+programs/xxxl-svm/src/processor.rs:1979:            let guardian_set_id = [0x22; 32];
+programs/xxxl-svm/src/processor.rs:1995:                guardian_set: Pubkey::new_unique(),
+programs/xxxl-svm/src/processor.rs:2012:                    guardian_set_id,
+programs/xxxl-svm/src/processor.rs:2016:                guardian_set: guardian_set_data(guardian_set_id),
+programs/xxxl-svm/src/processor.rs:2036:                guardian_set: rent.minimum_balance(data.guardian_set.len()),
+programs/xxxl-svm/src/processor.rs:2051:                guardian_set_account_index: 2,
+programs/xxxl-svm/src/processor.rs:2056:                guardian_set_id,
+programs/xxxl-svm/src/processor.rs:2110:                    &self.keys.guardian_set,
+programs/xxxl-svm/src/processor.rs:2113:                    &mut self.lamports.guardian_set,
+programs/xxxl-svm/src/processor.rs:2114:                    &mut self.data.guardian_set,
+programs/xxxl-svm/src/processor.rs:2215:        guardian_set_id: [u8; 32],
+programs/xxxl-svm/src/processor.rs:2227:        data[120..152].copy_from_slice(&guardian_set_id);
+programs/xxxl-svm/src/processor.rs:2231:    fn guardian_set_data(guardian_set_id: [u8; 32]) -> Vec<u8> {
+programs/xxxl-svm/src/processor.rs:2232:        let mut data = account_data(GUARDIAN_SET_ACCOUNT_LEN, GUARDIAN_SET_ACCOUNT_DISCRIMINATOR);
+programs/xxxl-svm/src/processor.rs:2233:        data[272..304].copy_from_slice(&guardian_set_id);
+programs/xxxl-svm/src/safety_invariants.rs:245:    pub production_guardian_set_unset_blocker_present: bool,
+programs/xxxl-svm/src/safety_invariants.rs:268:    let production_guardian_set_unset_blocker_present = xxxl_runtime_deployment_report_has_blocker(
+programs/xxxl-svm/src/safety_invariants.rs:269:        XxxlRuntimeDeploymentBlocker::ProductionGuardianSetUnset,
+programs/xxxl-svm/src/safety_invariants.rs:285:        production_guardian_set_unset_blocker_present,
+programs/xxxl-svm/src/safety_invariants.rs:294:            && production_guardian_set_unset_blocker_present
+programs/xxxl-svm/src/safety_invariants.rs:337:        XxxlRuntimeDeploymentBlocker::ProductionGuardianSetUnset,
+programs/xxxl-svm/src/safety_invariants.rs:541:        assert!(report.production_guardian_set_unset_blocker_present);
+programs/xxxl-svm/src/state.rs:7:pub const GUARDIAN_SET_ACCOUNT_LEN: usize = 320;
+programs/xxxl-svm/src/state.rs:37:pub struct GuardianSetAccountView<'a> {
+programs/xxxl-svm/src/state.rs:110:    pub fn guardian_set_id(&self) -> [u8; 32] {
+programs/xxxl-svm/src/state.rs:115:impl<'a> GuardianSetAccountView<'a> {
+programs/xxxl-svm/src/state.rs:119:            GUARDIAN_SET_ACCOUNT_LEN,
+programs/xxxl-svm/src/state.rs:134:    pub fn guardian_set_id(&self) -> [u8; 32] {
+programs/xxxl-svm/src/state.rs:314:        assert_eq!(GUARDIAN_SET_ACCOUNT_LEN, 320);
+programs/xxxl-svm/src/state.rs:400:    fn guardian_set_account_view_parses_known_fields() {
+programs/xxxl-svm/src/state.rs:401:        let mut data = valid_account(GUARDIAN_SET_ACCOUNT_LEN, GUARDIAN_SET_ACCOUNT_DISCRIMINATOR);
+programs/xxxl-svm/src/state.rs:405:        let view = GuardianSetAccountView::new(&data).expect("valid guardian set");
+programs/xxxl-svm/src/state_account_layout_skeleton.rs:29:    pub guardian_set_id: u64,
+programs/xxxl-svm/src/state_account_layout_skeleton.rs:35:pub struct GuardianSetHeaderAccountLayoutSkeleton {
+programs/xxxl-svm/src/state_account_layout_skeleton.rs:38:    pub guardian_set_id: u64,
+programs/xxxl-svm/src/state_account_layout_skeleton.rs:141:    output.extend_from_slice(&account.guardian_set_id.to_le_bytes());
+programs/xxxl-svm/src/state_account_layout_skeleton.rs:158:        guardian_set_id: read_u64_le(input, 50)?,
+programs/xxxl-svm/src/state_account_layout_skeleton.rs:164:pub fn validate_guardian_set_header_account_layout_skeleton(
+programs/xxxl-svm/src/state_account_layout_skeleton.rs:165:    account: GuardianSetHeaderAccountLayoutSkeleton,
+programs/xxxl-svm/src/state_account_layout_skeleton.rs:178:pub fn encode_guardian_set_header_account_layout_skeleton(
+programs/xxxl-svm/src/state_account_layout_skeleton.rs:179:    account: GuardianSetHeaderAccountLayoutSkeleton,
+programs/xxxl-svm/src/state_account_layout_skeleton.rs:185:    output.extend_from_slice(&account.guardian_set_id.to_le_bytes());
+programs/xxxl-svm/src/state_account_layout_skeleton.rs:192:pub fn decode_guardian_set_header_account_layout_skeleton(
+programs/xxxl-svm/src/state_account_layout_skeleton.rs:194:) -> Result<GuardianSetHeaderAccountLayoutSkeleton, XxxlStateAccountLayoutSkeletonError> {
+programs/xxxl-svm/src/state_account_layout_skeleton.rs:198:    let account = GuardianSetHeaderAccountLayoutSkeleton {
+programs/xxxl-svm/src/state_account_layout_skeleton.rs:201:        guardian_set_id: read_u64_le(input, 10)?,
+programs/xxxl-svm/src/state_account_layout_skeleton.rs:207:    validate_guardian_set_header_account_layout_skeleton(account)?;
+programs/xxxl-svm/src/state_account_layout_skeleton.rs:309:            guardian_set_id: 7,
+programs/xxxl-svm/src/state_account_layout_skeleton.rs:322:    fn guardian_set_header_account_layout_round_trips() {
+programs/xxxl-svm/src/state_account_layout_skeleton.rs:323:        let account = GuardianSetHeaderAccountLayoutSkeleton {
+programs/xxxl-svm/src/state_account_layout_skeleton.rs:326:            guardian_set_id: 7,
+programs/xxxl-svm/src/state_account_layout_skeleton.rs:332:        let encoded = encode_guardian_set_header_account_layout_skeleton(account);
+programs/xxxl-svm/src/state_account_layout_skeleton.rs:334:            decode_guardian_set_header_account_layout_skeleton(&encoded).expect("decode ok");
+programs/xxxl-svm/src/state_account_layout_skeleton.rs:401:            guardian_set_id: 7,
+programs/xxxl-svm/src/state_account_layout_skeleton.rs:422:            guardian_set_id: 7,
+programs/xxxl-svm/src/state_account_layout_skeleton.rs:437:    fn guardian_set_header_validation_rejects_invalid_threshold() {
+programs/xxxl-svm/src/state_account_layout_skeleton.rs:438:        let zero_count = GuardianSetHeaderAccountLayoutSkeleton {
+programs/xxxl-svm/src/state_account_layout_skeleton.rs:441:            guardian_set_id: 7,
+programs/xxxl-svm/src/state_account_layout_skeleton.rs:447:        let too_high = GuardianSetHeaderAccountLayoutSkeleton {
+programs/xxxl-svm/src/state_account_layout_skeleton.rs:450:            guardian_set_id: 7,
+programs/xxxl-svm/src/state_account_layout_skeleton.rs:457:            validate_guardian_set_header_account_layout_skeleton(zero_count),
+programs/xxxl-svm/src/state_account_layout_skeleton.rs:462:            validate_guardian_set_header_account_layout_skeleton(too_high),
+programs/xxxl-svm/src/state_initialization_skeleton.rs:4:        InitializeGuardianSetHeaderPayloadSkeleton, InitializeMintStatePayloadSkeleton,
+programs/xxxl-svm/src/state_initialization_skeleton.rs:8:        decode_guardian_set_header_account_layout_skeleton,
+programs/xxxl-svm/src/state_initialization_skeleton.rs:12:        encode_guardian_set_header_account_layout_skeleton,
+programs/xxxl-svm/src/state_initialization_skeleton.rs:16:        GuardianSetHeaderAccountLayoutSkeleton,
+programs/xxxl-svm/src/state_initialization_skeleton.rs:45:pub struct GuardianSetHeaderInitializationSkeletonInput {
+programs/xxxl-svm/src/state_initialization_skeleton.rs:46:    pub payload: InitializeGuardianSetHeaderPayloadSkeleton,
+programs/xxxl-svm/src/state_initialization_skeleton.rs:80:        guardian_set_id: input.payload.guardian_set_id,
+programs/xxxl-svm/src/state_initialization_skeleton.rs:86:pub fn build_guardian_set_header_account_layout_skeleton(
+programs/xxxl-svm/src/state_initialization_skeleton.rs:87:    input: GuardianSetHeaderInitializationSkeletonInput,
+programs/xxxl-svm/src/state_initialization_skeleton.rs:88:) -> Result<GuardianSetHeaderAccountLayoutSkeleton, XxxlStateInitializationSkeletonError> {
+programs/xxxl-svm/src/state_initialization_skeleton.rs:89:    let account = GuardianSetHeaderAccountLayoutSkeleton {
+programs/xxxl-svm/src/state_initialization_skeleton.rs:92:        guardian_set_id: input.payload.guardian_set_id,
+programs/xxxl-svm/src/state_initialization_skeleton.rs:98:    let encoded = encode_guardian_set_header_account_layout_skeleton(account);
+programs/xxxl-svm/src/state_initialization_skeleton.rs:99:    let decoded = decode_guardian_set_header_account_layout_skeleton(&encoded)?;
+programs/xxxl-svm/src/state_initialization_skeleton.rs:152:pub fn encode_and_verify_guardian_set_header_initialization_skeleton(
+programs/xxxl-svm/src/state_initialization_skeleton.rs:153:    input: GuardianSetHeaderInitializationSkeletonInput,
+programs/xxxl-svm/src/state_initialization_skeleton.rs:155:    let account = build_guardian_set_header_account_layout_skeleton(input)?;
+programs/xxxl-svm/src/state_initialization_skeleton.rs:156:    let encoded = encode_guardian_set_header_account_layout_skeleton(account);
+programs/xxxl-svm/src/state_initialization_skeleton.rs:157:    let decoded = decode_guardian_set_header_account_layout_skeleton(&encoded)?;
+programs/xxxl-svm/src/state_initialization_skeleton.rs:223:                guardian_set_id: 7,
+programs/xxxl-svm/src/state_initialization_skeleton.rs:236:        assert_eq!(account.guardian_set_id, 7);
+programs/xxxl-svm/src/state_initialization_skeleton.rs:247:                guardian_set_id: 7,
+programs/xxxl-svm/src/state_initialization_skeleton.rs:261:    fn guardian_set_header_initialization_encodes_and_decodes() {
+programs/xxxl-svm/src/state_initialization_skeleton.rs:262:        let input = GuardianSetHeaderInitializationSkeletonInput {
+programs/xxxl-svm/src/state_initialization_skeleton.rs:263:            payload: InitializeGuardianSetHeaderPayloadSkeleton {
+programs/xxxl-svm/src/state_initialization_skeleton.rs:264:                guardian_set_id: 7,
+programs/xxxl-svm/src/state_initialization_skeleton.rs:273:            encode_and_verify_guardian_set_header_initialization_skeleton(input).expect("encode ok");
+programs/xxxl-svm/src/state_initialization_skeleton.rs:279:    fn guardian_set_header_initialization_rejects_invalid_threshold() {
+programs/xxxl-svm/src/state_initialization_skeleton.rs:280:        let input = GuardianSetHeaderInitializationSkeletonInput {
+programs/xxxl-svm/src/state_initialization_skeleton.rs:281:            payload: InitializeGuardianSetHeaderPayloadSkeleton {
+programs/xxxl-svm/src/state_initialization_skeleton.rs:282:                guardian_set_id: 7,
+programs/xxxl-svm/src/state_initialization_skeleton.rs:291:            encode_and_verify_guardian_set_header_initialization_skeleton(input),
+programs/xxxl-svm/src/state_instruction_skeleton.rs:28:    InitializeGuardianSet = 1,
+programs/xxxl-svm/src/state_instruction_skeleton.rs:44:            1 => Ok(Self::InitializeGuardianSet),
+programs/xxxl-svm/src/state_instruction_skeleton.rs:61:    GuardianSet,
+programs/xxxl-svm/src/state_instruction_skeleton.rs:93:        kind: XxxlStateAccountKind::GuardianSet,
+programs/xxxl-svm/src/state_instruction_skeleton.rs:94:        name: "guardian_set",
+programs/xxxl-svm/src/state_instruction_skeleton.rs:129:pub fn guardian_set_pda(program_id: &Pubkey, guardian_set_id: u64) -> (Pubkey, u8) {
+programs/xxxl-svm/src/state_instruction_skeleton.rs:134:            &guardian_set_id.to_le_bytes(),
+programs/xxxl-svm/src/state_instruction_skeleton.rs:182:        assert_eq!(u8::from(XxxlGatewayInstructionTag::InitializeGuardianSet), 1);
+programs/xxxl-svm/src/state_instruction_skeleton.rs:213:        assert_eq!(skeletons[1].name, "guardian_set");
+programs/xxxl-svm/src/state_instruction_skeleton.rs:249:    fn guardian_set_pda_changes_with_guardian_set_id() {
+programs/xxxl-svm/src/state_instruction_skeleton.rs:252:        let first = guardian_set_pda(&program_id, 1);
+programs/xxxl-svm/src/state_instruction_skeleton.rs:253:        let second = guardian_set_pda(&program_id, 2);
+programs/xxxl-svm/src/typed_instruction_skeleton.rs:9:        decode_initialize_guardian_set_header_payload_skeleton,
+programs/xxxl-svm/src/typed_instruction_skeleton.rs:13:        encode_initialize_guardian_set_header_payload_skeleton,
+programs/xxxl-svm/src/typed_instruction_skeleton.rs:17:        InitializeGuardianSetHeaderPayloadSkeleton,
+programs/xxxl-svm/src/typed_instruction_skeleton.rs:29:    InitializeGuardianSetHeader(InitializeGuardianSetHeaderPayloadSkeleton),
+programs/xxxl-svm/src/typed_instruction_skeleton.rs:60:        XxxlTypedInstructionSkeleton::InitializeGuardianSetHeader(payload) => {
+programs/xxxl-svm/src/typed_instruction_skeleton.rs:62:                XxxlGatewayInstructionTag::InitializeGuardianSet,
+programs/xxxl-svm/src/typed_instruction_skeleton.rs:63:                &encode_initialize_guardian_set_header_payload_skeleton(payload),
+programs/xxxl-svm/src/typed_instruction_skeleton.rs:90:        XxxlGatewayInstructionTag::InitializeGuardianSet => {
+programs/xxxl-svm/src/typed_instruction_skeleton.rs:91:            Ok(XxxlTypedInstructionSkeleton::InitializeGuardianSetHeader(
+programs/xxxl-svm/src/typed_instruction_skeleton.rs:92:                decode_initialize_guardian_set_header_payload_skeleton(decoded.payload)?,
+programs/xxxl-svm/src/typed_instruction_skeleton.rs:128:                    guardian_set_id: 7,
+programs/xxxl-svm/src/typed_instruction_skeleton.rs:140:    fn guardian_set_typed_instruction_round_trips() {
+programs/xxxl-svm/src/typed_instruction_skeleton.rs:142:            XxxlTypedInstructionSkeleton::InitializeGuardianSetHeader(
+programs/xxxl-svm/src/typed_instruction_skeleton.rs:143:                InitializeGuardianSetHeaderPayloadSkeleton {
+programs/xxxl-svm/src/typed_instruction_skeleton.rs:144:                    guardian_set_id: 7,
+programs/xxxl-svm/src/typed_instruction_skeleton.rs:212:        let invalid_guardian_set = InitializeGuardianSetHeaderPayloadSkeleton {
+programs/xxxl-svm/src/typed_instruction_skeleton.rs:213:            guardian_set_id: 7,
+programs/xxxl-svm/src/typed_instruction_skeleton.rs:219:            XxxlGatewayInstructionTag::InitializeGuardianSet,
+programs/xxxl-svm/src/typed_instruction_skeleton.rs:220:            &encode_initialize_guardian_set_header_payload_skeleton(invalid_guardian_set),
+programs/xxxl-svm/src/validated_dispatch_skeleton.rs:81:                    guardian_set_id: 7,
+programs/xxxl-svm/src/validated_dispatch_skeleton.rs:142:                    guardian_set_id: 7,
+programs/xxxl-svm/src/validated_dispatch_skeleton.rs:167:                    guardian_set_id: 7,
+programs/xxxl-svm/src/validated_dispatch_skeleton.rs:197:                    guardian_set_id: 7,
+programs/xxxl-svm/src/validated_dispatch_skeleton.rs:227:                    guardian_set_id: 7,
+programs/xxxl-svm/src/verifier/b1c7_handler_authorization_boundary.rs:13:use super::guardian_set_account_loading_boundary::{
+programs/xxxl-svm/src/verifier/b1c7_handler_authorization_boundary.rs:14:    Phase41K2GuardianSetAccountLoadingResult, Phase41K2GuardianSetAccountLoadingStatus,
+programs/xxxl-svm/src/verifier/b1c7_handler_authorization_boundary.rs:28:    GuardianSetNotDecoded,
+programs/xxxl-svm/src/verifier/b1c7_handler_authorization_boundary.rs:59:    pub wires_b1b_guardian_set: bool,
+programs/xxxl-svm/src/verifier/b1c7_handler_authorization_boundary.rs:75:        wires_b1b_guardian_set: true,
+programs/xxxl-svm/src/verifier/b1c7_handler_authorization_boundary.rs:93:    guardian_set: &Phase41K2GuardianSetAccountLoadingResult,
+programs/xxxl-svm/src/verifier/b1c7_handler_authorization_boundary.rs:97:    if guardian_set.status
+programs/xxxl-svm/src/verifier/b1c7_handler_authorization_boundary.rs:98:        != Phase41K2GuardianSetAccountLoadingStatus::GuardianSetAccountDataDecoded
+programs/xxxl-svm/src/verifier/b1c7_handler_authorization_boundary.rs:100:        return rejected(B1C7HandlerAuthorizationRejectionKind::GuardianSetNotDecoded);
+programs/xxxl-svm/src/verifier/b1c7_handler_authorization_boundary.rs:122:            guardian_set.threshold,
+programs/xxxl-svm/src/verifier/b1c7_handler_authorization_boundary.rs:127:        guardian_set,
+programs/xxxl-svm/src/verifier/b1c7_handler_authorization_boundary.rs:138:            guardian_set.threshold,
+programs/xxxl-svm/src/verifier/b1c7_handler_authorization_boundary.rs:147:    let quorum = count_b1c_validated_guardian_quorum(guardian_set, validated);
+programs/xxxl-svm/src/verifier/b1c7_handler_authorization_boundary.rs:156:            guardian_set.threshold,
+programs/xxxl-svm/src/verifier/b1c7_handler_authorization_boundary.rs:167:        threshold: guardian_set.threshold,
+programs/xxxl-svm/src/verifier/b1c7_handler_authorization_boundary.rs:226:    use crate::verifier::guardian_set_account_loading_boundary::{
+programs/xxxl-svm/src/verifier/b1c7_handler_authorization_boundary.rs:227:        Phase41K2GuardianSetAccountLoadingResult, Phase41K2GuardianSetAccountLoadingStatus,
+programs/xxxl-svm/src/verifier/b1c7_handler_authorization_boundary.rs:243:            guardian_set_id: GUARDIAN_SET_ID,
+programs/xxxl-svm/src/verifier/b1c7_handler_authorization_boundary.rs:247:    fn guardian_set(
+programs/xxxl-svm/src/verifier/b1c7_handler_authorization_boundary.rs:250:    ) -> Phase41K2GuardianSetAccountLoadingResult {
+programs/xxxl-svm/src/verifier/b1c7_handler_authorization_boundary.rs:253:        Phase41K2GuardianSetAccountLoadingResult {
+programs/xxxl-svm/src/verifier/b1c7_handler_authorization_boundary.rs:254:            status: Phase41K2GuardianSetAccountLoadingStatus::GuardianSetAccountDataDecoded,
+programs/xxxl-svm/src/verifier/b1c7_handler_authorization_boundary.rs:257:            guardian_set_id: Some(GUARDIAN_SET_ID),
+programs/xxxl-svm/src/verifier/b1c7_handler_authorization_boundary.rs:274:            guardian_set_id_checked: true,
+programs/xxxl-svm/src/verifier/b1c7_handler_authorization_boundary.rs:276:            guardian_set_account_readonly: true,
+programs/xxxl-svm/src/verifier/b1c7_handler_authorization_boundary.rs:277:            guardian_set_account_non_signer: true,
+programs/xxxl-svm/src/verifier/b1c7_handler_authorization_boundary.rs:279:            caller_supplied_guardian_set_rejected: true,
+programs/xxxl-svm/src/verifier/b1c7_handler_authorization_boundary.rs:285:            guardian_set_runtime_loading_enabled: true,
+programs/xxxl-svm/src/verifier/b1c7_handler_authorization_boundary.rs:382:        assert!(report.wires_b1b_guardian_set);
+programs/xxxl-svm/src/verifier/b1c7_handler_authorization_boundary.rs:396:        Phase41K2GuardianSetAccountLoadingResult,
+programs/xxxl-svm/src/verifier/b1c7_handler_authorization_boundary.rs:406:            guardian_set_id: GUARDIAN_SET_ID,
+programs/xxxl-svm/src/verifier/b1c7_handler_authorization_boundary.rs:412:            guardian_set(2, vec![guardian(0xA1), guardian(0xA2), guardian(0xA3)]),
+programs/xxxl-svm/src/verifier/b1c7_handler_authorization_boundary.rs:420:        let (context, guardian_set, checked_prior_loading, payload_hash) =
+programs/xxxl-svm/src/verifier/b1c7_handler_authorization_boundary.rs:427:        assert_eq!(guardian_set.guardian_set_id, Some(GUARDIAN_SET_ID));
+programs/xxxl-svm/src/verifier/b1c7_handler_authorization_boundary.rs:428:        assert_eq!(guardian_set.threshold, Some(2));
+programs/xxxl-svm/src/verifier/b1c7_handler_authorization_boundary.rs:429:        assert_eq!(guardian_set.guardian_count, 3);
+programs/xxxl-svm/src/verifier/b1c7_handler_authorization_boundary.rs:437:            &guardian_set,
+programs/xxxl-svm/src/verifier/b1c7_handler_authorization_boundary.rs:464:            &guardian_set(2, vec![guardian(1), guardian(2), guardian(3)]),
+programs/xxxl-svm/src/verifier/b1c7_handler_authorization_boundary.rs:491:            &guardian_set(1, vec![guardian(1)]),
+programs/xxxl-svm/src/verifier/b1c7_handler_authorization_boundary.rs:511:            &guardian_set(1, vec![guardian(1)]),
+programs/xxxl-svm/src/verifier/b1c7_handler_authorization_boundary.rs:531:            &guardian_set(2, vec![guardian(1), guardian(2)]),
+programs/xxxl-svm/src/verifier/b1c7_handler_authorization_boundary.rs:551:            &guardian_set(1, vec![guardian(1)]),
+programs/xxxl-svm/src/verifier/b1c_ed25519_evidence_authorization_result.rs:14:    GuardianSetNotLoaded,
+programs/xxxl-svm/src/verifier/b1c_ed25519_evidence_authorization_result.rs:262:    fn guardian_set_not_loaded_rejection_keeps_all_execution_flags_false() {
+programs/xxxl-svm/src/verifier/b1c_ed25519_evidence_authorization_result.rs:264:            B1CEd25519EvidenceAuthorizationRejectionKind::GuardianSetNotLoaded,
+programs/xxxl-svm/src/verifier/b1c_guardian_membership_validation.rs:3:use super::guardian_set_account_loading_boundary::{
+programs/xxxl-svm/src/verifier/b1c_guardian_membership_validation.rs:4:    Phase41K2GuardianSetAccountLoadingResult, Phase41K2GuardianSetAccountLoadingStatus,
+programs/xxxl-svm/src/verifier/b1c_guardian_membership_validation.rs:18:    GuardianSetNotDecoded,
+programs/xxxl-svm/src/verifier/b1c_guardian_membership_validation.rs:19:    MissingGuardianSetId,
+programs/xxxl-svm/src/verifier/b1c_guardian_membership_validation.rs:27:    pub guardian_set_id: [u8; 32],
+programs/xxxl-svm/src/verifier/b1c_guardian_membership_validation.rs:53:    pub consumes_b1b_authoritative_guardian_set: bool,
+programs/xxxl-svm/src/verifier/b1c_guardian_membership_validation.rs:69:        consumes_b1b_authoritative_guardian_set: true,
+programs/xxxl-svm/src/verifier/b1c_guardian_membership_validation.rs:87:    guardian_set: &Phase41K2GuardianSetAccountLoadingResult,
+programs/xxxl-svm/src/verifier/b1c_guardian_membership_validation.rs:90:    if guardian_set.status
+programs/xxxl-svm/src/verifier/b1c_guardian_membership_validation.rs:91:        != Phase41K2GuardianSetAccountLoadingStatus::GuardianSetAccountDataDecoded
+programs/xxxl-svm/src/verifier/b1c_guardian_membership_validation.rs:94:            B1CGuardianMembershipValidationRejectionKind::GuardianSetNotDecoded,
+programs/xxxl-svm/src/verifier/b1c_guardian_membership_validation.rs:97:            guardian_set.guardian_count,
+programs/xxxl-svm/src/verifier/b1c_guardian_membership_validation.rs:102:    let Some(guardian_set_id) = guardian_set.guardian_set_id else {
+programs/xxxl-svm/src/verifier/b1c_guardian_membership_validation.rs:104:            B1CGuardianMembershipValidationRejectionKind::MissingGuardianSetId,
+programs/xxxl-svm/src/verifier/b1c_guardian_membership_validation.rs:107:            guardian_set.guardian_count,
+programs/xxxl-svm/src/verifier/b1c_guardian_membership_validation.rs:117:            guardian_set.guardian_count,
+programs/xxxl-svm/src/verifier/b1c_guardian_membership_validation.rs:127:        if !guardian_set.guardians.contains(&signer) {
+programs/xxxl-svm/src/verifier/b1c_guardian_membership_validation.rs:132:                guardian_set.guardian_count,
+programs/xxxl-svm/src/verifier/b1c_guardian_membership_validation.rs:147:            guardian_set_id,
+programs/xxxl-svm/src/verifier/b1c_guardian_membership_validation.rs:150:        source_guardian_count: guardian_set.guardian_count,
+programs/xxxl-svm/src/verifier/b1c_guardian_membership_validation.rs:189:    use super::super::guardian_set_account_loading_boundary::Phase41K2GuardianSetAccountRejectionCase;
+programs/xxxl-svm/src/verifier/b1c_guardian_membership_validation.rs:207:    fn guardian_set(
+programs/xxxl-svm/src/verifier/b1c_guardian_membership_validation.rs:208:        status: Phase41K2GuardianSetAccountLoadingStatus,
+programs/xxxl-svm/src/verifier/b1c_guardian_membership_validation.rs:210:    ) -> Phase41K2GuardianSetAccountLoadingResult {
+programs/xxxl-svm/src/verifier/b1c_guardian_membership_validation.rs:212:            status == Phase41K2GuardianSetAccountLoadingStatus::GuardianSetAccountDataDecoded;
+programs/xxxl-svm/src/verifier/b1c_guardian_membership_validation.rs:215:        Phase41K2GuardianSetAccountLoadingResult {
+programs/xxxl-svm/src/verifier/b1c_guardian_membership_validation.rs:220:                Some(Phase41K2GuardianSetAccountRejectionCase::InactiveOrDeprecatedGuardianSet)
+programs/xxxl-svm/src/verifier/b1c_guardian_membership_validation.rs:223:            guardian_set_id: if decoded { Some(GUARDIAN_SET_ID) } else { None },
+programs/xxxl-svm/src/verifier/b1c_guardian_membership_validation.rs:240:            guardian_set_id_checked: true,
+programs/xxxl-svm/src/verifier/b1c_guardian_membership_validation.rs:242:            guardian_set_account_readonly: true,
+programs/xxxl-svm/src/verifier/b1c_guardian_membership_validation.rs:243:            guardian_set_account_non_signer: true,
+programs/xxxl-svm/src/verifier/b1c_guardian_membership_validation.rs:245:            caller_supplied_guardian_set_rejected: true,
+programs/xxxl-svm/src/verifier/b1c_guardian_membership_validation.rs:251:            guardian_set_runtime_loading_enabled: true,
+programs/xxxl-svm/src/verifier/b1c_guardian_membership_validation.rs:264:    fn decoded_guardian_set() -> Phase41K2GuardianSetAccountLoadingResult {
+programs/xxxl-svm/src/verifier/b1c_guardian_membership_validation.rs:265:        guardian_set(
+programs/xxxl-svm/src/verifier/b1c_guardian_membership_validation.rs:266:            Phase41K2GuardianSetAccountLoadingStatus::GuardianSetAccountDataDecoded,
+programs/xxxl-svm/src/verifier/b1c_guardian_membership_validation.rs:288:        assert!(report.consumes_b1b_authoritative_guardian_set);
+programs/xxxl-svm/src/verifier/b1c_guardian_membership_validation.rs:303:            &decoded_guardian_set(),
+programs/xxxl-svm/src/verifier/b1c_guardian_membership_validation.rs:314:        assert_eq!(validated.guardian_set_id, GUARDIAN_SET_ID);
+programs/xxxl-svm/src/verifier/b1c_guardian_membership_validation.rs:323:            &decoded_guardian_set(),
+programs/xxxl-svm/src/verifier/b1c_guardian_membership_validation.rs:344:            &decoded_guardian_set(),
+programs/xxxl-svm/src/verifier/b1c_guardian_membership_validation.rs:364:            validate_b1c_payload_bound_evidence_guardian_membership(&decoded_guardian_set(), &[]);
+programs/xxxl-svm/src/verifier/b1c_guardian_membership_validation.rs:380:            &decoded_guardian_set(),
+programs/xxxl-svm/src/verifier/b1c_guardian_membership_validation.rs:399:    fn rejected_guardian_set_rejects() {
+programs/xxxl-svm/src/verifier/b1c_guardian_membership_validation.rs:400:        let source = guardian_set(
+programs/xxxl-svm/src/verifier/b1c_guardian_membership_validation.rs:401:            Phase41K2GuardianSetAccountLoadingStatus::GuardianSetAccountDataRejected,
+programs/xxxl-svm/src/verifier/b1c_guardian_membership_validation.rs:414:            Some(B1CGuardianMembershipValidationRejectionKind::GuardianSetNotDecoded)
+programs/xxxl-svm/src/verifier/b1c_instructions_sysvar_evidence_bridge.rs:315:            guardian_set_runtime_loading_enabled: false,
+programs/xxxl-svm/src/verifier/b1c_payload_hash_binding.rs:17:    pub guardian_set_id: [u8; 32],
+programs/xxxl-svm/src/verifier/b1c_payload_hash_binding.rs:113:        &context.guardian_set_id,
+programs/xxxl-svm/src/verifier/b1c_payload_hash_binding.rs:217:            guardian_set_id: [7; 32],
+programs/xxxl-svm/src/verifier/b1c_payload_hash_binding.rs:288:            guardian_set_id: [0xC7; 32],
+programs/xxxl-svm/src/verifier/b1c_payload_hash_binding.rs:383:        changed.guardian_set_id[0] ^= 0xff;
+programs/xxxl-svm/src/verifier/b1c_payload_hash_binding.rs:390:        changed.guardian_set_id[31] ^= 0xff;
+programs/xxxl-svm/src/verifier/b1c_payload_hash_binding.rs:430:        c.guardian_set_id[0] ^= 0xff;
+programs/xxxl-svm/src/verifier/b1c_payload_hash_binding.rs:434:        c.guardian_set_id[31] ^= 0xff;
+programs/xxxl-svm/src/verifier/b1c_quorum_counting.rs:3:use super::guardian_set_account_loading_boundary::{
+programs/xxxl-svm/src/verifier/b1c_quorum_counting.rs:4:    Phase41K2GuardianSetAccountLoadingResult, Phase41K2GuardianSetAccountLoadingStatus,
+programs/xxxl-svm/src/verifier/b1c_quorum_counting.rs:19:    GuardianSetNotDecoded,
+programs/xxxl-svm/src/verifier/b1c_quorum_counting.rs:20:    MissingGuardianSetId,
+programs/xxxl-svm/src/verifier/b1c_quorum_counting.rs:22:    GuardianSetIdMismatch,
+programs/xxxl-svm/src/verifier/b1c_quorum_counting.rs:33:    pub guardian_set_id: Option<[u8; 32]>,
+programs/xxxl-svm/src/verifier/b1c_quorum_counting.rs:80:    guardian_set: &Phase41K2GuardianSetAccountLoadingResult,
+programs/xxxl-svm/src/verifier/b1c_quorum_counting.rs:83:    if guardian_set.status
+programs/xxxl-svm/src/verifier/b1c_quorum_counting.rs:84:        != Phase41K2GuardianSetAccountLoadingStatus::GuardianSetAccountDataDecoded
+programs/xxxl-svm/src/verifier/b1c_quorum_counting.rs:87:            B1CQuorumCountingRejectionKind::GuardianSetNotDecoded,
+programs/xxxl-svm/src/verifier/b1c_quorum_counting.rs:88:            guardian_set.guardian_set_id,
+programs/xxxl-svm/src/verifier/b1c_quorum_counting.rs:89:            guardian_set.threshold,
+programs/xxxl-svm/src/verifier/b1c_quorum_counting.rs:90:            guardian_set.guardian_count,
+programs/xxxl-svm/src/verifier/b1c_quorum_counting.rs:97:    let Some(guardian_set_id) = guardian_set.guardian_set_id else {
+programs/xxxl-svm/src/verifier/b1c_quorum_counting.rs:99:            B1CQuorumCountingRejectionKind::MissingGuardianSetId,
+programs/xxxl-svm/src/verifier/b1c_quorum_counting.rs:101:            guardian_set.threshold,
+programs/xxxl-svm/src/verifier/b1c_quorum_counting.rs:102:            guardian_set.guardian_count,
+programs/xxxl-svm/src/verifier/b1c_quorum_counting.rs:109:    let Some(threshold) = guardian_set.threshold else {
+programs/xxxl-svm/src/verifier/b1c_quorum_counting.rs:112:            Some(guardian_set_id),
+programs/xxxl-svm/src/verifier/b1c_quorum_counting.rs:114:            guardian_set.guardian_count,
+programs/xxxl-svm/src/verifier/b1c_quorum_counting.rs:121:    if guardian_set_id != validated.guardian_set_id {
+programs/xxxl-svm/src/verifier/b1c_quorum_counting.rs:123:            B1CQuorumCountingRejectionKind::GuardianSetIdMismatch,
+programs/xxxl-svm/src/verifier/b1c_quorum_counting.rs:124:            Some(guardian_set_id),
+programs/xxxl-svm/src/verifier/b1c_quorum_counting.rs:126:            guardian_set.guardian_count,
+programs/xxxl-svm/src/verifier/b1c_quorum_counting.rs:136:            Some(guardian_set_id),
+programs/xxxl-svm/src/verifier/b1c_quorum_counting.rs:138:            guardian_set.guardian_count,
+programs/xxxl-svm/src/verifier/b1c_quorum_counting.rs:148:            Some(guardian_set_id),
+programs/xxxl-svm/src/verifier/b1c_quorum_counting.rs:150:            guardian_set.guardian_count,
+programs/xxxl-svm/src/verifier/b1c_quorum_counting.rs:157:    if usize::from(threshold) > guardian_set.guardian_count {
+programs/xxxl-svm/src/verifier/b1c_quorum_counting.rs:160:            Some(guardian_set_id),
+programs/xxxl-svm/src/verifier/b1c_quorum_counting.rs:162:            guardian_set.guardian_count,
+programs/xxxl-svm/src/verifier/b1c_quorum_counting.rs:180:            Some(guardian_set_id),
+programs/xxxl-svm/src/verifier/b1c_quorum_counting.rs:182:            guardian_set.guardian_count,
+programs/xxxl-svm/src/verifier/b1c_quorum_counting.rs:192:        guardian_set_id: Some(guardian_set_id),
+programs/xxxl-svm/src/verifier/b1c_quorum_counting.rs:194:        guardian_count: guardian_set.guardian_count,
+programs/xxxl-svm/src/verifier/b1c_quorum_counting.rs:210:    guardian_set_id: Option<[u8; 32]>,
+programs/xxxl-svm/src/verifier/b1c_quorum_counting.rs:224:        guardian_set_id,
+programs/xxxl-svm/src/verifier/b1c_quorum_counting.rs:242:    use super::super::guardian_set_account_loading_boundary::Phase41K2GuardianSetAccountRejectionCase;
+programs/xxxl-svm/src/verifier/b1c_quorum_counting.rs:255:            guardian_set_id: GUARDIAN_SET_ID,
+programs/xxxl-svm/src/verifier/b1c_quorum_counting.rs:260:    fn guardian_set(
+programs/xxxl-svm/src/verifier/b1c_quorum_counting.rs:263:        status: Phase41K2GuardianSetAccountLoadingStatus,
+programs/xxxl-svm/src/verifier/b1c_quorum_counting.rs:264:        guardian_set_id: Option<[u8; 32]>,
+programs/xxxl-svm/src/verifier/b1c_quorum_counting.rs:265:    ) -> Phase41K2GuardianSetAccountLoadingResult {
+programs/xxxl-svm/src/verifier/b1c_quorum_counting.rs:267:            status == Phase41K2GuardianSetAccountLoadingStatus::GuardianSetAccountDataDecoded;
+programs/xxxl-svm/src/verifier/b1c_quorum_counting.rs:269:        Phase41K2GuardianSetAccountLoadingResult {
+programs/xxxl-svm/src/verifier/b1c_quorum_counting.rs:274:                Some(Phase41K2GuardianSetAccountRejectionCase::InactiveOrDeprecatedGuardianSet)
+programs/xxxl-svm/src/verifier/b1c_quorum_counting.rs:277:            guardian_set_id,
+programs/xxxl-svm/src/verifier/b1c_quorum_counting.rs:294:            guardian_set_id_checked: true,
+programs/xxxl-svm/src/verifier/b1c_quorum_counting.rs:296:            guardian_set_account_readonly: true,
+programs/xxxl-svm/src/verifier/b1c_quorum_counting.rs:297:            guardian_set_account_non_signer: true,
+programs/xxxl-svm/src/verifier/b1c_quorum_counting.rs:299:            caller_supplied_guardian_set_rejected: true,
+programs/xxxl-svm/src/verifier/b1c_quorum_counting.rs:305:            guardian_set_runtime_loading_enabled: true,
+programs/xxxl-svm/src/verifier/b1c_quorum_counting.rs:318:    fn decoded_guardian_set(threshold: u8) -> Phase41K2GuardianSetAccountLoadingResult {
+programs/xxxl-svm/src/verifier/b1c_quorum_counting.rs:319:        guardian_set(
+programs/xxxl-svm/src/verifier/b1c_quorum_counting.rs:322:            Phase41K2GuardianSetAccountLoadingStatus::GuardianSetAccountDataDecoded,
+programs/xxxl-svm/src/verifier/b1c_quorum_counting.rs:352:            &decoded_guardian_set(1),
+programs/xxxl-svm/src/verifier/b1c_quorum_counting.rs:366:            &decoded_guardian_set(1),
+programs/xxxl-svm/src/verifier/b1c_quorum_counting.rs:382:            &decoded_guardian_set(2),
+programs/xxxl-svm/src/verifier/b1c_quorum_counting.rs:395:            &decoded_guardian_set(2),
+programs/xxxl-svm/src/verifier/b1c_quorum_counting.rs:408:            &decoded_guardian_set(2),
+programs/xxxl-svm/src/verifier/b1c_quorum_counting.rs:421:            &decoded_guardian_set(2),
+programs/xxxl-svm/src/verifier/b1c_quorum_counting.rs:439:            count_b1c_validated_guardian_quorum(&decoded_guardian_set(1), &validated(Vec::new()));
+programs/xxxl-svm/src/verifier/b1c_quorum_counting.rs:452:            &decoded_guardian_set(0),
+programs/xxxl-svm/src/verifier/b1c_quorum_counting.rs:467:            &guardian_set(
+programs/xxxl-svm/src/verifier/b1c_quorum_counting.rs:470:                Phase41K2GuardianSetAccountLoadingStatus::GuardianSetAccountDataDecoded,
+programs/xxxl-svm/src/verifier/b1c_quorum_counting.rs:485:    fn guardian_set_id_mismatch_rejects() {
+programs/xxxl-svm/src/verifier/b1c_quorum_counting.rs:487:            &guardian_set(
+programs/xxxl-svm/src/verifier/b1c_quorum_counting.rs:490:                Phase41K2GuardianSetAccountLoadingStatus::GuardianSetAccountDataDecoded,
+programs/xxxl-svm/src/verifier/b1c_quorum_counting.rs:499:            Some(B1CQuorumCountingRejectionKind::GuardianSetIdMismatch)
+programs/xxxl-svm/src/verifier/b1c_quorum_counting.rs:505:    fn rejected_guardian_set_rejects() {
+programs/xxxl-svm/src/verifier/b1c_quorum_counting.rs:507:            &guardian_set(
+programs/xxxl-svm/src/verifier/b1c_quorum_counting.rs:510:                Phase41K2GuardianSetAccountLoadingStatus::GuardianSetAccountDataRejected,
+programs/xxxl-svm/src/verifier/b1c_quorum_counting.rs:519:            Some(B1CQuorumCountingRejectionKind::GuardianSetNotDecoded)
+programs/xxxl-svm/src/verifier/ed25519_verification_evidence_coverage_matrix.rs:123:        FutureEd25519VerificationEvidenceRequirement::GuardianSetIdMatch,
+programs/xxxl-svm/src/verifier/ed25519_verification_evidence_coverage_matrix.rs:125:        Some(FutureEd25519VerificationEvidenceRejectionCase::GuardianSetMismatch),
+programs/xxxl-svm/src/verifier/ed25519_verification_evidence_coverage_matrix.rs:361:            FutureEd25519VerificationEvidenceRequirement::GuardianSetIdMatch,
+programs/xxxl-svm/src/verifier/ed25519_verification_evidence_coverage_matrix.rs:371:            Some(FutureEd25519VerificationEvidenceRejectionCase::GuardianSetMismatch)
+programs/xxxl-svm/src/verifier/ed25519_verification_evidence_integration_design.rs:18:    GuardianSetIdMatch,
+programs/xxxl-svm/src/verifier/ed25519_verification_evidence_integration_design.rs:39:    GuardianSetMismatch,
+programs/xxxl-svm/src/verifier/ed25519_verification_evidence_integration_design.rs:63:    pub future_guardian_set_binding_required: bool,
+programs/xxxl-svm/src/verifier/ed25519_verification_evidence_integration_design.rs:100:    FutureEd25519VerificationEvidenceRequirement::GuardianSetIdMatch,
+programs/xxxl-svm/src/verifier/ed25519_verification_evidence_integration_design.rs:121:    FutureEd25519VerificationEvidenceRejectionCase::GuardianSetMismatch,
+programs/xxxl-svm/src/verifier/ed25519_verification_evidence_integration_design.rs:146:        future_guardian_set_binding_required: true,
+programs/xxxl-svm/src/verifier/ed25519_verification_evidence_integration_design.rs:272:        assert!(report.future_guardian_set_binding_required);
+programs/xxxl-svm/src/verifier/guardian_membership_validation_boundary.rs:17:pub enum AuthoritativeGuardianSetSource {
+programs/xxxl-svm/src/verifier/guardian_membership_validation_boundary.rs:24:pub struct AuthoritativeGuardianSetRef<'a> {
+programs/xxxl-svm/src/verifier/guardian_membership_validation_boundary.rs:25:    guardian_set_id: &'a [u8; 32],
+programs/xxxl-svm/src/verifier/guardian_membership_validation_boundary.rs:28:    source: AuthoritativeGuardianSetSource,
+programs/xxxl-svm/src/verifier/guardian_membership_validation_boundary.rs:32:impl<'a> AuthoritativeGuardianSetRef<'a> {
+programs/xxxl-svm/src/verifier/guardian_membership_validation_boundary.rs:34:        guardian_set_id: &'a [u8; 32],
+programs/xxxl-svm/src/verifier/guardian_membership_validation_boundary.rs:39:            guardian_set_id,
+programs/xxxl-svm/src/verifier/guardian_membership_validation_boundary.rs:42:            source: AuthoritativeGuardianSetSource::ProgramControlledOnChain,
+programs/xxxl-svm/src/verifier/guardian_membership_validation_boundary.rs:48:        guardian_set_id: &'a [u8; 32],
+programs/xxxl-svm/src/verifier/guardian_membership_validation_boundary.rs:53:            guardian_set_id,
+programs/xxxl-svm/src/verifier/guardian_membership_validation_boundary.rs:56:            source: AuthoritativeGuardianSetSource::CallerInstructionData,
+programs/xxxl-svm/src/verifier/guardian_membership_validation_boundary.rs:62:        guardian_set_id: &'a [u8; 32],
+programs/xxxl-svm/src/verifier/guardian_membership_validation_boundary.rs:67:            guardian_set_id,
+programs/xxxl-svm/src/verifier/guardian_membership_validation_boundary.rs:70:            source: AuthoritativeGuardianSetSource::Unauthenticated,
+programs/xxxl-svm/src/verifier/guardian_membership_validation_boundary.rs:75:    pub fn guardian_set_id(&self) -> &'a [u8; 32] {
+programs/xxxl-svm/src/verifier/guardian_membership_validation_boundary.rs:76:        self.guardian_set_id
+programs/xxxl-svm/src/verifier/guardian_membership_validation_boundary.rs:87:    pub fn source(&self) -> AuthoritativeGuardianSetSource {
+programs/xxxl-svm/src/verifier/guardian_membership_validation_boundary.rs:104:    pub guardian_set_id: [u8; 32],
+programs/xxxl-svm/src/verifier/guardian_membership_validation_boundary.rs:136:    UnauthenticatedGuardianSet,
+programs/xxxl-svm/src/verifier/guardian_membership_validation_boundary.rs:137:    CallerSuppliedGuardianSetRejected,
+programs/xxxl-svm/src/verifier/guardian_membership_validation_boundary.rs:138:    EmptyGuardianSet,
+programs/xxxl-svm/src/verifier/guardian_membership_validation_boundary.rs:140:    ThresholdExceedsGuardianSet,
+programs/xxxl-svm/src/verifier/guardian_membership_validation_boundary.rs:142:    GuardianSetIdMismatch,
+programs/xxxl-svm/src/verifier/guardian_membership_validation_boundary.rs:143:    PayloadGuardianSetIdMismatch,
+programs/xxxl-svm/src/verifier/guardian_membership_validation_boundary.rs:153:    pub guardian_set_source: AuthoritativeGuardianSetSource,
+programs/xxxl-svm/src/verifier/guardian_membership_validation_boundary.rs:154:    pub guardian_set_from_caller_instruction_data: bool,
+programs/xxxl-svm/src/verifier/guardian_membership_validation_boundary.rs:182:    pub requires_authoritative_guardian_set_wrapper: bool,
+programs/xxxl-svm/src/verifier/guardian_membership_validation_boundary.rs:183:    pub rejects_caller_supplied_guardian_set: bool,
+programs/xxxl-svm/src/verifier/guardian_membership_validation_boundary.rs:184:    pub rejects_unauthenticated_guardian_set: bool,
+programs/xxxl-svm/src/verifier/guardian_membership_validation_boundary.rs:185:    pub checks_payload_guardian_set_id_binding: bool,
+programs/xxxl-svm/src/verifier/guardian_membership_validation_boundary.rs:186:    pub rejects_empty_guardian_set: bool,
+programs/xxxl-svm/src/verifier/guardian_membership_validation_boundary.rs:229:    requires_authoritative_guardian_set_wrapper: true,
+programs/xxxl-svm/src/verifier/guardian_membership_validation_boundary.rs:230:    rejects_caller_supplied_guardian_set: true,
+programs/xxxl-svm/src/verifier/guardian_membership_validation_boundary.rs:231:    rejects_unauthenticated_guardian_set: true,
+programs/xxxl-svm/src/verifier/guardian_membership_validation_boundary.rs:232:    checks_payload_guardian_set_id_binding: true,
+programs/xxxl-svm/src/verifier/guardian_membership_validation_boundary.rs:233:    rejects_empty_guardian_set: true,
+programs/xxxl-svm/src/verifier/guardian_membership_validation_boundary.rs:264:    expected_configured_guardian_set_id: &[u8; 32],
+programs/xxxl-svm/src/verifier/guardian_membership_validation_boundary.rs:265:    guardian_set: AuthoritativeGuardianSetRef<'_>,
+programs/xxxl-svm/src/verifier/guardian_membership_validation_boundary.rs:275:            guardian_set,
+programs/xxxl-svm/src/verifier/guardian_membership_validation_boundary.rs:286:            guardian_set,
+programs/xxxl-svm/src/verifier/guardian_membership_validation_boundary.rs:295:            guardian_set,
+programs/xxxl-svm/src/verifier/guardian_membership_validation_boundary.rs:304:            guardian_set,
+programs/xxxl-svm/src/verifier/guardian_membership_validation_boundary.rs:313:            guardian_set,
+programs/xxxl-svm/src/verifier/guardian_membership_validation_boundary.rs:322:            guardian_set,
+programs/xxxl-svm/src/verifier/guardian_membership_validation_boundary.rs:331:            guardian_set,
+programs/xxxl-svm/src/verifier/guardian_membership_validation_boundary.rs:340:            guardian_set,
+programs/xxxl-svm/src/verifier/guardian_membership_validation_boundary.rs:349:            guardian_set,
+programs/xxxl-svm/src/verifier/guardian_membership_validation_boundary.rs:358:            guardian_set,
+programs/xxxl-svm/src/verifier/guardian_membership_validation_boundary.rs:372:            guardian_set,
+programs/xxxl-svm/src/verifier/guardian_membership_validation_boundary.rs:383:                guardian_set,
+programs/xxxl-svm/src/verifier/guardian_membership_validation_boundary.rs:388:    if guardian_set.caller_instruction_data {
+programs/xxxl-svm/src/verifier/guardian_membership_validation_boundary.rs:390:            GuardianMembershipValidationErrorKind::CallerSuppliedGuardianSetRejected,
+programs/xxxl-svm/src/verifier/guardian_membership_validation_boundary.rs:393:            guardian_set,
+programs/xxxl-svm/src/verifier/guardian_membership_validation_boundary.rs:397:    if guardian_set.source != AuthoritativeGuardianSetSource::ProgramControlledOnChain {
+programs/xxxl-svm/src/verifier/guardian_membership_validation_boundary.rs:399:            GuardianMembershipValidationErrorKind::UnauthenticatedGuardianSet,
+programs/xxxl-svm/src/verifier/guardian_membership_validation_boundary.rs:402:            guardian_set,
+programs/xxxl-svm/src/verifier/guardian_membership_validation_boundary.rs:406:    if guardian_set.guardians.is_empty() {
+programs/xxxl-svm/src/verifier/guardian_membership_validation_boundary.rs:408:            GuardianMembershipValidationErrorKind::EmptyGuardianSet,
+programs/xxxl-svm/src/verifier/guardian_membership_validation_boundary.rs:411:            guardian_set,
+programs/xxxl-svm/src/verifier/guardian_membership_validation_boundary.rs:415:    if guardian_set.threshold == 0 {
+programs/xxxl-svm/src/verifier/guardian_membership_validation_boundary.rs:420:            guardian_set,
+programs/xxxl-svm/src/verifier/guardian_membership_validation_boundary.rs:424:    if guardian_set.threshold as usize > guardian_set.guardians.len() {
+programs/xxxl-svm/src/verifier/guardian_membership_validation_boundary.rs:426:            GuardianMembershipValidationErrorKind::ThresholdExceedsGuardianSet,
+programs/xxxl-svm/src/verifier/guardian_membership_validation_boundary.rs:429:            guardian_set,
+programs/xxxl-svm/src/verifier/guardian_membership_validation_boundary.rs:433:    if duplicate_guardian_public_key_index(guardian_set.guardians).is_some() {
+programs/xxxl-svm/src/verifier/guardian_membership_validation_boundary.rs:438:            guardian_set,
+programs/xxxl-svm/src/verifier/guardian_membership_validation_boundary.rs:442:    if guardian_set.guardian_set_id != expected_configured_guardian_set_id {
+programs/xxxl-svm/src/verifier/guardian_membership_validation_boundary.rs:444:            GuardianMembershipValidationErrorKind::GuardianSetIdMismatch,
+programs/xxxl-svm/src/verifier/guardian_membership_validation_boundary.rs:447:            guardian_set,
+programs/xxxl-svm/src/verifier/guardian_membership_validation_boundary.rs:451:    if decoded_payload.guardian_set_id != guardian_set.guardian_set_id {
+programs/xxxl-svm/src/verifier/guardian_membership_validation_boundary.rs:453:            GuardianMembershipValidationErrorKind::PayloadGuardianSetIdMismatch,
+programs/xxxl-svm/src/verifier/guardian_membership_validation_boundary.rs:456:            guardian_set,
+programs/xxxl-svm/src/verifier/guardian_membership_validation_boundary.rs:462:    let Some(matched_guardian_index) = guardian_set
+programs/xxxl-svm/src/verifier/guardian_membership_validation_boundary.rs:471:            guardian_set,
+programs/xxxl-svm/src/verifier/guardian_membership_validation_boundary.rs:477:        guardian_set_id: *guardian_set.guardian_set_id,
+programs/xxxl-svm/src/verifier/guardian_membership_validation_boundary.rs:518:    guardian_set: AuthoritativeGuardianSetRef<'_>,
+programs/xxxl-svm/src/verifier/guardian_membership_validation_boundary.rs:524:        guardian_set,
+programs/xxxl-svm/src/verifier/guardian_membership_validation_boundary.rs:534:    guardian_set: AuthoritativeGuardianSetRef<'_>,
+programs/xxxl-svm/src/verifier/guardian_membership_validation_boundary.rs:541:        guardian_set,
+programs/xxxl-svm/src/verifier/guardian_membership_validation_boundary.rs:551:    guardian_set: AuthoritativeGuardianSetRef<'_>,
+programs/xxxl-svm/src/verifier/guardian_membership_validation_boundary.rs:558:        guardian_set,
+programs/xxxl-svm/src/verifier/guardian_membership_validation_boundary.rs:568:    guardian_set: AuthoritativeGuardianSetRef<'_>,
+programs/xxxl-svm/src/verifier/guardian_membership_validation_boundary.rs:578:        guardian_set_source: guardian_set.source,
+programs/xxxl-svm/src/verifier/guardian_membership_validation_boundary.rs:579:        guardian_set_from_caller_instruction_data: guardian_set.caller_instruction_data,
+programs/xxxl-svm/src/verifier/guardian_membership_validation_boundary.rs:580:        guardian_count: guardian_set.guardians.len(),
+programs/xxxl-svm/src/verifier/guardian_membership_validation_boundary.rs:581:        threshold: guardian_set.threshold,
+programs/xxxl-svm/src/verifier/guardian_membership_validation_boundary.rs:632:    fn raw_payload_bytes_with_guardian_set_id(guardian_set_id: &[u8; 32]) -> Vec<u8> {
+programs/xxxl-svm/src/verifier/guardian_membership_validation_boundary.rs:653:        out.extend_from_slice(guardian_set_id);
+programs/xxxl-svm/src/verifier/guardian_membership_validation_boundary.rs:875:        guardian_set_id: &'a [u8; 32],
+programs/xxxl-svm/src/verifier/guardian_membership_validation_boundary.rs:878:    ) -> AuthoritativeGuardianSetRef<'a> {
+programs/xxxl-svm/src/verifier/guardian_membership_validation_boundary.rs:879:        AuthoritativeGuardianSetRef::from_program_controlled_on_chain_source(
+programs/xxxl-svm/src/verifier/guardian_membership_validation_boundary.rs:880:            guardian_set_id,
+programs/xxxl-svm/src/verifier/guardian_membership_validation_boundary.rs:891:        guardian_set: AuthoritativeGuardianSetRef<'a>,
+programs/xxxl-svm/src/verifier/guardian_membership_validation_boundary.rs:898:            guardian_set,
+programs/xxxl-svm/src/verifier/guardian_membership_validation_boundary.rs:916:        let raw_payload = raw_payload_bytes_with_guardian_set_id(&GUARDIAN_SET_ID);
+programs/xxxl-svm/src/verifier/guardian_membership_validation_boundary.rs:931:        assert_eq!(result.guardian_set_id, GUARDIAN_SET_ID);
+programs/xxxl-svm/src/verifier/guardian_membership_validation_boundary.rs:948:        let raw_payload = raw_payload_bytes_with_guardian_set_id(&GUARDIAN_SET_ID);
+programs/xxxl-svm/src/verifier/guardian_membership_validation_boundary.rs:973:        let raw_payload = raw_payload_bytes_with_guardian_set_id(&GUARDIAN_SET_ID);
+programs/xxxl-svm/src/verifier/guardian_membership_validation_boundary.rs:997:        let raw_payload = raw_payload_bytes_with_guardian_set_id(&GUARDIAN_SET_ID);
+programs/xxxl-svm/src/verifier/guardian_membership_validation_boundary.rs:1021:        let raw_payload = raw_payload_bytes_with_guardian_set_id(&GUARDIAN_SET_ID);
+programs/xxxl-svm/src/verifier/guardian_membership_validation_boundary.rs:1046:        let raw_payload = raw_payload_bytes_with_guardian_set_id(&GUARDIAN_SET_ID);
+programs/xxxl-svm/src/verifier/guardian_membership_validation_boundary.rs:1071:        let raw_payload = raw_payload_bytes_with_guardian_set_id(&GUARDIAN_SET_ID);
+programs/xxxl-svm/src/verifier/guardian_membership_validation_boundary.rs:1100:        let raw_payload = raw_payload_bytes_with_guardian_set_id(&GUARDIAN_SET_ID);
+programs/xxxl-svm/src/verifier/guardian_membership_validation_boundary.rs:1129:        let raw_payload = raw_payload_bytes_with_guardian_set_id(&GUARDIAN_SET_ID);
+programs/xxxl-svm/src/verifier/guardian_membership_validation_boundary.rs:1163:        let raw_payload = raw_payload_bytes_with_guardian_set_id(&GUARDIAN_SET_ID);
+programs/xxxl-svm/src/verifier/guardian_membership_validation_boundary.rs:1197:        let raw_payload = raw_payload_bytes_with_guardian_set_id(&GUARDIAN_SET_ID);
+programs/xxxl-svm/src/verifier/guardian_membership_validation_boundary.rs:1222:        let raw_payload = raw_payload_bytes_with_guardian_set_id(&GUARDIAN_SET_ID);
+programs/xxxl-svm/src/verifier/guardian_membership_validation_boundary.rs:1247:        let raw_payload = raw_payload_bytes_with_guardian_set_id(&GUARDIAN_SET_ID);
+programs/xxxl-svm/src/verifier/guardian_membership_validation_boundary.rs:1271:        let raw_payload = raw_payload_bytes_with_guardian_set_id(&GUARDIAN_SET_ID);
+programs/xxxl-svm/src/verifier/guardian_membership_validation_boundary.rs:1286:    fn rejects_unauthenticated_guardian_set() {
+programs/xxxl-svm/src/verifier/guardian_membership_validation_boundary.rs:1290:        let raw_payload = raw_payload_bytes_with_guardian_set_id(&GUARDIAN_SET_ID);
+programs/xxxl-svm/src/verifier/guardian_membership_validation_boundary.rs:1298:                AuthoritativeGuardianSetRef::unauthenticated_for_rejection(
+programs/xxxl-svm/src/verifier/guardian_membership_validation_boundary.rs:1304:            GuardianMembershipValidationErrorKind::UnauthenticatedGuardianSet,
+programs/xxxl-svm/src/verifier/guardian_membership_validation_boundary.rs:1309:    fn rejects_caller_supplied_guardian_set() {
+programs/xxxl-svm/src/verifier/guardian_membership_validation_boundary.rs:1313:        let raw_payload = raw_payload_bytes_with_guardian_set_id(&GUARDIAN_SET_ID);
+programs/xxxl-svm/src/verifier/guardian_membership_validation_boundary.rs:1321:                AuthoritativeGuardianSetRef::caller_supplied_for_rejection(
+programs/xxxl-svm/src/verifier/guardian_membership_validation_boundary.rs:1327:            GuardianMembershipValidationErrorKind::CallerSuppliedGuardianSetRejected,
+programs/xxxl-svm/src/verifier/guardian_membership_validation_boundary.rs:1332:    fn rejects_empty_guardian_set() {
+programs/xxxl-svm/src/verifier/guardian_membership_validation_boundary.rs:1336:        let raw_payload = raw_payload_bytes_with_guardian_set_id(&GUARDIAN_SET_ID);
+programs/xxxl-svm/src/verifier/guardian_membership_validation_boundary.rs:1346:            GuardianMembershipValidationErrorKind::EmptyGuardianSet,
+programs/xxxl-svm/src/verifier/guardian_membership_validation_boundary.rs:1355:        let raw_payload = raw_payload_bytes_with_guardian_set_id(&GUARDIAN_SET_ID);
+programs/xxxl-svm/src/verifier/guardian_membership_validation_boundary.rs:1374:        let raw_payload = raw_payload_bytes_with_guardian_set_id(&GUARDIAN_SET_ID);
+programs/xxxl-svm/src/verifier/guardian_membership_validation_boundary.rs:1384:            GuardianMembershipValidationErrorKind::ThresholdExceedsGuardianSet,
+programs/xxxl-svm/src/verifier/guardian_membership_validation_boundary.rs:1393:        let raw_payload = raw_payload_bytes_with_guardian_set_id(&GUARDIAN_SET_ID);
+programs/xxxl-svm/src/verifier/guardian_membership_validation_boundary.rs:1408:    fn rejects_configured_guardian_set_id_mismatch() {
+programs/xxxl-svm/src/verifier/guardian_membership_validation_boundary.rs:1412:        let raw_payload = raw_payload_bytes_with_guardian_set_id(&GUARDIAN_SET_ID);
+programs/xxxl-svm/src/verifier/guardian_membership_validation_boundary.rs:1422:            GuardianMembershipValidationErrorKind::GuardianSetIdMismatch,
+programs/xxxl-svm/src/verifier/guardian_membership_validation_boundary.rs:1427:    fn rejects_payload_guardian_set_id_mismatch() {
+programs/xxxl-svm/src/verifier/guardian_membership_validation_boundary.rs:1430:        let raw_payload = raw_payload_bytes_with_guardian_set_id(&OTHER_GUARDIAN_SET_ID);
+programs/xxxl-svm/src/verifier/guardian_membership_validation_boundary.rs:1448:            GuardianMembershipValidationErrorKind::PayloadGuardianSetIdMismatch,
+programs/xxxl-svm/src/verifier/guardian_membership_validation_boundary.rs:1457:        let raw_payload = raw_payload_bytes_with_guardian_set_id(&OTHER_GUARDIAN_SET_ID);
+programs/xxxl-svm/src/verifier/guardian_membership_validation_boundary.rs:1472:    fn rejects_verified_signer_not_in_guardian_set() {
+programs/xxxl-svm/src/verifier/guardian_membership_validation_boundary.rs:1476:        let raw_payload = raw_payload_bytes_with_guardian_set_id(&GUARDIAN_SET_ID);
+programs/xxxl-svm/src/verifier/guardian_membership_validation_boundary.rs:1495:        let raw_payload = raw_payload_bytes_with_guardian_set_id(&GUARDIAN_SET_ID);
+programs/xxxl-svm/src/verifier/guardian_membership_validation_boundary.rs:1514:        let raw_payload = raw_payload_bytes_with_guardian_set_id(&GUARDIAN_SET_ID);
+programs/xxxl-svm/src/verifier/guardian_membership_validation_boundary.rs:1564:        assert!(report.requires_authoritative_guardian_set_wrapper);
+programs/xxxl-svm/src/verifier/guardian_membership_validation_boundary.rs:1565:        assert!(report.rejects_caller_supplied_guardian_set);
+programs/xxxl-svm/src/verifier/guardian_membership_validation_boundary.rs:1566:        assert!(report.rejects_unauthenticated_guardian_set);
+programs/xxxl-svm/src/verifier/guardian_membership_validation_boundary.rs:1567:        assert!(report.checks_payload_guardian_set_id_binding);
+programs/xxxl-svm/src/verifier/guardian_quorum.rs:11:pub struct GuardianSetRef<'a> {
+programs/xxxl-svm/src/verifier/guardian_quorum.rs:12:    pub guardian_set_id: &'a [u8; 32],
+programs/xxxl-svm/src/verifier/guardian_quorum.rs:19:    pub guardian_set_id: &'a [u8; 32],
+programs/xxxl-svm/src/verifier/guardian_quorum.rs:27:    pub guardian_set_id: &'a [u8; 32],
+programs/xxxl-svm/src/verifier/guardian_quorum.rs:38:    EmptyGuardianSet,
+programs/xxxl-svm/src/verifier/guardian_quorum.rs:40:    ThresholdExceedsGuardianSet,
+programs/xxxl-svm/src/verifier/guardian_quorum.rs:43:    GuardianSetIdMismatch,
+programs/xxxl-svm/src/verifier/guardian_quorum.rs:68:    pub guardian_set_id_mismatch_rejected: bool,
+programs/xxxl-svm/src/verifier/guardian_quorum.rs:69:    pub empty_guardian_set_rejected: bool,
+programs/xxxl-svm/src/verifier/guardian_quorum.rs:107:        guardian_set_id_mismatch_rejected: true,
+programs/xxxl-svm/src/verifier/guardian_quorum.rs:108:        empty_guardian_set_rejected: true,
+programs/xxxl-svm/src/verifier/guardian_quorum.rs:138:    guardian_set: GuardianSetRef<'a>,
+programs/xxxl-svm/src/verifier/guardian_quorum.rs:141:    if guardian_set.guardians.is_empty() {
+programs/xxxl-svm/src/verifier/guardian_quorum.rs:143:            GuardianQuorumStructuralErrorKind::EmptyGuardianSet,
+programs/xxxl-svm/src/verifier/guardian_quorum.rs:144:            guardian_set,
+programs/xxxl-svm/src/verifier/guardian_quorum.rs:151:    if guardian_set.threshold == 0 {
+programs/xxxl-svm/src/verifier/guardian_quorum.rs:154:            guardian_set,
+programs/xxxl-svm/src/verifier/guardian_quorum.rs:161:    if guardian_set.threshold as usize > guardian_set.guardians.len() {
+programs/xxxl-svm/src/verifier/guardian_quorum.rs:163:            GuardianQuorumStructuralErrorKind::ThresholdExceedsGuardianSet,
+programs/xxxl-svm/src/verifier/guardian_quorum.rs:164:            guardian_set,
+programs/xxxl-svm/src/verifier/guardian_quorum.rs:171:    if let Some(index) = duplicate_guardian_index(guardian_set.guardians) {
+programs/xxxl-svm/src/verifier/guardian_quorum.rs:174:            guardian_set,
+programs/xxxl-svm/src/verifier/guardian_quorum.rs:184:            guardian_set,
+programs/xxxl-svm/src/verifier/guardian_quorum.rs:194:        if approval.guardian_set_id != guardian_set.guardian_set_id {
+programs/xxxl-svm/src/verifier/guardian_quorum.rs:196:                GuardianQuorumStructuralErrorKind::GuardianSetIdMismatch,
+programs/xxxl-svm/src/verifier/guardian_quorum.rs:197:                guardian_set,
+programs/xxxl-svm/src/verifier/guardian_quorum.rs:204:        if !guardian_set
+programs/xxxl-svm/src/verifier/guardian_quorum.rs:210:                guardian_set,
+programs/xxxl-svm/src/verifier/guardian_quorum.rs:223:                guardian_set,
+programs/xxxl-svm/src/verifier/guardian_quorum.rs:233:    if unique_known_approval_count < guardian_set.threshold as usize {
+programs/xxxl-svm/src/verifier/guardian_quorum.rs:236:            guardian_set,
+programs/xxxl-svm/src/verifier/guardian_quorum.rs:244:        guardian_set_id: guardian_set.guardian_set_id,
+programs/xxxl-svm/src/verifier/guardian_quorum.rs:245:        threshold: guardian_set.threshold,
+programs/xxxl-svm/src/verifier/guardian_quorum.rs:246:        guardian_count: guardian_set.guardians.len(),
+programs/xxxl-svm/src/verifier/guardian_quorum.rs:273:    guardian_set: GuardianSetRef<'_>,
+programs/xxxl-svm/src/verifier/guardian_quorum.rs:282:        threshold: guardian_set.threshold,
+programs/xxxl-svm/src/verifier/guardian_quorum.rs:283:        guardian_count: guardian_set.guardians.len(),
+programs/xxxl-svm/src/verifier/guardian_quorum.rs:303:    fn guardian_set<'a>(
+programs/xxxl-svm/src/verifier/guardian_quorum.rs:304:        guardian_set_id: &'a [u8; 32],
+programs/xxxl-svm/src/verifier/guardian_quorum.rs:307:    ) -> GuardianSetRef<'a> {
+programs/xxxl-svm/src/verifier/guardian_quorum.rs:308:        GuardianSetRef {
+programs/xxxl-svm/src/verifier/guardian_quorum.rs:309:            guardian_set_id,
+programs/xxxl-svm/src/verifier/guardian_quorum.rs:316:        guardian_set_id: &'a [u8; 32],
+programs/xxxl-svm/src/verifier/guardian_quorum.rs:320:            guardian_set_id,
+programs/xxxl-svm/src/verifier/guardian_quorum.rs:342:            guardian_set(&GUARDIAN_SET_ID, 2, &guardians),
+programs/xxxl-svm/src/verifier/guardian_quorum.rs:347:        assert_eq!(result.guardian_set_id, &GUARDIAN_SET_ID);
+programs/xxxl-svm/src/verifier/guardian_quorum.rs:364:            guardian_set(&GUARDIAN_SET_ID, 2, &guardians),
+programs/xxxl-svm/src/verifier/guardian_quorum.rs:382:            guardian_set(&GUARDIAN_SET_ID, 2, &guardians),
+programs/xxxl-svm/src/verifier/guardian_quorum.rs:392:    fn empty_guardian_set_is_rejected() {
+programs/xxxl-svm/src/verifier/guardian_quorum.rs:398:                guardian_set(&GUARDIAN_SET_ID, 1, &guardians),
+programs/xxxl-svm/src/verifier/guardian_quorum.rs:401:            GuardianQuorumStructuralErrorKind::EmptyGuardianSet,
+programs/xxxl-svm/src/verifier/guardian_quorum.rs:414:                guardian_set(&GUARDIAN_SET_ID, 0, &guardians),
+programs/xxxl-svm/src/verifier/guardian_quorum.rs:424:    fn threshold_greater_than_guardian_set_size_is_rejected() {
+programs/xxxl-svm/src/verifier/guardian_quorum.rs:430:                guardian_set(&GUARDIAN_SET_ID, 2, &guardians),
+programs/xxxl-svm/src/verifier/guardian_quorum.rs:433:            GuardianQuorumStructuralErrorKind::ThresholdExceedsGuardianSet,
+programs/xxxl-svm/src/verifier/guardian_quorum.rs:447:                guardian_set(&GUARDIAN_SET_ID, 1, &guardians),
+programs/xxxl-svm/src/verifier/guardian_quorum.rs:463:                guardian_set(&GUARDIAN_SET_ID, 1, &guardians),
+programs/xxxl-svm/src/verifier/guardian_quorum.rs:471:    fn guardian_set_id_mismatch_is_rejected() {
+programs/xxxl-svm/src/verifier/guardian_quorum.rs:477:                guardian_set(&GUARDIAN_SET_ID, 1, &guardians),
+programs/xxxl-svm/src/verifier/guardian_quorum.rs:480:            GuardianQuorumStructuralErrorKind::GuardianSetIdMismatch,
+programs/xxxl-svm/src/verifier/guardian_quorum.rs:493:                guardian_set(&GUARDIAN_SET_ID, 1, &guardians),
+programs/xxxl-svm/src/verifier/guardian_quorum.rs:512:                guardian_set(&GUARDIAN_SET_ID, 2, &guardians),
+programs/xxxl-svm/src/verifier/guardian_quorum.rs:529:                guardian_set(&GUARDIAN_SET_ID, 2, &guardians),
+programs/xxxl-svm/src/verifier/guardian_quorum.rs:568:        assert!(report.guardian_set_id_mismatch_rejected);
+programs/xxxl-svm/src/verifier/guardian_quorum.rs:569:        assert!(report.empty_guardian_set_rejected);
+programs/xxxl-svm/src/verifier/guardian_set_account_loading_boundary.rs:4:    ACCOUNT_DISCRIMINATOR_LEN, GUARDIAN_SET_ACCOUNT_DISCRIMINATOR, GUARDIAN_SET_ACCOUNT_LEN,
+programs/xxxl-svm/src/verifier/guardian_set_account_loading_boundary.rs:30:pub enum Phase41K2GuardianSetAccountLoadingStatus {
+programs/xxxl-svm/src/verifier/guardian_set_account_loading_boundary.rs:31:    GuardianSetAccountDataDecoded,
+programs/xxxl-svm/src/verifier/guardian_set_account_loading_boundary.rs:32:    GuardianSetAccountDataRejected,
+programs/xxxl-svm/src/verifier/guardian_set_account_loading_boundary.rs:36:pub enum Phase41K2GuardianSetAccountRejectionCase {
+programs/xxxl-svm/src/verifier/guardian_set_account_loading_boundary.rs:37:    MissingGuardianSetAccount,
+programs/xxxl-svm/src/verifier/guardian_set_account_loading_boundary.rs:39:    GuardianSetAccountIsSigner,
+programs/xxxl-svm/src/verifier/guardian_set_account_loading_boundary.rs:40:    GuardianSetAccountIsWritable,
+programs/xxxl-svm/src/verifier/guardian_set_account_loading_boundary.rs:41:    GuardianSetAccountOwnerMismatch,
+programs/xxxl-svm/src/verifier/guardian_set_account_loading_boundary.rs:42:    GuardianSetAccountPdaMismatch,
+programs/xxxl-svm/src/verifier/guardian_set_account_loading_boundary.rs:48:    InactiveOrDeprecatedGuardianSet,
+programs/xxxl-svm/src/verifier/guardian_set_account_loading_boundary.rs:53:    GuardianSetIdMismatch,
+programs/xxxl-svm/src/verifier/guardian_set_account_loading_boundary.rs:59:pub struct Phase41K2GuardianSetAccountLoadingResult {
+programs/xxxl-svm/src/verifier/guardian_set_account_loading_boundary.rs:60:    pub status: Phase41K2GuardianSetAccountLoadingStatus,
+programs/xxxl-svm/src/verifier/guardian_set_account_loading_boundary.rs:61:    pub rejection_case: Option<Phase41K2GuardianSetAccountRejectionCase>,
+programs/xxxl-svm/src/verifier/guardian_set_account_loading_boundary.rs:63:    pub guardian_set_id: Option<[u8; 32]>,
+programs/xxxl-svm/src/verifier/guardian_set_account_loading_boundary.rs:80:    pub guardian_set_id_checked: bool,
+programs/xxxl-svm/src/verifier/guardian_set_account_loading_boundary.rs:82:    pub guardian_set_account_readonly: bool,
+programs/xxxl-svm/src/verifier/guardian_set_account_loading_boundary.rs:83:    pub guardian_set_account_non_signer: bool,
+programs/xxxl-svm/src/verifier/guardian_set_account_loading_boundary.rs:85:    pub caller_supplied_guardian_set_rejected: bool,
+programs/xxxl-svm/src/verifier/guardian_set_account_loading_boundary.rs:91:    pub guardian_set_runtime_loading_enabled: bool,
+programs/xxxl-svm/src/verifier/guardian_set_account_loading_boundary.rs:104:pub struct Phase41K2GuardianSetAccountLoadingBoundaryReport {
+programs/xxxl-svm/src/verifier/guardian_set_account_loading_boundary.rs:113:    pub checks_guardian_set_account_readonly: bool,
+programs/xxxl-svm/src/verifier/guardian_set_account_loading_boundary.rs:114:    pub checks_guardian_set_account_non_signer: bool,
+programs/xxxl-svm/src/verifier/guardian_set_account_loading_boundary.rs:115:    pub fixed_guardian_set_pda_seed_format: bool,
+programs/xxxl-svm/src/verifier/guardian_set_account_loading_boundary.rs:120:    pub checks_guardian_set_id: bool,
+programs/xxxl-svm/src/verifier/guardian_set_account_loading_boundary.rs:124:    pub rejects_empty_guardian_set: bool,
+programs/xxxl-svm/src/verifier/guardian_set_account_loading_boundary.rs:132:    pub guardian_set_runtime_loading_enabled: bool,
+programs/xxxl-svm/src/verifier/guardian_set_account_loading_boundary.rs:145:    Phase41K2GuardianSetAccountLoadingBoundaryReport =
+programs/xxxl-svm/src/verifier/guardian_set_account_loading_boundary.rs:146:    Phase41K2GuardianSetAccountLoadingBoundaryReport {
+programs/xxxl-svm/src/verifier/guardian_set_account_loading_boundary.rs:149:        runtime_surface: "guardian_set_accountinfo_pda_loading",
+programs/xxxl-svm/src/verifier/guardian_set_account_loading_boundary.rs:155:        checks_guardian_set_account_readonly: true,
+programs/xxxl-svm/src/verifier/guardian_set_account_loading_boundary.rs:156:        checks_guardian_set_account_non_signer: true,
+programs/xxxl-svm/src/verifier/guardian_set_account_loading_boundary.rs:157:        fixed_guardian_set_pda_seed_format: true,
+programs/xxxl-svm/src/verifier/guardian_set_account_loading_boundary.rs:162:        checks_guardian_set_id: true,
+programs/xxxl-svm/src/verifier/guardian_set_account_loading_boundary.rs:166:        rejects_empty_guardian_set: true,
+programs/xxxl-svm/src/verifier/guardian_set_account_loading_boundary.rs:174:        guardian_set_runtime_loading_enabled: true,
+programs/xxxl-svm/src/verifier/guardian_set_account_loading_boundary.rs:186:pub fn phase_41k_2_guardian_set_account_loading_boundary_report(
+programs/xxxl-svm/src/verifier/guardian_set_account_loading_boundary.rs:187:) -> Phase41K2GuardianSetAccountLoadingBoundaryReport {
+programs/xxxl-svm/src/verifier/guardian_set_account_loading_boundary.rs:191:pub fn find_phase_41k_2_guardian_set_pda(
+programs/xxxl-svm/src/verifier/guardian_set_account_loading_boundary.rs:193:    guardian_set_id: &[u8; 32],
+programs/xxxl-svm/src/verifier/guardian_set_account_loading_boundary.rs:199:            guardian_set_id,
+programs/xxxl-svm/src/verifier/guardian_set_account_loading_boundary.rs:205:pub fn load_phase_41k_2_guardian_set_account_info(
+programs/xxxl-svm/src/verifier/guardian_set_account_loading_boundary.rs:206:    guardian_set_account: Option<&AccountInfo<'_>>,
+programs/xxxl-svm/src/verifier/guardian_set_account_loading_boundary.rs:208:    expected_guardian_set_id: &[u8; 32],
+programs/xxxl-svm/src/verifier/guardian_set_account_loading_boundary.rs:209:) -> Phase41K2GuardianSetAccountLoadingResult {
+programs/xxxl-svm/src/verifier/guardian_set_account_loading_boundary.rs:211:        find_phase_41k_2_guardian_set_pda(expected_program_id, expected_guardian_set_id);
+programs/xxxl-svm/src/verifier/guardian_set_account_loading_boundary.rs:213:    let Some(guardian_set_account) = guardian_set_account else {
+programs/xxxl-svm/src/verifier/guardian_set_account_loading_boundary.rs:217:                Phase41K2GuardianSetAccountRejectionCase::MissingGuardianSetAccount,
+programs/xxxl-svm/src/verifier/guardian_set_account_loading_boundary.rs:230:    if guardian_set_account.is_signer {
+programs/xxxl-svm/src/verifier/guardian_set_account_loading_boundary.rs:233:                guardian_set_account.data_len(),
+programs/xxxl-svm/src/verifier/guardian_set_account_loading_boundary.rs:234:                Phase41K2GuardianSetAccountRejectionCase::GuardianSetAccountIsSigner,
+programs/xxxl-svm/src/verifier/guardian_set_account_loading_boundary.rs:241:            guardian_set_account,
+programs/xxxl-svm/src/verifier/guardian_set_account_loading_boundary.rs:251:    if guardian_set_account.is_writable {
+programs/xxxl-svm/src/verifier/guardian_set_account_loading_boundary.rs:254:                guardian_set_account.data_len(),
+programs/xxxl-svm/src/verifier/guardian_set_account_loading_boundary.rs:255:                Phase41K2GuardianSetAccountRejectionCase::GuardianSetAccountIsWritable,
+programs/xxxl-svm/src/verifier/guardian_set_account_loading_boundary.rs:262:            guardian_set_account,
+programs/xxxl-svm/src/verifier/guardian_set_account_loading_boundary.rs:272:    if guardian_set_account.owner != expected_program_id {
+programs/xxxl-svm/src/verifier/guardian_set_account_loading_boundary.rs:275:                guardian_set_account.data_len(),
+programs/xxxl-svm/src/verifier/guardian_set_account_loading_boundary.rs:276:                Phase41K2GuardianSetAccountRejectionCase::GuardianSetAccountOwnerMismatch,
+programs/xxxl-svm/src/verifier/guardian_set_account_loading_boundary.rs:283:            guardian_set_account,
+programs/xxxl-svm/src/verifier/guardian_set_account_loading_boundary.rs:293:    if *guardian_set_account.key != expected_pda {
+programs/xxxl-svm/src/verifier/guardian_set_account_loading_boundary.rs:296:                guardian_set_account.data_len(),
+programs/xxxl-svm/src/verifier/guardian_set_account_loading_boundary.rs:297:                Phase41K2GuardianSetAccountRejectionCase::GuardianSetAccountPdaMismatch,
+programs/xxxl-svm/src/verifier/guardian_set_account_loading_boundary.rs:304:            guardian_set_account,
+programs/xxxl-svm/src/verifier/guardian_set_account_loading_boundary.rs:314:    let data = match guardian_set_account.try_borrow_data() {
+programs/xxxl-svm/src/verifier/guardian_set_account_loading_boundary.rs:319:                    guardian_set_account.data_len(),
+programs/xxxl-svm/src/verifier/guardian_set_account_loading_boundary.rs:320:                    Phase41K2GuardianSetAccountRejectionCase::AccountDataBorrowFailed,
+programs/xxxl-svm/src/verifier/guardian_set_account_loading_boundary.rs:327:                guardian_set_account,
+programs/xxxl-svm/src/verifier/guardian_set_account_loading_boundary.rs:339:        decode_phase_41k_2_guardian_set_account_data(data.as_ref(), expected_guardian_set_id);
+programs/xxxl-svm/src/verifier/guardian_set_account_loading_boundary.rs:343:        guardian_set_account,
+programs/xxxl-svm/src/verifier/guardian_set_account_loading_boundary.rs:353:pub fn decode_phase_41k_2_guardian_set_account_data(
+programs/xxxl-svm/src/verifier/guardian_set_account_loading_boundary.rs:355:    expected_guardian_set_id: &[u8; 32],
+programs/xxxl-svm/src/verifier/guardian_set_account_loading_boundary.rs:356:) -> Phase41K2GuardianSetAccountLoadingResult {
+programs/xxxl-svm/src/verifier/guardian_set_account_loading_boundary.rs:360:            Phase41K2GuardianSetAccountRejectionCase::MissingDiscriminator,
+programs/xxxl-svm/src/verifier/guardian_set_account_loading_boundary.rs:369:    if data.len() != GUARDIAN_SET_ACCOUNT_LEN {
+programs/xxxl-svm/src/verifier/guardian_set_account_loading_boundary.rs:372:            Phase41K2GuardianSetAccountRejectionCase::InvalidAccountDataLength,
+programs/xxxl-svm/src/verifier/guardian_set_account_loading_boundary.rs:384:            Phase41K2GuardianSetAccountRejectionCase::MissingDiscriminator,
+programs/xxxl-svm/src/verifier/guardian_set_account_loading_boundary.rs:396:            Phase41K2GuardianSetAccountRejectionCase::ZeroDiscriminator,
+programs/xxxl-svm/src/verifier/guardian_set_account_loading_boundary.rs:408:            Phase41K2GuardianSetAccountRejectionCase::WrongDiscriminator,
+programs/xxxl-svm/src/verifier/guardian_set_account_loading_boundary.rs:420:            Phase41K2GuardianSetAccountRejectionCase::UnsupportedSchemaVersion,
+programs/xxxl-svm/src/verifier/guardian_set_account_loading_boundary.rs:432:            Phase41K2GuardianSetAccountRejectionCase::UnsupportedSchemaVersion,
+programs/xxxl-svm/src/verifier/guardian_set_account_loading_boundary.rs:444:            Phase41K2GuardianSetAccountRejectionCase::InactiveOrDeprecatedGuardianSet,
+programs/xxxl-svm/src/verifier/guardian_set_account_loading_boundary.rs:456:            Phase41K2GuardianSetAccountRejectionCase::InactiveOrDeprecatedGuardianSet,
+programs/xxxl-svm/src/verifier/guardian_set_account_loading_boundary.rs:468:            Phase41K2GuardianSetAccountRejectionCase::InvalidThresholdZero,
+programs/xxxl-svm/src/verifier/guardian_set_account_loading_boundary.rs:480:            Phase41K2GuardianSetAccountRejectionCase::GuardianCountZero,
+programs/xxxl-svm/src/verifier/guardian_set_account_loading_boundary.rs:494:            Phase41K2GuardianSetAccountRejectionCase::InvalidThresholdZero,
+programs/xxxl-svm/src/verifier/guardian_set_account_loading_boundary.rs:506:            Phase41K2GuardianSetAccountRejectionCase::GuardianCountZero,
+programs/xxxl-svm/src/verifier/guardian_set_account_loading_boundary.rs:518:            Phase41K2GuardianSetAccountRejectionCase::GuardianCountExceedsMaxSupported,
+programs/xxxl-svm/src/verifier/guardian_set_account_loading_boundary.rs:530:            Phase41K2GuardianSetAccountRejectionCase::ThresholdExceedsGuardianCount,
+programs/xxxl-svm/src/verifier/guardian_set_account_loading_boundary.rs:539:    let Some(guardian_set_id) = read_fixed::<32>(data, GUARDIAN_SET_GUARDIAN_SET_ID_OFFSET) else {
+programs/xxxl-svm/src/verifier/guardian_set_account_loading_boundary.rs:542:            Phase41K2GuardianSetAccountRejectionCase::GuardianSetIdMismatch,
+programs/xxxl-svm/src/verifier/guardian_set_account_loading_boundary.rs:551:    if &guardian_set_id != expected_guardian_set_id {
+programs/xxxl-svm/src/verifier/guardian_set_account_loading_boundary.rs:554:            Phase41K2GuardianSetAccountRejectionCase::GuardianSetIdMismatch,
+programs/xxxl-svm/src/verifier/guardian_set_account_loading_boundary.rs:555:            Some(guardian_set_id),
+programs/xxxl-svm/src/verifier/guardian_set_account_loading_boundary.rs:571:                Phase41K2GuardianSetAccountRejectionCase::MalformedGuardianPublicKeyBytes,
+programs/xxxl-svm/src/verifier/guardian_set_account_loading_boundary.rs:572:                Some(guardian_set_id),
+programs/xxxl-svm/src/verifier/guardian_set_account_loading_boundary.rs:583:                Phase41K2GuardianSetAccountRejectionCase::MalformedGuardianPublicKeyBytes,
+programs/xxxl-svm/src/verifier/guardian_set_account_loading_boundary.rs:584:                Some(guardian_set_id),
+programs/xxxl-svm/src/verifier/guardian_set_account_loading_boundary.rs:598:            Phase41K2GuardianSetAccountRejectionCase::DuplicateGuardianPublicKey,
+programs/xxxl-svm/src/verifier/guardian_set_account_loading_boundary.rs:599:            Some(guardian_set_id),
+programs/xxxl-svm/src/verifier/guardian_set_account_loading_boundary.rs:609:        guardian_set_id,
+programs/xxxl-svm/src/verifier/guardian_set_account_loading_boundary.rs:618:    guardian_set_id: [u8; 32],
+programs/xxxl-svm/src/verifier/guardian_set_account_loading_boundary.rs:622:) -> Phase41K2GuardianSetAccountLoadingResult {
+programs/xxxl-svm/src/verifier/guardian_set_account_loading_boundary.rs:623:    Phase41K2GuardianSetAccountLoadingResult {
+programs/xxxl-svm/src/verifier/guardian_set_account_loading_boundary.rs:624:        status: Phase41K2GuardianSetAccountLoadingStatus::GuardianSetAccountDataDecoded,
+programs/xxxl-svm/src/verifier/guardian_set_account_loading_boundary.rs:627:        guardian_set_id: Some(guardian_set_id),
+programs/xxxl-svm/src/verifier/guardian_set_account_loading_boundary.rs:644:        guardian_set_id_checked: true,
+programs/xxxl-svm/src/verifier/guardian_set_account_loading_boundary.rs:646:        guardian_set_account_readonly: false,
+programs/xxxl-svm/src/verifier/guardian_set_account_loading_boundary.rs:647:        guardian_set_account_non_signer: false,
+programs/xxxl-svm/src/verifier/guardian_set_account_loading_boundary.rs:649:        caller_supplied_guardian_set_rejected: true,
+programs/xxxl-svm/src/verifier/guardian_set_account_loading_boundary.rs:655:        guardian_set_runtime_loading_enabled: false,
+programs/xxxl-svm/src/verifier/guardian_set_account_loading_boundary.rs:670:    rejection_case: Phase41K2GuardianSetAccountRejectionCase,
+programs/xxxl-svm/src/verifier/guardian_set_account_loading_boundary.rs:671:    guardian_set_id: Option<[u8; 32]>,
+programs/xxxl-svm/src/verifier/guardian_set_account_loading_boundary.rs:676:) -> Phase41K2GuardianSetAccountLoadingResult {
+programs/xxxl-svm/src/verifier/guardian_set_account_loading_boundary.rs:677:    Phase41K2GuardianSetAccountLoadingResult {
+programs/xxxl-svm/src/verifier/guardian_set_account_loading_boundary.rs:678:        status: Phase41K2GuardianSetAccountLoadingStatus::GuardianSetAccountDataRejected,
+programs/xxxl-svm/src/verifier/guardian_set_account_loading_boundary.rs:681:        guardian_set_id,
+programs/xxxl-svm/src/verifier/guardian_set_account_loading_boundary.rs:698:        guardian_set_id_checked: true,
+programs/xxxl-svm/src/verifier/guardian_set_account_loading_boundary.rs:700:        guardian_set_account_readonly: false,
+programs/xxxl-svm/src/verifier/guardian_set_account_loading_boundary.rs:701:        guardian_set_account_non_signer: false,
+programs/xxxl-svm/src/verifier/guardian_set_account_loading_boundary.rs:703:        caller_supplied_guardian_set_rejected: true,
+programs/xxxl-svm/src/verifier/guardian_set_account_loading_boundary.rs:709:        guardian_set_runtime_loading_enabled: false,
+programs/xxxl-svm/src/verifier/guardian_set_account_loading_boundary.rs:723:    mut result: Phase41K2GuardianSetAccountLoadingResult,
+programs/xxxl-svm/src/verifier/guardian_set_account_loading_boundary.rs:727:) -> Phase41K2GuardianSetAccountLoadingResult {
+programs/xxxl-svm/src/verifier/guardian_set_account_loading_boundary.rs:732:    result.guardian_set_runtime_loading_enabled = true;
+programs/xxxl-svm/src/verifier/guardian_set_account_loading_boundary.rs:733:    result.caller_supplied_guardian_set_rejected = true;
+programs/xxxl-svm/src/verifier/guardian_set_account_loading_boundary.rs:738:    mut result: Phase41K2GuardianSetAccountLoadingResult,
+programs/xxxl-svm/src/verifier/guardian_set_account_loading_boundary.rs:746:) -> Phase41K2GuardianSetAccountLoadingResult {
+programs/xxxl-svm/src/verifier/guardian_set_account_loading_boundary.rs:756:    result.guardian_set_account_readonly = !account.is_writable;
+programs/xxxl-svm/src/verifier/guardian_set_account_loading_boundary.rs:757:    result.guardian_set_account_non_signer = !account.is_signer;
+programs/xxxl-svm/src/verifier/guardian_set_account_loading_boundary.rs:758:    result.guardian_set_runtime_loading_enabled = true;
+programs/xxxl-svm/src/verifier/guardian_set_account_loading_boundary.rs:759:    result.caller_supplied_guardian_set_rejected = true;
+programs/xxxl-svm/src/verifier/guardian_set_account_loading_boundary.rs:761:        result.status == Phase41K2GuardianSetAccountLoadingStatus::GuardianSetAccountDataDecoded;
+programs/xxxl-svm/src/verifier/guardian_set_account_loading_boundary.rs:807:        let report = phase_41k_2_guardian_set_account_loading_boundary_report();
+programs/xxxl-svm/src/verifier/guardian_set_account_loading_boundary.rs:815:            "guardian_set_accountinfo_pda_loading"
+programs/xxxl-svm/src/verifier/guardian_set_account_loading_boundary.rs:821:        assert!(report.checks_guardian_set_id);
+programs/xxxl-svm/src/verifier/guardian_set_account_loading_boundary.rs:830:        assert!(report.checks_guardian_set_account_readonly);
+programs/xxxl-svm/src/verifier/guardian_set_account_loading_boundary.rs:831:        assert!(report.checks_guardian_set_account_non_signer);
+programs/xxxl-svm/src/verifier/guardian_set_account_loading_boundary.rs:832:        assert!(report.fixed_guardian_set_pda_seed_format);
+programs/xxxl-svm/src/verifier/guardian_set_account_loading_boundary.rs:836:        assert!(report.guardian_set_runtime_loading_enabled);
+programs/xxxl-svm/src/verifier/guardian_set_account_loading_boundary.rs:849:    fn decoder_accepts_valid_guardian_set_account_data() {
+programs/xxxl-svm/src/verifier/guardian_set_account_loading_boundary.rs:850:        let data = valid_guardian_set_account_data();
+programs/xxxl-svm/src/verifier/guardian_set_account_loading_boundary.rs:852:        let result = decode_phase_41k_2_guardian_set_account_data(&data, &GUARDIAN_SET_ID);
+programs/xxxl-svm/src/verifier/guardian_set_account_loading_boundary.rs:856:            Phase41K2GuardianSetAccountLoadingStatus::GuardianSetAccountDataDecoded
+programs/xxxl-svm/src/verifier/guardian_set_account_loading_boundary.rs:859:        assert_eq!(result.account_data_len, GUARDIAN_SET_ACCOUNT_LEN);
+programs/xxxl-svm/src/verifier/guardian_set_account_loading_boundary.rs:860:        assert_eq!(result.guardian_set_id, Some(GUARDIAN_SET_ID));
+programs/xxxl-svm/src/verifier/guardian_set_account_loading_boundary.rs:873:        assert!(!result.guardian_set_runtime_loading_enabled);
+programs/xxxl-svm/src/verifier/guardian_set_account_loading_boundary.rs:886:    fn loader_accepts_program_controlled_readonly_non_signer_guardian_set_pda() {
+programs/xxxl-svm/src/verifier/guardian_set_account_loading_boundary.rs:888:        let (guardian_set_pda, expected_bump) =
+programs/xxxl-svm/src/verifier/guardian_set_account_loading_boundary.rs:889:            find_phase_41k_2_guardian_set_pda(&program_id, &GUARDIAN_SET_ID);
+programs/xxxl-svm/src/verifier/guardian_set_account_loading_boundary.rs:890:        let mut data = valid_guardian_set_account_data();
+programs/xxxl-svm/src/verifier/guardian_set_account_loading_boundary.rs:894:            &guardian_set_pda,
+programs/xxxl-svm/src/verifier/guardian_set_account_loading_boundary.rs:904:        let result = load_phase_41k_2_guardian_set_account_info(
+programs/xxxl-svm/src/verifier/guardian_set_account_loading_boundary.rs:912:            Phase41K2GuardianSetAccountLoadingStatus::GuardianSetAccountDataDecoded
+programs/xxxl-svm/src/verifier/guardian_set_account_loading_boundary.rs:915:        assert_eq!(result.account_key, Some(guardian_set_pda));
+programs/xxxl-svm/src/verifier/guardian_set_account_loading_boundary.rs:916:        assert_eq!(result.expected_account_key, Some(guardian_set_pda));
+programs/xxxl-svm/src/verifier/guardian_set_account_loading_boundary.rs:920:        assert_eq!(result.guardian_set_id, Some(GUARDIAN_SET_ID));
+programs/xxxl-svm/src/verifier/guardian_set_account_loading_boundary.rs:927:        assert!(result.guardian_set_account_readonly);
+programs/xxxl-svm/src/verifier/guardian_set_account_loading_boundary.rs:928:        assert!(result.guardian_set_account_non_signer);
+programs/xxxl-svm/src/verifier/guardian_set_account_loading_boundary.rs:930:        assert!(result.caller_supplied_guardian_set_rejected);
+programs/xxxl-svm/src/verifier/guardian_set_account_loading_boundary.rs:931:        assert!(result.guardian_set_runtime_loading_enabled);
+programs/xxxl-svm/src/verifier/guardian_set_account_loading_boundary.rs:947:        let (guardian_set_pda, _) =
+programs/xxxl-svm/src/verifier/guardian_set_account_loading_boundary.rs:948:            find_phase_41k_2_guardian_set_pda(&program_id, &GUARDIAN_SET_ID);
+programs/xxxl-svm/src/verifier/guardian_set_account_loading_boundary.rs:949:        let mut data = valid_guardian_set_account_data();
+programs/xxxl-svm/src/verifier/guardian_set_account_loading_boundary.rs:954:            &guardian_set_pda,
+programs/xxxl-svm/src/verifier/guardian_set_account_loading_boundary.rs:964:        let result = load_phase_41k_2_guardian_set_account_info(
+programs/xxxl-svm/src/verifier/guardian_set_account_loading_boundary.rs:972:            Phase41K2GuardianSetAccountLoadingStatus::GuardianSetAccountDataRejected
+programs/xxxl-svm/src/verifier/guardian_set_account_loading_boundary.rs:976:            Some(Phase41K2GuardianSetAccountRejectionCase::GuardianSetAccountOwnerMismatch)
+programs/xxxl-svm/src/verifier/guardian_set_account_loading_boundary.rs:984:        assert!(result.guardian_set_runtime_loading_enabled);
+programs/xxxl-svm/src/verifier/guardian_set_account_loading_boundary.rs:992:        let mut data = valid_guardian_set_account_data();
+programs/xxxl-svm/src/verifier/guardian_set_account_loading_boundary.rs:1007:        let result = load_phase_41k_2_guardian_set_account_info(
+programs/xxxl-svm/src/verifier/guardian_set_account_loading_boundary.rs:1015:            Phase41K2GuardianSetAccountLoadingStatus::GuardianSetAccountDataRejected
+programs/xxxl-svm/src/verifier/guardian_set_account_loading_boundary.rs:1019:            Some(Phase41K2GuardianSetAccountRejectionCase::GuardianSetAccountPdaMismatch)
+programs/xxxl-svm/src/verifier/guardian_set_account_loading_boundary.rs:1027:        assert!(result.guardian_set_runtime_loading_enabled);
+programs/xxxl-svm/src/verifier/guardian_set_account_loading_boundary.rs:1032:    fn loader_rejects_missing_guardian_set_account() {
+programs/xxxl-svm/src/verifier/guardian_set_account_loading_boundary.rs:1036:            load_phase_41k_2_guardian_set_account_info(None, &program_id, &GUARDIAN_SET_ID);
+programs/xxxl-svm/src/verifier/guardian_set_account_loading_boundary.rs:1040:            Phase41K2GuardianSetAccountLoadingStatus::GuardianSetAccountDataRejected
+programs/xxxl-svm/src/verifier/guardian_set_account_loading_boundary.rs:1044:            Some(Phase41K2GuardianSetAccountRejectionCase::MissingGuardianSetAccount)
+programs/xxxl-svm/src/verifier/guardian_set_account_loading_boundary.rs:1050:        assert!(result.guardian_set_runtime_loading_enabled);
+programs/xxxl-svm/src/verifier/guardian_set_account_loading_boundary.rs:1063:    fn loader_rejects_signer_guardian_set_account() {
+programs/xxxl-svm/src/verifier/guardian_set_account_loading_boundary.rs:1065:        let (guardian_set_pda, _) =
+programs/xxxl-svm/src/verifier/guardian_set_account_loading_boundary.rs:1066:            find_phase_41k_2_guardian_set_pda(&program_id, &GUARDIAN_SET_ID);
+programs/xxxl-svm/src/verifier/guardian_set_account_loading_boundary.rs:1067:        let mut data = valid_guardian_set_account_data();
+programs/xxxl-svm/src/verifier/guardian_set_account_loading_boundary.rs:1071:            &guardian_set_pda,
+programs/xxxl-svm/src/verifier/guardian_set_account_loading_boundary.rs:1081:        let result = load_phase_41k_2_guardian_set_account_info(
+programs/xxxl-svm/src/verifier/guardian_set_account_loading_boundary.rs:1089:            Phase41K2GuardianSetAccountLoadingStatus::GuardianSetAccountDataRejected
+programs/xxxl-svm/src/verifier/guardian_set_account_loading_boundary.rs:1093:            Some(Phase41K2GuardianSetAccountRejectionCase::GuardianSetAccountIsSigner)
+programs/xxxl-svm/src/verifier/guardian_set_account_loading_boundary.rs:1096:        assert_eq!(result.account_key, Some(guardian_set_pda));
+programs/xxxl-svm/src/verifier/guardian_set_account_loading_boundary.rs:1101:        assert!(!result.guardian_set_account_non_signer);
+programs/xxxl-svm/src/verifier/guardian_set_account_loading_boundary.rs:1102:        assert!(result.guardian_set_account_readonly);
+programs/xxxl-svm/src/verifier/guardian_set_account_loading_boundary.rs:1103:        assert!(result.guardian_set_runtime_loading_enabled);
+programs/xxxl-svm/src/verifier/guardian_set_account_loading_boundary.rs:1110:    fn loader_rejects_writable_guardian_set_account() {
+programs/xxxl-svm/src/verifier/guardian_set_account_loading_boundary.rs:1112:        let (guardian_set_pda, _) =
+programs/xxxl-svm/src/verifier/guardian_set_account_loading_boundary.rs:1113:            find_phase_41k_2_guardian_set_pda(&program_id, &GUARDIAN_SET_ID);
+programs/xxxl-svm/src/verifier/guardian_set_account_loading_boundary.rs:1114:        let mut data = valid_guardian_set_account_data();
+programs/xxxl-svm/src/verifier/guardian_set_account_loading_boundary.rs:1118:            &guardian_set_pda,
+programs/xxxl-svm/src/verifier/guardian_set_account_loading_boundary.rs:1128:        let result = load_phase_41k_2_guardian_set_account_info(
+programs/xxxl-svm/src/verifier/guardian_set_account_loading_boundary.rs:1136:            Phase41K2GuardianSetAccountLoadingStatus::GuardianSetAccountDataRejected
+programs/xxxl-svm/src/verifier/guardian_set_account_loading_boundary.rs:1140:            Some(Phase41K2GuardianSetAccountRejectionCase::GuardianSetAccountIsWritable)
+programs/xxxl-svm/src/verifier/guardian_set_account_loading_boundary.rs:1143:        assert_eq!(result.account_key, Some(guardian_set_pda));
+programs/xxxl-svm/src/verifier/guardian_set_account_loading_boundary.rs:1148:        assert!(result.guardian_set_account_non_signer);
+programs/xxxl-svm/src/verifier/guardian_set_account_loading_boundary.rs:1149:        assert!(!result.guardian_set_account_readonly);
+programs/xxxl-svm/src/verifier/guardian_set_account_loading_boundary.rs:1150:        assert!(result.guardian_set_runtime_loading_enabled);
+programs/xxxl-svm/src/verifier/guardian_set_account_loading_boundary.rs:1159:        let (guardian_set_pda, _) =
+programs/xxxl-svm/src/verifier/guardian_set_account_loading_boundary.rs:1160:            find_phase_41k_2_guardian_set_pda(&program_id, &GUARDIAN_SET_ID);
+programs/xxxl-svm/src/verifier/guardian_set_account_loading_boundary.rs:1161:        let mut data = valid_guardian_set_account_data();
+programs/xxxl-svm/src/verifier/guardian_set_account_loading_boundary.rs:1166:            &guardian_set_pda,
+programs/xxxl-svm/src/verifier/guardian_set_account_loading_boundary.rs:1176:        let result = load_phase_41k_2_guardian_set_account_info(
+programs/xxxl-svm/src/verifier/guardian_set_account_loading_boundary.rs:1184:            Some(Phase41K2GuardianSetAccountRejectionCase::ZeroDiscriminator)
+programs/xxxl-svm/src/verifier/guardian_set_account_loading_boundary.rs:1190:        assert!(result.guardian_set_runtime_loading_enabled);
+programs/xxxl-svm/src/verifier/guardian_set_account_loading_boundary.rs:1208:            decode_phase_41k_2_guardian_set_account_data(&data, &GUARDIAN_SET_ID),
+programs/xxxl-svm/src/verifier/guardian_set_account_loading_boundary.rs:1209:            Phase41K2GuardianSetAccountRejectionCase::MissingDiscriminator,
+programs/xxxl-svm/src/verifier/guardian_set_account_loading_boundary.rs:1215:        let data = vec![0u8; GUARDIAN_SET_ACCOUNT_LEN - 1];
+programs/xxxl-svm/src/verifier/guardian_set_account_loading_boundary.rs:1218:            decode_phase_41k_2_guardian_set_account_data(&data, &GUARDIAN_SET_ID),
+programs/xxxl-svm/src/verifier/guardian_set_account_loading_boundary.rs:1219:            Phase41K2GuardianSetAccountRejectionCase::InvalidAccountDataLength,
+programs/xxxl-svm/src/verifier/guardian_set_account_loading_boundary.rs:1225:        let mut data = valid_guardian_set_account_data();
+programs/xxxl-svm/src/verifier/guardian_set_account_loading_boundary.rs:1229:            decode_phase_41k_2_guardian_set_account_data(&data, &GUARDIAN_SET_ID),
+programs/xxxl-svm/src/verifier/guardian_set_account_loading_boundary.rs:1230:            Phase41K2GuardianSetAccountRejectionCase::ZeroDiscriminator,
+programs/xxxl-svm/src/verifier/guardian_set_account_loading_boundary.rs:1236:        let mut data = valid_guardian_set_account_data();
+programs/xxxl-svm/src/verifier/guardian_set_account_loading_boundary.rs:1240:            decode_phase_41k_2_guardian_set_account_data(&data, &GUARDIAN_SET_ID),
+programs/xxxl-svm/src/verifier/guardian_set_account_loading_boundary.rs:1241:            Phase41K2GuardianSetAccountRejectionCase::WrongDiscriminator,
+programs/xxxl-svm/src/verifier/guardian_set_account_loading_boundary.rs:1247:        let mut data = valid_guardian_set_account_data();
+programs/xxxl-svm/src/verifier/guardian_set_account_loading_boundary.rs:1251:            decode_phase_41k_2_guardian_set_account_data(&data, &GUARDIAN_SET_ID),
+programs/xxxl-svm/src/verifier/guardian_set_account_loading_boundary.rs:1252:            Phase41K2GuardianSetAccountRejectionCase::UnsupportedSchemaVersion,
+programs/xxxl-svm/src/verifier/guardian_set_account_loading_boundary.rs:1257:    fn decoder_rejects_inactive_guardian_set() {
+programs/xxxl-svm/src/verifier/guardian_set_account_loading_boundary.rs:1258:        let mut data = valid_guardian_set_account_data();
+programs/xxxl-svm/src/verifier/guardian_set_account_loading_boundary.rs:1262:            decode_phase_41k_2_guardian_set_account_data(&data, &GUARDIAN_SET_ID),
+programs/xxxl-svm/src/verifier/guardian_set_account_loading_boundary.rs:1263:            Phase41K2GuardianSetAccountRejectionCase::InactiveOrDeprecatedGuardianSet,
+programs/xxxl-svm/src/verifier/guardian_set_account_loading_boundary.rs:1268:    fn decoder_rejects_deprecated_guardian_set() {
+programs/xxxl-svm/src/verifier/guardian_set_account_loading_boundary.rs:1269:        let mut data = valid_guardian_set_account_data();
+programs/xxxl-svm/src/verifier/guardian_set_account_loading_boundary.rs:1273:            decode_phase_41k_2_guardian_set_account_data(&data, &GUARDIAN_SET_ID),
+programs/xxxl-svm/src/verifier/guardian_set_account_loading_boundary.rs:1274:            Phase41K2GuardianSetAccountRejectionCase::InactiveOrDeprecatedGuardianSet,
+programs/xxxl-svm/src/verifier/guardian_set_account_loading_boundary.rs:1280:        let mut data = valid_guardian_set_account_data();
+programs/xxxl-svm/src/verifier/guardian_set_account_loading_boundary.rs:1285:            decode_phase_41k_2_guardian_set_account_data(&data, &GUARDIAN_SET_ID),
+programs/xxxl-svm/src/verifier/guardian_set_account_loading_boundary.rs:1286:            Phase41K2GuardianSetAccountRejectionCase::InvalidThresholdZero,
+programs/xxxl-svm/src/verifier/guardian_set_account_loading_boundary.rs:1292:        let mut data = valid_guardian_set_account_data();
+programs/xxxl-svm/src/verifier/guardian_set_account_loading_boundary.rs:1296:            decode_phase_41k_2_guardian_set_account_data(&data, &GUARDIAN_SET_ID),
+programs/xxxl-svm/src/verifier/guardian_set_account_loading_boundary.rs:1297:            Phase41K2GuardianSetAccountRejectionCase::GuardianCountZero,
+programs/xxxl-svm/src/verifier/guardian_set_account_loading_boundary.rs:1303:        let mut data = valid_guardian_set_account_data();
+programs/xxxl-svm/src/verifier/guardian_set_account_loading_boundary.rs:1307:            decode_phase_41k_2_guardian_set_account_data(&data, &GUARDIAN_SET_ID),
+programs/xxxl-svm/src/verifier/guardian_set_account_loading_boundary.rs:1308:            Phase41K2GuardianSetAccountRejectionCase::GuardianCountExceedsMaxSupported,
+programs/xxxl-svm/src/verifier/guardian_set_account_loading_boundary.rs:1314:        let mut data = valid_guardian_set_account_data();
+programs/xxxl-svm/src/verifier/guardian_set_account_loading_boundary.rs:1320:            decode_phase_41k_2_guardian_set_account_data(&data, &GUARDIAN_SET_ID),
+programs/xxxl-svm/src/verifier/guardian_set_account_loading_boundary.rs:1321:            Phase41K2GuardianSetAccountRejectionCase::ThresholdExceedsGuardianCount,
+programs/xxxl-svm/src/verifier/guardian_set_account_loading_boundary.rs:1326:    fn decoder_rejects_guardian_set_id_mismatch() {
+programs/xxxl-svm/src/verifier/guardian_set_account_loading_boundary.rs:1327:        let data = valid_guardian_set_account_data();
+programs/xxxl-svm/src/verifier/guardian_set_account_loading_boundary.rs:1330:            decode_phase_41k_2_guardian_set_account_data(&data, &OTHER_GUARDIAN_SET_ID),
+programs/xxxl-svm/src/verifier/guardian_set_account_loading_boundary.rs:1331:            Phase41K2GuardianSetAccountRejectionCase::GuardianSetIdMismatch,
+programs/xxxl-svm/src/verifier/guardian_set_account_loading_boundary.rs:1337:        let mut data = valid_guardian_set_account_data();
+programs/xxxl-svm/src/verifier/guardian_set_account_loading_boundary.rs:1346:            decode_phase_41k_2_guardian_set_account_data(&data, &GUARDIAN_SET_ID),
+programs/xxxl-svm/src/verifier/guardian_set_account_loading_boundary.rs:1347:            Phase41K2GuardianSetAccountRejectionCase::DuplicateGuardianPublicKey,
+programs/xxxl-svm/src/verifier/guardian_set_account_loading_boundary.rs:1351:    fn valid_guardian_set_account_data() -> Vec<u8> {
+programs/xxxl-svm/src/verifier/guardian_set_account_loading_boundary.rs:1352:        let mut data = vec![0u8; GUARDIAN_SET_ACCOUNT_LEN];
+programs/xxxl-svm/src/verifier/guardian_set_account_loading_boundary.rs:1378:        result: Phase41K2GuardianSetAccountLoadingResult,
+programs/xxxl-svm/src/verifier/guardian_set_account_loading_boundary.rs:1379:        expected_rejection_case: Phase41K2GuardianSetAccountRejectionCase,
+programs/xxxl-svm/src/verifier/guardian_set_account_loading_boundary.rs:1383:            Phase41K2GuardianSetAccountLoadingStatus::GuardianSetAccountDataRejected
+programs/xxxl-svm/src/verifier/guardian_set_account_loading_boundary.rs:1386:        assert!(!result.guardian_set_runtime_loading_enabled);
+programs/xxxl-svm/src/verifier/instructions_sysvar_access_contract_model.rs:14:    GuardianSetIdMatch,
+programs/xxxl-svm/src/verifier/instructions_sysvar_access_contract_model.rs:37:    GuardianSetMismatch,
+programs/xxxl-svm/src/verifier/instructions_sysvar_access_contract_model.rs:103:    Phase41BRequirement::GuardianSetIdMatch,
+programs/xxxl-svm/src/verifier/instructions_sysvar_access_contract_model.rs:125:    Phase41BRejectionCase::GuardianSetMismatch,
+programs/xxxl-svm/src/verifier/instructions_sysvar_access_contract_model.rs:216:        requirement: Phase41BRequirement::GuardianSetIdMatch,
+programs/xxxl-svm/src/verifier/instructions_sysvar_access_contract_model.rs:217:        primary_rejection_case: Some(Phase41BRejectionCase::GuardianSetMismatch),
+programs/xxxl-svm/src/verifier/instructions_sysvar_live_wiring_boundary.rs:74:    pub guardian_set_runtime_loading_enabled: bool,
+programs/xxxl-svm/src/verifier/instructions_sysvar_live_wiring_boundary.rs:103:    pub guardian_set_runtime_loading_enabled: bool,
+programs/xxxl-svm/src/verifier/instructions_sysvar_live_wiring_boundary.rs:133:        guardian_set_runtime_loading_enabled: false,
+programs/xxxl-svm/src/verifier/instructions_sysvar_live_wiring_boundary.rs:467:        guardian_set_runtime_loading_enabled: false,
+programs/xxxl-svm/src/verifier/instructions_sysvar_live_wiring_boundary.rs:577:        assert!(!report.guardian_set_runtime_loading_enabled);
+programs/xxxl-svm/src/verifier/instructions_sysvar_live_wiring_boundary.rs:670:        assert!(!result.guardian_set_runtime_loading_enabled);
+programs/xxxl-svm/src/verifier/mod.rs:45:pub mod guardian_set_account_loading_boundary;
+programs/xxxl-svm/src/verifier/mod.rs:209:    AuthoritativeGuardianSetRef, AuthoritativeGuardianSetSource, GuardianMembershipValidated,
+programs/xxxl-svm/src/verifier/mod.rs:220:    GuardianQuorumStructuralResult, GuardianSetRef, GUARDIAN_QUORUM_STRUCTURAL_REPORT,
+programs/xxxl-svm/src/verifier/mod.rs:223:pub use guardian_set_account_loading_boundary::{
+programs/xxxl-svm/src/verifier/mod.rs:224:    decode_phase_41k_2_guardian_set_account_data, find_phase_41k_2_guardian_set_pda,
+programs/xxxl-svm/src/verifier/mod.rs:225:    load_phase_41k_2_guardian_set_account_info,
+programs/xxxl-svm/src/verifier/mod.rs:226:    phase_41k_2_guardian_set_account_loading_boundary_report,
+programs/xxxl-svm/src/verifier/mod.rs:227:    Phase41K2GuardianSetAccountLoadingBoundaryReport, Phase41K2GuardianSetAccountLoadingResult,
+programs/xxxl-svm/src/verifier/mod.rs:228:    Phase41K2GuardianSetAccountLoadingStatus, Phase41K2GuardianSetAccountRejectionCase,
+programs/xxxl-svm/src/verifier/quorum_authorization_boundary.rs:4:    establish_guardian_membership_validation, AuthoritativeGuardianSetRef,
+programs/xxxl-svm/src/verifier/quorum_authorization_boundary.rs:41:    pub guardian_set_id: [u8; 32],
+programs/xxxl-svm/src/verifier/quorum_authorization_boundary.rs:72:    pub guardian_set_id: [u8; 32],
+programs/xxxl-svm/src/verifier/quorum_authorization_boundary.rs:103:    pub requires_same_expected_guardian_set_id_for_all_attempts: bool,
+programs/xxxl-svm/src/verifier/quorum_authorization_boundary.rs:104:    pub requires_same_authoritative_guardian_set_for_all_attempts: bool,
+programs/xxxl-svm/src/verifier/quorum_authorization_boundary.rs:134:        requires_same_expected_guardian_set_id_for_all_attempts: true,
+programs/xxxl-svm/src/verifier/quorum_authorization_boundary.rs:135:        requires_same_authoritative_guardian_set_for_all_attempts: true,
+programs/xxxl-svm/src/verifier/quorum_authorization_boundary.rs:164:    expected_configured_guardian_set_id: &'a [u8; 32],
+programs/xxxl-svm/src/verifier/quorum_authorization_boundary.rs:165:    guardian_set: AuthoritativeGuardianSetRef<'a>,
+programs/xxxl-svm/src/verifier/quorum_authorization_boundary.rs:170:            guardian_set,
+programs/xxxl-svm/src/verifier/quorum_authorization_boundary.rs:187:            expected_configured_guardian_set_id,
+programs/xxxl-svm/src/verifier/quorum_authorization_boundary.rs:188:            guardian_set,
+programs/xxxl-svm/src/verifier/quorum_authorization_boundary.rs:230:    if successful_distinct_guardian_count < guardian_set.threshold() as usize {
+programs/xxxl-svm/src/verifier/quorum_authorization_boundary.rs:233:            guardian_set,
+programs/xxxl-svm/src/verifier/quorum_authorization_boundary.rs:243:        guardian_set_id: *guardian_set.guardian_set_id(),
+programs/xxxl-svm/src/verifier/quorum_authorization_boundary.rs:244:        threshold: guardian_set.threshold(),
+programs/xxxl-svm/src/verifier/quorum_authorization_boundary.rs:245:        guardian_count: guardian_set.guardians().len(),
+programs/xxxl-svm/src/verifier/quorum_authorization_boundary.rs:277:    guardian_set: AuthoritativeGuardianSetRef<'_>,
+programs/xxxl-svm/src/verifier/quorum_authorization_boundary.rs:287:        guardian_set_id: *guardian_set.guardian_set_id(),
+programs/xxxl-svm/src/verifier/quorum_authorization_boundary.rs:288:        threshold: guardian_set.threshold(),
+programs/xxxl-svm/src/verifier/quorum_authorization_boundary.rs:289:        guardian_count: guardian_set.guardians().len(),
+programs/xxxl-svm/src/verifier/quorum_authorization_boundary.rs:323:        AuthoritativeGuardianSetRef, GuardianMembershipValidationErrorKind,
+programs/xxxl-svm/src/verifier/quorum_authorization_boundary.rs:362:    fn raw_payload_bytes_with_guardian_set_id(guardian_set_id: &[u8; 32]) -> Vec<u8> {
+programs/xxxl-svm/src/verifier/quorum_authorization_boundary.rs:383:        out.extend_from_slice(guardian_set_id);
+programs/xxxl-svm/src/verifier/quorum_authorization_boundary.rs:508:        guardian_set_id: &'a [u8; 32],
+programs/xxxl-svm/src/verifier/quorum_authorization_boundary.rs:511:    ) -> AuthoritativeGuardianSetRef<'a> {
+programs/xxxl-svm/src/verifier/quorum_authorization_boundary.rs:512:        AuthoritativeGuardianSetRef::from_program_controlled_on_chain_source(
+programs/xxxl-svm/src/verifier/quorum_authorization_boundary.rs:513:            guardian_set_id,
+programs/xxxl-svm/src/verifier/quorum_authorization_boundary.rs:529:        assert!(report.requires_same_expected_guardian_set_id_for_all_attempts);
+programs/xxxl-svm/src/verifier/quorum_authorization_boundary.rs:530:        assert!(report.requires_same_authoritative_guardian_set_for_all_attempts);
+programs/xxxl-svm/src/verifier/quorum_authorization_boundary.rs:553:        let raw_payload = raw_payload_bytes_with_guardian_set_id(&GUARDIAN_SET_ID);
+programs/xxxl-svm/src/verifier/quorum_authorization_boundary.rs:597:        let raw_payload = raw_payload_bytes_with_guardian_set_id(&GUARDIAN_SET_ID);
+programs/xxxl-svm/src/verifier/quorum_authorization_boundary.rs:650:        let raw_payload = raw_payload_bytes_with_guardian_set_id(&GUARDIAN_SET_ID);
+programs/xxxl-svm/src/verifier/quorum_authorization_boundary.rs:695:        let raw_payload = raw_payload_bytes_with_guardian_set_id(&GUARDIAN_SET_ID);
+programs/xxxl-svm/src/verifier/quorum_authorization_boundary.rs:696:        let other_raw_payload = raw_payload_bytes_with_guardian_set_id(&OTHER_GUARDIAN_SET_ID);
+programs/xxxl-svm/src/verifier/quorum_authorization_boundary.rs:729:    fn same_expected_guardian_set_id_is_enforced_for_all_attempts() {
+programs/xxxl-svm/src/verifier/quorum_authorization_boundary.rs:730:        let raw_payload = raw_payload_bytes_with_guardian_set_id(&GUARDIAN_SET_ID);
+programs/xxxl-svm/src/verifier/quorum_authorization_boundary.rs:756:            GuardianMembershipValidationErrorKind::GuardianSetIdMismatch
+programs/xxxl-svm/src/verifier/raw_payload.rs:30:    "guardian_set_id",
+programs/xxxl-svm/src/verifier/raw_payload.rs:74:    pub guardian_set_id: &'a [u8; 32],
+programs/xxxl-svm/src/verifier/raw_payload.rs:275:    let guardian_set_id = cursor.read_bytes32("guardian_set_id")?;
+programs/xxxl-svm/src/verifier/raw_payload.rs:300:        guardian_set_id,
+programs/xxxl-svm/src/verifier/raw_payload.rs:426:        assert_eq!(decoded.guardian_set_id, &[0x22; 32]);
+programs/xxxl-svm/src/verifier/raw_payload.rs:455:                "guardian_set_id",
+programs/xxxl-svm/src/verifier/replay_protection_boundary.rs:1:use super::guardian_membership_validation_boundary::AuthoritativeGuardianSetRef;
+programs/xxxl-svm/src/verifier/replay_protection_boundary.rs:85:    pub guardian_set_id: [u8; 32],
+programs/xxxl-svm/src/verifier/replay_protection_boundary.rs:218:    expected_configured_guardian_set_id: &'a [u8; 32],
+programs/xxxl-svm/src/verifier/replay_protection_boundary.rs:219:    guardian_set: AuthoritativeGuardianSetRef<'a>,
+programs/xxxl-svm/src/verifier/replay_protection_boundary.rs:225:        expected_configured_guardian_set_id,
+programs/xxxl-svm/src/verifier/replay_protection_boundary.rs:226:        guardian_set,
+programs/xxxl-svm/src/verifier/replay_protection_boundary.rs:282:        guardian_set_id: quorum.guardian_set_id,
+programs/xxxl-svm/src/verifier/replay_protection_boundary.rs:410:    use super::super::guardian_membership_validation_boundary::AuthoritativeGuardianSetRef;
+programs/xxxl-svm/src/verifier/replay_protection_boundary.rs:451:        guardian_set_id: &[u8; 32],
+programs/xxxl-svm/src/verifier/replay_protection_boundary.rs:474:        out.extend_from_slice(guardian_set_id);
+programs/xxxl-svm/src/verifier/replay_protection_boundary.rs:598:    fn authoritative_guardian_set<'a>(
+programs/xxxl-svm/src/verifier/replay_protection_boundary.rs:599:        guardian_set_id: &'a [u8; 32],
+programs/xxxl-svm/src/verifier/replay_protection_boundary.rs:602:    ) -> AuthoritativeGuardianSetRef<'a> {
+programs/xxxl-svm/src/verifier/replay_protection_boundary.rs:603:        AuthoritativeGuardianSetRef::from_program_controlled_on_chain_source(
+programs/xxxl-svm/src/verifier/replay_protection_boundary.rs:604:            guardian_set_id,
+programs/xxxl-svm/src/verifier/replay_protection_boundary.rs:679:            authoritative_guardian_set(&GUARDIAN_SET_ID, 2, &guardians),
+programs/xxxl-svm/src/verifier/replay_protection_boundary.rs:729:            authoritative_guardian_set(&GUARDIAN_SET_ID, 2, &guardians),
+programs/xxxl-svm/src/verifier/replay_protection_boundary.rs:778:            authoritative_guardian_set(&GUARDIAN_SET_ID, 2, &guardians),
+programs/xxxl-svm/src/verifier/replay_protection_boundary.rs:826:            authoritative_guardian_set(&GUARDIAN_SET_ID, 2, &guardians),
+programs/xxxl-svm/src/verifier/replay_protection_boundary.rs:863:            authoritative_guardian_set(&GUARDIAN_SET_ID, 1, &guardians),
+programs/xxxl-svm/src/verifier/replay_protection_boundary.rs:914:            authoritative_guardian_set(&GUARDIAN_SET_ID, 2, &guardians),
