@@ -1,0 +1,42 @@
+# State initialization decision matrix
+
+D3_MODEL_0_NO_INITIALIZATION_YET
+status: current_default
+meaning: No state initialization execution is approved.
+allows_state_init_execution_now: false
+allows_account_creation_now: false
+allows_mutation_now: false
+
+D3_MODEL_1_DIRECT_MANUAL_STATE_CREATION_WITH_UNBOUNDED_ADMIN
+status: rejected
+meaning: A human/admin creates or rewrites protocol state without a reviewed initializer, one-time guard, and public config boundary.
+reason_rejected: incompatible with immutable/no-hidden-admin-mint/no-admin-balance-write principles.
+allows_state_init_execution_now: false
+allows_mutation_now: false
+
+D3_MODEL_2_REVIEWED_TESTNET_INITIALIZER_WITH_ONE_TIME_GUARD
+status: selected_future_model
+meaning: A future reviewed initializer package may initialize long-lived protocol state once, with explicit account list, fixed layouts, fixed discriminators, reinitialization rejection, public config values, and final scoped GO.
+allows_state_init_execution_now: false
+allows_future_state_init_after_required_evidence: true
+allows_mutation_now: false
+
+D3_MODEL_3_LAZY_PROCESSED_EVENT_MARKING_AS_GENERAL_STATE_INIT
+status: rejected
+meaning: Treat per-event ProcessedEvent marking as general protocol state initialization.
+reason_rejected: ProcessedEvent marking is per-event replay protection and must stay separate from long-lived protocol initialization.
+allows_state_init_execution_now: false
+allows_mutation_now: false
+
+D3_MODEL_4_SPL_MINT_SETUP_INSIDE_BLOCKER_D
+status: rejected_for_D_scope
+meaning: Use D to approve SPL mint creation/configuration/authority setup.
+reason_rejected: SPL mint authority architecture is Blocker E scope.
+allows_spl_setup_now: false
+allows_mutation_now: false
+
+SELECTED_D3_DECISION
+REVIEWED_TESTNET_INITIALIZER_WITH_ONE_TIME_GUARD_REQUIRED_BEFORE_ANY_STATE_INIT_EXECUTION
+
+SELECTED_D3_BOUNDARY
+LONG_LIVED_PROTOCOL_STATE_INIT_SEPARATED_FROM_PROCESSED_EVENT_MARKING_AND_SPL_SETUP
