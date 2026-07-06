@@ -3304,3 +3304,80 @@ NO-GO REMAINS_FOR_GUARDIAN_DESCRIPTOR_FINALIZATION_GUARDIAN_KEYS_PRODUCTION_KEYS
 Next safe step:
 
 Blocker F.5 — guardian descriptor closure decision record.
+
+
+## Blocker F.5 guardian descriptor closure decision record
+
+The Blocker F.5 closure decision record is recorded in:
+
+docs/gateway/blocker-f-5-guardian-descriptor-closure-decision-record.md
+
+Blocker F is now CLOSED narrowly as:
+
+GUARDIAN_DESCRIPTOR_MODEL_REVIEWED_KEYS_AND_PACKAGES_NOT_APPROVED
+
+Closure basis:
+
+- F.1 opened guardian descriptor planning
+- F.2 completed repo-grounded guardian/quorum inventory
+- F.3 recorded the guardian descriptor decision model
+- F.4 completed guardian descriptor invariant review
+
+Accepted F.2 inventory result:
+
+all_inventory_checks_passed: true
+
+Accepted F.3 decision:
+
+STATIC_PUBLIC_GUARDIAN_DESCRIPTOR_PUBLIC_KEYS_ONLY_EXPLICIT_THRESHOLD_NO_PRIVATE_KEYS_NO_PACKAGES_NO_SIGNING
+
+Accepted key material boundary:
+
+PUBLIC_KEYS_ONLY_PRIVATE_KEYS_NEVER_COMMITTED_NEVER_REQUESTED_NEVER_PRINTED
+
+Accepted key type model:
+
+ED25519_PUBLIC_KEY_DESCRIPTOR_MODEL
+
+Accepted quorum model:
+
+EXPLICIT_THRESHOLD_OVER_DISTINCT_GUARDIAN_APPROVALS
+
+Accepted package/signing boundary:
+
+FUTURE_REVIEWED_GUARDIAN_DESCRIPTOR_AND_FINAL_SCOPED_GO_REQUIRED_BEFORE_ANY_GUARDIAN_PACKAGE_CONSTRUCTION_OR_SIGNING
+
+Accepted F.4 invariant result:
+
+all_invariants_reviewed: true
+
+blocker_f_closure_ready: true
+
+closure_type: narrow_descriptor_boundary_only
+
+Private key material scan accepted:
+
+private_key_scan_match_count: 0
+
+private_key_material_scan_result: NO_PRIVATE_KEY_MATERIAL_PATTERNS_FOUND
+
+F.5 does not approve guardian descriptor finalization, guardian public key selection, production key selection, private key handling, signing, guardian package construction, state initialization execution, SPL setup, deploy, write-buffer, set-upgrade-authority, close, upgrade, transaction submit, mutation, or production activation.
+
+Remaining blockers:
+
+- B — OPEN: expected post-upgrade ProgramData hash
+- G — OPEN: rollback / recovery plan
+
+Current status:
+
+BLOCKER_F_CLOSED_NARROW_GUARDIAN_DESCRIPTOR_MODEL_REVIEWED_KEYS_AND_PACKAGES_NOT_APPROVED
+
+Current decision:
+
+BLOCKER_F_CLOSED_NARROW_DESCRIPTOR_INVARIANTS_ONLY
+
+NO-GO REMAINS_FOR_GUARDIAN_DESCRIPTOR_FINALIZATION_GUARDIAN_KEYS_PRODUCTION_KEYS_SIGNING_PACKAGES_RPC_TESTNET_NETWORK_SUBMIT_MUTATION
+
+Next safe step:
+
+Blocker G.1 — rollback / recovery plan planning.
