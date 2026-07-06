@@ -127,4 +127,5 @@ fi
 echo "EXECUTE_REQUESTED: true"
 echo "BLOCKER_H_NOT_CLOSED: local-validator dry-run requires explicit GO"
 echo "RESULT: EXECUTION_REFUSED_BY_B6_63_NO_EXECUTION_BOUNDARY"
+# Exit 63 = BLOCKER_H_NOT_CLOSED
 exit 63
