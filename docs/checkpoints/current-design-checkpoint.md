@@ -2353,3 +2353,98 @@ NO-GO REMAINS_FOR_STATE_INITIALIZATION_EXECUTION_SIGNING_KEYS_PROGRAM_UPGRADE_SP
 Next safe step:
 
 Blocker D.2 — repo-grounded state layout and PDA inventory.
+
+
+## Blocker D.2 repo-grounded state layout and PDA inventory
+
+The Blocker D.2 inventory record is recorded in:
+
+docs/gateway/blocker-d-2-repo-grounded-state-layout-and-pda-inventory.md
+
+Evidence directory:
+
+docs/gateway/evidence/blocker-d-2-repo-grounded-state-layout-and-pda-inventory
+
+Account layout inventory:
+
+- MINT_STATE_ACCOUNT_LEN: 176
+- GATEWAY_CONFIG_ACCOUNT_LEN: 256
+- GUARDIAN_SET_ACCOUNT_LEN: 320
+- PROCESSED_EVENT_ACCOUNT_LEN: 144
+- RECIPIENT_BALANCE_ACCOUNT_LEN: 144
+
+Discriminator inventory:
+
+- MINT_STATE_ACCOUNT_DISCRIMINATOR
+- GATEWAY_CONFIG_ACCOUNT_DISCRIMINATOR
+- GUARDIAN_SET_ACCOUNT_DISCRIMINATOR
+- PROCESSED_EVENT_ACCOUNT_DISCRIMINATOR
+- RECIPIENT_BALANCE_ACCOUNT_DISCRIMINATOR
+
+PDA inventory:
+
+- gateway_mint_authority
+  - seeds: xxxl / gateway-mint-authority / v1
+  - depends_on_program_id: true
+  - purpose: SPL Token mint authority for gateway-backed XXXL minting
+
+State category inventory:
+
+- MintState: long-lived protocol state
+- GatewayConfig: long-lived route/config state
+- GuardianSet: long-lived guardian quorum state
+- ProcessedEvent: per-event replay/consumption state
+- RecipientBalance: per-recipient accounting state
+- gateway_mint_authority: derived authority PDA
+- SPL mint and token accounts: Blocker E scope
+
+Inventory checks:
+
+- all_expected_account_lengths_present: true
+- all_expected_account_lengths_match_current_values: true
+- runtime_layout_version_is_1: true
+- all_expected_discriminators_present: true
+- mint_state_view_present: true
+- gateway_config_view_present: true
+- guardian_set_view_present: true
+- processed_event_view_present: true
+- recipient_balance_view_present: true
+- legacy_processed_event_helper_marked_not_live: true
+- gateway_mint_authority_pda_inventory_present: true
+- gateway_mint_authority_seeds_present: true
+- gateway_mint_authority_depends_on_program_id: true
+- processed_event_marking_boundary_report_present: true
+- processed_event_marking_requires_system_owned_empty_entry: true
+- processed_event_marking_accepts_lamport_dusted_empty_pda: true
+- processed_event_marking_writes_final_consumed_image: true
+- processed_event_marking_redecodes_after_write: true
+- processed_event_marking_spl_mint_disabled: true
+- processed_event_marking_live_route_disabled: true
+- processed_event_marking_function_present: true
+- account_contract_processed_event_system_or_program_pda: true
+- account_contract_mint_authority_pda_program_derived: true
+- account_contract_rent_payer_signer_present: true
+- deployment_status_not_deployable: true
+- program_id_placeholder_boundary_active: true
+
+all_inventory_checks_passed: true
+
+D.2 confirms that the current repo defines state layout constants, discriminators, account views, gateway_mint_authority PDA inventory, and a Phase 41K.4 ProcessedEvent marking boundary.
+
+D.2 does not close Blocker D.
+
+D.2 does not initialize state, create accounts, call RPC, use testnet, use keys, sign, deploy, upgrade, configure SPL, construct guardian packages, submit, or mutate.
+
+Current status:
+
+BLOCKER_D_OPEN_REPO_GROUNDED_STATE_LAYOUT_AND_PDA_INVENTORY_COMPLETED_NO_INITIALIZATION
+
+Current decision:
+
+BLOCKER_D_NOT_CLOSED
+
+NO-GO REMAINS_FOR_STATE_INITIALIZATION_EXECUTION_SIGNING_KEYS_PROGRAM_UPGRADE_SPL_SETUP_GUARDIAN_PACKAGES_NETWORK_SUBMIT_MUTATION
+
+Next safe step:
+
+Blocker D.3 — state initialization authority and one-time guard decision model.
