@@ -1415,3 +1415,40 @@ Current decision remains:
 NO-GO FOR BLOCKER_H_LOCAL_VALIDATOR_EXECUTION_TESTNET_SIGNING_SPL_UPGRADE_INIT_SUBMIT
 
 The next safe step is Blocker H.5 GO decision step.
+
+
+## Blocker H.5 GO decision step, no execution
+
+The Blocker H.5 GO decision checkpoint is recorded in:
+
+docs/gateway/blocker-h-5-go-decision-step-no-execution.md
+
+H.5 defines the decision surface for a possible future actual local-validator dry-run.
+
+H.5 is not actual execution approval.
+
+H.5 does not run a local validator.
+
+H.5 does not add an actual runnable validator execution command.
+
+Fixture integrity anchor:
+
+0a3290df47782008f72b441d9b9bf36964003324dde5baaf03f5fb0a04b19da7
+
+Requester:
+
+Sergey Stepanenko
+
+Actual execution sign-off:
+
+EMPTY — no explicit GO for actual local-validator execution has been given in H.5.
+
+Current status:
+
+BLOCKER_H_GO_DECISION_SURFACE_DEFINED_SIGN_OFF_EMPTY_NO_EXECUTION
+
+Current decision remains:
+
+NO-GO FOR BLOCKER_H_LOCAL_VALIDATOR_EXECUTION_TESTNET_SIGNING_SPL_UPGRADE_INIT_SUBMIT
+
+The next safe step is a Sergey decision. Actual Blocker H local-validator dry-run requires a separate explicit scoped GO referencing the fixture SHA256.
