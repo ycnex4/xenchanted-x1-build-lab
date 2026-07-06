@@ -1111,3 +1111,38 @@ Current decision remains:
 NO-GO FOR BLOCKER_H_LOCAL_VALIDATOR_EXECUTION_TESTNET_SIGNING_SPL_UPGRADE_INIT_SUBMIT
 
 The next safe step is B6.64 command-boundary safety checkpoint / Theo review package for B6.63.
+
+
+## Phase 41K.6 B6.64 command-boundary safety checkpoint / Theo review package
+
+The B6.64 command-boundary safety checkpoint and Theo review package is recorded in:
+
+docs/gateway/phase-41k6-b6-64-command-boundary-safety-checkpoint-theo-review-package.md
+
+B6.64 verifies the B6.63 command-boundary script:
+
+scripts/gateway/b6_63_local_validator_command_boundary_no_execution.sh
+
+Verification result:
+
+- syntax check: OK
+- default blocker H gate: OK
+- default local-validator execution: NOT_EXECUTED
+- no testnet fallback: OK
+- --execute refusal: OK
+- --execute refusal exit code: 63
+- execute blocker H gate: OK
+- testnet action: NOT_EXECUTED
+- signing: NOT_EXECUTED
+- SPL setup: NOT_EXECUTED
+- upgrade/init/submit: NOT_EXECUTED
+
+Current status:
+
+COMMAND_BOUNDARY_SAFETY_CHECKPOINT_READY_FOR_THEO_REVIEW_NO_EXECUTION
+
+Current decision remains:
+
+NO-GO FOR BLOCKER_H_LOCAL_VALIDATOR_EXECUTION_TESTNET_SIGNING_SPL_UPGRADE_INIT_SUBMIT
+
+The next safe step is to send B6.64 to Theo for review.
