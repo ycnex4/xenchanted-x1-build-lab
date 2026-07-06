@@ -2027,7 +2027,7 @@ Static inventory result:
 - program_id_placeholder_active: true
 - handler_calls_authorization_before_atomic_mark_and_mint: true
 - atomic_boundary_checks_cpi_gate_before_atomic_mark_and_mint_call: true
-- atomic_boundary_marks_before_guarded_cpi_inside_atomic_function: false
+- atomic_boundary_marks_before_guarded_cpi_inside_atomic_function: true
 
 C.2 interpretation:
 
@@ -2056,3 +2056,29 @@ NO-GO REMAINS_FOR_HANDLER_ACTIVATION_SIGNING_KEYS_PROGRAM_UPGRADE_STATE_INIT_SPL
 Next safe step:
 
 Blocker C.3 — B1C7 production/testnet activation decision model.
+
+## C.2R order-check correction
+
+The original C.2 static check reported:
+
+atomic_boundary_marks_before_guarded_cpi_inside_atomic_function: false
+
+This was a tooling artifact, not a runtime gap.
+
+Reason:
+
+The check used a whole-file string index and matched the import/use occurrence of guarded_mint_to_cpi_execution_gate_boundary before the function body.
+
+Corrected function-scoped check:
+
+- function: atomic_mark_and_mint_boundary
+- mark_processed_event_atomic_call_line: 556
+- guarded_mint_to_cpi_execution_gate_boundary_call_line: 571
+- mark_before_guarded_cpi_call: true
+
+Corrected status:
+
+atomic_boundary_marks_before_guarded_cpi_inside_atomic_function: true
+
+C.2 remains inventory-only and still does not close Blocker C.
+

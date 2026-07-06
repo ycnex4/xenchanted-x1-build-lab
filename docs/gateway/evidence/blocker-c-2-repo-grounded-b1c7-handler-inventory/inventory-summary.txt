@@ -13,4 +13,4 @@
 - program_id_placeholder_active: true
 - handler_calls_authorization_before_atomic_mark_and_mint: true
 - atomic_boundary_checks_cpi_gate_before_atomic_mark_and_mint_call: true
-- atomic_boundary_marks_before_guarded_cpi_inside_atomic_function: false
+- atomic_boundary_marks_before_guarded_cpi_inside_atomic_function: true
