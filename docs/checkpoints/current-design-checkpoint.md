@@ -2790,3 +2790,74 @@ NO-GO REMAINS_FOR_SPL_MINT_SETUP_SPL_AUTHORITY_TRANSFER_SPL_CPI_MINTING_SIGNING_
 Next safe step:
 
 Blocker E.3 — SPL mint authority setup decision model.
+
+
+## Blocker E.3 SPL mint authority setup decision model
+
+The Blocker E.3 decision model is recorded in:
+
+docs/gateway/blocker-e-3-spl-mint-authority-setup-decision-model.md
+
+Evidence directory:
+
+docs/gateway/evidence/blocker-e-3-spl-mint-authority-setup-decision-model
+
+E.3 decision:
+
+GATEWAY_MINT_AUTHORITY_PDA_CANONICAL_MINT_AUTHORITY_NO_RETAINED_HUMAN_ADMIN_MINT_AUTHORITY
+
+Selected token program model:
+
+CLASSIC_SPL_TOKEN_CURRENT_REPO_MODEL
+
+Selected setup path:
+
+PREFER_INITIALIZE_MINT_WITH_GATEWAY_MINT_AUTHORITY_PDA_AS_AUTHORITY_ELSE_REVIEWED_TEMP_SETUP_AUTHORITY_HANDOFF_TO_PDA
+
+Selected freeze authority direction:
+
+FREEZE_AUTHORITY_NONE_PREFERRED
+
+Selected initial supply rule:
+
+ZERO_INITIAL_SUPPLY_REQUIRED
+
+Execution boundary:
+
+FUTURE_REVIEWED_SPL_SETUP_PACKAGE_AND_FINAL_SCOPED_GO_REQUIRED_BEFORE_ANY_SPL_MINT_SETUP_EXECUTION
+
+E.3 rejects:
+
+- retained human/admin mint authority
+- retained human/admin freeze authority as default
+- Token-2022 as current repo model
+- SPL setup execution before reviewed setup package and final scoped GO
+
+Remaining open items before E closure:
+
+- exact decimals value
+- exact canonical mint account address/model
+- exact setup package
+- exact freeze authority proof
+- exact mint authority proof
+- exact total supply reconciliation evidence
+- exact local/testnet evidence package
+- final scoped GO before execution
+
+E.3 does not close Blocker E.
+
+E.3 does not create an SPL mint, configure mint authority, transfer mint authority, set/disable freeze authority, mint tokens, initialize state, call RPC, use testnet, use keys, sign, deploy, upgrade, construct guardian packages, submit, or mutate.
+
+Current status:
+
+BLOCKER_E_OPEN_SPL_MINT_AUTHORITY_SETUP_DECISION_MODEL_RECORDED_NO_SPL_SETUP_NO_EXECUTION
+
+Current decision:
+
+GATEWAY_MINT_AUTHORITY_PDA_CANONICAL_MINT_AUTHORITY_NO_RETAINED_HUMAN_ADMIN_MINT_AUTHORITY
+
+NO-GO REMAINS_FOR_SPL_MINT_SETUP_SPL_AUTHORITY_TRANSFER_SPL_CPI_MINTING_SIGNING_KEYS_PROGRAM_UPGRADE_STATE_INIT_GUARDIAN_PACKAGES_NETWORK_SUBMIT_MUTATION
+
+Next safe step:
+
+Blocker E.4 — SPL mint authority invariant review package.
