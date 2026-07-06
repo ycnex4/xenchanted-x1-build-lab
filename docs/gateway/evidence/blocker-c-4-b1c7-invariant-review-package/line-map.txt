@@ -22,3 +22,7 @@
 - atomic_mark_fn_line: 525
 - mark_line: 556
 - guarded_cpi_line: 571
+
+- c4r_handler_calls_authorization_before_atomic_boundary: true
+- c4r_authorization_function_gates_status_before_return: true
+- c4r_atomic_boundary_rechecks_authorization_before_proceeding: true

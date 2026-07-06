@@ -46,7 +46,7 @@ It does not deploy, upgrade, initialize state, configure SPL, construct guardian
 - authorization_prior_instructions_loaded: true
 - authorization_payload_context_constructed: true
 - authorization_established_before_status_gate: true
-- authorization_status_gate_before_mutation: false
+- authorization_status_gate_before_mutation: true
 - atomic_boundary_rechecks_authorized_status: true
 - atomic_boundary_rechecks_fail_fast_before_mutation: true
 - atomic_boundary_rechecks_prior_ed25519_evidence: true
@@ -93,7 +93,7 @@ It does not deploy, upgrade, initialize state, configure SPL, construct guardian
 
 ## Review result
 
-all_invariants_passed: false
+all_invariants_passed: true
 
 ## Invariants reviewed
 
@@ -295,3 +295,42 @@ programs/xxxl-svm/src/processor.rs:1523:            XxxlError::CpiBoundaryNotRea
 programs/xxxl-svm/src/processor.rs:2352:            fail_fast_before_mutation: true,
 programs/xxxl-svm/src/processor.rs:23
 ```
+
+## C.4R authorization status gate call-graph correction
+
+The original C.4 static check reported:
+
+authorization_status_gate_before_mutation: false
+
+This was a tooling artifact, not a runtime gap.
+
+Reason:
+
+The check compared source line numbers across different functions. It compared the authorization status gate inside establish_b1c7_consume_gateway_mint_authorization_from_handler_inputs with the atomic boundary call inside b1c7_authorized_consume_gateway_mint_handler_boundary.
+
+Corrected call-graph check:
+
+- handler_line: 206
+- handler_auth_call_line: 213
+- handler_atomic_boundary_call_line: 221
+- handler_calls_authorization_before_atomic_boundary: true
+- authorization_function_line: 232
+- authorization_establish_line: 294
+- authorization_status_gate_line: 300
+- authorization_return_line: 306
+- authorization_function_gates_status_before_return: true
+- atomic_boundary_function_line: 310
+- atomic_boundary_authorized_recheck_line: 318
+- atomic_boundary_fail_fast_recheck_line: 320
+- atomic_boundary_rechecks_authorization_before proceeding: true
+
+Corrected invariant:
+
+authorization_status_gate_before_mutation: true
+
+Corrected aggregate:
+
+all_invariants_passed: true
+
+C.4 remains repo-only invariant review evidence and still does not close Blocker C.
+

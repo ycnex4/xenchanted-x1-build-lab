@@ -5,7 +5,7 @@
 - authorization_prior_instructions_loaded: true
 - authorization_payload_context_constructed: true
 - authorization_established_before_status_gate: true
-- authorization_status_gate_before_mutation: false
+- authorization_status_gate_before_mutation: true
 - atomic_boundary_rechecks_authorized_status: true
 - atomic_boundary_rechecks_fail_fast_before_mutation: true
 - atomic_boundary_rechecks_prior_ed25519_evidence: true

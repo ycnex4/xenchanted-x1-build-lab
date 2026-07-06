@@ -1,0 +1,53 @@
+# C.4R authorization status gate call-graph correction
+
+Status:
+
+C4R_AUTHORIZATION_STATUS_GATE_CALLGRAPH_ARTIFACT_CORRECTED
+
+The original C.4 static check reported:
+
+authorization_status_gate_before_mutation: false
+
+Reason:
+
+The first implementation compared source line numbers across different functions.
+
+It compared the authorization status gate inside establish_b1c7_consume_gateway_mint_authorization_from_handler_inputs with the atomic boundary call inside b1c7_authorized_consume_gateway_mint_handler_boundary.
+
+That is not a valid single-function line-order check.
+
+Corrected call-graph check:
+
+- handler_line: 206
+- handler_auth_call_line: 213
+- handler_atomic_boundary_call_line: 221
+- handler_calls_authorization_before_atomic_boundary: true
+
+- authorization_function_line: 232
+- authorization_establish_line: 294
+- authorization_status_gate_line: 300
+- authorization_return_line: 306
+- authorization_function_gates_status_before_return: true
+
+- atomic_boundary_function_line: 310
+- atomic_boundary_authorized_recheck_line: 318
+- atomic_boundary_fail_fast_recheck_line: 320
+- atomic_boundary_rechecks_authorization_before proceeding: true
+
+Corrected invariant:
+
+authorization_status_gate_before_mutation: true
+
+Interpretation:
+
+This is not a runtime gap.
+
+The handler calls the authorization function before calling the atomic mark+mint boundary.
+
+The authorization function rejects non-Authorized status before returning Ok(authorization).
+
+The atomic boundary also rechecks Authorized status and fail_fast_before_mutation.
+
+C.4 remains repo-only invariant review evidence.
+
+C.4R does not activate the handler, does not change runtime code, does not call RPC, does not use testnet, does not sign, does not deploy, does not upgrade, does not initialize state, does not configure SPL, does not construct guardian packages, does not submit, and does not mutate.
