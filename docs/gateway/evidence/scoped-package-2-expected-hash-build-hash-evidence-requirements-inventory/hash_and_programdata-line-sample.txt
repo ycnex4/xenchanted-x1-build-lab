@@ -1,0 +1,80 @@
+docs/checkpoints/current-design-checkpoint.md:296: - ProgramData account: 9tuesaPoJhrifF49vJewcg6PSWZeHAJiqQ97pq3LMW9T
+docs/checkpoints/current-design-checkpoint.md:307: ## Phase 41K.6 B6.39 expected post-upgrade ProgramData hash plan
+docs/checkpoints/current-design-checkpoint.md:309: The expected post-upgrade ProgramData hash plan is recorded in:
+docs/checkpoints/current-design-checkpoint.md:311: docs/gateway/phase-41k6-b6-39-post-upgrade-programdata-hash-plan.md
+docs/checkpoints/current-design-checkpoint.md:315: It does not compute or record the final expected hash.
+docs/checkpoints/current-design-checkpoint.md:325: POST_UPGRADE_PROGRAMDATA_HASH_PLAN_DEFINED_HASH_NOT_RECORDED
+docs/checkpoints/current-design-checkpoint.md:1360: - fixture bundle SHA256: 0a3290df47782008f72b441d9b9bf36964003324dde5baaf03f5fb0a04b19da7
+docs/checkpoints/current-design-checkpoint.md:1407: H.5 must reference the exact fixture SHA256 above.
+docs/checkpoints/current-design-checkpoint.md:1454: The next safe step is a Sergey decision. Actual Blocker H local-validator dry-run requires a separate explicit scoped GO referencing the fixture SHA256.
+docs/checkpoints/current-design-checkpoint.md:1465: Approved fixture bundle SHA256:
+docs/checkpoints/current-design-checkpoint.md:1518: - fixture bundle SHA256: 0a3290df47782008f72b441d9b9bf36964003324dde5baaf03f5fb0a04b19da7
+docs/checkpoints/current-design-checkpoint.md:1559: - fixture bundle SHA256: 0a3290df47782008f72b441d9b9bf36964003324dde5baaf03f5fb0a04b19da7
+docs/checkpoints/current-design-checkpoint.md:1602: - fixture bundle SHA256 verified: 0a3290df47782008f72b441d9b9bf36964003324dde5baaf03f5fb0a04b19da7
+docs/checkpoints/current-design-checkpoint.md:1623: - Blocker B: ProgramData hash
+docs/checkpoints/current-design-checkpoint.md:1670: A.1 does not call RPC, does not use testnet, does not use live RPC, does not use keys, does not sign, does not inspect live ProgramData, does not modify state, and does not submit to any network.
+docs/checkpoints/current-design-checkpoint.md:1698: - x1_testnet_programdata_account: 9tuesaPoJhrifF49vJewcg6PSWZeHAJiqQ97pq3LMW9T
+docs/checkpoints/current-design-checkpoint.md:1757: - x1_testnet_programdata_account: 9tuesaPoJhrifF49vJewcg6PSWZeHAJiqQ97pq3LMW9T
+docs/checkpoints/current-design-checkpoint.md:1760: A.3 does not call RPC, does not use testnet, does not use live RPC, does not use keys, does not sign, does not inspect live ProgramData, does not deploy, does not upgrade, does not initialize state, does not configure SPL, and does not submit to any network.
+docs/checkpoints/current-design-checkpoint.md:1785: The next safe step is A.4 read-only live ProgramData evidence GO form, still with no RPC execution.
+docs/checkpoints/current-design-checkpoint.md:1788: ## Blocker A.4 read-only live ProgramData evidence GO form
+docs/checkpoints/current-design-checkpoint.md:1792: docs/gateway/blocker-a-4-read-only-programdata-evidence-go-form.md
+docs/checkpoints/current-design-checkpoint.md:1794: A.4 defines the explicit scoped GO phrase required before A.5 may perform read-only live ProgramData evidence.
+docs/checkpoints/current-design-checkpoint.md:1796: A.4 does not call RPC, does not use testnet, does not use live RPC, does not use keys, does not sign, does not inspect live ProgramData, does not deploy, does not upgrade, does not initialize state, does not configure SPL, does not construct guardian packages,
+docs/checkpoints/current-design-checkpoint.md:1803: - programdata_account: 9tuesaPoJhrifF49vJewcg6PSWZeHAJiqQ97pq3LMW9T
+docs/checkpoints/current-design-checkpoint.md:1808: I approve Blocker A.5 read-only live ProgramData evidence only, scoped to X1 testnet RPC https://rpc.testnet.x1.xyz, program id D7AQmZNtFFFoJbducz93atteeSZhw3jq6RmsqBvaf1my, ProgramData account 9tuesaPoJhrifF49vJewcg6PSWZeHAJiqQ97pq3LMW9T, and expected observe
+docs/checkpoints/current-design-checkpoint.md:1816: BLOCKER_A_OPEN_READ_ONLY_PROGRAMDATA_EVIDENCE_GO_FORM_DEFINED_NO_RPC_NO_EXECUTION
+docs/checkpoints/current-design-checkpoint.md:1820: A5_READ_ONLY_LIVE_PROGRAMDATA_EVIDENCE_REQUIRES_EXPLICIT_SCOPED_GO
+docs/checkpoints/current-design-checkpoint.md:1825: ## Blocker A.5 read-only live ProgramData evidence
+docs/checkpoints/current-design-checkpoint.md:1827: The Blocker A.5 read-only live ProgramData evidence record is recorded in:
+docs/checkpoints/current-design-checkpoint.md:1829: docs/gateway/blocker-a-5-read-only-live-programdata-evidence.md
+docs/checkpoints/current-design-checkpoint.md:1833: docs/gateway/evidence/blocker-a-5-read-only-live-programdata-evidence
+docs/checkpoints/current-design-checkpoint.md:1839: ProgramData evidence status:
+docs/checkpoints/current-design-checkpoint.md:1841: READ_ONLY_PROGRAMDATA_EVIDENCE_MATCHED_EXPECTED_AUTHORITY
+docs/checkpoints/current-design-checkpoint.md:1845: - observed_programdata_account: 9tuesaPoJhrifF49vJewcg6PSWZeHAJiqQ97pq3LMW9T
+docs/checkpoints/current-design-checkpoint.md:1847: - programdata_matches_expected: true
+docs/checkpoints/current-design-checkpoint.md:1869: A.5R reviews the matched A.5 read-only live ProgramData evidence.
+docs/checkpoints/current-design-checkpoint.md:1873: - evidence_status: READ_ONLY_PROGRAMDATA_EVIDENCE_MATCHED_EXPECTED_AUTHORITY
+docs/checkpoints/current-design-checkpoint.md:1874: - observed_programdata_account: 9tuesaPoJhrifF49vJewcg6PSWZeHAJiqQ97pq3LMW9T
+docs/checkpoints/current-design-checkpoint.md:1876: - programdata_matches_expected: true
+docs/checkpoints/current-design-checkpoint.md:1922: - A.5 executed read-only live ProgramData evidence
+docs/checkpoints/current-design-checkpoint.md:1929: - observed_programdata_account: 9tuesaPoJhrifF49vJewcg6PSWZeHAJiqQ97pq3LMW9T
+docs/checkpoints/current-design-checkpoint.md:1931: - programdata_matches_expected: true
+docs/checkpoints/current-design-checkpoint.md:1942: - B — OPEN: expected post-upgrade ProgramData hash
+docs/checkpoints/current-design-checkpoint.md:2288: - B — OPEN: expected post-upgrade ProgramData hash
+docs/checkpoints/current-design-checkpoint.md:2571: - expected post-upgrade ProgramData hash in Blocker B
+docs/checkpoints/current-design-checkpoint.md:2635: - B — OPEN: expected post-upgrade ProgramData hash
+docs/checkpoints/current-design-checkpoint.md:2988: - B — OPEN: expected post-upgrade ProgramData hash
+docs/checkpoints/current-design-checkpoint.md:3368: - B — OPEN: expected post-upgrade ProgramData hash
+docs/checkpoints/current-design-checkpoint.md:3623: - Blocker B expected post-upgrade ProgramData hash
+docs/checkpoints/current-design-checkpoint.md:3700: - B — OPEN: expected post-upgrade ProgramData hash
+docs/checkpoints/current-design-checkpoint.md:3714: Blocker B.1 — expected post-upgrade ProgramData hash planning.
+docs/checkpoints/current-design-checkpoint.md:3717: ## Blocker B.1 expected post-upgrade ProgramData hash planning
+docs/checkpoints/current-design-checkpoint.md:3721: docs/gateway/blocker-b-1-expected-post-upgrade-programdata-hash-planning.md
+docs/checkpoints/current-design-checkpoint.md:3725: docs/gateway/evidence/blocker-b-1-expected-post-upgrade-programdata-hash-planning
+docs/checkpoints/current-design-checkpoint.md:3727: B.1 opens the expected post-upgrade ProgramData hash track after narrow closure of A, C, D, E, F, G, and H.
+docs/checkpoints/current-design-checkpoint.md:3731: - full hash bundle
+docs/checkpoints/current-design-checkpoint.md:3732: - canonical runtime hash over ProgramData executable bytes
+docs/checkpoints/current-design-checkpoint.md:3738: - baseline ProgramData evidence binding
+docs/checkpoints/current-design-checkpoint.md:3746: B.1 does not run build, compute artifact hash, compute ProgramData hash, deploy, upgrade, write buffer, change authority, initialize state, configure SPL, construct guardian packages, sign, call RPC, use testnet, submit, or mutate.
+docs/checkpoints/current-design-checkpoint.md:3750: BLOCKER_B_OPEN_EXPECTED_POST_UPGRADE_PROGRAMDATA_HASH_PLANNING_ONLY_NO_BUILD_NO_RPC_NO_EXECUTION
+docs/checkpoints/current-design-checkpoint.md:3760: Blocker B.2 — repo-grounded ProgramData hash inventory.
+docs/checkpoints/current-design-checkpoint.md:3763: ## Blocker B.2 repo-grounded ProgramData hash inventory
+docs/checkpoints/current-design-checkpoint.md:3767: docs/gateway/blocker-b-2-repo-grounded-programdata-hash-inventory.md
+docs/checkpoints/current-design-checkpoint.md:3771: docs/gateway/evidence/blocker-b-2-repo-grounded-programdata-hash-inventory
+docs/checkpoints/current-design-checkpoint.md:3779: - baseline_programdata_present: true
+docs/checkpoints/current-design-checkpoint.md:3780: - expected_programdata_hash_requirement_present: true
+docs/checkpoints/current-design-checkpoint.md:3785: - programdata_baseline_references_found: true
+docs/checkpoints/current-design-checkpoint.md:3796: - programdata_baseline: files=231, sampled_lines=120
+docs/checkpoints/current-design-checkpoint.md:3802: Hash bundle inventory:
+docs/checkpoints/current-design-checkpoint.md:3809: - canonical_runtime_hash_domain: ProgramData executable bytes preferred
+docs/checkpoints/current-design-checkpoint.md:3811: - baseline_programdata_account: 9tuesaPoJhrifF49vJewcg6PSWZeHAJiqQ97pq3LMW9T
+docs/checkpoints/current-design-checkpoint.md:3812: - pre_upgrade_expected_hash_package: required future evidence
+docs/checkpoints/current-design-checkpoint.md:3820: B.2 does not run build, compute artifact hash, compute ProgramData hash, deploy, upgrade, write buffer, change authority, initialize state, configure SPL, construct guardian packages, sign, call RPC, use testnet, submit, or mutate.
+docs/checkpoints/current-design-checkpoint.md:3824: BLOCKER_B_OPEN_REPO_GROUNDED_PROGRAMDATA_HASH_INVENTORY_COMPLETED_NO_BUILD_NO_HASH_NO_RPC_NO_EXECUTION
+docs/checkpoints/current-design-checkpoint.md:3834: Blocker B.3 — expected post-upgrade ProgramData hash decision model.
+docs/checkpoints/current-design-checkpoint.md:3837: ## Blocker B.3 expected post-upgrade ProgramData hash decision model
+docs/checkpoints/current-design-checkpoint.md:3841: docs/gateway/blocker-b-3-expected-post-upgrade-programdata-hash-decision-model.md
+docs/checkpoints/current-design-checkpoint.md:3845: docs/gateway/evidence/blocker-b-3-expected-post-upgrade-programdata-hash-decision-model
+docs/checkpoints/current-design-checkpoint.md:3849: FULL_HASH_BUNDLE_WITH_PROGRAMDATA_EXECUTABLE_BYTES_SHA256_AS_CANONICAL_RUNTIME_HASH
+docs/checkpoints/current-design-checkpoint.md:3853: PROGRAMDATA_EXECUTABLE_BYTES_EXCLUDING_LOADER_METADATA
