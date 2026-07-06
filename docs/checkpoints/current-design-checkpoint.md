@@ -1959,3 +1959,40 @@ NO-GO REMAINS_FOR_SIGNING_KEYS_PROGRAM_UPGRADE_STATE_INIT_SPL_SETUP_GUARDIAN_PAC
 Next safe step:
 
 Blocker C.1 — B1C7 handler production/testnet boundary planning.
+
+
+## Blocker C.1 B1C7 handler production/testnet boundary planning
+
+The Blocker C.1 planning record is recorded in:
+
+docs/gateway/blocker-c-1-b1c7-handler-production-testnet-boundary-planning.md
+
+C.1 opens the B1C7 handler production/testnet boundary track after Blocker A was closed narrowly.
+
+Current repo-grounded C status:
+
+- B1C7 integration exists behind feature gate: phase-41k6-b1c7-handler-integration-test-gate
+- dangerous SBF build allow feature is separately named and explicit
+- default consume_gateway_mint path rejects with CpiBoundaryNotReady when the B1C7 gate is not enabled
+- LIVE_ROUTE_ACTIVATION_FROM_PROCESS_INSTRUCTION_ENABLED remains false
+- deployment_status.rs still records deployable=false
+- program_id_status.rs still records PLACEHOLDER_PROGRAM_ID_BOUNDARY
+- lib.rs still records SCAFFOLD_ONLY_NOT_DEPLOYABLE
+
+C.1 does not activate the handler, does not change code, does not call RPC, does not use testnet, does not use keys, does not sign, does not deploy, does not upgrade, does not initialize state, does not configure SPL, does not construct guardian packages, does not submit, and does not mutate.
+
+Blocker C remains open.
+
+Current status:
+
+BLOCKER_C_OPEN_B1C7_HANDLER_BOUNDARY_PLANNING_ONLY_NO_CODE_CHANGE_NO_RPC_NO_EXECUTION
+
+Current decision:
+
+BLOCKER_C_NOT_CLOSED
+
+NO-GO REMAINS_FOR_HANDLER_ACTIVATION_SIGNING_KEYS_PROGRAM_UPGRADE_STATE_INIT_SPL_SETUP_GUARDIAN_PACKAGES_NETWORK_SUBMIT_MUTATION
+
+Next safe step:
+
+Blocker C.2 — repo-grounded B1C7 handler inventory.
