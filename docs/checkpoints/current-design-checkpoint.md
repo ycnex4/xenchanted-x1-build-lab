@@ -2523,3 +2523,69 @@ NO-GO REMAINS_FOR_STATE_INITIALIZATION_EXECUTION_SIGNING_KEYS_PROGRAM_UPGRADE_SP
 Next safe step:
 
 Blocker D.4 — state initialization invariant review package.
+
+
+## Blocker D.4 state initialization invariant review package
+
+The Blocker D.4 invariant review package is recorded in:
+
+docs/gateway/blocker-d-4-state-initialization-invariant-review-package.md
+
+Evidence directory:
+
+docs/gateway/evidence/blocker-d-4-state-initialization-invariant-review-package
+
+Reviewed invariants:
+
+- long-lived state scope is limited to MintState, GatewayConfig, and GuardianSet
+- state layouts, lengths, discriminators, account views, and runtime layout version are inventoried
+- future initializer must have a one-time guard
+- future initializer must reject reinitialization
+- direct manual unbounded admin initialization is rejected
+- ProcessedEvent remains per-event replay protection and is not general protocol initialization
+- RecipientBalance initialization model remains an explicit open design gap
+- SPL mint setup and SPL mint authority architecture remain Blocker E
+- gateway_mint_authority PDA is inventoried but not activated by D
+- future initializer must not introduce hidden admin mint or balance-write pathways
+- D.4 approves no execution, no account creation, no RPC, no signing, no deploy, no upgrade, no SPL setup, no submit, no mutation
+
+Review result:
+
+all_invariants_reviewed: true
+
+blocker_d_closure_ready: true
+
+closure_type: narrow_design_boundary_only
+
+Prepared closure candidate:
+
+STATE_INITIALIZATION_DESIGN_REVIEWED_EXECUTION_NOT_APPROVED
+
+Remaining open items outside D closure:
+
+- RecipientBalance lazy/precreate initialization mechanics
+- actual initializer instruction/package implementation
+- local evidence that reinitialization fails
+- local evidence that partial initialization cannot be treated as valid
+- SPL mint authority architecture in Blocker E
+- expected post-upgrade ProgramData hash in Blocker B
+- guardian descriptor in Blocker F
+- rollback/recovery plan in Blocker G
+
+D.4 does not close Blocker D.
+
+D.4 does not initialize state, create accounts, call RPC, use testnet, use keys, sign, deploy, upgrade, configure SPL, construct guardian packages, submit, or mutate.
+
+Current status:
+
+BLOCKER_D_REVIEW_READY_STATE_INITIALIZATION_INVARIANTS_RECORDED_NO_EXECUTION
+
+Current decision:
+
+BLOCKER_D_NOT_CLOSED_PENDING_CLOSURE_DECISION
+
+NO-GO REMAINS_FOR_STATE_INITIALIZATION_EXECUTION_SIGNING_KEYS_PROGRAM_UPGRADE_SPL_SETUP_GUARDIAN_PACKAGES_NETWORK_SUBMIT_MUTATION
+
+Next safe step:
+
+Blocker D.5 — state initialization design closure decision record.
