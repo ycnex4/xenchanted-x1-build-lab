@@ -1,0 +1,10 @@
+phase=blocker-c-4-b1c7-invariant-review-package
+timestamp_utc=2026-07-06T17:25:32Z
+repo_only=true
+rpc_used=false
+testnet_used=false
+code_changed=false
+handler_activated=false
+build_executed=false
+deployable_artifact_created=false
+mutation_executed=false

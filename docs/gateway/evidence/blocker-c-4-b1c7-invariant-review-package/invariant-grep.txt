@@ -1,0 +1,481 @@
+programs/xxxl-svm/src/account_contract.rs:131:pub const CONSUME_GATEWAY_MINT_B1_V3_ACCOUNT_CONTRACT: [ConsumeGatewayMintAccountContractEntry;
+programs/xxxl-svm/src/account_contract.rs:212:        name: "instructions_sysvar",
+programs/xxxl-svm/src/account_contract.rs:227:    &CONSUME_GATEWAY_MINT_B1_V3_ACCOUNT_CONTRACT
+programs/xxxl-svm/src/account_contract.rs:234:    if accounts.len() != CONSUME_GATEWAY_MINT_B1_V3_ACCOUNT_CONTRACT.len() {
+programs/xxxl-svm/src/account_contract.rs:238:    for entry in CONSUME_GATEWAY_MINT_B1_V3_ACCOUNT_CONTRACT {
+programs/xxxl-svm/src/account_contract.rs:251:    let instructions_sysvar = accounts
+programs/xxxl-svm/src/account_contract.rs:255:    if instructions_sysvar.key != &sysvar::instructions::id() {
+programs/xxxl-svm/src/account_contract.rs:490:    fn b1_v3_account_contract_rejects_missing_instructions_sysvar() {
+programs/xxxl-svm/src/account_contract.rs:499:    fn b1_v3_account_contract_rejects_wrong_instructions_sysvar_key() {
+programs/xxxl-svm/src/account_contract.rs:508:    fn b1_v3_account_contract_rejects_writable_instructions_sysvar() {
+programs/xxxl-svm/src/account_contract.rs:517:    fn b1_v3_account_contract_rejects_signer_instructions_sysvar() {
+programs/xxxl-svm/src/account_contract.rs:526:    fn b1_v3_account_contract_adds_readonly_non_signer_instructions_sysvar() {
+programs/xxxl-svm/src/account_contract.rs:550:        assert_eq!(sysvar_entry.name, "instructions_sysvar");
+programs/xxxl-svm/src/cpi.rs:123:pub fn spl_mint_to_cpi_execution_enabled() -> bool {
+programs/xxxl-svm/src/cpi.rs:124:    let _phase_41k5_d2_gate_marker = "PHASE_41K5_D2_SPL_CPI_GATE_OPEN_AFTER_B1C7";
+programs/xxxl-svm/src/cpi.rs:134:pub fn spl_mint_to_cpi_execution_enabled() -> bool {
+programs/xxxl-svm/src/cpi.rs:135:    let _phase_41k5_d2_gate_marker = "PHASE_41K5_D2_SPL_CPI_GATE_CLOSED";
+programs/xxxl-svm/src/cpi.rs:139:pub fn guarded_mint_to_cpi_execution_gate_boundary(
+programs/xxxl-svm/src/cpi.rs:150:        return Err(XxxlError::CpiBoundaryNotReady.into());
+programs/xxxl-svm/src/cpi.rs:160:    if !spl_mint_to_cpi_execution_enabled() {
+programs/xxxl-svm/src/cpi.rs:161:        return Err(XxxlError::CpiBoundaryNotReady.into());
+programs/xxxl-svm/src/cpi.rs:373:    fn guarded_mint_to_cpi_execution_gate_boundary_rejects_when_gate_disabled() {
+programs/xxxl-svm/src/cpi.rs:380:        assert!(!spl_mint_to_cpi_execution_enabled());
+programs/xxxl-svm/src/cpi.rs:398:                    guarded_mint_to_cpi_execution_gate_boundary(
+programs/xxxl-svm/src/cpi.rs:404:                    XxxlError::CpiBoundaryNotReady,
+programs/xxxl-svm/src/cpi.rs:411:    fn guarded_mint_to_cpi_execution_gate_boundary_rejects_planning_boundary_mismatch() {
+programs/xxxl-svm/src/cpi.rs:435:                    guarded_mint_to_cpi_execution_gate_boundary(
+programs/xxxl-svm/src/cpi.rs:448:    fn guarded_mint_to_cpi_execution_gate_boundary_rejects_live_route_flag_before_cpi() {
+programs/xxxl-svm/src/cpi.rs:472:                    guarded_mint_to_cpi_execution_gate_boundary(
+programs/xxxl-svm/src/cpi.rs:478:                    XxxlError::CpiBoundaryNotReady,
+programs/xxxl-svm/src/cpi.rs:485:    fn guarded_mint_to_cpi_execution_gate_boundary_rejects_wrong_pda_before_gate() {
+programs/xxxl-svm/src/cpi.rs:513:                    guarded_mint_to_cpi_execution_gate_boundary(
+programs/xxxl-svm/src/deployment_status.rs:97:        deployable: false,
+programs/xxxl-svm/src/deployment_status.rs:266:    crate::cpi::spl_mint_to_cpi_execution_enabled()
+programs/xxxl-svm/src/error.rs:12:    CpiBoundaryNotReady = 8,
+programs/xxxl-svm/src/phase_41k5_d15_atomic_mark_and_mint_svm_harness.rs:24:    processed_event_marking_boundary::mark_processed_event_atomic,
+programs/xxxl-svm/src/phase_41k5_d15_atomic_mark_and_mint_svm_harness.rs:74:    mark_processed_event_atomic(
+programs/xxxl-svm/src/processed_event_marking_boundary.rs:202:pub fn mark_processed_event_atomic<'a>(
+programs/xxxl-svm/src/processed_event_marking_boundary.rs:720:            mark_processed_event_atomic(
+programs/xxxl-svm/src/processed_event_marking_svm_harness.rs:20:use crate::{error::XxxlError, processed_event_marking_boundary::mark_processed_event_atomic};
+programs/xxxl-svm/src/processed_event_marking_svm_harness.rs:61:    mark_processed_event_atomic(
+programs/xxxl-svm/src/processor.rs:29:use crate::verifier::current_instruction_index_runtime_boundary::acquire_current_instruction_index_from_checked_instructions_sysvar;
+programs/xxxl-svm/src/processor.rs:37:        assert_gateway_mint_authority_pda, guarded_mint_to_cpi_execution_gate_boundary,
+programs/xxxl-svm/src/processor.rs:47:    processed_event_marking_boundary::{mark_processed_event_atomic, ProcessedEventMarkingWitness},
+programs/xxxl-svm/src/processor.rs:206:pub fn b1c7_authorized_consume_gateway_mint_handler_boundary(
+programs/xxxl-svm/src/processor.rs:213:    let authorization = establish_b1c7_consume_gateway_mint_authorization_from_handler_inputs(
+programs/xxxl-svm/src/processor.rs:221:    b1c7_atomic_mark_and_mint_after_authorization_boundary(
+programs/xxxl-svm/src/processor.rs:232:pub fn establish_b1c7_consume_gateway_mint_authorization_from_handler_inputs(
+programs/xxxl-svm/src/processor.rs:252:    let instructions_sysvar_account = account_at(accounts, CONSUME_GATEWAY_MINT_REQUIRED_ACCOUNTS)?;
+programs/xxxl-svm/src/processor.rs:267:        acquire_current_instruction_index_from_checked_instructions_sysvar(Some(
+programs/xxxl-svm/src/processor.rs:268:            instructions_sysvar_account,
+programs/xxxl-svm/src/processor.rs:275:        Some(instructions_sysvar_account),
+programs/xxxl-svm/src/processor.rs:300:    if authorization.status != B1C7HandlerAuthorizationStatus::Authorized
+programs/xxxl-svm/src/processor.rs:310:pub fn b1c7_atomic_mark_and_mint_after_authorization_boundary(
+programs/xxxl-svm/src/processor.rs:318:    if authorization.status != B1C7HandlerAuthorizationStatus::Authorized
+programs/xxxl-svm/src/processor.rs:320:        || !authorization.fail_fast_before_mutation
+programs/xxxl-svm/src/processor.rs:321:        || !authorization.evidence_from_prior_ed25519_instructions
+programs/xxxl-svm/src/processor.rs:322:        || !authorization.payload_hash_bound
+programs/xxxl-svm/src/processor.rs:323:        || !authorization.guardian_membership_validated
+programs/xxxl-svm/src/processor.rs:324:        || !authorization.quorum_met
+programs/xxxl-svm/src/processor.rs:329:    if !crate::cpi::spl_mint_to_cpi_execution_enabled() {
+programs/xxxl-svm/src/processor.rs:330:        return Err(XxxlError::CpiBoundaryNotReady.into());
+programs/xxxl-svm/src/processor.rs:334:        atomic_mark_and_mint_boundary(program_id, accounts, args, rent, consumed_slot)?;
+programs/xxxl-svm/src/processor.rs:393:    Err(XxxlError::CpiBoundaryNotReady.into())
+programs/xxxl-svm/src/processor.rs:405:    b1c7_authorized_consume_gateway_mint_handler_boundary(
+programs/xxxl-svm/src/processor.rs:427:        return Err(XxxlError::CpiBoundaryNotReady.into());
+programs/xxxl-svm/src/processor.rs:447:        return Err(XxxlError::CpiBoundaryNotReady.into());
+programs/xxxl-svm/src/processor.rs:456:        return Err(XxxlError::CpiBoundaryNotReady.into());
+programs/xxxl-svm/src/processor.rs:498:        return Err(XxxlError::CpiBoundaryNotReady.into());
+programs/xxxl-svm/src/processor.rs:525:pub fn atomic_mark_and_mint_boundary(
+programs/xxxl-svm/src/processor.rs:539:        return Err(XxxlError::CpiBoundaryNotReady.into());
+programs/xxxl-svm/src/processor.rs:548:        return Err(XxxlError::CpiBoundaryNotReady.into());
+programs/xxxl-svm/src/processor.rs:556:    let marking_witness = mark_processed_event_atomic(
+programs/xxxl-svm/src/processor.rs:571:    guarded_mint_to_cpi_execution_gate_boundary(
+programs/xxxl-svm/src/processor.rs:625:    guarded_mint_to_cpi_execution_gate_boundary(
+programs/xxxl-svm/src/processor.rs:1523:            XxxlError::CpiBoundaryNotReady,
+programs/xxxl-svm/src/processor.rs:2352:            fail_fast_before_mutation: true,
+programs/xxxl-svm/src/processor.rs:2353:            evidence_from_prior_ed25519_instructions: false,
+programs/xxxl-svm/src/processor.rs:2354:            payload_hash_bound: false,
+programs/xxxl-svm/src/processor.rs:2355:            guardian_membership_validated: false,
+programs/xxxl-svm/src/processor.rs:2356:            quorum_met: false,
+programs/xxxl-svm/src/processor.rs:2367:            status: B1C7HandlerAuthorizationStatus::Authorized,
+programs/xxxl-svm/src/processor.rs:2374:            fail_fast_before_mutation: true,
+programs/xxxl-svm/src/processor.rs:2375:            evidence_from_prior_ed25519_instructions: true,
+programs/xxxl-svm/src/processor.rs:2376:            payload_hash_bound: true,
+programs/xxxl-svm/src/processor.rs:2377:            guardian_membership_validated: true,
+programs/xxxl-svm/src/processor.rs:2378:            quorum_met: true,
+programs/xxxl-svm/src/processor.rs:2402:            b1c7_atomic_mark_and_mint_after_authorization_boundary(
+programs/xxxl-svm/src/processor.rs:2440:            b1c7_atomic_mark_and_mint_after_authorization_boundary(
+programs/xxxl-svm/src/processor.rs:2448:            XxxlError::CpiBoundaryNotReady,
+programs/xxxl-svm/src/program_id_status.rs:29:        status_code: "PLACEHOLDER_PROGRAM_ID_BOUNDARY",
+programs/xxxl-svm/src/program_id_status.rs:41:            XxxlProgramIdReadinessStatus::Placeholder => "PLACEHOLDER_PROGRAM_ID_BOUNDARY",
+programs/xxxl-svm/src/program_id_status.rs:86:        assert_eq!(status.code(), "PLACEHOLDER_PROGRAM_ID_BOUNDARY");
+programs/xxxl-svm/src/program_id_status.rs:98:        assert_eq!(report.status_code, "PLACEHOLDER_PROGRAM_ID_BOUNDARY");
+programs/xxxl-svm/src/verifier/b1c7_handler_authorization_boundary.rs:44:    pub fail_fast_before_mutation: bool,
+programs/xxxl-svm/src/verifier/b1c7_handler_authorization_boundary.rs:45:    pub evidence_from_prior_ed25519_instructions: bool,
+programs/xxxl-svm/src/verifier/b1c7_handler_authorization_boundary.rs:46:    pub payload_hash_bound: bool,
+programs/xxxl-svm/src/verifier/b1c7_handler_authorization_boundary.rs:47:    pub guardian_membership_validated: bool,
+programs/xxxl-svm/src/verifier/b1c7_handler_authorization_boundary.rs:48:    pub quorum_met: bool,
+programs/xxxl-svm/src/verifier/b1c7_handler_authorization_boundary.rs:64:    pub fail_fast_before_mutation: bool,
+programs/xxxl-svm/src/verifier/b1c7_handler_authorization_boundary.rs:80:        fail_fast_before_mutation: true,
+programs/xxxl-svm/src/verifier/b1c7_handler_authorization_boundary.rs:161:        status: B1C7HandlerAuthorizationStatus::Authorized,
+programs/xxxl-svm/src/verifier/b1c7_handler_authorization_boundary.rs:168:        fail_fast_before_mutation: true,
+programs/xxxl-svm/src/verifier/b1c7_handler_authorization_boundary.rs:169:        evidence_from_prior_ed25519_instructions: true,
+programs/xxxl-svm/src/verifier/b1c7_handler_authorization_boundary.rs:170:        payload_hash_bound: true,
+programs/xxxl-svm/src/verifier/b1c7_handler_authorization_boundary.rs:171:        guardian_membership_validated: true,
+programs/xxxl-svm/src/verifier/b1c7_handler_authorization_boundary.rs:172:        quorum_met: true,
+programs/xxxl-svm/src/verifier/b1c7_handler_authorization_boundary.rs:200:        fail_fast_before_mutation: true,
+programs/xxxl-svm/src/verifier/b1c7_handler_authorization_boundary.rs:201:        evidence_from_prior_ed25519_instructions: false,
+programs/xxxl-svm/src/verifier/b1c7_handler_authorization_boundary.rs:202:        payload_hash_bound: false,
+programs/xxxl-svm/src/verifier/b1c7_handler_authorization_boundary.rs:203:        guardian_membership_validated: false,
+programs/xxxl-svm/src/verifier/b1c7_handler_authorization_boundary.rs:204:        quorum_met: false,
+programs/xxxl-svm/src/verifier/b1c7_handler_authorization_boundary.rs:329:            uses_instructions_sysvar_account_info: true,
+programs/xxxl-svm/src/verifier/b1c7_handler_authorization_boundary.rs:330:            checks_instructions_sysvar_program_id: true,
+programs/xxxl-svm/src/verifier/b1c7_handler_authorization_boundary.rs:335:            raw_instructions_sysvar_parser_implemented: false,
+programs/xxxl-svm/src/verifier/b1c7_handler_authorization_boundary.rs:387:        assert!(report.fail_fast_before_mutation);
+programs/xxxl-svm/src/verifier/b1c7_handler_authorization_boundary.rs:442:        assert_eq!(result.status, B1C7HandlerAuthorizationStatus::Authorized);
+programs/xxxl-svm/src/verifier/b1c7_handler_authorization_boundary.rs:449:        assert!(result.fail_fast_before_mutation);
+programs/xxxl-svm/src/verifier/b1c7_handler_authorization_boundary.rs:450:        assert!(result.evidence_from_prior_ed25519_instructions);
+programs/xxxl-svm/src/verifier/b1c7_handler_authorization_boundary.rs:451:        assert!(result.payload_hash_bound);
+programs/xxxl-svm/src/verifier/b1c7_handler_authorization_boundary.rs:452:        assert!(result.guardian_membership_validated);
+programs/xxxl-svm/src/verifier/b1c7_handler_authorization_boundary.rs:453:        assert!(result.quorum_met);
+programs/xxxl-svm/src/verifier/b1c7_handler_authorization_boundary.rs:459:    fn full_pipeline_authorizes_before_mutation_when_quorum_met() {
+programs/xxxl-svm/src/verifier/b1c7_handler_authorization_boundary.rs:469:        assert_eq!(result.status, B1C7HandlerAuthorizationStatus::Authorized);
+programs/xxxl-svm/src/verifier/b1c7_handler_authorization_boundary.rs:476:        assert!(result.fail_fast_before_mutation);
+programs/xxxl-svm/src/verifier/b1c7_handler_authorization_boundary.rs:477:        assert!(result.evidence_from_prior_ed25519_instructions);
+programs/xxxl-svm/src/verifier/b1c7_handler_authorization_boundary.rs:478:        assert!(result.payload_hash_bound);
+programs/xxxl-svm/src/verifier/b1c7_handler_authorization_boundary.rs:479:        assert!(result.guardian_membership_validated);
+programs/xxxl-svm/src/verifier/b1c7_handler_authorization_boundary.rs:480:        assert!(result.quorum_met);
+programs/xxxl-svm/src/verifier/b1c_connect_ed25519_evidence_adapter.rs:8:use super::instructions_sysvar_live_wiring_boundary::{
+programs/xxxl-svm/src/verifier/b1c_connect_ed25519_evidence_adapter.rs:65:    pub reads_instructions_sysvar_directly: bool,
+programs/xxxl-svm/src/verifier/b1c_connect_ed25519_evidence_adapter.rs:85:        reads_instructions_sysvar_directly: false,
+programs/xxxl-svm/src/verifier/b1c_connect_ed25519_evidence_adapter.rs:220:    use crate::verifier::instructions_sysvar_access_contract_model::Phase41BRejectionCase;
+programs/xxxl-svm/src/verifier/b1c_connect_ed25519_evidence_adapter.rs:294:            uses_instructions_sysvar_account_info: true,
+programs/xxxl-svm/src/verifier/b1c_connect_ed25519_evidence_adapter.rs:295:            checks_instructions_sysvar_program_id: true,
+programs/xxxl-svm/src/verifier/b1c_connect_ed25519_evidence_adapter.rs:300:            raw_instructions_sysvar_parser_implemented: false,
+programs/xxxl-svm/src/verifier/b1c_connect_ed25519_evidence_adapter.rs:353:        assert!(!report.reads_instructions_sysvar_directly);
+programs/xxxl-svm/src/verifier/b1c_connect_ed25519_evidence_adapter.rs:493:    fn source_rejected_when_missing_instructions_sysvar_boundary_rejects() {
+programs/xxxl-svm/src/verifier/b1c_ed25519_evidence_authorization_result.rs:63:    pub reads_instructions_sysvar: bool,
+programs/xxxl-svm/src/verifier/b1c_ed25519_evidence_authorization_result.rs:78:    reads_instructions_sysvar: false,
+programs/xxxl-svm/src/verifier/b1c_ed25519_evidence_authorization_result.rs:173:        assert!(!report.reads_instructions_sysvar);
+programs/xxxl-svm/src/verifier/b1c_ed25519_evidence_parser.rs:90:    pub reads_instructions_sysvar: bool,
+programs/xxxl-svm/src/verifier/b1c_ed25519_evidence_parser.rs:111:        reads_instructions_sysvar: false,
+programs/xxxl-svm/src/verifier/b1c_ed25519_evidence_parser.rs:392:        assert!(!report.reads_instructions_sysvar);
+programs/xxxl-svm/src/verifier/b1c_instructions_sysvar_evidence_bridge.rs:4:    establish_phase_41k_1_instructions_sysvar_live_wiring_boundary,
+programs/xxxl-svm/src/verifier/b1c_instructions_sysvar_evidence_bridge.rs:24:    pub loaded_from_real_instructions_sysvar: bool,
+programs/xxxl-svm/src/verifier/b1c_instructions_sysvar_evidence_bridge.rs:43:    pub uses_real_instructions_sysvar_account_info: bool,
+programs/xxxl-svm/src/verifier/b1c_instructions_sysvar_evidence_bridge.rs:44:    pub checks_instructions_sysvar_account_id: bool,
+programs/xxxl-svm/src/verifier/b1c_instructions_sysvar_evidence_bridge.rs:68:    pub uses_real_instructions_sysvar_account_info: bool,
+programs/xxxl-svm/src/verifier/b1c_instructions_sysvar_evidence_bridge.rs:69:    pub checks_instructions_sysvar_account_id: bool,
+programs/xxxl-svm/src/verifier/b1c_instructions_sysvar_evidence_bridge.rs:94:    pub reads_real_instructions_sysvar_account_info: bool,
+programs/xxxl-svm/src/verifier/b1c_instructions_sysvar_evidence_bridge.rs:95:    pub checks_instructions_sysvar_account_id: bool,
+programs/xxxl-svm/src/verifier/b1c_instructions_sysvar_evidence_bridge.rs:113:    reads_real_instructions_sysvar_account_info: true,
+programs/xxxl-svm/src/verifier/b1c_instructions_sysvar_evidence_bridge.rs:114:    checks_instructions_sysvar_account_id: true,
+programs/xxxl-svm/src/verifier/b1c_instructions_sysvar_evidence_bridge.rs:127:pub fn b1c_instructions_sysvar_evidence_bridge_report(
+programs/xxxl-svm/src/verifier/b1c_instructions_sysvar_evidence_bridge.rs:132:pub fn load_b1c_instructions_sysvar_evidence_bridge(
+programs/xxxl-svm/src/verifier/b1c_instructions_sysvar_evidence_bridge.rs:133:    instructions_sysvar_account: Option<&AccountInfo<'_>>,
+programs/xxxl-svm/src/verifier/b1c_instructions_sysvar_evidence_bridge.rs:136:        establish_phase_41k_1_instructions_sysvar_live_wiring_boundary(instructions_sysvar_account);
+programs/xxxl-svm/src/verifier/b1c_instructions_sysvar_evidence_bridge.rs:138:    derive_b1c_instructions_sysvar_evidence_from_41k1(&phase_41k1_result)
+programs/xxxl-svm/src/verifier/b1c_instructions_sysvar_evidence_bridge.rs:141:pub fn derive_b1c_instructions_sysvar_evidence_from_41k1(
+programs/xxxl-svm/src/verifier/b1c_instructions_sysvar_evidence_bridge.rs:158:                uses_real_instructions_sysvar_account_info: source
+programs/xxxl-svm/src/verifier/b1c_instructions_sysvar_evidence_bridge.rs:159:                    .uses_real_instructions_sysvar_account_info,
+programs/xxxl-svm/src/verifier/b1c_instructions_sysvar_evidence_bridge.rs:160:                checks_instructions_sysvar_account_id: source.checks_instructions_sysvar_account_id,
+programs/xxxl-svm/src/verifier/b1c_instructions_sysvar_evidence_bridge.rs:188:            loaded_from_real_instructions_sysvar: prior.loaded_from_real_instructions_sysvar,
+programs/xxxl-svm/src/verifier/b1c_instructions_sysvar_evidence_bridge.rs:208:        uses_real_instructions_sysvar_account_info: source
+programs/xxxl-svm/src/verifier/b1c_instructions_sysvar_evidence_bridge.rs:209:            .uses_real_instructions_sysvar_account_info,
+programs/xxxl-svm/src/verifier/b1c_instructions_sysvar_evidence_bridge.rs:210:        checks_instructions_sysvar_account_id: source.checks_instructions_sysvar_account_id,
+programs/xxxl-svm/src/verifier/b1c_instructions_sysvar_evidence_bridge.rs:251:        instructions_sysvar_access_contract_model::Phase41BRejectionCase,
+programs/xxxl-svm/src/verifier/b1c_instructions_sysvar_evidence_bridge.rs:283:        uses_real_instructions_sysvar_account_info: bool,
+programs/xxxl-svm/src/verifier/b1c_instructions_sysvar_evidence_bridge.rs:284:        checks_instructions_sysvar_account_id: bool,
+programs/xxxl-svm/src/verifier/b1c_instructions_sysvar_evidence_bridge.rs:301:            uses_real_instructions_sysvar_account_info,
+programs/xxxl-svm/src/verifier/b1c_instructions_sysvar_evidence_bridge.rs:302:            checks_instructions_sysvar_account_id,
+programs/xxxl-svm/src/verifier/b1c_instructions_sysvar_evidence_bridge.rs:337:            loaded_from_real_instructions_sysvar: true,
+programs/xxxl-svm/src/verifier/b1c_instructions_sysvar_evidence_bridge.rs:348:        let report = b1c_instructions_sysvar_evidence_bridge_report();
+programs/xxxl-svm/src/verifier/b1c_instructions_sysvar_evidence_bridge.rs:359:        assert!(report.reads_real_instructions_sysvar_account_info);
+programs/xxxl-svm/src/verifier/b1c_instructions_sysvar_evidence_bridge.rs:360:        assert!(report.checks_instructions_sysvar_account_id);
+programs/xxxl-svm/src/verifier/b1c_instructions_sysvar_evidence_bridge.rs:375:        let result = derive_b1c_instructions_sysvar_evidence_from_41k1(&loaded_source());
+programs/xxxl-svm/src/verifier/b1c_instructions_sysvar_evidence_bridge.rs:389:                assert!(loaded.uses_real_instructions_sysvar_account_info);
+programs/xxxl-svm/src/verifier/b1c_instructions_sysvar_evidence_bridge.rs:390:                assert!(loaded.checks_instructions_sysvar_account_id);
+programs/xxxl-svm/src/verifier/b1c_instructions_sysvar_evidence_bridge.rs:406:                    assert!(prior.loaded_from_real_instructions_sysvar);
+programs/xxxl-svm/src/verifier/b1c_instructions_sysvar_evidence_bridge.rs:423:    fn maps_missing_instructions_sysvar_to_invalid_instruction_sysvar_rejection() {
+programs/xxxl-svm/src/verifier/b1c_instructions_sysvar_evidence_bridge.rs:438:            derive_b1c_instructions_sysvar_evidence_from_41k1(&source),
+programs/xxxl-svm/src/verifier/b1c_instructions_sysvar_evidence_bridge.rs:460:            derive_b1c_instructions_sysvar_evidence_from_41k1(&source),
+programs/xxxl-svm/src/verifier/b1c_instructions_sysvar_evidence_bridge.rs:482:            derive_b1c_instructions_sysvar_evidence_from_41k1(&source),
+programs/xxxl-svm/src/verifier/b1c_instructions_sysvar_evidence_bridge.rs:503:        match derive_b1c_instructions_sysvar_evidence_from_41k1(&source) {
+programs/xxxl-svm/src/verifier/b1c_quorum_counting.rs:41:    pub quorum_met: bool,
+programs/xxxl-svm/src/verifier/b1c_quorum_counting.rs:200:        quorum_met: true,
+programs/xxxl-svm/src/verifier/b1c_quorum_counting.rs:232:        quorum_met: false,
+programs/xxxl-svm/src/verifier/b1c_quorum_counting.rs:401:        assert!(result.quorum_met);
+programs/xxxl-svm/src/verifier/b1c_quorum_counting.rs:414:        assert!(result.quorum_met);
+programs/xxxl-svm/src/verifier/b1c_quorum_counting.rs:432:        assert!(!result.quorum_met);
+programs/xxxl-svm/src/verifier/checked_ed25519_byte_extraction_boundary.rs:10:use super::instructions_sysvar_access_contract_model::{
+programs/xxxl-svm/src/verifier/checked_ed25519_byte_extraction_boundary.rs:108:    raw_instructions_sysvar_parser_implemented: false,
+programs/xxxl-svm/src/verifier/checked_ed25519_byte_extraction_boundary.rs:485:            uses_instructions_sysvar_account_info: true,
+programs/xxxl-svm/src/verifier/checked_ed25519_byte_extraction_boundary.rs:486:            checks_instructions_sysvar_program_id: true,
+programs/xxxl-svm/src/verifier/checked_ed25519_byte_extraction_boundary.rs:491:            raw_instructions_sysvar_parser_implemented: false,
+programs/xxxl-svm/src/verifier/checked_prior_instruction_loading_runtime_boundary.rs:6:use super::instructions_sysvar_access_contract_model::{
+programs/xxxl-svm/src/verifier/checked_prior_instruction_loading_runtime_boundary.rs:63:    pub uses_instructions_sysvar_account_info: bool,
+programs/xxxl-svm/src/verifier/checked_prior_instruction_loading_runtime_boundary.rs:64:    pub checks_instructions_sysvar_program_id: bool,
+programs/xxxl-svm/src/verifier/checked_prior_instruction_loading_runtime_boundary.rs:69:    pub raw_instructions_sysvar_parser_implemented: bool,
+programs/xxxl-svm/src/verifier/checked_prior_instruction_loading_runtime_boundary.rs:94:    pub raw_instructions_sysvar_parser_implemented: bool,
+programs/xxxl-svm/src/verifier/checked_prior_instruction_loading_runtime_boundary.rs:105:    raw_instructions_sysvar_parser_implemented: false,
+programs/xxxl-svm/src/verifier/checked_prior_instruction_loading_runtime_boundary.rs:139:        raw_instructions_sysvar_parser_implemented: false,
+programs/xxxl-svm/src/verifier/checked_prior_instruction_loading_runtime_boundary.rs:151:    instructions_sysvar_account: Option<&AccountInfo<'_>>,
+programs/xxxl-svm/src/verifier/checked_prior_instruction_loading_runtime_boundary.rs:221:    let Some(account_info) = instructions_sysvar_account else {
+programs/xxxl-svm/src/verifier/checked_prior_instruction_loading_runtime_boundary.rs:359:    uses_instructions_sysvar_account_info: bool,
+programs/xxxl-svm/src/verifier/checked_prior_instruction_loading_runtime_boundary.rs:360:    checks_instructions_sysvar_program_id: bool,
+programs/xxxl-svm/src/verifier/checked_prior_instruction_loading_runtime_boundary.rs:375:        uses_instructions_sysvar_account_info,
+programs/xxxl-svm/src/verifier/checked_prior_instruction_loading_runtime_boundary.rs:376:        checks_instructions_sysvar_program_id,
+programs/xxxl-svm/src/verifier/checked_prior_instruction_loading_runtime_boundary.rs:381:        raw_instructions_sysvar_parser_implemented: false,
+programs/xxxl-svm/src/verifier/checked_prior_instruction_loading_runtime_boundary.rs:439:        assert!(!result.uses_instructions_sysvar_account_info);
+programs/xxxl-svm/src/verifier/checked_prior_instruction_loading_runtime_boundary.rs:440:        assert!(!result.checks_instructions_sysvar_program_id);
+programs/xxxl-svm/src/verifier/checked_prior_instruction_loading_runtime_boundary.rs:445:        assert!(!result.raw_instructions_sysvar_parser_implemented);
+programs/xxxl-svm/src/verifier/checked_prior_instruction_loading_runtime_boundary.rs:472:        assert!(result.uses_instructions_sysvar_account_info);
+programs/xxxl-svm/src/verifier/checked_prior_instruction_loading_runtime_boundary.rs:473:        assert!(!result.checks_instructions_sysvar_program_id);
+programs/xxxl-svm/src/verifier/checked_prior_instruction_loading_runtime_boundary.rs:502:        assert!(result.uses_instructions_sysvar_account_info);
+programs/xxxl-svm/src/verifier/checked_prior_instruction_loading_runtime_boundary.rs:503:        assert!(result.checks_instructions_sysvar_program_id);
+programs/xxxl-svm/src/verifier/checked_prior_instruction_loading_runtime_boundary.rs:621:        assert!(!flags.raw_instructions_sysvar_parser_implemented);
+programs/xxxl-svm/src/verifier/checked_prior_instruction_loading_runtime_boundary.rs:656:        assert!(!report.raw_instructions_sysvar_parser_implemented);
+programs/xxxl-svm/src/verifier/current_instruction_identity_boundary.rs:1:use super::instructions_sysvar_access_contract_model::{
+programs/xxxl-svm/src/verifier/current_instruction_identity_boundary.rs:59:    raw_instructions_sysvar_parser_implemented: false,
+programs/xxxl-svm/src/verifier/current_instruction_identity_boundary.rs:262:        assert!(!flags.raw_instructions_sysvar_parser_implemented);
+programs/xxxl-svm/src/verifier/current_instruction_identity_runtime_boundary.rs:7:use super::instructions_sysvar_access_contract_model::{
+programs/xxxl-svm/src/verifier/current_instruction_identity_runtime_boundary.rs:39:    pub raw_instructions_sysvar_parser_implemented: bool,
+programs/xxxl-svm/src/verifier/current_instruction_identity_runtime_boundary.rs:54:    pub raw_instructions_sysvar_parser_implemented: bool,
+programs/xxxl-svm/src/verifier/current_instruction_identity_runtime_boundary.rs:65:    raw_instructions_sysvar_parser_implemented: false,
+programs/xxxl-svm/src/verifier/current_instruction_identity_runtime_boundary.rs:95:        raw_instructions_sysvar_parser_implemented: false,
+programs/xxxl-svm/src/verifier/current_instruction_identity_runtime_boundary.rs:157:        raw_instructions_sysvar_parser_implemented: false,
+programs/xxxl-svm/src/verifier/current_instruction_identity_runtime_boundary.rs:409:        assert!(!result.raw_instructions_sysvar_parser_implemented);
+programs/xxxl-svm/src/verifier/current_instruction_identity_runtime_boundary.rs:421:        assert!(!flags.raw_instructions_sysvar_parser_implemented);
+programs/xxxl-svm/src/verifier/current_instruction_identity_runtime_boundary.rs:454:        assert!(!report.raw_instructions_sysvar_parser_implemented);
+programs/xxxl-svm/src/verifier/current_instruction_index_runtime_boundary.rs:5:use super::instructions_sysvar_access_contract_model::{
+programs/xxxl-svm/src/verifier/current_instruction_index_runtime_boundary.rs:30:    pub uses_instructions_sysvar_account_info: bool,
+programs/xxxl-svm/src/verifier/current_instruction_index_runtime_boundary.rs:31:    pub checks_instructions_sysvar_program_id: bool,
+programs/xxxl-svm/src/verifier/current_instruction_index_runtime_boundary.rs:34:    pub raw_instructions_sysvar_parser_implemented: bool,
+programs/xxxl-svm/src/verifier/current_instruction_index_runtime_boundary.rs:52:    pub raw_instructions_sysvar_parser_implemented: bool,
+programs/xxxl-svm/src/verifier/current_instruction_index_runtime_boundary.rs:62:    raw_instructions_sysvar_parser_implemented: false,
+programs/xxxl-svm/src/verifier/current_instruction_index_runtime_boundary.rs:94:        raw_instructions_sysvar_parser_implemented: false,
+programs/xxxl-svm/src/verifier/current_instruction_index_runtime_boundary.rs:103:pub fn acquire_current_instruction_index_from_checked_instructions_sysvar(
+programs/xxxl-svm/src/verifier/current_instruction_index_runtime_boundary.rs:104:    instructions_sysvar_account: Option<&AccountInfo<'_>>,
+programs/xxxl-svm/src/verifier/current_instruction_index_runtime_boundary.rs:106:    let Some(account_info) = instructions_sysvar_account else {
+programs/xxxl-svm/src/verifier/current_instruction_index_runtime_boundary.rs:165:    uses_instructions_sysvar_account_info: bool,
+programs/xxxl-svm/src/verifier/current_instruction_index_runtime_boundary.rs:166:    checks_instructions_sysvar_program_id: bool,
+programs/xxxl-svm/src/verifier/current_instruction_index_runtime_boundary.rs:175:        uses_instructions_sysvar_account_info,
+programs/xxxl-svm/src/verifier/current_instruction_index_runtime_boundary.rs:176:        checks_instructions_sysvar_program_id,
+programs/xxxl-svm/src/verifier/current_instruction_index_runtime_boundary.rs:179:        raw_instructions_sysvar_parser_implemented: false,
+programs/xxxl-svm/src/verifier/current_instruction_index_runtime_boundary.rs:205:    fn missing_account_maps_to_missing_instructions_sysvar() {
+programs/xxxl-svm/src/verifier/current_instruction_index_runtime_boundary.rs:206:        let result = acquire_current_instruction_index_from_checked_instructions_sysvar(None);
+programs/xxxl-svm/src/verifier/current_instruction_index_runtime_boundary.rs:217:        assert!(!result.uses_instructions_sysvar_account_info);
+programs/xxxl-svm/src/verifier/current_instruction_index_runtime_boundary.rs:218:        assert!(!result.checks_instructions_sysvar_program_id);
+programs/xxxl-svm/src/verifier/current_instruction_index_runtime_boundary.rs:221:        assert!(!result.raw_instructions_sysvar_parser_implemented);
+programs/xxxl-svm/src/verifier/current_instruction_index_runtime_boundary.rs:230:    fn wrong_account_key_maps_to_missing_instructions_sysvar() {
+programs/xxxl-svm/src/verifier/current_instruction_index_runtime_boundary.rs:238:            acquire_current_instruction_index_from_checked_instructions_sysvar(Some(&account));
+programs/xxxl-svm/src/verifier/current_instruction_index_runtime_boundary.rs:249:        assert!(result.uses_instructions_sysvar_account_info);
+programs/xxxl-svm/src/verifier/current_instruction_index_runtime_boundary.rs:250:        assert!(result.checks_instructions_sysvar_program_id);
+programs/xxxl-svm/src/verifier/current_instruction_index_runtime_boundary.rs:265:            acquire_current_instruction_index_from_checked_instructions_sysvar(Some(&account));
+programs/xxxl-svm/src/verifier/current_instruction_index_runtime_boundary.rs:273:        assert!(result.uses_instructions_sysvar_account_info);
+programs/xxxl-svm/src/verifier/current_instruction_index_runtime_boundary.rs:274:        assert!(result.checks_instructions_sysvar_program_id);
+programs/xxxl-svm/src/verifier/current_instruction_index_runtime_boundary.rs:277:        assert!(!result.raw_instructions_sysvar_parser_implemented);
+programs/xxxl-svm/src/verifier/current_instruction_index_runtime_boundary.rs:295:        assert!(result.uses_instructions_sysvar_account_info);
+programs/xxxl-svm/src/verifier/current_instruction_index_runtime_boundary.rs:296:        assert!(result.checks_instructions_sysvar_program_id);
+programs/xxxl-svm/src/verifier/current_instruction_index_runtime_boundary.rs:299:        assert!(!result.raw_instructions_sysvar_parser_implemented);
+programs/xxxl-svm/src/verifier/current_instruction_index_runtime_boundary.rs:309:    fn checked_current_index_error_maps_to_unreadable_instructions_sysvar() {
+programs/xxxl-svm/src/verifier/current_instruction_index_runtime_boundary.rs:333:        assert!(!flags.raw_instructions_sysvar_parser_implemented);
+programs/xxxl-svm/src/verifier/current_instruction_index_runtime_boundary.rs:368:        assert!(!report.raw_instructions_sysvar_parser_implemented);
+programs/xxxl-svm/src/verifier/ed25519_evidence_layout.rs:78:    pub instructions_sysvar_read: bool,
+programs/xxxl-svm/src/verifier/ed25519_evidence_layout.rs:274:        instructions_sysvar_read: false,
+programs/xxxl-svm/src/verifier/ed25519_evidence_layout.rs:405:        assert!(!result.instructions_sysvar_read);
+programs/xxxl-svm/src/verifier/ed25519_evidence_layout.rs:552:        assert!(!result.instructions_sysvar_read);
+programs/xxxl-svm/src/verifier/ed25519_instruction_byte_parsing_boundary.rs:6:use super::instructions_sysvar_access_contract_model::{
+programs/xxxl-svm/src/verifier/ed25519_instruction_byte_parsing_boundary.rs:139:    raw_instructions_sysvar_parser_implemented: false,
+programs/xxxl-svm/src/verifier/ed25519_instruction_byte_parsing_boundary.rs:812:            uses_instructions_sysvar_account_info: true,
+programs/xxxl-svm/src/verifier/ed25519_instruction_byte_parsing_boundary.rs:813:            checks_instructions_sysvar_program_id: true,
+programs/xxxl-svm/src/verifier/ed25519_instruction_byte_parsing_boundary.rs:818:            raw_instructions_sysvar_parser_implemented: false,
+programs/xxxl-svm/src/verifier/ed25519_instruction_data_parser.rs:25:    pub instructions_sysvar_read: bool,
+programs/xxxl-svm/src/verifier/ed25519_instruction_data_parser.rs:73:    pub instructions_sysvar_read_enabled: bool,
+programs/xxxl-svm/src/verifier/ed25519_instruction_data_parser.rs:109:        instructions_sysvar_read_enabled: false,
+programs/xxxl-svm/src/verifier/ed25519_instruction_data_parser.rs:270:        instructions_sysvar_read: false,
+programs/xxxl-svm/src/verifier/ed25519_instruction_data_parser.rs:401:        assert!(!result.instructions_sysvar_read);
+programs/xxxl-svm/src/verifier/ed25519_instruction_data_parser.rs:723:        assert!(!report.instructions_sysvar_read_enabled);
+programs/xxxl-svm/src/verifier/ed25519_prior_instruction_ordering.rs:35:    pub raw_instructions_sysvar_parser_implemented: bool,
+programs/xxxl-svm/src/verifier/ed25519_prior_instruction_ordering.rs:65:    pub raw_instructions_sysvar_parser_implemented: bool,
+programs/xxxl-svm/src/verifier/ed25519_prior_instruction_ordering.rs:97:    raw_instructions_sysvar_parser_implemented: false,
+programs/xxxl-svm/src/verifier/ed25519_prior_instruction_ordering.rs:170:        .instructions_sysvar_read
+programs/xxxl-svm/src/verifier/ed25519_prior_instruction_ordering.rs:186:        raw_instructions_sysvar_parser_implemented: false,
+programs/xxxl-svm/src/verifier/ed25519_prior_instruction_ordering.rs:228:        ed25519_verification_evidence_model_report, instructions_sysvar_evidence_scanner_report,
+programs/xxxl-svm/src/verifier/ed25519_prior_instruction_ordering.rs:247:            instructions_sysvar_read: false,
+programs/xxxl-svm/src/verifier/ed25519_prior_instruction_ordering.rs:396:            .instructions_sysvar_read = true;
+programs/xxxl-svm/src/verifier/ed25519_prior_instruction_ordering.rs:410:        assert!(!result.raw_instructions_sysvar_parser_implemented);
+programs/xxxl-svm/src/verifier/ed25519_prior_instruction_ordering.rs:431:        assert!(!report.raw_instructions_sysvar_parser_implemented);
+programs/xxxl-svm/src/verifier/ed25519_prior_instruction_ordering.rs:453:        let phase_39_report = instructions_sysvar_evidence_scanner_report();
+programs/xxxl-svm/src/verifier/ed25519_signature_verification_boundary.rs:13:use super::instructions_sysvar_access_contract_model::{
+programs/xxxl-svm/src/verifier/ed25519_signature_verification_boundary.rs:120:    raw_instructions_sysvar_parser_implemented: false,
+programs/xxxl-svm/src/verifier/ed25519_signature_verification_boundary.rs:510:            uses_instructions_sysvar_account_info: true,
+programs/xxxl-svm/src/verifier/ed25519_signature_verification_boundary.rs:511:            checks_instructions_sysvar_program_id: true,
+programs/xxxl-svm/src/verifier/ed25519_signature_verification_boundary.rs:516:            raw_instructions_sysvar_parser_implemented: false,
+programs/xxxl-svm/src/verifier/ed25519_verification_evidence.rs:138:    if parsed_evidence.instructions_sysvar_read {
+programs/xxxl-svm/src/verifier/ed25519_verification_evidence.rs:233:        instructions_sysvar_evidence_scanner_report, read_only_verifier_boundary,
+programs/xxxl-svm/src/verifier/ed25519_verification_evidence.rs:251:            instructions_sysvar_read: false,
+programs/xxxl-svm/src/verifier/ed25519_verification_evidence.rs:379:            .instructions_sysvar_read = true;
+programs/xxxl-svm/src/verifier/ed25519_verification_evidence.rs:478:        let phase_39_report = instructions_sysvar_evidence_scanner_report();
+programs/xxxl-svm/src/verifier/ed25519_verification_evidence_coverage_matrix.rs:37:    pub raw_instructions_sysvar_parser_implemented: bool,
+programs/xxxl-svm/src/verifier/ed25519_verification_evidence_coverage_matrix.rs:57:    pub raw_instructions_sysvar_parser_implemented: bool,
+programs/xxxl-svm/src/verifier/ed25519_verification_evidence_coverage_matrix.rs:171:        raw_instructions_sysvar_parser_implemented: false,
+programs/xxxl-svm/src/verifier/ed25519_verification_evidence_coverage_matrix.rs:225:        raw_instructions_sysvar_parser_implemented: false,
+programs/xxxl-svm/src/verifier/ed25519_verification_evidence_coverage_matrix.rs:292:            assert!(!entry.raw_instructions_sysvar_parser_implemented);
+programs/xxxl-svm/src/verifier/ed25519_verification_evidence_coverage_matrix.rs:444:        assert!(!report.raw_instructions_sysvar_parser_implemented);
+programs/xxxl-svm/src/verifier/ed25519_verification_evidence_coverage_matrix.rs:466:        assert!(!phase_40d_report.raw_instructions_sysvar_parser_implemented);
+programs/xxxl-svm/src/verifier/ed25519_verification_evidence_integration_design.rs:56:    pub future_instructions_sysvar_runtime_read_required: bool,
+programs/xxxl-svm/src/verifier/ed25519_verification_evidence_integration_design.rs:70:    pub raw_instructions_sysvar_parser_implemented: bool,
+programs/xxxl-svm/src/verifier/ed25519_verification_evidence_integration_design.rs:139:        future_instructions_sysvar_runtime_read_required: true,
+programs/xxxl-svm/src/verifier/ed25519_verification_evidence_integration_design.rs:153:        raw_instructions_sysvar_parser_implemented: false,
+programs/xxxl-svm/src/verifier/ed25519_verification_evidence_integration_design.rs:265:        assert!(report.future_instructions_sysvar_runtime_read_required);
+programs/xxxl-svm/src/verifier/ed25519_verification_evidence_integration_design.rs:280:        assert!(!report.raw_instructions_sysvar_parser_implemented);
+programs/xxxl-svm/src/verifier/guardian_membership_validation_boundary.rs:107:    pub guardian_membership_validated: bool,
+programs/xxxl-svm/src/verifier/guardian_membership_validation_boundary.rs:480:        guardian_membership_validated: true,
+programs/xxxl-svm/src/verifier/guardian_membership_validation_boundary.rs:934:        assert!(result.guardian_membership_validated);
+programs/xxxl-svm/src/verifier/instructions_sysvar_access_contract_model.rs:58:    pub raw_instructions_sysvar_parser_implemented: bool,
+programs/xxxl-svm/src/verifier/instructions_sysvar_access_contract_model.rs:281:    raw_instructions_sysvar_parser_implemented: false,
+programs/xxxl-svm/src/verifier/instructions_sysvar_access_contract_model.rs:427:        assert!(!flags.raw_instructions_sysvar_parser_implemented);
+programs/xxxl-svm/src/verifier/instructions_sysvar_accountinfo_presence_readability_runtime_boundary.rs:3:use super::instructions_sysvar_access_contract_model::Phase41BSafetyFlags;
+programs/xxxl-svm/src/verifier/instructions_sysvar_accountinfo_presence_readability_runtime_boundary.rs:4:use super::instructions_sysvar_presence_readability_boundary::{
+programs/xxxl-svm/src/verifier/instructions_sysvar_accountinfo_presence_readability_runtime_boundary.rs:5:    check_instructions_sysvar_presence_readability, Phase41C1InstructionsSysvarContainerView,
+programs/xxxl-svm/src/verifier/instructions_sysvar_accountinfo_presence_readability_runtime_boundary.rs:26:    pub raw_instructions_sysvar_parser_implemented: bool,
+programs/xxxl-svm/src/verifier/instructions_sysvar_accountinfo_presence_readability_runtime_boundary.rs:37:    raw_instructions_sysvar_parser_implemented: false,
+programs/xxxl-svm/src/verifier/instructions_sysvar_accountinfo_presence_readability_runtime_boundary.rs:69:        raw_instructions_sysvar_parser_implemented: false,
+programs/xxxl-svm/src/verifier/instructions_sysvar_accountinfo_presence_readability_runtime_boundary.rs:79:pub fn check_real_instructions_sysvar_accountinfo_presence_readability(
+programs/xxxl-svm/src/verifier/instructions_sysvar_accountinfo_presence_readability_runtime_boundary.rs:80:    instructions_sysvar_account: Option<&AccountInfo<'_>>,
+programs/xxxl-svm/src/verifier/instructions_sysvar_accountinfo_presence_readability_runtime_boundary.rs:82:    let Some(account_info) = instructions_sysvar_account else {
+programs/xxxl-svm/src/verifier/instructions_sysvar_accountinfo_presence_readability_runtime_boundary.rs:83:        return check_instructions_sysvar_presence_readability(
+programs/xxxl-svm/src/verifier/instructions_sysvar_accountinfo_presence_readability_runtime_boundary.rs:85:                instructions_sysvar_supplied: false,
+programs/xxxl-svm/src/verifier/instructions_sysvar_accountinfo_presence_readability_runtime_boundary.rs:86:                instructions_sysvar_readable: false,
+programs/xxxl-svm/src/verifier/instructions_sysvar_accountinfo_presence_readability_runtime_boundary.rs:92:        return check_instructions_sysvar_presence_readability(
+programs/xxxl-svm/src/verifier/instructions_sysvar_accountinfo_presence_readability_runtime_boundary.rs:94:                instructions_sysvar_supplied: false,
+programs/xxxl-svm/src/verifier/instructions_sysvar_accountinfo_presence_readability_runtime_boundary.rs:95:                instructions_sysvar_readable: false,
+programs/xxxl-svm/src/verifier/instructions_sysvar_accountinfo_presence_readability_runtime_boundary.rs:100:    let instructions_sysvar_readable = account_info.try_borrow_data().is_ok();
+programs/xxxl-svm/src/verifier/instructions_sysvar_accountinfo_presence_readability_runtime_boundary.rs:102:    check_instructions_sysvar_presence_readability(Phase41C1InstructionsSysvarContainerView {
+programs/xxxl-svm/src/verifier/instructions_sysvar_accountinfo_presence_readability_runtime_boundary.rs:103:        instructions_sysvar_supplied: true,
+programs/xxxl-svm/src/verifier/instructions_sysvar_accountinfo_presence_readability_runtime_boundary.rs:104:        instructions_sysvar_readable,
+programs/xxxl-svm/src/verifier/instructions_sysvar_accountinfo_presence_readability_runtime_boundary.rs:108:pub fn phase_41d1_instructions_sysvar_accountinfo_presence_readability_runtime_report(
+programs/xxxl-svm/src/verifier/instructions_sysvar_accountinfo_presence_readability_runtime_boundary.rs:117:    use super::super::instructions_sysvar_access_contract_model::Phase41BRejectionCase;
+programs/xxxl-svm/src/verifier/instructions_sysvar_accountinfo_presence_readability_runtime_boundary.rs:118:    use super::super::instructions_sysvar_presence_readability_boundary::Phase41C1InstructionsSysvarReadStatus;
+programs/xxxl-svm/src/verifier/instructions_sysvar_accountinfo_presence_readability_runtime_boundary.rs:131:    fn missing_account_maps_to_missing_instructions_sysvar() {
+programs/xxxl-svm/src/verifier/instructions_sysvar_accountinfo_presence_readability_runtime_boundary.rs:132:        let result = check_real_instructions_sysvar_accountinfo_presence_readability(None);
+programs/xxxl-svm/src/verifier/instructions_sysvar_accountinfo_presence_readability_runtime_boundary.rs:150:    fn wrong_account_key_maps_to_missing_instructions_sysvar() {
+programs/xxxl-svm/src/verifier/instructions_sysvar_accountinfo_presence_readability_runtime_boundary.rs:158:            check_real_instructions_sysvar_accountinfo_presence_readability(Some(&account));
+programs/xxxl-svm/src/verifier/instructions_sysvar_accountinfo_presence_readability_runtime_boundary.rs:171:    fn readable_instructions_sysvar_account_maps_to_present_and_readable() {
+programs/xxxl-svm/src/verifier/instructions_sysvar_accountinfo_presence_readability_runtime_boundary.rs:179:            check_real_instructions_sysvar_accountinfo_presence_readability(Some(&account));
+programs/xxxl-svm/src/verifier/instructions_sysvar_accountinfo_presence_readability_runtime_boundary.rs:198:    fn borrow_conflict_maps_to_unreadable_instructions_sysvar() {
+programs/xxxl-svm/src/verifier/instructions_sysvar_accountinfo_presence_readability_runtime_boundary.rs:213:            check_real_instructions_sysvar_accountinfo_presence_readability(Some(&account));
+programs/xxxl-svm/src/verifier/instructions_sysvar_accountinfo_presence_readability_runtime_boundary.rs:236:        assert!(!flags.raw_instructions_sysvar_parser_implemented);
+programs/xxxl-svm/src/verifier/instructions_sysvar_accountinfo_presence_readability_runtime_boundary.rs:260:            phase_41d1_instructions_sysvar_accountinfo_presence_readability_runtime_report();
+programs/xxxl-svm/src/verifier/instructions_sysvar_accountinfo_presence_readability_runtime_boundary.rs:270:        assert!(!report.raw_instructions_sysvar_parser_implemented);
+programs/xxxl-svm/src/verifier/instructions_sysvar_evidence_scanner.rs:67:    pub raw_instructions_sysvar_data_parsed: bool,
+programs/xxxl-svm/src/verifier/instructions_sysvar_evidence_scanner.rs:100:        raw_instructions_sysvar_data_parsed: false,
+programs/xxxl-svm/src/verifier/instructions_sysvar_evidence_scanner.rs:128:pub fn scan_instructions_sysvar_for_ed25519_evidence(
+programs/xxxl-svm/src/verifier/instructions_sysvar_evidence_scanner.rs:252:pub fn instructions_sysvar_evidence_scanner_report(
+programs/xxxl-svm/src/verifier/instructions_sysvar_evidence_scanner.rs:341:        scan_instructions_sysvar_for_ed25519_evidence(
+programs/xxxl-svm/src/verifier/instructions_sysvar_evidence_scanner.rs:514:        let report = instructions_sysvar_evidence_scanner_report();
+programs/xxxl-svm/src/verifier/instructions_sysvar_evidence_scanner.rs:525:        assert!(!report.raw_instructions_sysvar_data_parsed);
+programs/xxxl-svm/src/verifier/instructions_sysvar_evidence_scanner.rs:549:        let report = instructions_sysvar_evidence_scanner_report();
+programs/xxxl-svm/src/verifier/instructions_sysvar_evidence_scanner.rs:566:        let report = instructions_sysvar_evidence_scanner_report();
+programs/xxxl-svm/src/verifier/instructions_sysvar_evidence_scanner.rs:583:        let report = instructions_sysvar_evidence_scanner_report();
+programs/xxxl-svm/src/verifier/instructions_sysvar_evidence_scanner.rs:598:        let report = instructions_sysvar_evidence_scanner_report();
+programs/xxxl-svm/src/verifier/instructions_sysvar_live_wiring_boundary.rs:9:    acquire_current_instruction_index_from_checked_instructions_sysvar,
+programs/xxxl-svm/src/verifier/instructions_sysvar_live_wiring_boundary.rs:12:use super::instructions_sysvar_access_contract_model::Phase41BRejectionCase;
+programs/xxxl-svm/src/verifier/instructions_sysvar_live_wiring_boundary.rs:38:    pub loaded_from_real_instructions_sysvar: bool,
+programs/xxxl-svm/src/verifier/instructions_sysvar_live_wiring_boundary.rs:60:    pub uses_real_instructions_sysvar_account_info: bool,
+programs/xxxl-svm/src/verifier/instructions_sysvar_live_wiring_boundary.rs:61:    pub checks_instructions_sysvar_account_id: bool,
+programs/xxxl-svm/src/verifier/instructions_sysvar_live_wiring_boundary.rs:91:    pub uses_real_instructions_sysvar_account_info: bool,
+programs/xxxl-svm/src/verifier/instructions_sysvar_live_wiring_boundary.rs:92:    pub checks_instructions_sysvar_account_id: bool,
+programs/xxxl-svm/src/verifier/instructions_sysvar_live_wiring_boundary.rs:120:        runtime_surface: "real_instructions_sysvar_loading",
+programs/xxxl-svm/src/verifier/instructions_sysvar_live_wiring_boundary.rs:121:        uses_real_instructions_sysvar_account_info: true,
+programs/xxxl-svm/src/verifier/instructions_sysvar_live_wiring_boundary.rs:122:        checks_instructions_sysvar_account_id: true,
+programs/xxxl-svm/src/verifier/instructions_sysvar_live_wiring_boundary.rs:145:pub fn phase_41k_1_instructions_sysvar_live_wiring_boundary_report(
+programs/xxxl-svm/src/verifier/instructions_sysvar_live_wiring_boundary.rs:150:pub fn establish_phase_41k_1_instructions_sysvar_live_wiring_boundary(
+programs/xxxl-svm/src/verifier/instructions_sysvar_live_wiring_boundary.rs:151:    instructions_sysvar_account: Option<&AccountInfo<'_>>,
+programs/xxxl-svm/src/verifier/instructions_sysvar_live_wiring_boundary.rs:153:    let current_index_result = acquire_current_instruction_index_from_checked_instructions_sysvar(
+programs/xxxl-svm/src/verifier/instructions_sysvar_live_wiring_boundary.rs:154:        instructions_sysvar_account,
+programs/xxxl-svm/src/verifier/instructions_sysvar_live_wiring_boundary.rs:170:            current_index_result.uses_instructions_sysvar_account_info,
+programs/xxxl-svm/src/verifier/instructions_sysvar_live_wiring_boundary.rs:171:            current_index_result.checks_instructions_sysvar_program_id,
+programs/xxxl-svm/src/verifier/instructions_sysvar_live_wiring_boundary.rs:225:        instructions_sysvar_account,
+programs/xxxl-svm/src/verifier/instructions_sysvar_live_wiring_boundary.rs:245:            loading_result.uses_instructions_sysvar_account_info,
+programs/xxxl-svm/src/verifier/instructions_sysvar_live_wiring_boundary.rs:246:            loading_result.checks_instructions_sysvar_program_id,
+programs/xxxl-svm/src/verifier/instructions_sysvar_live_wiring_boundary.rs:265:                loading_result.uses_instructions_sysvar_account_info,
+programs/xxxl-svm/src/verifier/instructions_sysvar_live_wiring_boundary.rs:266:                loading_result.checks_instructions_sysvar_program_id,
+programs/xxxl-svm/src/verifier/instructions_sysvar_live_wiring_boundary.rs:283:                loading_result.uses_instructions_sysvar_account_info,
+programs/xxxl-svm/src/verifier/instructions_sysvar_live_wiring_boundary.rs:284:                loading_result.checks_instructions_sysvar_program_id,
+programs/xxxl-svm/src/verifier/instructions_sysvar_live_wiring_boundary.rs:301:                loading_result.uses_instructions_sysvar_account_info,
+programs/xxxl-svm/src/verifier/instructions_sysvar_live_wiring_boundary.rs:302:                loading_result.checks_instructions_sysvar_program_id,
+programs/xxxl-svm/src/verifier/instructions_sysvar_live_wiring_boundary.rs:317:                loading_result.uses_instructions_sysvar_account_info,
+programs/xxxl-svm/src/verifier/instructions_sysvar_live_wiring_boundary.rs:318:                loading_result.checks_instructions_sysvar_program_id,
+programs/xxxl-svm/src/verifier/instructions_sysvar_live_wiring_boundary.rs:346:                loading_result.uses_instructions_sysvar_account_info,
+programs/xxxl-svm/src/verifier/instructions_sysvar_live_wiring_boundary.rs:347:                loading_result.checks_instructions_sysvar_program_id,
+programs/xxxl-svm/src/verifier/instructions_sysvar_live_wiring_boundary.rs:363:                loading_result.uses_instructions_sysvar_account_info,
+programs/xxxl-svm/src/verifier/instructions_sysvar_live_wiring_boundary.rs:364:                loading_result.checks_instructions_sysvar_program_id,
+programs/xxxl-svm/src/verifier/instructions_sysvar_live_wiring_boundary.rs:382:                loaded_from_real_instructions_sysvar: true,
+programs/xxxl-svm/src/verifier/instructions_sysvar_live_wiring_boundary.rs:401:            loading_result.uses_instructions_sysvar_account_info,
+programs/xxxl-svm/src/verifier/instructions_sysvar_live_wiring_boundary.rs:402:            loading_result.checks_instructions_sysvar_program_id,
+programs/xxxl-svm/src/verifier/instructions_sysvar_live_wiring_boundary.rs:417:        loading_result.uses_instructions_sysvar_account_info,
+programs/xxxl-svm/src/verifier/instructions_sysvar_live_wiring_boundary.rs:418:        loading_result.checks_instructions_sysvar_program_id,
+programs/xxxl-svm/src/verifier/instructions_sysvar_live_wiring_boundary.rs:433:    uses_real_instructions_sysvar_account_info: bool,
+programs/xxxl-svm/src/verifier/instructions_sysvar_live_wiring_boundary.rs:434:    checks_instructions_sysvar_account_id: bool,
+programs/xxxl-svm/src/verifier/instructions_sysvar_live_wiring_boundary.rs:453:        uses_real_instructions_sysvar_account_info,
+programs/xxxl-svm/src/verifier/instructions_sysvar_live_wiring_boundary.rs:454:        checks_instructions_sysvar_account_id,
+programs/xxxl-svm/src/verifier/instructions_sysvar_live_wiring_boundary.rs:490:    use super::super::instructions_sysvar_access_contract_model::Phase41BRejectionCase;
+programs/xxxl-svm/src/verifier/instructions_sysvar_live_wiring_boundary.rs:537:            uses_instructions_sysvar_account_info: true,
+programs/xxxl-svm/src/verifier/instructions_sysvar_live_wiring_boundary.rs:538:            checks_instructions_sysvar_program_id: true,
+programs/xxxl-svm/src/verifier/instructions_sysvar_live_wiring_boundary.rs:543:            raw_instructions_sysvar_parser_implemented: false,
+programs/xxxl-svm/src/verifier/instructions_sysvar_live_wiring_boundary.rs:559:        let report = phase_41k_1_instructions_sysvar_live_wiring_boundary_report();
+programs/xxxl-svm/src/verifier/instructions_sysvar_live_wiring_boundary.rs:565:        assert!(report.uses_real_instructions_sysvar_account_info);
+programs/xxxl-svm/src/verifier/instructions_sysvar_live_wiring_boundary.rs:566:        assert!(report.checks_instructions_sysvar_account_id);
+programs/xxxl-svm/src/verifier/instructions_sysvar_live_wiring_boundary.rs:591:        let result = establish_phase_41k_1_instructions_sysvar_live_wiring_boundary(None);
+programs/xxxl-svm/src/verifier/instructions_sysvar_live_wiring_boundary.rs:601:        assert!(!result.uses_real_instructions_sysvar_account_info);
+programs/xxxl-svm/src/verifier/instructions_sysvar_live_wiring_boundary.rs:602:        assert!(!result.checks_instructions_sysvar_account_id);
+programs/xxxl-svm/src/verifier/instructions_sysvar_live_wiring_boundary.rs:619:        let result = establish_phase_41k_1_instructions_sysvar_live_wiring_boundary(Some(&account));
+programs/xxxl-svm/src/verifier/instructions_sysvar_live_wiring_boundary.rs:629:        assert!(result.uses_real_instructions_sysvar_account_info);
+programs/xxxl-svm/src/verifier/instructions_sysvar_live_wiring_boundary.rs:630:        assert!(result.checks_instructions_sysvar_account_id);
+programs/xxxl-svm/src/verifier/instructions_sysvar_presence_readability_boundary.rs:1:use super::instructions_sysvar_access_contract_model::{
+programs/xxxl-svm/src/verifier/instructions_sysvar_presence_readability_boundary.rs:22:    pub instructions_sysvar_supplied: bool,
+programs/xxxl-svm/src/verifier/instructions_sysvar_presence_readability_boundary.rs:23:    pub instructions_sysvar_readable: bool,
+programs/xxxl-svm/src/verifier/instructions_sysvar_presence_readability_boundary.rs:64:    raw_instructions_sysvar_parser_implemented: false,
+programs/xxxl-svm/src/verifier/instructions_sysvar_presence_readability_boundary.rs:102:pub fn check_instructions_sysvar_presence_readability(
+programs/xxxl-svm/src/verifier/instructions_sysvar_presence_readability_boundary.rs:105:    let (status, rejection_case) = if !container.instructions_sysvar_supplied {
+programs/xxxl-svm/src/verifier/instructions_sysvar_presence_readability_boundary.rs:110:    } else if !container.instructions_sysvar_readable {
+programs/xxxl-svm/src/verifier/instructions_sysvar_presence_readability_boundary.rs:134:pub fn phase_41c1_instructions_sysvar_presence_readability_boundary_report(
+programs/xxxl-svm/src/verifier/instructions_sysvar_presence_readability_boundary.rs:144:    fn missing_instructions_sysvar_maps_to_phase_41b_rejection_case() {
+programs/xxxl-svm/src/verifier/instructions_sysvar_presence_readability_boundary.rs:145:        let result = check_instructions_sysvar_presence_readability(
+programs/xxxl-svm/src/verifier/instructions_sysvar_presence_readability_boundary.rs:147:                instructions_sysvar_supplied: false,
+programs/xxxl-svm/src/verifier/instructions_sysvar_presence_readability_boundary.rs:148:                instructions_sysvar_readable: false,
+programs/xxxl-svm/src/verifier/instructions_sysvar_presence_readability_boundary.rs:168:    fn unreadable_instructions_sysvar_maps_to_phase_41b_rejection_case() {
+programs/xxxl-svm/src/verifier/instructions_sysvar_presence_readability_boundary.rs:169:        let result = check_instructions_sysvar_presence_readability(
+programs/xxxl-svm/src/verifier/instructions_sysvar_presence_readability_boundary.rs:171:                instructions_sysvar_supplied: true,
+programs/xxxl-svm/src/verifier/instructions_sysvar_presence_readability_boundary.rs:172:                instructions_sysvar_readable: false,
+programs/xxxl-svm/src/verifier/instructions_sysvar_presence_readability_boundary.rs:192:    fn present_and_readable_instructions_sysvar_has_no_rejection_case() {
+programs/xxxl-svm/src/verifier/instructions_sysvar_presence_readability_boundary.rs:193:        let result = check_instructions_sysvar_presence_readability(
+programs/xxxl-svm/src/verifier/instructions_sysvar_presence_readability_boundary.rs:195:                instructions_sysvar_supplied: true,
+programs/xxxl-svm/src/verifier/instructions_sysvar_presence_readability_boundary.rs:196:                instructions_sysvar_readable: true,
+programs/xxxl-svm/src/verifier/instructions_sysvar_presence_readability_boundary.rs:229:        assert!(!flags.raw_instructions_sysvar_parser_implemented);
+programs/xxxl-svm/src/verifier/instructions_sysvar_presence_readability_boundary.rs:252:        let report = phase_41c1_instructions_sysvar_presence_readability_boundary_report();
+programs/xxxl-svm/src/verifier/instructions_sysvar_presence_readability_boundary.rs:273:                .raw_instructions_sysvar_parser_implemented
+programs/xxxl-svm/src/verifier/instructions_sysvar_presence_readability_boundary.rs:286:        let present = check_instructions_sysvar_presence_readability(
+programs/xxxl-svm/src/verifier/instructions_sysvar_presence_readability_boundary.rs:288:                instructions_sysvar_supplied: true,
+programs/xxxl-svm/src/verifier/instructions_sysvar_presence_readability_boundary.rs:289:                instructions_sysvar_readable: true,
+programs/xxxl-svm/src/verifier/mod.rs:28:pub mod b1c_instructions_sysvar_evidence_bridge;
+programs/xxxl-svm/src/verifier/mod.rs:46:pub mod instructions_sysvar_evidence_scanner;
+programs/xxxl-svm/src/verifier/mod.rs:47:pub mod instructions_sysvar_live_wiring_boundary;
+programs/xxxl-svm/src/verifier/mod.rs:101:pub use b1c_instructions_sysvar_evidence_bridge::{
+programs/xxxl-svm/src/verifier/mod.rs:102:    b1c_instructions_sysvar_evidence_bridge_report,
+programs/xxxl-svm/src/verifier/mod.rs:103:    derive_b1c_instructions_sysvar_evidence_from_41k1,
+programs/xxxl-svm/src/verifier/mod.rs:104:    load_b1c_instructions_sysvar_evidence_bridge, B1CInstructionsSysvarEvidenceBridgeReport,
+programs/xxxl-svm/src/verifier/mod.rs:237:pub use instructions_sysvar_evidence_scanner::{
+programs/xxxl-svm/src/verifier/mod.rs:238:    instructions_sysvar_evidence_scanner_report, scan_instructions_sysvar_for_ed25519_evidence,
+programs/xxxl-svm/src/verifier/mod.rs:244:pub use instructions_sysvar_live_wiring_boundary::{
+programs/xxxl-svm/src/verifier/mod.rs:245:    establish_phase_41k_1_instructions_sysvar_live_wiring_boundary,
+programs/xxxl-svm/src/verifier/mod.rs:246:    phase_41k_1_instructions_sysvar_live_wiring_boundary_report,
+programs/xxxl-svm/src/verifier/mod.rs:303:pub mod instructions_sysvar_access_contract_model;
+programs/xxxl-svm/src/verifier/mod.rs:304:pub mod instructions_sysvar_accountinfo_presence_readability_runtime_boundary;
+programs/xxxl-svm/src/verifier/mod.rs:305:pub mod instructions_sysvar_presence_readability_boundary;
+programs/xxxl-svm/src/verifier/payload_hash_binding_boundary.rs:171:    use super::super::instructions_sysvar_access_contract_model::PHASE_41B_SAFETY_FLAGS;
+programs/xxxl-svm/src/verifier/prefilter_phase_41c3_candidate_descriptor_runtime_boundary.rs:7:use super::instructions_sysvar_access_contract_model::{
+programs/xxxl-svm/src/verifier/prefilter_phase_41c3_candidate_descriptor_runtime_boundary.rs:84:    raw_instructions_sysvar_parser_implemented: false,
+programs/xxxl-svm/src/verifier/prefilter_phase_41c3_candidate_descriptor_runtime_boundary.rs:397:            uses_instructions_sysvar_account_info: true,
+programs/xxxl-svm/src/verifier/prefilter_phase_41c3_candidate_descriptor_runtime_boundary.rs:398:            checks_instructions_sysvar_program_id: true,
+programs/xxxl-svm/src/verifier/prefilter_phase_41c3_candidate_descriptor_runtime_boundary.rs:403:            raw_instructions_sysvar_parser_implemented: false,
+programs/xxxl-svm/src/verifier/prefilter_phase_41c3_candidate_descriptor_runtime_boundary.rs:431:            uses_instructions_sysvar_account_info: false,
+programs/xxxl-svm/src/verifier/prefilter_phase_41c3_candidate_descriptor_runtime_boundary.rs:432:            checks_instructions_sysvar_program_id: false,
+programs/xxxl-svm/src/verifier/prefilter_phase_41c3_candidate_descriptor_runtime_boundary.rs:437:            raw_instructions_sysvar_parser_implemented: false,
+programs/xxxl-svm/src/verifier/prefilter_phase_41c3_candidate_descriptor_runtime_boundary.rs:677:        assert!(!flags.raw_instructions_sysvar_parser_implemented);
+programs/xxxl-svm/src/verifier/prior_ed25519_lookup_ordering_boundary.rs:1:use super::instructions_sysvar_access_contract_model::{
+programs/xxxl-svm/src/verifier/prior_ed25519_lookup_ordering_boundary.rs:73:    raw_instructions_sysvar_parser_implemented: false,
+programs/xxxl-svm/src/verifier/prior_ed25519_lookup_ordering_boundary.rs:521:        assert!(!flags.raw_instructions_sysvar_parser_implemented);
+programs/xxxl-svm/src/verifier/prior_instruction_index_range_runtime_boundary.rs:5:use super::instructions_sysvar_access_contract_model::{
+programs/xxxl-svm/src/verifier/prior_instruction_index_range_runtime_boundary.rs:35:    pub raw_instructions_sysvar_parser_implemented: bool,
+programs/xxxl-svm/src/verifier/prior_instruction_index_range_runtime_boundary.rs:55:    pub raw_instructions_sysvar_parser_implemented: bool,
+programs/xxxl-svm/src/verifier/prior_instruction_index_range_runtime_boundary.rs:66:    raw_instructions_sysvar_parser_implemented: false,
+programs/xxxl-svm/src/verifier/prior_instruction_index_range_runtime_boundary.rs:99:        raw_instructions_sysvar_parser_implemented: false,
+programs/xxxl-svm/src/verifier/prior_instruction_index_range_runtime_boundary.rs:189:        raw_instructions_sysvar_parser_implemented: false,
+programs/xxxl-svm/src/verifier/prior_instruction_index_range_runtime_boundary.rs:229:        assert!(!result.raw_instructions_sysvar_parser_implemented);
+programs/xxxl-svm/src/verifier/prior_instruction_index_range_runtime_boundary.rs:371:        assert!(!flags.raw_instructions_sysvar_parser_implemented);
+programs/xxxl-svm/src/verifier/prior_instruction_index_range_runtime_boundary.rs:405:        assert!(!report.raw_instructions_sysvar_parser_implemented);

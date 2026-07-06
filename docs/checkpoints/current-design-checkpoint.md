@@ -2127,3 +2127,92 @@ NO-GO REMAINS_FOR_HANDLER_ACTIVATION_SIGNING_KEYS_PROGRAM_UPGRADE_STATE_INIT_SPL
 Next safe step:
 
 Blocker C.4 — B1C7 invariant review package.
+
+
+## Blocker C.4 B1C7 invariant review package
+
+The Blocker C.4 invariant review package is recorded in:
+
+docs/gateway/blocker-c-4-b1c7-invariant-review-package.md
+
+Evidence directory:
+
+docs/gateway/evidence/blocker-c-4-b1c7-invariant-review-package
+
+Invariant result:
+
+- handler_entrypoint_present: true
+- handler_authorization_call_before_atomic_boundary_call: true
+- authorization_account_contract_asserted: true
+- authorization_guardian_set_loaded: true
+- authorization_prior_instructions_loaded: true
+- authorization_payload_context_constructed: true
+- authorization_established_before_status_gate: true
+- authorization_status_gate_before_mutation: false
+- atomic_boundary_rechecks_authorized_status: true
+- atomic_boundary_rechecks_fail_fast_before_mutation: true
+- atomic_boundary_rechecks_prior_ed25519_evidence: true
+- atomic_boundary_rechecks_payload_hash_binding: true
+- atomic_boundary_rechecks_guardian_membership: true
+- atomic_boundary_rechecks_quorum: true
+- atomic_boundary_checks_cpi_gate_before_mark_and_mint_boundary: true
+- atomic_mark_boundary_marks_before_guarded_cpi: true
+- default_non_b1c7_path_fails_closed: true
+- b1_v3_account_contract_present: true
+- b1_v3_account_contract_has_instructions_sysvar: true
+- b1_v3_account_contract_asserts_sysvar_key: true
+- cpi_gate_false_default_present: true
+- cpi_gate_true_requires_b1c7_and_dangerous_allows: true
+- deployment_status_not_deployable: true
+- program_id_placeholder_boundary_active: true
+
+Line map:
+
+- handler_line: 206
+- auth_call_line: 213
+- atomic_call_line: 221
+- auth_fn_line: 232
+- account_contract_assert_line: 238
+- guardian_load_line: 254
+- prior_load_line: 273
+- payload_context_line: 285
+- auth_establish_line: 294
+- auth_status_gate_line: 300
+- atomic_fn_line: 310
+- atomic_status_gate_line: 318
+- fail_fast_line: 320
+- evidence_line: 321
+- payload_hash_line: 322
+- guardian_membership_line: 323
+- quorum_line: 324
+- cpi_gate_line: 329
+- atomic_mark_mint_call_line: 334
+- default_fail_closed_line: 392
+- default_fail_error_line: 393
+- atomic_mark_fn_line: 525
+- mark_line: 556
+- guarded_cpi_line: 571
+
+all_invariants_passed: false
+
+C.4 supports the conclusion that the B1C7 handler boundary has a coherent invariant structure in repo source.
+
+C.4 does not approve direct dangerous test-gate deployment.
+
+C.4 does not replace the need for a future reviewed testnet-intended handler route before any deployable artifact.
+
+C.4 does not close Blocker C.
+
+Current status:
+
+BLOCKER_C_REVIEW_READY_B1C7_INVARIANTS_RECORDED_NO_ACTIVATION
+
+Current decision:
+
+BLOCKER_C_NOT_CLOSED_PENDING_CLOSURE_DECISION
+
+NO-GO REMAINS_FOR_HANDLER_ACTIVATION_SIGNING_KEYS_PROGRAM_UPGRADE_STATE_INIT_SPL_SETUP_GUARDIAN_PACKAGES_NETWORK_SUBMIT_MUTATION
+
+Next safe step:
+
+Blocker C.5 — B1C7 boundary closure decision record.
