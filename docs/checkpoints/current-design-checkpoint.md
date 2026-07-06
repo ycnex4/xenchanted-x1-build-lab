@@ -1628,3 +1628,28 @@ Still open:
 - Blocker G: rollback plan
 
 Future program-load testing, state initialization simulation, fixture consumption testing, SPL testing, signing, or testnet work must be opened as separately scoped work with its own GO boundary.
+
+
+## Blocker H post-closure tmp ignore safety
+
+The post-closure tmp ignore safety record is recorded in:
+
+docs/gateway/blocker-h-post-closure-tmp-ignore-safety.md
+
+Purpose:
+
+Protect local disposable runtime output from accidental commit after Blocker H closure.
+
+Git ignore rule:
+
+tmp/
+
+Rule status:
+
+ADDED_TMP_IGNORE_RULE
+
+This safety step does not run the validator, does not modify fixtures, and does not modify disposable ledger contents.
+
+Blocker H remains closed.
+
+NO-GO remains for testnet, signing, SPL setup, program upgrade, persistent initialization, and network submit.

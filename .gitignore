@@ -4,3 +4,6 @@ coverage/
 .vitest/
 .env
 .env.*
+
+# Local disposable validator ledgers, generated fixtures, and runtime scratch output
+tmp/
