@@ -1,0 +1,42 @@
+# Future exact GO boundary after Evidence Package.5
+
+Evidence Package.5 does not grant GO.
+
+After this closure, a later exact scoped user GO phrase may authorize only the local build/hash execution package if all preconditions are still satisfied.
+
+A future exact GO must bind:
+- operation class
+- package id
+- repo full name
+- branch
+- source commit
+- clean working tree requirement
+- exact build command
+- exact feature flags
+- exact artifact path
+- exact evidence path
+- toolchain capture requirements
+- hash algorithm
+- canonical runtime hash domain
+- no RPC/testnet boundary
+- no mutation boundary
+- stop-on-mismatch rule
+- no automatic retry rule
+- post-execution evidence requirements
+
+A future exact GO must not authorize:
+- RPC
+- testnet
+- deploy
+- upgrade
+- write-buffer
+- authority change
+- state initialization
+- SPL setup
+- guardian package construction
+- signing
+- transaction submit
+- mutation
+- production activation
+
+If any identity, source commit, build command, toolchain, feature flag, artifact path, hash method, or boundary differs, stop.

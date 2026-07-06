@@ -5134,3 +5134,84 @@ NO-GO REMAINS_FOR_BUILD_HASH_DEPLOY_UPGRADE_WRITE_BUFFER_STATE_INIT_SPL_SETUP_GU
 Next safe step:
 
 Evidence Package.5 — expected-hash/build-hash execution decision closure record.
+
+
+## Evidence Package.5 expected-hash/build-hash execution decision closure record
+
+The Evidence Package.5 closure record is recorded in:
+
+docs/gateway/evidence-package-5-expected-hash-build-hash-execution-decision-closure-record.md
+
+Evidence directory:
+
+docs/gateway/evidence/evidence-package-5-expected-hash-build-hash-execution-decision-closure-record
+
+Current status:
+
+EVIDENCE_PACKAGE_5_CLOSED_NARROW_STRICT_LOCAL_BUILD_HASH_EXECUTION_MODEL_REVIEWED_EXECUTION_NOT_APPROVED
+
+Current decision:
+
+STRICT_LOCAL_BUILD_HASH_EXECUTION_DECISION_MODEL_CLOSED_NARROW_FINAL_GO_NOT_GRANTED
+
+Selected execution model:
+
+STRICT_LOCAL_BUILD_HASH_EXECUTION_WITH_EXACT_GO_ONLY
+
+Current GO state:
+
+FINAL_GO_NOT_GRANTED
+
+Closed decision points:
+
+- Evidence Package.1 selected strict local execution package shape
+- Evidence Package.2 inventoried candidate exact values
+- Evidence Package.3 recorded strict local build/hash execution decision model
+- Evidence Package.4 reviewed execution invariants and prepared closure candidate
+- exact scoped GO remains required before any build/hash execution
+- clean repo before execution remains required
+- exact source commit binding remains required
+- toolchain capture remains required
+- exact build command binding remains required
+- dangerous features remain rejected
+- artifact and hash success criteria remain required
+- canonical ProgramData executable-bytes SHA256 remains required
+- canonical hash method remains required
+- no RPC/testnet boundary remains required
+- no mutation boundary remains required
+- no secret material boundary remains required
+- stop on mismatch remains required
+- automatic retry remains rejected
+- future execution evidence file list is defined
+- current GO state remains FINAL_GO_NOT_GRANTED
+- no execution approved
+
+Still not approved:
+
+- exact scoped user GO phrase selection
+- build
+- local artifact hash computation
+- ProgramData executable-bytes hash computation
+- RPC
+- testnet
+- deploy
+- upgrade
+- write-buffer
+- authority change
+- state initialization
+- SPL setup
+- guardian package construction
+- signing
+- transaction submit
+- mutation
+- production activation
+
+Evidence Package.5 does not grant GO.
+
+Evidence Package.5 does not run build, compute artifact hash, compute ProgramData hash, call RPC, use testnet, deploy, upgrade, write buffer, change authority, initialize state, configure SPL, construct guardian packages, sign, submit, or mutate.
+
+NO-GO REMAINS_FOR_BUILD_HASH_DEPLOY_UPGRADE_WRITE_BUFFER_STATE_INIT_SPL_SETUP_GUARDIAN_PACKAGES_SIGNING_RPC_TESTNET_NETWORK_SUBMIT_MUTATION
+
+Next safe step:
+
+BuildHash Execution.1 — exact scoped local build/hash execution GO package.

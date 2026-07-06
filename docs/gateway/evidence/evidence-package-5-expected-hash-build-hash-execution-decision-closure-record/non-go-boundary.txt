@@ -1,0 +1,24 @@
+# Evidence Package.5 non-GO boundary
+
+Evidence Package.5 does not grant GO.
+
+Evidence Package.5 does not approve:
+- build
+- local artifact hash computation
+- ProgramData executable-bytes hash computation
+- RPC
+- testnet
+- deploy
+- upgrade
+- write-buffer
+- authority change
+- state initialization
+- SPL setup
+- guardian package construction
+- signing
+- transaction submit
+- mutation
+- production activation
+
+Evidence Package.5 closes only the strict local build/hash execution decision model.
+Any actual build/hash execution still requires a later exact scoped user GO phrase.

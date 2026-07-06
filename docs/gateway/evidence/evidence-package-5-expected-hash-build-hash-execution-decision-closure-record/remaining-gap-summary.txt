@@ -1,0 +1,17 @@
+# Evidence Package.5 remaining gaps
+
+- exact scoped user GO phrase not selected
+- actual build/hash execution package not executed
+- toolchain versions not captured
+- build not executed
+- local SBF artifact SHA256 not computed
+- canonical ProgramData executable-bytes SHA256 not computed
+- RPC/testnet not approved
+- deploy/upgrade/write-buffer not approved
+- state initialization not approved
+- SPL setup not approved
+- guardian package construction not approved
+- signing not approved
+- submit not approved
+- mutation not approved
+- production activation not approved
