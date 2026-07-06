@@ -4224,3 +4224,62 @@ NO-GO REMAINS_FOR_BUILD_HASH_DEPLOY_UPGRADE_WRITE_BUFFER_STATE_INIT_SPL_SETUP_GU
 Next safe step:
 
 Final GO.3 — final scoped GO package decision model.
+
+
+## Final GO.3 final scoped GO package decision model
+
+The Final GO.3 decision model is recorded in:
+
+docs/gateway/final-go-3-final-scoped-go-package-decision-model.md
+
+Evidence directory:
+
+docs/gateway/evidence/final-go-3-final-scoped-go-package-decision-model
+
+Current status:
+
+FINAL_GO_3_OPEN_FINAL_SCOPED_GO_DECISION_MODEL_RECORDED_NO_BUILD_NO_HASH_NO_RPC_NO_EXECUTION
+
+Current decision:
+
+STAGED_SINGLE_OPERATION_SCOPED_GO_MODEL_REQUIRED_FINAL_GO_NOT_GRANTED
+
+Selected model:
+
+STAGED_SINGLE_OPERATION_SCOPED_GO_MODEL_REQUIRED
+
+Selected rules:
+
+- one future GO package authorizes exactly one operation class only
+- general GO is rejected
+- multi-action chained GO is rejected
+- expected-hash package is required before any upgrade/write-buffer GO
+- read-only baseline precheck is required before any network mutation GO
+- identity/hash/authority/network/cost/verification mismatch requires stop
+- automatic retry is rejected
+- exact scoped user GO phrase is required for each future action
+- post-action read-only verification is required after any mutation
+- Final GO.3 itself does not grant GO
+- Final GO.3 does not approve build/hash/RPC/testnet/submit/mutation
+
+Remaining gaps:
+
+- actual final scoped GO package not drafted
+- actual expected-hash package not generated
+- actual build/hash evidence not generated
+- actual read-only network precheck not executed
+- actual operation class not selected
+- actual user GO phrase not selected
+- actual max cost boundary not selected
+- actual post-action verification bundle not generated
+- execution remains NO-GO
+
+Final GO.3 does not grant GO.
+
+Final GO.3 does not run build, compute artifact hash, compute ProgramData hash, deploy, upgrade, write buffer, change authority, initialize state, configure SPL, construct guardian packages, sign, call RPC, use testnet, submit, or mutate.
+
+NO-GO REMAINS_FOR_BUILD_HASH_DEPLOY_UPGRADE_WRITE_BUFFER_STATE_INIT_SPL_SETUP_GUARDIAN_PACKAGES_SIGNING_RPC_TESTNET_NETWORK_SUBMIT_MUTATION
+
+Next safe step:
+
+Final GO.4 — final scoped GO package invariant review.

@@ -1,0 +1,39 @@
+# Final GO state machine
+
+STATE_0_NO_GO
+meaning: No execution permission exists.
+current_state_after_final_go_3: true
+
+STATE_1_PLANNING_READY
+meaning: Planning records exist, but no action is authorized.
+
+STATE_2_INVENTORY_READY
+meaning: Repo evidence inventory exists, but no action is authorized.
+
+STATE_3_DECISION_MODEL_READY
+meaning: Decision model exists, but no action is authorized.
+
+STATE_4_FUTURE_PACKAGE_DRAFTED
+meaning: A future exact package may be drafted for one operation class only.
+
+STATE_5_FUTURE_PACKAGE_REVIEWED
+meaning: A future exact package may be reviewed, still no action unless explicit user phrase is present.
+
+STATE_6_EXACT_SCOPED_USER_GO_PRESENT
+meaning: User has explicitly approved exactly one operation class with exact scope.
+
+STATE_7_ALLOWED_ACTION_RUNNING
+meaning: Only the approved operation class may be performed.
+
+STATE_8_POST_ACTION_READ_ONLY_VERIFICATION
+meaning: After action, required read-only verification bundle must be recorded.
+
+STATE_9_COMPLETE_OR_STOP
+meaning: If verification passes, close the operation package. If mismatch occurs, stop. No automatic retry.
+
+DISALLOWED_TRANSITIONS:
+- STATE_3_DECISION_MODEL_READY -> STATE_7_ALLOWED_ACTION_RUNNING
+- STATE_4_FUTURE_PACKAGE_DRAFTED -> STATE_7_ALLOWED_ACTION_RUNNING
+- STATE_5_FUTURE_PACKAGE_REVIEWED -> STATE_7_ALLOWED_ACTION_RUNNING without exact scoped user GO
+- any state -> automatic retry after mismatch
+- any state -> broader action than the exact GO scope

@@ -1,0 +1,35 @@
+# Future exact scoped user GO phrase template
+
+This is a template only.
+Final GO.3 does not select an actual phrase and does not grant GO.
+
+A future phrase must include:
+
+I explicitly approve exactly this scoped operation:
+<OPERATION_CLASS>
+
+Network:
+<NETWORK_NAME_AND_RPC_IDENTITY_IF_USED>
+
+Program id:
+<PROGRAM_ID>
+
+ProgramData account:
+<PROGRAMDATA_ACCOUNT>
+
+Expected authority:
+<AUTHORITY_PUBLIC_KEY>
+
+Source commit:
+<SOURCE_COMMIT>
+
+Expected hash package:
+<EXPECTED_HASH_PACKAGE_ID>
+
+Maximum cost:
+<MAX_COST>
+
+Abort rule:
+Stop on any mismatch. No automatic retry.
+
+I understand this GO does not approve any action outside this exact scope.

@@ -1,0 +1,37 @@
+# Future final scoped GO package strict rules
+
+RULE_01_SINGLE_OPERATION_CLASS_ONLY
+A future GO package may authorize exactly one operation class.
+
+RULE_02_NO_GENERAL_GO
+A future GO package must not authorize broad project execution.
+
+RULE_03_EXACT_IDENTITIES_REQUIRED
+Network, program id, ProgramData account, authority, source commit, build command, feature flags, artifact path, hashes, cost boundary, and user GO phrase must be exact.
+
+RULE_04_EXPECTED_HASH_PACKAGE_REQUIRED_FOR_UPGRADE
+Upgrade/write-buffer GO cannot exist without a prior expected-hash package.
+
+RULE_05_READ_ONLY_PRECHECK_REQUIRED_BEFORE_MUTATION
+Any network mutation GO requires read-only baseline prechecks.
+
+RULE_06_STOP_ON_MISMATCH
+Any mismatch in identity, hash, authority, network, ProgramData, program id, cost boundary, or verification result requires stop.
+
+RULE_07_NO_AUTOMATIC_RETRY
+Automatic retry is forbidden.
+
+RULE_08_POST_ACTION_VERIFICATION_REQUIRED
+Any mutation package must define post-action read-only verification before it can be considered complete.
+
+RULE_09_EXACT_USER_GO_PHRASE_REQUIRED
+No action may run unless the user provides the exact future scoped GO phrase.
+
+RULE_10_NO_SECRET_MATERIAL_IN_REPO
+Private keys, seed phrases, and secret material must not be recorded in repo evidence.
+
+RULE_11_NO_SCOPE_EXPANSION
+The operator must not expand the action beyond the exact GO package scope.
+
+RULE_12_SEPARATE_GO_FOR_SEPARATE_BOUNDARY
+Build/hash, read-only RPC, upgrade/write-buffer, state init, SPL setup, guardian package/signing/submit, and production activation each require separate scoped approval if ever pursued.
