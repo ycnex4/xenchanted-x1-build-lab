@@ -433,3 +433,30 @@ No testnet action is approved by this checkpoint.
 Current decision remains:
 
 NO-GO.
+
+## B6.54 local guardian failure matrix skeleton
+
+B6.54 local guardian failure matrix skeleton is implemented in:
+
+programs/xxxl-svm/src/local_guardian_failure_matrix_skeleton.rs
+
+The module is explicitly marked:
+
+LOCAL_GUARDIAN_FAILURE_MATRIX_SKELETON_NOT_EXECUTING
+
+Current safety flags:
+
+- local_only: true
+- testnet_allowed: false
+- live_route_allowed: false
+- signing_enabled: false
+- guardian_package_construction_enabled: false
+- production_keys_allowed: false
+- writes_to_disk: false
+- fixture_file_emission_enabled: false
+- failure_matrix_execution_enabled: false
+- local_validator_execution_approved: false
+
+Current decision remains:
+
+NO-GO.
