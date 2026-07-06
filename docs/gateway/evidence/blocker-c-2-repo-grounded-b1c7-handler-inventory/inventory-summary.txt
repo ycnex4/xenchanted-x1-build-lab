@@ -1,0 +1,16 @@
+- cargo_b1c7_feature_present: true
+- cargo_b1c7_dangerous_allow_present: true
+- processor_compile_error_for_b1c7_without_dangerous_allow: true
+- processor_live_route_flag_false: true
+- processor_default_path_fails_cpi_not_ready: true
+- processor_b1c7_handler_boundary_present: true
+- processor_b1c7_authorization_from_inputs_present: true
+- processor_b1c7_atomic_boundary_present: true
+- account_contract_b1_v3_12_account_contract_present: true
+- cpi_execution_false_default_present: true
+- cpi_execution_true_requires_b1c7_and_dangerous_allows: true
+- deployment_still_not_deployable: true
+- program_id_placeholder_active: true
+- handler_calls_authorization_before_atomic_mark_and_mint: true
+- atomic_boundary_checks_cpi_gate_before_atomic_mark_and_mint_call: true
+- atomic_boundary_marks_before_guarded_cpi_inside_atomic_function: false
