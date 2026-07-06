@@ -1,0 +1,80 @@
+AGENTS.md:31: Treat the XXXL SVM runtime as scaffold-only, locked, unreleasable, and not deployable by default.
+README.md:24: - [XXXL Stage 1 gateway authorization consumer](docs/xxxl/xxxl-stage-1-gateway-authorization-consumer.md)
+README.md:103: - XNTD-to-XXXL burn-to-mint gateway design
+README.md:104: - Stage 1 XXXL gateway architecture boundary
+README.md:105: - Stage 1 XXXL gateway implementation plan
+README.md:107: - Stage 1 gateway message schema
+README.md:108: - Stage 1 gateway canonical encoding
+README.md:109: - Stage 1 gateway test vectors
+README.md:110: - Stage 1 gateway Theo review notes
+README.md:111: - Stage 1 gateway pre-implementation blockers
+README.md:112: - Stage 1 gateway hash, signature, and recipient decisions
+README.md:113: - Stage 1 gateway mandatory source block fields
+README.md:122: - Stage 1 generated gateway vectors
+README.md:123: - Stage 1 gateway vector fixture tests
+README.md:124: - Stage 1 gateway encoding helpers
+README.md:126: - Stage 1 gateway verifier helpers
+README.md:128: - Stage 1 gateway approval verifier
+README.md:133: - Stage 1 gateway state model
+README.md:134: - Stage 1 gateway end-to-end scenario
+README.md:135: - Stage 1 gateway negative end-to-end matrix
+README.md:136: - Stage 1 gateway baseline checkpoint
+README.md:142: - Stage 2.0 gateway runtime planning outline
+README.md:147: - Stage 2.5 gateway risk review
+README.md:150: - Stage 2.8 gateway planning baseline checkpoint
+README.md:154: - XXXL Stage 1 gateway authorization consumer
+README.md:404: Gateway:
+README.md:406: - [XNTD-to-XXXL burn-to-mint gateway design](docs/gateway/xntd-to-xxxl-burn-to-mint-gateway-design.md)
+README.md:407: - [Stage 1 XXXL Gateway architecture](docs/gateway/stage-1-xxxl-gateway-architecture.md)
+README.md:408: - [Stage 1 XXXL Gateway implementation plan](docs/gateway/stage-1-xxxl-gateway-implementation-plan.md)
+README.md:409: - [Stage 1 Ethereum burn event schema](docs/gateway/stage-1-ethereum-burn-event-schema.md)
+README.md:467: - [Stage 1.5 runtime mapping notes](docs/gateway/stage-1-5-runtime-mapping-notes.md)
+README.md:468: - [Stage 1.6 guardian set management design](docs/gateway/stage-1-6-guardian-set-management-design.md)
+README.md:469: - [Stage 1.7 X1 account/storage layout design](docs/gateway/stage-1-7-x1-account-storage-layout-design.md)
+README.md:470: - [Stage 1.8 X1 runtime assumptions checkpoint](docs/gateway/stage-1-8-x1-runtime-assumptions-checkpoint.md)
+README.md:471: - [Stage 1.9 Stage 2 planning readiness checkpoint](docs/gateway/stage-1-9-stage-2-planning-readiness.md)
+README.md:472: - [Stage 1.10 X1 program instruction and PDA derivation design](docs/gateway/stage-1-10-x1-program-instruction-and-pda-derivation-design.md)
+README.md:473: - [Stage 1.10 Theo review refinements](docs/gateway/stage-1-10-theo-review-refinements.md)
+README.md:474: - [Stage 2 direct mint prototype start](docs/gateway/stage-2-direct-mint-prototype-start.md)
+README.md:475: - [Stage 2 direct mint gateway skeleton testnet evidence](docs/gateway/evidence/stage-2-direct-mint-skeleton-testnet-evidence.md)
+README.md:476: - [Stage 2 guardian signature verification compile evidence](docs/gateway/evidence/stage-2-guardian-signature-verification-compile-evidence.md)
+README.md:477: - [Stage 2 guardian signature parser reference tests](docs/gateway/evidence/stage-2-guardian-signature-parser-reference-tests.md)
+README.md:478: - [Stage 2 Theo guardian signature refinements](docs/gateway/evidence/stage-2-theo-guardian-signature-refinements.md)
+README.md:479: - [Stage 2.4 Message hash binding design](docs/gateway/stage-2-4-message-hash-binding-design.md)
+README.md:480: - [Stage 2.4 runtime message hash binding evidence](docs/gateway/evidence/stage-2-4-runtime-message-hash-binding-evidence.md)
+README.md:481: - [Stage 2.4 runtime binding X1 testnet evidence](docs/gateway/evidence/stage-2-4-runtime-binding-testnet-evidence.md)
+README.md:482: - [Stage 2.5 Token mint CPI planning](docs/gateway/stage-2-5-token-mint-cpi-planning.md)
+README.md:483: - [Stage 2.5 SPL Token decision](docs/gateway/stage-2-5-spl-token-decision.md)
+README.md:484: - [Stage 2.5 XXXL mint creation decision](docs/gateway/stage-2-5-xxxl-mint-creation-decision.md)
+README.md:485: - [Stage 2.5 Mint authority PDA decision](docs/gateway/stage-2-5-mint-authority-pda-decision.md)
+README.md:486: - [Stage 2.5 Recipient token account policy](docs/gateway/stage-2-5-recipient-token-account-policy.md)
+README.md:487: - [Stage 2.5 Compute budget strategy](docs/gateway/stage-2-5-compute-budget-strategy.md)
+README.md:488: - [Stage 2.5 Deployment prerequisites](docs/gateway/stage-2-5-deployment-prerequisites.md)
+README.md:489: - [Stage 2.5 Token mint CPI testnet evidence](docs/gateway/evidence/stage-2-5-token-mint-cpi-testnet-evidence.md)
+README.md:490: - [Stage 2.6 CPI failure rollback matrix evidence](docs/gateway/evidence/stage-2-6-cpi-failure-rollback-matrix-evidence.md)
+README.md:491: - [Stage 2.7 Runtime account hygiene evidence](docs/gateway/evidence/stage-2-7-runtime-account-hygiene-evidence.md)
+README.md:492: - [Stage 2.8 Relayer transaction shape](docs/gateway/stage-2-8-relayer-transaction-shape.md)
+README.md:493: - [Stage 2.9 TypeScript relayer prototype evidence](docs/gateway/evidence/stage-2-9-typescript-relayer-prototype-evidence.md)
+README.md:494: - [Stage 2.10 Relayer idempotency / retry evidence](docs/gateway/evidence/stage-2-10-relayer-idempotency-retry-evidence.md)
+README.md:495: - [Stage 2.11 Ambiguous confirmation recovery evidence](docs/gateway/evidence/stage-2-11-ambiguous-confirmation-recovery-evidence.md)
+README.md:496: - [Stage 2.12 Inconsistent recovery state evidence](docs/gateway/evidence/stage-2-12-inconsistent-recovery-state-evidence.md)
+README.md:497: - [Stage 2.13 Relayer operational state machine evidence](docs/gateway/evidence/stage-2-13-relayer-operational-state-machine-evidence.md)
+README.md:498: - [Stage 2.14 Relayer input preflight guard evidence](docs/gateway/evidence/stage-2-14-relayer-input-preflight-guard-evidence.md)
+README.md:499: - [Stage 2.15 Preflight integrated submit path evidence](docs/gateway/evidence/stage-2-15-preflight-integrated-submit-path-evidence.md)
+README.md:500: - [Stage 2.16 Relayer task normalization evidence](docs/gateway/evidence/stage-2-16-relayer-task-normalization-evidence.md)
+README.md:501: - [Stage 2.17 Normalized task submit wrapper evidence](docs/gateway/evidence/stage-2-17-normalized-task-submit-wrapper-evidence.md)
+README.md:502: - [Stage 2.18 Watcher event normalized task adapter evidence](docs/gateway/evidence/stage-2-18-watcher-event-normalized-task-adapter-evidence.md)
+README.md:503: - [Stage 2.19 Watcher event full submit pipeline evidence](docs/gateway/evidence/stage-2-19-watcher-event-full-submit-pipeline-evidence.md)
+README.md:504: - [Stage 2.20 Watcher event submit idempotency retry evidence](docs/gateway/evidence/stage-2-20-watcher-event-submit-idempotency-retry-evidence.md)
+README.md:505: - [Stage 2.21 Watcher event ambiguous recovery evidence](docs/gateway/evidence/stage-2-21-watcher-event-ambiguous-recovery-evidence.md)
+README.md:506: - [Stage 2.22 Watcher event operational submit wrapper evidence](docs/gateway/evidence/stage-2-22-watcher-event-operational-submit-wrapper-evidence.md)
+README.md:507: - [Stage 2.23 Watcher event batch queue processing evidence](docs/gateway/evidence/stage-2-23-watcher-event-batch-queue-processing-evidence.md)
+README.md:508: - [Stage 2.24 Durable relayer journal model evidence](docs/gateway/evidence/stage-2-24-durable-relayer-journal-model-evidence.md)
+README.md:509: - [Stage 2.25 Watcher-to-relayer contract boundary evidence](docs/gateway/evidence/stage-2-25-watcher-to-relayer-contract-boundary-evidence.md)
+README.md:510: - [Stage 2.26 Relayer dedupe journal replay guard evidence](docs/gateway/evidence/stage-2-26-relayer-dedupe-journal-replay-guard-evidence.md)
+README.md:511: - [Stage 2.27 Relayer import pipeline evidence](docs/gateway/evidence/stage-2-27-relayer-import-pipeline-evidence.md)
+README.md:512: - [Stage 2.28 Import pipeline durable resume plan evidence](docs/gateway/evidence/stage-2-28-import-pipeline-durable-resume-plan-evidence.md)
+README.md:513: - [Stage 2.29 Resume plan execution model evidence](docs/gateway/evidence/stage-2-29-resume-plan-execution-model-evidence.md)
+README.md:514: - [Stage 2.30 Relayer operator report run summary evidence](docs/gateway/evidence/stage-2-30-relayer-operator-report-run-summary-evidence.md)
+README.md:515: - [Stage 2.31 Operator report serialization log artifact evidence](docs/gateway/evidence/stage-2-31-operator-report-serialization-log-artifact-evidence.md)
+README.md:516: - [Stage 2.32 Operator report audit log append model evidence](docs/gateway/evidence/stage-2-32-operator-report-audit-log-append-model-evidence.md)

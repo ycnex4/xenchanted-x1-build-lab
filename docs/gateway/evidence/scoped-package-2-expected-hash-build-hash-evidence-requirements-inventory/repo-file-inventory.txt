@@ -1,0 +1,18 @@
+# Repo file inventory for future expected-hash/build-hash package requirements
+
+Cargo files:
+- programs/xxxl-svm/Cargo.toml
+
+Lockfiles:
+- package-lock.json
+- programs/xxxl-svm/Cargo.lock
+
+Build-related tracked files sample:
+- programs/xxxl-svm/Cargo.lock
+- programs/xxxl-svm/Cargo.toml
+
+Gateway docs count:
+- 439
+
+xxxl-svm program files count:
+- 93

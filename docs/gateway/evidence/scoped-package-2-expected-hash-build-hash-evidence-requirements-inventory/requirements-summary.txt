@@ -1,0 +1,20 @@
+- sp1_selected_operation_class_recorded: true
+- final_go_not_granted: true
+- blocker_b_expected_hash_requirements_present: true
+- repo_source_binding_requirement_inventoried: true
+- build_command_requirement_inventoried: true
+- toolchain_lockfile_requirement_inventoried: true
+- feature_flag_requirement_inventoried: true
+- artifact_path_requirement_inventoried: true
+- artifact_sha256_requirement_inventoried: true
+- canonical_programdata_hash_domain_requirement_inventoried: true
+- canonical_programdata_sha256_requirement_inventoried: true
+- baseline_program_binding_requirement_inventoried: true
+- expected_hash_package_id_requirement_inventoried: true
+- stop_on_mismatch_requirement_inventoried: true
+- exact_user_go_requirement_inventoried: true
+- no_secret_material_requirement_inventoried: true
+- evidence_storage_requirement_inventoried: true
+- sp2_no_build_no_hash_no_rpc_no_execution: true
+
+all_requirements_inventoried: true

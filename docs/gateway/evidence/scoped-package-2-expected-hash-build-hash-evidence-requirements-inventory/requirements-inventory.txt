@@ -1,0 +1,61 @@
+# Expected-hash/build-hash evidence package requirements inventory
+
+SP2_REQ_01_REPO_SOURCE_BINDING
+status: required
+meaning: future package must bind repo full name, branch, source commit, and clean working tree status
+
+SP2_REQ_02_BUILD_COMMAND_BINDING
+status: required
+meaning: future package must define exact build command before any build GO
+
+SP2_REQ_03_TOOLCHAIN_LOCKFILE_BINDING
+status: required
+meaning: future package must bind Rust/Solana/SBF toolchain and lockfiles
+
+SP2_REQ_04_FEATURE_FLAG_BINDING
+status: required
+meaning: future package must bind feature flags and dangerous gate status
+
+SP2_REQ_05_LOCAL_ARTIFACT_PATH
+status: required
+meaning: future package must define exact local SBF artifact path
+
+SP2_REQ_06_LOCAL_ARTIFACT_SHA256
+status: required_future_value
+meaning: future package must record local SBF artifact SHA256 after separately approved build/hash execution
+
+SP2_REQ_07_CANONICAL_PROGRAMDATA_HASH_DOMAIN
+status: required
+meaning: canonical runtime hash domain is ProgramData executable bytes excluding loader metadata
+
+SP2_REQ_08_CANONICAL_PROGRAMDATA_SHA256
+status: required_future_value
+meaning: future package must record canonical ProgramData executable-bytes SHA256 after separately approved hash execution
+
+SP2_REQ_09_BASELINE_PROGRAM_BINDING
+status: required
+meaning: future package must bind current program id, ProgramData account, and upgrade authority baseline
+
+SP2_REQ_10_EXPECTED_HASH_PACKAGE_ID
+status: required_future_value
+meaning: future package must have a unique expected-hash package id
+
+SP2_REQ_11_NO_RPC_FOR_LOCAL_BUILD_HASH_PACKAGE
+status: required_boundary
+meaning: requirements inventory does not permit RPC/testnet; later read-only precheck is separate
+
+SP2_REQ_12_STOP_ON_MISMATCH
+status: required
+meaning: future mismatch policy must be stop, not retry
+
+SP2_REQ_13_EXACT_USER_GO_REQUIRED_BEFORE_EXECUTION
+status: required
+meaning: future build/hash execution requires exact scoped user GO phrase
+
+SP2_REQ_14_NO_SECRET_MATERIAL
+status: required
+meaning: future evidence must not include private keys, seed phrases, or secret material
+
+SP2_REQ_15_EVIDENCE_STORAGE_PATH
+status: required
+meaning: future package must define evidence directory and required files

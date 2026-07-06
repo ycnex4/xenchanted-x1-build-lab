@@ -1,0 +1,80 @@
+AGENTS.md:8: - If the task is ambiguous, stop and explain the ambiguity before editing code.
+README.md:96: - registrar mutation order hardening
+README.md:226: - no protocol state mutation
+README.md:227: - no snapshot mutation
+README.md:565: This stage does not activate live routes, deployment, authority freeze execution, processed-event mutation, or recipient-balance mutation.
+README.md:575: - no processed-event mutation
+README.md:576: - no recipient-balance mutation
+README.md:580: ## XXXL runtime state mutation fixture
+README.md:582: The XXXL X1/SVM port now has deterministic state mutation helpers for runtime account data:
+README.md:591: - no process_instruction state mutation
+README.md:606: The fixture prechecks replay, recipient balance owner/mint, prepared CPI amount, and recipient balance overflow before applying state mutations.
+README.md:612: - no process_instruction processed-event mutation
+README.md:613: - no process_instruction recipient-balance mutation
+README.md:746: - why Mollusk should come before live route mutation
+README.md:884: - valid preflight success without state mutation
+README.md:901: No runtime state mutation is enabled.
+README.md:909:     decode -> guarded account validation -> execution plan -> stop
+README.md:920: No runtime state mutation is enabled.
+README.md:922: ## XXXL processed event mutation boundary
+README.md:924: The XXXL runtime model now has a separately tested processed-event mutation boundary.
+README.md:928: This stage does not connect mutation to `process_instruction`.
+README.md:933: No recipient balance mutation is enabled.
+README.md:935: ## XXXL recipient balance mutation boundary
+README.md:937: The XXXL runtime model now has a separately tested recipient-balance mutation boundary.
+README.md:941: This stage does not connect mutation to `process_instruction`.
+README.md:946: No processed event mutation is enabled by this boundary.
+README.md:948: ## XXXL atomic state mutation composition boundary
+README.md:950: The XXXL runtime model now has a composed atomic state-mutation boundary.
+README.md:952: The new boundary accepts an execution plan, processed-event account data, and recipient-balance account data. It prechecks both accounts before writing either mutation.
+README.md:960: This stage does not connect mutation to `process_instruction`.
+README.md:965: No SPL mint supply mutation is enabled.
+README.md:978: No state mutation is connected to `process_instruction`.
+README.md:991: No runtime state mutation is performed.
+README.md:994: ## XXXL runtime local state mutation composition boundary
+README.md:996: The XXXL runtime model now composes planning with local program-owned state mutation.
+README.md:1003: The mutation uses the atomic state mutation composition boundary, which prechecks both local state accounts before writing.
+README.md:1010: No SPL mint supply mutation is enabled.
+README.md:1011: No recipient SPL token account mutation is enabled.
+README.md:1025: No SPL mint supply mutation is enabled.
+README.md:1026: No recipient SPL token account mutation is enabled.
+README.md:1961: ## XXXL atomic mutation planning notes boundary
+README.md:1963: A documentation-only atomic mutation planning notes boundary has been added.
+README.md:1967: - `docs/xxxl/xxxl-atomic-mutation-planning-notes-boundary.md`
+README.md:1979: - mutation ordering
+README.md:1997: No runtime state mutation was enabled.
+docs/assumptions.md:230: - reorder successful registrar mutations for Core Redeem and XEN Burn
+docs/assumptions.md:233: The registrar mutation ordering has been addressed in the registrar-mutation-order-assumptions branch.
+docs/checkpoints/current-design-checkpoint.md:55: NO-GO.
+docs/checkpoints/current-design-checkpoint.md:75: NO-GO.
+docs/checkpoints/current-design-checkpoint.md:93: NO-GO.
+docs/checkpoints/current-design-checkpoint.md:113: NO-GO.
+docs/checkpoints/current-design-checkpoint.md:133: NO-GO.
+docs/checkpoints/current-design-checkpoint.md:155: NO-GO.
+docs/checkpoints/current-design-checkpoint.md:177: NO-GO.
+docs/checkpoints/current-design-checkpoint.md:197: NO-GO.
+docs/checkpoints/current-design-checkpoint.md:219: NO-GO.
+docs/checkpoints/current-design-checkpoint.md:239: NO-GO.
+docs/checkpoints/current-design-checkpoint.md:247: It defines the future success path, failure matrix, and no-mutation evidence requirements.
+docs/checkpoints/current-design-checkpoint.md:259: NO-GO.
+docs/checkpoints/current-design-checkpoint.md:279: NO-GO.
+docs/checkpoints/current-design-checkpoint.md:305: NO-GO.
+docs/checkpoints/current-design-checkpoint.md:329: NO-GO.
+docs/checkpoints/current-design-checkpoint.md:345: It does not approve testnet action.
+docs/checkpoints/current-design-checkpoint.md:353: NO-GO.
+docs/checkpoints/current-design-checkpoint.md:363: It does not approve local-validator execution.
+docs/checkpoints/current-design-checkpoint.md:367: It does not approve testnet action.
+docs/checkpoints/current-design-checkpoint.md:375: NO-GO.
+docs/checkpoints/current-design-checkpoint.md:389: It does not approve local-validator execution.
+docs/checkpoints/current-design-checkpoint.md:391: It does not approve testnet action.
+docs/checkpoints/current-design-checkpoint.md:399: NO-GO.
+docs/checkpoints/current-design-checkpoint.md:411: It does not approve local-validator execution.
+docs/checkpoints/current-design-checkpoint.md:413: It does not approve testnet action.
+docs/checkpoints/current-design-checkpoint.md:421: NO-GO.
+docs/checkpoints/current-design-checkpoint.md:433: It does not approve local-validator execution.
+docs/checkpoints/current-design-checkpoint.md:435: It does not approve testnet action.
+docs/checkpoints/current-design-checkpoint.md:443: NO-GO.
+docs/checkpoints/current-design-checkpoint.md:457: It does not approve local-validator execution.
+docs/checkpoints/current-design-checkpoint.md:459: It does not approve testnet action.
+docs/checkpoints/current-design-checkpoint.md:473: NO-GO.
+docs/checkpoints/current-design-checkpoint.md:489: It does not approve local-validator execution.

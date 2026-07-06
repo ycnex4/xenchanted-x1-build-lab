@@ -4472,3 +4472,80 @@ NO-GO REMAINS_FOR_BUILD_HASH_DEPLOY_UPGRADE_WRITE_BUFFER_STATE_INIT_SPL_SETUP_GU
 Next safe step:
 
 Scoped Package.2 — expected-hash/build-hash evidence package requirements inventory.
+
+
+## Scoped Package.2 expected-hash/build-hash evidence package requirements inventory
+
+The Scoped Package.2 requirements inventory is recorded in:
+
+docs/gateway/scoped-package-2-expected-hash-build-hash-evidence-requirements-inventory.md
+
+Evidence directory:
+
+docs/gateway/evidence/scoped-package-2-expected-hash-build-hash-evidence-requirements-inventory
+
+Current status:
+
+SCOPED_PACKAGE_2_OPEN_EXPECTED_HASH_BUILD_HASH_REQUIREMENTS_INVENTORY_COMPLETED_NO_BUILD_NO_HASH_NO_RPC_NO_EXECUTION
+
+Current decision:
+
+EXPECTED_HASH_BUILD_HASH_EVIDENCE_REQUIREMENTS_INVENTORIED_FINAL_GO_NOT_GRANTED
+
+Selected operation class:
+
+EXPECTED_HASH_BUILD_HASH_EVIDENCE_PACKAGE_PLANNING_ONLY
+
+Current GO state:
+
+FINAL_GO_NOT_GRANTED
+
+Requirements summary:
+
+- sp1_selected_operation_class_recorded: true
+- final_go_not_granted: true
+- blocker_b_expected_hash_requirements_present: true
+- repo_source_binding_requirement_inventoried: true
+- build_command_requirement_inventoried: true
+- toolchain_lockfile_requirement_inventoried: true
+- feature_flag_requirement_inventoried: true
+- artifact_path_requirement_inventoried: true
+- artifact_sha256_requirement_inventoried: true
+- canonical_programdata_hash_domain_requirement_inventoried: true
+- canonical_programdata_sha256_requirement_inventoried: true
+- baseline_program_binding_requirement_inventoried: true
+- expected_hash_package_id_requirement_inventoried: true
+- stop_on_mismatch_requirement_inventoried: true
+- exact_user_go_requirement_inventoried: true
+- no_secret_material_requirement_inventoried: true
+- evidence_storage_requirement_inventoried: true
+- sp2_no_build_no_hash_no_rpc_no_execution: true
+
+all_requirements_inventoried: true
+
+Remaining gaps:
+
+- actual future expected-hash/build-hash package not drafted
+- exact source commit for future execution not selected
+- exact build command for future execution not selected
+- exact toolchain versions for future execution not selected
+- exact feature flag set for future execution not selected
+- exact local artifact path for future execution not selected
+- local SBF artifact SHA256 not computed
+- canonical ProgramData executable-bytes SHA256 not computed
+- expected-hash package id not selected
+- future exact user GO phrase not selected
+- build/hash execution remains not approved
+- RPC/testnet remains not approved
+- deploy/upgrade/write-buffer remains not approved
+- mutation remains not approved
+
+Scoped Package.2 does not grant GO.
+
+Scoped Package.2 does not run build, compute artifact hash, compute ProgramData hash, call RPC, use testnet, deploy, upgrade, write buffer, change authority, initialize state, configure SPL, construct guardian packages, sign, submit, or mutate.
+
+NO-GO REMAINS_FOR_BUILD_HASH_DEPLOY_UPGRADE_WRITE_BUFFER_STATE_INIT_SPL_SETUP_GUARDIAN_PACKAGES_SIGNING_RPC_TESTNET_NETWORK_SUBMIT_MUTATION
+
+Next safe step:
+
+Scoped Package.3 — expected-hash/build-hash evidence package decision model.
