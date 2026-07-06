@@ -1,0 +1,9 @@
+phase=blocker-a-5-read-only-live-programdata-evidence
+timestamp_utc=2026-07-06T16:36:33Z
+rpc_url=https://rpc.testnet.x1.xyz
+program_id=D7AQmZNtFFFoJbducz93atteeSZhw3jq6RmsqBvaf1my
+expected_programdata=9tuesaPoJhrifF49vJewcg6PSWZeHAJiqQ97pq3LMW9T
+expected_upgrade_authority=DTfvjtRL63u3XYHXQfgRQCdhEanUK1qqawvfEAM9hxAc
+signing_used=false
+mutation_executed=false
+commands_are_read_only=true
