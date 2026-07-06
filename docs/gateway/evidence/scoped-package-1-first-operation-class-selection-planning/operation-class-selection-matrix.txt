@@ -1,0 +1,56 @@
+# Scoped Package.1 operation class selection matrix
+
+SP1_CANDIDATE_00_NO_OPERATION_SELECTED
+status: rejected
+meaning: Do not select any future operation class.
+reason_rejected: Final GO.5 explicitly identifies Scoped Package.1 as the next safe planning step.
+
+SP1_CANDIDATE_01_UPGRADE_OR_WRITE_BUFFER
+status: rejected_for_now
+meaning: Select upgrade/write-buffer as the first future operation class.
+reason_rejected: Expected-hash/build-hash evidence package must exist before any upgrade/write-buffer GO.
+
+SP1_CANDIDATE_02_READ_ONLY_NETWORK_PRECHECK
+status: rejected_for_now
+meaning: Select read-only RPC/network precheck as the first future operation class.
+reason_rejected: Read-only precheck is needed before mutation, but expected-hash/build-hash evidence planning is the safer first dependency for upgrade safety.
+
+SP1_CANDIDATE_03_STATE_INIT
+status: rejected_for_now
+meaning: Select state initialization as the first future operation class.
+reason_rejected: State initialization execution is not approved and should not precede expected-hash/build-hash evidence planning.
+
+SP1_CANDIDATE_04_SPL_SETUP
+status: rejected_for_now
+meaning: Select SPL setup as the first future operation class.
+reason_rejected: SPL setup execution is not approved and should not precede expected-hash/build-hash evidence planning.
+
+SP1_CANDIDATE_05_GUARDIAN_PACKAGE_OR_SIGNING
+status: rejected_for_now
+meaning: Select guardian package construction or signing as the first future operation class.
+reason_rejected: Guardian package construction and signing are not approved and should remain separate later boundaries.
+
+SP1_CANDIDATE_06_PRODUCTION_ACTIVATION
+status: rejected
+meaning: Select production activation as the first future operation class.
+reason_rejected: Production activation is far outside the current safety boundary.
+
+SP1_CANDIDATE_07_EXPECTED_HASH_BUILD_HASH_EVIDENCE_PACKAGE
+status: selected_for_planning_only
+meaning: Select expected-hash/build-hash evidence package as the first future operation class to plan.
+reason_selected: Blocker B requires expected hash package and build/hash evidence before any upgrade/write-buffer GO.
+
+SELECTED_SP1_OPERATION_CLASS
+EXPECTED_HASH_BUILD_HASH_EVIDENCE_PACKAGE_PLANNING_ONLY
+
+SELECTED_SP1_OPERATION_CLASS_KIND
+PLANNING_ONLY_NOT_EXECUTION
+
+SELECTED_SP1_GO_STATE
+FINAL_GO_NOT_GRANTED
+
+SELECTED_SP1_DOES_NOT_AUTHORIZE
+BUILD_HASH_RPC_TESTNET_DEPLOY_UPGRADE_WRITE_BUFFER_STATE_INIT_SPL_SETUP_GUARDIAN_PACKAGE_SIGNING_SUBMIT_MUTATION
+
+SELECTED_SP1_NEXT_SAFE_STEP
+SCOPED_PACKAGE_2_EXPECTED_HASH_BUILD_HASH_EVIDENCE_PACKAGE_REQUIREMENTS_INVENTORY

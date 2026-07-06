@@ -1,0 +1,31 @@
+# Selected operation class boundary
+
+selected_operation_class: EXPECTED_HASH_BUILD_HASH_EVIDENCE_PACKAGE_PLANNING_ONLY
+
+selection_scope:
+- planning only
+- first future operation class target
+- no actual package drafted
+- no build
+- no artifact hash computation
+- no ProgramData executable-bytes hash computation
+- no RPC
+- no testnet
+- no deploy
+- no upgrade
+- no write-buffer
+- no state initialization
+- no SPL setup
+- no guardian package construction
+- no signing
+- no submit
+- no mutation
+
+future_meaning:
+A later separate scoped package may define exact requirements for a future expected-hash/build-hash evidence package.
+
+future_requirement:
+Even that later package must not execute build or hash computation unless a separate exact scoped user GO phrase is recorded.
+
+current_go_state: FINAL_GO_NOT_GRANTED
+execution_approved: false
