@@ -693,3 +693,33 @@ LOCAL_GUARDIAN_FAILURE_MATRIX_INTEGRATION_MAP_DESIGN_NOT_EXECUTED
 Current decision remains:
 
 NO-GO.
+
+## Phase 41K.6 B6.54 local guardian failure matrix skeleton
+
+The local guardian failure matrix skeleton is implemented in:
+
+programs/xxxl-svm/src/local_guardian_failure_matrix_skeleton.rs
+
+It models guardian descriptor and guardian fixture integration failure cases in memory, including no-mutation policy, log expectation ids, and safety report expectation ids.
+
+It does not execute the failure matrix.
+
+It does not emit fixture files.
+
+It does not create descriptor files.
+
+It does not construct guardian packages.
+
+It does not enable signing.
+
+It does not approve local-validator execution.
+
+It does not approve testnet action.
+
+Current status:
+
+LOCAL_GUARDIAN_FAILURE_MATRIX_SKELETON_NOT_EXECUTING
+
+Current decision remains:
+
+NO-GO.

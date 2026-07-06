@@ -1496,6 +1496,64 @@ Current decision remains:
 
 NO-GO.
 
+## B6.54 local guardian failure matrix skeleton status
+
+- local_guardian_failure_matrix_skeleton_file: programs/xxxl-svm/src/local_guardian_failure_matrix_skeleton.rs
+- local_guardian_failure_matrix_skeleton_status: LOCAL_GUARDIAN_FAILURE_MATRIX_SKELETON_NOT_EXECUTING
+- local_guardian_failure_matrix_integration_map_defined: true
+- local_guardian_failure_matrix_implemented: skeleton_only
+- local_guardian_failure_matrix_executed: false
+- local_guardian_descriptor_fixture_integration_implemented: skeleton_only
+- local_guardian_descriptor_skeleton_implemented: skeleton_only
+- guardian_descriptor_created: false
+- guardian_set_initialized_on_testnet: false
+- guardian_package_construction_enabled: false
+- guardian_signing_enabled: false
+- production_keys_allowed: false
+- blocker_f_guardian_set_testnet_descriptor: open_design_started
+- blocker_f_closed: false
+- spl_mint_authority_configured: false
+- spl_cpi_minting_enabled: false
+- local_validator_go_form_defined: true
+- local_validator_go_approved: false
+- blocker_h_local_validator_dry_run: open_design_started
+- blocker_h_closed: false
+- local_validator_execution_approved: false
+- local_validator_matrix_defined: true
+- local_validator_matrix_executed: false
+- fixture_file_emission_enabled: false
+- writes_to_disk: false
+- live_runtime_handler_enabled: false
+- live_route_enabled: false
+- on_chain_state_write_enabled: false
+- account_initialization_enabled: false
+- testnet_submit_enabled: false
+- build_for_upgrade_approved: false
+- upgrade_go_approved: false
+- state_init_go_approved: false
+- submit_go_approved: false
+- production_activation_approved: false
+
+B6.54 adds a local guardian failure matrix skeleton.
+
+It does not execute the failure matrix.
+
+It does not emit fixture files.
+
+It does not create descriptor files.
+
+It does not construct guardian packages.
+
+It does not enable signing.
+
+It does not approve local-validator execution.
+
+It does not approve testnet action.
+
+Current decision remains:
+
+NO-GO.
+
 ## Current decision
 
 Current decision:
