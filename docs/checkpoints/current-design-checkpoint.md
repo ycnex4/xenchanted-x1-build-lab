@@ -4353,3 +4353,81 @@ NO-GO REMAINS_FOR_BUILD_HASH_DEPLOY_UPGRADE_WRITE_BUFFER_STATE_INIT_SPL_SETUP_GU
 Next safe step:
 
 Final GO.5 — final scoped GO model closure decision record.
+
+
+## Final GO.5 final scoped GO model closure decision record
+
+The Final GO.5 closure decision record is recorded in:
+
+docs/gateway/final-go-5-final-scoped-go-model-closure-decision-record.md
+
+Evidence directory:
+
+docs/gateway/evidence/final-go-5-final-scoped-go-model-closure-decision-record
+
+Current status:
+
+FINAL_GO_5_CLOSED_NARROW_FINAL_SCOPED_GO_MODEL_REVIEWED_EXECUTION_NOT_APPROVED
+
+Current decision:
+
+FINAL_SCOPED_GO_MODEL_CLOSED_NARROW_FINAL_GO_NOT_GRANTED
+
+Current GO state:
+
+FINAL_GO_NOT_GRANTED
+
+Selected model:
+
+STAGED_SINGLE_OPERATION_SCOPED_GO_MODEL_REQUIRED
+
+Closed model points:
+
+- Final GO.1 planning completed
+- Final GO.2 repo-grounded inventory completed
+- Final GO.3 decision model recorded
+- Final GO.4 invariant review completed
+- staged single-operation scoped GO model accepted
+- general GO rejected
+- broad multi-action GO rejected
+- one future GO package may authorize exactly one operation class only
+- exact bindings required for any future GO package
+- expected-hash package required before any upgrade/write-buffer GO
+- read-only baseline precheck required before any network mutation GO
+- identity/hash/authority/network/cost/verification mismatch requires stop
+- automatic retry rejected
+- exact scoped user GO phrase required for each future GO package
+- post-action read-only verification required after any mutation
+- separate GO required for separate execution boundary
+- current GO state remains FINAL_GO_NOT_GRANTED
+- no execution approved
+
+Still not approved:
+
+- actual future scoped GO package drafting
+- actual expected-hash package generation
+- actual build
+- actual artifact hash computation
+- actual ProgramData executable-bytes hash computation
+- actual read-only RPC/network precheck
+- actual deploy
+- actual upgrade
+- actual write-buffer
+- actual authority change
+- actual state initialization
+- actual SPL setup
+- actual guardian package construction
+- actual signing
+- actual transaction submit
+- actual mutation
+- production activation
+
+Final GO.5 does not grant GO.
+
+Final GO.5 does not run build, compute artifact hash, compute ProgramData hash, deploy, upgrade, write buffer, change authority, initialize state, configure SPL, construct guardian packages, sign, call RPC, use testnet, submit, or mutate.
+
+NO-GO REMAINS_FOR_BUILD_HASH_DEPLOY_UPGRADE_WRITE_BUFFER_STATE_INIT_SPL_SETUP_GUARDIAN_PACKAGES_SIGNING_RPC_TESTNET_NETWORK_SUBMIT_MUTATION
+
+Next safe step:
+
+Scoped Package.1 — select the first future operation class for planning only.

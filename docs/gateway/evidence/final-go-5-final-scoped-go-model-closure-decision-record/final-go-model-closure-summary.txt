@@ -1,0 +1,37 @@
+# Final scoped GO model closure summary
+
+closure_status: FINAL_GO_5_CLOSED_NARROW_FINAL_SCOPED_GO_MODEL_REVIEWED_EXECUTION_NOT_APPROVED
+closure_decision: FINAL_SCOPED_GO_MODEL_CLOSED_NARROW_FINAL_GO_NOT_GRANTED
+current_go_state: FINAL_GO_NOT_GRANTED
+closure_scope: narrow_final_scoped_go_model_boundary_only
+
+selected_model: STAGED_SINGLE_OPERATION_SCOPED_GO_MODEL_REQUIRED
+single_operation_rule: ONE_FINAL_GO_PACKAGE_AUTHORIZES_EXACTLY_ONE_OPERATION_CLASS_ONLY
+general_go_rejected: true
+multi_action_chained_go_rejected: true
+exact_bindings_required: true
+expected_hash_gate_required: true
+read_only_precheck_gate_required: true
+stop_on_mismatch_required: true
+automatic_retry_rejected: true
+exact_user_go_phrase_required: true
+post_action_verification_required: true
+separate_go_for_separate_boundary_required: true
+
+execution_approved: false
+build_approved: false
+artifact_hash_computation_approved: false
+programdata_hash_computation_approved: false
+rpc_approved: false
+testnet_approved: false
+deploy_approved: false
+upgrade_approved: false
+write_buffer_approved: false
+authority_change_approved: false
+state_init_approved: false
+spl_setup_approved: false
+guardian_package_approved: false
+signing_approved: false
+submit_approved: false
+mutation_approved: false
+production_activation_approved: false
