@@ -1,0 +1,44 @@
+# Evidence Package.4 success/stop boundary review
+
+success_criteria_reviewed: true
+stop_conditions_reviewed: true
+no_rpc_testnet_boundary_reviewed: true
+no_mutation_boundary_reviewed: true
+no_secrets_boundary_reviewed: true
+exact_go_gate_reviewed: true
+
+success_requires:
+- exact scoped user GO phrase
+- clean repo before execution
+- source commit binding
+- toolchain capture
+- exact build command
+- no dangerous features
+- artifact exists and is non-empty
+- local artifact SHA256 recorded
+- canonical ProgramData executable-bytes SHA256 recorded
+- no RPC/testnet
+- no mutation
+- no secrets
+- evidence complete
+- final status captured
+
+stop_required_on:
+- missing or wrong GO phrase
+- dirty repo before execution
+- source commit mismatch
+- missing toolchain
+- build command mismatch
+- dangerous feature selected
+- build failure
+- artifact missing or empty
+- local hash failure
+- canonical hash method missing or ambiguous
+- canonical hash failure
+- RPC/testnet attempt
+- mutation attempt
+- secret material
+- unexpected output
+- unexplained final git status
+
+automatic_retry: rejected

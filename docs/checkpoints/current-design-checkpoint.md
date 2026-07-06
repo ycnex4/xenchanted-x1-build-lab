@@ -5050,3 +5050,87 @@ NO-GO REMAINS_FOR_BUILD_HASH_DEPLOY_UPGRADE_WRITE_BUFFER_STATE_INIT_SPL_SETUP_GU
 Next safe step:
 
 Evidence Package.4 — expected-hash/build-hash execution decision invariant review.
+
+
+## Evidence Package.4 expected-hash/build-hash execution decision invariant review
+
+The Evidence Package.4 invariant review is recorded in:
+
+docs/gateway/evidence-package-4-expected-hash-build-hash-execution-decision-invariant-review.md
+
+Evidence directory:
+
+docs/gateway/evidence/evidence-package-4-expected-hash-build-hash-execution-decision-invariant-review
+
+Current status:
+
+EVIDENCE_PACKAGE_4_REVIEW_READY_EXPECTED_HASH_BUILD_HASH_EXECUTION_INVARIANTS_RECORDED_NO_BUILD_NO_HASH_NO_RPC_NO_EXECUTION
+
+Current decision:
+
+STRICT_LOCAL_BUILD_HASH_EXECUTION_MODEL_REVIEWED_FINAL_GO_NOT_GRANTED_PENDING_CLOSURE_DECISION
+
+Closure candidate prepared:
+
+STRICT_LOCAL_BUILD_HASH_EXECUTION_MODEL_REVIEWED_EXECUTION_NOT_APPROVED
+
+Selected execution model:
+
+STRICT_LOCAL_BUILD_HASH_EXECUTION_WITH_EXACT_GO_ONLY
+
+Current GO state:
+
+FINAL_GO_NOT_GRANTED
+
+Reviewed invariants:
+
+- current GO is not granted
+- exact scoped GO gate required
+- clean repo before execution required
+- exact source commit binding required
+- toolchain version capture required
+- exact build command binding required
+- dangerous features rejected
+- artifact existence and local SHA256 success criteria required
+- canonical ProgramData executable-bytes SHA256 required
+- canonical hash method missing or ambiguous is stop condition
+- no RPC/testnet boundary required
+- no deploy/upgrade/write-buffer/signing/submit/mutation boundary required
+- no secret material boundary required
+- stop on mismatch required
+- automatic retry rejected
+- future execution evidence file list required
+- no execution approved now
+
+Review result:
+
+all_invariants_reviewed: true
+
+execution_model_closure_ready: true
+
+closure_type: narrow_expected_hash_build_hash_execution_decision_model_boundary_only
+
+execution_approved: false
+
+Remaining gaps:
+
+- Evidence Package.5 closure decision not recorded
+- exact scoped user GO phrase not selected
+- future execution package not closed
+- toolchain versions not captured
+- build not executed
+- local SBF artifact SHA256 not computed
+- canonical ProgramData executable-bytes SHA256 not computed
+- RPC/testnet not approved
+- deploy/upgrade/write-buffer not approved
+- mutation not approved
+
+Evidence Package.4 does not grant GO.
+
+Evidence Package.4 does not run build, compute artifact hash, compute ProgramData hash, call RPC, use testnet, deploy, upgrade, write buffer, change authority, initialize state, configure SPL, construct guardian packages, sign, submit, or mutate.
+
+NO-GO REMAINS_FOR_BUILD_HASH_DEPLOY_UPGRADE_WRITE_BUFFER_STATE_INIT_SPL_SETUP_GUARDIAN_PACKAGES_SIGNING_RPC_TESTNET_NETWORK_SUBMIT_MUTATION
+
+Next safe step:
+
+Evidence Package.5 — expected-hash/build-hash execution decision closure record.
