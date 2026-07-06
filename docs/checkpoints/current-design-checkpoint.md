@@ -831,3 +831,42 @@ Current decision remains:
 NO-GO.
 
 The next safe step is a decision from Sergey. Actual fixture emission remains forbidden without a separate explicit scoped GO.
+
+## Phase 41K.6 B6.57 Theo safety boundary review
+
+Theo's B6.57 safety boundary review is recorded in:
+
+docs/gateway/phase-41k6-b6-57-theo-safety-boundary-review.md
+
+Theo confirmed that the NO-GO boundary after B6.7 through B6.57 remains clean.
+
+Theo approved B6.58 local-only fixture emission with mandatory constraints:
+
+- mock/deterministic data only
+- no real private keys
+- no seed phrases
+- no credentials
+- no real upgrade authority keypair
+- no authenticated testnet RPC endpoints
+- guardian descriptors may contain public mock/deterministic data only
+- no local-validator execution
+- no testnet action
+- no signing
+- no guardian package construction
+- no SPL mint authority setup
+- no SPL CPI minting
+- no upgrade
+- no state initialization
+- no submit
+
+Theo's approval does not replace Sergey explicit scoped GO.
+
+Current status:
+
+THEO_SAFETY_BOUNDARY_REVIEW_RECORDED_B6_58_APPROVED_MOCK_DATA_ONLY_SERGEY_GO_STILL_REQUIRED
+
+Current decision remains:
+
+NO-GO UNTIL SERGEY EXPLICIT B6.58 GO.
+
+The next safe step is a Sergey decision.
