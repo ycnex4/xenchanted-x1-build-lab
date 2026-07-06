@@ -1,0 +1,80 @@
+README.md:98: - CLI snapshot verification and recovery commands
+README.md:99: - snapshot verification / backup / recovery helpers
+README.md:232: The CLI only reads, validates, summarizes, and reports recovery source.
+README.md:258: - snapshot recovery load
+README.md:292: - snapshot serialization / verification / recovery
+README.md:344: - recovery load from canonical or backup snapshot
+README.md:345: - read-only recovery reporting
+README.md:347: Snapshot recovery does not:
+README.md:374: - snapshot recovery is read-only
+README.md:490: - [Stage 2.6 CPI failure rollback matrix evidence](docs/gateway/evidence/stage-2-6-cpi-failure-rollback-matrix-evidence.md)
+README.md:495: - [Stage 2.11 Ambiguous confirmation recovery evidence](docs/gateway/evidence/stage-2-11-ambiguous-confirmation-recovery-evidence.md)
+README.md:496: - [Stage 2.12 Inconsistent recovery state evidence](docs/gateway/evidence/stage-2-12-inconsistent-recovery-state-evidence.md)
+README.md:505: - [Stage 2.21 Watcher event ambiguous recovery evidence](docs/gateway/evidence/stage-2-21-watcher-event-ambiguous-recovery-evidence.md)
+README.md:527: - [EV-01 / EV-02 Atomic rollback prototype evidence plan](docs/gateway/evidence/ev-01-ev-02-atomic-rollback-prototype.md)
+README.md:528: - [EV-01 / EV-02 X1 testnet atomic rollback evidence](docs/gateway/evidence/ev-01-ev-02-x1-testnet-atomic-rollback-evidence.md)
+README.md:533: The next recommended step is the first prototype-only evidence branch for EV-01 transaction-level atomicity and EV-02 account write rollback, or collecting official X1 runtime documentation if available.
+docs/assumptions.md:168: ## 8. Snapshot recovery is read-only
+docs/assumptions.md:170: CLI snapshot recovery is intentionally read-only.
+docs/assumptions.md:189: - this prevents accidental destructive recovery behavior in the MVP
+docs/assumptions.md:201: - recovery load checks
+docs/checkpoints/current-design-checkpoint.md:261: ## Phase 41K.6 B6.37 rollback and recovery plan map
+docs/checkpoints/current-design-checkpoint.md:263: The rollback and recovery plan map is recorded in:
+docs/checkpoints/current-design-checkpoint.md:265: docs/gateway/phase-41k6-b6-37-rollback-recovery-plan-map.md
+docs/checkpoints/current-design-checkpoint.md:267: It defines rollback and recovery requirements for local-validator, upgrade, state initialization, SPL mint authority, guardian set, submit rehearsal, and live route activation.
+docs/checkpoints/current-design-checkpoint.md:269: It does not execute rollback or recovery.
+docs/checkpoints/current-design-checkpoint.md:1322: - rollback plan if dry-run produces unexpected state
+docs/checkpoints/current-design-checkpoint.md:1628: - Blocker G: rollback plan
+docs/checkpoints/current-design-checkpoint.md:1947: - G — OPEN: rollback / recovery plan
+docs/checkpoints/current-design-checkpoint.md:2292: - G — OPEN: rollback / recovery plan
+docs/checkpoints/current-design-checkpoint.md:2573: - rollback/recovery plan in Blocker G
+docs/checkpoints/current-design-checkpoint.md:2638: - G — OPEN: rollback / recovery plan
+docs/checkpoints/current-design-checkpoint.md:2990: - G — OPEN: rollback / recovery plan
+docs/checkpoints/current-design-checkpoint.md:3369: - G — OPEN: rollback / recovery plan
+docs/checkpoints/current-design-checkpoint.md:3383: Blocker G.1 — rollback / recovery plan planning.
+docs/checkpoints/current-design-checkpoint.md:3386: ## Blocker G.1 rollback / recovery plan planning
+docs/checkpoints/current-design-checkpoint.md:3390: docs/gateway/blocker-g-1-rollback-recovery-plan-planning.md
+docs/checkpoints/current-design-checkpoint.md:3394: docs/gateway/evidence/blocker-g-1-rollback-recovery-plan-planning
+docs/checkpoints/current-design-checkpoint.md:3396: G.1 opens rollback / recovery planning after:
+docs/checkpoints/current-design-checkpoint.md:3406: - full stage-gated recovery plan
+docs/checkpoints/current-design-checkpoint.md:3407: - explicit pre-mutation abort points
+docs/checkpoints/current-design-checkpoint.md:3408: - no automatic retry after failure
+docs/checkpoints/current-design-checkpoint.md:3410: - explicit user GO before any mutation or recovery action
+docs/checkpoints/current-design-checkpoint.md:3411: - explicit abandon/redeploy path when rollback is not possible
+docs/checkpoints/current-design-checkpoint.md:3430: Blocker G.2 — repo-grounded rollback / recovery inventory.
+docs/checkpoints/current-design-checkpoint.md:3433: ## Blocker G.2 repo-grounded rollback / recovery inventory
+docs/checkpoints/current-design-checkpoint.md:3437: docs/gateway/blocker-g-2-repo-grounded-rollback-recovery-inventory.md
+docs/checkpoints/current-design-checkpoint.md:3441: docs/gateway/evidence/blocker-g-2-repo-grounded-rollback-recovery-inventory
+docs/checkpoints/current-design-checkpoint.md:3469: Stage-gated recovery inventory:
+docs/checkpoints/current-design-checkpoint.md:3471: - pre_build_abort: required future recovery branch
+docs/checkpoints/current-design-checkpoint.md:3472: - post_build_pre_deploy_abort: required future recovery branch
+docs/checkpoints/current-design-checkpoint.md:3473: - post_deploy_pre_state_init_observation: required future recovery branch
+docs/checkpoints/current-design-checkpoint.md:3474: - post_state_init_stop_condition: required future recovery branch
+docs/checkpoints/current-design-checkpoint.md:3475: - post_spl_setup_stop_condition: required future recovery branch
+docs/checkpoints/current-design-checkpoint.md:3476: - post_guardian_descriptor_pre_package_abort: required future recovery branch
+docs/checkpoints/current-design-checkpoint.md:3477: - post_package_pre_submit_abort: required future recovery branch
+docs/checkpoints/current-design-checkpoint.md:3479: - non_reversible_action_policy: abandon/redeploy decision path required
+docs/checkpoints/current-design-checkpoint.md:3481: - user_go_policy: explicit scoped user GO required before mutation/recovery action
+docs/checkpoints/current-design-checkpoint.md:3499: Blocker G.3 — rollback / recovery decision model.
+docs/checkpoints/current-design-checkpoint.md:3502: ## Blocker G.3 rollback / recovery decision model
+docs/checkpoints/current-design-checkpoint.md:3506: docs/gateway/blocker-g-3-rollback-recovery-decision-model.md
+docs/checkpoints/current-design-checkpoint.md:3510: docs/gateway/evidence/blocker-g-3-rollback-recovery-decision-model
+docs/checkpoints/current-design-checkpoint.md:3516: Rollback model:
+docs/checkpoints/current-design-checkpoint.md:3549: - non-reversible action abandon/redeploy gate
+docs/checkpoints/current-design-checkpoint.md:3557: - recovery action without explicit scoped user GO
+docs/checkpoints/current-design-checkpoint.md:3562: - rollback / recovery invariant review package
+docs/checkpoints/current-design-checkpoint.md:3584: Blocker G.4 — rollback / recovery invariant review package.
+docs/checkpoints/current-design-checkpoint.md:3587: ## Blocker G.4 rollback / recovery invariant review package
+docs/checkpoints/current-design-checkpoint.md:3591: docs/gateway/blocker-g-4-rollback-recovery-invariant-review-package.md
+docs/checkpoints/current-design-checkpoint.md:3595: docs/gateway/evidence/blocker-g-4-rollback-recovery-invariant-review-package
+docs/checkpoints/current-design-checkpoint.md:3599: - full stage-gated recovery model
+docs/checkpoints/current-design-checkpoint.md:3600: - explicit pre-mutation abort points
+docs/checkpoints/current-design-checkpoint.md:3603: - explicit scoped user GO required before any mutation or recovery action
+docs/checkpoints/current-design-checkpoint.md:3604: - abandon/redeploy path required when safe rollback is not possible
+docs/checkpoints/current-design-checkpoint.md:3605: - evidence required before next stage or recovery branch
+docs/checkpoints/current-design-checkpoint.md:3644: Blocker G.5 — rollback / recovery closure decision record.
+docs/checkpoints/current-design-checkpoint.md:3647: ## Blocker G.5 rollback / recovery closure decision record
+docs/checkpoints/current-design-checkpoint.md:3651: docs/gateway/blocker-g-5-rollback-recovery-closure-decision-record.md
+docs/checkpoints/current-design-checkpoint.md:3659: - G.1 opened rollback / recovery planning
+docs/checkpoints/current-design-checkpoint.md:3660: - G.2 completed repo-grounded rollback / recovery inventory
+docs/checkpoints/current-design-checkpoint.md:3661: - G.3 recorded the rollback / recovery decision model

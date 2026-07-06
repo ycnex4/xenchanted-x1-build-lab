@@ -1,0 +1,80 @@
+docs/checkpoints/current-design-checkpoint.md:1360: - fixture bundle SHA256: 0a3290df47782008f72b441d9b9bf36964003324dde5baaf03f5fb0a04b19da7
+docs/checkpoints/current-design-checkpoint.md:1407: H.5 must reference the exact fixture SHA256 above.
+docs/checkpoints/current-design-checkpoint.md:1454: The next safe step is a Sergey decision. Actual Blocker H local-validator dry-run requires a separate explicit scoped GO referencing the fixture SHA256.
+docs/checkpoints/current-design-checkpoint.md:1465: Approved fixture bundle SHA256:
+docs/checkpoints/current-design-checkpoint.md:1518: - fixture bundle SHA256: 0a3290df47782008f72b441d9b9bf36964003324dde5baaf03f5fb0a04b19da7
+docs/checkpoints/current-design-checkpoint.md:1559: - fixture bundle SHA256: 0a3290df47782008f72b441d9b9bf36964003324dde5baaf03f5fb0a04b19da7
+docs/checkpoints/current-design-checkpoint.md:1602: - fixture bundle SHA256 verified: 0a3290df47782008f72b441d9b9bf36964003324dde5baaf03f5fb0a04b19da7
+docs/checkpoints/current-design-checkpoint.md:3731: - full hash bundle
+docs/checkpoints/current-design-checkpoint.md:3732: - canonical runtime hash over ProgramData executable bytes
+docs/checkpoints/current-design-checkpoint.md:3734: - build command binding
+docs/checkpoints/current-design-checkpoint.md:3735: - toolchain/version binding
+docs/checkpoints/current-design-checkpoint.md:3802: Hash bundle inventory:
+docs/checkpoints/current-design-checkpoint.md:3809: - canonical_runtime_hash_domain: ProgramData executable bytes preferred
+docs/checkpoints/current-design-checkpoint.md:3857: SHA256
+docs/checkpoints/current-design-checkpoint.md:3891: Required future hash bundle fields:
+docs/checkpoints/current-design-checkpoint.md:3895: - build command
+docs/checkpoints/current-design-checkpoint.md:3896: - toolchain versions
+docs/checkpoints/current-design-checkpoint.md:3897: - lockfiles
+docs/checkpoints/current-design-checkpoint.md:3898: - feature flags
+docs/checkpoints/current-design-checkpoint.md:3901: - local SBF artifact sha256
+docs/checkpoints/current-design-checkpoint.md:3902: - canonical ProgramData executable-bytes sha256
+docs/checkpoints/current-design-checkpoint.md:3925: - future actual expected-hash package
+docs/checkpoints/current-design-checkpoint.md:3960: - full hash bundle required
+docs/checkpoints/current-design-checkpoint.md:3961: - canonical runtime hash domain is ProgramData executable bytes excluding loader metadata
+docs/checkpoints/current-design-checkpoint.md:3962: - canonical hash algorithm is SHA256
+docs/checkpoints/current-design-checkpoint.md:3963: - local SBF artifact sha256 required but insufficient alone
+docs/checkpoints/current-design-checkpoint.md:3964: - source commit / repo clean status / build command / toolchain / lockfiles / feature flags binding required
+docs/checkpoints/current-design-checkpoint.md:3967: - post-upgrade read-only ProgramData executable-bytes sha256 verification required
+docs/checkpoints/current-design-checkpoint.md:3988: - future actual expected-hash package
+docs/checkpoints/current-design-checkpoint.md:4039: SHA256
+docs/checkpoints/current-design-checkpoint.md:4077: B.5 does not approve actual expected-hash package generation, build, local artifact hash computation, ProgramData executable-bytes hash computation, deploy, upgrade, write buffer, authority change, state initialization execution, SPL setup, guardian package co
+docs/checkpoints/xxxl-final-external-review-closure-boundary.md:41: The reviewer reported a local `cargo build-sbf` toolchain or lockfile issue and missing local `cargo audit` / `cargo deny` tools.
+docs/checkpoints/xxxl-x1-testnet-build-execution-evidence.md:5: Base: `2b3018b Add X1 testnet toolchain artifact preflight`
+docs/checkpoints/xxxl-x1-testnet-build-execution-evidence.md:73: - `HEAD`: `2b3018b Add X1 testnet toolchain artifact preflight`
+docs/checkpoints/xxxl-x1-testnet-build-execution-evidence.md:80: ## Local Toolchain Snapshot
+docs/checkpoints/xxxl-x1-testnet-build-execution-evidence.md:102: Build command:
+docs/checkpoints/xxxl-x1-testnet-deployment-command-plan.md:71: - SVM/Solana program build command
+docs/checkpoints/xxxl-x1-testnet-deployment-toolchain-artifact-preflight.md:1: # XXXL X1 Testnet Deployment Toolchain Artifact Preflight Checkpoint
+docs/checkpoints/xxxl-x1-testnet-deployment-toolchain-artifact-preflight.md:4: Branch: `stage-xxxl-x1-testnet-deployment-toolchain-artifact-preflight`
+docs/checkpoints/xxxl-x1-testnet-deployment-toolchain-artifact-preflight.md:9: This checkpoint records a local toolchain and artifact-path preflight for a future X1 testnet deployment execution stage.
+docs/checkpoints/xxxl-x1-testnet-deployment-toolchain-artifact-preflight.md:29: - `docs/xxxl/xxxl-x1-testnet-deployment-toolchain-artifact-preflight.md`
+docs/checkpoints/xxxl-x1-testnet-deployment-toolchain-artifact-preflight.md:30: - `docs/checkpoints/xxxl-x1-testnet-deployment-toolchain-artifact-preflight.md`
+docs/checkpoints/xxxl-x1-testnet-deployment-toolchain-artifact-preflight.md:63: ## Local Toolchain Snapshot
+docs/checkpoints/xxxl-x1-testnet-deployment-toolchain-artifact-preflight.md:78: Planned build command:
+docs/checkpoints/xxxl-x1-testnet-deployment-toolchain-artifact-preflight.md:87: The build command was not executed in this stage.
+docs/checkpoints/xxxl-x1-testnet-deployment-toolchain-artifact-preflight.md:130: The X1 testnet deployment toolchain/artifact preflight was recorded.
+docs/gateway/blocker-a-2-repo-grounded-upgrade-authority-status-reconciliation.md:118: - verified fixture bundle SHA256 preserved
+docs/gateway/blocker-b-1-expected-post-upgrade-programdata-hash-planning.md:55: Before any final scoped GO can be considered, the project needs a clear expected-hash model and evidence package.
+docs/gateway/blocker-b-1-expected-post-upgrade-programdata-hash-planning.md:63: What exactly is the expected hash domain: local SBF artifact bytes, buffer account data, ProgramData executable bytes, raw ProgramData account data, or a bundle of several hashes?
+docs/gateway/blocker-b-1-expected-post-upgrade-programdata-hash-planning.md:66: Which hash algorithm is canonical for this blocker: sha256, keccak256, or another repo-standard hash?
+docs/gateway/blocker-b-1-expected-post-upgrade-programdata-hash-planning.md:75: Which build command, toolchain, features, environment, lockfiles, and source commit must be bound to the expected hash?
+docs/gateway/blocker-b-1-expected-post-upgrade-programdata-hash-planning.md:78: Which feature flags are allowed or forbidden for the expected post-upgrade artifact?
+docs/gateway/blocker-b-1-expected-post-upgrade-programdata-hash-planning.md:125: meaning: Record sha256 of local SBF artifact only.
+docs/gateway/blocker-b-1-expected-post-upgrade-programdata-hash-planning.md:135: meaning: Record source commit, build command, toolchain, feature flags, artifact hash, expected ProgramData executable bytes hash, baseline ProgramData, and post-upgrade read-only verification plan.
+docs/gateway/blocker-b-1-expected-post-upgrade-programdata-hash-planning.md:145: meaning: Use buffer data hash before upgrade and ProgramData executable bytes hash after upgrade.
+docs/gateway/blocker-b-1-expected-post-upgrade-programdata-hash-planning.md:163: - define artifact/source/toolchain binding questions
+docs/gateway/blocker-b-1-expected-post-upgrade-programdata-hash-planning.md:164: - define future pre-upgrade expected-hash evidence requirement
+docs/gateway/blocker-b-1-expected-post-upgrade-programdata-hash-planning.md:193: - full hash bundle
+docs/gateway/blocker-b-1-expected-post-upgrade-programdata-hash-planning.md:194: - canonical runtime hash over ProgramData executable bytes
+docs/gateway/blocker-b-1-expected-post-upgrade-programdata-hash-planning.md:196: - build command binding
+docs/gateway/blocker-b-1-expected-post-upgrade-programdata-hash-planning.md:197: - toolchain/version binding
+docs/gateway/blocker-b-2-repo-grounded-programdata-hash-inventory.md:93: ## Hash bundle inventory
+docs/gateway/blocker-b-2-repo-grounded-programdata-hash-inventory.md:100: - canonical_runtime_hash_domain: ProgramData executable bytes preferred
+docs/gateway/blocker-b-2-repo-grounded-programdata-hash-inventory.md:111: B.2 confirms that the repository contains enough ProgramData, hash/artifact, build/toolchain, feature-gate, and final-GO/NO-GO references to support a decision-model step.
+docs/gateway/blocker-b-2-repo-grounded-programdata-hash-inventory.md:115: B.2 does not select the final expected-hash model and does not compute any hash.
+docs/gateway/blocker-b-2-repo-grounded-programdata-hash-inventory.md:119: - final expected-hash decision model
+docs/gateway/blocker-b-2-repo-grounded-programdata-hash-inventory.md:122: - exact build/toolchain/feature binding rule
+docs/gateway/blocker-b-2-repo-grounded-programdata-hash-inventory.md:124: - future ProgramData executable-bytes hash procedure
+docs/gateway/blocker-b-2-repo-grounded-programdata-hash-inventory.md:167: B.3 should select the expected-hash model and hash-bundle requirements.
+docs/gateway/blocker-b-3-expected-post-upgrade-programdata-hash-decision-model.md:17: SHA256
+docs/gateway/blocker-b-3-expected-post-upgrade-programdata-hash-decision-model.md:101: - canonical runtime hash is sha256 over ProgramData executable bytes
+docs/gateway/blocker-b-3-expected-post-upgrade-programdata-hash-decision-model.md:103: - local SBF artifact sha256 is still required as future pre-upgrade evidence
+docs/gateway/blocker-b-3-expected-post-upgrade-programdata-hash-decision-model.md:104: - source commit, build command, toolchain, lockfiles, and feature flags must be bound
+docs/gateway/blocker-b-3-expected-post-upgrade-programdata-hash-decision-model.md:111: ## Required future hash bundle fields
+docs/gateway/blocker-b-3-expected-post-upgrade-programdata-hash-decision-model.md:115: - build command
+docs/gateway/blocker-b-3-expected-post-upgrade-programdata-hash-decision-model.md:116: - toolchain versions
+docs/gateway/blocker-b-3-expected-post-upgrade-programdata-hash-decision-model.md:117: - lockfiles
+docs/gateway/blocker-b-3-expected-post-upgrade-programdata-hash-decision-model.md:118: - feature flags
+docs/gateway/blocker-b-3-expected-post-upgrade-programdata-hash-decision-model.md:121: - local SBF artifact sha256
+docs/gateway/blocker-b-3-expected-post-upgrade-programdata-hash-decision-model.md:122: - canonical ProgramData executable-bytes sha256

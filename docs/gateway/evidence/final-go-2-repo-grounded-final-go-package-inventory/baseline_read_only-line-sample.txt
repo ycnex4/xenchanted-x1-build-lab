@@ -1,0 +1,80 @@
+README.md:5: This repository models how verified xEnchanted Crypto / X1 activity can be converted into deterministic Build state through watcher candidates, proof objects, registrar handlers, replay protection, snapshots, and read-only CLI inspection.
+README.md:80: Current main baseline:
+README.md:101: - read-only RPC smoke path review
+README.md:136: - Stage 1 gateway baseline checkpoint
+README.md:150: - Stage 2.8 gateway planning baseline checkpoint
+README.md:205: The CLI is intentionally minimal and read-only.
+README.md:215: Read-only RPC smoke commands:
+README.md:293: - CLI read-only commands
+README.md:345: - read-only recovery reporting
+README.md:374: - snapshot recovery is read-only
+README.md:399: - [Read-only RPC smoke review](docs/read-only-rpc-smoke-review.md)
+README.md:465: A controlled read-only mainnet RPC smoke for XC protocol params has completed successfully.
+README.md:526: - [Stage 2.8 Gateway planning baseline checkpoint](docs/gateway/stage-2-8-gateway-planning-baseline-checkpoint.md)
+README.md:624: 2. Rust quality/security baseline: `cargo fmt --check`, `cargo test`, `cargo audit`, `cargo deny check`, `cargo geiger` report-only, and manual account checklist draft
+README.md:637: ## XXXL Rust quality/security baseline
+README.md:639: The XXXL SVM program now has a Rust quality/security baseline stage.
+README.md:641: Current baseline:
+README.md:658: - no Solana/SPL runtime dependency upgrade inside the baseline stage
+README.md:686: The XXXL SVM scaffold now has a strict Rust warning baseline.
+README.md:779: - baseline cargo audit scan: 196 crates
+README.md:1392: Current Program ID dependency:
+README.md:1485: Current Program ID readiness status:
+README.md:1521: Current Program ID linked blocker:
+docs/assumptions.md:168: ## 8. Snapshot recovery is read-only
+docs/assumptions.md:170: CLI snapshot recovery is intentionally read-only.
+docs/build/build-state-history-identity-model.md:152: Gateway profile preview is a read-only UX helper.
+docs/build/build-v1-spec.md:472: Gateway profile preview is a read-only UX helper.
+docs/build/program-authority-model.md:190: - freeze / remove upgrade authority
+docs/build/program-authority-model.md:266: - upgrade authority is removed or heavily constrained
+docs/build/program-authority-model.md:296: - Upgrade authority is a production-risk decision.
+docs/checkpoints/current-design-checkpoint.md:281: ## Phase 41K.6 B6.38 upgrade authority custody map
+docs/checkpoints/current-design-checkpoint.md:283: The upgrade authority custody map is recorded in:
+docs/checkpoints/current-design-checkpoint.md:287: It records the public authority baseline and the remaining custody requirements before any future upgrade can be considered.
+docs/checkpoints/current-design-checkpoint.md:293: Known public baseline:
+docs/checkpoints/current-design-checkpoint.md:297: - upgrade authority public key: DTfvjtRL63u3XYHXQfgRQCdhEanUK1qqawvfEAM9hxAc
+docs/checkpoints/current-design-checkpoint.md:461: Known public baseline:
+docs/checkpoints/current-design-checkpoint.md:849: - no real upgrade authority keypair
+docs/checkpoints/current-design-checkpoint.md:1622: - Blocker A: upgrade authority
+docs/checkpoints/current-design-checkpoint.md:1658: ## Blocker A.1 upgrade authority discovery planning-only
+docs/checkpoints/current-design-checkpoint.md:1666: Define the safe discovery and evidence boundary for Blocker A upgrade authority.
+docs/checkpoints/current-design-checkpoint.md:1684: The next safe step is Blocker A.2 repo-only upgrade authority source discovery.
+docs/checkpoints/current-design-checkpoint.md:1687: ## Blocker A.2 repo-grounded upgrade authority status reconciliation
+docs/checkpoints/current-design-checkpoint.md:1695: Repo-grounded public baseline from B6.38:
+docs/checkpoints/current-design-checkpoint.md:1746: Candidate future Blocker A closure state after live read-only evidence:
+docs/checkpoints/current-design-checkpoint.md:1752: Upgrade authority is tolerated only as a temporary staged-finalization mechanism, not as mint authority and not as discretionary supply control.
+docs/checkpoints/current-design-checkpoint.md:1754: Carried-forward public baseline:
+docs/checkpoints/current-design-checkpoint.md:1785: The next safe step is A.4 read-only live ProgramData evidence GO form, still with no RPC execution.
+docs/checkpoints/current-design-checkpoint.md:1788: ## Blocker A.4 read-only live ProgramData evidence GO form
+docs/checkpoints/current-design-checkpoint.md:1792: docs/gateway/blocker-a-4-read-only-programdata-evidence-go-form.md
+docs/checkpoints/current-design-checkpoint.md:1794: A.4 defines the explicit scoped GO phrase required before A.5 may perform read-only live ProgramData evidence.
+docs/checkpoints/current-design-checkpoint.md:1808: I approve Blocker A.5 read-only live ProgramData evidence only, scoped to X1 testnet RPC https://rpc.testnet.x1.xyz, program id D7AQmZNtFFFoJbducz93atteeSZhw3jq6RmsqBvaf1my, ProgramData account 9tuesaPoJhrifF49vJewcg6PSWZeHAJiqQ97pq3LMW9T, and expected observe
+docs/checkpoints/current-design-checkpoint.md:1825: ## Blocker A.5 read-only live ProgramData evidence
+docs/checkpoints/current-design-checkpoint.md:1827: The Blocker A.5 read-only live ProgramData evidence record is recorded in:
+docs/checkpoints/current-design-checkpoint.md:1829: docs/gateway/blocker-a-5-read-only-live-programdata-evidence.md
+docs/checkpoints/current-design-checkpoint.md:1833: docs/gateway/evidence/blocker-a-5-read-only-live-programdata-evidence
+docs/checkpoints/current-design-checkpoint.md:1835: A.5 executed only read-only RPC inspection using explicit --url.
+docs/checkpoints/current-design-checkpoint.md:1863: ## Blocker A.5R read-only evidence review package
+docs/checkpoints/current-design-checkpoint.md:1867: docs/gateway/blocker-a-5r-read-only-evidence-review-package.md
+docs/checkpoints/current-design-checkpoint.md:1869: A.5R reviews the matched A.5 read-only live ProgramData evidence.
+docs/checkpoints/current-design-checkpoint.md:1921: - A.4 defined explicit read-only GO form
+docs/checkpoints/current-design-checkpoint.md:1922: - A.5 executed read-only live ProgramData evidence
+docs/checkpoints/current-design-checkpoint.md:1925: Accepted live read-only evidence:
+docs/checkpoints/current-design-checkpoint.md:2317: - Blocker A closed narrowly as upgrade authority present but accepted for test phase
+docs/checkpoints/current-design-checkpoint.md:2663: - Blocker A closed narrowly as upgrade authority present but accepted for test phase
+docs/checkpoints/current-design-checkpoint.md:3019: - Blocker A closed narrowly as upgrade authority present but accepted for test phase
+docs/checkpoints/current-design-checkpoint.md:3398: - Blocker A closed narrowly as upgrade authority present but accepted for test phase
+docs/checkpoints/current-design-checkpoint.md:3409: - explicit post-submit observation requirements
+docs/checkpoints/current-design-checkpoint.md:3548: - post-submit observation gate
+docs/checkpoints/current-design-checkpoint.md:3566: - actual future post-submit observation bundle
+docs/checkpoints/current-design-checkpoint.md:3601: - post-submit observation evidence required
+docs/checkpoints/current-design-checkpoint.md:3626: - future post-submit observation bundle
+docs/checkpoints/current-design-checkpoint.md:3738: - baseline ProgramData evidence binding
+docs/checkpoints/current-design-checkpoint.md:3739: - post-upgrade read-only verification plan
+docs/checkpoints/current-design-checkpoint.md:3867: Baseline binding:
+docs/checkpoints/current-design-checkpoint.md:3903: - baseline program id
+docs/checkpoints/current-design-checkpoint.md:3904: - baseline ProgramData account
+docs/checkpoints/current-design-checkpoint.md:3905: - baseline upgrade authority observation
+docs/checkpoints/current-design-checkpoint.md:3907: - post-upgrade read-only verification procedure
+docs/checkpoints/current-design-checkpoint.md:3918: - continuing after missing post-upgrade read-only verification
+docs/checkpoints/current-design-checkpoint.md:3965: - baseline program id / ProgramData account / upgrade authority observation binding required
