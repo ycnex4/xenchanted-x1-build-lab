@@ -1,0 +1,51 @@
+# Local Rebuild Investigation.1 result summary
+
+status:
+LOCAL_REBUILD_INVESTIGATION_1_COMPLETED_FRESH_REBUILD_MATCHES_OLD_EXPECTED_LIVE_TESTNET_BINARY_DIFFERS_NO_RPC_NO_TESTNET_NO_MUTATION
+
+investigation_result:
+FRESH_REBUILD_MATCHES_OLD_EXPECTED_LIVE_TESTNET_BINARY_DIFFERS
+
+classification_hint:
+LIVE_TESTNET_BINARY_DIFFERENT_STALE_OR_UNKNOWN
+
+current_main_commit:
+bcaa206d5f3cfc62ad209da8e1414021813f1a98
+
+current_main_short:
+bcaa206d5f3c
+
+build_status:
+0
+
+old_expected_hash:
+e68ada36e1914584c2dcc186afbdfcba608b286fc2cd404015a7a8c28764daa1
+
+fresh_local_hash:
+e68ada36e1914584c2dcc186afbdfcba608b286fc2cd404015a7a8c28764daa1
+
+fresh_local_size:
+20840
+
+observed_live_hash:
+fd4d3b659ccaea4f5e24eca4d9e80ff808c43de1bf1ecef7315961751a085a7e
+
+observed_hash_now:
+fd4d3b659ccaea4f5e24eca4d9e80ff808c43de1bf1ecef7315961751a085a7e
+
+observed_live_size:
+38584
+
+fresh_equals_old_expected:
+true
+
+fresh_equals_observed_live:
+false
+
+fresh_binary_equals_observed_binary:
+false
+
+decision:
+Expected hash is validated by fresh rebuild from current main.
+Observed live testnet binary differs from current local build.
+Deploy/upgrade remains blocked until separate investigation result decision and scoped package.

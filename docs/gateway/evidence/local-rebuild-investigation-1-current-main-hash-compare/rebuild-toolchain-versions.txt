@@ -1,0 +1,11 @@
+=== rust ===
+rustc 1.95.0 (59807616e 2026-04-14)
+cargo 1.95.0 (f2d3ce0bd 2026-03-21)
+
+=== solana ===
+solana-cli 4.0.0 (src:8de42dc0; feat:dda54cf7, client:Agave)
+
+=== cargo build-sbf ===
+cargo-build-sbf 4.0.0
+platform-tools v1.53
+rustc 1.89.0

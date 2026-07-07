@@ -1,0 +1,9 @@
+# Local-only command set
+
+git diff --name-status "ee0cb44f7d496e010e784608d0c7ccc8e84e7fb6..bcaa206d5f3cfc62ad209da8e1414021813f1a98" -- programs/xxxl-svm Cargo.toml Cargo.lock rust-toolchain rust-toolchain.toml .cargo
+cargo build-sbf --manifest-path programs/xxxl-svm/Cargo.toml --no-default-features
+sha256sum "programs/xxxl-svm/target/deploy/xxxl_svm.so"
+stat -c%s "programs/xxxl-svm/target/deploy/xxxl_svm.so"
+sha256sum "docs/gateway/evidence/read-only-network-precheck-execution-1-after-exact-go/observed-xxxl-svm.so"
+stat -c%s "docs/gateway/evidence/read-only-network-precheck-execution-1-after-exact-go/observed-xxxl-svm.so"
+cmp -s "programs/xxxl-svm/target/deploy/xxxl_svm.so" "docs/gateway/evidence/read-only-network-precheck-execution-1-after-exact-go/observed-xxxl-svm.so"
