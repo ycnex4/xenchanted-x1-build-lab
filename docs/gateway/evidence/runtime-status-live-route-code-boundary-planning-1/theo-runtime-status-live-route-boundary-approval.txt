@@ -1,0 +1,7 @@
+theo_verdict=APPROVE_RUNTIME_STATUS_LIVE_ROUTE_CODE_BOUNDARY_PACKAGE_PLANNING_ONLY
+execution_blocked=true
+activation_authorized=false
+rpc_mutation_authorized=false
+route_enablement_authorized=false
+scope=PLANNING_ONLY
+main_at_start=8f406fd

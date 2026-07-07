@@ -1,0 +1,12 @@
+package_scope=PLANNING_ONLY
+code_change_authorized=false
+activation_authorized=false
+rpc_mutation_authorized=false
+route_enablement_authorized=false
+spl_cpi_enablement_authorized=false
+guardian_binding_authorized=false
+proof_log_binding_authorized=false
+deploy_authorized=false
+upgrade_authorized=false
+testnet_state_change_authorized=false
+this_package_may_only_define_code_boundary_targets_and_future_closure_criteria
