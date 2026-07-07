@@ -1,0 +1,32 @@
+# Proposed future precheck success criteria
+
+future_success_requires:
+- exact GO phrase matches final selected phrase
+- clean working tree before execution
+- source commit matches final package binding
+- RPC endpoint equals final selected endpoint
+- network is X1_TESTNET
+- program id equals D7AQmZNtFFFoJbducz93atteeSZhw3jq6RmsqBvaf1my
+- ProgramData account equals 9tuesaPoJhrifF49vJewcg6PSWZeHAJiqQ97pq3LMW9T
+- observed upgrade authority equals DTfvjtRL63u3XYHXQfgRQCdhEanUK1qqawvfEAM9hxAc
+- observed executable bytes are extracted successfully
+- observed executable bytes SHA256 is computed successfully
+- observed executable bytes SHA256 equals e68ada36e1914584c2dcc186afbdfcba608b286fc2cd404015a7a8c28764daa1
+- canonical hash domain remains PROGRAMDATA_EXECUTABLE_BYTES_EXCLUDING_LOADER_METADATA
+- hash algorithm remains SHA256
+- no signer flag
+- no keypair path
+- no secret material
+- no transaction submit
+- no deploy
+- no upgrade
+- no write-buffer
+- no authority change
+- no state initialization
+- no SPL setup
+- no guardian package construction
+- no mutation
+- evidence files written
+- final status captured
+
+all_success_criteria_required: true

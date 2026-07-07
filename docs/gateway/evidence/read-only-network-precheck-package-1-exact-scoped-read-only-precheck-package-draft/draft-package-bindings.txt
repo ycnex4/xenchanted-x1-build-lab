@@ -1,0 +1,27 @@
+# Read-only Network Precheck Package.1 draft bindings
+
+package_status: DRAFT_NOT_EXECUTABLE
+operation_class: READ_ONLY_NETWORK_PRECHECK_ONLY
+draft_package_id: RONPP1_DRAFT_f3bff313af20
+source_commit: f3bff313af205285d4635fa709fc04f162edbb05
+source_short: f3bff313af20
+
+network: X1_TESTNET
+proposed_rpc_endpoint: https://rpc.testnet.x1.xyz
+rpc_endpoint_status: PROPOSED_NOT_USED_NOT_VERIFIED
+
+program_id: D7AQmZNtFFFoJbducz93atteeSZhw3jq6RmsqBvaf1my
+programdata_account: 9tuesaPoJhrifF49vJewcg6PSWZeHAJiqQ97pq3LMW9T
+expected_upgrade_authority: DTfvjtRL63u3XYHXQfgRQCdhEanUK1qqawvfEAM9hxAc
+expected_canonical_programdata_executable_bytes_sha256: e68ada36e1914584c2dcc186afbdfcba608b286fc2cd404015a7a8c28764daa1
+canonical_hash_domain: PROGRAMDATA_EXECUTABLE_BYTES_EXCLUDING_LOADER_METADATA
+hash_algorithm: SHA256
+
+exact_go_phrase_status: UNSET_PENDING_FUTURE_CLOSURE
+read_only_precheck_go_granted_now: false
+
+rpc_used_now: false
+testnet_used_now: false
+programdata_read_executed_now: false
+live_hash_comparison_executed_now: false
+mutation_executed_now: false

@@ -1,0 +1,24 @@
+# Read-only Network Precheck Package.1 non-GO boundary
+
+Read-only Network Precheck Package.1 does not grant GO.
+
+Read-only Network Precheck Package.1 does not approve:
+- RPC
+- testnet call
+- ProgramData read
+- live account inspection
+- live hash comparison
+- deploy
+- upgrade
+- write-buffer
+- authority change
+- state initialization
+- SPL setup
+- guardian package construction
+- signing
+- transaction submit
+- mutation
+- production activation
+
+This phase is repo-only draft.
+The proposed RPC endpoint and command set are not executed.

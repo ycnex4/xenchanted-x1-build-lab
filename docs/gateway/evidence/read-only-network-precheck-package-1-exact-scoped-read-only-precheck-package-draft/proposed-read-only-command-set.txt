@@ -1,0 +1,26 @@
+# Proposed future read-only command set
+
+command_set_status: PROPOSED_NOT_EXECUTABLE
+rpc_endpoint_status: PROPOSED_NOT_USED_NOT_VERIFIED
+proposed_rpc_endpoint: https://rpc.testnet.x1.xyz
+
+proposed_future_commands:
+1. solana account 9tuesaPoJhrifF49vJewcg6PSWZeHAJiqQ97pq3LMW9T --url https://rpc.testnet.x1.xyz --output json
+2. solana account D7AQmZNtFFFoJbducz93atteeSZhw3jq6RmsqBvaf1my --url https://rpc.testnet.x1.xyz --output json
+3. solana program dump D7AQmZNtFFFoJbducz93atteeSZhw3jq6RmsqBvaf1my docs/gateway/evidence/FUTURE_EXACT_PRECHECK_EXECUTION/observed-xxxl-svm.so --url https://rpc.testnet.x1.xyz
+4. sha256sum docs/gateway/evidence/FUTURE_EXACT_PRECHECK_EXECUTION/observed-xxxl-svm.so
+
+proposed_future_command_purpose:
+- read ProgramData account metadata
+- read program account metadata
+- dump executable bytes read-only
+- compute observed executable bytes SHA256 locally
+- compare observed SHA256 to expected SHA256
+
+expected_sha256:
+e68ada36e1914584c2dcc186afbdfcba608b286fc2cd404015a7a8c28764daa1
+
+must_not_execute_in_this_phase: true
+executed_now: false
+rpc_used_now: false
+testnet_used_now: false

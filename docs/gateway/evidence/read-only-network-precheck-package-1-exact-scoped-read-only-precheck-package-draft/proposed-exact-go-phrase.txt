@@ -1,0 +1,20 @@
+# Proposed exact GO phrase draft
+
+phrase_status: DRAFT_NOT_FINAL_NOT_EXECUTABLE
+
+proposed_draft_phrase:
+GO_RONPP_READ_ONLY_PRECHECK_ONLY_RONPP1_DRAFT_f3bff313af20_SOURCE_f3bff313af20
+
+meaning_if_finalized_later:
+- authorize only read-only network precheck
+- bind package id
+- bind source commit
+- bind X1 testnet
+- bind exact RPC endpoint
+- bind program id
+- bind ProgramData account
+- bind expected hash
+- forbid signer/keypair/submit/mutation
+
+not_final_now: true
+read_only_precheck_go_granted_now: false
