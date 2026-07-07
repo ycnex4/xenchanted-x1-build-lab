@@ -1,0 +1,8 @@
+future_exact_go_phrase=GO_TESTNET_UPGRADE_EXISTING_PROGRAM_ONLY_TDUP1_SOURCE_17a1576_EXPECTED_E68ADA36_PROGRAM_D7AQMZNT
+
+status:
+DEFINED_BUT_NOT_GRANTED
+
+meaning:
+This phrase is defined for a future execution package.
+It is not active until the planning package is merged and a separate execution package is closed.

@@ -6152,3 +6152,49 @@ The expected local build hash is valid. The live testnet binary differs from the
 Deploy/upgrade remains blocked until a separate scoped package and separate exact GO.
 
 No RPC, testnet call, ProgramData read, executable bytes dump, live hash comparison, deploy, upgrade, write-buffer, signing, submit, or mutation is approved by this checkpoint.
+
+## Testnet Upgrade Package Planning.1 existing program only
+
+Planning record:
+
+docs/gateway/testnet-upgrade-package-planning-1-existing-program.md
+
+Status:
+
+TESTNET_UPGRADE_PACKAGE_PLANNING_1_EXISTING_PROGRAM_ONLY_EXECUTION_BLOCKED_NO_RPC_NO_MUTATION
+
+Path decision:
+
+UPGRADE_EXISTING_PROGRAM_ONLY
+
+Source commit:
+
+17a1576e7addfa753f9569c49f8736ef55614d7d
+
+Program ID:
+
+D7AQmZNtFFFoJbducz93atteeSZhw3jq6RmsqBvaf1my
+
+ProgramData account:
+
+9tuesaPoJhrifF49vJewcg6PSWZeHAJiqQ97pq3LMW9T
+
+Upgrade authority:
+
+DTfvjtRL63u3XYHXQfgRQCdhEanUK1qqawvfEAM9hxAc
+
+Expected hash:
+
+e68ada36e1914584c2dcc186afbdfcba608b286fc2cd404015a7a8c28764daa1
+
+Future exact GO phrase:
+
+GO_TESTNET_UPGRADE_EXISTING_PROGRAM_ONLY_TDUP1_SOURCE_17a1576_EXPECTED_E68ADA36_PROGRAM_D7AQMZNT
+
+GO phrase status:
+
+DEFINED_BUT_NOT_GRANTED
+
+Execution remains blocked until a separate execution package and separate exact GO.
+
+No RPC, testnet call, write-buffer, upgrade, signing, submit, mutation, deploy/redeploy, or activation is approved by this checkpoint.

@@ -1,20 +1,3 @@
-# X1 Testnet Deploy Progress Tracker
-
-Last updated by:
-
-testnet-upgrade-package-planning-1-existing-program
-
-Current status:
-
-TESTNET_UPGRADE_PACKAGE_PLANNING_1_EXISTING_PROGRAM_ONLY_EXECUTION_BLOCKED_NO_RPC_NO_MUTATION
-
-Current decision:
-
-UPGRADE_EXISTING_PROGRAM_ONLY_PLANNED_EXECUTION_BLOCKED
-
-## Progress
-
-~~~text
 ✅ 0: repo sanity review before GO
 ✅ 1: local build/hash evidence
 ✅ 2: RONB — read-only network baseline model
@@ -36,24 +19,3 @@ UPGRADE_EXISTING_PROGRAM_ONLY_PLANNED_EXECUTION_BLOCKED
 
 blocked:
 execution/RPC/write-buffer/upgrade/sign/submit/mutation
-~~~
-
-## Future GO phrase status
-
-~~~text
-DEFINED_BUT_NOT_GRANTED
-GO_TESTNET_UPGRADE_EXISTING_PROGRAM_ONLY_TDUP1_SOURCE_17a1576_EXPECTED_E68ADA36_PROGRAM_D7AQMZNT
-~~~
-
-## Still forbidden
-
-~~~text
-- RPC now
-- write-buffer now
-- upgrade now
-- signing now
-- submit now
-- mutation now
-- deploy/redeploy new Program ID
-- production activation
-~~~

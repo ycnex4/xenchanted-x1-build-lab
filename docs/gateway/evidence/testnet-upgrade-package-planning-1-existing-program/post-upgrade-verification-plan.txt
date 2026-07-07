@@ -1,0 +1,12 @@
+Post-upgrade verification plan after future exact GO execution:
+
+1. Read Program account.
+2. Read ProgramData account.
+3. Confirm ProgramData account remains 9tuesaPoJhrifF49vJewcg6PSWZeHAJiqQ97pq3LMW9T.
+4. Confirm upgrade authority remains DTfvjtRL63u3XYHXQfgRQCdhEanUK1qqawvfEAM9hxAc unless a separately approved authority decision exists.
+5. Dump deployed program bytes from D7AQmZNtFFFoJbducz93atteeSZhw3jq6RmsqBvaf1my.
+6. Compute SHA256.
+7. Require post-upgrade hash == e68ada36e1914584c2dcc186afbdfcba608b286fc2cd404015a7a8c28764daa1.
+8. Require post-upgrade binary size == 20840.
+9. Record transaction signature and all verification outputs.
+10. If any check fails, stop and do not proceed to activation.

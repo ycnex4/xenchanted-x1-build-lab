@@ -1,0 +1,14 @@
+This planning checkpoint is not an execution GO.
+
+execution_authorized=false
+rpc_used=false
+testnet_used=false
+programdata_read_executed=false
+executable_bytes_dumped=false
+live_hash_comparison_executed=false
+deploy_executed=false
+upgrade_executed=false
+write_buffer_executed=false
+signing_executed=false
+submit_executed=false
+mutation_executed=false

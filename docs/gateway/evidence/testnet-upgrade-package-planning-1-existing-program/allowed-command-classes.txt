@@ -1,0 +1,26 @@
+Allowed only in future execution package after separate exact GO:
+
+1. Local build/hash commands:
+   cargo build-sbf --manifest-path programs/xxxl-svm/Cargo.toml --no-default-features
+   sha256sum programs/xxxl-svm/target/deploy/xxxl_svm.so
+   stat -c%s programs/xxxl-svm/target/deploy/xxxl_svm.so
+
+2. Immediate read-only verification before upgrade:
+   solana account D7AQmZNtFFFoJbducz93atteeSZhw3jq6RmsqBvaf1my --url https://rpc.testnet.x1.xyz --output json
+   solana account 9tuesaPoJhrifF49vJewcg6PSWZeHAJiqQ97pq3LMW9T --url https://rpc.testnet.x1.xyz --output json
+   solana program dump D7AQmZNtFFFoJbducz93atteeSZhw3jq6RmsqBvaf1my <evidence-path>/pre-upgrade-observed.so --url https://rpc.testnet.x1.xyz
+   sha256sum <evidence-path>/pre-upgrade-observed.so
+
+3. Upgrade existing program only:
+   solana program write-buffer <expected-local-artifact> ...
+   solana program upgrade <buffer-address> D7AQmZNtFFFoJbducz93atteeSZhw3jq6RmsqBvaf1my ...
+
+4. Post-upgrade read-only verification:
+   solana account D7AQmZNtFFFoJbducz93atteeSZhw3jq6RmsqBvaf1my --url https://rpc.testnet.x1.xyz --output json
+   solana account 9tuesaPoJhrifF49vJewcg6PSWZeHAJiqQ97pq3LMW9T --url https://rpc.testnet.x1.xyz --output json
+   solana program dump D7AQmZNtFFFoJbducz93atteeSZhw3jq6RmsqBvaf1my <evidence-path>/post-upgrade-observed.so --url https://rpc.testnet.x1.xyz
+   sha256sum <evidence-path>/post-upgrade-observed.so
+
+Important:
+Exact command lines, signer paths, buffer handling, and CLI v4.0 syntax must be finalized in the execution package.
+This planning checkpoint does not authorize running any of them.
