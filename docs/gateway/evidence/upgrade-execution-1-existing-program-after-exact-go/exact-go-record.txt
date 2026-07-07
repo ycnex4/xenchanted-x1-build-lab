@@ -1,0 +1,7 @@
+go_phrase=GO_TESTNET_UPGRADE_EXISTING_PROGRAM_ONLY_TDEX1_SOURCE_DE6C96A_EXPECTED_E68ADA36_PROGRAM_D7AQMZNT
+go_phrase_match=true
+scope=UPGRADE_EXISTING_PROGRAM_ONLY
+execution_authorized=true
+write_buffer_executed=false
+upgrade_executed=false
+mutation_executed=false
