@@ -1,0 +1,23 @@
+# Non-GO boundary
+
+This checkpoint does not grant GO.
+
+This checkpoint does not approve:
+- RPC
+- testnet call
+- ProgramData read
+- executable bytes dump
+- live hash comparison
+- deploy
+- upgrade
+- write-buffer
+- authority change
+- state initialization
+- SPL setup
+- guardian package construction
+- signing
+- transaction submit
+- mutation
+- production activation
+
+This checkpoint pauses execution and prepares a Theo review package.

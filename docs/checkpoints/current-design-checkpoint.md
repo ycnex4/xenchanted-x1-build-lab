@@ -5845,3 +5845,42 @@ Read-only Network Precheck Package.3 does not call RPC, use testnet, read Progra
 Next safe step:
 
 Read-only Network Precheck Execution.1 — after exact user GO phrase only.
+
+
+## Testnet Deploy Checkpoint.1 before Theo review
+
+The X1 testnet deploy track checkpoint is recorded in:
+
+docs/gateway/testnet-deploy-checkpoint-1-before-theo-review.md
+
+Progress tracker:
+
+docs/gateway/testnet-deploy-progress-tracker.md
+
+Theo review package:
+
+docs/gateway/theo-review-package-testnet-deploy-boundary-after-ronpp3.md
+
+Current status:
+
+TESTNET_DEPLOY_CHECKPOINT_1_BEFORE_THEO_REVIEW_RECORDED_NO_RPC_NO_TESTNET_NO_MUTATION
+
+Current decision:
+
+PAUSE_FOR_THEO_REVIEW_BEFORE_READ_ONLY_PRECHECK_EXECUTION
+
+Current main commit:
+
+6db0483583d0d1cd9beb0b02ed28a6d949fc4f2e
+
+Current main short:
+
+6db0483583d0
+
+This checkpoint records that RONPP3 is closed, but continuing directly to read-only precheck should pause for Theo review because the RONPP3 final GO phrase is bound to the pre-merge source short fead873b9d8d while current main is 6db0483583d0.
+
+No RPC, testnet call, ProgramData read, executable bytes dump, live hash comparison, deploy, upgrade, write-buffer, signing, submit, or mutation is approved by this checkpoint.
+
+Next safe step:
+
+Send Theo review package and wait for verdict before RONPP3 alignment or read-only precheck execution.
