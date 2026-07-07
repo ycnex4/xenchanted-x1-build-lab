@@ -1,0 +1,13 @@
+diff_check_status=0
+review_only=true
+source_change_authorized=false
+blocker_removal_authorized=false
+activation_authorized=false
+rpc_mutation_authorized=false
+route_enablement_authorized=false
+deploy_authorized=false
+upgrade_authorized=false
+ProductionGuardianSetUnset_remains_active=true
+ProductionProofLogUnset_remains_active=true
+execution_remains_blocked=true
+review_verdict_received=false
