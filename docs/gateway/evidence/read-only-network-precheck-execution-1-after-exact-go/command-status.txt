@@ -1,0 +1,4 @@
+programdata_account_status=0
+program_account_status=0
+program_dump_status=0
+sha256_status=0

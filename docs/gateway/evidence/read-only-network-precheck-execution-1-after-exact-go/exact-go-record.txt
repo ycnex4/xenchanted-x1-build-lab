@@ -1,0 +1,32 @@
+# Exact GO record
+
+user_go_phrase:
+GO_RONPP_READ_ONLY_PRECHECK_ONLY_RONPP3A_READ_ONLY_PRECHECK_18ff5149e850_SOURCE_18ff5149e850
+
+expected_go_phrase:
+GO_RONPP_READ_ONLY_PRECHECK_ONLY_RONPP3A_READ_ONLY_PRECHECK_18ff5149e850_SOURCE_18ff5149e850
+
+go_phrase_match: true
+
+authorized_operation_class:
+READ_ONLY_NETWORK_PRECHECK_ONLY
+
+authorized_scope:
+- RPC read
+- ProgramData/account metadata read
+- executable bytes dump
+- SHA256 compare
+- evidence only
+
+explicitly_not_authorized:
+- deploy
+- upgrade
+- write-buffer
+- authority change
+- state initialization
+- SPL setup
+- guardian package construction
+- signing
+- transaction submit
+- mutation
+- production activation

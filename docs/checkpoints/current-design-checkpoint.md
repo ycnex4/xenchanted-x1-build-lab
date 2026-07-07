@@ -5948,3 +5948,65 @@ No RPC, testnet call, ProgramData read, executable bytes dump, live hash compari
 Next safe step:
 
 Read-only Network Precheck Execution.1 — after exact user GO phrase only.
+
+## Read-only Network Precheck Execution.1 after exact GO
+
+Execution record:
+
+docs/gateway/read-only-network-precheck-execution-1-after-exact-go.md
+
+Progress tracker:
+
+docs/gateway/testnet-deploy-progress-tracker.md
+
+Status:
+
+READ_ONLY_NETWORK_PRECHECK_EXECUTION_1_STOPPED_AFTER_EXACT_GO_MISMATCH_OR_READ_FAILURE_NO_MUTATION
+
+Operation class:
+
+READ_ONLY_NETWORK_PRECHECK_ONLY
+
+Exact GO phrase used:
+
+GO_RONPP_READ_ONLY_PRECHECK_ONLY_RONPP3A_READ_ONLY_PRECHECK_18ff5149e850_SOURCE_18ff5149e850
+
+Precheck match:
+
+false
+
+Observed ProgramData:
+
+9tuesaPoJhrifF49vJewcg6PSWZeHAJiqQ97pq3LMW9T
+
+Expected ProgramData:
+
+9tuesaPoJhrifF49vJewcg6PSWZeHAJiqQ97pq3LMW9T
+
+Observed upgrade authority:
+
+DTfvjtRL63u3XYHXQfgRQCdhEanUK1qqawvfEAM9hxAc
+
+Expected upgrade authority:
+
+DTfvjtRL63u3XYHXQfgRQCdhEanUK1qqawvfEAM9hxAc
+
+Observed executable bytes SHA256:
+
+fd4d3b659ccaea4f5e24eca4d9e80ff808c43de1bf1ecef7315961751a085a7e
+
+Expected executable bytes SHA256:
+
+e68ada36e1914584c2dcc186afbdfcba608b286fc2cd404015a7a8c28764daa1
+
+Observed executable bytes size:
+
+38584
+
+RPC/testnet read was executed. ProgramData/account read, executable bytes dump, and live hash comparison were executed.
+
+No deploy, upgrade, write-buffer, signing, submit, mutation, state initialization, SPL setup, guardian package construction, or activation was executed.
+
+Next safe step:
+
+Precheck result decision.
