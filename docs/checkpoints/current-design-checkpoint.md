@@ -5601,3 +5601,54 @@ Read-only Network Baseline.4 does not call RPC, use testnet, read ProgramData, p
 Next safe step:
 
 Read-only Network Baseline.5 — exact read-only precheck model closure record.
+
+
+## Read-only Network Baseline.5 exact read-only precheck model closure record
+
+The Read-only Network Baseline.5 closure record is recorded in:
+
+docs/gateway/read-only-network-baseline-5-exact-read-only-precheck-model-closure-record.md
+
+Evidence directory:
+
+docs/gateway/evidence/read-only-network-baseline-5-exact-read-only-precheck-model-closure-record
+
+Current status:
+
+READ_ONLY_NETWORK_BASELINE_5_CLOSED_EXACT_READ_ONLY_PRECHECK_MODEL_REVIEWED_RPC_NOT_APPROVED_EXECUTION_NOT_APPROVED
+
+Current decision:
+
+STRICT_READ_ONLY_NETWORK_PRECHECK_MODEL_CLOSED_NARROW_FINAL_READ_ONLY_GO_NOT_GRANTED
+
+Selected model:
+
+STRICT_READ_ONLY_NETWORK_PRECHECK_WITH_EXACT_GO_ONLY
+
+Current GO state:
+
+READ_ONLY_NETWORK_GO_NOT_GRANTED
+
+Closure result:
+
+read_only_precheck_model_closed_narrowly: true
+
+read_only_precheck_go_granted: false
+
+rpc_used: false
+
+testnet_used: false
+
+programdata_read_executed: false
+
+live_hash_comparison_executed: false
+
+mutation_executed: false
+
+Read-only Network Baseline.5 closes the model only.
+
+Read-only Network Baseline.5 does not call RPC, use testnet, read ProgramData, perform live hash comparison, deploy, upgrade, write buffer, sign, submit, or mutate.
+
+Next safe step:
+
+Read-only Network Precheck Package.1 — exact scoped read-only precheck package draft.

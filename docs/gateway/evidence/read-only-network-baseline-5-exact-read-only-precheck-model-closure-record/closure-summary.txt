@@ -1,0 +1,37 @@
+# Read-only Network Baseline.5 closure summary
+
+status: READ_ONLY_NETWORK_BASELINE_5_CLOSED_EXACT_READ_ONLY_PRECHECK_MODEL_REVIEWED_RPC_NOT_APPROVED_EXECUTION_NOT_APPROVED
+decision: STRICT_READ_ONLY_NETWORK_PRECHECK_MODEL_CLOSED_NARROW_FINAL_READ_ONLY_GO_NOT_GRANTED
+selected_model: STRICT_READ_ONLY_NETWORK_PRECHECK_WITH_EXACT_GO_ONLY
+current_go_state: READ_ONLY_NETWORK_GO_NOT_GRANTED
+
+closed_scope:
+- RONB1 precheck package planning recorded
+- RONB2 exact read-only precheck requirements inventoried
+- RONB3 strict read-only precheck decision model recorded
+- RONB4 invariant review recorded
+- RONB5 closure records narrow model closure
+
+closure_meaning:
+The strict read-only network precheck model is closed narrowly.
+Future read-only network access is not approved by this closure.
+A separate exact scoped read-only precheck package is still required.
+A later exact user GO phrase is still required before any RPC/testnet read.
+
+not_approved_by_closure:
+- RPC
+- testnet call
+- ProgramData read
+- live account inspection
+- live hash comparison
+- deploy
+- upgrade
+- write-buffer
+- authority change
+- state initialization
+- SPL setup
+- guardian package construction
+- signing
+- transaction submit
+- mutation
+- production activation

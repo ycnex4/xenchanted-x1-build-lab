@@ -1,0 +1,27 @@
+# Future exact GO requirements
+
+current_exact_go_phrase: UNSET_NOT_SELECTED
+current_read_only_precheck_go_granted: false
+
+future_exact_go_phrase_must_bind:
+- package id
+- operation class READ_ONLY_NETWORK_PRECHECK_ONLY
+- source commit
+- X1 testnet network
+- exact RPC endpoint
+- program id
+- ProgramData account
+- expected hash
+- read-only boundary
+
+future_exact_go_phrase_must_not_be_interpreted_as:
+- deploy GO
+- upgrade GO
+- write-buffer GO
+- authority-change GO
+- signing GO
+- transaction-submit GO
+- mutation GO
+- production activation GO
+
+future_exact_go_phrase_status: deferred_to_future_exact_read_only_precheck_package
