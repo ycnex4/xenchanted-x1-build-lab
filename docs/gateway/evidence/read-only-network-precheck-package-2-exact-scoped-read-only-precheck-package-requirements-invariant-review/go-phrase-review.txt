@@ -1,0 +1,18 @@
+# Read-only Network Precheck Package.2 GO phrase review
+
+reviewed_draft_phrase:
+GO_RONPP_READ_ONLY_PRECHECK_ONLY_RONPP1_DRAFT_f3bff313af20_SOURCE_f3bff313af20
+
+phrase_status:
+DRAFT_NOT_FINAL_NOT_EXECUTABLE
+
+review_result:
+- phrase is recorded as draft only
+- phrase has not been used by user
+- phrase does not grant GO now
+- phrase must be re-selected or finalized in a later closure record
+- future exact user GO must be verbatim
+- future exact user GO must authorize only READ_ONLY_NETWORK_PRECHECK_ONLY
+- future exact user GO must not authorize deploy/upgrade/write-buffer/sign/submit/mutation
+
+read_only_precheck_go_granted_now: false

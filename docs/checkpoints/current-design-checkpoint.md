@@ -5699,3 +5699,66 @@ Read-only Network Precheck Package.1 does not call RPC, use testnet, read Progra
 Next safe step:
 
 Read-only Network Precheck Package.2 — exact scoped read-only precheck package requirements/invariant review.
+
+
+## Read-only Network Precheck Package.2 exact scoped read-only precheck package requirements/invariant review
+
+The Read-only Network Precheck Package.2 review is recorded in:
+
+docs/gateway/read-only-network-precheck-package-2-exact-scoped-read-only-precheck-package-requirements-invariant-review.md
+
+Evidence directory:
+
+docs/gateway/evidence/read-only-network-precheck-package-2-exact-scoped-read-only-precheck-package-requirements-invariant-review
+
+Current status:
+
+READ_ONLY_NETWORK_PRECHECK_PACKAGE_2_REVIEW_READY_EXACT_SCOPED_READ_ONLY_PRECHECK_PACKAGE_REQUIREMENTS_INVARIANTS_RECORDED_NO_RPC_NO_TESTNET_NO_PROGRAMDATA_READ_NO_MUTATION
+
+Current decision:
+
+EXACT_SCOPED_READ_ONLY_PRECHECK_PACKAGE_REVIEWED_GO_NOT_GRANTED_PENDING_CLOSURE
+
+Closure candidate:
+
+EXACT_SCOPED_READ_ONLY_PRECHECK_PACKAGE_REVIEWED_GO_NOT_GRANTED_EXECUTION_NOT_APPROVED
+
+Current GO state:
+
+READ_ONLY_PRECHECK_GO_NOT_GRANTED
+
+Reviewed draft package id:
+
+RONPP1_DRAFT_f3bff313af20
+
+Proposed RPC endpoint remains:
+
+https://rpc.testnet.x1.xyz
+
+Review result:
+
+all_requirements_reviewed: true
+
+all_invariants_reviewed: true
+
+draft_package_reviewed: true
+
+closure_ready: true
+
+read_only_precheck_go_granted: false
+
+rpc_used: false
+
+testnet_used: false
+
+programdata_read_executed: false
+
+live_hash_comparison_executed: false
+
+mutation_executed: false
+
+Read-only Network Precheck Package.2 does not call RPC, use testnet, read ProgramData, perform live hash comparison, deploy, upgrade, write buffer, sign, submit, or mutate.
+
+Next safe step:
+
+Read-only Network Precheck Package.3 — exact scoped read-only precheck package closure record.

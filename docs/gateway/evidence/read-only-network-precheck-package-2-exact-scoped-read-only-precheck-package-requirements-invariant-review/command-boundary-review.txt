@@ -1,0 +1,27 @@
+# Read-only Network Precheck Package.2 command boundary review
+
+reviewed_proposed_commands:
+- solana account 9tuesaPoJhrifF49vJewcg6PSWZeHAJiqQ97pq3LMW9T --url https://rpc.testnet.x1.xyz --output json
+- solana account D7AQmZNtFFFoJbducz93atteeSZhw3jq6RmsqBvaf1my --url https://rpc.testnet.x1.xyz --output json
+- solana program dump D7AQmZNtFFFoJbducz93atteeSZhw3jq6RmsqBvaf1my docs/gateway/evidence/FUTURE_EXACT_PRECHECK_EXECUTION/observed-xxxl-svm.so --url https://rpc.testnet.x1.xyz
+- sha256sum docs/gateway/evidence/FUTURE_EXACT_PRECHECK_EXECUTION/observed-xxxl-svm.so
+
+review_result:
+- commands are proposed only
+- commands were not executed
+- RPC was not called
+- testnet was not used
+- ProgramData was not read
+- executable bytes were not dumped
+- live hash comparison was not performed
+
+future_command_review_requirements:
+- exact evidence path must be finalized
+- exact command set must be reviewed again before closure
+- command set must contain no signer flags
+- command set must contain no keypair paths
+- command set must contain no transaction submit commands
+- command set must contain no deploy/upgrade/write-buffer commands
+- command set must contain no mutation commands
+- output paths must be inside future evidence directory
+- no secrets may be requested or printed

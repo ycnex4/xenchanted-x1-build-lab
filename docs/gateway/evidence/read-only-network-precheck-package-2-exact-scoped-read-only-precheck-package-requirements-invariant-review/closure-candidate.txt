@@ -1,0 +1,28 @@
+# Read-only Network Precheck Package.2 closure candidate
+
+closure_candidate:
+EXACT_SCOPED_READ_ONLY_PRECHECK_PACKAGE_REVIEWED_GO_NOT_GRANTED_EXECUTION_NOT_APPROVED
+
+closure_candidate_meaning:
+- RONPP1 draft package has been reviewed
+- package remains not executable
+- proposed RPC endpoint remains not used/not verified
+- proposed command set remains not executed
+- proposed GO phrase remains draft/not final
+- read-only precheck GO remains not granted
+- RPC/testnet/ProgramData read/live hash comparison remain not approved
+- signing/submit/mutation remain not approved
+
+next_safe_step:
+Read-only Network Precheck Package.3 — exact scoped read-only precheck package closure record
+
+next_step_must_not:
+- call RPC
+- use testnet
+- read ProgramData
+- dump executable bytes
+- compute live observed hash
+- perform live hash comparison
+- sign
+- submit
+- mutate
