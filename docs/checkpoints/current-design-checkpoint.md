@@ -5478,3 +5478,38 @@ Read-only Network Baseline.1 does not call RPC, use testnet, read ProgramData, d
 Next safe step:
 
 Read-only Network Baseline.2 — exact read-only precheck requirements inventory.
+
+
+## Read-only Network Baseline.2 exact read-only precheck requirements inventory
+
+The Read-only Network Baseline.2 requirements inventory is recorded in:
+
+docs/gateway/read-only-network-baseline-2-exact-read-only-precheck-requirements-inventory.md
+
+Evidence directory:
+
+docs/gateway/evidence/read-only-network-baseline-2-exact-read-only-precheck-requirements-inventory
+
+Current status:
+
+READ_ONLY_NETWORK_BASELINE_2_OPEN_EXACT_READ_ONLY_PRECHECK_REQUIREMENTS_INVENTORY_NO_RPC_NO_TESTNET_NO_MUTATION
+
+Current decision:
+
+READ_ONLY_PRECHECK_REQUIREMENTS_INVENTORIED_RPC_NOT_APPROVED
+
+Current GO state:
+
+READ_ONLY_NETWORK_GO_NOT_GRANTED
+
+Expected canonical ProgramData executable-bytes SHA256 remains:
+
+e68ada36e1914584c2dcc186afbdfcba608b286fc2cd404015a7a8c28764daa1
+
+Read-only Network Baseline.2 inventories requirements only.
+
+Read-only Network Baseline.2 does not call RPC, use testnet, read ProgramData, perform live hash comparison, deploy, upgrade, write buffer, sign, submit, or mutate.
+
+Next safe step:
+
+Read-only Network Baseline.3 — exact read-only precheck decision model.

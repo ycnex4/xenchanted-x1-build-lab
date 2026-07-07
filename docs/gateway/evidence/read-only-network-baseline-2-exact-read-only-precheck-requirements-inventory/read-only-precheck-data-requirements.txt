@@ -1,0 +1,41 @@
+# Read-only precheck data requirements
+
+future_precheck_must_capture:
+- exact user GO phrase
+- selected RPC endpoint
+- network identity
+- current timestamp UTC
+- program id queried
+- ProgramData account queried
+- ProgramData account owner / loader identity if available
+- observed upgrade authority
+- observed executable bytes or canonical equivalent
+- observed executable bytes length
+- observed executable bytes SHA256
+- expected executable bytes SHA256
+- hash comparison result
+- no-signing evidence
+- no-submit evidence
+- no-mutation evidence
+- final command status
+
+future_precheck_success_requires:
+- exact GO phrase matches
+- RPC endpoint explicitly selected
+- network is X1 testnet
+- program id matches expected
+- ProgramData account matches expected
+- observed upgrade authority matches expected
+- observed executable bytes extracted/canonicalized successfully
+- observed executable bytes SHA256 computed successfully
+- observed executable bytes SHA256 equals expected hash
+- no signing
+- no transaction submit
+- no mutation
+- evidence files written
+
+future_precheck_result_if_hash_mismatch:
+- stop
+- record mismatch
+- do not retry automatically
+- do not proceed to mutation package

@@ -1,0 +1,30 @@
+# Future read-only command shape inventory
+
+command_status: INVENTORY_ONLY_NOT_EXECUTABLE
+rpc_status_now: NOT_APPROVED_NOT_USED
+
+future_read_only_command_categories:
+- read account data for ProgramData account
+- inspect program account / ProgramData relationship if required
+- decode upgradeable loader metadata if required
+- extract executable bytes or equivalent canonical representation
+- compute SHA256 locally
+- compare against expected hash
+
+future_command_must_not_include:
+- solana program deploy
+- solana program write-buffer
+- solana program set-upgrade-authority
+- solana program close
+- solana transfer
+- any transaction submit
+- any signer flag
+- any keypair path
+- any secret material
+- any state initialization
+- any SPL setup
+- any guardian package construction
+
+future_exact_commands: UNSET_NOT_SELECTED
+future_rpc_endpoint: UNSET_NOT_SELECTED
+future_exact_go_phrase: UNSET_NOT_SELECTED
