@@ -1,0 +1,119 @@
+# Read-only Network Precheck Package.2 requirements/invariant review matrix
+
+RONPP2_INVARIANT_01_DRAFT_EXISTS:
+status: reviewed
+result: true
+meaning: RONPP1 draft exists and is marked draft-only/not executable.
+
+RONPP2_INVARIANT_02_OPERATION_CLASS_BOUND:
+status: reviewed
+result: true
+meaning: Operation class is READ_ONLY_NETWORK_PRECHECK_ONLY.
+
+RONPP2_INVARIANT_03_DRAFT_PACKAGE_ID_BOUND:
+status: reviewed
+result: true
+meaning: Draft package id is RONPP1_DRAFT_f3bff313af20.
+
+RONPP2_INVARIANT_04_SOURCE_COMMIT_BOUND:
+status: reviewed
+result: true
+meaning: RONPP1 source commit is f3bff313af205285d4635fa709fc04f162edbb05.
+
+RONPP2_INVARIANT_05_NETWORK_BOUND:
+status: reviewed
+result: true
+meaning: Network is X1_TESTNET.
+
+RONPP2_INVARIANT_06_RPC_ENDPOINT_PROPOSED_NOT_USED:
+status: reviewed
+result: true
+meaning: Proposed RPC endpoint is https://rpc.testnet.x1.xyz but remains not used/not verified.
+
+RONPP2_INVARIANT_07_PROGRAM_ID_BOUND:
+status: reviewed
+result: true
+meaning: Program id is D7AQmZNtFFFoJbducz93atteeSZhw3jq6RmsqBvaf1my.
+
+RONPP2_INVARIANT_08_PROGRAMDATA_BOUND:
+status: reviewed
+result: true
+meaning: ProgramData account is 9tuesaPoJhrifF49vJewcg6PSWZeHAJiqQ97pq3LMW9T.
+
+RONPP2_INVARIANT_09_EXPECTED_AUTHORITY_BOUND:
+status: reviewed
+result: true
+meaning: Expected upgrade authority is DTfvjtRL63u3XYHXQfgRQCdhEanUK1qqawvfEAM9hxAc.
+
+RONPP2_INVARIANT_10_EXPECTED_HASH_BOUND:
+status: reviewed
+result: true
+meaning: Expected canonical executable bytes SHA256 is e68ada36e1914584c2dcc186afbdfcba608b286fc2cd404015a7a8c28764daa1.
+
+RONPP2_INVARIANT_11_HASH_DOMAIN_AND_ALGORITHM_BOUND:
+status: reviewed
+result: true
+meaning: Canonical domain is PROGRAMDATA_EXECUTABLE_BYTES_EXCLUDING_LOADER_METADATA and algorithm is SHA256.
+
+RONPP2_INVARIANT_12_COMMAND_SET_PROPOSED_NOT_EXECUTED:
+status: reviewed
+result: true
+meaning: Proposed command set is recorded but not executable in RONPP2.
+
+RONPP2_INVARIANT_13_COMMAND_SET_READ_ONLY_INTENT:
+status: reviewed
+result: true
+meaning: Proposed command set is intended to read account metadata, dump executable bytes, and compute SHA256 locally.
+
+RONPP2_INVARIANT_14_COMMAND_SET_REQUIRES_FUTURE_REVIEW:
+status: reviewed
+result: true
+meaning: Exact future command set still requires closure review before any RPC use.
+
+RONPP2_INVARIANT_15_EXACT_GO_DRAFT_NOT_FINAL:
+status: reviewed
+result: true
+meaning: Proposed GO phrase is draft-only and not executable.
+
+RONPP2_INVARIANT_16_READ_ONLY_GO_NOT_GRANTED:
+status: reviewed
+result: true
+meaning: Read-only precheck GO remains not granted.
+
+RONPP2_INVARIANT_17_NO_SIGNER_KEYPAIR_SECRET:
+status: reviewed
+result: true
+meaning: Signer flags, keypair paths, and secret material remain forbidden.
+
+RONPP2_INVARIANT_18_NO_TRANSACTION_SUBMIT:
+status: reviewed
+result: true
+meaning: Transaction submit remains forbidden.
+
+RONPP2_INVARIANT_19_NO_MUTATION:
+status: reviewed
+result: true
+meaning: Deploy, upgrade, write-buffer, authority change, state initialization, SPL setup, guardian package construction, and mutation remain forbidden.
+
+RONPP2_INVARIANT_20_STOP_ON_MISMATCH:
+status: reviewed
+result: true
+meaning: Missing/different GO, dirty tree, endpoint mismatch, network mismatch, identity mismatch, authority mismatch, hash mismatch, and command-boundary mismatch remain stop conditions.
+
+RONPP2_INVARIANT_21_NO_AUTOMATIC_RETRY:
+status: reviewed
+result: true
+meaning: Automatic retry remains rejected.
+
+RONPP2_AGGREGATE:
+all_requirements_reviewed: true
+all_invariants_reviewed: true
+draft_package_reviewed: true
+closure_ready: true
+closure_candidate: EXACT_SCOPED_READ_ONLY_PRECHECK_PACKAGE_REVIEWED_GO_NOT_GRANTED_EXECUTION_NOT_APPROVED
+rpc_approved_now: false
+testnet_approved_now: false
+programdata_read_approved_now: false
+live_hash_comparison_approved_now: false
+execution_approved_now: false
+mutation_approved_now: false

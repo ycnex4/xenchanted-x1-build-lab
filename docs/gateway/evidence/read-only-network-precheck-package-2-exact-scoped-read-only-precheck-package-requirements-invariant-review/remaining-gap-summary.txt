@@ -1,0 +1,16 @@
+# Read-only Network Precheck Package.2 remaining gaps
+
+- RONPP3 closure record not recorded
+- final package id not selected
+- final exact GO phrase not selected
+- proposed RPC endpoint not verified
+- exact command set not finalized
+- exact evidence path not finalized
+- execution package not closed
+- ProgramData read not executed
+- observed upgrade authority not re-read
+- observed executable bytes not extracted
+- observed executable bytes SHA256 not computed
+- observed-vs-expected hash comparison not executed
+- RPC/testnet not approved
+- signing/submit/mutation not approved

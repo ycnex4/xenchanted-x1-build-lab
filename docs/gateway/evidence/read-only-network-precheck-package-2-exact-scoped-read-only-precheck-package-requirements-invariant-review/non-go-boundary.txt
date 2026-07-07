@@ -1,0 +1,23 @@
+# Read-only Network Precheck Package.2 non-GO boundary
+
+Read-only Network Precheck Package.2 does not grant GO.
+
+Read-only Network Precheck Package.2 does not approve:
+- RPC
+- testnet call
+- ProgramData read
+- live account inspection
+- live hash comparison
+- deploy
+- upgrade
+- write-buffer
+- authority change
+- state initialization
+- SPL setup
+- guardian package construction
+- signing
+- transaction submit
+- mutation
+- production activation
+
+Read-only Network Precheck Package.2 is requirements/invariant review only.
