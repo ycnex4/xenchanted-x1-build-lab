@@ -1,0 +1,25 @@
+package_scope=REVIEW_ONLY
+branch=guardian-set-proof-log-public-spec-review-1
+review_head=d320d19
+review_head_full=d320d190e403c8b3ad495e190948933344a0b803
+review_main_expected=d320d19
+
+source_change_authorized=false
+blocker_removal_authorized=false
+activation_authorized=false
+rpc_mutation_authorized=false
+route_enablement_authorized=false
+deploy_authorized=false
+upgrade_authorized=false
+
+review_target_1=docs/gateway/guardian-set-public-policy-1.md
+review_target_2=docs/gateway/proof-log-public-policy-1.md
+review_target_3=docs/gateway/guardian-set-proof-log-public-spec-1.md
+
+=== review target sha256 ===
+264a22a41948d2a16c409cbc4ad6e91b1b06491fa20b7fc124fe58b90062937d  docs/gateway/guardian-set-public-policy-1.md
+bfdeb6c0ee7c6a2ad38e2750c14aaf4360217b21c94a073c711697a7c40a8f85  docs/gateway/proof-log-public-policy-1.md
+dc6daf3c05b19efd328377e65f69312aad1025fc0c0fd9946a24ef60be61c390  docs/gateway/guardian-set-proof-log-public-spec-1.md
+
+=== current git status ===
+?? docs/gateway/evidence/guardian-set-proof-log-public-spec-review-1/
