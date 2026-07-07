@@ -5652,3 +5652,50 @@ Read-only Network Baseline.5 does not call RPC, use testnet, read ProgramData, p
 Next safe step:
 
 Read-only Network Precheck Package.1 — exact scoped read-only precheck package draft.
+
+
+## Read-only Network Precheck Package.1 exact scoped read-only precheck package draft
+
+The Read-only Network Precheck Package.1 draft is recorded in:
+
+docs/gateway/read-only-network-precheck-package-1-exact-scoped-read-only-precheck-package-draft.md
+
+Evidence directory:
+
+docs/gateway/evidence/read-only-network-precheck-package-1-exact-scoped-read-only-precheck-package-draft
+
+Current status:
+
+READ_ONLY_NETWORK_PRECHECK_PACKAGE_1_OPEN_EXACT_SCOPED_READ_ONLY_PRECHECK_PACKAGE_DRAFT_NO_RPC_NO_TESTNET_NO_PROGRAMDATA_READ_NO_MUTATION
+
+Current decision:
+
+EXACT_SCOPED_READ_ONLY_PRECHECK_PACKAGE_DRAFT_RECORDED_READ_ONLY_GO_NOT_GRANTED
+
+Current GO state:
+
+READ_ONLY_PRECHECK_GO_NOT_GRANTED
+
+Draft package id:
+
+RONPP1_DRAFT_f3bff313af20
+
+Source commit:
+
+f3bff313af205285d4635fa709fc04f162edbb05
+
+Proposed RPC endpoint:
+
+https://rpc.testnet.x1.xyz
+
+Expected canonical ProgramData executable-bytes SHA256:
+
+e68ada36e1914584c2dcc186afbdfcba608b286fc2cd404015a7a8c28764daa1
+
+This is repo-only draft.
+
+Read-only Network Precheck Package.1 does not call RPC, use testnet, read ProgramData, perform live hash comparison, deploy, upgrade, write buffer, sign, submit, or mutate.
+
+Next safe step:
+
+Read-only Network Precheck Package.2 — exact scoped read-only precheck package requirements/invariant review.
