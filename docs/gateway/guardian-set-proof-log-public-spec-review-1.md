@@ -2,7 +2,7 @@
 
 Status:
 
-GUARDIAN_SET_PROOF_LOG_PUBLIC_SPEC_REVIEW_1_READY_FOR_REVIEW_EXECUTION_BLOCKED
+GUARDIAN_SET_PROOF_LOG_PUBLIC_SPEC_REVIEW_1_APPROVED_REVIEW_ONLY_EXECUTION_BLOCKED
 
 ## Scope
 review_only=true
@@ -148,6 +148,45 @@ upgrade_completed=false
 
 ## Result
 review_package_prepared=true
-review_verdict_received=false
+review_verdict_received=true
 execution_remains_blocked=true
-next_step=request_public_spec_review_verdict
+next_step=program-id-binding-resolution-plan_or_guardian-set-proof-log-policy-refinement-1
+
+
+## Actual public spec review verdict
+
+verdict_file=docs/gateway/evidence/guardian-set-proof-log-public-spec-review-1/theo-public-spec-review-verdict.txt
+external_review_verdict=APPROVE_GUARDIAN_SET_PROOF_LOG_PUBLIC_SPEC_REVIEW_1_REVIEW_ONLY
+review_result=ALL_REVIEW_PASS_CRITERIA_MET_WITH_DOCUMENTED_NON_BLOCKING_GAPS
+
+guardian_policy_review_passed=true
+proof_log_policy_review_passed=true
+
+non_blocking_gap_1=append_only_or_tamper_evident_publication_policy_needs_more_explicit_section
+non_blocking_gap_2=retention_policy_needs_more_explicit_archival_duration_and_strategy
+non_blocking_gap_3=operator_publication_flow_needs_more_explicit_who_how_where
+gap_impact=safe_while_execution_blocked
+recommended_followup=guardian-set-proof-log-policy-refinement-1_before_blocker_removal
+
+ProductionGuardianSetUnset_remains_active=true
+ProductionProofLogUnset_remains_active=true
+blocker_removal_completed=false
+activation_execution_completed=false
+rpc_mutation_completed=false
+route_enablement_completed=false
+deploy_completed=false
+upgrade_completed=false
+
+approved_next_package_primary=program-id-binding-resolution-plan
+approved_next_package_alternative=guardian-set-proof-log-policy-refinement-1
+
+execution_remains_blocked=true
+activation_authorized=false
+rpc_mutation_authorized=false
+route_enablement_authorized=false
+deploy_authorized=false
+upgrade_authorized=false
+source_change_authorized=false
+blocker_removal_authorized=false
+cleanup_authorized=false
+separate_exact_activation_go_required=true
