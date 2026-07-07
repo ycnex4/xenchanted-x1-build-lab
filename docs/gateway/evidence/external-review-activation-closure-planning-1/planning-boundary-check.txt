@@ -1,0 +1,8 @@
+diff_check_status=0
+planning_only=true
+source_change_authorized=false
+activation_authorized=false
+rpc_mutation_authorized=false
+route_enablement_authorized=false
+deploy_authorized=false
+upgrade_authorized=false
