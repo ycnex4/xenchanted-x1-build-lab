@@ -1,0 +1,165 @@
+   Compiling xxxl-svm v0.1.0 (/mnt/c/Users/user/xenchanted-x1-build-lab/programs/xxxl-svm)
+warning: unused imports: `ProcessedEventAccountView` and `RecipientBalanceAccountView`
+  --> src/execution_plan.rs:16:39
+   |
+16 |     state::{credit_recipient_balance, ProcessedEventAccountView, RecipientBalanceAccountView},
+   |                                       ^^^^^^^^^^^^^^^^^^^^^^^^^  ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+   |
+   = note: `#[warn(unused_imports)]` on by default
+
+warning: unused import: `clock::Clock`
+  --> src/processor.rs:12:32
+   |
+12 |     account_info::AccountInfo, clock::Clock, entrypoint::ProgramResult, msg,
+   |                                ^^^^^^^^^^^^
+
+warning: unused imports: `raw_payload_decoder_report` and `read_only_verifier_boundary`
+ --> src/verifier/canonical_payload.rs:5:34
+  |
+5 |     decode_guardian_payload_raw, raw_payload_decoder_report, read_only_verifier_boundary,
+  |                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^  ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: type `Phase41F_1CheckedByteExtractionStatus` should have an upper camel case name
+  --> src/verifier/checked_ed25519_byte_extraction_boundary.rs:18:10
+   |
+18 | pub enum Phase41F_1CheckedByteExtractionStatus {
+   |          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ help: convert the identifier to upper camel case: `Phase41f1checkedByteExtractionStatus`
+   |
+   = note: `#[warn(non_camel_case_types)]` on by default
+
+warning: type `Phase41F_1ExtractedEd25519ByteSlices` should have an upper camel case name
+  --> src/verifier/checked_ed25519_byte_extraction_boundary.rs:32:12
+   |
+32 | pub struct Phase41F_1ExtractedEd25519ByteSlices<'a> {
+   |            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ help: convert the identifier to upper camel case: `Phase41f1extractedEd25519byteSlices`
+
+warning: type `Phase41F_1CheckedByteExtractionResult` should have an upper camel case name
+  --> src/verifier/checked_ed25519_byte_extraction_boundary.rs:42:12
+   |
+42 | pub struct Phase41F_1CheckedByteExtractionResult<'a> {
+   |            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ help: convert the identifier to upper camel case: `Phase41f1checkedByteExtractionResult`
+
+warning: type `Phase41F_1CheckedByteExtractionBoundaryReport` should have an upper camel case name
+  --> src/verifier/checked_ed25519_byte_extraction_boundary.rs:76:12
+   |
+76 | pub struct Phase41F_1CheckedByteExtractionBoundaryReport {
+   |            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ help: convert the identifier to upper camel case: `Phase41f1checkedByteExtractionBoundaryReport`
+
+warning: type `Phase41E_1Ed25519ByteParsingStatus` should have an upper camel case name
+  --> src/verifier/ed25519_instruction_byte_parsing_boundary.rs:26:10
+   |
+26 | pub enum Phase41E_1Ed25519ByteParsingStatus {
+   |          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ help: convert the identifier to upper camel case: `Phase41e1ed25519byteParsingStatus`
+
+warning: type `Phase41E_1ByteRange` should have an upper camel case name
+  --> src/verifier/ed25519_instruction_byte_parsing_boundary.rs:46:12
+   |
+46 | pub struct Phase41E_1ByteRange {
+   |            ^^^^^^^^^^^^^^^^^^^ help: convert the identifier to upper camel case: `Phase41e1byteRange`
+
+warning: type `Phase41E_1Ed25519InstructionIndexReferences` should have an upper camel case name
+  --> src/verifier/ed25519_instruction_byte_parsing_boundary.rs:52:12
+   |
+52 | pub struct Phase41E_1Ed25519InstructionIndexReferences {
+   |            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ help: convert the identifier to upper camel case: `Phase41e1ed25519instructionIndexReferences`
+
+warning: type `Phase41E_1ParsedEd25519Offsets` should have an upper camel case name
+  --> src/verifier/ed25519_instruction_byte_parsing_boundary.rs:59:12
+   |
+59 | pub struct Phase41E_1ParsedEd25519Offsets {
+   |            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ help: convert the identifier to upper camel case: `Phase41e1parsedEd25519offsets`
+
+warning: type `Phase41E_1Ed25519ByteParsingResult` should have an upper camel case name
+  --> src/verifier/ed25519_instruction_byte_parsing_boundary.rs:71:12
+   |
+71 | pub struct Phase41E_1Ed25519ByteParsingResult {
+   |            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ help: convert the identifier to upper camel case: `Phase41e1ed25519byteParsingResult`
+
+warning: type `Phase41E_1Ed25519ByteParsingBoundaryReport` should have an upper camel case name
+   --> src/verifier/ed25519_instruction_byte_parsing_boundary.rs:107:12
+    |
+107 | pub struct Phase41E_1Ed25519ByteParsingBoundaryReport {
+    |            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ help: convert the identifier to upper camel case: `Phase41e1ed25519byteParsingBoundaryReport`
+
+warning: type `Phase41F_2Ed25519VerificationModel` should have an upper camel case name
+  --> src/verifier/ed25519_signature_verification_boundary.rs:21:10
+   |
+21 | pub enum Phase41F_2Ed25519VerificationModel {
+   |          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ help: convert the identifier to upper camel case: `Phase41f2ed25519verificationModel`
+
+warning: type `Phase41F_2Ed25519SignatureVerificationStatus` should have an upper camel case name
+  --> src/verifier/ed25519_signature_verification_boundary.rs:26:10
+   |
+26 | pub enum Phase41F_2Ed25519SignatureVerificationStatus {
+   |          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ help: convert the identifier to upper camel case: `Phase41f2ed25519signatureVerificationStatus`
+
+warning: type `Phase41F_2VerifiedEd25519SignatureRanges` should have an upper camel case name
+  --> src/verifier/ed25519_signature_verification_boundary.rs:41:12
+   |
+41 | pub struct Phase41F_2VerifiedEd25519SignatureRanges {
+   |            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ help: convert the identifier to upper camel case: `Phase41f2verifiedEd25519signatureRanges`
+
+warning: type `Phase41F_2Ed25519SignatureVerificationResult` should have an upper camel case name
+  --> src/verifier/ed25519_signature_verification_boundary.rs:48:12
+   |
+48 | pub struct Phase41F_2Ed25519SignatureVerificationResult {
+   |            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ help: convert the identifier to upper camel case: `Phase41f2ed25519signatureVerificationResult`
+
+warning: type `Phase41F_2Ed25519SignatureVerificationBoundaryReport` should have an upper camel case name
+  --> src/verifier/ed25519_signature_verification_boundary.rs:85:12
+   |
+85 | pub struct Phase41F_2Ed25519SignatureVerificationBoundaryReport {
+   |            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ help: convert the identifier to upper camel case: `Phase41f2ed25519signatureVerificationBoundaryReport`
+
+warning: unused import: `Phase41C1RuntimeApiSelection`
+ --> src/verifier/instructions_sysvar_accountinfo_presence_readability_runtime_boundary.rs:6:59
+  |
+6 |     Phase41C1InstructionsSysvarPresenceReadabilityResult, Phase41C1RuntimeApiSelection,
+  |                                                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: use of deprecated module `solana_program::system_instruction`: Use `solana_system_interface` crate instead
+ --> src/processed_event_marking_boundary.rs:3:17
+  |
+3 |     rent::Rent, system_instruction, system_program,
+  |                 ^^^^^^^^^^^^^^^^^^
+  |
+  = note: `#[warn(deprecated)]` on by default
+
+warning: use of deprecated module `solana_program::system_program`: Use `solana_sdk_ids::system_program` instead
+ --> src/processed_event_marking_boundary.rs:3:37
+  |
+3 |     rent::Rent, system_instruction, system_program,
+  |                                     ^^^^^^^^^^^^^^
+
+warning: use of deprecated module `solana_program::system_program`: Use `solana_sdk_ids::system_program` instead
+  --> src/processor.rs:13:62
+   |
+13 |     program_error::ProgramError, pubkey::Pubkey, rent::Rent, system_program, sysvar::Sysvar,
+   |                                                              ^^^^^^^^^^^^^^
+
+warning: unused import: `sysvar::Sysvar`
+  --> src/processor.rs:13:78
+   |
+13 |     program_error::ProgramError, pubkey::Pubkey, rent::Rent, system_program, sysvar::Sysvar,
+   |                                                                              ^^^^^^^^^^^^^^
+
+warning: unused variable: `matched_instruction_index`
+   --> src/verifier/prefilter_phase_41c3_candidate_descriptor_runtime_boundary.rs:281:9
+    |
+281 |     let matched_instruction_index = phase_41c3_result.matched_instruction_index;
+    |         ^^^^^^^^^^^^^^^^^^^^^^^^^ help: if this is intentional, prefix it with an underscore: `_matched_instruction_index`
+    |
+    = note: `#[warn(unused_variables)]` on by default
+
+warning: associated function `from_program_controlled_on_chain_source` is never used
+  --> src/verifier/guardian_membership_validation_boundary.rs:33:19
+   |
+32 | impl<'a> AuthoritativeGuardianSetRef<'a> {
+   | ---------------------------------------- associated function in this implementation
+33 |     pub(crate) fn from_program_controlled_on_chain_source(
+   |                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+   |
+   = note: `#[warn(dead_code)]` on by default
+
+warning: `xxxl-svm` (lib) generated 25 warnings (run `cargo fix --lib -p xxxl-svm` to apply 4 suggestions)
+    Finished `release` profile [optimized] target(s) in 14.44s

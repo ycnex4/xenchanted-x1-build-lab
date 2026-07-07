@@ -5389,3 +5389,43 @@ Actual local build/hash execution still requires the user to provide the exact G
 Next safe step:
 
 BuildHash Execution.2 — local build/hash execution after exact GO.
+
+## BuildHash Execution.2 local build/hash execution after exact GO
+
+Status:
+
+BUILDHASH_EXECUTION_2_COMPLETED_LOCAL_BUILD_HASH_AFTER_EXACT_GO_NO_RPC_NO_TESTNET_NO_MUTATION
+
+Final package id:
+
+BHX2_LOCAL_BUILD_HASH_ee0cb44f7d49
+
+Bound program source commit:
+
+ee0cb44f7d496e010e784608d0c7ccc8e84e7fb6
+
+Current repo commit at execution:
+
+0863ab1b14aaea1f2ca6b8803cadb7665abecb73
+
+Artifact path:
+
+programs/xxxl-svm/target/deploy/xxxl_svm.so
+
+Artifact size bytes:
+
+20840
+
+Local artifact SHA256:
+
+e68ada36e1914584c2dcc186afbdfcba608b286fc2cd404015a7a8c28764daa1
+
+Canonical ProgramData executable-bytes SHA256:
+
+e68ada36e1914584c2dcc186afbdfcba608b286fc2cd404015a7a8c28764daa1
+
+RPC/testnet/deploy/upgrade/sign/submit/mutation were not executed.
+
+Next safe step:
+
+Read-only Network Baseline.1 — precheck package planning only.
