@@ -6122,3 +6122,33 @@ No RPC, testnet call, ProgramData read, executable bytes dump from network, live
 Next safe step:
 
 Investigation result decision / deploy-readiness decision.
+
+## Investigation Result Decision.1 live testnet binary differs
+
+Decision record:
+
+docs/gateway/investigation-result-decision-1-live-testnet-binary-differs.md
+
+Status:
+
+INVESTIGATION_RESULT_DECISION_1_LIVE_TESTNET_BINARY_DIFFERENT_STALE_OR_UNKNOWN_DEPLOY_UPGRADE_BLOCKED_NO_RPC_NO_MUTATION
+
+Classification:
+
+LIVE_TESTNET_BINARY_DIFFERENT_STALE_OR_UNKNOWN
+
+Fresh local hash:
+
+e68ada36e1914584c2dcc186afbdfcba608b286fc2cd404015a7a8c28764daa1
+
+Observed live testnet hash:
+
+fd4d3b659ccaea4f5e24eca4d9e80ff808c43de1bf1ecef7315961751a085a7e
+
+Conclusion:
+
+The expected local build hash is valid. The live testnet binary differs from the current local build and is classified as stale/different/unknown.
+
+Deploy/upgrade remains blocked until a separate scoped package and separate exact GO.
+
+No RPC, testnet call, ProgramData read, executable bytes dump, live hash comparison, deploy, upgrade, write-buffer, signing, submit, or mutation is approved by this checkpoint.
