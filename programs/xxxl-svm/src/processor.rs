@@ -95,6 +95,8 @@ compile_error!(
     "phase-41k6-b1c7-handler-integration-test-gate wires the guardian-authorized ConsumeGatewayMint mark+mint path. It is a non-production integration gate and must never be included in deploy artifacts without the explicit dangerous test allow feature."
 );
 
+pub const LIVE_ROUTE_ACTIVATION_MODE: &str = "ACTIVATION_PACKAGE_GATED";
+pub const LIVE_ROUTE_ACTIVATION_CONFIGURABLE_BY_ACTIVATION_PACKAGE: bool = true;
 pub const LIVE_ROUTE_ACTIVATION_FROM_PROCESS_INSTRUCTION_ENABLED: bool = false;
 
 pub struct PreparedConsumeGatewayMintCpi<'a, 'b> {

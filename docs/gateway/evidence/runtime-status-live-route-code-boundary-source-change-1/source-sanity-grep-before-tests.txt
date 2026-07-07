@@ -1,0 +1,33 @@
+=== old scaffold marker in source ===
+
+=== new runtime marker in source ===
+programs/xxxl-svm/src/deployment_status.rs:95:        status_code: "SOURCE_BOUNDARY_READY_ACTIVATION_BLOCKED",
+programs/xxxl-svm/src/deployment_status.rs:105:                "SOURCE_BOUNDARY_READY_ACTIVATION_BLOCKED"
+programs/xxxl-svm/src/deployment_status.rs:281:        assert_eq!(XXXL_RUNTIME_STATUS, "SOURCE_BOUNDARY_READY_ACTIVATION_BLOCKED");
+programs/xxxl-svm/src/deployment_status.rs:288:            "SOURCE_BOUNDARY_READY_ACTIVATION_BLOCKED"
+programs/xxxl-svm/src/deployment_status.rs:483:        assert_eq!(report.status_code, "SOURCE_BOUNDARY_READY_ACTIVATION_BLOCKED");
+programs/xxxl-svm/src/deployment_status.rs:520:                assert_eq!(report.status_code, "SOURCE_BOUNDARY_READY_ACTIVATION_BLOCKED");
+programs/xxxl-svm/src/lib.rs:56:pub const XXXL_RUNTIME_STATUS: &str = "SOURCE_BOUNDARY_READY_ACTIVATION_BLOCKED";
+
+=== old execution step marker ===
+programs/xxxl-svm/src/execution_plan.rs:262:            AtomicExecutionStep::KeepLiveRouteDisabled,
+programs/xxxl-svm/src/execution_plan.rs:581:            AtomicExecutionStep::KeepLiveRouteDisabled,
+programs/xxxl-svm/src/execution_plan.rs:722:            AtomicExecutionStep::KeepLiveRouteDisabled,
+programs/xxxl-svm/src/execution_plan.rs:960:            AtomicExecutionStep::KeepLiveRouteDisabled,
+
+=== new execution step marker ===
+programs/xxxl-svm/src/execution_plan.rs:24:    KeepLiveRouteActivationPackageGated,
+programs/xxxl-svm/src/execution_plan.rs:31:    AtomicExecutionStep::KeepLiveRouteActivationPackageGated,
+
+=== live route execution flag remains false ===
+programs/xxxl-svm/src/processor.rs:100:pub const LIVE_ROUTE_ACTIVATION_FROM_PROCESS_INSTRUCTION_ENABLED: bool = false;
+
+=== possible broken syntax leftovers ===
+9:    LiveRouteDisabled,
+46:    XxxlRuntimeDeploymentBlocker::LiveRouteDisabled,
+61:        blocker: XxxlRuntimeDeploymentBlocker::LiveRouteDisabled,
+123:            XxxlRuntimeDeploymentBlocker::LiveRouteDisabled => "LIVE_ROUTE_DISABLED",
+144:            XxxlRuntimeDeploymentBlocker::LiveRouteDisabled => {
+173:            XxxlRuntimeDeploymentBlocker::LiveRouteDisabled => {
+302:        assert!(blockers.contains(&XxxlRuntimeDeploymentBlocker::LiveRouteDisabled));
+331:            XxxlRuntimeDeploymentBlocker::LiveRouteDisabled.description(),

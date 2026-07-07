@@ -1,0 +1,7 @@
+ programs/xxxl-svm/src/cpi.rs               |  4 +++
+ programs/xxxl-svm/src/deployment_status.rs | 50 +++++++++++++++-----------
+ programs/xxxl-svm/src/execution_plan.rs    | 12 +++----
+ programs/xxxl-svm/src/lib.rs               | 43 +++++++++++-----------
+ programs/xxxl-svm/src/processor.rs         |  2 ++
+ programs/xxxl-svm/src/program_id_status.rs | 57 ++++++++++++++++++------------
+ 6 files changed, 97 insertions(+), 71 deletions(-)

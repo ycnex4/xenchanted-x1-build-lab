@@ -1,0 +1,104 @@
+programs/xxxl-svm/src/cpi.rs:59:    pub live_route_activation_enabled: bool,
+programs/xxxl-svm/src/cpi.rs:68:    if execution_plan.live_route_activation_enabled
+programs/xxxl-svm/src/cpi.rs:69:        || execution_plan.mint_to_invocation_from_process_instruction_enabled
+programs/xxxl-svm/src/cpi.rs:116:        live_route_activation_enabled: false,
+programs/xxxl-svm/src/cpi.rs:149:    if execution_plan.live_route_activation_enabled
+programs/xxxl-svm/src/cpi.rs:150:        || execution_plan.mint_to_invocation_from_process_instruction_enabled
+programs/xxxl-svm/src/cpi.rs:151:        || planning_boundary.live_route_activation_enabled
+programs/xxxl-svm/src/cpi.rs:367:            live_route_activation_enabled: false,
+programs/xxxl-svm/src/cpi.rs:368:            mint_to_invocation_from_process_instruction_enabled: false,
+programs/xxxl-svm/src/cpi.rs:473:                planning_boundary.live_route_activation_enabled = true;
+programs/xxxl-svm/src/cpi.rs:501:            live_route_activation_enabled: false,
+programs/xxxl-svm/src/cpi.rs:557:                assert!(!plan.live_route_activation_enabled);
+programs/xxxl-svm/src/cpi.rs:621:        execution_plan.live_route_activation_enabled = true;
+programs/xxxl-svm/src/cpi.rs:648:        execution_plan.mint_to_invocation_from_process_instruction_enabled = true;
+programs/xxxl-svm/src/deployment_status.rs:31:    pub deployable: bool,
+programs/xxxl-svm/src/deployment_status.rs:95:        status_code: "SOURCE_BOUNDARY_READY_ACTIVATION_BLOCKED",
+programs/xxxl-svm/src/deployment_status.rs:98:        deployable: false,
+programs/xxxl-svm/src/deployment_status.rs:106:                "SOURCE_BOUNDARY_READY_ACTIVATION_BLOCKED"
+programs/xxxl-svm/src/deployment_status.rs:263:    crate::processor::LIVE_ROUTE_ACTIVATION_FROM_PROCESS_INSTRUCTION_ENABLED
+programs/xxxl-svm/src/deployment_status.rs:284:            "SOURCE_BOUNDARY_READY_ACTIVATION_BLOCKED"
+programs/xxxl-svm/src/deployment_status.rs:292:            "SOURCE_BOUNDARY_READY_ACTIVATION_BLOCKED"
+programs/xxxl-svm/src/deployment_status.rs:489:            "SOURCE_BOUNDARY_READY_ACTIVATION_BLOCKED"
+programs/xxxl-svm/src/deployment_status.rs:529:                    "SOURCE_BOUNDARY_READY_ACTIVATION_BLOCKED"
+programs/xxxl-svm/src/execution_plan.rs:24:    KeepLiveRouteActivationPackageGated,
+programs/xxxl-svm/src/execution_plan.rs:31:    AtomicExecutionStep::KeepLiveRouteActivationPackageGated,
+programs/xxxl-svm/src/execution_plan.rs:44:    pub live_route_activation_enabled: bool,
+programs/xxxl-svm/src/execution_plan.rs:45:    pub mint_to_invocation_from_process_instruction_enabled: bool,
+programs/xxxl-svm/src/execution_plan.rs:80:        live_route_activation_enabled: false,
+programs/xxxl-svm/src/execution_plan.rs:81:        mint_to_invocation_from_process_instruction_enabled: false,
+programs/xxxl-svm/src/execution_plan.rs:93:    if execution_plan.live_route_activation_enabled
+programs/xxxl-svm/src/execution_plan.rs:94:        || execution_plan.mint_to_invocation_from_process_instruction_enabled
+programs/xxxl-svm/src/execution_plan.rs:116:    if execution_plan.live_route_activation_enabled
+programs/xxxl-svm/src/execution_plan.rs:117:        || execution_plan.mint_to_invocation_from_process_instruction_enabled
+programs/xxxl-svm/src/execution_plan.rs:140:    if execution_plan.live_route_activation_enabled
+programs/xxxl-svm/src/execution_plan.rs:141:        || execution_plan.mint_to_invocation_from_process_instruction_enabled
+programs/xxxl-svm/src/execution_plan.rs:262:            AtomicExecutionStep::KeepLiveRouteActivationPackageGated,
+programs/xxxl-svm/src/execution_plan.rs:356:        assert!(!plan.live_route_activation_enabled);
+programs/xxxl-svm/src/execution_plan.rs:357:        assert!(!plan.mint_to_invocation_from_process_instruction_enabled);
+programs/xxxl-svm/src/execution_plan.rs:543:        plan.live_route_activation_enabled = true;
+programs/xxxl-svm/src/execution_plan.rs:560:        plan.mint_to_invocation_from_process_instruction_enabled = true;
+programs/xxxl-svm/src/execution_plan.rs:581:            AtomicExecutionStep::KeepLiveRouteActivationPackageGated,
+programs/xxxl-svm/src/execution_plan.rs:684:        plan.live_route_activation_enabled = true;
+programs/xxxl-svm/src/execution_plan.rs:701:        plan.mint_to_invocation_from_process_instruction_enabled = true;
+programs/xxxl-svm/src/execution_plan.rs:722:            AtomicExecutionStep::KeepLiveRouteActivationPackageGated,
+programs/xxxl-svm/src/execution_plan.rs:908:        plan.live_route_activation_enabled = true;
+programs/xxxl-svm/src/execution_plan.rs:932:        plan.mint_to_invocation_from_process_instruction_enabled = true;
+programs/xxxl-svm/src/execution_plan.rs:960:            AtomicExecutionStep::KeepLiveRouteActivationPackageGated,
+programs/xxxl-svm/src/execution_plan.rs:1104:            live_route_activation_enabled: false,
+programs/xxxl-svm/src/execution_plan.rs:1105:            mint_to_invocation_from_process_instruction_enabled: false,
+programs/xxxl-svm/src/lib.rs:56:pub const XXXL_RUNTIME_STATUS: &str = "SOURCE_BOUNDARY_READY_ACTIVATION_BLOCKED";
+programs/xxxl-svm/src/processor.rs:98:pub const LIVE_ROUTE_ACTIVATION_MODE: &str = "ACTIVATION_PACKAGE_GATED";
+programs/xxxl-svm/src/processor.rs:99:pub const LIVE_ROUTE_ACTIVATION_CONFIGURABLE_BY_ACTIVATION_PACKAGE: bool = true;
+programs/xxxl-svm/src/processor.rs:100:pub const LIVE_ROUTE_ACTIVATION_FROM_PROCESS_INSTRUCTION_ENABLED: bool = false;
+programs/xxxl-svm/src/processor.rs:111:    pub live_route_activation_enabled: bool,
+programs/xxxl-svm/src/processor.rs:119:    pub live_route_activation_enabled: bool,
+programs/xxxl-svm/src/processor.rs:127:    pub live_route_activation_enabled: bool,
+programs/xxxl-svm/src/processor.rs:426:    if execution_plan.live_route_activation_enabled
+programs/xxxl-svm/src/processor.rs:427:        || execution_plan.mint_to_invocation_from_process_instruction_enabled
+programs/xxxl-svm/src/processor.rs:446:    if execution_plan.live_route_activation_enabled
+programs/xxxl-svm/src/processor.rs:447:        || execution_plan.mint_to_invocation_from_process_instruction_enabled
+programs/xxxl-svm/src/processor.rs:455:    if mint_to_cpi_plan.live_route_activation_enabled
+programs/xxxl-svm/src/processor.rs:464:        live_route_activation_enabled: false,
+programs/xxxl-svm/src/processor.rs:485:    if planning_composition.live_route_activation_enabled
+programs/xxxl-svm/src/processor.rs:489:            .live_route_activation_enabled
+programs/xxxl-svm/src/processor.rs:492:            .mint_to_invocation_from_process_instruction_enabled
+programs/xxxl-svm/src/processor.rs:495:            .live_route_activation_enabled
+programs/xxxl-svm/src/processor.rs:522:        live_route_activation_enabled: false,
+programs/xxxl-svm/src/processor.rs:538:    if execution_plan.live_route_activation_enabled
+programs/xxxl-svm/src/processor.rs:539:        || execution_plan.mint_to_invocation_from_process_instruction_enabled
+programs/xxxl-svm/src/processor.rs:547:    if mint_to_cpi_plan.live_route_activation_enabled
+programs/xxxl-svm/src/processor.rs:584:        live_route_activation_enabled: false,
+programs/xxxl-svm/src/processor.rs:1163:        assert!(!plan.live_route_activation_enabled);
+programs/xxxl-svm/src/processor.rs:1164:        assert!(!plan.mint_to_invocation_from_process_instruction_enabled);
+programs/xxxl-svm/src/processor.rs:1213:        assert!(!execution_plan.live_route_activation_enabled);
+programs/xxxl-svm/src/processor.rs:1214:        assert!(!execution_plan.mint_to_invocation_from_process_instruction_enabled);
+programs/xxxl-svm/src/processor.rs:1248:        assert!(!composition.execution_plan.live_route_activation_enabled);
+programs/xxxl-svm/src/processor.rs:1252:                .mint_to_invocation_from_process_instruction_enabled
+programs/xxxl-svm/src/processor.rs:1262:        assert!(!composition.mint_to_cpi_plan.live_route_activation_enabled);
+programs/xxxl-svm/src/processor.rs:1269:        assert!(!composition.live_route_activation_enabled);
+programs/xxxl-svm/src/program_id_status.rs:17:    pub deployable_path_ready: bool,
+programs/xxxl-svm/src/program_id_status.rs:29:        status_code: "X1_TESTNET_PROGRAM_ID_BOUNDARY_REVIEWED_ACTIVATION_BLOCKED",
+programs/xxxl-svm/src/program_id_status.rs:32:        deployable_path_ready: true,
+programs/xxxl-svm/src/program_id_status.rs:42:                "X1_TESTNET_PROGRAM_ID_BOUNDARY_REVIEWED_ACTIVATION_BLOCKED"
+programs/xxxl-svm/src/program_id_status.rs:68:pub fn xxxl_program_id_deployable_path_ready() -> bool {
+programs/xxxl-svm/src/program_id_status.rs:69:    xxxl_program_id_readiness_report().deployable_path_ready
+programs/xxxl-svm/src/program_id_status.rs:90:            "X1_TESTNET_PROGRAM_ID_BOUNDARY_REVIEWED_ACTIVATION_BLOCKED"
+programs/xxxl-svm/src/program_id_status.rs:108:            "X1_TESTNET_PROGRAM_ID_BOUNDARY_REVIEWED_ACTIVATION_BLOCKED"
+programs/xxxl-svm/src/program_id_status.rs:115:        assert!(report.deployable_path_ready);
+programs/xxxl-svm/src/program_id_status.rs:139:        assert!(xxxl_program_id_deployable_path_ready());
+programs/xxxl-svm/src/safety_invariants.rs:18:    pub runtime_deployable: bool,
+programs/xxxl-svm/src/safety_invariants.rs:22:    pub live_route_activation_enabled: bool,
+programs/xxxl-svm/src/safety_invariants.rs:32:            && !self.live_route_activation_enabled
+programs/xxxl-svm/src/safety_invariants.rs:39:        runtime_deployable: xxxl_runtime_is_deployable(),
+programs/xxxl-svm/src/safety_invariants.rs:44:        live_route_activation_enabled:
+programs/xxxl-svm/src/safety_invariants.rs:78:    pub live_route_activation_enabled: bool,
+programs/xxxl-svm/src/safety_invariants.rs:87:        live_route_activation_enabled: summary.live_route_activation_enabled,
+programs/xxxl-svm/src/safety_invariants.rs:88:        consistent: !(summary.blocking_invariants_hold() && summary.live_route_activation_enabled),
+programs/xxxl-svm/src/safety_invariants.rs:148:    pub runtime_deployable: bool,
+programs/xxxl-svm/src/safety_invariants.rs:161:        runtime_deployable: safety_summary.runtime_deployable,
+programs/xxxl-svm/src/safety_invariants.rs:211:    let live_route_disabled = !safety_summary.live_route_activation_enabled;
+programs/xxxl-svm/src/safety_invariants.rs:423:        assert!(!summary.live_route_activation_enabled);
+programs/xxxl-svm/src/safety_invariants.rs:452:        assert!(!report.live_route_activation_enabled);
+programs/xxxl-svm/src/verifier/boundary.rs:213:        assert_eq!(boundary.status.code(), "READ_ONLY_SCAFFOLD_ONLY");
+programs/xxxl-svm/src/verifier/types.rs:10:            VerifierBoundaryStatus::ReadOnlyScaffoldOnly => "READ_ONLY_SCAFFOLD_ONLY",

@@ -1,6 +1,6 @@
 #[derive(Clone, Copy, Debug, PartialEq, Eq)]
 pub enum XxxlRuntimeDeploymentStatus {
-    ScaffoldOnlyNotDeployable,
+    SourceBoundaryReadyActivationBlocked,
 }
 
 #[derive(Clone, Copy, Debug, PartialEq, Eq)]
@@ -39,7 +39,7 @@ pub enum XxxlRuntimeDeploymentGateResult {
 }
 
 pub const XXXL_RUNTIME_DEPLOYMENT_STATUS: XxxlRuntimeDeploymentStatus =
-    XxxlRuntimeDeploymentStatus::ScaffoldOnlyNotDeployable;
+    XxxlRuntimeDeploymentStatus::SourceBoundaryReadyActivationBlocked;
 
 pub const XXXL_RUNTIME_DEPLOYMENT_BLOCKERS: [XxxlRuntimeDeploymentBlocker; 6] = [
     XxxlRuntimeDeploymentBlocker::PlaceholderProgramId,
@@ -92,8 +92,9 @@ pub const XXXL_RUNTIME_DEPLOYMENT_BLOCKER_REPORTS: [XxxlRuntimeDeploymentBlocker
 pub const XXXL_RUNTIME_DEPLOYMENT_REPORT: XxxlRuntimeDeploymentReport =
     XxxlRuntimeDeploymentReport {
         status: XXXL_RUNTIME_DEPLOYMENT_STATUS,
-        status_code: "SCAFFOLD_ONLY_NOT_DEPLOYABLE",
-        status_description: "The XXXL SVM runtime is a scaffold-only build and is not deployable.",
+        status_code: "SOURCE_BOUNDARY_READY_ACTIVATION_BLOCKED",
+        status_description:
+            "The XXXL SVM runtime source boundary is ready, but activation remains blocked.",
         deployable: false,
         blockers: &XXXL_RUNTIME_DEPLOYMENT_BLOCKER_REPORTS,
     };
@@ -101,16 +102,16 @@ pub const XXXL_RUNTIME_DEPLOYMENT_REPORT: XxxlRuntimeDeploymentReport =
 impl XxxlRuntimeDeploymentStatus {
     pub fn code(self) -> &'static str {
         match self {
-            XxxlRuntimeDeploymentStatus::ScaffoldOnlyNotDeployable => {
-                "SCAFFOLD_ONLY_NOT_DEPLOYABLE"
+            XxxlRuntimeDeploymentStatus::SourceBoundaryReadyActivationBlocked => {
+                "SOURCE_BOUNDARY_READY_ACTIVATION_BLOCKED"
             }
         }
     }
 
     pub fn description(self) -> &'static str {
         match self {
-            XxxlRuntimeDeploymentStatus::ScaffoldOnlyNotDeployable => {
-                "The XXXL SVM runtime is a scaffold-only build and is not deployable."
+            XxxlRuntimeDeploymentStatus::SourceBoundaryReadyActivationBlocked => {
+                "The XXXL SVM runtime source boundary is ready, but activation remains blocked."
             }
         }
     }
@@ -272,24 +273,27 @@ mod tests {
     use crate::{XXXL_PROGRAM_ID_PLACEHOLDER, XXXL_RUNTIME_STATUS};
 
     #[test]
-    fn runtime_status_is_scaffold_only_not_deployable() {
+    fn runtime_status_is_source_boundary_ready_activation_blocked() {
         assert_eq!(
             xxxl_runtime_deployment_status(),
-            XxxlRuntimeDeploymentStatus::ScaffoldOnlyNotDeployable
+            XxxlRuntimeDeploymentStatus::SourceBoundaryReadyActivationBlocked
         );
         assert!(!xxxl_runtime_is_deployable());
-        assert_eq!(XXXL_RUNTIME_STATUS, "SCAFFOLD_ONLY_NOT_DEPLOYABLE");
+        assert_eq!(
+            XXXL_RUNTIME_STATUS,
+            "SOURCE_BOUNDARY_READY_ACTIVATION_BLOCKED"
+        );
     }
 
     #[test]
     fn runtime_status_code_and_description_are_human_readable() {
         assert_eq!(
             xxxl_runtime_deployment_status_code(),
-            "SCAFFOLD_ONLY_NOT_DEPLOYABLE"
+            "SOURCE_BOUNDARY_READY_ACTIVATION_BLOCKED"
         );
         assert_eq!(
             xxxl_runtime_deployment_status_description(),
-            "The XXXL SVM runtime is a scaffold-only build and is not deployable."
+            "The XXXL SVM runtime source boundary is ready, but activation remains blocked."
         );
     }
 
@@ -473,17 +477,20 @@ mod tests {
     }
 
     #[test]
-    fn runtime_deployment_report_is_stable_and_not_deployable() {
+    fn runtime_deployment_report_is_source_boundary_ready_and_activation_blocked() {
         let report = xxxl_runtime_deployment_report();
 
         assert_eq!(
             report.status,
-            XxxlRuntimeDeploymentStatus::ScaffoldOnlyNotDeployable
+            XxxlRuntimeDeploymentStatus::SourceBoundaryReadyActivationBlocked
         );
-        assert_eq!(report.status_code, "SCAFFOLD_ONLY_NOT_DEPLOYABLE");
+        assert_eq!(
+            report.status_code,
+            "SOURCE_BOUNDARY_READY_ACTIVATION_BLOCKED"
+        );
         assert_eq!(
             report.status_description,
-            "The XXXL SVM runtime is a scaffold-only build and is not deployable."
+            "The XXXL SVM runtime source boundary is ready, but activation remains blocked."
         );
         assert!(!report.deployable);
         assert_eq!(report.blockers.len(), 6);
@@ -517,12 +524,15 @@ mod tests {
     fn runtime_predeploy_gate_is_blocked_for_current_report() {
         match xxxl_runtime_deployment_gate_result() {
             XxxlRuntimeDeploymentGateResult::Blocked(report) => {
-                assert_eq!(report.status_code, "SCAFFOLD_ONLY_NOT_DEPLOYABLE");
+                assert_eq!(
+                    report.status_code,
+                    "SOURCE_BOUNDARY_READY_ACTIVATION_BLOCKED"
+                );
                 assert!(!report.deployable);
                 assert_eq!(report.blockers.len(), 6);
             }
             XxxlRuntimeDeploymentGateResult::Ready(_) => {
-                panic!("current XXXL runtime must not pass the predeploy gate");
+                panic!("activation-blocked XXXL runtime must not pass the predeploy gate");
             }
         }
 
@@ -542,7 +552,7 @@ mod tests {
                 assert_eq!(blocked_report.blockers.len(), report.blockers.len());
             }
             XxxlRuntimeDeploymentGateResult::Ready(_) => {
-                panic!("current XXXL runtime unexpectedly passed the predeploy gate");
+                panic!("activation-blocked XXXL runtime unexpectedly passed the predeploy gate");
             }
         }
     }
