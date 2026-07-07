@@ -1,0 +1,118 @@
+# Read-only Network Baseline.4 invariant review matrix
+
+RONB4_INVARIANT_01_CURRENT_GO_NOT_GRANTED:
+status: reviewed
+result: true
+meaning: Current GO state remains READ_ONLY_NETWORK_GO_NOT_GRANTED.
+
+RONB4_INVARIANT_02_SELECTED_MODEL_STRICT_READ_ONLY:
+status: reviewed
+result: true
+meaning: Selected model is STRICT_READ_ONLY_NETWORK_PRECHECK_WITH_EXACT_GO_ONLY.
+
+RONB4_INVARIANT_03_RONB3_NOT_EXECUTABLE:
+status: reviewed
+result: true
+meaning: RONB3 is decision-model-only and not executable.
+
+RONB4_INVARIANT_04_RPC_NOT_APPROVED_NOW:
+status: reviewed
+result: true
+meaning: RPC remains not approved in RONB4.
+
+RONB4_INVARIANT_05_TESTNET_NOT_APPROVED_NOW:
+status: reviewed
+result: true
+meaning: Testnet call remains not approved in RONB4.
+
+RONB4_INVARIANT_06_PROGRAMDATA_READ_NOT_APPROVED_NOW:
+status: reviewed
+result: true
+meaning: ProgramData read remains not approved in RONB4.
+
+RONB4_INVARIANT_07_LIVE_HASH_COMPARISON_NOT_APPROVED_NOW:
+status: reviewed
+result: true
+meaning: Live hash comparison remains not approved in RONB4.
+
+RONB4_INVARIANT_08_MUTATION_NOT_APPROVED_NOW:
+status: reviewed
+result: true
+meaning: Mutation remains not approved in RONB4.
+
+RONB4_INVARIANT_09_EXACT_GO_REQUIRED_FOR_FUTURE_PRECHECK:
+status: reviewed
+result: true
+meaning: A later exact scoped user GO phrase remains required before any read-only network precheck.
+
+RONB4_INVARIANT_10_EXACT_RPC_ENDPOINT_REQUIRED:
+status: reviewed
+result: true
+meaning: A future package must bind an exact RPC endpoint.
+
+RONB4_INVARIANT_11_X1_TESTNET_BINDING_REQUIRED:
+status: reviewed
+result: true
+meaning: A future package must bind X1_TESTNET network identity.
+
+RONB4_INVARIANT_12_PROGRAM_ID_AND_PROGRAMDATA_BINDINGS_REQUIRED:
+status: reviewed
+result: true
+meaning: Future precheck must bind program id and ProgramData account.
+
+RONB4_INVARIANT_13_EXPECTED_AUTHORITY_BINDING_REQUIRED:
+status: reviewed
+result: true
+meaning: Future precheck must verify observed upgrade authority.
+
+RONB4_INVARIANT_14_EXPECTED_HASH_BINDING_REQUIRED:
+status: reviewed
+result: true
+meaning: Expected hash remains e68ada36e1914584c2dcc186afbdfcba608b286fc2cd404015a7a8c28764daa1.
+
+RONB4_INVARIANT_15_HASH_DOMAIN_AND_ALGORITHM_REQUIRED:
+status: reviewed
+result: true
+meaning: Hash domain and SHA256 algorithm remain required.
+
+RONB4_INVARIANT_16_NO_SIGNER_KEYPAIR_SECRET:
+status: reviewed
+result: true
+meaning: Signer flags, keypair paths, and secret material remain forbidden.
+
+RONB4_INVARIANT_17_NO_TRANSACTION_SUBMIT:
+status: reviewed
+result: true
+meaning: Transaction submit remains forbidden.
+
+RONB4_INVARIANT_18_NO_DEPLOY_UPGRADE_WRITE_BUFFER:
+status: reviewed
+result: true
+meaning: Deploy, upgrade, and write-buffer remain forbidden.
+
+RONB4_INVARIANT_19_NO_STATE_SPL_GUARDIAN_MUTATION:
+status: reviewed
+result: true
+meaning: State initialization, SPL setup, guardian package construction, and mutation remain forbidden.
+
+RONB4_INVARIANT_20_STOP_ON_MISMATCH:
+status: reviewed
+result: true
+meaning: Any identity, authority, hash, method, command, or boundary mismatch remains a stop condition.
+
+RONB4_INVARIANT_21_NO_AUTOMATIC_RETRY:
+status: reviewed
+result: true
+meaning: Automatic retry remains rejected.
+
+RONB4_AGGREGATE:
+all_invariants_reviewed: true
+read_only_precheck_model_closure_ready: true
+closure_type: narrow_exact_read_only_network_precheck_model_boundary_only
+current_go_state: READ_ONLY_NETWORK_GO_NOT_GRANTED
+rpc_approved_now: false
+testnet_approved_now: false
+programdata_read_approved_now: false
+live_hash_comparison_approved_now: false
+execution_approved: false
+mutation_approved_now: false

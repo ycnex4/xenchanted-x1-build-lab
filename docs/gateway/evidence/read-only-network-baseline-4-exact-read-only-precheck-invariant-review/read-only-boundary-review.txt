@@ -1,0 +1,37 @@
+# Read-only Network Baseline.4 read-only boundary review
+
+reviewed:
+- selected model
+- current GO state
+- exact future GO requirement
+- exact RPC endpoint requirement
+- X1 testnet network binding
+- program id binding
+- ProgramData account binding
+- expected upgrade authority binding
+- expected hash binding
+- canonical hash domain
+- hash algorithm
+- success criteria
+- stop conditions
+- no signer/keypair/secret boundary
+- no transaction submit boundary
+- no deploy/upgrade/write-buffer boundary
+- no state/SPL/guardian/mutation boundary
+- stop on mismatch rule
+- no automatic retry rule
+
+review_result:
+The RONB3 decision model is ready for narrow closure in RONB5.
+
+closure_candidate:
+STRICT_READ_ONLY_NETWORK_PRECHECK_MODEL_REVIEWED_RPC_NOT_APPROVED_EXECUTION_NOT_APPROVED
+
+closure_must_not_approve:
+- RPC
+- testnet call
+- ProgramData read
+- live hash comparison
+- signing
+- transaction submit
+- mutation
