@@ -1,0 +1,16 @@
+future_exact_go_phrase=GO_TESTNET_UPGRADE_EXISTING_PROGRAM_ONLY_TDEX1_SOURCE_DE6C96A_EXPECTED_E68ADA36_PROGRAM_D7AQMZNT
+
+status:
+DEFINED_BUT_NOT_GRANTED
+
+binding:
+source_commit=de6c96a90b5dc54d4b88cbda00d7d7175874e1c2
+program_id=D7AQmZNtFFFoJbducz93atteeSZhw3jq6RmsqBvaf1my
+programdata_account=9tuesaPoJhrifF49vJewcg6PSWZeHAJiqQ97pq3LMW9T
+expected_hash=e68ada36e1914584c2dcc186afbdfcba608b286fc2cd404015a7a8c28764daa1
+expected_size=20840
+path=UPGRADE_EXISTING_PROGRAM_ONLY
+scope=upgrade_existing_program_only
+
+not_authorized:
+This phrase is not granted by this closure checkpoint.

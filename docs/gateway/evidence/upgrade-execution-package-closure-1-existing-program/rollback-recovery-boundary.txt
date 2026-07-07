@@ -1,0 +1,17 @@
+rollback_status:
+not_automatic
+
+stale_binary_recovery:
+The stale live binary was dumped earlier as:
+docs/gateway/evidence/read-only-network-precheck-execution-1-after-exact-go/observed-xxxl-svm.so
+
+rollback_policy:
+No rollback is authorized by this closure package.
+If upgrade fails before final upgrade transaction, stop and preserve buffer evidence.
+If upgrade succeeds but post-upgrade verification fails, stop and create separate rollback/recovery package.
+
+authority_recovery:
+Upgrade authority must remain DTfvjtRL63u3XYHXQfgRQCdhEanUK1qqawvfEAM9hxAc unless separately changed by an approved package.
+
+buffer_cleanup:
+If buffer cleanup is needed, it requires separate cleanup package and separate exact GO.

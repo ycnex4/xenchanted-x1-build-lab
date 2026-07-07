@@ -1,0 +1,30 @@
+buffer_pattern=WRITE_BUFFER_THEN_UPGRADE
+
+buffer_keypair_env_var:
+X1_UPGRADE_BUFFER_KEYPAIR
+
+buffer_keypair_source:
+local temporary file keypair
+
+buffer_keypair_repo_storage:
+forbidden
+
+buffer_keypair_chat_disclosure:
+forbidden
+
+buffer_creation:
+future execution package creates or verifies local buffer keypair only after exact GO
+
+buffer_funding:
+upgrade authority / fee payer funds buffer creation and upload transaction fees
+
+minimum_authority_balance_policy:
+authority balance must be >= 0.35 SOL before write-buffer
+
+rent_policy:
+future execution must record rent estimate for 20840 bytes before write-buffer.
+If 2x rent-exempt amount plus fee cushion exceeds 0.35 SOL, STOP.
+
+buffer_cleanup_plan:
+If write-buffer succeeds but upgrade is aborted before final upgrade, close or recover buffer only in a separate cleanup package with separate exact GO.
+No cleanup mutation is authorized by this closure package.
