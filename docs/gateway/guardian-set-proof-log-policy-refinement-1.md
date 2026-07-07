@@ -1,0 +1,127 @@
+# Guardian Set / Proof Log Policy Refinement.1
+
+Status:
+
+GUARDIAN_SET_PROOF_LOG_POLICY_REFINEMENT_1_COMPLETED_DOCUMENTATION_ONLY_EXECUTION_BLOCKED
+
+## Scope
+documentation_only=true
+source_change_authorized=false
+blocker_removal_authorized=false
+activation_authorized=false
+rpc_mutation_authorized=false
+route_enablement_authorized=false
+deploy_authorized=false
+upgrade_authorized=false
+cleanup_authorized=false
+
+## Approval basis
+theo_verdict=APPROVE_GUARDIAN_SET_PROOF_LOG_PUBLIC_SPEC_REVIEW_1_REVIEW_ONLY
+theo_approved_next_package_alternative=guardian-set-proof-log-policy-refinement-1
+scope=DOCUMENTATION_ONLY
+execution_blocked=true
+source_change_authorized=false
+blocker_removal_authorized=false
+activation_authorized=false
+rpc_mutation_authorized=false
+route_enablement_authorized=false
+deploy_authorized=false
+upgrade_authorized=false
+cleanup_authorized=false
+main_at_start=04cdd2b
+previous_main=04cdd2b
+previous_package=docs/gateway/guardian-set-proof-log-public-spec-review-1.md
+previous_status=GUARDIAN_SET_PROOF_LOG_PUBLIC_SPEC_REVIEW_1_APPROVED_REVIEW_ONLY_EXECUTION_BLOCKED
+refinement_gap_1=append_only_or_tamper_evident_publication_policy_needs_more_explicit_section
+refinement_gap_2=retention_policy_needs_more_explicit_archival_duration_and_strategy
+refinement_gap_3=operator_publication_flow_needs_more_explicit_who_how_where
+ProductionGuardianSetUnset_remains_active=true
+ProductionProofLogUnset_remains_active=true
+separate_exact_activation_go_required=true
+
+## Refinement gap map
+package_scope=DOCUMENTATION_ONLY
+source_change_authorized=false
+blocker_removal_authorized=false
+activation_authorized=false
+rpc_mutation_authorized=false
+route_enablement_authorized=false
+deploy_authorized=false
+upgrade_authorized=false
+cleanup_authorized=false
+
+review_source=docs/gateway/evidence/guardian-set-proof-log-public-spec-review-1/theo-public-spec-review-verdict.txt
+review_verdict=APPROVE_GUARDIAN_SET_PROOF_LOG_PUBLIC_SPEC_REVIEW_1_REVIEW_ONLY
+review_result=ALL_REVIEW_PASS_CRITERIA_MET_WITH_DOCUMENTED_NON_BLOCKING_GAPS
+
+gap_1=append_only_or_tamper_evident_publication_policy_needs_more_explicit_section
+refinement_target_1=docs/gateway/proof-log-public-policy-1.md
+refinement_action_1=add_explicit_append_only_or_tamper_evident_publication_section
+
+gap_2=retention_policy_needs_more_explicit_archival_duration_and_strategy
+refinement_target_2=docs/gateway/proof-log-public-policy-1.md
+refinement_action_2=add_explicit_retention_and_archival_strategy_section
+
+gap_3=operator_publication_flow_needs_more_explicit_who_how_where
+refinement_target_3=docs/gateway/proof-log-public-policy-1.md
+refinement_action_3=add_explicit_operator_publication_flow_section
+
+ProductionGuardianSetUnset_remains_active=true
+ProductionProofLogUnset_remains_active=true
+blocker_removal_completed=false
+activation_execution_completed=false
+execution_remains_blocked=true
+
+## Refinement actions
+refined_gap_1=append_only_or_tamper_evident_publication_policy_explicit_section_added
+refined_gap_2=retention_policy_archival_duration_and_strategy_explicit_section_added
+refined_gap_3=operator_publication_flow_who_how_where_explicit_section_added
+refinement_target=docs/gateway/proof-log-public-policy-1.md
+documentation_only=true
+source_change_authorized=false
+blocker_removal_authorized=false
+activation_authorized=false
+rpc_mutation_authorized=false
+route_enablement_authorized=false
+deploy_authorized=false
+upgrade_authorized=false
+execution_remains_blocked=true
+
+## Document refined
+refined_document=docs/gateway/proof-log-public-policy-1.md
+
+## Gaps addressed
+gap_1_addressed=true
+gap_1_result=append_only_or_tamper_evident_publication_policy_explicit_section_added
+gap_2_addressed=true
+gap_2_result=retention_and_archival_strategy_explicit_section_added
+gap_3_addressed=true
+gap_3_result=operator_publication_flow_explicit_section_added
+
+## Added policy sections
+added_section_1=Append-only / tamper-evident publication policy
+added_section_2=Operator publication flow
+added_section_3=Retention and archival strategy
+
+## Blocker state
+ProductionGuardianSetUnset_remains_active=true
+ProductionProofLogUnset_remains_active=true
+blocker_removal_completed=false
+source_change_completed=false
+activation_execution_completed=false
+rpc_mutation_completed=false
+route_enablement_completed=false
+deploy_completed=false
+upgrade_completed=false
+
+## Next package
+next_package=program-id-binding-resolution-plan
+next_package_scope=SOURCE_CHANGE_PLANNING_OR_SOURCE_ONLY_AS_EXPLICITLY_APPROVED
+next_package_goal=resolve_placeholder_program_id_binding_before_live_route_or_spl_cpi_activation
+next_package_must_not_enable_activation=true
+next_package_must_not_perform_rpc_mutation=true
+next_package_must_not_deploy_or_upgrade=true
+
+## Result
+documentation_refinement_completed=true
+execution_remains_blocked=true
