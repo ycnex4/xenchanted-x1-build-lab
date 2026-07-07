@@ -1,0 +1,100 @@
+# Runtime Blocker Closure Package Planning.1
+
+Status:
+
+RUNTIME_BLOCKER_CLOSURE_PACKAGE_PLANNING_1_COMPLETED_EXECUTION_BLOCKED
+
+## Theo approval
+theo_verdict=APPROVE_RUNTIME_BLOCKER_CLOSURE_PACKAGE_PLANNING_ONLY
+execution_blocked=true
+activation_authorized=false
+rpc_mutation_authorized=false
+route_enablement_authorized=false
+scope=PLANNING_ONLY
+main_at_start=8f5b845
+
+## Blocker closure criteria
+package_scope=PLANNING_ONLY
+execution_authorized=false
+
+blocker=runtime_status_scaffold_only_not_deployable
+closed_means=runtime code no longer declares scaffold-only/not-deployable status and deployable_path_ready is intentionally true
+closed_by=code_change_plus_review
+evidence=source_diff_tests_review_note
+rpc_mutation_required=false
+
+blocker=live_route_activation_disabled
+closed_means=live route activation is intentionally enabled in code/config and guarded by tests
+closed_by=code_change_plus_tests
+evidence=source_diff_tests_activation_boundary_doc
+rpc_mutation_required=false_or_activation_execution_dependent
+
+blocker=spl_cpi_execution_disabled_or_unreviewed
+closed_means=SPL CPI execution path is reviewed, intentionally enabled if needed, and covered by tests
+closed_by=code_review_plus_tests
+evidence=source_diff_cpi_review_tests
+rpc_mutation_required=false
+
+blocker=production_guardian_set_unset
+closed_means=production/testnet guardian set for activation is defined and bound by package
+closed_by=human_decision_plus_config_or_state_plan
+evidence=guardian_set_record_no_private_keys
+rpc_mutation_required=maybe_only_if_onchain_state_binding_required
+
+blocker=production_proof_log_unset
+closed_means=proof log destination/schema/storage binding is defined and testable
+closed_by=human_decision_plus_config_or_state_plan
+evidence=proof_log_record_schema_tests
+rpc_mutation_required=maybe_only_if_onchain_state_binding_required
+
+blocker=integration_test_sequence_not_completed
+closed_means=defined integration test sequence passes against intended target without unauthorized mutation
+closed_by=test_result
+evidence=test_logs_summary
+rpc_mutation_required=read_only_or_testnet_mutation_depending_on_test_scope
+
+blocker=external_review_not_completed_for_activation
+closed_means=Theo/external review approves activation package closure readiness
+closed_by=external_review
+evidence=review_verdict_record
+rpc_mutation_required=false
+
+## Blocker closure type map
+package_scope=PLANNING_ONLY
+execution_authorized=false
+
+code_change_required=runtime_status_scaffold_only_not_deployable
+code_change_required=live_route_activation_disabled
+code_or_review_required=spl_cpi_execution_disabled_or_unreviewed
+
+human_decision_required=production_guardian_set_unset
+human_decision_required=production_proof_log_unset
+
+test_result_required=integration_test_sequence_not_completed
+external_review_required=external_review_not_completed_for_activation
+
+rpc_mutation_now_authorized=false
+activation_now_authorized=false
+
+## Blocker closure order
+package_scope=PLANNING_ONLY
+execution_authorized=false
+
+closure_order_1=runtime_status_scaffold_only_not_deployable
+closure_order_2=live_route_activation_disabled
+closure_order_3=spl_cpi_execution_disabled_or_unreviewed
+closure_order_4=production_guardian_set_unset
+closure_order_5=production_proof_log_unset
+closure_order_6=integration_test_sequence_not_completed
+closure_order_7=external_review_not_completed_for_activation
+
+reason=code_and_runtime_boundaries_before_human_binding_before_tests_before_external_review
+activation_now_authorized=false
+rpc_mutation_now_authorized=false
+
+## Result
+runtime_blocker_closure_planning_completed=true
+activation_authorized=false
+rpc_mutation_authorized=false
+route_enablement_authorized=false
+next_step=runtime_status_and_live_route_code_boundary_package
