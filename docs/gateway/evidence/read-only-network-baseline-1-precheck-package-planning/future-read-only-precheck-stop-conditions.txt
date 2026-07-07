@@ -1,0 +1,19 @@
+# Future read-only network precheck stop conditions
+
+stop_if:
+- exact scoped GO phrase is missing or differs
+- RPC endpoint is missing, ambiguous, or not explicitly selected
+- network is not X1 testnet
+- program id differs
+- ProgramData account differs
+- upgrade authority differs
+- ProgramData cannot be read
+- executable bytes cannot be extracted or canonicalized
+- observed executable-bytes SHA256 cannot be computed
+- observed executable-bytes SHA256 differs from expected hash
+- any signing is requested
+- any transaction submit is requested
+- any deploy/upgrade/write-buffer/mutation action is attempted
+- any secret material is requested, printed, or required
+
+automatic_retry: rejected

@@ -5429,3 +5429,52 @@ RPC/testnet/deploy/upgrade/sign/submit/mutation were not executed.
 Next safe step:
 
 Read-only Network Baseline.1 — precheck package planning only.
+
+
+## Read-only Network Baseline.1 precheck package planning
+
+The Read-only Network Baseline.1 planning record is recorded in:
+
+docs/gateway/read-only-network-baseline-1-precheck-package-planning.md
+
+Evidence directory:
+
+docs/gateway/evidence/read-only-network-baseline-1-precheck-package-planning
+
+Current status:
+
+READ_ONLY_NETWORK_BASELINE_1_OPEN_PRECHECK_PACKAGE_PLANNING_ONLY_NO_RPC_NO_TESTNET_NO_MUTATION
+
+Current decision:
+
+READ_ONLY_NETWORK_PRECHECK_PACKAGE_SHAPE_SELECTED_RPC_NOT_APPROVED
+
+Current GO state:
+
+READ_ONLY_NETWORK_GO_NOT_GRANTED
+
+Expected local artifact SHA256:
+
+e68ada36e1914584c2dcc186afbdfcba608b286fc2cd404015a7a8c28764daa1
+
+Expected canonical ProgramData executable-bytes SHA256:
+
+e68ada36e1914584c2dcc186afbdfcba608b286fc2cd404015a7a8c28764daa1
+
+Program id:
+
+D7AQmZNtFFFoJbducz93atteeSZhw3jq6RmsqBvaf1my
+
+ProgramData account:
+
+9tuesaPoJhrifF49vJewcg6PSWZeHAJiqQ97pq3LMW9T
+
+Observed upgrade authority:
+
+DTfvjtRL63u3XYHXQfgRQCdhEanUK1qqawvfEAM9hxAc
+
+Read-only Network Baseline.1 does not call RPC, use testnet, read ProgramData, deploy, upgrade, write buffer, sign, submit, or mutate.
+
+Next safe step:
+
+Read-only Network Baseline.2 — exact read-only precheck requirements inventory.
