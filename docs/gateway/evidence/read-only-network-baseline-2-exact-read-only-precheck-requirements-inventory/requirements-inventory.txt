@@ -1,0 +1,85 @@
+# Read-only Network Baseline.2 requirements inventory
+
+operation_class: READ_ONLY_NETWORK_BASELINE_PRECHECK_REQUIREMENTS_INVENTORY_ONLY
+requirements_status: INVENTORIED_NOT_EXECUTABLE
+current_go_state: READ_ONLY_NETWORK_GO_NOT_GRANTED
+
+RONB2_REQ_01_EXACT_NETWORK_BINDING:
+required: true
+current_value: X1_TESTNET
+status: inventoried
+
+RONB2_REQ_02_RPC_ENDPOINT_SELECTION:
+required: true
+current_value: UNSET_NOT_SELECTED
+status: deferred_to_future_exact_precheck_package
+
+RONB2_REQ_03_PROGRAM_ID_BINDING:
+required: true
+current_value: D7AQmZNtFFFoJbducz93atteeSZhw3jq6RmsqBvaf1my
+status: inventoried
+
+RONB2_REQ_04_PROGRAMDATA_ACCOUNT_BINDING:
+required: true
+current_value: 9tuesaPoJhrifF49vJewcg6PSWZeHAJiqQ97pq3LMW9T
+status: inventoried
+
+RONB2_REQ_05_EXPECTED_UPGRADE_AUTHORITY_BINDING:
+required: true
+current_value: DTfvjtRL63u3XYHXQfgRQCdhEanUK1qqawvfEAM9hxAc
+status: inventoried
+
+RONB2_REQ_06_EXPECTED_HASH_BINDING:
+required: true
+current_value: e68ada36e1914584c2dcc186afbdfcba608b286fc2cd404015a7a8c28764daa1
+status: inventoried
+
+RONB2_REQ_07_CANONICAL_HASH_DOMAIN:
+required: true
+current_value: PROGRAMDATA_EXECUTABLE_BYTES_EXCLUDING_LOADER_METADATA
+status: inventoried
+
+RONB2_REQ_08_HASH_ALGORITHM:
+required: true
+current_value: SHA256
+status: inventoried
+
+RONB2_REQ_09_READ_ONLY_METHOD_SELECTION:
+required: true
+current_value: UNSET_NOT_SELECTED
+status: deferred_to_future_exact_precheck_package
+
+RONB2_REQ_10_EVIDENCE_PATH_SELECTION:
+required: true
+current_value: UNSET_NOT_SELECTED
+status: deferred_to_future_exact_precheck_package
+
+RONB2_REQ_11_EXACT_GO_PHRASE_SELECTION:
+required: true
+current_value: UNSET_NOT_SELECTED
+status: deferred_to_future_exact_precheck_package
+
+RONB2_REQ_12_NO_SIGNING:
+required: true
+current_value: signing_forbidden
+status: inventoried
+
+RONB2_REQ_13_NO_TRANSACTION_SUBMIT:
+required: true
+current_value: submit_forbidden
+status: inventoried
+
+RONB2_REQ_14_NO_MUTATION:
+required: true
+current_value: mutation_forbidden
+status: inventoried
+
+RONB2_REQ_15_STOP_ON_MISMATCH:
+required: true
+current_value: stop_on_any_identity_authority_hash_method_boundary_mismatch
+status: inventoried
+
+RONB2_REQ_16_NO_AUTOMATIC_RETRY:
+required: true
+current_value: automatic_retry_rejected
+status: inventoried
