@@ -1,0 +1,5 @@
+build_command=cargo build-sbf --manifest-path programs/xxxl-svm/Cargo.toml --no-default-features
+artifact_path=programs/xxxl-svm/target/deploy/xxxl_svm.so
+build_started_utc=2026-07-07T02:42:47Z
+build_finished_utc=2026-07-07T02:43:03Z
+build_exit_code=0

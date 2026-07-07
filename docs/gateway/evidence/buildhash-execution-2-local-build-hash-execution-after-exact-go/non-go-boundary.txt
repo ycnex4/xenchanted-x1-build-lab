@@ -1,0 +1,20 @@
+# BuildHash Execution.2 non-GO boundary
+
+BuildHash Execution.2 executed only local build/hash after exact GO.
+
+BuildHash Execution.2 did not approve or execute:
+- RPC
+- testnet
+- deploy
+- upgrade
+- write-buffer
+- authority change
+- state initialization
+- SPL setup
+- guardian package construction
+- signing
+- transaction submit
+- mutation
+- production activation
+
+Any future read-only network baseline/precheck or mutation package requires a separate scoped package.

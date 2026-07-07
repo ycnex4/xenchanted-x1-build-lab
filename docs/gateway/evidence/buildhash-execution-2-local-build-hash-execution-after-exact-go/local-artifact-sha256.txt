@@ -1,0 +1,5 @@
+artifact_path=programs/xxxl-svm/target/deploy/xxxl_svm.so
+artifact_exists=true
+artifact_non_empty=true
+artifact_size_bytes=20840
+local_artifact_sha256=e68ada36e1914584c2dcc186afbdfcba608b286fc2cd404015a7a8c28764daa1
