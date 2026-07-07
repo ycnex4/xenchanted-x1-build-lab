@@ -1,0 +1,23 @@
+# Non-GO boundary
+
+This alignment checkpoint does not grant GO.
+
+This alignment checkpoint does not approve:
+- RPC
+- testnet call
+- ProgramData read
+- executable bytes dump
+- live hash comparison
+- deploy
+- upgrade
+- write-buffer
+- authority change
+- state initialization
+- SPL setup
+- guardian package construction
+- signing
+- transaction submit
+- mutation
+- production activation
+
+This checkpoint only records Theo verdict, diff classification, and aligned read-only precheck package binding.

@@ -1,0 +1,19 @@
+ docs/checkpoints/current-design-checkpoint.md      | 122 ++++++
+ .../allowed-next-step.txt                          |  36 ++
+ .../closure-summary.txt                            |  52 +++
+ .../final-exact-go-phrase.txt                      |  19 +
+ .../final-read-only-command-set.txt                |  37 ++
+ .../final-stop-conditions.txt                      |  25 ++
+ .../final-success-criteria.txt                     |  34 ++
+ .../metadata.txt                                   |  23 ++
+ .../non-go-boundary.txt                            |  25 ++
+ .../remaining-gap-summary.txt                      |  11 +
+ .../metadata.txt                                   |  21 +
+ .../non-go-boundary.txt                            |  23 ++
+ .../progress-state.txt                             |  32 ++
+ .../theo-review-questions.txt                      |  27 ++
+ ...ed-read-only-precheck-package-closure-record.md | 424 +++++++++++++++++++++
+ ...stnet-deploy-checkpoint-1-before-theo-review.md | 219 +++++++++++
+ docs/gateway/testnet-deploy-progress-tracker.md    | 122 ++++++
+ ...package-testnet-deploy-boundary-after-ronpp3.md | 199 ++++++++++
+ 18 files changed, 1451 insertions(+)

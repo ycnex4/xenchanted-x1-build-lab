@@ -1,0 +1,27 @@
+# Theo repo-grounded verdict record
+
+verdict_timestamp_user_supplied: 2026-07-07 14:59
+
+primary_verdict:
+APPROVE_RONPP3_ALIGNMENT_BEFORE_READ_ONLY_PRECHECK
+
+recommended_option:
+Option A — new exact GO phrase bound to current main.
+
+repo_grounded_findings_from_theo:
+- diff fead873b9d8d -> 18ff514 is docs-only
+- code changes: ZERO
+- build artifacts: no change
+- expected SHA256: no change
+- Program ID: no change
+- ProgramData account: no change
+- RONPP3 bindings remain valid
+- alignment checkpoint is still recommended because execution will happen from current main
+- read-only precheck is the correct next execution step after alignment
+- deploy/upgrade must remain a separate operation class
+- inert deploy may keep scaffold/placeholder/live-route/SPL-CPI blockers explicitly out of scope
+- functional route requires blockers closed
+- we are not walking in circles
+
+selected_path:
+APPROVE_RONPP3_ALIGNMENT_BEFORE_READ_ONLY_PRECHECK_WITH_NEW_GO_PHRASE_BOUND_TO_CURRENT_MAIN

@@ -5884,3 +5884,67 @@ No RPC, testnet call, ProgramData read, executable bytes dump, live hash compari
 Next safe step:
 
 Send Theo review package and wait for verdict before RONPP3 alignment or read-only precheck execution.
+
+## Testnet Deploy Checkpoint.2 Theo verdict and RONPP3 alignment
+
+The Theo verdict and RONPP3 alignment checkpoint is recorded in:
+
+docs/gateway/testnet-deploy-checkpoint-2-theo-verdict-ronpp3-alignment.md
+
+Progress tracker:
+
+docs/gateway/testnet-deploy-progress-tracker.md
+
+Current status:
+
+TESTNET_DEPLOY_CHECKPOINT_2_THEO_VERDICT_RONPP3_ALIGNMENT_RECORDED_NO_RPC_NO_TESTNET_NO_MUTATION
+
+Current decision:
+
+RONPP3_ALIGNMENT_ACCEPTED_AFTER_THEO_VERDICT_READ_ONLY_PRECHECK_GO_NOT_GRANTED
+
+Current GO state:
+
+READ_ONLY_PRECHECK_GO_NOT_GRANTED
+
+Theo verdict:
+
+APPROVE_RONPP3_ALIGNMENT_BEFORE_READ_ONLY_PRECHECK
+
+Alignment package id:
+
+RONPP3A_READ_ONLY_PRECHECK_18ff5149e850
+
+Current main commit:
+
+18ff5149e8507c11a64e3bbcdc3349b0abde4ef4
+
+Current main short:
+
+18ff5149e850
+
+RONPP3 bound source commit:
+
+fead873b9d8d4e018106d1167e6b27494b03d89e
+
+RONPP3 bound source short:
+
+fead873b9d8d
+
+Diff scope:
+
+DOCS_ONLY
+
+Material code changes:
+
+false
+
+Final exact GO phrase after alignment:
+
+GO_RONPP_READ_ONLY_PRECHECK_ONLY_RONPP3A_READ_ONLY_PRECHECK_18ff5149e850_SOURCE_18ff5149e850
+
+No RPC, testnet call, ProgramData read, executable bytes dump, live hash comparison, deploy, upgrade, write-buffer, signing, submit, or mutation is approved by this checkpoint.
+
+Next safe step:
+
+Read-only Network Precheck Execution.1 — after exact user GO phrase only.

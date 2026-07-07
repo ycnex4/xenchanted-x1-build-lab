@@ -1,0 +1,21 @@
+# Diff scope classification
+
+base_commit: fead873b9d8d4e018106d1167e6b27494b03d89e
+base_short: fead873b9d8d
+current_main_commit: 18ff5149e8507c11a64e3bbcdc3349b0abde4ef4
+current_main_short: 18ff5149e850
+
+diff_line_count: 18
+diff_scope: DOCS_ONLY
+material_code_changes: false
+
+classification:
+The diff from RONPP3 bound source commit to current main was inspected by path.
+
+Theo's repo-grounded verdict states that the diff is documentation-only, with zero code changes and no build/hash/program-id/programdata changes.
+
+local_path_classification:
+DOCS_ONLY
+
+non_doc_paths_file:
+docs/gateway/evidence/testnet-deploy-checkpoint-2-theo-verdict-ronpp3-alignment/non-doc-paths.txt

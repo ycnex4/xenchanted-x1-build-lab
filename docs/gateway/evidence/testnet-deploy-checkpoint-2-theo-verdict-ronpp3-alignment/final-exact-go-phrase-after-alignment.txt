@@ -1,0 +1,34 @@
+# Final exact GO phrase after RONPP3 alignment
+
+phrase_status: FINAL_SELECTED_NOT_GRANTED_UNTIL_USER_REPEATS_VERBATIM
+
+old_ronpp3_go_phrase:
+GO_RONPP_READ_ONLY_PRECHECK_ONLY_RONPP3_READ_ONLY_PRECHECK_fead873b9d8d_SOURCE_fead873b9d8d
+
+old_ronpp3_go_phrase_status:
+SUPERSEDED_BY_ALIGNMENT_OPTION_A
+
+alignment_package_id:
+RONPP3A_READ_ONLY_PRECHECK_18ff5149e850
+
+current_main_commit:
+18ff5149e8507c11a64e3bbcdc3349b0abde4ef4
+
+current_main_short:
+18ff5149e850
+
+final_exact_go_phrase:
+GO_RONPP_READ_ONLY_PRECHECK_ONLY_RONPP3A_READ_ONLY_PRECHECK_18ff5149e850_SOURCE_18ff5149e850
+
+meaning:
+- authorize only READ_ONLY_NETWORK_PRECHECK_ONLY
+- bind alignment package id
+- bind current main short
+- bind X1 testnet
+- bind exact RPC endpoint
+- bind program id
+- bind ProgramData account
+- bind expected hash
+- forbid signer/keypair/submit/mutation/deploy/upgrade
+
+read_only_precheck_go_granted_now: false
