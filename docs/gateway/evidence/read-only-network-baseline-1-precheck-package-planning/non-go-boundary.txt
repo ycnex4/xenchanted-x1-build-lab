@@ -1,0 +1,23 @@
+# Read-only Network Baseline.1 non-GO boundary
+
+Read-only Network Baseline.1 does not grant GO.
+
+Read-only Network Baseline.1 does not approve:
+- RPC
+- testnet call
+- ProgramData read
+- hash comparison against live network
+- deploy
+- upgrade
+- write-buffer
+- authority change
+- state initialization
+- SPL setup
+- guardian package construction
+- signing
+- transaction submit
+- mutation
+- production activation
+
+Read-only Network Baseline.1 is planning-only.
+A later exact scoped GO package is required before any read-only network precheck.
