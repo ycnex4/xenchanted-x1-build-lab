@@ -1,0 +1,31 @@
+# Allowed next step after RONB5
+
+next_safe_step:
+Read-only Network Precheck Package.1 — exact scoped read-only precheck package draft.
+
+next_safe_step_scope:
+- repo-only package draft
+- select package id
+- bind exact operation class
+- propose exact RPC endpoint
+- propose exact read-only command set
+- propose exact evidence path
+- propose exact GO phrase
+- no RPC
+- no testnet call
+- no ProgramData read
+- no live hash comparison
+- no signing
+- no transaction submit
+- no mutation
+
+not_allowed_next_without_later_exact_go:
+- RPC call
+- testnet ProgramData read
+- live hash comparison
+- deploy
+- upgrade
+- write-buffer
+- sign
+- submit
+- mutation

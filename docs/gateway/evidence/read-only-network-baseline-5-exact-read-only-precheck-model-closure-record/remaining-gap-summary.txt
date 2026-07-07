@@ -1,0 +1,15 @@
+# Read-only Network Baseline.5 remaining gaps
+
+- exact read-only precheck package not drafted
+- package id for actual read-only precheck not selected
+- RPC endpoint not selected
+- exact read-only command set not selected
+- exact evidence path not selected
+- exact GO phrase not selected
+- ProgramData read not executed
+- observed upgrade authority not re-read
+- observed executable bytes not extracted
+- observed executable bytes SHA256 not computed
+- observed-vs-expected hash comparison not executed
+- RPC/testnet not approved
+- signing/submit/mutation not approved

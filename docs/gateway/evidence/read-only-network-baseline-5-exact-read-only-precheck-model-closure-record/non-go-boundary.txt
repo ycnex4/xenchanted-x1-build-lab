@@ -1,0 +1,24 @@
+# Read-only Network Baseline.5 non-GO boundary
+
+Read-only Network Baseline.5 does not grant GO.
+
+Read-only Network Baseline.5 does not approve:
+- RPC
+- testnet call
+- ProgramData read
+- live account inspection
+- live hash comparison
+- deploy
+- upgrade
+- write-buffer
+- authority change
+- state initialization
+- SPL setup
+- guardian package construction
+- signing
+- transaction submit
+- mutation
+- production activation
+
+Read-only Network Baseline.5 closes the model only.
+Future read-only network access requires a separate exact scoped package and a later exact user GO phrase.
