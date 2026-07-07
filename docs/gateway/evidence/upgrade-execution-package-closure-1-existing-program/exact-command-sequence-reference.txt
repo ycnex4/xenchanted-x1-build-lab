@@ -1,0 +1,77 @@
+# Exact command sequence reference for future execution only
+
+# This file defines the intended future command sequence.
+# It is NOT authorized by this closure checkpoint.
+# It may only be executed after the exact GO phrase is provided separately.
+
+set -euo pipefail
+
+PHASE="upgrade-execution-1-existing-program-after-exact-go"
+RPC_ENDPOINT="https://rpc.testnet.x1.xyz"
+PROGRAM_ID="D7AQmZNtFFFoJbducz93atteeSZhw3jq6RmsqBvaf1my"
+PROGRAMDATA_ACCOUNT="9tuesaPoJhrifF49vJewcg6PSWZeHAJiqQ97pq3LMW9T"
+EXPECTED_UPGRADE_AUTHORITY="DTfvjtRL63u3XYHXQfgRQCdhEanUK1qqawvfEAM9hxAc"
+EXPECTED_HASH="e68ada36e1914584c2dcc186afbdfcba608b286fc2cd404015a7a8c28764daa1"
+EXPECTED_SIZE="20840"
+MIN_AUTHORITY_BALANCE_SOL="0.35"
+LOCAL_ARTIFACT="programs/xxxl-svm/target/deploy/xxxl_svm.so"
+EVIDENCE_DIR="docs/gateway/evidence/${PHASE}"
+
+test -n "${X1_UPGRADE_AUTHORITY_KEYPAIR:-}"
+test -f "$X1_UPGRADE_AUTHORITY_KEYPAIR"
+test -n "${X1_UPGRADE_BUFFER_KEYPAIR:-}"
+
+AUTHORITY_PUBKEY="$(solana-keygen pubkey "$X1_UPGRADE_AUTHORITY_KEYPAIR")"
+test "$AUTHORITY_PUBKEY" = "$EXPECTED_UPGRADE_AUTHORITY"
+
+cargo build-sbf --manifest-path programs/xxxl-svm/Cargo.toml --no-default-features
+
+FRESH_HASH="$(sha256sum "$LOCAL_ARTIFACT" | cut -d' ' -f1)"
+FRESH_SIZE="$(stat -c%s "$LOCAL_ARTIFACT")"
+test "$FRESH_HASH" = "$EXPECTED_HASH"
+test "$FRESH_SIZE" = "$EXPECTED_SIZE"
+
+solana account "$PROGRAM_ID" --url "$RPC_ENDPOINT" --output json > "$EVIDENCE_DIR/pre-upgrade-program-account.json"
+solana account "$PROGRAMDATA_ACCOUNT" --url "$RPC_ENDPOINT" --output json > "$EVIDENCE_DIR/pre-upgrade-programdata-account.json"
+solana program dump "$PROGRAM_ID" "$EVIDENCE_DIR/pre-upgrade-observed.so" --url "$RPC_ENDPOINT"
+sha256sum "$EVIDENCE_DIR/pre-upgrade-observed.so" > "$EVIDENCE_DIR/pre-upgrade-observed.sha256"
+
+solana balance "$AUTHORITY_PUBKEY" --url "$RPC_ENDPOINT" > "$EVIDENCE_DIR/authority-balance-before.txt"
+solana rent "$EXPECTED_SIZE" --url "$RPC_ENDPOINT" > "$EVIDENCE_DIR/rent-estimate-${EXPECTED_SIZE}.txt"
+
+solana-keygen new --no-bip39-passphrase --force --outfile "$X1_UPGRADE_BUFFER_KEYPAIR"
+BUFFER_PUBKEY="$(solana-keygen pubkey "$X1_UPGRADE_BUFFER_KEYPAIR")"
+echo "$BUFFER_PUBKEY" > "$EVIDENCE_DIR/buffer-pubkey.txt"
+
+solana program write-buffer "$LOCAL_ARTIFACT" \
+  --buffer "$X1_UPGRADE_BUFFER_KEYPAIR" \
+  --upgrade-authority "$X1_UPGRADE_AUTHORITY_KEYPAIR" \
+  --keypair "$X1_UPGRADE_AUTHORITY_KEYPAIR" \
+  --url "$RPC_ENDPOINT" \
+  > "$EVIDENCE_DIR/write-buffer.stdout" \
+  2> "$EVIDENCE_DIR/write-buffer.stderr"
+
+solana program dump "$BUFFER_PUBKEY" "$EVIDENCE_DIR/buffer-observed.so" --url "$RPC_ENDPOINT"
+sha256sum "$EVIDENCE_DIR/buffer-observed.so" > "$EVIDENCE_DIR/buffer-observed.sha256"
+
+BUFFER_HASH="$(cut -d' ' -f1 "$EVIDENCE_DIR/buffer-observed.sha256")"
+BUFFER_SIZE="$(stat -c%s "$EVIDENCE_DIR/buffer-observed.so")"
+test "$BUFFER_HASH" = "$EXPECTED_HASH"
+test "$BUFFER_SIZE" = "$EXPECTED_SIZE"
+
+solana program upgrade "$BUFFER_PUBKEY" "$PROGRAM_ID" \
+  --upgrade-authority "$X1_UPGRADE_AUTHORITY_KEYPAIR" \
+  --keypair "$X1_UPGRADE_AUTHORITY_KEYPAIR" \
+  --url "$RPC_ENDPOINT" \
+  > "$EVIDENCE_DIR/upgrade.stdout" \
+  2> "$EVIDENCE_DIR/upgrade.stderr"
+
+solana account "$PROGRAM_ID" --url "$RPC_ENDPOINT" --output json > "$EVIDENCE_DIR/post-upgrade-program-account.json"
+solana account "$PROGRAMDATA_ACCOUNT" --url "$RPC_ENDPOINT" --output json > "$EVIDENCE_DIR/post-upgrade-programdata-account.json"
+solana program dump "$PROGRAM_ID" "$EVIDENCE_DIR/post-upgrade-observed.so" --url "$RPC_ENDPOINT"
+sha256sum "$EVIDENCE_DIR/post-upgrade-observed.so" > "$EVIDENCE_DIR/post-upgrade-observed.sha256"
+
+POST_HASH="$(cut -d' ' -f1 "$EVIDENCE_DIR/post-upgrade-observed.sha256")"
+POST_SIZE="$(stat -c%s "$EVIDENCE_DIR/post-upgrade-observed.so")"
+test "$POST_HASH" = "$EXPECTED_HASH"
+test "$POST_SIZE" = "$EXPECTED_SIZE"

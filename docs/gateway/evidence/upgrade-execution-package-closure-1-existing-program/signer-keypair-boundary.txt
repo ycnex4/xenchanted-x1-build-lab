@@ -1,0 +1,27 @@
+signer_boundary_status=CONFIRMED_BY_USER
+
+expected_upgrade_authority=DTfvjtRL63u3XYHXQfgRQCdhEanUK1qqawvfEAM9hxAc
+
+keypair_source:
+local file keypair
+
+repo_storage:
+forbidden
+
+chat_disclosure:
+forbidden
+
+env_var_required:
+X1_UPGRADE_AUTHORITY_KEYPAIR
+
+future_execution_required_check:
+solana-keygen pubkey "$X1_UPGRADE_AUTHORITY_KEYPAIR"
+
+required_result:
+DTfvjtRL63u3XYHXQfgRQCdhEanUK1qqawvfEAM9hxAc
+
+stop_if:
+- X1_UPGRADE_AUTHORITY_KEYPAIR is empty
+- file does not exist
+- solana-keygen pubkey fails
+- derived pubkey differs from DTfvjtRL63u3XYHXQfgRQCdhEanUK1qqawvfEAM9hxAc

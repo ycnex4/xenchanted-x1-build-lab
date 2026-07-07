@@ -1,0 +1,23 @@
+Stop immediately during future execution if any occurs:
+
+- X1_UPGRADE_AUTHORITY_KEYPAIR missing
+- authority keypair path does not exist
+- authority pubkey != DTfvjtRL63u3XYHXQfgRQCdhEanUK1qqawvfEAM9hxAc
+- X1_UPGRADE_BUFFER_KEYPAIR missing
+- source commit != de6c96a90b5dc54d4b88cbda00d7d7175874e1c2
+- fresh rebuild hash != e68ada36e1914584c2dcc186afbdfcba608b286fc2cd404015a7a8c28764daa1
+- fresh rebuild size != 20840
+- Program ID mismatch
+- ProgramData account mismatch
+- upgrade authority mismatch
+- authority balance < 0.35 SOL
+- rent/fee requirement exceeds 0.35 SOL policy
+- write-buffer fails
+- buffer hash != e68ada36e1914584c2dcc186afbdfcba608b286fc2cd404015a7a8c28764daa1
+- buffer size != 20840
+- any RPC error
+- timeout on confirmation
+- any command asks for unexpected authority
+- any target differs from D7AQmZNtFFFoJbducz93atteeSZhw3jq6RmsqBvaf1my / 9tuesaPoJhrifF49vJewcg6PSWZeHAJiqQ97pq3LMW9T
+- post-upgrade hash != e68ada36e1914584c2dcc186afbdfcba608b286fc2cd404015a7a8c28764daa1
+- post-upgrade size != 20840

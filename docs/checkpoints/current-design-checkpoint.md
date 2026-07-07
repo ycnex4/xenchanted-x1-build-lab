@@ -6198,3 +6198,49 @@ DEFINED_BUT_NOT_GRANTED
 Execution remains blocked until a separate execution package and separate exact GO.
 
 No RPC, testnet call, write-buffer, upgrade, signing, submit, mutation, deploy/redeploy, or activation is approved by this checkpoint.
+
+## Upgrade Execution Package Closure.1 existing program
+
+Closure record:
+
+docs/gateway/upgrade-execution-package-closure-1-existing-program.md
+
+Status:
+
+UPGRADE_EXECUTION_PACKAGE_CLOSURE_1_EXISTING_PROGRAM_EXECUTION_BLOCKED_NO_RPC_NO_MUTATION
+
+Future exact GO phrase:
+
+GO_TESTNET_UPGRADE_EXISTING_PROGRAM_ONLY_TDEX1_SOURCE_DE6C96A_EXPECTED_E68ADA36_PROGRAM_D7AQMZNT
+
+GO phrase status:
+
+DEFINED_BUT_NOT_GRANTED
+
+Source commit:
+
+de6c96a90b5dc54d4b88cbda00d7d7175874e1c2
+
+Program ID:
+
+D7AQmZNtFFFoJbducz93atteeSZhw3jq6RmsqBvaf1my
+
+ProgramData account:
+
+9tuesaPoJhrifF49vJewcg6PSWZeHAJiqQ97pq3LMW9T
+
+Upgrade authority:
+
+DTfvjtRL63u3XYHXQfgRQCdhEanUK1qqawvfEAM9hxAc
+
+Expected hash:
+
+e68ada36e1914584c2dcc186afbdfcba608b286fc2cd404015a7a8c28764daa1
+
+Expected size:
+
+20840
+
+Execution remains blocked until the separate exact GO phrase is explicitly provided.
+
+No RPC, testnet call, write-buffer, upgrade, signing, submit, mutation, rollback, cleanup, or activation is approved by this checkpoint.

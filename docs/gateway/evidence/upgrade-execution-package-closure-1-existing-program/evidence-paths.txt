@@ -1,0 +1,29 @@
+future_execution_evidence_dir:
+docs/gateway/evidence/upgrade-execution-1-existing-program-after-exact-go
+
+required_future_evidence:
+- exact-go-record.txt
+- signer-keypair-verification.txt
+- buffer-keypair-record.txt
+- build-output.txt
+- fresh-local-artifact.sha256
+- fresh-local-artifact.size
+- pre-upgrade-program-account.json
+- pre-upgrade-programdata-account.json
+- pre-upgrade-observed.so
+- pre-upgrade-observed.sha256
+- authority-balance-before.txt
+- rent-estimate-20840.txt
+- write-buffer.stdout
+- write-buffer.stderr
+- buffer-pubkey.txt
+- buffer-observed.so
+- buffer-observed.sha256
+- upgrade.stdout
+- upgrade.stderr
+- upgrade-signature.txt
+- post-upgrade-program-account.json
+- post-upgrade-programdata-account.json
+- post-upgrade-observed.so
+- post-upgrade-observed.sha256
+- final-verification-summary.txt
