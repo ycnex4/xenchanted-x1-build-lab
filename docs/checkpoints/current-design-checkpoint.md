@@ -5513,3 +5513,38 @@ Read-only Network Baseline.2 does not call RPC, use testnet, read ProgramData, p
 Next safe step:
 
 Read-only Network Baseline.3 — exact read-only precheck decision model.
+
+
+## Read-only Network Baseline.3 exact read-only precheck decision model
+
+The Read-only Network Baseline.3 decision model is recorded in:
+
+docs/gateway/read-only-network-baseline-3-exact-read-only-precheck-decision-model.md
+
+Evidence directory:
+
+docs/gateway/evidence/read-only-network-baseline-3-exact-read-only-precheck-decision-model
+
+Current status:
+
+READ_ONLY_NETWORK_BASELINE_3_OPEN_EXACT_READ_ONLY_PRECHECK_DECISION_MODEL_RECORDED_NO_RPC_NO_TESTNET_NO_MUTATION
+
+Current decision:
+
+STRICT_READ_ONLY_NETWORK_PRECHECK_WITH_EXACT_GO_ONLY_MODEL_REQUIRED_RPC_NOT_APPROVED
+
+Selected model:
+
+STRICT_READ_ONLY_NETWORK_PRECHECK_WITH_EXACT_GO_ONLY
+
+Current GO state:
+
+READ_ONLY_NETWORK_GO_NOT_GRANTED
+
+Read-only Network Baseline.3 records the strict read-only network precheck model only.
+
+Read-only Network Baseline.3 does not call RPC, use testnet, read ProgramData, perform live hash comparison, deploy, upgrade, write buffer, sign, submit, or mutate.
+
+Next safe step:
+
+Read-only Network Baseline.4 — exact read-only precheck invariant review.

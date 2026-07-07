@@ -1,0 +1,24 @@
+# Read-only Network Baseline.3 non-GO boundary
+
+Read-only Network Baseline.3 does not grant GO.
+
+Read-only Network Baseline.3 does not approve:
+- RPC
+- testnet call
+- ProgramData read
+- live account inspection
+- live hash comparison
+- deploy
+- upgrade
+- write-buffer
+- authority change
+- state initialization
+- SPL setup
+- guardian package construction
+- signing
+- transaction submit
+- mutation
+- production activation
+
+Read-only Network Baseline.3 records the decision model only.
+A later exact scoped read-only precheck package and exact user GO phrase are required before any RPC/testnet read.
