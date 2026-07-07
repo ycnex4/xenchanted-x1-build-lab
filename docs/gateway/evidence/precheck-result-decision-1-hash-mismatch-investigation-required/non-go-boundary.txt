@@ -1,0 +1,23 @@
+# Non-GO boundary
+
+This decision checkpoint does not grant GO.
+
+This checkpoint does not approve:
+- new RPC calls
+- testnet calls
+- ProgramData reads
+- executable bytes dumps
+- live hash comparisons
+- deploy
+- upgrade
+- write-buffer
+- authority change
+- state initialization
+- SPL setup
+- guardian package construction
+- signing
+- transaction submit
+- mutation
+- production activation
+
+This checkpoint only records a decision: the hash mismatch stopped correctly and investigation is required before categorization.

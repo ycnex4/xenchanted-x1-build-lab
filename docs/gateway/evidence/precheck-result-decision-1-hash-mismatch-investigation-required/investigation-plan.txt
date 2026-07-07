@@ -1,0 +1,32 @@
+# Investigation plan
+
+Next checkpoint should be local-only unless explicitly scoped otherwise.
+
+Required investigation before deploy/upgrade:
+1. Rebuild from current main using:
+   cargo build-sbf --manifest-path programs/xxxl-svm/Cargo.toml --no-default-features
+
+2. Compute local artifact SHA256.
+
+3. Compare:
+   - fresh local rebuild hash
+   - old expected hash e68ada36e1914584c2dcc186afbdfcba608b286fc2cd404015a7a8c28764daa1
+   - observed live testnet hash fd4d3b659ccaea4f5e24eca4d9e80ff808c43de1bf1ecef7315961751a085a7e
+
+4. Interpret:
+   - if fresh local rebuild == e68ada36e1914584c2dcc186afbdfcba608b286fc2cd404015a7a8c28764daa1, expected hash remains current and live testnet binary is different/stale/unknown.
+   - if fresh local rebuild != e68ada36e1914584c2dcc186afbdfcba608b286fc2cd404015a7a8c28764daa1, expected hash is stale or build environment changed.
+   - if fresh local rebuild == fd4d3b659ccaea4f5e24eca4d9e80ff808c43de1bf1ecef7315961751a085a7e, live testnet already matches current rebuild.
+   - if fresh local rebuild differs from both, investigate build environment, features, SBF toolchain, or artifact/hash domain.
+
+5. Optional later, after local rebuild:
+   investigate observed binary origin without mutation.
+
+Forbidden until classification:
+- deploy
+- upgrade
+- write-buffer
+- signing
+- transaction submit
+- mutation
+- activation

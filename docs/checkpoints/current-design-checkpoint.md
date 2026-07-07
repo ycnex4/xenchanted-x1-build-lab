@@ -6010,3 +6010,59 @@ No deploy, upgrade, write-buffer, signing, submit, mutation, state initializatio
 Next safe step:
 
 Precheck result decision.
+
+## Precheck Result Decision.1 hash mismatch investigation required
+
+Decision record:
+
+docs/gateway/precheck-result-decision-1-hash-mismatch-investigation-required.md
+
+Progress tracker:
+
+docs/gateway/testnet-deploy-progress-tracker.md
+
+Status:
+
+PRECHECK_RESULT_DECISION_1_HASH_MISMATCH_INVESTIGATION_REQUIRED_DEPLOY_UPGRADE_BLOCKED_NO_RPC_NO_MUTATION
+
+Decision:
+
+STOPPED_CORRECTLY_BY_READ_ONLY_PRECHECK
+
+Classification:
+
+HASH_MISMATCH_INVESTIGATION_REQUIRED_BEFORE_CATEGORIZATION
+
+Expected hash:
+
+e68ada36e1914584c2dcc186afbdfcba608b286fc2cd404015a7a8c28764daa1
+
+Observed hash:
+
+fd4d3b659ccaea4f5e24eca4d9e80ff808c43de1bf1ecef7315961751a085a7e
+
+Observed size:
+
+38584
+
+Expected hash source package:
+
+BHX2_LOCAL_BUILD_HASH_ee0cb44f7d49
+
+Expected hash source bound program source commit:
+
+ee0cb44f7d496e010e784608d0c7ccc8e84e7fb6
+
+Expected hash source repo commit at execution:
+
+0863ab1b14aaea1f2ca6b8803cadb7665abecb73
+
+Deploy/upgrade status:
+
+BLOCKED
+
+No new RPC, testnet call, ProgramData read, executable bytes dump, live hash comparison, deploy, upgrade, write-buffer, signing, submit, or mutation is approved by this checkpoint.
+
+Next safe step:
+
+Local rebuild / observed-binary investigation package.
