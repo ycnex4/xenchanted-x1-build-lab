@@ -6066,3 +6066,59 @@ No new RPC, testnet call, ProgramData read, executable bytes dump, live hash com
 Next safe step:
 
 Local rebuild / observed-binary investigation package.
+
+## Local Rebuild Investigation.1 current main hash compare
+
+Investigation record:
+
+docs/gateway/local-rebuild-investigation-1-current-main-hash-compare.md
+
+Progress tracker:
+
+docs/gateway/testnet-deploy-progress-tracker.md
+
+Status:
+
+LOCAL_REBUILD_INVESTIGATION_1_COMPLETED_FRESH_REBUILD_MATCHES_OLD_EXPECTED_LIVE_TESTNET_BINARY_DIFFERS_NO_RPC_NO_TESTNET_NO_MUTATION
+
+Investigation result:
+
+FRESH_REBUILD_MATCHES_OLD_EXPECTED_LIVE_TESTNET_BINARY_DIFFERS
+
+Classification hint:
+
+LIVE_TESTNET_BINARY_DIFFERENT_STALE_OR_UNKNOWN
+
+Current main commit:
+
+bcaa206d5f3cfc62ad209da8e1414021813f1a98
+
+Old expected hash:
+
+e68ada36e1914584c2dcc186afbdfcba608b286fc2cd404015a7a8c28764daa1
+
+Fresh local hash:
+
+e68ada36e1914584c2dcc186afbdfcba608b286fc2cd404015a7a8c28764daa1
+
+Observed live hash:
+
+fd4d3b659ccaea4f5e24eca4d9e80ff808c43de1bf1ecef7315961751a085a7e
+
+Fresh equals old expected:
+
+true
+
+Fresh equals observed live:
+
+false
+
+Conclusion:
+
+Expected hash is validated by fresh rebuild from current main. Observed live testnet binary differs from current local build.
+
+No RPC, testnet call, ProgramData read, executable bytes dump from network, live hash comparison, deploy, upgrade, write-buffer, signing, submit, or mutation is approved by this checkpoint.
+
+Next safe step:
+
+Investigation result decision / deploy-readiness decision.

@@ -2,20 +2,20 @@
 
 Last updated by:
 
-precheck-result-decision-1-hash-mismatch-investigation-required
+local-rebuild-investigation-1-current-main-hash-compare
 
 Current status:
 
-PRECHECK_RESULT_DECISION_1_HASH_MISMATCH_INVESTIGATION_REQUIRED_DEPLOY_UPGRADE_BLOCKED_NO_RPC_NO_MUTATION
+LOCAL_REBUILD_INVESTIGATION_1_COMPLETED_FRESH_REBUILD_MATCHES_OLD_EXPECTED_LIVE_TESTNET_BINARY_DIFFERS_NO_RPC_NO_TESTNET_NO_MUTATION
 
 Current decision:
 
-STOPPED_CORRECTLY_BY_READ_ONLY_PRECHECK_INVESTIGATION_REQUIRED
+INVESTIGATION_RESULT_DECISION_REQUIRED_DEPLOY_UPGRADE_BLOCKED
 
 ## Progress
 
 ~~~text
-# X1 Testnet Deploy Track progress state after Precheck Result Decision.1
+# X1 Testnet Deploy Track progress state after Local Rebuild Investigation.1
 
 ✅ 0: repo sanity review before GO
 ✅ 1: local build/hash evidence
@@ -28,10 +28,10 @@ STOPPED_CORRECTLY_BY_READ_ONLY_PRECHECK_INVESTIGATION_REQUIRED
 ✅ 7: RONPP3 alignment to current main merge commit
 ✅ 8: Read-only Network Precheck Execution.1
 ✅ 9: Precheck Result Decision — hash mismatch stopped correctly
+✅ 10: Local Rebuild Investigation.1 — fresh rebuild matches old expected hash
 
-👉 10: local rebuild / observed-binary investigation package
+👉 11: investigation result decision / deploy-readiness decision
 
-⏭ 11: New build/hash after investigation
 ⏭ 12: Testnet deploy/upgrade package only after classification
 ⏭ 13: Testnet deploy/upgrade execution only after separate exact GO
 ⏭ 14: Post-deploy verification
@@ -41,49 +41,60 @@ blocked:
 deploy/upgrade/write-buffer/sign/submit/mutation
 ~~~
 
-## Decision summary
+## Investigation result
 
 ~~~text
-# Precheck Result Decision.1
+# Local Rebuild Investigation.1 result summary
 
 status:
-PRECHECK_RESULT_DECISION_1_HASH_MISMATCH_INVESTIGATION_REQUIRED_DEPLOY_UPGRADE_BLOCKED_NO_RPC_NO_MUTATION
+LOCAL_REBUILD_INVESTIGATION_1_COMPLETED_FRESH_REBUILD_MATCHES_OLD_EXPECTED_LIVE_TESTNET_BINARY_DIFFERS_NO_RPC_NO_TESTNET_NO_MUTATION
+
+investigation_result:
+FRESH_REBUILD_MATCHES_OLD_EXPECTED_LIVE_TESTNET_BINARY_DIFFERS
+
+classification_hint:
+LIVE_TESTNET_BINARY_DIFFERENT_STALE_OR_UNKNOWN
+
+current_main_commit:
+bcaa206d5f3cfc62ad209da8e1414021813f1a98
+
+current_main_short:
+bcaa206d5f3c
+
+build_status:
+0
+
+old_expected_hash:
+e68ada36e1914584c2dcc186afbdfcba608b286fc2cd404015a7a8c28764daa1
+
+fresh_local_hash:
+e68ada36e1914584c2dcc186afbdfcba608b286fc2cd404015a7a8c28764daa1
+
+fresh_local_size:
+20840
+
+observed_live_hash:
+fd4d3b659ccaea4f5e24eca4d9e80ff808c43de1bf1ecef7315961751a085a7e
+
+observed_hash_now:
+fd4d3b659ccaea4f5e24eca4d9e80ff808c43de1bf1ecef7315961751a085a7e
+
+observed_live_size:
+38584
+
+fresh_equals_old_expected:
+true
+
+fresh_equals_observed_live:
+false
+
+fresh_binary_equals_observed_binary:
+false
 
 decision:
-STOPPED_CORRECTLY_BY_READ_ONLY_PRECHECK
-
-classification:
-HASH_MISMATCH_INVESTIGATION_REQUIRED_BEFORE_CATEGORIZATION
-
-not_classified_yet_as:
-- expected stale testnet binary
-- stale local expected hash
-- wrong build artifact/hash domain
-- wrong deployment target
-
-current_likelihood_notes_from_theo:
-- expected stale/different testnet binary: medium
-- local expected hash stale: medium-high
-- wrong build artifact/hash domain: low-medium
-- wrong deployment target: low
-
-reason:
-ProgramData account and upgrade authority match expected values, but live testnet executable bytes hash differs from the expected local build hash.
-
-critical_observation:
-The expected hash originated from BuildHash Execution.2, not from a fresh rebuild from current main.
-
-next_required_checkpoint:
-local rebuild / observed-binary investigation package
-
-deploy_upgrade_blocked:
-true
-~~~
-
-## Next safe step
-
-~~~text
-Local rebuild / observed-binary investigation package.
+Expected hash is validated by fresh rebuild from current main.
+Observed live testnet binary differs from current local build.
+Deploy/upgrade remains blocked until separate investigation result decision and scoped package.
 ~~~
 
 ## Still forbidden

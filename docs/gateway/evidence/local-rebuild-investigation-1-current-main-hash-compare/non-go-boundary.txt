@@ -1,0 +1,21 @@
+# Non-GO boundary
+
+This local rebuild investigation does not approve:
+- RPC
+- testnet calls
+- ProgramData reads
+- executable bytes dumps from network
+- live hash comparisons
+- deploy
+- upgrade
+- write-buffer
+- authority change
+- state initialization
+- SPL setup
+- guardian package construction
+- signing
+- transaction submit
+- mutation
+- production activation
+
+This checkpoint is local-only.

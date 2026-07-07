@@ -1,0 +1,11 @@
+timestamp_utc=2026-07-07T12:54:34Z
+branch=local-rebuild-investigation-1-current-main-hash-compare
+head=bcaa206d5f3cfc62ad209da8e1414021813f1a98
+build_command=cargo build-sbf --manifest-path programs/xxxl-svm/Cargo.toml --no-default-features
+network_used=false
+rpc_used=false
+deploy_executed=false
+upgrade_executed=false
+signing_executed=false
+submit_executed=false
+mutation_executed=false
