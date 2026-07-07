@@ -5548,3 +5548,56 @@ Read-only Network Baseline.3 does not call RPC, use testnet, read ProgramData, p
 Next safe step:
 
 Read-only Network Baseline.4 — exact read-only precheck invariant review.
+
+
+## Read-only Network Baseline.4 exact read-only precheck invariant review
+
+The Read-only Network Baseline.4 invariant review is recorded in:
+
+docs/gateway/read-only-network-baseline-4-exact-read-only-precheck-invariant-review.md
+
+Evidence directory:
+
+docs/gateway/evidence/read-only-network-baseline-4-exact-read-only-precheck-invariant-review
+
+Current status:
+
+READ_ONLY_NETWORK_BASELINE_4_REVIEW_READY_EXACT_READ_ONLY_PRECHECK_INVARIANTS_RECORDED_NO_RPC_NO_TESTNET_NO_MUTATION
+
+Current decision:
+
+STRICT_READ_ONLY_NETWORK_PRECHECK_MODEL_REVIEWED_RPC_NOT_APPROVED_PENDING_CLOSURE
+
+Closure candidate prepared:
+
+STRICT_READ_ONLY_NETWORK_PRECHECK_MODEL_REVIEWED_RPC_NOT_APPROVED_EXECUTION_NOT_APPROVED
+
+Selected model:
+
+STRICT_READ_ONLY_NETWORK_PRECHECK_WITH_EXACT_GO_ONLY
+
+Current GO state:
+
+READ_ONLY_NETWORK_GO_NOT_GRANTED
+
+Review result:
+
+all_invariants_reviewed: true
+
+read_only_precheck_model_closure_ready: true
+
+rpc_approved_now: false
+
+testnet_approved_now: false
+
+programdata_read_approved_now: false
+
+live_hash_comparison_approved_now: false
+
+mutation_approved_now: false
+
+Read-only Network Baseline.4 does not call RPC, use testnet, read ProgramData, perform live hash comparison, deploy, upgrade, write buffer, sign, submit, or mutate.
+
+Next safe step:
+
+Read-only Network Baseline.5 — exact read-only precheck model closure record.

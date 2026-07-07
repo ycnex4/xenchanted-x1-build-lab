@@ -1,0 +1,25 @@
+# Read-only Network Baseline.4 non-GO boundary
+
+Read-only Network Baseline.4 does not grant GO.
+
+Read-only Network Baseline.4 does not approve:
+- RPC
+- testnet call
+- ProgramData read
+- live account inspection
+- live hash comparison
+- deploy
+- upgrade
+- write-buffer
+- authority change
+- state initialization
+- SPL setup
+- guardian package construction
+- signing
+- transaction submit
+- mutation
+- production activation
+
+Read-only Network Baseline.4 is invariant review only.
+A later RONB5 closure record is required before a future exact read-only precheck package.
+A later exact scoped user GO phrase is required before any RPC/testnet read.
