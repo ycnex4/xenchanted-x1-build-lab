@@ -1,0 +1,37 @@
+# Final read-only command set selected for future execution after exact GO
+
+command_set_status: FINAL_SELECTED_NOT_EXECUTED
+execution_requires_user_exact_go: true
+
+rpc_endpoint: https://rpc.testnet.x1.xyz
+program_id: D7AQmZNtFFFoJbducz93atteeSZhw3jq6RmsqBvaf1my
+programdata_account: 9tuesaPoJhrifF49vJewcg6PSWZeHAJiqQ97pq3LMW9T
+future_evidence_dir: docs/gateway/evidence/read-only-network-precheck-execution-1-after-exact-go
+
+future_commands:
+1. solana account 9tuesaPoJhrifF49vJewcg6PSWZeHAJiqQ97pq3LMW9T --url https://rpc.testnet.x1.xyz --output json
+2. solana account D7AQmZNtFFFoJbducz93atteeSZhw3jq6RmsqBvaf1my --url https://rpc.testnet.x1.xyz --output json
+3. solana program dump D7AQmZNtFFFoJbducz93atteeSZhw3jq6RmsqBvaf1my docs/gateway/evidence/read-only-network-precheck-execution-1-after-exact-go/observed-xxxl-svm.so --url https://rpc.testnet.x1.xyz
+4. sha256sum docs/gateway/evidence/read-only-network-precheck-execution-1-after-exact-go/observed-xxxl-svm.so
+
+future_command_must_not_include:
+- signer flag
+- keypair path
+- secret material
+- transaction submit
+- deploy
+- upgrade
+- write-buffer
+- set-upgrade-authority
+- close
+- transfer
+- initialize
+- SPL setup
+- guardian package construction
+- mutation
+
+executed_now: false
+rpc_used_now: false
+testnet_used_now: false
+programdata_read_executed_now: false
+live_hash_comparison_executed_now: false

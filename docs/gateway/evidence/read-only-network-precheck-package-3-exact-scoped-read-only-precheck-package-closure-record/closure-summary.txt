@@ -1,0 +1,52 @@
+# Read-only Network Precheck Package.3 closure summary
+
+status: READ_ONLY_NETWORK_PRECHECK_PACKAGE_3_CLOSED_EXACT_SCOPED_READ_ONLY_PRECHECK_PACKAGE_READY_FOR_USER_EXACT_GO_NO_RPC_NO_TESTNET_NO_PROGRAMDATA_READ_NO_MUTATION
+decision: EXACT_SCOPED_READ_ONLY_PRECHECK_PACKAGE_CLOSED_FINAL_READ_ONLY_GO_NOT_GRANTED_UNTIL_USER_EXACT_PHRASE
+operation_class: READ_ONLY_NETWORK_PRECHECK_ONLY
+
+final_package_id: RONPP3_READ_ONLY_PRECHECK_fead873b9d8d
+source_commit: fead873b9d8d4e018106d1167e6b27494b03d89e
+source_short: fead873b9d8d
+network: X1_TESTNET
+rpc_endpoint: https://rpc.testnet.x1.xyz
+program_id: D7AQmZNtFFFoJbducz93atteeSZhw3jq6RmsqBvaf1my
+programdata_account: 9tuesaPoJhrifF49vJewcg6PSWZeHAJiqQ97pq3LMW9T
+expected_upgrade_authority: DTfvjtRL63u3XYHXQfgRQCdhEanUK1qqawvfEAM9hxAc
+expected_canonical_programdata_executable_bytes_sha256: e68ada36e1914584c2dcc186afbdfcba608b286fc2cd404015a7a8c28764daa1
+canonical_hash_domain: PROGRAMDATA_EXECUTABLE_BYTES_EXCLUDING_LOADER_METADATA
+hash_algorithm: SHA256
+
+final_exact_go_phrase: GO_RONPP_READ_ONLY_PRECHECK_ONLY_RONPP3_READ_ONLY_PRECHECK_fead873b9d8d_SOURCE_fead873b9d8d
+read_only_precheck_go_granted_now: false
+
+closure_meaning:
+- exact scoped read-only precheck package is closed
+- user exact GO phrase is required before any RPC/testnet read
+- current closure does not execute RPC
+- current closure does not read ProgramData
+- current closure does not dump executable bytes
+- current closure does not compute live observed hash
+- current closure does not perform live hash comparison
+- current closure does not authorize signing, submit, or mutation
+
+allowed_after_exact_go_only:
+- read-only ProgramData/account precheck on X1 testnet
+- read-only executable bytes dump
+- local SHA256 computation of observed dump
+- observed-vs-expected hash comparison
+- evidence recording
+
+not_allowed_even_after_read_only_go:
+- signer flag
+- keypair path
+- secret material
+- transaction submit
+- deploy
+- upgrade
+- write-buffer
+- authority change
+- state initialization
+- SPL setup
+- guardian package construction
+- mutation
+- production activation
