@@ -1,0 +1,10 @@
+All must be true before any future execution GO:
+
+[ ] Fresh rebuild from source commit 17a1576e7addfa753f9569c49f8736ef55614d7d produces hash e68ada36e1914584c2dcc186afbdfcba608b286fc2cd404015a7a8c28764daa1
+[ ] Fresh local artifact size is 20840
+[ ] Immediate read-only precheck confirms ProgramData account 9tuesaPoJhrifF49vJewcg6PSWZeHAJiqQ97pq3LMW9T
+[ ] Immediate read-only precheck confirms upgrade authority DTfvjtRL63u3XYHXQfgRQCdhEanUK1qqawvfEAM9hxAc
+[ ] Immediate read-only precheck confirms target Program ID D7AQmZNtFFFoJbducz93atteeSZhw3jq6RmsqBvaf1my
+[ ] Runtime blockers are explicitly scoped as inert deploy only, not functional route activation
+[ ] Exact execution GO phrase is provided by user after package closure
+[ ] No command outside the closed package is used

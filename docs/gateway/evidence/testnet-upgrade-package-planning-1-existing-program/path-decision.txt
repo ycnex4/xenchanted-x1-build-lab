@@ -1,0 +1,12 @@
+path_decision=UPGRADE_EXISTING_PROGRAM_ONLY
+
+reason:
+Program ID, ProgramData account, and upgrade authority already match expected values.
+The live binary differs from the expected local build.
+Therefore the planning path is upgrade existing program, preserving Program ID.
+
+not_selected:
+REDEPLOY_NEW_PROGRAM_OR_NEWDATA
+
+redeploy_new_program_reason_rejected:
+A new deploy would change the target assumptions and would not preserve the intended Program ID boundary.

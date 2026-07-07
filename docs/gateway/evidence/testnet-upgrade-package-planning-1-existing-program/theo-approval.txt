@@ -1,0 +1,5 @@
+verdict=APPROVE_TESTNET_DEPLOY_UPGRADE_PACKAGE_PLANNING_CHECKPOINT_ONLY
+execution_remains_blocked=true
+classification=LIVE_TESTNET_BINARY_DIFFERENT_STALE_OR_UNKNOWN
+planning_approved=true
+execution_approved=false

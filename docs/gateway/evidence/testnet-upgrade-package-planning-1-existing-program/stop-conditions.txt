@@ -1,0 +1,14 @@
+Stop immediately if any condition occurs:
+
+- Fresh rebuild hash differs from e68ada36e1914584c2dcc186afbdfcba608b286fc2cd404015a7a8c28764daa1
+- Fresh artifact size differs from 20840
+- ProgramData account mismatch
+- Upgrade authority mismatch
+- Target Program ID mismatch
+- Any RPC/read-only precheck error before upgrade
+- Buffer/write hash cannot be verified before final upgrade step
+- Buffer/write hash differs from e68ada36e1914584c2dcc186afbdfcba608b286fc2cd404015a7a8c28764daa1
+- Unexpected CLI behavior
+- Any command asks for an authority not explicitly scoped
+- Any signing prompt appears outside the exact GO execution package
+- Any transaction would target a different program or ProgramData account

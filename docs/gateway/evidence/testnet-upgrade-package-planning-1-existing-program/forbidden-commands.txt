@@ -1,0 +1,15 @@
+Forbidden by this planning checkpoint:
+
+- Any execution command now
+- Any RPC call now
+- Any deploy to new Program ID
+- Any redeploy/new ProgramData path
+- Any upgrade execution without separate exact GO
+- Any write-buffer without separate exact GO
+- Any signing without separate exact GO
+- Any transaction submit without separate exact GO
+- Any authority change
+- Any state initialization
+- Any SPL setup
+- Any guardian package construction
+- Any production activation
