@@ -1,0 +1,14 @@
+theo_verdict=APPROVE_EXTERNAL_REVIEW_PACKET_1_REVIEW_ONLY
+scope=REVIEW_ONLY
+execution_blocked=true
+source_change_authorized=false
+activation_authorized=false
+rpc_mutation_authorized=false
+route_enablement_authorized=false
+deploy_authorized=false
+upgrade_authorized=false
+main_at_start=af554ab
+previous_main=af554ab
+previous_package=docs/gateway/external-review-activation-closure-planning-1.md
+previous_status=EXTERNAL_REVIEW_ACTIVATION_CLOSURE_PLANNING_1_COMPLETED_EXECUTION_BLOCKED
+approved_next_package=external-review-packet-1
