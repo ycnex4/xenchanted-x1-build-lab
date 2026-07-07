@@ -1,0 +1,3 @@
+authority_pubkey=DTfvjtRL63u3XYHXQfgRQCdhEanUK1qqawvfEAM9hxAc
+expected_authority=DTfvjtRL63u3XYHXQfgRQCdhEanUK1qqawvfEAM9hxAc
+buffer_exists_status=1
