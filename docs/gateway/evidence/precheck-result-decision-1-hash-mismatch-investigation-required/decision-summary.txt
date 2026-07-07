@@ -1,0 +1,34 @@
+# Precheck Result Decision.1
+
+status:
+PRECHECK_RESULT_DECISION_1_HASH_MISMATCH_INVESTIGATION_REQUIRED_DEPLOY_UPGRADE_BLOCKED_NO_RPC_NO_MUTATION
+
+decision:
+STOPPED_CORRECTLY_BY_READ_ONLY_PRECHECK
+
+classification:
+HASH_MISMATCH_INVESTIGATION_REQUIRED_BEFORE_CATEGORIZATION
+
+not_classified_yet_as:
+- expected stale testnet binary
+- stale local expected hash
+- wrong build artifact/hash domain
+- wrong deployment target
+
+current_likelihood_notes_from_theo:
+- expected stale/different testnet binary: medium
+- local expected hash stale: medium-high
+- wrong build artifact/hash domain: low-medium
+- wrong deployment target: low
+
+reason:
+ProgramData account and upgrade authority match expected values, but live testnet executable bytes hash differs from the expected local build hash.
+
+critical_observation:
+The expected hash originated from BuildHash Execution.2, not from a fresh rebuild from current main.
+
+next_required_checkpoint:
+local rebuild / observed-binary investigation package
+
+deploy_upgrade_blocked:
+true

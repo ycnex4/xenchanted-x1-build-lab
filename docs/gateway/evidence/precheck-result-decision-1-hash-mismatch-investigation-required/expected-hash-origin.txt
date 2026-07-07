@@ -1,0 +1,27 @@
+# Expected hash origin
+
+expected_hash:
+e68ada36e1914584c2dcc186afbdfcba608b286fc2cd404015a7a8c28764daa1
+
+source_document:
+docs/gateway/buildhash-execution-2-local-build-hash-execution-after-exact-go.md
+
+source_package_id:
+BHX2_LOCAL_BUILD_HASH_ee0cb44f7d49
+
+bound_program_source_commit:
+ee0cb44f7d496e010e784608d0c7ccc8e84e7fb6
+
+repo_commit_at_buildhash_execution:
+0863ab1b14aaea1f2ca6b8803cadb7665abecb73
+
+build_command:
+cargo build-sbf --manifest-path programs/xxxl-svm/Cargo.toml --no-default-features
+
+artifact_size_bytes_at_buildhash_execution:
+20840
+
+important_decision_note:
+The expected hash was produced by BuildHash Execution.2, not by a fresh rebuild from current main 33874af99722cfe38912f1e9cee1b63c4bf1ef2f.
+
+Therefore, Theo's stale-hash hypothesis remains plausible until a fresh local rebuild from current main is performed and compared.

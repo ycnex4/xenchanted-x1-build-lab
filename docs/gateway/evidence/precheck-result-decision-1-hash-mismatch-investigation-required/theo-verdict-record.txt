@@ -1,0 +1,26 @@
+# Theo verdict record
+
+verdict_timestamp_user_supplied: 2026-07-07
+
+verdict:
+APPROVE — Precheck Result Decision checkpoint. Deploy/upgrade remains blocked.
+
+classification:
+STOPPED_CORRECTLY_BY_READ_ONLY_PRECHECK
+
+interpretation:
+The read-only precheck functioned exactly as designed. Hash mismatch was detected, execution halted, zero mutation. This is a success of the safety system, not a failure.
+
+recommended_classification:
+investigation-required before categorization
+
+not_allowed:
+Do not proceed anyway.
+
+recommended_next_steps:
+1. Investigate observed binary.
+2. Rebuild from current main.
+3. Compare observed vs rebuilt.
+
+critical_question:
+Where did expected hash e68ada36... come from?
