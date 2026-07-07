@@ -1,0 +1,121 @@
+=== current main / branch ===
+branch=external-review-activation-closure-planning-1
+head=7187f85
+
+=== runtime status ===
+programs/xxxl-svm/src/deployment_status.rs:31:    pub deployable: bool,
+programs/xxxl-svm/src/deployment_status.rs:95:        status_code: "SOURCE_BOUNDARY_READY_ACTIVATION_BLOCKED",
+programs/xxxl-svm/src/deployment_status.rs:98:        deployable: false,
+programs/xxxl-svm/src/deployment_status.rs:106:                "SOURCE_BOUNDARY_READY_ACTIVATION_BLOCKED"
+programs/xxxl-svm/src/deployment_status.rs:258:pub fn xxxl_runtime_is_deployable() -> bool {
+programs/xxxl-svm/src/deployment_status.rs:281:        assert!(!xxxl_runtime_is_deployable());
+programs/xxxl-svm/src/deployment_status.rs:284:            "SOURCE_BOUNDARY_READY_ACTIVATION_BLOCKED"
+programs/xxxl-svm/src/deployment_status.rs:292:            "SOURCE_BOUNDARY_READY_ACTIVATION_BLOCKED"
+programs/xxxl-svm/src/deployment_status.rs:473:        assert!(!xxxl_runtime_is_deployable());
+programs/xxxl-svm/src/deployment_status.rs:489:            "SOURCE_BOUNDARY_READY_ACTIVATION_BLOCKED"
+programs/xxxl-svm/src/deployment_status.rs:513:        assert_eq!(report.deployable, xxxl_runtime_is_deployable());
+programs/xxxl-svm/src/deployment_status.rs:529:                    "SOURCE_BOUNDARY_READY_ACTIVATION_BLOCKED"
+programs/xxxl-svm/src/deployment_status.rs:564:        assert!(!xxxl_runtime_is_deployable());
+programs/xxxl-svm/src/lib.rs:56:pub const XXXL_RUNTIME_STATUS: &str = "SOURCE_BOUNDARY_READY_ACTIVATION_BLOCKED";
+
+=== program id status ===
+programs/xxxl-svm/src/program_id_status.rs:3:    XXXL_PROGRAM_ID_PLACEHOLDER,
+programs/xxxl-svm/src/program_id_status.rs:17:    pub deployable_path_ready: bool,
+programs/xxxl-svm/src/program_id_status.rs:29:        status_code: "X1_TESTNET_PROGRAM_ID_BOUNDARY_REVIEWED_ACTIVATION_BLOCKED",
+programs/xxxl-svm/src/program_id_status.rs:31:        configured_program_id: XXXL_PROGRAM_ID_PLACEHOLDER,
+programs/xxxl-svm/src/program_id_status.rs:32:        deployable_path_ready: true,
+programs/xxxl-svm/src/program_id_status.rs:42:                "X1_TESTNET_PROGRAM_ID_BOUNDARY_REVIEWED_ACTIVATION_BLOCKED"
+programs/xxxl-svm/src/program_id_status.rs:64:pub fn xxxl_program_id_placeholder_boundary_is_active() -> bool {
+programs/xxxl-svm/src/program_id_status.rs:68:pub fn xxxl_program_id_deployable_path_ready() -> bool {
+programs/xxxl-svm/src/program_id_status.rs:69:    xxxl_program_id_readiness_report().deployable_path_ready
+programs/xxxl-svm/src/program_id_status.rs:90:            "X1_TESTNET_PROGRAM_ID_BOUNDARY_REVIEWED_ACTIVATION_BLOCKED"
+programs/xxxl-svm/src/program_id_status.rs:108:            "X1_TESTNET_PROGRAM_ID_BOUNDARY_REVIEWED_ACTIVATION_BLOCKED"
+programs/xxxl-svm/src/program_id_status.rs:114:        assert_eq!(report.configured_program_id, XXXL_PROGRAM_ID_PLACEHOLDER);
+programs/xxxl-svm/src/program_id_status.rs:115:        assert!(report.deployable_path_ready);
+programs/xxxl-svm/src/program_id_status.rs:138:        assert!(xxxl_program_id_placeholder_boundary_is_active());
+programs/xxxl-svm/src/program_id_status.rs:139:        assert!(xxxl_program_id_deployable_path_ready());
+programs/xxxl-svm/src/lib.rs:52:pub const XXXL_PROGRAM_ID_PLACEHOLDER: &str = "XXXLProgram111111111111111111111111111111111";
+
+=== live route gate ===
+programs/xxxl-svm/src/processor.rs:98:pub const LIVE_ROUTE_ACTIVATION_MODE: &str = "ACTIVATION_PACKAGE_GATED";
+programs/xxxl-svm/src/processor.rs:99:pub const LIVE_ROUTE_ACTIVATION_CONFIGURABLE_BY_ACTIVATION_PACKAGE: bool = true;
+programs/xxxl-svm/src/processor.rs:100:pub const LIVE_ROUTE_ACTIVATION_FROM_PROCESS_INSTRUCTION_ENABLED: bool = false;
+programs/xxxl-svm/src/deployment_status.rs:263:    crate::processor::LIVE_ROUTE_ACTIVATION_FROM_PROCESS_INSTRUCTION_ENABLED
+
+=== spl cpi gate ===
+programs/xxxl-svm/src/cpi.rs:34:pub const SPL_CPI_GUARD_REVIEWED_FOR_ACTIVATION_PACKAGE: bool = true;
+programs/xxxl-svm/src/cpi.rs:35:pub const SPL_CPI_EXECUTION_REMAINS_ACTIVATION_BLOCKED: bool = true;
+programs/xxxl-svm/src/cpi.rs:36:pub const SPL_CPI_BOUNDARY_MODE: &str = "GUARDED_ACTIVATION_PACKAGE_GATED";
+programs/xxxl-svm/src/cpi.rs:127:pub fn spl_mint_to_cpi_execution_enabled() -> bool {
+programs/xxxl-svm/src/cpi.rs:138:pub fn spl_mint_to_cpi_execution_enabled() -> bool {
+programs/xxxl-svm/src/cpi.rs:164:    if !spl_mint_to_cpi_execution_enabled() {
+programs/xxxl-svm/src/cpi.rs:384:        assert!(!spl_mint_to_cpi_execution_enabled());
+programs/xxxl-svm/src/deployment_status.rs:267:    crate::cpi::spl_mint_to_cpi_execution_enabled()
+
+=== active deployment blockers ===
+programs/xxxl-svm/src/deployment_status.rs:8:    PlaceholderProgramId,
+programs/xxxl-svm/src/deployment_status.rs:9:    LiveRouteDisabled,
+programs/xxxl-svm/src/deployment_status.rs:10:    SplCpiExecutionDisabled,
+programs/xxxl-svm/src/deployment_status.rs:13:    ProductionGuardianSetUnset,
+programs/xxxl-svm/src/deployment_status.rs:14:    ProductionProofLogUnset,
+programs/xxxl-svm/src/deployment_status.rs:15:    ExternalReviewIncomplete,
+programs/xxxl-svm/src/deployment_status.rs:44:pub const XXXL_RUNTIME_DEPLOYMENT_BLOCKERS: [XxxlRuntimeDeploymentBlocker; 6] = [
+programs/xxxl-svm/src/deployment_status.rs:45:    XxxlRuntimeDeploymentBlocker::PlaceholderProgramId,
+programs/xxxl-svm/src/deployment_status.rs:46:    XxxlRuntimeDeploymentBlocker::LiveRouteDisabled,
+programs/xxxl-svm/src/deployment_status.rs:47:    XxxlRuntimeDeploymentBlocker::SplCpiExecutionDisabled,
+programs/xxxl-svm/src/deployment_status.rs:48:    XxxlRuntimeDeploymentBlocker::ProductionGuardianSetUnset,
+programs/xxxl-svm/src/deployment_status.rs:49:    XxxlRuntimeDeploymentBlocker::ProductionProofLogUnset,
+programs/xxxl-svm/src/deployment_status.rs:50:    XxxlRuntimeDeploymentBlocker::ExternalReviewIncomplete,
+programs/xxxl-svm/src/deployment_status.rs:55:        blocker: XxxlRuntimeDeploymentBlocker::PlaceholderProgramId,
+programs/xxxl-svm/src/deployment_status.rs:61:        blocker: XxxlRuntimeDeploymentBlocker::LiveRouteDisabled,
+programs/xxxl-svm/src/deployment_status.rs:67:        blocker: XxxlRuntimeDeploymentBlocker::SplCpiExecutionDisabled,
+programs/xxxl-svm/src/deployment_status.rs:73:        blocker: XxxlRuntimeDeploymentBlocker::ProductionGuardianSetUnset,
+programs/xxxl-svm/src/deployment_status.rs:79:        blocker: XxxlRuntimeDeploymentBlocker::ProductionProofLogUnset,
+programs/xxxl-svm/src/deployment_status.rs:85:        blocker: XxxlRuntimeDeploymentBlocker::ExternalReviewIncomplete,
+programs/xxxl-svm/src/deployment_status.rs:123:            XxxlRuntimeDeploymentBlocker::PlaceholderProgramId => "PLACEHOLDER_PROGRAM_ID",
+programs/xxxl-svm/src/deployment_status.rs:124:            XxxlRuntimeDeploymentBlocker::LiveRouteDisabled => "LIVE_ROUTE_DISABLED",
+programs/xxxl-svm/src/deployment_status.rs:125:            XxxlRuntimeDeploymentBlocker::SplCpiExecutionDisabled => "SPL_CPI_EXECUTION_DISABLED",
+programs/xxxl-svm/src/deployment_status.rs:132:            XxxlRuntimeDeploymentBlocker::ProductionGuardianSetUnset => {
+programs/xxxl-svm/src/deployment_status.rs:135:            XxxlRuntimeDeploymentBlocker::ProductionProofLogUnset => "PRODUCTION_PROOF_LOG_UNSET",
+programs/xxxl-svm/src/deployment_status.rs:136:            XxxlRuntimeDeploymentBlocker::ExternalReviewIncomplete => "EXTERNAL_REVIEW_INCOMPLETE",
+programs/xxxl-svm/src/deployment_status.rs:142:            XxxlRuntimeDeploymentBlocker::PlaceholderProgramId => {
+programs/xxxl-svm/src/deployment_status.rs:145:            XxxlRuntimeDeploymentBlocker::LiveRouteDisabled => {
+programs/xxxl-svm/src/deployment_status.rs:148:            XxxlRuntimeDeploymentBlocker::SplCpiExecutionDisabled => {
+programs/xxxl-svm/src/deployment_status.rs:157:            XxxlRuntimeDeploymentBlocker::ProductionGuardianSetUnset => {
+programs/xxxl-svm/src/deployment_status.rs:160:            XxxlRuntimeDeploymentBlocker::ProductionProofLogUnset => {
+programs/xxxl-svm/src/deployment_status.rs:163:            XxxlRuntimeDeploymentBlocker::ExternalReviewIncomplete => {
+programs/xxxl-svm/src/deployment_status.rs:171:            XxxlRuntimeDeploymentBlocker::PlaceholderProgramId => {
+programs/xxxl-svm/src/deployment_status.rs:174:            XxxlRuntimeDeploymentBlocker::LiveRouteDisabled => {
+programs/xxxl-svm/src/deployment_status.rs:177:            XxxlRuntimeDeploymentBlocker::SplCpiExecutionDisabled => {
+programs/xxxl-svm/src/deployment_status.rs:186:            XxxlRuntimeDeploymentBlocker::ProductionGuardianSetUnset => {
+programs/xxxl-svm/src/deployment_status.rs:189:            XxxlRuntimeDeploymentBlocker::ProductionProofLogUnset => {
+programs/xxxl-svm/src/deployment_status.rs:192:            XxxlRuntimeDeploymentBlocker::ExternalReviewIncomplete => {
+programs/xxxl-svm/src/deployment_status.rs:212:    &XXXL_RUNTIME_DEPLOYMENT_BLOCKERS
+programs/xxxl-svm/src/deployment_status.rs:305:        assert!(blockers.contains(&XxxlRuntimeDeploymentBlocker::PlaceholderProgramId));
+programs/xxxl-svm/src/deployment_status.rs:306:        assert!(blockers.contains(&XxxlRuntimeDeploymentBlocker::LiveRouteDisabled));
+programs/xxxl-svm/src/deployment_status.rs:307:        assert!(blockers.contains(&XxxlRuntimeDeploymentBlocker::SplCpiExecutionDisabled));
+programs/xxxl-svm/src/deployment_status.rs:310:        assert!(blockers.contains(&XxxlRuntimeDeploymentBlocker::ProductionGuardianSetUnset));
+programs/xxxl-svm/src/deployment_status.rs:311:        assert!(blockers.contains(&XxxlRuntimeDeploymentBlocker::ProductionProofLogUnset));
+programs/xxxl-svm/src/deployment_status.rs:312:        assert!(blockers.contains(&XxxlRuntimeDeploymentBlocker::ExternalReviewIncomplete));
+programs/xxxl-svm/src/deployment_status.rs:335:            XxxlRuntimeDeploymentBlocker::LiveRouteDisabled.description(),
+programs/xxxl-svm/src/deployment_status.rs:339:            XxxlRuntimeDeploymentBlocker::SplCpiExecutionDisabled.description(),
+programs/xxxl-svm/src/deployment_status.rs:352:            XxxlRuntimeDeploymentBlocker::PlaceholderProgramId.resolution(),
+programs/xxxl-svm/src/deployment_status.rs:356:            XxxlRuntimeDeploymentBlocker::ProductionGuardianSetUnset.resolution(),
+programs/xxxl-svm/src/deployment_status.rs:381:            XxxlRuntimeDeploymentBlocker::PlaceholderProgramId,
+programs/xxxl-svm/src/deployment_status.rs:387:            XxxlRuntimeDeploymentBlocker::PlaceholderProgramId
+programs/xxxl-svm/src/deployment_status.rs:505:            XxxlRuntimeDeploymentBlocker::PlaceholderProgramId.resolution()
+programs/xxxl-svm/src/deployment_status.rs:574:            .contains(&XxxlRuntimeDeploymentBlocker::PlaceholderProgramId));
+programs/xxxl-svm/src/deployment_status.rs:576:            XxxlRuntimeDeploymentBlocker::PlaceholderProgramId.description(),
+programs/xxxl-svm/src/deployment_status.rs:580:            XxxlRuntimeDeploymentBlocker::PlaceholderProgramId.resolution(),
+programs/xxxl-svm/src/safety_invariants.rs:255:        XxxlRuntimeDeploymentBlocker::PlaceholderProgramId,
+programs/xxxl-svm/src/safety_invariants.rs:258:        xxxl_runtime_deployment_report_has_blocker(XxxlRuntimeDeploymentBlocker::LiveRouteDisabled);
+programs/xxxl-svm/src/safety_invariants.rs:260:        XxxlRuntimeDeploymentBlocker::SplCpiExecutionDisabled,
+programs/xxxl-svm/src/safety_invariants.rs:269:        XxxlRuntimeDeploymentBlocker::ProductionGuardianSetUnset,
+programs/xxxl-svm/src/safety_invariants.rs:272:        XxxlRuntimeDeploymentBlocker::ProductionProofLogUnset,
+programs/xxxl-svm/src/safety_invariants.rs:275:        XxxlRuntimeDeploymentBlocker::ExternalReviewIncomplete,
+programs/xxxl-svm/src/safety_invariants.rs:327:        XxxlRuntimeDeploymentBlocker::PlaceholderProgramId,
+programs/xxxl-svm/src/safety_invariants.rs:329:        XxxlRuntimeDeploymentBlocker::LiveRouteDisabled,
+programs/xxxl-svm/src/safety_invariants.rs:331:        XxxlRuntimeDeploymentBlocker::SplCpiExecutionDisabled,
+programs/xxxl-svm/src/safety_invariants.rs:337:        XxxlRuntimeDeploymentBlocker::ProductionGuardianSetUnset,
+programs/xxxl-svm/src/safety_invariants.rs:339:        XxxlRuntimeDeploymentBlocker::ProductionProofLogUnset,
+programs/xxxl-svm/src/safety_invariants.rs:341:        XxxlRuntimeDeploymentBlocker::ExternalReviewIncomplete,

@@ -1,0 +1,13 @@
+theo_verdict=APPROVE_EXTERNAL_REVIEW_ACTIVATION_CLOSURE_PLANNING
+scope=PLANNING_ONLY
+execution_blocked=true
+activation_authorized=false
+rpc_mutation_authorized=false
+route_enablement_authorized=false
+deploy_authorized=false
+upgrade_authorized=false
+source_change_authorized=false
+main_at_start=7187f85
+previous_main=7187f85
+previous_package=docs/gateway/runtime-status-live-route-code-boundary-source-change-1.md
+previous_status=RUNTIME_STATUS_LIVE_ROUTE_CODE_BOUNDARY_SOURCE_CHANGE_1_COMPLETED_EXECUTION_BLOCKED
