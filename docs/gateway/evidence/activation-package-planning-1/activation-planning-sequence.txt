@@ -1,0 +1,9 @@
+activation_sequence_status=PLANNED_ONLY
+step_1=activation_package_planning_current
+step_2=runtime_blocker_closure_package
+step_3=activation_package_closure
+step_4=separate_exact_activation_go
+step_5=activation_execution_only_after_go
+step_6=post_activation_verification
+execution_authorized_now=false
+rpc_mutation_authorized_now=false

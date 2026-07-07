@@ -1,0 +1,15 @@
+activation_package_scope=PLANNING_ONLY
+activation_execution_authorized=false
+activation_means=future_functional_route_enablement
+may_plan=runtime_status_transition_out_of_scaffold_only
+may_plan=live_route_enablement
+may_plan=spl_cpi_execution_enablement
+may_plan=guardian_set_binding
+may_plan=proof_log_binding
+may_plan=runtime_state_initialization_if_required
+may_plan=integration_test_sequence
+not_authorized=code_change
+not_authorized=deploy
+not_authorized=upgrade
+not_authorized=rpc_mutation
+not_authorized=activation_execution

@@ -1,0 +1,7 @@
+theo_verdict=APPROVE_ACTIVATION_PACKAGE_PLANNING_ONLY
+execution_blocked=true
+activation_authorized=false
+rollback_authorized=false
+cleanup_authorized=false
+scope=PLANNING_ONLY
+current_main_at_planning_start=dc9d988
