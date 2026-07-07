@@ -2,7 +2,7 @@
 
 Status:
 
-EXTERNAL_REVIEW_PACKET_1_READY_FOR_REVIEW_EXECUTION_BLOCKED
+EXTERNAL_REVIEW_PACKET_1_APPROVED_REVIEW_ONLY_EXECUTION_BLOCKED
 
 ## Scope
 review_only=true
@@ -141,14 +141,14 @@ requested_output_4=explicit_statement_execution_remains_blocked
 
 ## Result
 review_packet_prepared=true
-review_verdict_received=false
+review_verdict_received=true
 execution_completed=false
 source_change_completed=false
 activation_execution_completed=false
 rpc_mutation_completed=false
 deploy_completed=false
 upgrade_completed=false
-next_step=request_external_review_verdict
+next_step=guardian_set_and_proof_log_closure_plan
 
 ## Preliminary review response
 
@@ -160,4 +160,29 @@ execution_remains_blocked=true
 
 The reviewer confirmed that the declared pattern is acceptable if true, but independent review cannot be completed without access to the actual repository source and review packet.
 
-This package is therefore pushed as a review branch for source-visible review. It is not merged to main as an approved external review.
+This package was therefore pushed as a review branch for source-visible review. At that point, it was not merged to main as an approved external review.
+
+
+## Actual external review verdict
+
+verdict_file=docs/gateway/evidence/external-review-packet-1/theo-external-review-packet-1-verdict.txt
+external_review_verdict=APPROVE_EXTERNAL_REVIEW_PACKET_1_REVIEW_ONLY
+review_type=INDEPENDENT_SOURCE_VERIFICATION_COMPLETE
+review_result=ALL_DECLARATIONS_MATCH_CODE
+
+remaining_blocker_1=PlaceholderProgramId
+remaining_blocker_2=LiveRouteDisabled
+remaining_blocker_3=SplCpiExecutionDisabled
+remaining_blocker_4=ProductionGuardianSetUnset
+remaining_blocker_5=ProductionProofLogUnset
+remaining_blocker_6=ExternalReviewIncomplete_closing_by_review_verdict
+
+approved_next_planning_package=guardian_set_and_proof_log_closure_plan
+
+execution_remains_blocked=true
+activation_authorized=false
+rpc_mutation_authorized=false
+route_enablement_authorized=false
+deploy_authorized=false
+upgrade_authorized=false
+separate_exact_activation_go_required=true

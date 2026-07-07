@@ -1,0 +1,12 @@
+diff_check_status=0
+review_only=true
+actual_external_review_verdict=APPROVE_EXTERNAL_REVIEW_PACKET_1_REVIEW_ONLY
+independent_source_verification_complete=true
+source_change_authorized=false
+activation_authorized=false
+rpc_mutation_authorized=false
+route_enablement_authorized=false
+deploy_authorized=false
+upgrade_authorized=false
+execution_remains_blocked=true
+approved_next_planning_package=guardian_set_and_proof_log_closure_plan
