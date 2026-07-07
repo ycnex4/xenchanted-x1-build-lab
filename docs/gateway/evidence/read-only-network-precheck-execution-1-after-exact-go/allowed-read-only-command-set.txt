@@ -1,0 +1,6 @@
+# Allowed read-only command set
+
+solana account "9tuesaPoJhrifF49vJewcg6PSWZeHAJiqQ97pq3LMW9T" --url "https://rpc.testnet.x1.xyz" --output json
+solana account "D7AQmZNtFFFoJbducz93atteeSZhw3jq6RmsqBvaf1my" --url "https://rpc.testnet.x1.xyz" --output json
+solana program dump "D7AQmZNtFFFoJbducz93atteeSZhw3jq6RmsqBvaf1my" "docs/gateway/evidence/read-only-network-precheck-execution-1-after-exact-go/observed-xxxl-svm.so" --url "https://rpc.testnet.x1.xyz"
+sha256sum "docs/gateway/evidence/read-only-network-precheck-execution-1-after-exact-go/observed-xxxl-svm.so"
