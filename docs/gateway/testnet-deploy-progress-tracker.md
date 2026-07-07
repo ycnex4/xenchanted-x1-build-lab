@@ -2,30 +2,33 @@
 
 Last updated by:
 
-testnet-deploy-checkpoint-1-before-theo-review
+testnet-deploy-checkpoint-2-theo-verdict-ronpp3-alignment
 
 Current status:
 
-TESTNET_DEPLOY_CHECKPOINT_1_BEFORE_THEO_REVIEW_RECORDED_NO_RPC_NO_TESTNET_NO_MUTATION
+TESTNET_DEPLOY_CHECKPOINT_2_THEO_VERDICT_RONPP3_ALIGNMENT_RECORDED_NO_RPC_NO_TESTNET_NO_MUTATION
 
 Current decision:
 
-PAUSE_FOR_THEO_REVIEW_BEFORE_READ_ONLY_PRECHECK_EXECUTION
+RONPP3_ALIGNMENT_ACCEPTED_AFTER_THEO_VERDICT_READ_ONLY_PRECHECK_GO_NOT_GRANTED
 
 ## Progress
 
 ~~~text
+# X1 Testnet Deploy Track progress state after alignment
+
 ✅ 0: repo sanity review before GO
 ✅ 1: local build/hash evidence
 ✅ 2: RONB — read-only network baseline model
 ✅ 3: RONPP1 — read-only precheck package draft
 ✅ 4: RONPP2 — requirements / invariant review
 ✅ 5: RONPP3 — exact read-only package closure
+✅ 6: checkpoint + Theo review package
+✅ 6R: Theo repo-grounded verdict — APPROVE_RONPP3_ALIGNMENT_BEFORE_READ_ONLY_PRECHECK
+✅ 7: RONPP3 alignment to current main merge commit
 
-👉 6: checkpoint + Theo review package
+👉 8: Read-only Network Precheck Execution.1 — after exact user GO only
 
-⏭ 7: RONPP3 alignment to current main merge commit
-⏭ 8: Read-only Network Precheck Execution.1
 ⏭ 9: Precheck result decision
 ⏭ 10: Deploy-readiness cleanup
 ⏭ 11: New build/hash after readiness changes
@@ -33,72 +36,71 @@ PAUSE_FOR_THEO_REVIEW_BEFORE_READ_ONLY_PRECHECK_EXECUTION
 ⏭ 13: Testnet deploy/upgrade execution
 ⏭ 14: Post-deploy verification
 ⏭ 15: Separate activation path
+
+current_main_commit: 18ff5149e8507c11a64e3bbcdc3349b0abde4ef4
+current_main_short: 18ff5149e850
+alignment_package_id: RONPP3A_READ_ONLY_PRECHECK_18ff5149e850
+final_exact_go_phrase: GO_RONPP_READ_ONLY_PRECHECK_ONLY_RONPP3A_READ_ONLY_PRECHECK_18ff5149e850_SOURCE_18ff5149e850
+
+read_only_precheck_go_granted_now: false
 ~~~
 
-## Current known facts
-
-Current main commit:
+## Theo verdict
 
 ~~~text
-6db0483583d0d1cd9beb0b02ed28a6d949fc4f2e
+primary_verdict: APPROVE_RONPP3_ALIGNMENT_BEFORE_READ_ONLY_PRECHECK
+recommended_option: Option A — new exact GO phrase bound to current main
 ~~~
 
-RONPP3 bound source commit:
+## Diff classification
 
 ~~~text
-fead873b9d8d4e018106d1167e6b27494b03d89e
+# Diff scope classification
+
+base_commit: fead873b9d8d4e018106d1167e6b27494b03d89e
+base_short: fead873b9d8d
+current_main_commit: 18ff5149e8507c11a64e3bbcdc3349b0abde4ef4
+current_main_short: 18ff5149e850
+
+diff_line_count: 18
+diff_scope: DOCS_ONLY
+material_code_changes: false
+
+classification:
+The diff from RONPP3 bound source commit to current main was inspected by path.
+
+Theo's repo-grounded verdict states that the diff is documentation-only, with zero code changes and no build/hash/program-id/programdata changes.
+
+local_path_classification:
+DOCS_ONLY
+
+non_doc_paths_file:
+docs/gateway/evidence/testnet-deploy-checkpoint-2-theo-verdict-ronpp3-alignment/non-doc-paths.txt
 ~~~
 
-RONPP3 final GO phrase currently recorded:
+## Final exact GO phrase after alignment
 
 ~~~text
-GO_RONPP_READ_ONLY_PRECHECK_ONLY_RONPP3_READ_ONLY_PRECHECK_fead873b9d8d_SOURCE_fead873b9d8d
-~~~
-
-Known alignment gap:
-
-~~~text
-RONPP3 is bound to fead873b9d8d, while current main is 6db0483583d0 after merge.
-Before any read-only RPC execution, add a repo-only alignment checkpoint or ask Theo to confirm a different approach.
+GO_RONPP_READ_ONLY_PRECHECK_ONLY_RONPP3A_READ_ONLY_PRECHECK_18ff5149e850_SOURCE_18ff5149e850
 ~~~
 
 ## Bound read-only precheck values
 
-Network:
+network: X1_TESTNET
 
-~~~text
-X1_TESTNET
-~~~
+rpc_endpoint: https://rpc.testnet.x1.xyz
 
-RPC endpoint:
+program_id: D7AQmZNtFFFoJbducz93atteeSZhw3jq6RmsqBvaf1my
 
-~~~text
-https://rpc.testnet.x1.xyz
-~~~
+programdata_account: 9tuesaPoJhrifF49vJewcg6PSWZeHAJiqQ97pq3LMW9T
 
-Program id:
+expected_upgrade_authority: DTfvjtRL63u3XYHXQfgRQCdhEanUK1qqawvfEAM9hxAc
 
-~~~text
-D7AQmZNtFFFoJbducz93atteeSZhw3jq6RmsqBvaf1my
-~~~
+expected_canonical_programdata_executable_bytes_sha256: e68ada36e1914584c2dcc186afbdfcba608b286fc2cd404015a7a8c28764daa1
 
-ProgramData account:
+canonical_hash_domain: PROGRAMDATA_EXECUTABLE_BYTES_EXCLUDING_LOADER_METADATA
 
-~~~text
-9tuesaPoJhrifF49vJewcg6PSWZeHAJiqQ97pq3LMW9T
-~~~
-
-Expected upgrade authority:
-
-~~~text
-DTfvjtRL63u3XYHXQfgRQCdhEanUK1qqawvfEAM9hxAc
-~~~
-
-Expected canonical ProgramData executable-bytes SHA256:
-
-~~~text
-e68ada36e1914584c2dcc186afbdfcba608b286fc2cd404015a7a8c28764daa1
-~~~
+hash_algorithm: SHA256
 
 ## Still forbidden
 
