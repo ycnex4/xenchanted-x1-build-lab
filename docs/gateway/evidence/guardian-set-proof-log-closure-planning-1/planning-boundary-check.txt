@@ -1,0 +1,13 @@
+diff_check_status=0
+planning_only=true
+source_change_authorized=false
+activation_authorized=false
+rpc_mutation_authorized=false
+route_enablement_authorized=false
+deploy_authorized=false
+upgrade_authorized=false
+blockers_removed_now=false
+guardian_set_defined_now=false
+proof_log_defined_now=false
+execution_remains_blocked=true
+next_package=guardian-set-proof-log-public-spec-1
