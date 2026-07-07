@@ -1,0 +1,27 @@
+# Theo review questions
+
+1. Are we still on the correct path from RONPP3 toward a safe X1 testnet deploy track?
+
+2. Is it correct to insert a repo-only alignment checkpoint before using the RONPP3 exact GO phrase, because RONPP3 is bound to source commit fead873b9d8d while current main is 6db0483583d0?
+
+3. Is Read-only Network Precheck Execution.1 the correct next execution step after alignment, limited to:
+   - RPC read
+   - ProgramData/account metadata
+   - executable bytes dump
+   - SHA256 compare
+   - evidence only?
+
+4. Should we treat deploy/upgrade as a separate operation class after read-only precheck, with a separate scoped package and separate exact GO?
+
+5. Before any testnet deploy/upgrade, must we first resolve or explicitly scope around:
+   - SCAFFOLD_ONLY_NOT_DEPLOYABLE
+   - PLACEHOLDER_PROGRAM_ID_BOUNDARY
+   - LIVE_ROUTE_DISABLED
+   - SPL_CPI_EXECUTION_DISABLED
+   - production guardian/proof-log/external review blockers?
+
+6. If the next target is only an inert testnet artifact deployment, what blockers may remain open but must be explicitly recorded as out of scope?
+
+7. If the next target is a functional gateway testnet route, what blockers must close before deploy/activation?
+
+8. Are we over-documenting in a way that creates circular process, or is the current separation of read-only precheck, deploy/upgrade, and activation still justified?

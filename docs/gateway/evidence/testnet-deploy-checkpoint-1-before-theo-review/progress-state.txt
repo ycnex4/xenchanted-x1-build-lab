@@ -1,0 +1,32 @@
+# X1 Testnet Deploy Track progress state
+
+✅ 0: repo sanity review before GO
+✅ 1: local build/hash evidence
+✅ 2: RONB — read-only network baseline model
+✅ 3: RONPP1 — read-only precheck package draft
+✅ 4: RONPP2 — requirements / invariant review
+✅ 5: RONPP3 — exact read-only package closure
+
+👉 6: checkpoint + Theo review package
+
+⏭ 7: RONPP3 alignment to current main merge commit
+⏭ 8: Read-only Network Precheck Execution.1
+⏭ 9: Precheck result decision
+⏭ 10: Deploy-readiness cleanup
+⏭ 11: New build/hash after readiness changes
+⏭ 12: Testnet deploy/upgrade package
+⏭ 13: Testnet deploy/upgrade execution
+⏭ 14: Post-deploy verification
+⏭ 15: Separate activation path
+
+Current main commit:
+6db0483583d0d1cd9beb0b02ed28a6d949fc4f2e
+
+RONPP3 bound source commit:
+fead873b9d8d4e018106d1167e6b27494b03d89e
+
+Known alignment gap:
+RONPP3 final GO phrase is bound to fead873b9d8d, but current main is 6db0483583d0 after merge.
+
+Recommended next step after Theo review:
+repo-only RONPP3 alignment before any read-only RPC execution.
