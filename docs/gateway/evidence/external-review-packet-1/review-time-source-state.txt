@@ -1,0 +1,32 @@
+package_scope=REVIEW_ONLY
+source_change_authorized=false
+activation_authorized=false
+rpc_mutation_authorized=false
+route_enablement_authorized=false
+deploy_authorized=false
+upgrade_authorized=false
+
+review_branch=external-review-packet-1
+review_head=af554ab
+review_head_full=af554ab39718ee921fb5d5ff1a477e6ec129c04f
+review_main_expected=af554ab
+
+review_source_file=programs/xxxl-svm/src/lib.rs
+review_source_file=programs/xxxl-svm/src/deployment_status.rs
+review_source_file=programs/xxxl-svm/src/program_id_status.rs
+review_source_file=programs/xxxl-svm/src/processor.rs
+review_source_file=programs/xxxl-svm/src/cpi.rs
+review_source_file=programs/xxxl-svm/src/execution_plan.rs
+review_source_file=programs/xxxl-svm/src/safety_invariants.rs
+
+=== source file sha256 ===
+45eca8690dba8729253a65cae0259953ae86abdfc2cc7408c198112468ea9d7d  programs/xxxl-svm/src/lib.rs
+22b8e35ac206c136814953396568d819c3681949dd72cd5eb7540e71f98ab87f  programs/xxxl-svm/src/deployment_status.rs
+e4f6dcf2879c3160655fa5b1aadae837b78522aae2a07b9b2a2313bc933b3a12  programs/xxxl-svm/src/program_id_status.rs
+5dec9dd75af3aad3a0c0eb88eb4d1b7782d8d22786d88d70d5056cd07cd6e58f  programs/xxxl-svm/src/processor.rs
+30f9a3597348e32a49a6674700a1e461abdd4af7b077c6fcd22c394418b35f41  programs/xxxl-svm/src/cpi.rs
+9cba182cba7db83957b17e9aaf67e250b48a2d77e1efb39cdba4cc940c733fba  programs/xxxl-svm/src/execution_plan.rs
+b6e5cd6edbea09423cedbebcd4b46e23211e53747a1e640d01a50837673bc399  programs/xxxl-svm/src/safety_invariants.rs
+
+=== current git status ===
+?? docs/gateway/evidence/external-review-packet-1/
