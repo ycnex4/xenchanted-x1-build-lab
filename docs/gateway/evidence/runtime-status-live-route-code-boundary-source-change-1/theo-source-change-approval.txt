@@ -1,0 +1,9 @@
+theo_verdict=APPROVE_RUNTIME_STATUS_LIVE_ROUTE_CODE_BOUNDARY_SOURCE_CHANGE_PACKAGE
+scope=SOURCE_CHANGES_ONLY
+execution_blocked=true
+activation_authorized=false
+rpc_mutation_authorized=false
+route_enablement_authorized=false
+deploy_authorized=false
+upgrade_authorized=false
+main_at_start=517478b

@@ -1,0 +1,11 @@
+diff_check_status=0
+expected_changed_source_files=programs/xxxl-svm/src/cpi.rs
+expected_changed_source_files=programs/xxxl-svm/src/deployment_status.rs
+expected_changed_source_files=programs/xxxl-svm/src/execution_plan.rs
+expected_changed_source_files=programs/xxxl-svm/src/lib.rs
+expected_changed_source_files=programs/xxxl-svm/src/processor.rs
+expected_changed_source_files=programs/xxxl-svm/src/program_id_status.rs
+rpc_mutation_authorized=false
+activation_authorized=false
+deploy_authorized=false
+upgrade_authorized=false

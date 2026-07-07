@@ -1,0 +1,14 @@
+test_status=0
+log_file=docs/gateway/evidence/runtime-status-live-route-code-boundary-source-change-1/cargo-test-xxxl-svm-after-program-id-safety-lock-fix.full.log
+
+=== counts ===
+warnings=33
+errors=0
+failed_threads=0
+
+=== test result lines ===
+test result: ok. 773 passed; 0 failed; 1 ignored; 0 measured; 0 filtered out; finished in 0.30s
+
+=== failures block ===
+
+=== first error lines ===

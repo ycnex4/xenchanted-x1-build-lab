@@ -1,0 +1,6 @@
+programs/xxxl-svm/src/cpi.rs
+programs/xxxl-svm/src/deployment_status.rs
+programs/xxxl-svm/src/execution_plan.rs
+programs/xxxl-svm/src/lib.rs
+programs/xxxl-svm/src/processor.rs
+programs/xxxl-svm/src/program_id_status.rs

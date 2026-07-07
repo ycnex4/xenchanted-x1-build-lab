@@ -31,6 +31,10 @@ use crate::{
     },
 };
 
+pub const SPL_CPI_GUARD_REVIEWED_FOR_ACTIVATION_PACKAGE: bool = true;
+pub const SPL_CPI_EXECUTION_REMAINS_ACTIVATION_BLOCKED: bool = true;
+pub const SPL_CPI_BOUNDARY_MODE: &str = "GUARDED_ACTIVATION_PACKAGE_GATED";
+
 pub struct MintToCpiAccounts<'a, 'b> {
     pub token_program: &'a AccountInfo<'b>,
     pub mint: &'a AccountInfo<'b>,

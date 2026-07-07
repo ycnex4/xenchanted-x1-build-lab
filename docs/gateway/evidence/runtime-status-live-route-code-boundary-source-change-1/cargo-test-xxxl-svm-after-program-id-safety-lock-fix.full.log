@@ -1,0 +1,984 @@
+warning: unused import: `clock::Clock`
+  --> src/processor.rs:12:32
+   |
+12 |     account_info::AccountInfo, clock::Clock, entrypoint::ProgramResult, msg,
+   |                                ^^^^^^^^^^^^
+   |
+   = note: `#[warn(unused_imports)]` (part of `#[warn(unused)]`) on by default
+
+warning: type `Phase41F_1CheckedByteExtractionStatus` should have an upper camel case name
+  --> src/verifier/checked_ed25519_byte_extraction_boundary.rs:18:10
+   |
+18 | pub enum Phase41F_1CheckedByteExtractionStatus {
+   |          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ help: convert the identifier to upper camel case: `Phase41f1checkedByteExtractionStatus`
+   |
+   = note: `#[warn(non_camel_case_types)]` (part of `#[warn(nonstandard_style)]`) on by default
+
+warning: type `Phase41F_1ExtractedEd25519ByteSlices` should have an upper camel case name
+  --> src/verifier/checked_ed25519_byte_extraction_boundary.rs:32:12
+   |
+32 | pub struct Phase41F_1ExtractedEd25519ByteSlices<'a> {
+   |            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ help: convert the identifier to upper camel case: `Phase41f1extractedEd25519byteSlices`
+
+warning: type `Phase41F_1CheckedByteExtractionResult` should have an upper camel case name
+  --> src/verifier/checked_ed25519_byte_extraction_boundary.rs:42:12
+   |
+42 | pub struct Phase41F_1CheckedByteExtractionResult<'a> {
+   |            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ help: convert the identifier to upper camel case: `Phase41f1checkedByteExtractionResult`
+
+warning: type `Phase41F_1CheckedByteExtractionBoundaryReport` should have an upper camel case name
+  --> src/verifier/checked_ed25519_byte_extraction_boundary.rs:76:12
+   |
+76 | pub struct Phase41F_1CheckedByteExtractionBoundaryReport {
+   |            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ help: convert the identifier to upper camel case: `Phase41f1checkedByteExtractionBoundaryReport`
+
+warning: type `Phase41E_1Ed25519ByteParsingStatus` should have an upper camel case name
+  --> src/verifier/ed25519_instruction_byte_parsing_boundary.rs:26:10
+   |
+26 | pub enum Phase41E_1Ed25519ByteParsingStatus {
+   |          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ help: convert the identifier to upper camel case: `Phase41e1ed25519byteParsingStatus`
+
+warning: type `Phase41E_1ByteRange` should have an upper camel case name
+  --> src/verifier/ed25519_instruction_byte_parsing_boundary.rs:46:12
+   |
+46 | pub struct Phase41E_1ByteRange {
+   |            ^^^^^^^^^^^^^^^^^^^ help: convert the identifier to upper camel case: `Phase41e1byteRange`
+
+warning: type `Phase41E_1Ed25519InstructionIndexReferences` should have an upper camel case name
+  --> src/verifier/ed25519_instruction_byte_parsing_boundary.rs:52:12
+   |
+52 | pub struct Phase41E_1Ed25519InstructionIndexReferences {
+   |            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ help: convert the identifier to upper camel case: `Phase41e1ed25519instructionIndexReferences`
+
+warning: type `Phase41E_1ParsedEd25519Offsets` should have an upper camel case name
+  --> src/verifier/ed25519_instruction_byte_parsing_boundary.rs:59:12
+   |
+59 | pub struct Phase41E_1ParsedEd25519Offsets {
+   |            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ help: convert the identifier to upper camel case: `Phase41e1parsedEd25519offsets`
+
+warning: type `Phase41E_1Ed25519ByteParsingResult` should have an upper camel case name
+  --> src/verifier/ed25519_instruction_byte_parsing_boundary.rs:71:12
+   |
+71 | pub struct Phase41E_1Ed25519ByteParsingResult {
+   |            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ help: convert the identifier to upper camel case: `Phase41e1ed25519byteParsingResult`
+
+warning: type `Phase41E_1Ed25519ByteParsingBoundaryReport` should have an upper camel case name
+   --> src/verifier/ed25519_instruction_byte_parsing_boundary.rs:107:12
+    |
+107 | pub struct Phase41E_1Ed25519ByteParsingBoundaryReport {
+    |            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ help: convert the identifier to upper camel case: `Phase41e1ed25519byteParsingBoundaryReport`
+
+warning: type `Phase41F_2Ed25519VerificationModel` should have an upper camel case name
+  --> src/verifier/ed25519_signature_verification_boundary.rs:21:10
+   |
+21 | pub enum Phase41F_2Ed25519VerificationModel {
+   |          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ help: convert the identifier to upper camel case: `Phase41f2ed25519verificationModel`
+
+warning: type `Phase41F_2Ed25519SignatureVerificationStatus` should have an upper camel case name
+  --> src/verifier/ed25519_signature_verification_boundary.rs:26:10
+   |
+26 | pub enum Phase41F_2Ed25519SignatureVerificationStatus {
+   |          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ help: convert the identifier to upper camel case: `Phase41f2ed25519signatureVerificationStatus`
+
+warning: type `Phase41F_2VerifiedEd25519SignatureRanges` should have an upper camel case name
+  --> src/verifier/ed25519_signature_verification_boundary.rs:41:12
+   |
+41 | pub struct Phase41F_2VerifiedEd25519SignatureRanges {
+   |            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ help: convert the identifier to upper camel case: `Phase41f2verifiedEd25519signatureRanges`
+
+warning: type `Phase41F_2Ed25519SignatureVerificationResult` should have an upper camel case name
+  --> src/verifier/ed25519_signature_verification_boundary.rs:48:12
+   |
+48 | pub struct Phase41F_2Ed25519SignatureVerificationResult {
+   |            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ help: convert the identifier to upper camel case: `Phase41f2ed25519signatureVerificationResult`
+
+warning: type `Phase41F_2Ed25519SignatureVerificationBoundaryReport` should have an upper camel case name
+  --> src/verifier/ed25519_signature_verification_boundary.rs:85:12
+   |
+85 | pub struct Phase41F_2Ed25519SignatureVerificationBoundaryReport {
+   |            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ help: convert the identifier to upper camel case: `Phase41f2ed25519signatureVerificationBoundaryReport`
+
+warning: use of deprecated function `state::mark_processed_event_consumed_legacy_planning_only`: Use the Phase 41K.4 processed-event marking boundary instead
+  --> src/execution_plan.rs:10:19
+   |
+10 | use crate::state::mark_processed_event_consumed_legacy_planning_only;
+   |                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+   |
+   = note: `#[warn(deprecated)]` on by default
+
+warning: use of deprecated module `solana_program::system_instruction`: Use `solana_system_interface` crate instead
+ --> src/processed_event_marking_boundary.rs:3:17
+  |
+3 |     rent::Rent, system_instruction, system_program,
+  |                 ^^^^^^^^^^^^^^^^^^
+
+warning: use of deprecated module `solana_program::system_program`: Use `solana_sdk_ids::system_program` instead
+ --> src/processed_event_marking_boundary.rs:3:37
+  |
+3 |     rent::Rent, system_instruction, system_program,
+  |                                     ^^^^^^^^^^^^^^
+
+warning: use of deprecated module `solana_program::system_program`: Use `solana_sdk_ids::system_program` instead
+  --> src/processor.rs:13:62
+   |
+13 |     program_error::ProgramError, pubkey::Pubkey, rent::Rent, system_program, sysvar::Sysvar,
+   |                                                              ^^^^^^^^^^^^^^
+
+warning: use of deprecated function `state::mark_processed_event_consumed_legacy_planning_only`: Use the Phase 41K.4 processed-event marking boundary instead
+   --> src/state.rs:488:9
+    |
+488 |         mark_processed_event_consumed_legacy_planning_only(
+    |         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: use of deprecated function `state::mark_processed_event_consumed_legacy_planning_only`: Use the Phase 41K.4 processed-event marking boundary instead
+   --> src/state.rs:521:13
+    |
+521 |             mark_processed_event_consumed_legacy_planning_only(
+    |             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: use of deprecated function `state::mark_processed_event_consumed_legacy_planning_only`: Use the Phase 41K.4 processed-event marking boundary instead
+   --> src/state.rs:548:13
+    |
+548 |             mark_processed_event_consumed_legacy_planning_only(
+    |             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: unused import: `sysvar::Sysvar`
+  --> src/processor.rs:13:78
+   |
+13 |     program_error::ProgramError, pubkey::Pubkey, rent::Rent, system_program, sysvar::Sysvar,
+   |                                                                              ^^^^^^^^^^^^^^
+
+warning: unused variable: `matched_instruction_index`
+   --> src/verifier/prefilter_phase_41c3_candidate_descriptor_runtime_boundary.rs:281:9
+    |
+281 |     let matched_instruction_index = phase_41c3_result.matched_instruction_index;
+    |         ^^^^^^^^^^^^^^^^^^^^^^^^^ help: if this is intentional, prefix it with an underscore: `_matched_instruction_index`
+    |
+    = note: `#[warn(unused_variables)]` (part of `#[warn(unused)]`) on by default
+
+warning: function `consume_gateway_mint_account_contract_documents_owner_models` is never used
+   --> src/account_contract.rs:562:8
+    |
+562 |     fn consume_gateway_mint_account_contract_documents_owner_models() {
+    |        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    |
+    = note: `#[warn(dead_code)]` (part of `#[warn(unused)]`) on by default
+
+warning: function `assert_owner_model` is never used
+   --> src/account_contract.rs:626:8
+    |
+626 |     fn assert_owner_model(index: usize, owner_model: AccountOwnerModel) {
+    |        ^^^^^^^^^^^^^^^^^^
+
+warning: function `read_u128_le` is never used
+    --> src/processor.rs:2304:8
+     |
+2304 |     fn read_u128_le(input: &[u8], offset: usize) -> u128 {
+     |        ^^^^^^^^^^^^
+
+warning: function `read_fixed_32` is never used
+    --> src/processor.rs:2316:8
+     |
+2316 |     fn read_fixed_32(input: &[u8], offset: usize) -> [u8; 32] {
+     |        ^^^^^^^^^^^^^
+
+warning: constant `GUARDIAN_3_PUBLIC_KEY_BYTES` is never used
+   --> src/verifier/quorum_authorization_boundary.rs:342:11
+    |
+342 |     const GUARDIAN_3_PUBLIC_KEY_BYTES: [u8; 32] = [0x03; 32];
+    |           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: constant `OTHER_GUARDIAN_SET_ID` is never used
+   --> src/verifier/replay_protection_boundary.rs:415:11
+    |
+415 |     const OTHER_GUARDIAN_SET_ID: [u8; 32] = [0x23; 32];
+    |           ^^^^^^^^^^^^^^^^^^^^^
+
+warning: constant `GUARDIAN_3_PUBLIC_KEY_BYTES` is never used
+   --> src/verifier/replay_protection_boundary.rs:430:11
+    |
+430 |     const GUARDIAN_3_PUBLIC_KEY_BYTES: [u8; 32] = [0x03; 32];
+    |           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: `xxxl-svm` (lib test) generated 32 warnings (run `cargo fix --lib -p xxxl-svm --tests` to apply 2 suggestions)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 4.24s
+     Running unittests src/lib.rs (programs/xxxl-svm/target/debug/deps/xxxl_svm-0ad1c373db1503b6)
+
+running 774 tests
+test account_contract::tests::consume_gateway_mint_account_contract_matches_instruction_indices ... ok
+test account_contract::tests::consume_gateway_mint_account_contract_lookup_rejects_out_of_range_index ... ok
+test account_contract::tests::consume_gateway_mint_account_contract_requires_only_rent_payer_signer ... ok
+test account_contract::tests::consume_gateway_mint_account_contract_marks_only_mutable_accounts_writable ... ok
+test account_contract::tests::consume_gateway_mint_account_contract_has_expected_length_and_indices ... ok
+test account_order_skeleton::tests::account_order_skeleton_status_is_local_only_not_deployable ... ok
+test account_order_skeleton::tests::consume_gateway_mint_account_order_is_stable ... ok
+test account_order_skeleton::tests::initialize_gateway_config_account_order_is_stable ... ok
+test account_order_skeleton::tests::consume_gateway_mint_writable_accounts_are_explicit ... ok
+test account_contract::tests::consume_gateway_mint_account_contract_matches_processor_indices ... ok
+test account_order_skeleton::tests::initialize_guardian_set_account_order_is_stable ... ok
+test account_order_skeleton::tests::initialize_mint_state_account_order_is_stable ... ok
+test account_order_skeleton::tests::account_indices_match_position ... ok
+test account_order_skeleton::tests::required_account_count_is_enforced ... ok
+test account_validation_skeleton::tests::account_validation_skeleton_status_is_local_only_not_deployable ... ok
+test account_validation_skeleton::tests::consume_gateway_mint_owner_expectations_are_explicit ... ok
+test account_validation_skeleton::tests::expected_account_metas_match_consume_gateway_mint_requirements ... ok
+test account_validation_skeleton::tests::expected_account_metas_match_initialize_gateway_config_requirements ... ok
+test account_validation_skeleton::tests::validation_rejects_invalid_account_count ... ok
+test account_validation_skeleton::tests::validation_rejects_owner_expectation_mismatch ... ok
+test account_validation_skeleton::tests::validation_rejects_signer_mismatch ... ok
+test account_validation_skeleton::tests::validation_rejects_writable_mismatch ... ok
+test consume_execution_plan_skeleton::tests::consume_execution_plan_rejects_invalid_account_metas ... ok
+test consume_execution_plan_skeleton::tests::consume_execution_plan_rejects_inactive_mint_state ... ok
+test consume_execution_plan_skeleton::tests::consume_execution_plan_accepts_valid_consume_boundary ... ok
+test consume_execution_plan_skeleton::tests::consume_execution_plan_rejects_non_consume_instruction ... ok
+test consume_execution_plan_skeleton::tests::consume_execution_plan_rejects_total_minted_overflow ... ok
+test consume_execution_plan_skeleton::tests::consume_execution_plan_skeleton_status_is_local_only_not_deployable ... ok
+test consume_state_transition_skeleton::tests::consume_state_transition_allows_zero_amount_as_boundary_only ... ok
+test consume_state_transition_skeleton::tests::consume_state_transition_builds_processed_event ... ok
+test consume_state_transition_skeleton::tests::consume_state_transition_rejects_inactive_mint_state ... ok
+test consume_state_transition_skeleton::tests::consume_state_transition_rejects_total_minted_overflow ... ok
+test consume_state_transition_skeleton::tests::consume_state_transition_skeleton_status_is_local_only_not_deployable ... ok
+test consume_state_transition_skeleton::tests::consume_state_transition_updates_total_minted ... ok
+test cpi::tests::gateway_mint_authority_pda_accepts_real_derived_fixture ... ok
+test cpi::tests::gateway_mint_authority_pda_rejects_wrong_bump ... ok
+test cpi::tests::gateway_mint_authority_pda_rejects_wrong_pda ... ok
+test cpi::tests::guarded_mint_to_cpi_execution_gate_boundary_rejects_live_route_flag_before_cpi ... ok
+test cpi::tests::guarded_mint_to_cpi_execution_gate_boundary_rejects_planning_boundary_mismatch ... ok
+test cpi::tests::guarded_mint_to_cpi_execution_gate_boundary_rejects_when_gate_disabled ... ok
+test cpi::tests::guarded_mint_to_cpi_execution_gate_boundary_rejects_wrong_pda_before_gate ... ok
+test cpi::tests::mint_to_boundary_rejects_wrong_pda_before_invoke_signed ... ok
+test cpi::tests::mint_to_cpi_planning_boundary_builds_plan_without_invoke_signed ... ok
+test cpi::tests::mint_to_cpi_planning_boundary_rejects_amount_mismatch ... ok
+test cpi::tests::mint_to_cpi_planning_boundary_rejects_live_route_flag ... ok
+test cpi::tests::mint_to_cpi_planning_boundary_rejects_mint_to_flag ... ok
+test cpi::tests::mint_to_cpi_planning_boundary_rejects_wrong_bump ... ok
+test cpi::tests::mint_to_cpi_planning_boundary_rejects_wrong_mint_mapping ... ok
+test cpi::tests::mint_to_cpi_planning_boundary_rejects_wrong_pda ... ok
+test cpi::tests::mint_to_cpi_planning_boundary_rejects_wrong_token_program ... ok
+test cpi::tests::mint_to_cpi_planning_boundary_rejects_zero_boundary_amount ... ok
+test cpi::tests::mint_to_instruction_rejects_zero_amount ... ok
+test cpi::tests::mint_to_instruction_uses_spl_token_program_and_expected_accounts ... ok
+test cpi::tests::signer_seeds_are_exact_and_include_bump ... ok
+test deployment_status::tests::mollusk_coverage_transition_keeps_only_expected_active_blockers ... ok
+test deployment_status::tests::runtime_deployment_blocker_codes_are_stable ... ok
+test deployment_status::tests::runtime_deployment_blocker_descriptions_are_human_readable ... ok
+test deployment_status::tests::runtime_deployment_blocker_report_lookup_finds_placeholder_program_id ... ok
+test deployment_status::tests::runtime_deployment_blocker_reports_match_blocker_methods ... ok
+test deployment_status::tests::runtime_deployment_blocker_resolutions_are_human_readable ... ok
+test deployment_status::tests::runtime_deployment_blockers_are_explicit ... ok
+test deployment_status::tests::runtime_deployment_report_has_all_explicit_blockers ... ok
+test deployment_status::tests::runtime_deployment_report_has_transitioned_account_contract_review_blocker ... ok
+test deployment_status::tests::runtime_deployment_report_has_transitioned_mollusk_coverage_blocker ... ok
+test deployment_status::tests::runtime_deployment_report_is_source_boundary_ready_and_activation_blocked ... ok
+test deployment_status::tests::runtime_deployment_report_matches_runtime_flags ... ok
+test deployment_status::tests::runtime_deployment_report_rejects_unknown_blocker_code ... ok
+test deployment_status::tests::runtime_deployment_status_keeps_placeholder_program_id_visible ... ok
+test deployment_status::tests::runtime_deployment_status_matches_disabled_runtime_flags ... ok
+test deployment_status::tests::runtime_predeploy_gate_is_blocked_for_current_report ... ok
+test deployment_status::tests::runtime_predeploy_gate_uses_the_deployment_report ... ok
+test deployment_status::tests::runtime_status_code_and_description_are_human_readable ... ok
+test deployment_status::tests::runtime_status_is_source_boundary_ready_activation_blocked ... ok
+test dispatch_skeleton::tests::dispatch_plans_consume_gateway_mint_with_expected_accounts ... ok
+test dispatch_skeleton::tests::dispatch_plans_initialize_gateway_config_with_expected_accounts ... ok
+test dispatch_skeleton::tests::dispatch_plans_initialize_guardian_set_with_expected_accounts ... ok
+test dispatch_skeleton::tests::dispatch_plans_initialize_mint_state_with_expected_accounts ... ok
+test dispatch_skeleton::tests::dispatch_rejects_invalid_instruction_data ... ok
+test dispatch_skeleton::tests::dispatch_rejects_wrong_account_count_after_decode ... ok
+test dispatch_skeleton::tests::dispatch_skeleton_status_is_local_only_not_deployable ... ok
+test execution_plan::tests::atomic_execution_plan_is_built_from_prepared_cpi_boundary ... ok
+test execution_plan::tests::atomic_execution_plan_rejects_amount_mismatch ... ok
+test execution_plan::tests::atomic_state_mutation_composition_boundary_marks_event_and_credits_balance ... ok
+test execution_plan::tests::atomic_state_mutation_composition_boundary_rejects_live_route_flag_without_changes ... ok
+test execution_plan::tests::atomic_state_mutation_composition_boundary_rejects_mint_to_flag_without_changes ... ok
+test execution_plan::tests::atomic_state_mutation_composition_boundary_rejects_recipient_overflow_before_event_mark ... ok
+test execution_plan::tests::atomic_state_mutation_composition_boundary_rejects_reordered_steps_without_changes ... ok
+test execution_plan::tests::atomic_state_mutation_composition_boundary_rejects_replay_before_balance_credit ... ok
+test execution_plan::tests::atomic_state_mutation_composition_boundary_rejects_wrong_event_key_before_balance_credit ... ok
+test execution_plan::tests::atomic_state_mutation_composition_boundary_rejects_wrong_mint_before_event_mark ... ok
+test execution_plan::tests::atomic_state_mutation_composition_boundary_rejects_wrong_recipient_owner_before_event_mark ... ok
+test execution_plan::tests::atomic_state_mutation_composition_boundary_rejects_zero_amount_without_changes ... ok
+test execution_plan::tests::atomic_state_mutation_fixture_marks_processed_and_credits_balance ... ok
+test execution_plan::tests::atomic_state_mutation_fixture_rejects_balance_overflow_before_marking_processed ... ok
+test execution_plan::tests::atomic_state_mutation_fixture_rejects_replay_before_credit ... ok
+test execution_plan::tests::atomic_state_mutation_fixture_rejects_wrong_recipient_balance_owner ... ok
+test execution_plan::tests::atomic_step_order_is_fixed ... ok
+test execution_plan::tests::atomic_step_order_rejects_reordered_steps ... ok
+test execution_plan::tests::fixture_does_not_depend_on_gateway_config_account_layout ... ok
+test execution_plan::tests::processed_event_mutation_boundary_marks_event_from_execution_plan ... ok
+test execution_plan::tests::processed_event_mutation_boundary_rejects_live_route_flag_without_changes ... ok
+test execution_plan::tests::processed_event_mutation_boundary_rejects_mint_to_flag_without_changes ... ok
+test execution_plan::tests::processed_event_mutation_boundary_rejects_reordered_steps_without_changes ... ok
+test execution_plan::tests::processed_event_mutation_boundary_rejects_replay_without_changes ... ok
+test execution_plan::tests::processed_event_mutation_boundary_rejects_wrong_event_key_without_changes ... ok
+test execution_plan::tests::processed_event_mutation_boundary_rejects_wrong_recipient_without_changes ... ok
+test execution_plan::tests::processed_event_mutation_boundary_rejects_wrong_route_without_changes ... ok
+test execution_plan::tests::processed_event_mutation_boundary_rejects_zero_amount_plan_without_changes ... ok
+test execution_plan::tests::recipient_balance_mutation_boundary_credits_balance_from_execution_plan ... ok
+test execution_plan::tests::recipient_balance_mutation_boundary_rejects_balance_overflow_without_changes ... ok
+test execution_plan::tests::recipient_balance_mutation_boundary_rejects_live_route_flag_without_changes ... ok
+test execution_plan::tests::recipient_balance_mutation_boundary_rejects_mint_to_flag_without_changes ... ok
+test execution_plan::tests::recipient_balance_mutation_boundary_rejects_reordered_steps_without_changes ... ok
+test execution_plan::tests::recipient_balance_mutation_boundary_rejects_wrong_mint_without_changes ... ok
+test execution_plan::tests::recipient_balance_mutation_boundary_rejects_wrong_owner_without_changes ... ok
+test execution_plan::tests::recipient_balance_mutation_boundary_rejects_zero_amount_plan_without_changes ... ok
+test initialization_execution_plan_skeleton::tests::initialization_execution_plan_skeleton_status_is_local_only_not_deployable ... ok
+test initialization_execution_plan_skeleton::tests::initialize_gateway_config_execution_plan_accepts_valid_instruction ... ok
+test initialization_execution_plan_skeleton::tests::initialize_gateway_config_execution_plan_rejects_invalid_account_metas ... ok
+test initialization_execution_plan_skeleton::tests::initialize_gateway_config_execution_plan_rejects_non_gateway_config_instruction ... ok
+test initialization_execution_plan_skeleton::tests::initialize_guardian_set_execution_plan_accepts_valid_instruction ... ok
+test initialization_execution_plan_skeleton::tests::initialize_mint_state_execution_plan_accepts_valid_instruction ... ok
+test instruction::tests::consume_gateway_mint_instruction_parses_known_layout ... ok
+test instruction::tests::consume_gateway_mint_rejects_nonzero_reserved_202_207 ... ok
+test instruction::tests::consume_gateway_mint_rejects_nonzero_reserved_any_byte ... ok
+test instruction::tests::consume_gateway_mint_rejects_version_0 ... ok
+test instruction::tests::consume_gateway_mint_rejects_version_1 ... ok
+test instruction::tests::consume_gateway_mint_rejects_wrong_account_index_boundary ... ok
+test instruction::tests::consume_gateway_mint_rejects_wrong_account_meta_count ... ok
+test instruction::tests::consume_gateway_mint_rejects_wrong_instruction_discriminator ... ok
+test instruction::tests::consume_gateway_mint_rejects_wrong_instruction_length ... ok
+test instruction::tests::consume_gateway_mint_rejects_wrong_instruction_version ... ok
+test instruction::tests::consume_gateway_mint_v2_parses_max_source_chain_id ... ok
+test instruction::tests::consume_gateway_mint_v2_parses_source_chain_id ... ok
+test instruction_codec_skeleton::tests::codec_status_is_local_only_not_deployable ... ok
+test instruction_codec_skeleton::tests::decode_accepts_reserved_instruction_tags ... ok
+test instruction_codec_skeleton::tests::decode_rejects_empty_instruction_data ... ok
+test instruction_codec_skeleton::tests::decode_rejects_invalid_instruction_tag ... ok
+test instruction_codec_skeleton::tests::empty_payload_skeleton_accepts_empty_payload_reserved_tags ... ok
+test instruction_codec_skeleton::tests::empty_payload_skeleton_rejects_non_empty_payload_until_payload_layouts_exist ... ok
+test instruction_codec_skeleton::tests::encode_decode_round_trip_preserves_tag_and_payload ... ok
+test instruction_payload_skeleton::tests::consume_gateway_mint_payload_boundary_round_trip_preserves_fields ... ok
+test instruction_payload_skeleton::tests::gateway_config_payload_rejects_invalid_bool ... ok
+test instruction_payload_skeleton::tests::gateway_config_payload_round_trip_preserves_fields ... ok
+test instruction_payload_skeleton::tests::guardian_set_header_rejects_invalid_threshold ... ok
+test instruction_payload_skeleton::tests::guardian_set_header_rejects_zero_guardian_count ... ok
+test instruction_payload_skeleton::tests::guardian_set_header_round_trip_preserves_fields ... ok
+test instruction_payload_skeleton::tests::mint_state_payload_round_trip_preserves_fields ... ok
+test instruction_payload_skeleton::tests::payload_decoders_reject_wrong_lengths ... ok
+test instruction_payload_skeleton::tests::payload_skeleton_status_is_local_only_not_deployable ... ok
+test local_execution_plan_skeleton::tests::local_execution_plan_skeleton_status_is_local_only_not_deployable ... ok
+test local_execution_plan_skeleton::tests::local_execution_plans_consume_gateway_mint ... ok
+test local_execution_plan_skeleton::tests::local_execution_plans_initialize_gateway_config ... ok
+test local_execution_plan_skeleton::tests::local_execution_plans_initialize_guardian_set ... ok
+test local_execution_plan_skeleton::tests::local_execution_plans_initialize_mint_state ... ok
+test local_execution_plan_skeleton::tests::local_execution_rejects_context_instruction_mismatch ... ok
+test local_execution_plan_skeleton::tests::local_execution_rejects_invalid_account_metas_before_context_execution ... ok
+test local_execution_scenario_skeleton::tests::local_execution_scenario_allows_zero_mint_amount_as_boundary_only ... ok
+test local_execution_scenario_skeleton::tests::local_execution_scenario_rejects_inactive_mint_state_before_consume ... ok
+test local_execution_scenario_skeleton::tests::local_execution_scenario_rejects_invalid_guardian_threshold ... ok
+test local_execution_scenario_skeleton::tests::local_execution_scenario_rejects_total_minted_overflow ... ok
+test local_execution_scenario_skeleton::tests::local_execution_scenario_runs_full_local_sequence ... ok
+test local_execution_scenario_skeleton::tests::local_execution_scenario_skeleton_status_is_local_only_not_deployable ... ok
+test local_fixture_file_emitter_skeleton::tests::expected_file_names_are_complete_and_stable ... ok
+test local_fixture_file_emitter_skeleton::tests::file_emitter_status_is_non_writing_skeleton ... ok
+test local_fixture_file_emitter_skeleton::tests::full_emission_plan_is_local_only_and_non_writing ... ok
+test local_fixture_file_emitter_skeleton::tests::full_emission_plan_rejects_unsafe_fixture_identity ... ok
+test local_fixture_file_emitter_skeleton::tests::local_fixture_files_are_built_without_disk_writes ... ok
+test local_fixture_file_emitter_skeleton::tests::missing_expected_file_is_rejected ... ok
+test local_fixture_file_emitter_skeleton::tests::output_directory_accepts_local_disposable_relative_path ... ok
+test local_fixture_file_emitter_skeleton::tests::output_directory_rejects_empty_and_unsafe_paths ... ok
+test local_fixture_file_emitter_skeleton::tests::rendered_files_include_manifest_and_safety_report ... ok
+test local_fixture_file_emitter_skeleton::tests::rendered_text_safety_rejects_forbidden_markers ... ok
+test local_fixture_generator_skeleton::tests::deterministic_pubkey_fixture_changes_for_different_seed ... ok
+test local_fixture_generator_skeleton::tests::deterministic_pubkey_fixture_is_stable_for_same_seed ... ok
+test local_fixture_generator_skeleton::tests::fixture_generator_boundary_rejects_non_local_flags_by_construction ... ok
+test local_fixture_generator_skeleton::tests::fixture_generator_skeleton_status_is_local_only ... ok
+test local_fixture_generator_skeleton::tests::fixture_manifest_rejects_empty_fixture_set_id ... ok
+test local_fixture_generator_skeleton::tests::fixture_manifest_rejects_empty_seed_label ... ok
+test local_fixture_generator_skeleton::tests::fixture_manifest_rejects_unsafe_text_patterns ... ok
+test local_fixture_generator_skeleton::tests::fixture_manifest_uses_safe_local_defaults ... ok
+test local_fixture_generator_skeleton::tests::full_fixture_set_builds_with_guard_intact_and_live_route_disabled ... ok
+test local_fixture_generator_skeleton::tests::safety_report_is_pass_and_local_only ... ok
+test local_guardian_descriptor_skeleton::tests::descriptor_builds_local_only_non_signing_model ... ok
+test local_guardian_descriptor_skeleton::tests::descriptor_rejects_empty_required_fields ... ok
+test local_guardian_descriptor_skeleton::tests::descriptor_rejects_invalid_thresholds ... ok
+test local_guardian_descriptor_skeleton::tests::descriptor_rejects_unsafe_text ... ok
+test local_guardian_descriptor_skeleton::tests::descriptor_safety_validation_accepts_safe_descriptor ... ok
+test local_guardian_descriptor_skeleton::tests::descriptor_status_and_flags_are_local_only_not_signing ... ok
+test local_guardian_descriptor_skeleton::tests::descriptor_threshold_pass_model_is_stable ... ok
+test local_guardian_descriptor_skeleton::tests::integrity_hash_changes_when_descriptor_changes ... ok
+test local_guardian_descriptor_skeleton::tests::local_public_key_fixture_is_deterministic_and_non_signing ... ok
+test local_guardian_descriptor_skeleton::tests::public_key_fixture_changes_by_index ... ok
+test local_guardian_descriptor_skeleton::tests::public_key_fixture_list_rejects_zero_count ... ok
+test local_guardian_descriptor_skeleton::tests::signing_material_markers_are_rejected ... ok
+test local_guardian_failure_matrix_skeleton::tests::failure_case_builder_defaults_to_no_mutation_no_execution ... ok
+test local_guardian_failure_matrix_skeleton::tests::failure_case_builder_rejects_empty_and_raw_secret_assignment_markers ... ok
+test local_guardian_failure_matrix_skeleton::tests::failure_groups_are_stable ... ok
+test local_guardian_failure_matrix_skeleton::tests::matrix_builds_from_local_integration_inputs ... ok
+test local_guardian_failure_matrix_skeleton::tests::matrix_contains_expected_guardian_failure_cases ... ok
+test local_guardian_failure_matrix_skeleton::tests::matrix_rejects_empty_matrix_id ... ok
+test local_guardian_failure_matrix_skeleton::tests::matrix_rejects_unsafe_integration_inputs ... ok
+test local_guardian_failure_matrix_skeleton::tests::matrix_safety_rejects_mutated_execution_flag ... ok
+test local_guardian_failure_matrix_skeleton::tests::matrix_safety_validation_accepts_safe_matrix ... ok
+test local_guardian_failure_matrix_skeleton::tests::matrix_status_and_flags_are_local_only_non_executing ... ok
+test local_guardian_fixture_integration_skeleton::tests::expected_failure_case_ids_are_stable ... ok
+test local_guardian_fixture_integration_skeleton::tests::integration_builds_local_descriptor_fixture_link ... ok
+test local_guardian_fixture_integration_skeleton::tests::integration_rejects_invalid_threshold ... ok
+test local_guardian_fixture_integration_skeleton::tests::integration_rejects_unsafe_descriptor_identity ... ok
+test local_guardian_fixture_integration_skeleton::tests::integration_rejects_unsafe_fixture_identity ... ok
+test local_guardian_fixture_integration_skeleton::tests::integration_safety_rejects_mutated_execution_flag ... ok
+test local_guardian_fixture_integration_skeleton::tests::integration_safety_validation_accepts_safe_integration ... ok
+test local_guardian_fixture_integration_skeleton::tests::integration_status_and_flags_are_local_only_non_executing ... ok
+test local_guardian_fixture_integration_skeleton::tests::integration_text_rejects_empty_and_unsafe_patterns ... ok
+test pda::tests::gateway_mint_authority_changes_with_program_id ... ok
+test pda::tests::gateway_mint_authority_derivation_is_deterministic ... ok
+test pda::tests::gateway_mint_authority_fixture_is_not_placeholder_program_id ... ok
+test pda::tests::gateway_mint_authority_fixture_report_matches_derivation ... ok
+test pda::tests::gateway_mint_authority_seeds_are_exact ... ok
+test pda::tests::gateway_mint_authority_uses_real_find_program_address ... ok
+test pda::tests::pda_derivation_inventory_entry_lookup_is_stable ... ok
+test pda::tests::pda_derivation_inventory_is_explicit ... ok
+test pda::tests::pda_derivation_inventory_matches_account_contract ... ok
+test pda::tests::pda_fixture_reports_change_with_program_id ... ok
+test pda::tests::pda_fixture_reports_match_inventory ... ok
+test pda::tests::pda_fixture_verification_accepts_derived_reports ... ok
+test pda::tests::pda_fixture_verification_rejects_wrong_bump ... ok
+test pda::tests::pda_fixture_verification_rejects_wrong_name ... ok
+test pda::tests::pda_fixture_verification_rejects_wrong_pda ... ok
+test pda::tests::pda_fixture_verification_rejects_wrong_program_id ... ok
+test pda::tests::pda_fixture_verification_rejects_wrong_report_count ... ok
+test pda::x1_testnet_program_id_candidate_dry_run_tests::x1_testnet_program_id_candidate_pda_dry_run ... ignored, requires XXXL_TESTNET_PROGRAM_ID_CANDIDATE; off-chain only; no RPC, no deploy, no SOL spend
+test processed_event_marking_boundary::tests::already_consumed_processed_event_rejects_before_cpi_or_mutation ... ok
+test processed_event_marking_boundary::tests::boundary_report_enables_only_marking_not_live_route_or_spl_mint ... ok
+test processed_event_marking_boundary::tests::different_canonical_event_key_derives_different_processed_event_pda ... ok
+test processed_event_marking_boundary::tests::executable_processed_event_rejects_before_cpi_or_mutation ... ok
+test processed_event_marking_boundary::tests::final_consumed_image_redecodes_as_processed_with_41k3_loader_decoder ... ok
+test processed_event_marking_boundary::tests::final_consumed_image_rejects_zero_amount ... ok
+test processed_event_marking_boundary::tests::final_consumed_image_uses_xxxl_mint_amount_as_consumed_amount ... ok
+test processed_event_marking_boundary::tests::initialized_unconsumed_processed_event_rejects_and_is_not_repaired ... ok
+test processed_event_marking_boundary::tests::readonly_processed_event_rejects_before_cpi_or_mutation ... ok
+test processed_event_marking_boundary::tests::rent_payer_must_be_signer_and_writable ... ok
+test processed_event_marking_boundary::tests::signer_processed_event_rejects_before_cpi_or_mutation ... ok
+test processed_event_marking_boundary::tests::signer_seeds_match_41k3_processed_event_pda_seed_format ... ok
+test processed_event_marking_boundary::tests::system_owned_nonzero_data_rejects_before_cpi_or_mutation ... ok
+test processed_event_marking_boundary::tests::wrong_pda_rejects_before_cpi_or_mutation ... ok
+test processed_event_marking_boundary::tests::wrong_system_program_account_rejects_before_cpi_or_mutation ... ok
+test processor::tests::consume_gateway_mint_v2_happy_path_matches_gateway_config ... ok
+test processor::tests::guarded_live_handler_fixture_builds_disabled_execution_plan_after_validation ... ok
+test processor::tests::guarded_live_handler_fixture_rejects_invalid_boundary_before_plan ... ok
+test processor::tests::handler_integration_prepares_cpi_boundary_after_decode_and_validation ... ok
+test processor::tests::handler_integration_rejects_amount_larger_than_spl_token_u64_range ... ok
+test processor::tests::handler_integration_rejects_consumed_processed_event ... ok
+test processor::tests::handler_integration_rejects_gateway_config_guardian_set_id_mismatch ... ok
+test processor::tests::handler_integration_rejects_gateway_config_source_chain_weight_mismatch ... ok
+test processor::tests::handler_integration_rejects_gateway_config_target_mint_mismatch ... ok
+test processor::tests::handler_integration_rejects_gateway_route_mismatch ... ok
+test processor::tests::handler_integration_rejects_wrong_account_count ... ok
+test processor::tests::handler_integration_rejects_wrong_account_order ... ok
+test processor::tests::handler_integration_rejects_wrong_guardian_set_id ... ok
+test processor::tests::handler_integration_rejects_wrong_mint_authority_bump ... ok
+test processor::tests::handler_integration_rejects_wrong_mint_authority_pda ... ok
+test processor::tests::handler_integration_rejects_wrong_processed_event_canonical_event_key ... ok
+test processor::tests::handler_integration_rejects_wrong_processed_event_recipient ... ok
+test processor::tests::handler_integration_rejects_wrong_processed_event_route_id ... ok
+test processor::tests::handler_integration_rejects_wrong_program_owner_for_program_owned_account ... ok
+test processor::tests::handler_integration_rejects_wrong_recipient_balance_mint ... ok
+test processor::tests::handler_integration_rejects_wrong_recipient_balance_owner ... ok
+test processor::tests::handler_integration_rejects_wrong_recipient_token_mint ... ok
+test processor::tests::handler_integration_rejects_wrong_spl_mint_authority ... ok
+test processor::tests::handler_integration_rejects_wrong_spl_mint_owner ... ok
+test processor::tests::handler_integration_rejects_wrong_spl_token_program_id ... ok
+test processor::tests::handler_integration_rejects_zero_amount ... ok
+test processor::tests::handler_rejects_source_chain_id_mismatch ... ok
+test processor::tests::handler_rejects_source_chain_id_unexpected ... ok
+test processor::tests::handler_rejects_source_chain_id_zero ... ok
+test processor::tests::process_instruction_execution_plan_helper_builds_plan_without_live_route_activation ... ok
+test processor::tests::runtime_account_contract_rejects_missing_rent_payer_signature ... ok
+test processor::tests::runtime_account_contract_rejects_missing_required_writable_account ... ok
+test processor::tests::runtime_account_contract_rejects_readonly_rent_payer ... ok
+test processor::tests::runtime_account_contract_rejects_unexpected_external_signer ... ok
+test processor::tests::runtime_account_contract_rejects_unnecessary_writable_readonly_account ... ok
+test processor::tests::runtime_account_contract_rejects_wrong_system_program_id ... ok
+test processor::tests::runtime_disabled_spl_cpi_gate_boundary_rejects_at_gate_without_mutation ... ok
+test processor::tests::runtime_disabled_spl_cpi_gate_boundary_rejects_consumed_event_before_gate_without_mutation ... ok
+test processor::tests::runtime_disabled_spl_cpi_gate_boundary_rejects_wrong_recipient_token_account_without_mutation ... ok
+test processor::tests::runtime_disabled_spl_cpi_gate_boundary_rejects_zero_amount_without_mutation ... ok
+test processor::tests::runtime_local_state_mutation_composition_boundary_rejects_consumed_event_without_credit ... ok
+test processor::tests::runtime_local_state_mutation_composition_boundary_rejects_live_style_system_owned_empty_processed_event ... ok
+test processor::tests::runtime_local_state_mutation_composition_boundary_rejects_recipient_overflow_before_event_mark ... ok
+test processor::tests::runtime_local_state_mutation_composition_boundary_rejects_wrong_recipient_token_account_without_mutation ... ok
+test processor::tests::runtime_planning_composition_boundary_builds_execution_and_cpi_plans_without_mutation ... ok
+test processor::tests::runtime_planning_composition_boundary_rejects_consumed_event_without_mutation ... ok
+test processor::tests::runtime_planning_composition_boundary_rejects_wrong_recipient_token_account_without_mutation ... ok
+test processor::tests::runtime_planning_composition_boundary_rejects_zero_amount_without_mutation ... ok
+test program_id_status::tests::program_id_placeholder_blocker_is_active_in_deployment_report ... ok
+test program_id_status::tests::program_id_readiness_report_is_reviewed_and_activation_blocked ... ok
+test program_id_status::tests::program_id_readiness_report_matches_deployment_blocker_metadata ... ok
+test program_id_status::tests::program_id_readiness_status_is_reviewed_activation_blocked ... ok
+test program_id_status::tests::program_id_source_ready_but_placeholder_binding_safety_lock_remains_active ... ok
+test safety_invariants::tests::activation_safety_consistency_summary_collects_all_current_gates ... ok
+test safety_invariants::tests::all_activation_gates_are_consistent_with_current_safety_invariants ... ok
+test safety_invariants::tests::deployment_blocker_evidence_consistency_report_matches_current_lock_evidence ... ok
+test safety_invariants::tests::deployment_blocker_evidence_is_consistent_for_current_scaffold ... ok
+test safety_invariants::tests::live_route_is_consistent_with_current_safety_invariants ... ok
+test safety_invariants::tests::live_route_safety_consistency_report_is_disabled_and_consistent ... ok
+test safety_invariants::tests::mollusk_coverage_transition_keeps_runtime_blocked_and_safety_locked ... ok
+test safety_invariants::tests::predeploy_gate_is_consistent_with_current_safety_invariants ... ok
+test safety_invariants::tests::predeploy_gate_safety_consistency_report_is_blocked_and_consistent ... ok
+test safety_invariants::tests::runtime_blocking_safety_invariants_hold_for_current_scaffold ... ok
+test safety_invariants::tests::runtime_safety_invariant_summary_matches_current_blocking_state ... ok
+test safety_invariants::tests::runtime_safety_lock_evidence_is_complete_for_current_scaffold ... ok
+test safety_invariants::tests::runtime_safety_lock_evidence_summary_collects_current_evidence ... ok
+test safety_invariants::tests::runtime_safety_lock_is_active_for_current_scaffold ... ok
+test safety_invariants::tests::runtime_safety_lock_summary_collects_current_lock_state ... ok
+test safety_invariants::tests::runtime_safety_release_decision_report_blocks_current_scaffold ... ok
+test safety_invariants::tests::runtime_safety_release_is_not_allowed_for_current_scaffold ... ok
+test safety_invariants::tests::runtime_safety_unlock_criteria_summary_blocks_current_scaffold ... ok
+test safety_invariants::tests::runtime_safety_unlock_is_not_ready_for_current_scaffold ... ok
+test safety_invariants::tests::safety_lock_deployment_gate_consistency_report_is_locked_and_blocked ... ok
+test safety_invariants::tests::safety_lock_is_consistent_with_current_deployment_gate ... ok
+test safety_invariants::tests::spl_cpi_is_consistent_with_current_safety_invariants ... ok
+test safety_invariants::tests::spl_cpi_safety_consistency_report_is_disabled_and_consistent ... ok
+test state::tests::account_layout_lengths_match_production_layout ... ok
+test state::tests::account_view_rejects_truncated_data ... ok
+test state::tests::account_view_rejects_wrong_discriminator ... ok
+test state::tests::account_view_rejects_wrong_version ... ok
+test state::tests::gateway_config_account_view_parses_known_fields ... ok
+test state::tests::guardian_set_account_view_parses_known_fields ... ok
+test state::tests::mint_state_account_view_parses_known_fields ... ok
+test state::tests::processed_event_account_view_parses_known_fields ... ok
+test state::tests::processed_event_mutation_marks_event_consumed_and_writes_amount_and_slot ... ok
+test state::tests::processed_event_mutation_rejects_replay ... ok
+test state::tests::processed_event_mutation_rejects_wrong_canonical_event_key ... ok
+test state::tests::recipient_balance_account_view_parses_known_fields ... ok
+test state::tests::recipient_balance_mutation_credits_balance_and_writes_last_event_key ... ok
+test state::tests::recipient_balance_mutation_rejects_overflow ... ok
+test state::tests::recipient_balance_mutation_rejects_wrong_owner ... ok
+test state_account_layout_skeleton::tests::decoder_rejects_invalid_boolean ... ok
+test state_account_layout_skeleton::tests::decoder_rejects_wrong_discriminator ... ok
+test state_account_layout_skeleton::tests::decoder_rejects_wrong_length ... ok
+test state_account_layout_skeleton::tests::gateway_config_account_layout_round_trips ... ok
+test state_account_layout_skeleton::tests::guardian_set_header_account_layout_round_trips ... ok
+test state_account_layout_skeleton::tests::guardian_set_header_validation_rejects_invalid_threshold ... ok
+test state_account_layout_skeleton::tests::mint_state_account_layout_round_trips ... ok
+test state_account_layout_skeleton::tests::processed_event_account_layout_round_trips ... ok
+test state_account_layout_skeleton::tests::state_account_layout_lengths_are_stable ... ok
+test state_account_layout_skeleton::tests::state_account_layout_skeleton_status_is_local_only_not_deployable ... ok
+test state_initialization_skeleton::tests::gateway_config_initialization_builds_expected_account_layout ... ok
+test state_initialization_skeleton::tests::gateway_config_initialization_encodes_and_decodes ... ok
+test state_initialization_skeleton::tests::guardian_set_header_initialization_encodes_and_decodes ... ok
+test state_initialization_skeleton::tests::guardian_set_header_initialization_rejects_invalid_threshold ... ok
+test state_initialization_skeleton::tests::mint_state_initialization_encodes_and_decodes ... ok
+test state_initialization_skeleton::tests::processed_event_marking_encodes_and_decodes ... ok
+test state_initialization_skeleton::tests::state_initialization_skeleton_status_is_local_only_not_deployable ... ok
+test state_instruction_skeleton::tests::discriminators_are_unique_and_eight_bytes ... ok
+test state_instruction_skeleton::tests::gateway_config_pda_is_program_id_parametric ... ok
+test state_instruction_skeleton::tests::guardian_set_pda_changes_with_guardian_set_id ... ok
+test state_instruction_skeleton::tests::instruction_tag_decoding_rejects_unknown_tags ... ok
+test state_instruction_skeleton::tests::instruction_tags_are_reserved_and_stable ... ok
+test state_instruction_skeleton::tests::mint_state_pda_changes_with_mint ... ok
+test state_instruction_skeleton::tests::processed_event_pda_changes_with_canonical_event_key ... ok
+test state_instruction_skeleton::tests::skeleton_status_is_local_only_not_deployable ... ok
+test state_instruction_skeleton::tests::state_account_skeleton_inventory_is_complete ... ok
+test typed_instruction_skeleton::tests::consume_gateway_mint_boundary_typed_instruction_round_trips ... ok
+test typed_instruction_skeleton::tests::gateway_config_typed_instruction_round_trips ... ok
+test typed_instruction_skeleton::tests::guardian_set_typed_instruction_round_trips ... ok
+test typed_instruction_skeleton::tests::mint_state_typed_instruction_round_trips ... ok
+test typed_instruction_skeleton::tests::typed_instruction_decode_rejects_invalid_guardian_threshold ... ok
+test typed_instruction_skeleton::tests::typed_instruction_decode_rejects_invalid_tag ... ok
+test typed_instruction_skeleton::tests::typed_instruction_decode_rejects_wrong_payload_length ... ok
+test typed_instruction_skeleton::tests::typed_instruction_skeleton_status_is_local_only_not_deployable ... ok
+test validated_dispatch_skeleton::tests::validated_dispatch_accepts_consume_gateway_mint_boundary ... ok
+test validated_dispatch_skeleton::tests::validated_dispatch_accepts_initialize_gateway_config ... ok
+test validated_dispatch_skeleton::tests::validated_dispatch_rejects_invalid_instruction_before_account_validation ... ok
+test validated_dispatch_skeleton::tests::validated_dispatch_rejects_owner_expectation_mismatch ... ok
+test validated_dispatch_skeleton::tests::validated_dispatch_rejects_signer_mismatch ... ok
+test validated_dispatch_skeleton::tests::validated_dispatch_rejects_writable_mismatch ... ok
+test validated_dispatch_skeleton::tests::validated_dispatch_rejects_wrong_account_count ... ok
+test validated_dispatch_skeleton::tests::validated_dispatch_skeleton_status_is_local_only_not_deployable ... ok
+test validation::tests::account_owner_check_accepts_expected_owner ... ok
+test validation::tests::account_owner_check_rejects_wrong_owner ... ok
+test validation::tests::initialized_mint_check_accepts_spl_token_mint_with_expected_authority ... ok
+test validation::tests::initialized_mint_check_rejects_uninitialized_mint ... ok
+test validation::tests::initialized_mint_check_rejects_wrong_mint_authority ... ok
+test validation::tests::initialized_mint_check_rejects_wrong_owner ... ok
+test validation::tests::recipient_ata_boundary_accepts_initialized_matching_token_account ... ok
+test validation::tests::recipient_ata_boundary_rejects_uninitialized_token_account ... ok
+test validation::tests::recipient_ata_boundary_rejects_wrong_mint ... ok
+test validation::tests::recipient_ata_boundary_rejects_wrong_owner ... ok
+test validation::tests::rent_exemption_check_accepts_minimum_balance ... ok
+test validation::tests::rent_exemption_check_rejects_low_balance ... ok
+test verifier::boundary::tests::boundary_lists_exactly_phase_31_components ... ok
+test verifier::boundary::tests::error_categories_include_phase_31_surface ... ok
+test verifier::boundary::tests::future_runtime_cases_are_carried_forward_and_not_implemented ... ok
+test verifier::boundary::tests::safety_flags_remain_disabled ... ok
+test verifier::boundary::tests::scaffold_marker_and_version_are_stable ... ok
+test verifier::boundary::tests::scaffold_report_matches_read_only_boundary ... ok
+test verifier::canonical_payload::tests::canonical_payload_hash_matches_phase_23_ts_vector ... ok
+test verifier::canonical_payload::tests::malformed_raw_payload_is_rejected_before_hash_acceptance ... ok
+test verifier::canonical_payload::tests::marker_version_and_domain_are_stable ... ok
+test verifier::canonical_payload::tests::phase_32_boundary_safety_flags_remain_false ... ok
+test verifier::canonical_payload::tests::phase_33_decoder_still_accepts_valid_payload ... ok
+test verifier::canonical_payload::tests::report_keeps_execution_and_unfinished_verifier_surfaces_disabled ... ok
+test verifier::canonical_payload::tests::report_states_hash_is_recomputed_and_caller_hash_is_not_trusted ... ok
+test verifier::canonical_payload::tests::validation_accepts_matching_recomputed_hash ... ok
+test verifier::canonical_payload::tests::validation_rejects_wrong_expected_hash ... ok
+test verifier::canonical_payload::tests::wrong_domain_material_does_not_match_phase_23_hash ... ok
+test verifier::checked_ed25519_byte_extraction_boundary::tests::extracts_signature_pubkey_and_borrowed_message_with_checked_slices ... ok
+test verifier::checked_ed25519_byte_extraction_boundary::tests::rejects_instruction_data_length_mismatch ... ok
+test verifier::checked_ed25519_byte_extraction_boundary::tests::rejects_message_slice_unavailable ... ok
+test verifier::checked_ed25519_byte_extraction_boundary::tests::rejects_missing_matched_instruction_index ... ok
+test verifier::checked_ed25519_byte_extraction_boundary::tests::rejects_missing_parsed_offsets ... ok
+test verifier::checked_ed25519_byte_extraction_boundary::tests::rejects_non_runtime_data_loaded_entry ... ok
+test verifier::checked_ed25519_byte_extraction_boundary::tests::rejects_public_key_slice_unavailable ... ok
+test verifier::checked_ed25519_byte_extraction_boundary::tests::rejects_signature_slice_unavailable ... ok
+test verifier::checked_ed25519_byte_extraction_boundary::tests::rejects_when_ed25519_bytes_were_not_parsed ... ok
+test verifier::checked_ed25519_byte_extraction_boundary::tests::rejects_when_matched_instruction_is_unavailable ... ok
+test verifier::checked_ed25519_byte_extraction_boundary::tests::report_preserves_extraction_only_non_authorizing_boundary ... ok
+test verifier::checked_prior_instruction_loading_runtime_boundary::tests::checked_load_failure_maps_to_deterministic_non_authorizing_entry ... ok
+test verifier::checked_prior_instruction_loading_runtime_boundary::tests::checked_load_success_maps_to_runtime_data_only_entry ... ok
+test verifier::checked_prior_instruction_loading_runtime_boundary::tests::empty_prior_range_causes_no_loading_attempt_and_does_not_require_sysvar_account ... ok
+test verifier::checked_prior_instruction_loading_runtime_boundary::tests::inconsistent_prior_range_with_same_index_fails_closed_before_loading ... ok
+test verifier::checked_prior_instruction_loading_runtime_boundary::tests::missing_sysvar_account_fails_closed_for_nonempty_prior_range ... ok
+test verifier::checked_prior_instruction_loading_runtime_boundary::tests::phase_41d3_2_2_flips_only_loading_capability_flags ... ok
+test verifier::checked_prior_instruction_loading_runtime_boundary::tests::phase_41d3_2_2_report_preserves_loading_only_boundary ... ok
+test verifier::checked_prior_instruction_loading_runtime_boundary::tests::unavailable_prior_range_fails_closed_before_loading ... ok
+test verifier::checked_prior_instruction_loading_runtime_boundary::tests::wrong_sysvar_account_key_fails_closed_before_loading ... ok
+test verifier::current_instruction_identity_boundary::tests::inconsistent_discriminator_maps_to_missing_current_identity_rejection_case ... ok
+test verifier::current_instruction_identity_boundary::tests::inconsistent_payload_binding_maps_to_missing_current_identity_rejection_case ... ok
+test verifier::current_instruction_identity_boundary::tests::inconsistent_program_id_maps_to_missing_current_identity_rejection_case ... ok
+test verifier::current_instruction_identity_boundary::tests::missing_current_instruction_identity_maps_to_phase_41b_rejection_case ... ok
+test verifier::current_instruction_identity_boundary::tests::phase_41c2_declares_only_three_structural_results ... ok
+test verifier::current_instruction_identity_boundary::tests::phase_41c2_does_not_cross_into_phase_41c3_or_authorization_scope ... ok
+test state::tests::phase_41k4_marking_modules_must_not_call_legacy_processed_event_helper ... ok
+test verifier::current_instruction_identity_boundary::tests::phase_41c2_report_preserves_boundary ... ok
+test verifier::current_instruction_identity_boundary::tests::phase_41c2_safety_flags_keep_real_runtime_read_deferred ... ok
+test verifier::current_instruction_identity_boundary::tests::valid_current_instruction_identity_is_non_authorizing ... ok
+test verifier::current_instruction_identity_runtime_boundary::tests::discriminator_mismatch_maps_to_inconsistent_current_instruction_identity ... ok
+test verifier::current_instruction_identity_runtime_boundary::tests::empty_expected_discriminator_maps_to_missing_current_instruction_identity ... ok
+test verifier::current_instruction_identity_runtime_boundary::tests::missing_instruction_data_maps_to_missing_current_instruction_identity ... ok
+test verifier::current_instruction_identity_runtime_boundary::tests::missing_program_id_maps_to_missing_current_instruction_identity ... ok
+test verifier::current_instruction_identity_runtime_boundary::tests::payload_binding_mismatch_maps_to_inconsistent_current_instruction_identity ... ok
+test verifier::current_instruction_identity_runtime_boundary::tests::phase_41d2_flips_only_current_identity_runtime_flag_after_41d1 ... ok
+test verifier::current_instruction_identity_runtime_boundary::tests::phase_41d2_report_preserves_runtime_identity_boundary ... ok
+test verifier::current_instruction_identity_runtime_boundary::tests::short_instruction_data_maps_to_inconsistent_current_instruction_identity ... ok
+test verifier::current_instruction_identity_runtime_boundary::tests::valid_entrypoint_identity_maps_to_current_instruction_identity_bound ... ok
+test verifier::current_instruction_identity_runtime_boundary::tests::wrong_program_id_maps_to_inconsistent_current_instruction_identity ... ok
+test verifier::current_instruction_index_runtime_boundary::tests::checked_current_index_error_maps_to_unreadable_instructions_sysvar ... ok
+test verifier::current_instruction_index_runtime_boundary::tests::checked_current_index_success_maps_to_ordering_only_index ... ok
+test verifier::current_instruction_index_runtime_boundary::tests::missing_account_maps_to_missing_instructions_sysvar ... ok
+test verifier::current_instruction_index_runtime_boundary::tests::phase_41d3_1_flips_no_instruction_loading_or_prior_lookup_flags ... ok
+test verifier::current_instruction_index_runtime_boundary::tests::phase_41d3_1_report_preserves_current_index_only_boundary ... ok
+test verifier::current_instruction_index_runtime_boundary::tests::wrong_account_key_maps_to_missing_instructions_sysvar ... ok
+test verifier::current_instruction_index_runtime_boundary::tests::zeroed_sysvar_data_can_only_map_to_ordering_index_not_authorization ... ok
+test verifier::ed25519_evidence_layout::tests::marker_version_and_layout_constants_are_stable ... ok
+test verifier::ed25519_evidence_layout::tests::message_region_out_of_bounds_is_rejected ... ok
+test verifier::ed25519_evidence_layout::tests::message_region_overlapping_header_is_rejected ... ok
+test verifier::ed25519_evidence_layout::tests::non_32_byte_message_size_is_rejected ... ok
+test verifier::ed25519_evidence_layout::tests::phase_32_boundary_safety_flags_remain_false ... ok
+test verifier::ed25519_evidence_layout::tests::phase_34_hash_validator_remains_available_and_recomputing ... ok
+test verifier::ed25519_evidence_layout::tests::phase_35_structural_quorum_remains_a_separate_required_check ... ok
+test verifier::ed25519_evidence_layout::tests::public_key_region_out_of_bounds_is_rejected ... ok
+test verifier::ed25519_evidence_layout::tests::public_key_region_overlapping_header_is_rejected ... ok
+test verifier::ed25519_evidence_layout::tests::report_keeps_unfinished_verifier_and_execution_surfaces_disabled ... ok
+test verifier::ed25519_evidence_layout::tests::report_says_ed25519_and_signature_proof_are_not_implemented ... ok
+test verifier::ed25519_evidence_layout::tests::signature_region_out_of_bounds_is_rejected ... ok
+test verifier::ed25519_evidence_layout::tests::signature_region_overlapping_header_is_rejected ... ok
+test verifier::ed25519_evidence_layout::tests::success_result_exposes_no_cryptographic_verification ... ok
+test verifier::ed25519_evidence_layout::tests::truncated_instruction_data_is_rejected ... ok
+test verifier::ed25519_evidence_layout::tests::unexpected_signature_count_is_rejected ... ok
+test verifier::ed25519_evidence_layout::tests::valid_single_signature_layout_is_accepted ... ok
+test verifier::ed25519_evidence_layout::tests::zero_signature_count_is_rejected ... ok
+test verifier::ed25519_instruction_byte_parsing_boundary::tests::parses_valid_single_signature_layout_as_non_authorizing_metadata ... ok
+test verifier::ed25519_instruction_byte_parsing_boundary::tests::phase_41e_1_report_preserves_non_authorizing_parser_boundary ... ok
+test verifier::ed25519_instruction_byte_parsing_boundary::tests::rejects_cross_instruction_message_reference_without_new_loading ... ok
+test verifier::ed25519_instruction_byte_parsing_boundary::tests::rejects_cross_instruction_public_key_reference_without_new_loading ... ok
+test verifier::ed25519_instruction_byte_parsing_boundary::tests::rejects_cross_instruction_signature_reference_without_new_loading ... ok
+test verifier::ed25519_instruction_byte_parsing_boundary::tests::rejects_empty_instruction_data ... ok
+test verifier::ed25519_instruction_byte_parsing_boundary::tests::rejects_message_range_aliasing_offset_table ... ok
+test verifier::ed25519_instruction_byte_parsing_boundary::tests::rejects_missing_message_byte_range ... ok
+test verifier::ed25519_instruction_byte_parsing_boundary::tests::rejects_non_runtime_data_entry_before_byte_parsing ... ok
+test verifier::ed25519_instruction_byte_parsing_boundary::tests::rejects_nonzero_padding_byte ... ok
+test verifier::ed25519_instruction_byte_parsing_boundary::tests::rejects_out_of_bounds_message_offset ... ok
+test verifier::ed25519_instruction_byte_parsing_boundary::tests::rejects_out_of_bounds_public_key_offset ... ok
+test verifier::ed25519_instruction_byte_parsing_boundary::tests::rejects_out_of_bounds_signature_offset ... ok
+test verifier::ed25519_instruction_byte_parsing_boundary::tests::rejects_overlapping_parsed_ranges_deterministically ... ok
+test verifier::ed25519_instruction_byte_parsing_boundary::tests::rejects_public_key_range_aliasing_offset_table ... ok
+test verifier::ed25519_instruction_byte_parsing_boundary::tests::rejects_short_header ... ok
+test verifier::ed25519_instruction_byte_parsing_boundary::tests::rejects_signature_range_aliasing_offset_table ... ok
+test verifier::ed25519_instruction_byte_parsing_boundary::tests::rejects_unsupported_signature_count ... ok
+test verifier::ed25519_instruction_byte_parsing_boundary::tests::rejects_when_matched_instruction_index_is_missing ... ok
+test verifier::ed25519_instruction_byte_parsing_boundary::tests::rejects_when_matched_instruction_is_not_in_loaded_prior_set ... ok
+test verifier::ed25519_instruction_byte_parsing_boundary::tests::rejects_when_structural_status_is_not_located_even_if_layer_flag_is_true ... ok
+test verifier::ed25519_instruction_byte_parsing_boundary::tests::rejects_wrong_program_id_even_when_prefilter_status_claims_located ... ok
+test verifier::ed25519_instruction_data_parser::tests::guardian_public_key_mismatch_is_rejected ... ok
+test verifier::ed25519_instruction_data_parser::tests::message_hash_mismatch_is_rejected ... ok
+test verifier::ed25519_instruction_data_parser::tests::message_region_out_of_bounds_is_rejected ... ok
+test verifier::ed25519_instruction_data_parser::tests::message_region_overlap_header_is_rejected ... ok
+test verifier::ed25519_instruction_data_parser::tests::non_sentinel_message_instruction_index_is_rejected ... ok
+test verifier::ed25519_instruction_data_parser::tests::non_sentinel_public_key_instruction_index_is_rejected ... ok
+test verifier::ed25519_instruction_data_parser::tests::non_sentinel_signature_instruction_index_is_rejected ... ok
+test verifier::ed25519_instruction_data_parser::tests::nonzero_padding_is_rejected ... ok
+test verifier::ed25519_instruction_data_parser::tests::phase_32_boundary_safety_flags_remain_false ... ok
+test verifier::ed25519_instruction_data_parser::tests::phase_34_hash_validator_remains_available_and_recomputing ... ok
+test verifier::ed25519_instruction_data_parser::tests::phase_35_quorum_remains_separate_and_not_counted ... ok
+test verifier::ed25519_instruction_data_parser::tests::phase_37_layout_model_remains_required ... ok
+test verifier::ed25519_instruction_data_parser::tests::public_key_region_out_of_bounds_is_rejected ... ok
+test verifier::ed25519_instruction_data_parser::tests::public_key_region_overlap_header_is_rejected ... ok
+test verifier::ed25519_instruction_data_parser::tests::report_preserves_all_disabled_execution_and_security_flags ... ok
+test verifier::ed25519_instruction_data_parser::tests::signature_count_two_is_rejected ... ok
+test verifier::ed25519_instruction_data_parser::tests::signature_count_zero_is_rejected ... ok
+test verifier::ed25519_instruction_data_parser::tests::signature_region_out_of_bounds_is_rejected ... ok
+test verifier::ed25519_instruction_data_parser::tests::signature_region_overlap_header_is_rejected ... ok
+test verifier::ed25519_instruction_data_parser::tests::thirty_one_byte_message_size_is_rejected ... ok
+test verifier::ed25519_instruction_data_parser::tests::thirty_three_byte_message_size_is_rejected ... ok
+test verifier::ed25519_instruction_data_parser::tests::too_short_data_is_rejected ... ok
+test verifier::ed25519_instruction_data_parser::tests::valid_instruction_data_parses_and_extracts_evidence_bytes ... ok
+test verifier::ed25519_instruction_data_parser::tests::valid_result_does_not_claim_crypto_sysvar_quorum_or_authorization ... ok
+test verifier::ed25519_prior_instruction_ordering::tests::accepted_ordering_result_is_not_verification_evidence ... ok
+test verifier::ed25519_prior_instruction_ordering::tests::current_instruction_index_out_of_bounds_is_rejected ... ok
+test verifier::ed25519_prior_instruction_ordering::tests::ed25519_instruction_after_current_instruction_is_rejected ... ok
+test verifier::ed25519_prior_instruction_ordering::tests::ed25519_instruction_before_current_instruction_is_accepted ... ok
+test verifier::ed25519_prior_instruction_ordering::tests::ed25519_instruction_equal_to_current_instruction_is_rejected ... ok
+test verifier::ed25519_prior_instruction_ordering::tests::first_instruction_before_current_instruction_is_accepted ... ok
+test verifier::ed25519_prior_instruction_ordering::tests::marker_and_report_are_stable ... ok
+test verifier::ed25519_prior_instruction_ordering::tests::matched_ed25519_instruction_index_out_of_bounds_is_rejected ... ok
+test verifier::ed25519_prior_instruction_ordering::tests::model_report_preserves_all_disabled_runtime_surfaces ... ok
+test verifier::ed25519_prior_instruction_ordering::tests::parsed_instruction_sysvar_claim_is_rejected ... ok
+test verifier::ed25519_prior_instruction_ordering::tests::phase_32_boundary_safety_flags_remain_false ... ok
+test verifier::ed25519_prior_instruction_ordering::tests::phase_39_40b_and_40d_remain_required ... ok
+test verifier::ed25519_prior_instruction_ordering::tests::zero_instruction_count_is_rejected ... ok
+test verifier::ed25519_signature_verification_boundary::tests::establishes_native_ed25519_verification_without_accepting_proof_or_authorization ... ok
+test verifier::ed25519_signature_verification_boundary::tests::rejects_instruction_data_length_mismatch ... ok
+test verifier::ed25519_signature_verification_boundary::tests::rejects_matched_instruction_index_mismatch ... ok
+test verifier::ed25519_signature_verification_boundary::tests::rejects_missing_parsed_offsets ... ok
+test verifier::ed25519_signature_verification_boundary::tests::rejects_non_runtime_data_loaded_entry ... ok
+test verifier::ed25519_signature_verification_boundary::tests::rejects_when_checked_slices_were_not_extracted ... ok
+test verifier::ed25519_signature_verification_boundary::tests::rejects_when_extracted_ranges_do_not_match_parsed_ranges ... ok
+test verifier::ed25519_signature_verification_boundary::tests::rejects_when_matched_instruction_is_unavailable ... ok
+test verifier::ed25519_signature_verification_boundary::tests::rejects_when_self_reference_binding_is_unavailable ... ok
+test verifier::ed25519_signature_verification_boundary::tests::rejects_wrong_program_id_as_defense_in_depth ... ok
+test verifier::ed25519_signature_verification_boundary::tests::report_documents_model_a_without_downstream_trust_drift ... ok
+test verifier::ed25519_verification_evidence::tests::authorization_claim_is_rejected ... ok
+test verifier::ed25519_verification_evidence::tests::candidate_message_hash_mismatch_is_rejected ... ok
+test verifier::ed25519_verification_evidence::tests::candidate_public_key_mismatch_is_rejected ... ok
+test verifier::ed25519_verification_evidence::tests::clean_scanned_candidate_maps_to_non_authorizing_boundary_result ... ok
+test verifier::ed25519_verification_evidence::tests::cryptographic_proof_claim_is_rejected ... ok
+test verifier::ed25519_verification_evidence::tests::execution_surface_claim_is_rejected ... ok
+test verifier::ed25519_verification_evidence::tests::marker_and_report_are_stable ... ok
+test verifier::ed25519_verification_evidence::tests::parsed_instruction_sysvar_claim_is_rejected ... ok
+test verifier::ed25519_verification_evidence::tests::parsed_message_hash_mismatch_is_rejected ... ok
+test verifier::ed25519_verification_evidence::tests::parsed_public_key_mismatch_is_rejected ... ok
+test verifier::ed25519_verification_evidence::tests::parsed_signature_verification_claim_is_rejected ... ok
+test verifier::ed25519_verification_evidence::tests::phase_32_boundary_safety_flags_remain_false ... ok
+test verifier::ed25519_verification_evidence::tests::phase_34_hash_validator_remains_available ... ok
+test verifier::ed25519_verification_evidence::tests::phase_35_quorum_remains_separate_and_not_counted ... ok
+test verifier::ed25519_verification_evidence::tests::phase_37_layout_model_remains_required ... ok
+test verifier::ed25519_verification_evidence::tests::phase_38_parser_remains_required ... ok
+test verifier::ed25519_verification_evidence::tests::phase_39_scanner_remains_required ... ok
+test verifier::ed25519_verification_evidence::tests::quorum_claim_is_rejected ... ok
+test verifier::ed25519_verification_evidence::tests::report_preserves_all_disabled_execution_and_security_flags ... ok
+test verifier::ed25519_verification_evidence::tests::signature_verification_claim_is_rejected ... ok
+test verifier::ed25519_verification_evidence_coverage_matrix::tests::all_phase_40d_rejection_cases_remain_declared ... ok
+test verifier::ed25519_verification_evidence_coverage_matrix::tests::deterministic_failure_reason_has_no_single_primary_error ... ok
+test verifier::ed25519_verification_evidence_coverage_matrix::tests::every_matrix_entry_is_declared_future_only_and_non_authorizing ... ok
+test verifier::ed25519_verification_evidence_coverage_matrix::tests::guardian_requirements_map_to_guardian_errors ... ok
+test verifier::ed25519_verification_evidence_coverage_matrix::tests::instruction_presence_requirement_maps_to_instruction_not_found ... ok
+test verifier::ed25519_verification_evidence_coverage_matrix::tests::marker_and_report_are_stable ... ok
+test verifier::ed25519_verification_evidence_coverage_matrix::tests::matrix_covers_every_phase_40d_requirement ... ok
+test verifier::ed25519_verification_evidence_coverage_matrix::tests::payload_hash_requirement_maps_to_message_hash_mismatch ... ok
+test verifier::ed25519_verification_evidence_coverage_matrix::tests::phase_32_boundary_safety_flags_remain_false ... ok
+test verifier::ed25519_verification_evidence_coverage_matrix::tests::phase_40d_design_report_remains_non_authorizing ... ok
+test verifier::ed25519_verification_evidence_coverage_matrix::tests::report_preserves_all_disabled_runtime_surfaces ... ok
+test verifier::ed25519_verification_evidence_coverage_matrix::tests::route_mint_recipient_and_amount_requirements_map_to_binding_errors ... ok
+test verifier::ed25519_verification_evidence_coverage_matrix::tests::sysvar_requirement_maps_to_missing_sysvar ... ok
+test verifier::ed25519_verification_evidence_integration_design::tests::design_accepts_no_signature_proof_or_verification_evidence ... ok
+test verifier::ed25519_verification_evidence_integration_design::tests::design_preserves_quorum_authorization_and_execution_boundaries ... ok
+test verifier::ed25519_verification_evidence_integration_design::tests::design_requires_future_runtime_bindings_but_implements_none ... ok
+test verifier::ed25519_verification_evidence_integration_design::tests::future_rejection_cases_are_explicit_and_ordered ... ok
+test verifier::ed25519_verification_evidence_integration_design::tests::future_requirements_are_explicit_and_ordered ... ok
+test verifier::ed25519_verification_evidence_integration_design::tests::marker_and_report_are_stable ... ok
+test verifier::ed25519_verification_evidence_integration_design::tests::phase_32_boundary_safety_flags_remain_false ... ok
+test verifier::ed25519_verification_evidence_integration_design::tests::phase_40b_model_remains_required_and_non_authorizing ... ok
+test verifier::guardian_membership_validation_boundary::tests::accepts_only_verified_extracted_signer_not_arbitrary_claim_key ... ok
+test verifier::guardian_membership_validation_boundary::tests::rejects_arbitrary_message_range_pairing_attack ... ok
+test verifier::guardian_membership_validation_boundary::tests::rejects_caller_supplied_guardian_set ... ok
+test verifier::guardian_membership_validation_boundary::tests::rejects_configured_guardian_set_id_mismatch ... ok
+test verifier::guardian_membership_validation_boundary::tests::rejects_duplicate_guardian_public_key ... ok
+test verifier::guardian_membership_validation_boundary::tests::rejects_empty_guardian_set ... ok
+test verifier::guardian_membership_validation_boundary::tests::rejects_extracted_signed_message_length_not_32 ... ok
+test verifier::guardian_membership_validation_boundary::tests::rejects_free_decoded_payload_substitution_by_hash_binding_raw_payload_bytes ... ok
+test verifier::guardian_membership_validation_boundary::tests::rejects_instruction_data_length_mismatch ... ok
+test verifier::guardian_membership_validation_boundary::tests::rejects_matched_instruction_index_mismatch ... ok
+test verifier::guardian_membership_validation_boundary::tests::rejects_message_range_mismatch ... ok
+test verifier::guardian_membership_validation_boundary::tests::rejects_missing_extracted_signer_public_key ... ok
+test verifier::guardian_membership_validation_boundary::tests::rejects_missing_verified_ranges ... ok
+test verifier::guardian_membership_validation_boundary::tests::rejects_payload_guardian_set_id_mismatch ... ok
+test verifier::guardian_membership_validation_boundary::tests::rejects_payload_hash_binding_failure_for_extracted_message_bytes ... ok
+test verifier::guardian_membership_validation_boundary::tests::rejects_phase_41f_1_extraction_not_established ... ok
+test verifier::guardian_membership_validation_boundary::tests::rejects_phase_41f_established_status_with_false_flag ... ok
+test verifier::guardian_membership_validation_boundary::tests::rejects_phase_41f_not_established ... ok
+test verifier::guardian_membership_validation_boundary::tests::rejects_public_key_range_mismatch ... ok
+test verifier::guardian_membership_validation_boundary::tests::rejects_signature_range_mismatch ... ok
+test verifier::guardian_membership_validation_boundary::tests::rejects_threshold_greater_than_guardian_count ... ok
+test verifier::guardian_membership_validation_boundary::tests::rejects_threshold_zero ... ok
+test verifier::guardian_membership_validation_boundary::tests::rejects_unauthenticated_guardian_set ... ok
+test verifier::guardian_membership_validation_boundary::tests::rejects_verified_signer_not_in_guardian_set ... ok
+test verifier::guardian_membership_validation_boundary::tests::report_preserves_boundary_and_forbidden_runtime_surfaces ... ok
+test verifier::guardian_membership_validation_boundary::tests::success_keeps_downstream_execution_flags_false ... ok
+test verifier::guardian_membership_validation_boundary::tests::valid_verified_signer_is_accepted_as_guardian_member ... ok
+test verifier::guardian_quorum::tests::duplicate_guardian_approval_is_rejected ... ok
+test verifier::guardian_quorum::tests::duplicate_guardian_public_key_in_set_is_rejected ... ok
+test verifier::guardian_quorum::tests::empty_approvals_are_rejected ... ok
+test verifier::guardian_quorum::tests::empty_guardian_set_is_rejected ... ok
+test verifier::guardian_quorum::tests::guardian_set_id_mismatch_is_rejected ... ok
+test verifier::guardian_quorum::tests::insufficient_unique_approvals_are_rejected ... ok
+test verifier::guardian_quorum::tests::phase_32_boundary_safety_flags_remain_false ... ok
+test verifier::guardian_quorum::tests::phase_34_hash_validator_remains_available_and_recomputing ... ok
+test verifier::guardian_quorum::tests::report_keeps_unfinished_verifier_and_execution_surfaces_disabled ... ok
+test verifier::guardian_quorum::tests::report_says_ed25519_and_signature_proof_are_not_implemented ... ok
+test verifier::guardian_quorum::tests::threshold_exactly_met_is_accepted ... ok
+test verifier::guardian_quorum::tests::threshold_exceeded_is_accepted ... ok
+test verifier::guardian_quorum::tests::threshold_greater_than_guardian_set_size_is_rejected ... ok
+test verifier::guardian_quorum::tests::threshold_zero_is_rejected ... ok
+test verifier::guardian_quorum::tests::unknown_guardian_is_rejected ... ok
+test verifier::guardian_quorum::tests::valid_quorum_is_accepted ... ok
+test verifier::guardian_set_account_loading_boundary::tests::boundary_report_is_decoder_only_and_keeps_downstream_surfaces_disabled ... ok
+test verifier::guardian_set_account_loading_boundary::tests::decoder_accepts_valid_guardian_set_account_data ... ok
+test verifier::guardian_set_account_loading_boundary::tests::decoder_rejects_deprecated_guardian_set ... ok
+test verifier::guardian_set_account_loading_boundary::tests::decoder_rejects_duplicate_guardian_public_key ... ok
+test verifier::guardian_set_account_loading_boundary::tests::decoder_rejects_guardian_count_above_max_supported ... ok
+test verifier::guardian_set_account_loading_boundary::tests::decoder_rejects_guardian_count_zero ... ok
+test verifier::guardian_set_account_loading_boundary::tests::decoder_rejects_guardian_set_id_mismatch ... ok
+test verifier::guardian_set_account_loading_boundary::tests::decoder_rejects_inactive_guardian_set ... ok
+test verifier::guardian_set_account_loading_boundary::tests::decoder_rejects_invalid_account_data_length ... ok
+test verifier::guardian_set_account_loading_boundary::tests::decoder_rejects_missing_discriminator ... ok
+test verifier::guardian_set_account_loading_boundary::tests::decoder_rejects_threshold_above_guardian_count ... ok
+test verifier::guardian_set_account_loading_boundary::tests::decoder_rejects_threshold_zero ... ok
+test verifier::guardian_set_account_loading_boundary::tests::decoder_rejects_unsupported_schema_version ... ok
+test verifier::guardian_set_account_loading_boundary::tests::decoder_rejects_wrong_discriminator ... ok
+test verifier::guardian_set_account_loading_boundary::tests::decoder_rejects_zero_discriminator ... ok
+test verifier::guardian_set_account_loading_boundary::tests::loader_accepts_program_controlled_readonly_non_signer_guardian_set_pda ... ok
+test verifier::guardian_set_account_loading_boundary::tests::loader_rejects_checked_account_data_without_enabling_downstream_surfaces ... ok
+test verifier::guardian_set_account_loading_boundary::tests::loader_rejects_missing_guardian_set_account ... ok
+test verifier::guardian_set_account_loading_boundary::tests::loader_rejects_signer_guardian_set_account ... ok
+test verifier::guardian_set_account_loading_boundary::tests::loader_rejects_writable_guardian_set_account ... ok
+test verifier::guardian_set_account_loading_boundary::tests::loader_rejects_wrong_owner_before_data_trust ... ok
+test verifier::guardian_set_account_loading_boundary::tests::loader_rejects_wrong_pda_before_data_trust ... ok
+test verifier::instructions_sysvar_access_contract_model::tests::deterministic_failure_reason_remains_meta_requirement ... ok
+test verifier::instructions_sysvar_access_contract_model::tests::every_rejection_case_has_an_owning_requirement ... ok
+test verifier::instructions_sysvar_access_contract_model::tests::four_phase_40_orphan_rejection_cases_are_closed ... ok
+test verifier::instructions_sysvar_access_contract_model::tests::model_report_preserves_boundary ... ok
+test verifier::instructions_sysvar_access_contract_model::tests::phase_41b_declares_eighteen_rejection_cases ... ok
+test verifier::instructions_sysvar_access_contract_model::tests::phase_41b_declares_twenty_requirements ... ok
+test verifier::instructions_sysvar_access_contract_model::tests::phase_41b_materializes_review_notes_but_implements_no_runtime_integration ... ok
+test verifier::instructions_sysvar_access_contract_model::tests::safety_flags_remain_false ... ok
+test verifier::instructions_sysvar_accountinfo_presence_readability_runtime_boundary::tests::borrow_conflict_maps_to_unreadable_instructions_sysvar ... ok
+test verifier::instructions_sysvar_accountinfo_presence_readability_runtime_boundary::tests::missing_account_maps_to_missing_instructions_sysvar ... ok
+test verifier::instructions_sysvar_accountinfo_presence_readability_runtime_boundary::tests::phase_41d1_flips_only_account_info_parser_and_concrete_api_flags ... ok
+test verifier::instructions_sysvar_accountinfo_presence_readability_runtime_boundary::tests::phase_41d1_report_preserves_runtime_read_boundary ... ok
+test verifier::instructions_sysvar_accountinfo_presence_readability_runtime_boundary::tests::readable_instructions_sysvar_account_maps_to_present_and_readable ... ok
+test verifier::instructions_sysvar_accountinfo_presence_readability_runtime_boundary::tests::wrong_account_key_maps_to_missing_instructions_sysvar ... ok
+test verifier::instructions_sysvar_evidence_scanner::tests::duplicate_matching_ed25519_evidence_is_rejected ... ok
+test verifier::instructions_sysvar_evidence_scanner::tests::empty_instruction_set_is_rejected ... ok
+test verifier::instructions_sysvar_evidence_scanner::tests::guardian_public_key_mismatch_is_rejected_through_phase_38_parser ... ok
+test verifier::instructions_sysvar_evidence_scanner::tests::malformed_ed25519_candidate_parser_failure_is_reported ... ok
+test verifier::instructions_sysvar_evidence_scanner::tests::message_hash_mismatch_is_rejected_through_phase_38_parser ... ok
+test verifier::instructions_sysvar_evidence_scanner::tests::no_matching_ed25519_evidence_is_rejected ... ok
+test verifier::instructions_sysvar_evidence_scanner::tests::phase_32_boundary_safety_flags_remain_false ... ok
+test verifier::instructions_sysvar_evidence_scanner::tests::phase_34_hash_validator_remains_available_and_recomputing ... ok
+test verifier::instructions_sysvar_evidence_scanner::tests::phase_35_quorum_remains_separate_and_not_counted ... ok
+test verifier::instructions_sysvar_evidence_scanner::tests::phase_37_layout_model_remains_required ... ok
+test verifier::instructions_sysvar_evidence_scanner::tests::phase_38_parser_remains_required ... ok
+test verifier::instructions_sysvar_evidence_scanner::tests::report_preserves_all_disabled_execution_and_security_flags ... ok
+test verifier::instructions_sysvar_evidence_scanner::tests::scanner_finds_one_valid_ed25519_evidence_among_non_ed25519_instructions ... ok
+test verifier::instructions_sysvar_evidence_scanner::tests::scanner_skips_non_ed25519_program_instructions ... ok
+test verifier::instructions_sysvar_evidence_scanner::tests::success_result_does_not_claim_crypto_proof_quorum_or_authorization ... ok
+test verifier::instructions_sysvar_live_wiring_boundary::tests::derives_n_prior_ed25519_precompiles_for_quorum ... ok
+test verifier::instructions_sysvar_live_wiring_boundary::tests::direct_accountinfo_entry_missing_sysvar_fails_closed ... ok
+test verifier::instructions_sysvar_live_wiring_boundary::tests::direct_accountinfo_entry_wrong_sysvar_key_fails_closed_after_identity_check ... ok
+test verifier::instructions_sysvar_live_wiring_boundary::tests::no_prior_ed25519_precompile_fails_closed ... ok
+test verifier::instructions_sysvar_live_wiring_boundary::tests::report_documents_41k1_runtime_surface_only ... ok
+test verifier::instructions_sysvar_presence_readability_boundary::tests::missing_instructions_sysvar_maps_to_phase_41b_rejection_case ... ok
+test verifier::instructions_sysvar_presence_readability_boundary::tests::phase_41c1_declares_only_three_structural_results ... ok
+test verifier::instructions_sysvar_presence_readability_boundary::tests::phase_41c1_does_not_cross_into_phase_41c2_or_41c3_scope ... ok
+test verifier::instructions_sysvar_presence_readability_boundary::tests::phase_41c1_report_preserves_boundary ... ok
+test verifier::instructions_sysvar_presence_readability_boundary::tests::phase_41c1_sets_only_concrete_runtime_api_selected_true ... ok
+test verifier::instructions_sysvar_presence_readability_boundary::tests::present_and_readable_instructions_sysvar_has_no_rejection_case ... ok
+test verifier::instructions_sysvar_presence_readability_boundary::tests::unreadable_instructions_sysvar_maps_to_phase_41b_rejection_case ... ok
+test verifier::payload_hash_binding_boundary::tests::establishes_payload_hash_binding_for_valid_canonical_payload_hash ... ok
+test verifier::payload_hash_binding_boundary::tests::keeps_execution_acceptance_and_mutation_flags_disabled ... ok
+test verifier::payload_hash_binding_boundary::tests::preserves_domain_separator_and_vector_parity_with_canonical_payload_validator ... ok
+test verifier::payload_hash_binding_boundary::tests::rejects_malformed_raw_payload_before_authenticity ... ok
+test verifier::payload_hash_binding_boundary::tests::rejects_signed_message_lengths_other_than_32 ... ok
+test verifier::payload_hash_binding_boundary::tests::rejects_when_phase_41f_native_ed25519_verification_is_not_established ... ok
+test verifier::payload_hash_binding_boundary::tests::rejects_wrong_32_byte_signed_hash ... ok
+test verifier::prefilter_phase_41c3_candidate_descriptor_runtime_boundary::tests::duplicate_ed25519_candidates_are_delegated_to_phase_41c3_ambiguity_model ... ok
+test verifier::prefilter_phase_41c3_candidate_descriptor_runtime_boundary::tests::ed25519_program_id_match_creates_non_authorizing_phase_41c3_descriptor ... ok
+test verifier::prefilter_phase_41c3_candidate_descriptor_runtime_boundary::tests::empty_loaded_prior_instruction_list_delegates_to_phase_41c3_not_found ... ok
+test verifier::prefilter_phase_41c3_candidate_descriptor_runtime_boundary::tests::later_index_ed25519_candidate_is_rejected_by_phase_41c3 ... ok
+test verifier::prefilter_phase_41c3_candidate_descriptor_runtime_boundary::tests::non_runtime_data_loaded_entry_fails_closed_before_descriptor_construction ... ok
+test verifier::prefilter_phase_41c3_candidate_descriptor_runtime_boundary::tests::phase_41d3_2_3_flips_only_structural_location_boundary_flag ... ok
+test verifier::prefilter_phase_41c3_candidate_descriptor_runtime_boundary::tests::same_index_ed25519_candidate_is_rejected_by_phase_41c3 ... ok
+test verifier::prefilter_phase_41c3_candidate_descriptor_runtime_boundary::tests::unrelated_loaded_instruction_is_discarded_without_candidate_descriptor ... ok
+test verifier::prefilter_phase_41c3_candidate_descriptor_runtime_boundary::tests::unavailable_loading_result_fails_closed_before_prefiltering ... ok
+test verifier::prefilter_phase_41c3_candidate_descriptor_runtime_boundary::tests::phase_41d3_2_3_report_preserves_non_authorizing_descriptor_boundary ... ok
+test verifier::prior_ed25519_lookup_ordering_boundary::tests::empty_candidate_set_maps_to_ed25519_not_found ... ok
+test verifier::prior_ed25519_lookup_ordering_boundary::tests::duplicate_guardian_evidence_maps_to_phase_41b_duplicate_guardian_evidence ... ok
+test verifier::prior_ed25519_lookup_ordering_boundary::tests::empty_candidate_set_is_the_descriptor_contract_for_no_evidence_candidates ... ok
+test verifier::prior_ed25519_lookup_ordering_boundary::tests::ambiguous_prior_matches_map_to_phase_41b_ambiguous_candidate_evidence ... ok
+test verifier::prior_ed25519_lookup_ordering_boundary::tests::phase_41c3_declares_only_seven_structural_results ... ok
+test verifier::prior_ed25519_lookup_ordering_boundary::tests::non_matching_ed25519_candidate_maps_to_not_found ... ok
+test verifier::prior_ed25519_lookup_ordering_boundary::tests::malformed_candidate_maps_to_phase_41b_malformed_instruction_data ... ok
+test verifier::prior_ed25519_lookup_ordering_boundary::tests::phase_41c3_report_preserves_boundary ... ok
+test verifier::prior_ed25519_lookup_ordering_boundary::tests::phase_41c3_safety_flags_keep_real_runtime_read_deferred ... ok
+test verifier::prior_ed25519_lookup_ordering_boundary::tests::same_or_later_instruction_maps_to_phase_41b_after_current_instruction ... ok
+test verifier::prior_ed25519_lookup_ordering_boundary::tests::single_prior_match_is_non_authorizing ... ok
+test verifier::prior_ed25519_lookup_ordering_boundary::tests::valid_prior_match_with_same_or_later_matching_candidate_still_locates_prior_match ... ok
+test verifier::prior_ed25519_lookup_ordering_boundary::tests::wrong_program_id_maps_to_phase_41b_wrong_program_id ... ok
+test verifier::prior_instruction_index_range_runtime_boundary::tests::acquired_status_without_current_index_fails_closed ... ok
+test verifier::prior_instruction_index_range_runtime_boundary::tests::current_index_five_constructs_zero_to_four_only ... ok
+test verifier::prior_instruction_index_range_runtime_boundary::tests::current_index_one_constructs_single_prior_index_zero ... ok
+test verifier::prior_instruction_index_range_runtime_boundary::tests::current_index_zero_maps_to_empty_prior_range ... ok
+test verifier::prior_instruction_index_range_runtime_boundary::tests::forged_oversized_current_index_fails_closed_without_allocation ... ok
+test verifier::prior_instruction_index_range_runtime_boundary::tests::phase_41d3_2_1_flips_no_loading_locating_or_trust_flags ... ok
+test verifier::prior_instruction_index_range_runtime_boundary::tests::phase_41d3_2_1_report_preserves_range_only_boundary ... ok
+test verifier::prior_instruction_index_range_runtime_boundary::tests::unavailable_current_index_fails_closed_without_prior_range ... ok
+test verifier::processed_registry_account_loading_boundary::tests::boundary_report_enables_only_processed_registry_runtime_loading ... ok
+test verifier::processed_registry_account_loading_boundary::tests::canonical_event_key_mismatch_rejects ... ok
+test verifier::processed_registry_account_loading_boundary::tests::executable_rejects_in_all_states ... ok
+test verifier::processed_registry_account_loading_boundary::tests::initialized_consumed_classifies_processed_and_adapts_to_41j_one_item_list ... ok
+test verifier::processed_registry_account_loading_boundary::tests::initialized_unconsumed_rejects ... ok
+test verifier::processed_registry_account_loading_boundary::tests::invalid_consumed_flags_reject_fail_closed ... ok
+test verifier::processed_registry_account_loading_boundary::tests::malformed_short_discriminator_rejects_without_panic ... ok
+test verifier::processed_registry_account_loading_boundary::tests::missing_account_info_rejects ... ok
+test verifier::processed_registry_account_loading_boundary::tests::processed_event_pda_uses_exact_canonical_seed_format ... ok
+test verifier::processed_registry_account_loading_boundary::tests::recipient_mismatch_rejects ... ok
+test verifier::processed_registry_account_loading_boundary::tests::route_id_mismatch_rejects ... ok
+test verifier::processed_registry_account_loading_boundary::tests::signer_rejects_in_all_states ... ok
+test verifier::processed_registry_account_loading_boundary::tests::system_owned_empty_data_nonzero_lamports_is_still_unprocessed ... ok
+test verifier::processed_registry_account_loading_boundary::tests::system_owned_empty_data_zero_lamports_is_unprocessed ... ok
+test verifier::processed_registry_account_loading_boundary::tests::system_owned_nonzero_data_rejects ... ok
+test verifier::processed_registry_account_loading_boundary::tests::truncated_data_rejects_without_panic ... ok
+test verifier::processed_registry_account_loading_boundary::tests::unsupported_version_rejects ... ok
+test verifier::processed_registry_account_loading_boundary::tests::writable_processed_event_account_is_allowed_but_not_mutated ... ok
+test verifier::processed_registry_account_loading_boundary::tests::wrong_discriminator_rejects ... ok
+test verifier::processed_registry_account_loading_boundary::tests::wrong_owner_rejects ... ok
+test verifier::processed_registry_account_loading_boundary::tests::wrong_pda_rejects_before_data_trust ... ok
+test verifier::processed_registry_account_loading_boundary::tests::zero_discriminator_rejects ... ok
+test verifier::quorum_authorization_boundary::tests::duplicate_guardian_attempt_is_not_counted_twice ... ok
+test verifier::quorum_authorization_boundary::tests::empty_attempts_rejected_without_runtime_authority ... ok
+test verifier::quorum_authorization_boundary::tests::establishes_quorum_from_successful_distinct_41h_validations ... ok
+test verifier::quorum_authorization_boundary::tests::report_documents_41i_boundary_and_forbidden_runtime_surfaces ... ok
+test verifier::quorum_authorization_boundary::tests::failed_attempt_does_not_kill_valid_m_of_n_and_error_is_preserved ... ok
+test verifier::quorum_authorization_boundary::tests::same_expected_guardian_set_id_is_enforced_for_all_attempts ... ok
+test verifier::quorum_authorization_boundary::tests::same_raw_payload_is_enforced_by_internal_41h_2_composition ... ok
+test verifier::raw_payload::tests::decoded_field_order_matches_phase_23 ... ok
+test verifier::raw_payload::tests::decoder_report_is_read_only_and_partial_for_field_order ... ok
+test verifier::raw_payload::tests::empty_variable_length_field_is_rejected ... ok
+test verifier::raw_payload::tests::malformed_length_prefixed_encoding_is_rejected ... ok
+test verifier::raw_payload::tests::phase_32_safety_flags_remain_false ... ok
+test verifier::raw_payload::tests::structurally_detectable_wrong_field_order_is_rejected ... ok
+test verifier::raw_payload::tests::trailing_bytes_are_rejected ... ok
+test verifier::raw_payload::tests::truncated_payload_is_rejected ... ok
+test verifier::raw_payload::tests::valid_canonical_payload_decodes ... ok
+test verifier::raw_payload::tests::wrong_byte_encoding_fixture_is_rejected_at_decoder_level ... ok
+test verifier::replay_protection_boundary::tests::establishes_replay_eligibility_for_unprocessed_authorized_event ... ok
+test verifier::replay_protection_boundary::tests::quorum_failure_cannot_reach_replay_eligibility ... ok
+test verifier::replay_protection_boundary::tests::raw_payload_is_bound_to_internal_41i_before_replay_key_derivation ... ok
+test verifier::replay_protection_boundary::tests::rejects_already_processed_canonical_event_key ... ok
+test verifier::replay_protection_boundary::tests::rejects_caller_supplied_processed_registry_view ... ok
+test verifier::replay_protection_boundary::tests::rejects_unauthenticated_processed_registry_view ... ok
+test verifier::replay_protection_boundary::tests::report_documents_41j_non_mutating_boundary ... ok
+
+test result: ok. 773 passed; 0 failed; 1 ignored; 0 measured; 0 filtered out; finished in 0.30s
+

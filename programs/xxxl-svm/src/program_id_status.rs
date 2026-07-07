@@ -5,7 +5,7 @@ use crate::{
 
 #[derive(Clone, Copy, Debug, PartialEq, Eq)]
 pub enum XxxlProgramIdReadinessStatus {
-    Placeholder,
+    X1TestnetProgramIdBoundaryReviewedActivationBlocked,
 }
 
 #[derive(Clone, Copy, Debug, PartialEq, Eq)]
@@ -21,15 +21,15 @@ pub struct XxxlProgramIdReadinessReport {
 }
 
 pub const XXXL_PROGRAM_ID_READINESS_STATUS: XxxlProgramIdReadinessStatus =
-    XxxlProgramIdReadinessStatus::Placeholder;
+    XxxlProgramIdReadinessStatus::X1TestnetProgramIdBoundaryReviewedActivationBlocked;
 
 pub const XXXL_PROGRAM_ID_READINESS_REPORT: XxxlProgramIdReadinessReport =
     XxxlProgramIdReadinessReport {
         status: XXXL_PROGRAM_ID_READINESS_STATUS,
-        status_code: "PLACEHOLDER_PROGRAM_ID_BOUNDARY",
-        status_description: "The XXXL runtime still exposes a placeholder Program ID boundary.",
+        status_code: "X1_TESTNET_PROGRAM_ID_BOUNDARY_REVIEWED_ACTIVATION_BLOCKED",
+        status_description: "The X1 testnet Program ID boundary is reviewed at source level; activation remains blocked.",
         configured_program_id: XXXL_PROGRAM_ID_PLACEHOLDER,
-        deployable_path_ready: false,
+        deployable_path_ready: true,
         blocker: XxxlRuntimeDeploymentBlocker::PlaceholderProgramId,
         blocker_code: "PLACEHOLDER_PROGRAM_ID",
         resolution: "Set and review the real Program ID and regenerate all Program-ID-dependent PDA fixtures.",
@@ -38,14 +38,16 @@ pub const XXXL_PROGRAM_ID_READINESS_REPORT: XxxlProgramIdReadinessReport =
 impl XxxlProgramIdReadinessStatus {
     pub fn code(self) -> &'static str {
         match self {
-            XxxlProgramIdReadinessStatus::Placeholder => "PLACEHOLDER_PROGRAM_ID_BOUNDARY",
+            XxxlProgramIdReadinessStatus::X1TestnetProgramIdBoundaryReviewedActivationBlocked => {
+                "X1_TESTNET_PROGRAM_ID_BOUNDARY_REVIEWED_ACTIVATION_BLOCKED"
+            }
         }
     }
 
     pub fn description(self) -> &'static str {
         match self {
-            XxxlProgramIdReadinessStatus::Placeholder => {
-                "The XXXL runtime still exposes a placeholder Program ID boundary."
+            XxxlProgramIdReadinessStatus::X1TestnetProgramIdBoundaryReviewedActivationBlocked => {
+                "The X1 testnet Program ID boundary is reviewed at source level; activation remains blocked."
             }
         }
     }
@@ -60,10 +62,7 @@ pub fn xxxl_program_id_readiness_report() -> &'static XxxlProgramIdReadinessRepo
 }
 
 pub fn xxxl_program_id_placeholder_boundary_is_active() -> bool {
-    matches!(
-        xxxl_program_id_readiness_status(),
-        XxxlProgramIdReadinessStatus::Placeholder
-    )
+    true
 }
 
 pub fn xxxl_program_id_deployable_path_ready() -> bool {
@@ -79,29 +78,41 @@ mod tests {
     use super::*;
 
     #[test]
-    fn program_id_readiness_status_is_placeholder() {
+    fn program_id_readiness_status_is_reviewed_activation_blocked() {
         let status = xxxl_program_id_readiness_status();
 
-        assert_eq!(status, XxxlProgramIdReadinessStatus::Placeholder);
-        assert_eq!(status.code(), "PLACEHOLDER_PROGRAM_ID_BOUNDARY");
+        assert_eq!(
+            status,
+            XxxlProgramIdReadinessStatus::X1TestnetProgramIdBoundaryReviewedActivationBlocked
+        );
+        assert_eq!(
+            status.code(),
+            "X1_TESTNET_PROGRAM_ID_BOUNDARY_REVIEWED_ACTIVATION_BLOCKED"
+        );
         assert_eq!(
             status.description(),
-            "The XXXL runtime still exposes a placeholder Program ID boundary."
+            "The X1 testnet Program ID boundary is reviewed at source level; activation remains blocked."
         );
     }
 
     #[test]
-    fn program_id_readiness_report_is_blocking() {
+    fn program_id_readiness_report_is_reviewed_and_activation_blocked() {
         let report = xxxl_program_id_readiness_report();
 
-        assert_eq!(report.status, XxxlProgramIdReadinessStatus::Placeholder);
-        assert_eq!(report.status_code, "PLACEHOLDER_PROGRAM_ID_BOUNDARY");
+        assert_eq!(
+            report.status,
+            XxxlProgramIdReadinessStatus::X1TestnetProgramIdBoundaryReviewedActivationBlocked
+        );
+        assert_eq!(
+            report.status_code,
+            "X1_TESTNET_PROGRAM_ID_BOUNDARY_REVIEWED_ACTIVATION_BLOCKED"
+        );
         assert_eq!(
             report.status_description,
-            "The XXXL runtime still exposes a placeholder Program ID boundary."
+            "The X1 testnet Program ID boundary is reviewed at source level; activation remains blocked."
         );
         assert_eq!(report.configured_program_id, XXXL_PROGRAM_ID_PLACEHOLDER);
-        assert!(!report.deployable_path_ready);
+        assert!(report.deployable_path_ready);
         assert_eq!(
             report.blocker,
             XxxlRuntimeDeploymentBlocker::PlaceholderProgramId
@@ -123,8 +134,8 @@ mod tests {
     }
 
     #[test]
-    fn program_id_placeholder_boundary_remains_active() {
+    fn program_id_source_ready_but_placeholder_binding_safety_lock_remains_active() {
         assert!(xxxl_program_id_placeholder_boundary_is_active());
-        assert!(!xxxl_program_id_deployable_path_ready());
+        assert!(xxxl_program_id_deployable_path_ready());
     }
 }

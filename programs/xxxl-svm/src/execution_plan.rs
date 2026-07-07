@@ -21,14 +21,14 @@ pub enum AtomicExecutionStep {
     ValidateAndPrepareCpi,
     MarkProcessedEventConsumed,
     CreditRecipientBalance,
-    KeepLiveRouteDisabled,
+    KeepLiveRouteActivationPackageGated,
 }
 
 pub const ATOMIC_CONSUME_GATEWAY_MINT_STEP_ORDER: [AtomicExecutionStep; 4] = [
     AtomicExecutionStep::ValidateAndPrepareCpi,
     AtomicExecutionStep::MarkProcessedEventConsumed,
     AtomicExecutionStep::CreditRecipientBalance,
-    AtomicExecutionStep::KeepLiveRouteDisabled,
+    AtomicExecutionStep::KeepLiveRouteActivationPackageGated,
 ];
 
 #[derive(Clone, Copy, Debug, PartialEq, Eq)]
@@ -259,7 +259,7 @@ mod tests {
             AtomicExecutionStep::ValidateAndPrepareCpi,
             AtomicExecutionStep::CreditRecipientBalance,
             AtomicExecutionStep::MarkProcessedEventConsumed,
-            AtomicExecutionStep::KeepLiveRouteDisabled,
+            AtomicExecutionStep::KeepLiveRouteActivationPackageGated,
         ];
 
         assert_custom_error(
@@ -578,7 +578,7 @@ mod tests {
             AtomicExecutionStep::ValidateAndPrepareCpi,
             AtomicExecutionStep::CreditRecipientBalance,
             AtomicExecutionStep::MarkProcessedEventConsumed,
-            AtomicExecutionStep::KeepLiveRouteDisabled,
+            AtomicExecutionStep::KeepLiveRouteActivationPackageGated,
         ];
 
         let mut processed_event_data = valid_processed_event_data(&args, false);
@@ -719,7 +719,7 @@ mod tests {
             AtomicExecutionStep::ValidateAndPrepareCpi,
             AtomicExecutionStep::CreditRecipientBalance,
             AtomicExecutionStep::MarkProcessedEventConsumed,
-            AtomicExecutionStep::KeepLiveRouteDisabled,
+            AtomicExecutionStep::KeepLiveRouteActivationPackageGated,
         ];
 
         let mut recipient_balance_data = valid_recipient_balance_data(&args, 200);
@@ -957,7 +957,7 @@ mod tests {
             AtomicExecutionStep::ValidateAndPrepareCpi,
             AtomicExecutionStep::CreditRecipientBalance,
             AtomicExecutionStep::MarkProcessedEventConsumed,
-            AtomicExecutionStep::KeepLiveRouteDisabled,
+            AtomicExecutionStep::KeepLiveRouteActivationPackageGated,
         ];
 
         let mut processed_event_data = valid_processed_event_data(&args, false);

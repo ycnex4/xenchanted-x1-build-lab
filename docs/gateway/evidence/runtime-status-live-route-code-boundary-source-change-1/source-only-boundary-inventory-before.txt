@@ -1,0 +1,105 @@
+programs/xxxl-svm/src/cpi.rs:55:    pub live_route_activation_enabled: bool,
+programs/xxxl-svm/src/cpi.rs:64:    if execution_plan.live_route_activation_enabled
+programs/xxxl-svm/src/cpi.rs:65:        || execution_plan.mint_to_invocation_from_process_instruction_enabled
+programs/xxxl-svm/src/cpi.rs:112:        live_route_activation_enabled: false,
+programs/xxxl-svm/src/cpi.rs:145:    if execution_plan.live_route_activation_enabled
+programs/xxxl-svm/src/cpi.rs:146:        || execution_plan.mint_to_invocation_from_process_instruction_enabled
+programs/xxxl-svm/src/cpi.rs:147:        || planning_boundary.live_route_activation_enabled
+programs/xxxl-svm/src/cpi.rs:363:            live_route_activation_enabled: false,
+programs/xxxl-svm/src/cpi.rs:364:            mint_to_invocation_from_process_instruction_enabled: false,
+programs/xxxl-svm/src/cpi.rs:469:                planning_boundary.live_route_activation_enabled = true;
+programs/xxxl-svm/src/cpi.rs:497:            live_route_activation_enabled: false,
+programs/xxxl-svm/src/cpi.rs:553:                assert!(!plan.live_route_activation_enabled);
+programs/xxxl-svm/src/cpi.rs:617:        execution_plan.live_route_activation_enabled = true;
+programs/xxxl-svm/src/cpi.rs:644:        execution_plan.mint_to_invocation_from_process_instruction_enabled = true;
+programs/xxxl-svm/src/deployment_status.rs:31:    pub deployable: bool,
+programs/xxxl-svm/src/deployment_status.rs:56:        code: "PLACEHOLDER_PROGRAM_ID",
+programs/xxxl-svm/src/deployment_status.rs:95:        status_code: "SCAFFOLD_ONLY_NOT_DEPLOYABLE",
+programs/xxxl-svm/src/deployment_status.rs:97:        deployable: false,
+programs/xxxl-svm/src/deployment_status.rs:105:                "SCAFFOLD_ONLY_NOT_DEPLOYABLE"
+programs/xxxl-svm/src/deployment_status.rs:122:            XxxlRuntimeDeploymentBlocker::PlaceholderProgramId => "PLACEHOLDER_PROGRAM_ID",
+programs/xxxl-svm/src/deployment_status.rs:262:    crate::processor::LIVE_ROUTE_ACTIVATION_FROM_PROCESS_INSTRUCTION_ENABLED
+programs/xxxl-svm/src/deployment_status.rs:281:        assert_eq!(XXXL_RUNTIME_STATUS, "SCAFFOLD_ONLY_NOT_DEPLOYABLE");
+programs/xxxl-svm/src/deployment_status.rs:288:            "SCAFFOLD_ONLY_NOT_DEPLOYABLE"
+programs/xxxl-svm/src/deployment_status.rs:315:        assert_eq!(blockers[0].code(), "PLACEHOLDER_PROGRAM_ID");
+programs/xxxl-svm/src/deployment_status.rs:385:        assert_eq!(report.code, "PLACEHOLDER_PROGRAM_ID");
+programs/xxxl-svm/src/deployment_status.rs:459:                "PLACEHOLDER_PROGRAM_ID",
+programs/xxxl-svm/src/deployment_status.rs:483:        assert_eq!(report.status_code, "SCAFFOLD_ONLY_NOT_DEPLOYABLE");
+programs/xxxl-svm/src/deployment_status.rs:490:        assert_eq!(report.blockers[0].code, "PLACEHOLDER_PROGRAM_ID");
+programs/xxxl-svm/src/deployment_status.rs:520:                assert_eq!(report.status_code, "SCAFFOLD_ONLY_NOT_DEPLOYABLE");
+programs/xxxl-svm/src/execution_plan.rs:44:    pub live_route_activation_enabled: bool,
+programs/xxxl-svm/src/execution_plan.rs:45:    pub mint_to_invocation_from_process_instruction_enabled: bool,
+programs/xxxl-svm/src/execution_plan.rs:80:        live_route_activation_enabled: false,
+programs/xxxl-svm/src/execution_plan.rs:81:        mint_to_invocation_from_process_instruction_enabled: false,
+programs/xxxl-svm/src/execution_plan.rs:93:    if execution_plan.live_route_activation_enabled
+programs/xxxl-svm/src/execution_plan.rs:94:        || execution_plan.mint_to_invocation_from_process_instruction_enabled
+programs/xxxl-svm/src/execution_plan.rs:116:    if execution_plan.live_route_activation_enabled
+programs/xxxl-svm/src/execution_plan.rs:117:        || execution_plan.mint_to_invocation_from_process_instruction_enabled
+programs/xxxl-svm/src/execution_plan.rs:140:    if execution_plan.live_route_activation_enabled
+programs/xxxl-svm/src/execution_plan.rs:141:        || execution_plan.mint_to_invocation_from_process_instruction_enabled
+programs/xxxl-svm/src/execution_plan.rs:356:        assert!(!plan.live_route_activation_enabled);
+programs/xxxl-svm/src/execution_plan.rs:357:        assert!(!plan.mint_to_invocation_from_process_instruction_enabled);
+programs/xxxl-svm/src/execution_plan.rs:543:        plan.live_route_activation_enabled = true;
+programs/xxxl-svm/src/execution_plan.rs:560:        plan.mint_to_invocation_from_process_instruction_enabled = true;
+programs/xxxl-svm/src/execution_plan.rs:684:        plan.live_route_activation_enabled = true;
+programs/xxxl-svm/src/execution_plan.rs:701:        plan.mint_to_invocation_from_process_instruction_enabled = true;
+programs/xxxl-svm/src/execution_plan.rs:908:        plan.live_route_activation_enabled = true;
+programs/xxxl-svm/src/execution_plan.rs:932:        plan.mint_to_invocation_from_process_instruction_enabled = true;
+programs/xxxl-svm/src/execution_plan.rs:1104:            live_route_activation_enabled: false,
+programs/xxxl-svm/src/execution_plan.rs:1105:            mint_to_invocation_from_process_instruction_enabled: false,
+programs/xxxl-svm/src/lib.rs:57:pub const XXXL_RUNTIME_STATUS: &str = "SCAFFOLD_ONLY_NOT_DEPLOYABLE";
+programs/xxxl-svm/src/processor.rs:98:pub const LIVE_ROUTE_ACTIVATION_FROM_PROCESS_INSTRUCTION_ENABLED: bool = false;
+programs/xxxl-svm/src/processor.rs:109:    pub live_route_activation_enabled: bool,
+programs/xxxl-svm/src/processor.rs:117:    pub live_route_activation_enabled: bool,
+programs/xxxl-svm/src/processor.rs:125:    pub live_route_activation_enabled: bool,
+programs/xxxl-svm/src/processor.rs:424:    if execution_plan.live_route_activation_enabled
+programs/xxxl-svm/src/processor.rs:425:        || execution_plan.mint_to_invocation_from_process_instruction_enabled
+programs/xxxl-svm/src/processor.rs:444:    if execution_plan.live_route_activation_enabled
+programs/xxxl-svm/src/processor.rs:445:        || execution_plan.mint_to_invocation_from_process_instruction_enabled
+programs/xxxl-svm/src/processor.rs:453:    if mint_to_cpi_plan.live_route_activation_enabled
+programs/xxxl-svm/src/processor.rs:462:        live_route_activation_enabled: false,
+programs/xxxl-svm/src/processor.rs:483:    if planning_composition.live_route_activation_enabled
+programs/xxxl-svm/src/processor.rs:487:            .live_route_activation_enabled
+programs/xxxl-svm/src/processor.rs:490:            .mint_to_invocation_from_process_instruction_enabled
+programs/xxxl-svm/src/processor.rs:493:            .live_route_activation_enabled
+programs/xxxl-svm/src/processor.rs:520:        live_route_activation_enabled: false,
+programs/xxxl-svm/src/processor.rs:536:    if execution_plan.live_route_activation_enabled
+programs/xxxl-svm/src/processor.rs:537:        || execution_plan.mint_to_invocation_from_process_instruction_enabled
+programs/xxxl-svm/src/processor.rs:545:    if mint_to_cpi_plan.live_route_activation_enabled
+programs/xxxl-svm/src/processor.rs:582:        live_route_activation_enabled: false,
+programs/xxxl-svm/src/processor.rs:1161:        assert!(!plan.live_route_activation_enabled);
+programs/xxxl-svm/src/processor.rs:1162:        assert!(!plan.mint_to_invocation_from_process_instruction_enabled);
+programs/xxxl-svm/src/processor.rs:1211:        assert!(!execution_plan.live_route_activation_enabled);
+programs/xxxl-svm/src/processor.rs:1212:        assert!(!execution_plan.mint_to_invocation_from_process_instruction_enabled);
+programs/xxxl-svm/src/processor.rs:1246:        assert!(!composition.execution_plan.live_route_activation_enabled);
+programs/xxxl-svm/src/processor.rs:1250:                .mint_to_invocation_from_process_instruction_enabled
+programs/xxxl-svm/src/processor.rs:1260:        assert!(!composition.mint_to_cpi_plan.live_route_activation_enabled);
+programs/xxxl-svm/src/processor.rs:1267:        assert!(!composition.live_route_activation_enabled);
+programs/xxxl-svm/src/program_id_status.rs:17:    pub deployable_path_ready: bool,
+programs/xxxl-svm/src/program_id_status.rs:29:        status_code: "PLACEHOLDER_PROGRAM_ID_BOUNDARY",
+programs/xxxl-svm/src/program_id_status.rs:32:        deployable_path_ready: false,
+programs/xxxl-svm/src/program_id_status.rs:34:        blocker_code: "PLACEHOLDER_PROGRAM_ID",
+programs/xxxl-svm/src/program_id_status.rs:41:            XxxlProgramIdReadinessStatus::Placeholder => "PLACEHOLDER_PROGRAM_ID_BOUNDARY",
+programs/xxxl-svm/src/program_id_status.rs:69:pub fn xxxl_program_id_deployable_path_ready() -> bool {
+programs/xxxl-svm/src/program_id_status.rs:70:    xxxl_program_id_readiness_report().deployable_path_ready
+programs/xxxl-svm/src/program_id_status.rs:86:        assert_eq!(status.code(), "PLACEHOLDER_PROGRAM_ID_BOUNDARY");
+programs/xxxl-svm/src/program_id_status.rs:98:        assert_eq!(report.status_code, "PLACEHOLDER_PROGRAM_ID_BOUNDARY");
+programs/xxxl-svm/src/program_id_status.rs:104:        assert!(!report.deployable_path_ready);
+programs/xxxl-svm/src/program_id_status.rs:109:        assert_eq!(report.blocker_code, "PLACEHOLDER_PROGRAM_ID");
+programs/xxxl-svm/src/program_id_status.rs:128:        assert!(!xxxl_program_id_deployable_path_ready());
+programs/xxxl-svm/src/safety_invariants.rs:18:    pub runtime_deployable: bool,
+programs/xxxl-svm/src/safety_invariants.rs:22:    pub live_route_activation_enabled: bool,
+programs/xxxl-svm/src/safety_invariants.rs:32:            && !self.live_route_activation_enabled
+programs/xxxl-svm/src/safety_invariants.rs:39:        runtime_deployable: xxxl_runtime_is_deployable(),
+programs/xxxl-svm/src/safety_invariants.rs:44:        live_route_activation_enabled:
+programs/xxxl-svm/src/safety_invariants.rs:78:    pub live_route_activation_enabled: bool,
+programs/xxxl-svm/src/safety_invariants.rs:87:        live_route_activation_enabled: summary.live_route_activation_enabled,
+programs/xxxl-svm/src/safety_invariants.rs:88:        consistent: !(summary.blocking_invariants_hold() && summary.live_route_activation_enabled),
+programs/xxxl-svm/src/safety_invariants.rs:148:    pub runtime_deployable: bool,
+programs/xxxl-svm/src/safety_invariants.rs:161:        runtime_deployable: safety_summary.runtime_deployable,
+programs/xxxl-svm/src/safety_invariants.rs:211:    let live_route_disabled = !safety_summary.live_route_activation_enabled;
+programs/xxxl-svm/src/safety_invariants.rs:423:        assert!(!summary.live_route_activation_enabled);
+programs/xxxl-svm/src/safety_invariants.rs:452:        assert!(!report.live_route_activation_enabled);
+programs/xxxl-svm/src/safety_invariants.rs:555:            "PLACEHOLDER_PROGRAM_ID"
+programs/xxxl-svm/src/verifier/boundary.rs:213:        assert_eq!(boundary.status.code(), "READ_ONLY_SCAFFOLD_ONLY");
+programs/xxxl-svm/src/verifier/types.rs:10:            VerifierBoundaryStatus::ReadOnlyScaffoldOnly => "READ_ONLY_SCAFFOLD_ONLY",
