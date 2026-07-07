@@ -5762,3 +5762,86 @@ Read-only Network Precheck Package.2 does not call RPC, use testnet, read Progra
 Next safe step:
 
 Read-only Network Precheck Package.3 — exact scoped read-only precheck package closure record.
+
+
+## Read-only Network Precheck Package.3 exact scoped read-only precheck package closure record
+
+The Read-only Network Precheck Package.3 closure is recorded in:
+
+docs/gateway/read-only-network-precheck-package-3-exact-scoped-read-only-precheck-package-closure-record.md
+
+Evidence directory:
+
+docs/gateway/evidence/read-only-network-precheck-package-3-exact-scoped-read-only-precheck-package-closure-record
+
+Current status:
+
+READ_ONLY_NETWORK_PRECHECK_PACKAGE_3_CLOSED_EXACT_SCOPED_READ_ONLY_PRECHECK_PACKAGE_READY_FOR_USER_EXACT_GO_NO_RPC_NO_TESTNET_NO_PROGRAMDATA_READ_NO_MUTATION
+
+Current decision:
+
+EXACT_SCOPED_READ_ONLY_PRECHECK_PACKAGE_CLOSED_FINAL_READ_ONLY_GO_NOT_GRANTED_UNTIL_USER_EXACT_PHRASE
+
+Operation class:
+
+READ_ONLY_NETWORK_PRECHECK_ONLY
+
+Current GO state:
+
+READ_ONLY_PRECHECK_GO_NOT_GRANTED
+
+Final package id:
+
+RONPP3_READ_ONLY_PRECHECK_fead873b9d8d
+
+Source commit:
+
+fead873b9d8d4e018106d1167e6b27494b03d89e
+
+Final exact GO phrase:
+
+GO_RONPP_READ_ONLY_PRECHECK_ONLY_RONPP3_READ_ONLY_PRECHECK_fead873b9d8d_SOURCE_fead873b9d8d
+
+Network:
+
+X1_TESTNET
+
+RPC endpoint:
+
+https://rpc.testnet.x1.xyz
+
+Program id:
+
+D7AQmZNtFFFoJbducz93atteeSZhw3jq6RmsqBvaf1my
+
+ProgramData account:
+
+9tuesaPoJhrifF49vJewcg6PSWZeHAJiqQ97pq3LMW9T
+
+Expected canonical ProgramData executable-bytes SHA256:
+
+e68ada36e1914584c2dcc186afbdfcba608b286fc2cd404015a7a8c28764daa1
+
+Closure result:
+
+exact_scoped_read_only_precheck_package_closed: true
+
+read_only_precheck_go_granted: false
+
+rpc_used: false
+
+testnet_used: false
+
+programdata_read_executed: false
+
+executable_bytes_dumped: false
+
+live_hash_comparison_executed: false
+
+mutation_executed: false
+
+Read-only Network Precheck Package.3 does not call RPC, use testnet, read ProgramData, dump executable bytes, perform live hash comparison, deploy, upgrade, write buffer, sign, submit, or mutate.
+
+Next safe step:
+
+Read-only Network Precheck Execution.1 — after exact user GO phrase only.

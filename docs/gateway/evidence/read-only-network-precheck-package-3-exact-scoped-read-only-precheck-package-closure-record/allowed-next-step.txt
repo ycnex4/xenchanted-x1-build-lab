@@ -1,0 +1,36 @@
+# Allowed next step after RONPP3
+
+next_safe_step:
+Read-only Network Precheck Execution.1 — after exact user GO phrase only.
+
+exact_user_go_required:
+GO_RONPP_READ_ONLY_PRECHECK_ONLY_RONPP3_READ_ONLY_PRECHECK_fead873b9d8d_SOURCE_fead873b9d8d
+
+allowed_only_after_exact_go:
+- verify exact GO phrase
+- verify clean tree
+- verify package bindings
+- run final read-only command set
+- write evidence
+- compare observed SHA256 to expected SHA256
+
+not_allowed_without_exact_go:
+- RPC
+- testnet call
+- ProgramData read
+- executable bytes dump
+- live hash comparison
+
+not_allowed_even_with_read_only_go:
+- signer flag
+- keypair path
+- secret material
+- transaction submit
+- deploy
+- upgrade
+- write-buffer
+- authority change
+- state initialization
+- SPL setup
+- guardian package construction
+- mutation

@@ -1,0 +1,25 @@
+# Read-only Network Precheck Package.3 non-GO boundary
+
+Read-only Network Precheck Package.3 does not grant GO.
+
+Read-only Network Precheck Package.3 does not execute:
+- RPC
+- testnet call
+- ProgramData read
+- live account inspection
+- executable bytes dump
+- live hash comparison
+- deploy
+- upgrade
+- write-buffer
+- authority change
+- state initialization
+- SPL setup
+- guardian package construction
+- signing
+- transaction submit
+- mutation
+- production activation
+
+Read-only Network Precheck Package.3 only closes the exact scoped read-only package.
+The user must provide the final exact GO phrase verbatim before any RPC/testnet read.

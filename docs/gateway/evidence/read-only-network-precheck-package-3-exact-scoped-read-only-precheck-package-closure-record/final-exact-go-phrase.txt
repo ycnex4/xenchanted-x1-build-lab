@@ -1,0 +1,19 @@
+# Final exact GO phrase
+
+phrase_status: FINAL_SELECTED_NOT_GRANTED_UNTIL_USER_REPEATS_VERBATIM
+
+final_exact_go_phrase:
+GO_RONPP_READ_ONLY_PRECHECK_ONLY_RONPP3_READ_ONLY_PRECHECK_fead873b9d8d_SOURCE_fead873b9d8d
+
+meaning:
+- authorize only READ_ONLY_NETWORK_PRECHECK_ONLY
+- bind final package id
+- bind source commit short
+- bind X1 testnet
+- bind exact RPC endpoint
+- bind program id
+- bind ProgramData account
+- bind expected hash
+- forbid signer/keypair/submit/mutation
+
+read_only_precheck_go_granted_now: false

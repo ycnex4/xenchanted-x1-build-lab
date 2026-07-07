@@ -1,0 +1,34 @@
+# Final future execution success criteria
+
+success_requires:
+- user provides exact GO phrase verbatim
+- exact GO phrase equals GO_RONPP_READ_ONLY_PRECHECK_ONLY_RONPP3_READ_ONLY_PRECHECK_fead873b9d8d_SOURCE_fead873b9d8d
+- clean working tree before execution
+- source commit binding verified
+- operation class is READ_ONLY_NETWORK_PRECHECK_ONLY
+- network is X1_TESTNET
+- RPC endpoint is https://rpc.testnet.x1.xyz
+- program id is D7AQmZNtFFFoJbducz93atteeSZhw3jq6RmsqBvaf1my
+- ProgramData account is 9tuesaPoJhrifF49vJewcg6PSWZeHAJiqQ97pq3LMW9T
+- expected upgrade authority is DTfvjtRL63u3XYHXQfgRQCdhEanUK1qqawvfEAM9hxAc
+- expected hash is e68ada36e1914584c2dcc186afbdfcba608b286fc2cd404015a7a8c28764daa1
+- ProgramData/account metadata captured
+- executable bytes dump captured
+- observed executable bytes SHA256 computed locally
+- observed executable bytes SHA256 equals expected hash
+- evidence files written
+- no signer flag
+- no keypair path
+- no secret material
+- no transaction submit
+- no deploy
+- no upgrade
+- no write-buffer
+- no authority change
+- no state initialization
+- no SPL setup
+- no guardian package construction
+- no mutation
+- final status captured
+
+all_success_criteria_required: true

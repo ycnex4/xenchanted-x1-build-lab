@@ -1,0 +1,11 @@
+# Read-only Network Precheck Package.3 remaining gaps
+
+- user exact GO phrase not provided
+- Read-only Network Precheck Execution.1 not executed
+- RPC/testnet read not executed
+- ProgramData/account metadata not read
+- observed upgrade authority not re-read
+- observed executable bytes not dumped
+- observed executable bytes SHA256 not computed
+- observed-vs-expected hash comparison not executed
+- signing/submit/mutation not approved
