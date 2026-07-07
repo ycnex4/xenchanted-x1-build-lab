@@ -1,0 +1,20 @@
+# Read-only Network Baseline.3 forbidden actions
+
+forbidden_now_and_in_future_read_only_precheck:
+- signer flag
+- keypair path
+- secret material
+- transaction submit
+- deploy
+- upgrade
+- write-buffer
+- set-upgrade-authority
+- close program/buffer/account
+- transfer
+- state initialization
+- SPL setup
+- guardian package construction
+- mutation
+- production activation
+
+future_precheck_must_remain_read_only: true

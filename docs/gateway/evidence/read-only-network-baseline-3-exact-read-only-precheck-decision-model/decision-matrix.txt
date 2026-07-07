@@ -1,0 +1,30 @@
+# Read-only Network Baseline.3 decision matrix
+
+OPTION_01_NO_PRECHECK_MODEL:
+decision: rejected
+reason: Future live network read requires explicit read-only model and stop rules.
+
+OPTION_02_IMMEDIATE_RPC_NOW:
+decision: rejected
+reason: RONB3 is decision-model-only and RPC is not approved.
+
+OPTION_03_READ_AND_MUTATE_COMBINED:
+decision: rejected
+reason: Read-only baseline must not combine with deploy, upgrade, write-buffer, signing, submit, or mutation.
+
+OPTION_04_READ_ONLY_WITHOUT_EXACT_GO:
+decision: rejected
+reason: Future read-only network access requires exact scoped user GO.
+
+OPTION_05_READ_ONLY_WITH_SIGNER_OR_KEYPAIR:
+decision: rejected
+reason: Read-only precheck must not require signer flags, keypair paths, secret material, or transaction submission.
+
+OPTION_06_READ_ONLY_HASH_CHECK_ONLY:
+decision: selected
+model: STRICT_READ_ONLY_NETWORK_PRECHECK_WITH_EXACT_GO_ONLY
+reason: This preserves local hash evidence, checks live ProgramData read-only, and forbids mutation.
+
+OPTION_07_AUTOMATIC_RETRY_ON_MISMATCH:
+decision: rejected
+reason: Hash/identity/authority mismatch is a stop condition; automatic retry remains rejected.
