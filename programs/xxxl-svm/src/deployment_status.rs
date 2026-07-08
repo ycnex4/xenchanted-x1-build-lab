@@ -41,16 +41,15 @@ pub enum XxxlRuntimeDeploymentGateResult {
 pub const XXXL_RUNTIME_DEPLOYMENT_STATUS: XxxlRuntimeDeploymentStatus =
     XxxlRuntimeDeploymentStatus::SourceBoundaryReadyActivationBlocked;
 
-pub const XXXL_RUNTIME_DEPLOYMENT_BLOCKERS: [XxxlRuntimeDeploymentBlocker; 6] = [
+pub const XXXL_RUNTIME_DEPLOYMENT_BLOCKERS: [XxxlRuntimeDeploymentBlocker; 5] = [
     XxxlRuntimeDeploymentBlocker::PlaceholderProgramId,
     XxxlRuntimeDeploymentBlocker::LiveRouteDisabled,
     XxxlRuntimeDeploymentBlocker::SplCpiExecutionDisabled,
     XxxlRuntimeDeploymentBlocker::ProductionGuardianSetUnset,
     XxxlRuntimeDeploymentBlocker::ProductionProofLogUnset,
-    XxxlRuntimeDeploymentBlocker::ExternalReviewIncomplete,
 ];
 
-pub const XXXL_RUNTIME_DEPLOYMENT_BLOCKER_REPORTS: [XxxlRuntimeDeploymentBlockerReport; 6] = [
+pub const XXXL_RUNTIME_DEPLOYMENT_BLOCKER_REPORTS: [XxxlRuntimeDeploymentBlockerReport; 5] = [
     XxxlRuntimeDeploymentBlockerReport {
         blocker: XxxlRuntimeDeploymentBlocker::PlaceholderProgramId,
         code: "PLACEHOLDER_PROGRAM_ID",
@@ -80,12 +79,6 @@ pub const XXXL_RUNTIME_DEPLOYMENT_BLOCKER_REPORTS: [XxxlRuntimeDeploymentBlocker
         code: "PRODUCTION_PROOF_LOG_UNSET",
         description: "The production proof-log and public audit trail are not configured.",
         resolution: "Define the production proof-log format, retention policy, public audit trail, and operator publication flow.",
-    },
-    XxxlRuntimeDeploymentBlockerReport {
-        blocker: XxxlRuntimeDeploymentBlocker::ExternalReviewIncomplete,
-        code: "EXTERNAL_REVIEW_INCOMPLETE",
-        description: "External review is not complete for deployment activation.",
-        resolution: "Complete external review of the live route, guardian policy, CPI path, account contract, replay protection, and deployment checklist.",
     },
 ];
 
@@ -301,7 +294,7 @@ mod tests {
     fn runtime_deployment_blockers_are_explicit() {
         let blockers = xxxl_runtime_deployment_blockers();
 
-        assert_eq!(blockers.len(), 6);
+        assert_eq!(blockers.len(), 5);
         assert!(blockers.contains(&XxxlRuntimeDeploymentBlocker::PlaceholderProgramId));
         assert!(blockers.contains(&XxxlRuntimeDeploymentBlocker::LiveRouteDisabled));
         assert!(blockers.contains(&XxxlRuntimeDeploymentBlocker::SplCpiExecutionDisabled));
@@ -309,7 +302,7 @@ mod tests {
         assert!(!blockers.contains(&XxxlRuntimeDeploymentBlocker::MolluskCoverageIncomplete));
         assert!(blockers.contains(&XxxlRuntimeDeploymentBlocker::ProductionGuardianSetUnset));
         assert!(blockers.contains(&XxxlRuntimeDeploymentBlocker::ProductionProofLogUnset));
-        assert!(blockers.contains(&XxxlRuntimeDeploymentBlocker::ExternalReviewIncomplete));
+        assert!(!blockers.contains(&XxxlRuntimeDeploymentBlocker::ExternalReviewIncomplete));
     }
 
     #[test]
@@ -321,7 +314,6 @@ mod tests {
         assert_eq!(blockers[2].code(), "SPL_CPI_EXECUTION_DISABLED");
         assert_eq!(blockers[3].code(), "PRODUCTION_GUARDIAN_SET_UNSET");
         assert_eq!(blockers[4].code(), "PRODUCTION_PROOF_LOG_UNSET");
-        assert_eq!(blockers[5].code(), "EXTERNAL_REVIEW_INCOMPLETE");
     }
 
     #[test]
@@ -449,6 +441,27 @@ mod tests {
     }
 
     #[test]
+    fn runtime_deployment_report_has_transitioned_external_review_blocker() {
+        assert!(xxxl_runtime_deployment_blocker_report(
+            XxxlRuntimeDeploymentBlocker::ExternalReviewIncomplete,
+        )
+        .is_none());
+        assert_eq!(
+            XxxlRuntimeDeploymentBlocker::ExternalReviewIncomplete.code(),
+            "EXTERNAL_REVIEW_INCOMPLETE"
+        );
+        assert!(XxxlRuntimeDeploymentBlocker::ExternalReviewIncomplete
+            .description()
+            .contains("External review"));
+        assert!(XxxlRuntimeDeploymentBlocker::ExternalReviewIncomplete
+            .resolution()
+            .contains("external review"));
+        assert!(!xxxl_runtime_deployment_report_has_blocker_code(
+            "EXTERNAL_REVIEW_INCOMPLETE"
+        ));
+    }
+
+    #[test]
     fn mollusk_coverage_transition_keeps_only_expected_active_blockers() {
         let report = xxxl_runtime_deployment_report();
         let active_codes: Vec<&str> = report
@@ -465,7 +478,6 @@ mod tests {
                 "SPL_CPI_EXECUTION_DISABLED",
                 "PRODUCTION_GUARDIAN_SET_UNSET",
                 "PRODUCTION_PROOF_LOG_UNSET",
-                "EXTERNAL_REVIEW_INCOMPLETE",
             ]
         );
         assert!(!active_codes.contains(&"ACCOUNT_CONTRACT_UNREVIEWED"));
@@ -493,13 +505,12 @@ mod tests {
             "The XXXL SVM runtime source boundary is ready, but activation remains blocked."
         );
         assert!(!report.deployable);
-        assert_eq!(report.blockers.len(), 6);
+        assert_eq!(report.blockers.len(), 5);
         assert_eq!(report.blockers[0].code, "PLACEHOLDER_PROGRAM_ID");
         assert_eq!(report.blockers[1].code, "LIVE_ROUTE_DISABLED");
         assert_eq!(report.blockers[2].code, "SPL_CPI_EXECUTION_DISABLED");
         assert_eq!(report.blockers[3].code, "PRODUCTION_GUARDIAN_SET_UNSET");
         assert_eq!(report.blockers[4].code, "PRODUCTION_PROOF_LOG_UNSET");
-        assert_eq!(report.blockers[5].code, "EXTERNAL_REVIEW_INCOMPLETE");
         assert_eq!(
             report.blockers[0].resolution,
             XxxlRuntimeDeploymentBlocker::PlaceholderProgramId.resolution()
@@ -529,7 +540,7 @@ mod tests {
                     "SOURCE_BOUNDARY_READY_ACTIVATION_BLOCKED"
                 );
                 assert!(!report.deployable);
-                assert_eq!(report.blockers.len(), 6);
+                assert_eq!(report.blockers.len(), 5);
             }
             XxxlRuntimeDeploymentGateResult::Ready(_) => {
                 panic!("activation-blocked XXXL runtime must not pass the predeploy gate");

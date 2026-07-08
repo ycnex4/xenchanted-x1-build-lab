@@ -1,0 +1,19 @@
+[git diff --name-only]
+docs/gateway/current-execution-plan.md
+docs/gateway/current-runtime-state.md
+programs/xxxl-svm/src/deployment_status.rs
+programs/xxxl-svm/src/safety_invariants.rs
+
+[git ls-files --others --exclude-standard]
+docs/gateway/evidence/external-review-blocker-removal-source-change/cargo-test-after-external-review-blocker-removal.txt
+docs/gateway/evidence/external-review-blocker-removal-source-change/changed-files-including-untracked.txt
+docs/gateway/evidence/external-review-blocker-removal-source-change/changed-files.txt
+docs/gateway/evidence/external-review-blocker-removal-source-change/diff-stat.txt
+docs/gateway/evidence/external-review-blocker-removal-source-change/doc-consistency-fix-summary.txt
+docs/gateway/evidence/external-review-blocker-removal-source-change/focused-grep-after-patch.txt
+docs/gateway/evidence/external-review-blocker-removal-source-change/key-blocker-checks.txt
+docs/gateway/evidence/external-review-blocker-removal-source-change/post-test-summary.txt
+docs/gateway/evidence/external-review-blocker-removal-source-change/refreshed-doc-key-checks.txt
+docs/gateway/evidence/external-review-blocker-removal-source-change/source-change-closure-summary.txt
+docs/gateway/evidence/external-review-blocker-removal-source-change/theo-external-review-blocker-removal-approval.txt
+docs/gateway/external-review-blocker-removal-source-change.md

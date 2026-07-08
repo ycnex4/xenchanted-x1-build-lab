@@ -1,0 +1,4 @@
+docs/gateway/current-execution-plan.md
+docs/gateway/current-runtime-state.md
+programs/xxxl-svm/src/deployment_status.rs
+programs/xxxl-svm/src/safety_invariants.rs

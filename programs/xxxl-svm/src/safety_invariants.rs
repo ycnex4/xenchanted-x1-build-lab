@@ -293,7 +293,7 @@ pub fn xxxl_deployment_blocker_evidence_consistency_report(
             && !mollusk_coverage_incomplete_blocker_present
             && production_guardian_set_unset_blocker_present
             && production_proof_log_unset_blocker_present
-            && external_review_incomplete_blocker_present,
+            && !external_review_incomplete_blocker_present,
     }
 }
 
@@ -540,7 +540,7 @@ mod tests {
         assert!(!report.mollusk_coverage_incomplete_blocker_present);
         assert!(report.production_guardian_set_unset_blocker_present);
         assert!(report.production_proof_log_unset_blocker_present);
-        assert!(report.external_review_incomplete_blocker_present);
+        assert!(!report.external_review_incomplete_blocker_present);
         assert!(report.evidence_consistent);
     }
 
@@ -566,7 +566,7 @@ mod tests {
         assert!(xxxl_runtime_deployment_report_has_blocker_code(
             "PRODUCTION_PROOF_LOG_UNSET"
         ));
-        assert!(xxxl_runtime_deployment_report_has_blocker_code(
+        assert!(!xxxl_runtime_deployment_report_has_blocker_code(
             "EXTERNAL_REVIEW_INCOMPLETE"
         ));
         assert!(!xxxl_runtime_deployment_report_has_blocker_code(
