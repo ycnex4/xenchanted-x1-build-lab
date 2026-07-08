@@ -115,7 +115,7 @@ Ground truth from current main/source state.
 
 3. Program ID binding:
    - status=PAUSED
-   - future action: resume program-id-binding-resolution-plan after this reconciliation package closes
+   - current action: continue with program-id-binding-resolution-plan from main debe302
 
 4. Local-only fixture lane:
    - status=NO-GO
