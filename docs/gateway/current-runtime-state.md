@@ -10,7 +10,7 @@ If source/docs/context disagree, source is the runtime ground truth, and this le
 
 ## Ledger Metadata
 
-- last_updated_commit: 65a8e83
+- reconciled_source_base_commit: 65a8e83
 - last_updated_package: gateway-state-reconciliation-1
 - ledger_author: Sergey Stepanenko / ChatGPT assisted
 - package_scope: DOCUMENTATION_ONLY

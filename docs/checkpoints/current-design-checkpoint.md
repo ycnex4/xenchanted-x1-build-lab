@@ -2,7 +2,7 @@
 
 Status: RECONCILED_BY_CANONICAL_RUNTIME_STATE_LEDGER
 Last updated package: gateway-state-reconciliation-1
-Last updated commit: 65a8e83
+Reconciled source base commit: 65a8e83
 Scope: DOCUMENTATION_ONLY
 
 ## Canonical State Source
