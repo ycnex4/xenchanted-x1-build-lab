@@ -148,24 +148,18 @@ A package is not closed unless it states:
 
 ## Next Immediate Step
 
-After this roadmap package is merged:
+Review docs/gateway/program-id-binding-resolution-plan.md and choose the next approved package.
 
-program-id-binding-resolution-plan
+Candidate next packages:
 
-Scope:
+- external-review-blocker-removal-source-change
+- program-id-binding-source-change
 
-PLANNING_ONLY
-
-Required base:
-
-current main after gateway-execution-roadmap-1
-
-Required behavior:
+Required behavior until a separate explicit approval is received:
 
 - use docs/gateway/current-runtime-state.md as canonical coordination state;
-- inventory actual source state, not assumed chat context;
-- include ExternalReviewIncomplete as ACTIVE;
-- keep PlaceholderProgramId ACTIVE;
+- keep ExternalReviewIncomplete as ACTIVE;
+- keep PlaceholderProgramId as ACTIVE;
 - do not change source;
 - do not remove blockers;
 - do not activate route;

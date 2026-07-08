@@ -11,10 +11,10 @@ If source/docs/context disagree, source is the runtime ground truth, and this le
 ## Ledger Metadata
 
 - reconciled_source_base_commit: 65a8e83
-- last_updated_package: gateway-state-reconciliation-1
+- last_updated_package: program-id-binding-resolution-plan
 - ledger_author: Sergey Stepanenko / ChatGPT assisted
 - package_scope: DOCUMENTATION_ONLY
-- next_required_action: continue with program-id-binding-resolution-plan
+- next_required_action: review program-id-binding-resolution-plan and choose next approved package
 
 ## Authorization Boundary
 
@@ -45,7 +45,7 @@ If source/docs/context disagree, source is the runtime ground truth, and this le
 | Lane | Status | Blocking Condition | Next Step |
 |:---|:---|:---|:---|
 | gateway-state-reconciliation | CLOSED | reconciliation package complete | no further action in this lane |
-| program-id-binding | ACTIVE | PlaceholderProgramId | continue with program-id-binding-resolution-plan |
+| program-id-binding | ACTIVE | PlaceholderProgramId | review program-id-binding-resolution-plan and choose next approved package |
 | guardian-proof-log | PAUSED | ProductionGuardianSetUnset, ProductionProofLogUnset | future instantiation package |
 | local-only-fixtures | NO-GO | local-only fixture emission not approved | separate future GO required |
 
@@ -115,7 +115,7 @@ Ground truth from current main/source state.
 
 3. Program ID binding:
    - status=PAUSED
-   - current action: continue with program-id-binding-resolution-plan from current main
+   - current action: review program-id-binding-resolution-plan and choose next approved package
 
 4. Local-only fixture lane:
    - status=NO-GO
@@ -130,13 +130,16 @@ Ground truth from current main/source state.
 - [x] no source blocker removed by this package
 - [x] no activation, deploy, route enablement, RPC mutation, or upgrade performed
 
-## Next Allowed Package
+## Next Required Decision
 
-After this package is closed:
+Review docs/gateway/program-id-binding-resolution-plan.md and choose the next approved package.
 
-program-id-binding-resolution-plan
+Candidate next packages:
 
-Scope remains PLANNING_ONLY.
+- external-review-blocker-removal-source-change
+- program-id-binding-source-change
+
+Neither is authorized by this ledger.
 
 ## Forbidden Next Actions Without Separate Explicit Approval
 

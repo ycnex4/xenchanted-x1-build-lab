@@ -1,0 +1,50 @@
+package=program-id-binding-resolution-plan
+scope=PLANNING_ONLY
+base_main=fda2c93
+branch=program-id-binding-resolution-plan
+
+=== canonical runtime state references ===
+17:- next_required_action: continue with program-id-binding-resolution-plan
+24:| blocker_removal | false |
+25:| activation | false |
+29:| route_enablement | false |
+31:| external_review_blocker_removal | false |
+48:| program-id-binding | ACTIVE | PlaceholderProgramId | continue with program-id-binding-resolution-plan |
+58:| PlaceholderProgramId | ACTIVE | N/A | ACTIVE |
+63:| ExternalReviewIncomplete | ACTIVE | review_approved_source_unchanged | ACTIVE |
+69:| ExternalReviewIncomplete | true | false | ACTIVE |
+79:| live_route_activation | disabled | programs/xxxl-svm/src/processor.rs::LIVE_ROUTE_ACTIVATION_FROM_PROCESS_INSTRUCTION_ENABLED |
+80:| spl_cpi_execution | disabled | programs/xxxl-svm/src/cpi.rs |
+98:- ExternalReviewIncomplete: working context said CLOSED, but source says ACTIVE.
+106:1. ExternalReviewIncomplete:
+108:   - source_blocker_removed=false
+109:   - effective_blocker_status=ACTIVE
+118:   - current action: continue with program-id-binding-resolution-plan from current main
+131:- [x] no activation, deploy, route enablement, RPC mutation, or upgrade performed
+137:program-id-binding-resolution-plan
+146:- ExternalReviewIncomplete blocker removal
+
+=== execution roadmap references ===
+28:- next runtime package: program-id-binding-resolution-plan
+29:- next runtime package scope: PLANNING_ONLY
+30:- ExternalReviewIncomplete effective status: ACTIVE
+44:- real Program ID binding has been selected, reviewed, and reflected in all Program-ID-dependent surfaces;
+45:- Program-ID-dependent PDA evidence has been regenerated and reviewed;
+47:- ExternalReviewIncomplete is removed only by a dedicated source-change package;
+56:Activation-ready does not mean activated.
+60:This roadmap does not authorize:
+64:- Program ID source binding;
+65:- ExternalReviewIncomplete blocker removal;
+82:6. Program ID binding source changes require a dedicated source-change package.
+96:| 2 | program-id-binding-resolution-plan | PLANNING_ONLY | Inventory Program ID binding surfaces, PDA dependencies, source/doc drift, and future source-change targets/non-targets | Theo/reviewer approval for next source-change path |
+97:| 3 | external-review-blocker-removal-source-change | SOURCE_CHANGE_NO_ACTIVATION | Remove ExternalReviewIncomplete only if explicitly approved; update tests and safety expectations | source blocker removed, no activation |
+98:| 4 | program-id-binding-source-change | SOURCE_CHANGE_NO_ACTIVATION | Replace placeholder Program ID model with reviewed real Program ID binding path | PlaceholderProgramId state updated only as approved |
+99:| 5 | program-id-dependent-pda-evidence | DOCUMENTATION_ONLY or LOCAL_ONLY_GENERATION | Regenerate/review Program-ID-dependent PDA evidence | evidence reviewed, no live action |
+100:| 6 | guardian-set-instantiation-plan | PLANNING_ONLY | Define production guardian set instantiation requirements | approval for source/config package if needed |
+101:| 7 | proof-log-instantiation-plan | PLANNING_ONLY | Define production proof log instantiation requirements | approval for source/config package if needed |
+102:| 8 | live-route-readiness-plan | PLANNING_ONLY | Review live route activation boundary without enabling route | approval for future route package only |
+103:| 9 | spl-cpi-readiness-plan | PLANNING_ONLY | Review SPL CPI execution boundary without enabling CPI | approval for future CPI package only |
+126:- Program ID source binding authorized
+153:program-id-binding-resolution-plan
+157:PLANNING_ONLY
+167:- include ExternalReviewIncomplete as ACTIVE;
