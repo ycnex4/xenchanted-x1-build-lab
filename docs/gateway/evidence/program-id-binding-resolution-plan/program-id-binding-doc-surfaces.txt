@@ -1,0 +1,177 @@
+package=program-id-binding-resolution-plan
+scope=PLANNING_ONLY
+purpose=focused_doc_inventory_for_program_id_binding_resolution_plan
+
+=== docs audited ===
+docs/gateway/current-runtime-state.md
+docs/gateway/current-execution-plan.md
+docs/gateway/external-review-packet-1.md
+docs/xxxl/xxxl-real-pda-derivation-fixture.md
+docs/xxxl/xxxl-x1-svm-port-scaffold.md
+docs/gateway/phase-41k6-b6-57-local-only-fixture-emission-go-form.md
+
+=== focused hits ===
+docs/gateway/current-execution-plan.md:20:- runtime_state_update_required: false
+docs/gateway/current-execution-plan.md:21:- reason: this roadmap defines order, goals, gates, and no-go boundaries; it does not reclassify runtime state
+docs/gateway/current-execution-plan.md:27:- active runtime lane: program-id-binding
+docs/gateway/current-execution-plan.md:28:- next runtime package: program-id-binding-resolution-plan
+docs/gateway/current-execution-plan.md:30:- ExternalReviewIncomplete effective status: ACTIVE
+docs/gateway/current-execution-plan.md:31:- source_blocker_removed=false
+docs/gateway/current-execution-plan.md:32:- activation_authorized=false
+docs/gateway/current-execution-plan.md:42:Reach an activation-ready gateway/runtime state where:
+docs/gateway/current-execution-plan.md:44:- real Program ID binding has been selected, reviewed, and reflected in all Program-ID-dependent surfaces;
+docs/gateway/current-execution-plan.md:45:- Program-ID-dependent PDA evidence has been regenerated and reviewed;
+docs/gateway/current-execution-plan.md:47:- ExternalReviewIncomplete is removed only by a dedicated source-change package;
+docs/gateway/current-execution-plan.md:51:- SPL CPI execution gate has been reviewed and only changes through a dedicated package;
+docs/gateway/current-execution-plan.md:52:- local-only and local-validator evidence exists before any live route/deploy/activation step;
+docs/gateway/current-execution-plan.md:53:- every state-changing package updates docs/gateway/current-runtime-state.md in the same closure commit;
+docs/gateway/current-execution-plan.md:54:- final activation/deploy/route/RPC mutation remains impossible without separate exact GO.
+docs/gateway/current-execution-plan.md:56:Activation-ready does not mean activated.
+docs/gateway/current-execution-plan.md:62:- source changes;
+docs/gateway/current-execution-plan.md:63:- blocker removal;
+docs/gateway/current-execution-plan.md:64:- Program ID source binding;
+docs/gateway/current-execution-plan.md:65:- ExternalReviewIncomplete blocker removal;
+docs/gateway/current-execution-plan.md:66:- live route enablement;
+docs/gateway/current-execution-plan.md:67:- SPL CPI execution enablement;
+docs/gateway/current-execution-plan.md:71:- local-only fixture emission;
+docs/gateway/current-execution-plan.md:73:- activation.
+docs/gateway/current-execution-plan.md:79:3. Review approval is not blocker removal.
+docs/gateway/current-execution-plan.md:81:5. Source blocker removal requires a dedicated source-change package.
+docs/gateway/current-execution-plan.md:82:6. Program ID binding source changes require a dedicated source-change package.
+docs/gateway/current-execution-plan.md:83:7. Activation, deployment, route enablement, SPL CPI enablement, and RPC mutation each require separate explicit approval.
+docs/gateway/current-execution-plan.md:84:8. Every future state-changing package must update docs/gateway/current-runtime-state.md in the same closure commit.
+docs/gateway/current-execution-plan.md:90:This is the intended order unless explicitly changed by a later approved roadmap update.
+docs/gateway/current-execution-plan.md:95:| 1 | gateway-execution-roadmap-1 | DOCUMENTATION_ONLY | Define final goal, package order, gates, and no-go boundaries | this roadmap merged |
+docs/gateway/current-execution-plan.md:96:| 2 | program-id-binding-resolution-plan | PLANNING_ONLY | Inventory Program ID binding surfaces, PDA dependencies, source/doc drift, and future source-change targets/non-targets | Theo/reviewer approval for next source-change path |
+docs/gateway/current-execution-plan.md:97:| 3 | external-review-blocker-removal-source-change | SOURCE_CHANGE_NO_ACTIVATION | Remove ExternalReviewIncomplete only if explicitly approved; update tests and safety expectations | source blocker removed, no activation |
+docs/gateway/current-execution-plan.md:98:| 4 | program-id-binding-source-change | SOURCE_CHANGE_NO_ACTIVATION | Replace placeholder Program ID model with reviewed real Program ID binding path | PlaceholderProgramId state updated only as approved |
+docs/gateway/current-execution-plan.md:99:| 5 | program-id-dependent-pda-evidence | DOCUMENTATION_ONLY or LOCAL_ONLY_GENERATION | Regenerate/review Program-ID-dependent PDA evidence | evidence reviewed, no live action |
+docs/gateway/current-execution-plan.md:102:| 8 | live-route-readiness-plan | PLANNING_ONLY | Review live route activation boundary without enabling route | approval for future route package only |
+docs/gateway/current-execution-plan.md:103:| 9 | spl-cpi-readiness-plan | PLANNING_ONLY | Review SPL CPI execution boundary without enabling CPI | approval for future CPI package only |
+docs/gateway/current-execution-plan.md:105:| 11 | deployment-readiness-review | REVIEW_ONLY | Confirm all blockers, evidence, tests, and docs are aligned | activation/deploy still blocked |
+docs/gateway/current-execution-plan.md:106:| 12 | activation-package | ACTIVATION_PACKAGE | Define exact activation/deploy/route/RPC actions | exact GO required |
+docs/gateway/current-execution-plan.md:107:| 13 | activation-execution | ACTIVATION_EXECUTION | Execute only the approved live actions | post-action evidence and ledger update |
+docs/gateway/current-execution-plan.md:120:- activation_authorized
+docs/gateway/current-execution-plan.md:126:- Program ID source binding authorized
+docs/gateway/current-execution-plan.md:127:- state_ledger_update_required
+docs/gateway/current-execution-plan.md:142:- whether source changed;
+docs/gateway/current-execution-plan.md:144:- whether docs/gateway/current-runtime-state.md was updated;
+docs/gateway/current-execution-plan.md:153:program-id-binding-resolution-plan
+docs/gateway/current-execution-plan.md:167:- include ExternalReviewIncomplete as ACTIVE;
+docs/gateway/current-execution-plan.md:168:- keep PlaceholderProgramId ACTIVE;
+docs/gateway/current-execution-plan.md:172:- do not enable SPL CPI;
+docs/gateway/current-execution-plan.md:176:## Roadmap Update Rule
+docs/gateway/current-execution-plan.md:178:This roadmap may be updated by future documentation-only packages.
+docs/gateway/current-execution-plan.md:180:Roadmap updates do not change runtime state unless docs/gateway/current-runtime-state.md is also updated in the same closure commit.
+docs/gateway/current-runtime-state.md:7:Every package that changes or reclassifies project state must update this file in the same closure commit, or explicitly state that no runtime-state update is required.
+docs/gateway/current-runtime-state.md:14:- last_updated_package: gateway-state-reconciliation-1
+docs/gateway/current-runtime-state.md:17:- next_required_action: continue with program-id-binding-resolution-plan
+docs/gateway/current-runtime-state.md:25:| activation | false |
+docs/gateway/current-runtime-state.md:37:3. Review approval is not the same as source blocker removal.
+docs/gateway/current-runtime-state.md:39:5. Future packages must update this file when they change or reclassify project state.
+docs/gateway/current-runtime-state.md:48:| program-id-binding | ACTIVE | PlaceholderProgramId | continue with program-id-binding-resolution-plan |
+docs/gateway/current-runtime-state.md:50:| local-only-fixtures | NO-GO | local-only fixture emission not approved | separate future GO required |
+docs/gateway/current-runtime-state.md:58:| PlaceholderProgramId | ACTIVE | N/A | ACTIVE |
+docs/gateway/current-runtime-state.md:63:| ExternalReviewIncomplete | ACTIVE | review_approved_source_unchanged | ACTIVE |
+docs/gateway/current-runtime-state.md:69:| ExternalReviewIncomplete | true | false | ACTIVE |
+docs/gateway/current-runtime-state.md:79:| live_route_activation | disabled | programs/xxxl-svm/src/processor.rs::LIVE_ROUTE_ACTIVATION_FROM_PROCESS_INSTRUCTION_ENABLED |
+docs/gateway/current-runtime-state.md:89:| docs/gateway/current-runtime-state.md | CANONICAL | keep updated in future state-changing package closures |
+docs/gateway/current-runtime-state.md:90:| docs/checkpoints/current-design-checkpoint.md | DIVERGENT | update during this reconciliation package |
+docs/gateway/current-runtime-state.md:94:| docs/gateway/phase-41k6-b6-57-local-only-fixture-emission-go-form.md | NO_GO_LANE | do not mix with Program ID binding |
+docs/gateway/current-runtime-state.md:96:## State Drift Discovered Before Program ID Binding Plan
+docs/gateway/current-runtime-state.md:98:- ExternalReviewIncomplete: working context said CLOSED, but source says ACTIVE.
+docs/gateway/current-runtime-state.md:101:- Program ID binding planning must inventory actual main/source state, not assumed context state.
+docs/gateway/current-runtime-state.md:102:- Program ID source-change must wait until this reconciliation package is closed.
+docs/gateway/current-runtime-state.md:106:1. ExternalReviewIncomplete:
+docs/gateway/current-runtime-state.md:108:   - source_blocker_removed=false
+docs/gateway/current-runtime-state.md:109:   - effective_blocker_status=ACTIVE
+docs/gateway/current-runtime-state.md:114:   - future action inside this package: update checkpoint to reference current-runtime-state.md as canonical
+docs/gateway/current-runtime-state.md:116:3. Program ID binding:
+docs/gateway/current-runtime-state.md:118:   - current action: continue with program-id-binding-resolution-plan from current main
+docs/gateway/current-runtime-state.md:121:   - status=NO-GO
+docs/gateway/current-runtime-state.md:124:## Required Before Next Source Change
+docs/gateway/current-runtime-state.md:127:- [x] current-design-checkpoint.md updated to stop acting as stale current truth
+docs/gateway/current-runtime-state.md:131:- [x] no activation, deploy, route enablement, RPC mutation, or upgrade performed
+docs/gateway/current-runtime-state.md:137:program-id-binding-resolution-plan
+docs/gateway/current-runtime-state.md:143:- source changes
+docs/gateway/current-runtime-state.md:144:- blocker removal
+docs/gateway/current-runtime-state.md:145:- Program ID source binding
+docs/gateway/current-runtime-state.md:146:- ExternalReviewIncomplete blocker removal
+docs/gateway/current-runtime-state.md:147:- live route enablement
+docs/gateway/current-runtime-state.md:148:- SPL CPI execution enablement
+docs/gateway/current-runtime-state.md:152:- local-only fixture emission
+docs/gateway/external-review-packet-1.md:10:activation_authorized=false
+docs/gateway/external-review-packet-1.md:21:activation_authorized=false
+docs/gateway/external-review-packet-1.md:28:previous_package=docs/gateway/external-review-activation-closure-planning-1.md
+docs/gateway/external-review-packet-1.md:29:previous_status=EXTERNAL_REVIEW_ACTIVATION_CLOSURE_PLANNING_1_COMPLETED_EXECUTION_BLOCKED
+docs/gateway/external-review-packet-1.md:35:activation_authorized=false
+docs/gateway/external-review-packet-1.md:69:activation_authorized=false
+docs/gateway/external-review-packet-1.md:76:review_pass_requires_2=runtime_status_is_SOURCE_BOUNDARY_READY_ACTIVATION_BLOCKED
+docs/gateway/external-review-packet-1.md:81:review_pass_requires_7=live_route_activation_mode_activation_package_gated
+docs/gateway/external-review-packet-1.md:83:review_pass_requires_9=spl_cpi_boundary_guarded_activation_package_gated
+docs/gateway/external-review-packet-1.md:90:review_pass_requires_16=no_rpc_mutation_no_deploy_no_upgrade_no_activation_execution
+docs/gateway/external-review-packet-1.md:92:review_blocked_if_1=deployment_status_deployable_true_without_activation_go
+docs/gateway/external-review-packet-1.md:98:review_blocked_if_7=any_rpc_mutation_or_activation_attempt_detected
+docs/gateway/external-review-packet-1.md:110:review_scope_4=live_route_activation_gate
+docs/gateway/external-review-packet-1.md:118:runtime_status=SOURCE_BOUNDARY_READY_ACTIVATION_BLOCKED
+docs/gateway/external-review-packet-1.md:123:live_route_activation_mode=ACTIVATION_PACKAGE_GATED
+docs/gateway/external-review-packet-1.md:125:spl_cpi_boundary_mode=GUARDED_ACTIVATION_PACKAGE_GATED
+docs/gateway/external-review-packet-1.md:129:remaining_blocker_1=PlaceholderProgramId
+docs/gateway/external-review-packet-1.md:134:remaining_blocker_6=ExternalReviewIncomplete
+docs/gateway/external-review-packet-1.md:147:activation_execution_completed=false
+docs/gateway/external-review-packet-1.md:173:remaining_blocker_1=PlaceholderProgramId
+docs/gateway/external-review-packet-1.md:178:remaining_blocker_6=ExternalReviewIncomplete_closing_by_review_verdict
+docs/gateway/external-review-packet-1.md:183:activation_authorized=false
+docs/gateway/external-review-packet-1.md:188:separate_exact_activation_go_required=true
+docs/gateway/phase-41k6-b6-57-local-only-fixture-emission-go-form.md:1:# Phase 41K.6 B6.57 — Local-only fixture emission GO form
+docs/gateway/phase-41k6-b6-57-local-only-fixture-emission-go-form.md:9:NO-GO
+docs/gateway/phase-41k6-b6-57-local-only-fixture-emission-go-form.md:25:It does not build, deploy, upgrade, sign, submit, spend SOL, initialize testnet accounts, configure SPL mint authority, perform SPL CPI minting, construct guardian packages, create descriptor files, or rehearse live submit flow.
+docs/gateway/phase-41k6-b6-57-local-only-fixture-emission-go-form.md:29:B6.56 defined the readiness decision map for future local-only fixture emission.
+docs/gateway/phase-41k6-b6-57-local-only-fixture-emission-go-form.md:41:Can the project define the exact future approval form for local-only fixture emission?
+docs/gateway/phase-41k6-b6-57-local-only-fixture-emission-go-form.md:49:Does B6.57 approve actual fixture emission?
+docs/gateway/phase-41k6-b6-57-local-only-fixture-emission-go-form.md:57:NO-GO.
+docs/gateway/phase-41k6-b6-57-local-only-fixture-emission-go-form.md:72:- explicit non-approval of validator, testnet, signing, guardian package construction, SPL mint authority setup, SPL CPI minting, upgrade, state initialization, and submit
+docs/gateway/phase-41k6-b6-57-local-only-fixture-emission-go-form.md:85:- perform SPL CPI minting
+docs/gateway/phase-41k6-b6-57-local-only-fixture-emission-go-form.md:94:The future explicit approval phrase for actual local-only fixture emission must be:
+docs/gateway/phase-41k6-b6-57-local-only-fixture-emission-go-form.md:96:I approve B6.58 actual local-only fixture file emission only, scoped to tmp/local-validator-fixtures/phase-41k6-b6-local-only, with no local-validator execution, no testnet action, no signing, no guardian package construction, no descriptor file creation, no SPL mint authority setup, no SPL CPI minting, no upgrade, no state initialization, and no submit.
+docs/gateway/phase-41k6-b6-57-local-only-fixture-emission-go-form.md:98:Without that exact approval meaning, actual fixture emission remains forbidden.
+docs/gateway/phase-41k6-b6-57-local-only-fixture-emission-go-form.md:220:- SPL CPI minting did not happen
+docs/gateway/phase-41k6-b6-57-local-only-fixture-emission-go-form.md:300:B6.57 does not approve SPL CPI minting.
+docs/gateway/phase-41k6-b6-57-local-only-fixture-emission-go-form.md:310:NO-GO.
+docs/gateway/phase-41k6-b6-57-local-only-fixture-emission-go-form.md:328:B6.57 defines the future fixture emission approval form only. It does not emit fixtures and does not execute a local validator dry-run.
+docs/gateway/phase-41k6-b6-57-local-only-fixture-emission-go-form.md:344:B6.57 does not configure SPL mint authority and does not approve SPL CPI minting.
+docs/gateway/phase-41k6-b6-57-local-only-fixture-emission-go-form.md:377:NO-GO.
+docs/xxxl/xxxl-real-pda-derivation-fixture.md:1:# XXXL Real PDA Derivation Fixture
+docs/xxxl/xxxl-real-pda-derivation-fixture.md:5:This stage adds the first real SVM PDA derivation fixture for XXXL runtime.
+docs/xxxl/xxxl-real-pda-derivation-fixture.md:9:The goal is to replace the model-only PDA boundary with a real Rust/SVM fixture using:
+docs/xxxl/xxxl-real-pda-derivation-fixture.md:11:- `Pubkey::find_program_address`
+docs/xxxl/xxxl-real-pda-derivation-fixture.md:17:- `REAL_PDA_DERIVATION_FIXTURE_BOUNDARY_ONLY`
+docs/xxxl/xxxl-real-pda-derivation-fixture.md:23:Gateway mint authority PDA seeds remain:
+docs/xxxl/xxxl-real-pda-derivation-fixture.md:37:- `programs/xxxl-svm/src/pda.rs`
+docs/xxxl/xxxl-real-pda-derivation-fixture.md:41:- `cargo test --manifest-path programs/xxxl-svm/Cargo.toml pda -- --nocapture`
+docs/xxxl/xxxl-real-pda-derivation-fixture.md:47:- real `Pubkey::find_program_address`
+docs/xxxl/xxxl-real-pda-derivation-fixture.md:48:- deterministic derivation for the same Program ID
+docs/xxxl/xxxl-real-pda-derivation-fixture.md:49:- PDA changes when Program ID changes
+docs/xxxl/xxxl-real-pda-derivation-fixture.md:50:- PDA is not equal to fixture Program ID
+docs/xxxl/xxxl-real-pda-derivation-fixture.md:52:## Program ID boundary
+docs/xxxl/xxxl-real-pda-derivation-fixture.md:54:The live Program ID is still not known.
+docs/xxxl/xxxl-real-pda-derivation-fixture.md:58:- placeholder Program ID is not accepted as live
+docs/xxxl/xxxl-real-pda-derivation-fixture.md:59:- model-only PDA is not accepted as live
+docs/xxxl/xxxl-real-pda-derivation-fixture.md:60:- deploy-time Program ID remains required
+docs/xxxl/xxxl-real-pda-derivation-fixture.md:61:- live PDA output depends on the final Program ID
+docs/xxxl/xxxl-real-pda-derivation-fixture.md:65:This PDA is required for the future SPL Token `mint_to` CPI.
+docs/xxxl/xxxl-real-pda-derivation-fixture.md:71:- PDA signer through `invoke_signed`
+docs/xxxl/xxxl-real-pda-derivation-fixture.md:72:- real bump from `find_program_address`
+docs/xxxl/xxxl-real-pda-derivation-fixture.md:84:It does not finalize the live Program ID.
+docs/xxxl/xxxl-x1-svm-port-scaffold.md:31:- `programs/xxxl-svm/src/pda.rs`
+docs/xxxl/xxxl-x1-svm-port-scaffold.md:42:- no route activation
+docs/xxxl/xxxl-x1-svm-port-scaffold.md:43:- no Avalanche activation
+docs/xxxl/xxxl-x1-svm-port-scaffold.md:47:## Program ID boundary
+docs/xxxl/xxxl-x1-svm-port-scaffold.md:49:The Program ID remains a placeholder boundary.
+docs/xxxl/xxxl-x1-svm-port-scaffold.md:51:A real Program ID must be introduced in a later deploy-time decision stage.
+docs/xxxl/xxxl-x1-svm-port-scaffold.md:53:## PDA fixture plan
+docs/xxxl/xxxl-x1-svm-port-scaffold.md:55:Gateway mint authority PDA seeds remain fixed:
+docs/xxxl/xxxl-x1-svm-port-scaffold.md:59:A later fixture must use real SVM `find_program_address`.
+docs/xxxl/xxxl-x1-svm-port-scaffold.md:61:The model-only PDA must not be accepted as live PDA.
+docs/xxxl/xxxl-x1-svm-port-scaffold.md:79:- PDA signer through `invoke_signed`
+docs/xxxl/xxxl-x1-svm-port-scaffold.md:99:It does not complete real PDA fixture.
