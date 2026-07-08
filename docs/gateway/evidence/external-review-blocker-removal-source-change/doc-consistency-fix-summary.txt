@@ -1,0 +1,11 @@
+package=external-review-blocker-removal-source-change
+doc_consistency_fix_performed=true
+
+fixed_current_runtime_state_stale_source_active_wording=true
+fixed_current_runtime_state_stale_tests_active_wording=true
+fixed_program_id_binding_next_candidate_wording=true
+fixed_execution_plan_external_review_blocker_removal_wording=true
+
+source_changed_by_this_fix=false
+tests_need_rerun=false
+prior_cargo_test_exit=0

@@ -1,0 +1,12 @@
+docs/gateway/current-runtime-state.md:17:- next_required_action: continue with program-id-binding-source-change approval request
+docs/gateway/current-runtime-state.md:48:| program-id-binding | ACTIVE | PlaceholderProgramId | continue with program-id-binding-source-change approval request |
+docs/gateway/current-runtime-state.md:63:| ExternalReviewIncomplete | REMOVED_FROM_ACTIVE_SOURCE_BLOCKERS | review_approved_source_changed | REMOVED |
+docs/gateway/current-runtime-state.md:98:- ExternalReviewIncomplete drift resolved by external-review-blocker-removal-source-change: source active blocker removed and tests now expect it inactive.
+docs/gateway/current-runtime-state.md:140:program-id-binding-source-change is the next approval-request candidate.
+docs/gateway/current-runtime-state.md:149:- additional blocker removal beyond ExternalReviewIncomplete
+docs/gateway/current-execution-plan.md:30:- ExternalReviewIncomplete effective status: REMOVED
+docs/gateway/current-execution-plan.md:47:- ExternalReviewIncomplete was removed only by the approved dedicated source-change package;
+docs/gateway/current-execution-plan.md:65:- additional blocker removal beyond ExternalReviewIncomplete;
+docs/gateway/current-execution-plan.md:98:| 4 | program-id-binding-source-change | SOURCE_CHANGE_NO_ACTIVATION | Replace placeholder Program ID model with reviewed real Program ID binding path | PlaceholderProgramId state updated only as approved |
+docs/gateway/current-execution-plan.md:153:Next package for approval request:
+docs/gateway/current-execution-plan.md:155:- program-id-binding-source-change

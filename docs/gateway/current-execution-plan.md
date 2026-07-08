@@ -27,7 +27,7 @@ The canonical runtime-state ledger currently identifies:
 - active runtime lane: program-id-binding
 - next runtime package: program-id-binding-resolution-plan
 - next runtime package scope: PLANNING_ONLY
-- ExternalReviewIncomplete effective status: ACTIVE
+- ExternalReviewIncomplete effective status: REMOVED
 - source_blocker_removed=false
 - activation_authorized=false
 - deploy_authorized=false
@@ -44,7 +44,7 @@ Reach an activation-ready gateway/runtime state where:
 - real Program ID binding has been selected, reviewed, and reflected in all Program-ID-dependent surfaces;
 - Program-ID-dependent PDA evidence has been regenerated and reviewed;
 - source blocker state is explicit, current, and consistent with tests;
-- ExternalReviewIncomplete is removed only by a dedicated source-change package;
+- ExternalReviewIncomplete was removed only by the approved dedicated source-change package;
 - guardian set policy is not only defined but instantiated through an approved package;
 - proof log policy is not only defined but instantiated through an approved package;
 - live route gate has been reviewed and only changes through a dedicated package;
@@ -62,7 +62,7 @@ This roadmap does not authorize:
 - source changes;
 - blocker removal;
 - Program ID source binding;
-- ExternalReviewIncomplete blocker removal;
+- additional blocker removal beyond ExternalReviewIncomplete;
 - live route enablement;
 - SPL CPI execution enablement;
 - deployment;
@@ -150,16 +150,14 @@ A package is not closed unless it states:
 
 Review docs/gateway/program-id-binding-resolution-plan.md and choose the next approved package.
 
-Selected next package for approval request:
+Next package for approval request:
 
-- external-review-blocker-removal-source-change
-
-program-id-binding-source-change remains a later candidate.
+- program-id-binding-source-change
 
 Required behavior until a separate explicit approval is received:
 
 - use docs/gateway/current-runtime-state.md as canonical coordination state;
-- keep ExternalReviewIncomplete as ACTIVE;
+- keep ExternalReviewIncomplete removed from active source blockers;
 - keep PlaceholderProgramId as ACTIVE;
 - do not change source;
 - do not remove blockers;

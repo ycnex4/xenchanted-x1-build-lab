@@ -1,0 +1,50 @@
+programs/xxxl-svm/src/deployment_status.rs:15:    ExternalReviewIncomplete,
+programs/xxxl-svm/src/deployment_status.rs:44:pub const XXXL_RUNTIME_DEPLOYMENT_BLOCKERS: [XxxlRuntimeDeploymentBlocker; 5] = [
+programs/xxxl-svm/src/deployment_status.rs:52:pub const XXXL_RUNTIME_DEPLOYMENT_BLOCKER_REPORTS: [XxxlRuntimeDeploymentBlockerReport; 5] = [
+programs/xxxl-svm/src/deployment_status.rs:129:            XxxlRuntimeDeploymentBlocker::ExternalReviewIncomplete => "EXTERNAL_REVIEW_INCOMPLETE",
+programs/xxxl-svm/src/deployment_status.rs:156:            XxxlRuntimeDeploymentBlocker::ExternalReviewIncomplete => {
+programs/xxxl-svm/src/deployment_status.rs:185:            XxxlRuntimeDeploymentBlocker::ExternalReviewIncomplete => {
+programs/xxxl-svm/src/deployment_status.rs:297:        assert_eq!(blockers.len(), 5);
+programs/xxxl-svm/src/deployment_status.rs:305:        assert!(!blockers.contains(&XxxlRuntimeDeploymentBlocker::ExternalReviewIncomplete));
+programs/xxxl-svm/src/deployment_status.rs:358:        assert_eq!(reports.len(), blockers.len());
+programs/xxxl-svm/src/deployment_status.rs:446:            XxxlRuntimeDeploymentBlocker::ExternalReviewIncomplete,
+programs/xxxl-svm/src/deployment_status.rs:450:            XxxlRuntimeDeploymentBlocker::ExternalReviewIncomplete.code(),
+programs/xxxl-svm/src/deployment_status.rs:451:            "EXTERNAL_REVIEW_INCOMPLETE"
+programs/xxxl-svm/src/deployment_status.rs:453:        assert!(XxxlRuntimeDeploymentBlocker::ExternalReviewIncomplete
+programs/xxxl-svm/src/deployment_status.rs:456:        assert!(XxxlRuntimeDeploymentBlocker::ExternalReviewIncomplete
+programs/xxxl-svm/src/deployment_status.rs:460:            "EXTERNAL_REVIEW_INCOMPLETE"
+programs/xxxl-svm/src/deployment_status.rs:508:        assert_eq!(report.blockers.len(), 5);
+programs/xxxl-svm/src/deployment_status.rs:543:                assert_eq!(report.blockers.len(), 5);
+programs/xxxl-svm/src/deployment_status.rs:563:                assert_eq!(blocked_report.blockers.len(), report.blockers.len());
+programs/xxxl-svm/src/safety_invariants.rs:247:    pub external_review_incomplete_blocker_present: bool,
+programs/xxxl-svm/src/safety_invariants.rs:274:    let external_review_incomplete_blocker_present = xxxl_runtime_deployment_report_has_blocker(
+programs/xxxl-svm/src/safety_invariants.rs:275:        XxxlRuntimeDeploymentBlocker::ExternalReviewIncomplete,
+programs/xxxl-svm/src/safety_invariants.rs:287:        external_review_incomplete_blocker_present,
+programs/xxxl-svm/src/safety_invariants.rs:296:            && !external_review_incomplete_blocker_present,
+programs/xxxl-svm/src/safety_invariants.rs:341:        XxxlRuntimeDeploymentBlocker::ExternalReviewIncomplete,
+programs/xxxl-svm/src/safety_invariants.rs:543:        assert!(!report.external_review_incomplete_blocker_present);
+programs/xxxl-svm/src/safety_invariants.rs:570:            "EXTERNAL_REVIEW_INCOMPLETE"
+docs/gateway/current-runtime-state.md:17:- next_required_action: continue with program-id-binding-source-change approval request
+docs/gateway/current-runtime-state.md:48:| program-id-binding | ACTIVE | PlaceholderProgramId | continue with program-id-binding-source-change approval request |
+docs/gateway/current-runtime-state.md:63:| ExternalReviewIncomplete | REMOVED_FROM_ACTIVE_SOURCE_BLOCKERS | review_approved_source_changed | REMOVED |
+docs/gateway/current-runtime-state.md:69:| ExternalReviewIncomplete | true | true | REMOVED |
+docs/gateway/current-runtime-state.md:98:- ExternalReviewIncomplete: working context said CLOSED, but source says ACTIVE.
+docs/gateway/current-runtime-state.md:99:- Tests still expect EXTERNAL_REVIEW_INCOMPLETE as active.
+docs/gateway/current-runtime-state.md:106:1. ExternalReviewIncomplete:
+docs/gateway/current-runtime-state.md:141:program-id-binding-source-change remains a later candidate.
+docs/gateway/current-runtime-state.md:150:- ExternalReviewIncomplete blocker removal
+docs/gateway/current-execution-plan.md:30:- ExternalReviewIncomplete effective status: REMOVED
+docs/gateway/current-execution-plan.md:47:- ExternalReviewIncomplete is removed only by a dedicated source-change package;
+docs/gateway/current-execution-plan.md:65:- ExternalReviewIncomplete blocker removal;
+docs/gateway/current-execution-plan.md:97:| 3 | external-review-blocker-removal-source-change | SOURCE_CHANGE_NO_ACTIVATION | Remove ExternalReviewIncomplete only if explicitly approved; update tests and safety expectations | source blocker removed, no activation |
+docs/gateway/current-execution-plan.md:98:| 4 | program-id-binding-source-change | SOURCE_CHANGE_NO_ACTIVATION | Replace placeholder Program ID model with reviewed real Program ID binding path | PlaceholderProgramId state updated only as approved |
+docs/gateway/current-execution-plan.md:153:Next package for approval request:
+docs/gateway/current-execution-plan.md:155:- program-id-binding-source-change
+docs/gateway/current-execution-plan.md:160:- keep ExternalReviewIncomplete removed from active source blockers;
+docs/gateway/external-review-blocker-removal-source-change.md:7:This package removes `ExternalReviewIncomplete` from the active source blocker list.
+docs/gateway/external-review-blocker-removal-source-change.md:17:- remove `ExternalReviewIncomplete` from active deployment blockers;
+docs/gateway/external-review-blocker-removal-source-change.md:19:- keep `ExternalReviewIncomplete` as a historical enum/code/resolution value;
+docs/gateway/external-review-blocker-removal-source-change.md:35:Removing `ExternalReviewIncomplete` reflects only the already-completed external review of the reviewed source state.
+docs/gateway/external-review-blocker-removal-source-change.md:43:- ExternalReviewIncomplete_source_blocker_removed=true
+docs/gateway/external-review-blocker-removal-source-change.md:44:- ExternalReviewIncomplete_effective_status=REMOVED
+docs/gateway/external-review-blocker-removal-source-change.md:62:program-id-binding-source-change

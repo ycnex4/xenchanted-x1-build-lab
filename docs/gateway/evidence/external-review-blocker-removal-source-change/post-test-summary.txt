@@ -1,0 +1,28 @@
+package=external-review-blocker-removal-source-change
+scope=SOURCE_CHANGE_NO_ACTIVATION
+
+cargo_test_exit=0
+cargo_test_log=docs/gateway/evidence/external-review-blocker-removal-source-change/cargo-test-after-external-review-blocker-removal.txt
+warnings_count=88
+errors_count=0
+failures_count=0
+
+focused_grep_log=docs/gateway/evidence/external-review-blocker-removal-source-change/focused-grep-after-patch.txt
+focused_grep_hits=2
+focused_grep_hits_are_expected_negative_assertions=true
+
+expected_negative_assertion_1=deployment_status asserts ExternalReviewIncomplete is not contained in active blockers
+expected_negative_assertion_2=safety_invariants asserts external_review_incomplete_blocker_present is false
+
+source_change_result=ExternalReviewIncomplete removed from active source blockers
+historical_enum_code_resolution_preserved=true
+
+runtime_deployable_expected=false
+predeploy_gate_expected=blocked
+
+activation_authorized=false
+deploy_authorized=false
+route_enablement_authorized=false
+spl_cpi_enablement_authorized=false
+program_id_binding_source_change_authorized=false
+rpc_mutation_authorized=false

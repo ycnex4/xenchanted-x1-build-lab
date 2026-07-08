@@ -11,10 +11,10 @@ If source/docs/context disagree, source is the runtime ground truth, and this le
 ## Ledger Metadata
 
 - reconciled_source_base_commit: 65a8e83
-- last_updated_package: program-id-binding-resolution-plan
+- last_updated_package: external-review-blocker-removal-source-change
 - ledger_author: Sergey Stepanenko / ChatGPT assisted
 - package_scope: DOCUMENTATION_ONLY
-- next_required_action: request approval for external-review-blocker-removal-source-change with review-integrity condition
+- next_required_action: continue with program-id-binding-source-change approval request
 
 ## Authorization Boundary
 
@@ -45,7 +45,7 @@ If source/docs/context disagree, source is the runtime ground truth, and this le
 | Lane | Status | Blocking Condition | Next Step |
 |:---|:---|:---|:---|
 | gateway-state-reconciliation | CLOSED | reconciliation package complete | no further action in this lane |
-| program-id-binding | ACTIVE | PlaceholderProgramId | request approval for external-review-blocker-removal-source-change with review-integrity condition |
+| program-id-binding | ACTIVE | PlaceholderProgramId | continue with program-id-binding-source-change approval request |
 | guardian-proof-log | PAUSED | ProductionGuardianSetUnset, ProductionProofLogUnset | future instantiation package |
 | local-only-fixtures | NO-GO | local-only fixture emission not approved | separate future GO required |
 
@@ -60,13 +60,13 @@ Ground truth from current main/source state.
 | SplCpiExecutionDisabled | ACTIVE | N/A | ACTIVE |
 | ProductionGuardianSetUnset | ACTIVE | policy_defined_not_instantiated | ACTIVE |
 | ProductionProofLogUnset | ACTIVE | policy_defined_not_instantiated | ACTIVE |
-| ExternalReviewIncomplete | ACTIVE | review_approved_source_unchanged | ACTIVE |
+| ExternalReviewIncomplete | REMOVED_FROM_ACTIVE_SOURCE_BLOCKERS | review_approved_source_changed | REMOVED |
 
 ## Review Approval vs Source Removal
 
 | Item | Review Approved | Source Blocker Removed | Effective Runtime Status |
 |:---|:---:|:---:|:---|
-| ExternalReviewIncomplete | true | false | ACTIVE |
+| ExternalReviewIncomplete | true | true | REMOVED |
 | ProductionGuardianSetUnset | policy_defined | false | ACTIVE |
 | ProductionProofLogUnset | policy_defined | false | ACTIVE |
 
@@ -95,8 +95,7 @@ Ground truth from current main/source state.
 
 ## State Drift Discovered Before Program ID Binding Plan
 
-- ExternalReviewIncomplete: working context said CLOSED, but source says ACTIVE.
-- Tests still expect EXTERNAL_REVIEW_INCOMPLETE as active.
+- ExternalReviewIncomplete drift resolved by external-review-blocker-removal-source-change: source active blocker removed and tests now expect it inactive.
 - current-design-checkpoint.md is stale relative to later B6.55/B6.56/B6.57 documents and guardian/proof-log policy packages.
 - Program ID binding planning must inventory actual main/source state, not assumed context state.
 - Program ID source-change must wait until this reconciliation package is closed.
@@ -105,9 +104,9 @@ Ground truth from current main/source state.
 
 1. ExternalReviewIncomplete:
    - review_approved=true
-   - source_blocker_removed=false
-   - effective_blocker_status=ACTIVE
-   - future action: external-review-blocker-removal-source-change
+   - source_blocker_removed=true
+   - effective_blocker_status=REMOVED
+   - review_integrity_condition=removal_does_not_preapprove_subsequent_program_id_binding
 
 2. current-design-checkpoint.md:
    - status=DIVERGENT
@@ -138,7 +137,7 @@ Selected next package for approval request:
 
 - external-review-blocker-removal-source-change
 
-program-id-binding-source-change remains a later candidate.
+program-id-binding-source-change is the next approval-request candidate.
 
 Neither is authorized by this ledger.
 
@@ -147,7 +146,7 @@ Neither is authorized by this ledger.
 - source changes
 - blocker removal
 - Program ID source binding
-- ExternalReviewIncomplete blocker removal
+- additional blocker removal beyond ExternalReviewIncomplete
 - live route enablement
 - SPL CPI execution enablement
 - deployment

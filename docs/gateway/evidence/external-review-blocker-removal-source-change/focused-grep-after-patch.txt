@@ -1,0 +1,2 @@
+programs/xxxl-svm/src/deployment_status.rs:305:        assert!(!blockers.contains(&XxxlRuntimeDeploymentBlocker::ExternalReviewIncomplete));
+programs/xxxl-svm/src/safety_invariants.rs:543:        assert!(!report.external_review_incomplete_blocker_present);
