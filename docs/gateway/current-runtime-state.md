@@ -14,7 +14,7 @@ If source/docs/context disagree, source is the runtime ground truth, and this le
 - last_updated_package: program-id-binding-resolution-plan
 - ledger_author: Sergey Stepanenko / ChatGPT assisted
 - package_scope: DOCUMENTATION_ONLY
-- next_required_action: review program-id-binding-resolution-plan and choose next approved package
+- next_required_action: request approval for external-review-blocker-removal-source-change with review-integrity condition
 
 ## Authorization Boundary
 
@@ -45,7 +45,7 @@ If source/docs/context disagree, source is the runtime ground truth, and this le
 | Lane | Status | Blocking Condition | Next Step |
 |:---|:---|:---|:---|
 | gateway-state-reconciliation | CLOSED | reconciliation package complete | no further action in this lane |
-| program-id-binding | ACTIVE | PlaceholderProgramId | review program-id-binding-resolution-plan and choose next approved package |
+| program-id-binding | ACTIVE | PlaceholderProgramId | request approval for external-review-blocker-removal-source-change with review-integrity condition |
 | guardian-proof-log | PAUSED | ProductionGuardianSetUnset, ProductionProofLogUnset | future instantiation package |
 | local-only-fixtures | NO-GO | local-only fixture emission not approved | separate future GO required |
 
@@ -134,10 +134,11 @@ Ground truth from current main/source state.
 
 Review docs/gateway/program-id-binding-resolution-plan.md and choose the next approved package.
 
-Candidate next packages:
+Selected next package for approval request:
 
 - external-review-blocker-removal-source-change
-- program-id-binding-source-change
+
+program-id-binding-source-change remains a later candidate.
 
 Neither is authorized by this ledger.
 

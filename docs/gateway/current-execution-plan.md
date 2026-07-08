@@ -150,10 +150,11 @@ A package is not closed unless it states:
 
 Review docs/gateway/program-id-binding-resolution-plan.md and choose the next approved package.
 
-Candidate next packages:
+Selected next package for approval request:
 
 - external-review-blocker-removal-source-change
-- program-id-binding-source-change
+
+program-id-binding-source-change remains a later candidate.
 
 Required behavior until a separate explicit approval is received:
 

@@ -244,6 +244,14 @@ Reason:
 
 Cleaning ExternalReviewIncomplete first reduces ambiguity before Program ID source changes.
 
+Review-integrity condition:
+
+Removing ExternalReviewIncomplete reflects only the already-completed external review of the reviewed source state.
+
+It does not pre-approve the subsequent Program ID binding.
+
+The final deployment-readiness review must re-gate the complete post-Program-ID-binding state as an external-review equivalent, so external review complete is never decoupled from the actually deployed source.
+
 ## Required Reviewer Questions
 
 Before moving to any source-change package, reviewers should answer:
