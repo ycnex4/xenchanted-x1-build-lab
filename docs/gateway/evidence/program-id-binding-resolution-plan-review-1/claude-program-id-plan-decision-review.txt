@@ -1,0 +1,26 @@
+auditor=Claude
+review_type=focused_decision_review
+reviewed_package=program-id-binding-resolution-plan
+reviewed_main=9cfa050
+verdict=APPROVE_PROGRAM_ID_BINDING_RESOLUTION_PLAN_AND_DO_EXTERNAL_REVIEW_BLOCKER_REMOVAL_FIRST
+
+planning_plan_safe_and_complete=true
+docs_only_confirmed=true
+source_change_detected=false
+blockers_preserved=true
+source_change_authorized=false
+blocker_removal_authorized=false
+activation_authorized=false
+deploy_authorized=false
+route_enablement_authorized=false
+spl_cpi_enablement_authorized=false
+rpc_mutation_authorized=false
+
+recommended_next_package=external-review-blocker-removal-source-change
+recommended_next_package_scope=SOURCE_CHANGE_NO_ACTIVATION
+
+review_integrity_condition_required_for_package_A=true
+condition_summary=Removing ExternalReviewIncomplete reflects only the already-completed external review of the reviewed source state and does not pre-approve subsequent Program ID binding. Final deployment-readiness review must re-gate the complete post-Program-ID-binding state as an external-review equivalent.
+
+condition_blocks_current_plan=false
+condition_blocks_closure_of_package_A=true
