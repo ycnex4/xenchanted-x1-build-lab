@@ -96,7 +96,7 @@ This is the intended order unless explicitly changed by a later approved roadmap
 | 2 | program-id-binding-resolution-plan | PLANNING_ONLY | Inventory Program ID binding surfaces, PDA dependencies, source/doc drift, and future source-change targets/non-targets | Theo/reviewer approval for next source-change path |
 | 3 | external-review-blocker-removal-source-change | SOURCE_CHANGE_NO_ACTIVATION | Remove ExternalReviewIncomplete only if explicitly approved; update tests and safety expectations | source blocker removed, no activation |
 | 4 | program-id-binding-source-change | SOURCE_CHANGE_NO_ACTIVATION | Replace placeholder Program ID model with reviewed real Program ID binding path | PlaceholderProgramId state updated only as approved |
-| 5 | program-id-dependent-pda-evidence | DOCUMENTATION_ONLY or LOCAL_ONLY_GENERATION | Regenerate/review Program-ID-dependent PDA evidence | evidence reviewed, no live action |
+| 5 | program-id-dependent-pda-evidence | PURE_EVIDENCE_DOCUMENTATION_NO_CODE_MUTATION_NO_ACTIVATION | Record/review Program-ID-dependent PDA evidence | COMPLETE; evidence reviewed, no live action |
 | 6 | guardian-set-instantiation-plan | PLANNING_ONLY | Define production guardian set instantiation requirements | approval for source/config package if needed |
 | 7 | proof-log-instantiation-plan | PLANNING_ONLY | Define production proof log instantiation requirements | approval for source/config package if needed |
 | 8 | live-route-readiness-plan | PLANNING_ONLY | Review live route activation boundary without enabling route | approval for future route package only |
@@ -152,7 +152,7 @@ Review docs/gateway/program-id-binding-resolution-plan.md and choose the next ap
 
 Next package for approval request:
 
-- program-id-dependent-pda-evidence
+- live-route-spl-cpi-activation-source-plan
 
 Required behavior until a separate explicit approval is received:
 
@@ -171,3 +171,19 @@ Required behavior until a separate explicit approval is received:
 This roadmap may be updated by future documentation-only packages.
 
 Roadmap updates do not change runtime state unless docs/gateway/current-runtime-state.md is also updated in the same closure commit.
+
+## Completed: program-id-dependent-pda-evidence
+
+Status: COMPLETE.
+
+This package recorded Program-ID-dependent PDA evidence for the already-bound Program ID:
+
+- Program ID: `D7AQmZNtFFFoJbducz93atteeSZhw3jq6RmsqBvaf1my`
+- gateway_mint_authority PDA: `BLVsQPYXnDsTmfMW9wrXHBFpcmexM47BcAvVcibRtRYG`
+- gateway_mint_authority bump: `252`
+
+No source-code mutation, activation, deploy, upgrade, RPC mutation, route enablement, SPL CPI enablement, guardian set instantiation, proof log instantiation, local-only fixture emission, or cleanup was authorized or performed.
+
+Next package for approval request:
+
+- live-route-spl-cpi-activation-source-plan

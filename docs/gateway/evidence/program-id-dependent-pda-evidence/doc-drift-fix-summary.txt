@@ -1,0 +1,13 @@
+package=program-id-dependent-pda-evidence
+fix_type=doc_state_alignment
+
+fixed_runtime_state_program_id_binding_row=true
+fixed_execution_plan_pda_row=true
+
+reason=after PDA evidence closure, stale wording still pointed to program-id-dependent-pda-evidence as next action in one table row
+
+source_code_mutation_performed=false
+activation_performed=false
+deploy_performed=false
+rpc_mutation_performed=false
+next_required_decision=live-route-spl-cpi-activation-source-plan_approval_request

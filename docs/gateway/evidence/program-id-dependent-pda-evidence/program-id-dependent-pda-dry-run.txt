@@ -1,0 +1,352 @@
+   Compiling xxxl-svm v0.1.0 (/mnt/c/Users/user/xenchanted-x1-build-lab/programs/xxxl-svm)
+warning: unused imports: `ProcessedEventAccountView` and `RecipientBalanceAccountView`
+  --> src/execution_plan.rs:16:39
+   |
+16 |     state::{credit_recipient_balance, ProcessedEventAccountView, RecipientBalanceAccountView},
+   |                                       ^^^^^^^^^^^^^^^^^^^^^^^^^  ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+   |
+   = note: `#[warn(unused_imports)]` (part of `#[warn(unused)]`) on by default
+
+warning: unused import: `clock::Clock`
+  --> src/processor.rs:12:32
+   |
+12 |     account_info::AccountInfo, clock::Clock, entrypoint::ProgramResult, msg,
+   |                                ^^^^^^^^^^^^
+
+warning: unused imports: `raw_payload_decoder_report` and `read_only_verifier_boundary`
+ --> src/verifier/canonical_payload.rs:5:34
+  |
+5 |     decode_guardian_payload_raw, raw_payload_decoder_report, read_only_verifier_boundary,
+  |                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^  ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: type `Phase41F_1CheckedByteExtractionStatus` should have an upper camel case name
+  --> src/verifier/checked_ed25519_byte_extraction_boundary.rs:18:10
+   |
+18 | pub enum Phase41F_1CheckedByteExtractionStatus {
+   |          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ help: convert the identifier to upper camel case: `Phase41f1checkedByteExtractionStatus`
+   |
+   = note: `#[warn(non_camel_case_types)]` (part of `#[warn(nonstandard_style)]`) on by default
+
+warning: type `Phase41F_1ExtractedEd25519ByteSlices` should have an upper camel case name
+  --> src/verifier/checked_ed25519_byte_extraction_boundary.rs:32:12
+   |
+32 | pub struct Phase41F_1ExtractedEd25519ByteSlices<'a> {
+   |            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ help: convert the identifier to upper camel case: `Phase41f1extractedEd25519byteSlices`
+
+warning: type `Phase41F_1CheckedByteExtractionResult` should have an upper camel case name
+  --> src/verifier/checked_ed25519_byte_extraction_boundary.rs:42:12
+   |
+42 | pub struct Phase41F_1CheckedByteExtractionResult<'a> {
+   |            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ help: convert the identifier to upper camel case: `Phase41f1checkedByteExtractionResult`
+
+warning: type `Phase41F_1CheckedByteExtractionBoundaryReport` should have an upper camel case name
+  --> src/verifier/checked_ed25519_byte_extraction_boundary.rs:76:12
+   |
+76 | pub struct Phase41F_1CheckedByteExtractionBoundaryReport {
+   |            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ help: convert the identifier to upper camel case: `Phase41f1checkedByteExtractionBoundaryReport`
+
+warning: type `Phase41E_1Ed25519ByteParsingStatus` should have an upper camel case name
+  --> src/verifier/ed25519_instruction_byte_parsing_boundary.rs:26:10
+   |
+26 | pub enum Phase41E_1Ed25519ByteParsingStatus {
+   |          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ help: convert the identifier to upper camel case: `Phase41e1ed25519byteParsingStatus`
+
+warning: type `Phase41E_1ByteRange` should have an upper camel case name
+  --> src/verifier/ed25519_instruction_byte_parsing_boundary.rs:46:12
+   |
+46 | pub struct Phase41E_1ByteRange {
+   |            ^^^^^^^^^^^^^^^^^^^ help: convert the identifier to upper camel case: `Phase41e1byteRange`
+
+warning: type `Phase41E_1Ed25519InstructionIndexReferences` should have an upper camel case name
+  --> src/verifier/ed25519_instruction_byte_parsing_boundary.rs:52:12
+   |
+52 | pub struct Phase41E_1Ed25519InstructionIndexReferences {
+   |            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ help: convert the identifier to upper camel case: `Phase41e1ed25519instructionIndexReferences`
+
+warning: type `Phase41E_1ParsedEd25519Offsets` should have an upper camel case name
+  --> src/verifier/ed25519_instruction_byte_parsing_boundary.rs:59:12
+   |
+59 | pub struct Phase41E_1ParsedEd25519Offsets {
+   |            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ help: convert the identifier to upper camel case: `Phase41e1parsedEd25519offsets`
+
+warning: type `Phase41E_1Ed25519ByteParsingResult` should have an upper camel case name
+  --> src/verifier/ed25519_instruction_byte_parsing_boundary.rs:71:12
+   |
+71 | pub struct Phase41E_1Ed25519ByteParsingResult {
+   |            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ help: convert the identifier to upper camel case: `Phase41e1ed25519byteParsingResult`
+
+warning: type `Phase41E_1Ed25519ByteParsingBoundaryReport` should have an upper camel case name
+   --> src/verifier/ed25519_instruction_byte_parsing_boundary.rs:107:12
+    |
+107 | pub struct Phase41E_1Ed25519ByteParsingBoundaryReport {
+    |            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ help: convert the identifier to upper camel case: `Phase41e1ed25519byteParsingBoundaryReport`
+
+warning: type `Phase41F_2Ed25519VerificationModel` should have an upper camel case name
+  --> src/verifier/ed25519_signature_verification_boundary.rs:21:10
+   |
+21 | pub enum Phase41F_2Ed25519VerificationModel {
+   |          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ help: convert the identifier to upper camel case: `Phase41f2ed25519verificationModel`
+
+warning: type `Phase41F_2Ed25519SignatureVerificationStatus` should have an upper camel case name
+  --> src/verifier/ed25519_signature_verification_boundary.rs:26:10
+   |
+26 | pub enum Phase41F_2Ed25519SignatureVerificationStatus {
+   |          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ help: convert the identifier to upper camel case: `Phase41f2ed25519signatureVerificationStatus`
+
+warning: type `Phase41F_2VerifiedEd25519SignatureRanges` should have an upper camel case name
+  --> src/verifier/ed25519_signature_verification_boundary.rs:41:12
+   |
+41 | pub struct Phase41F_2VerifiedEd25519SignatureRanges {
+   |            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ help: convert the identifier to upper camel case: `Phase41f2verifiedEd25519signatureRanges`
+
+warning: type `Phase41F_2Ed25519SignatureVerificationResult` should have an upper camel case name
+  --> src/verifier/ed25519_signature_verification_boundary.rs:48:12
+   |
+48 | pub struct Phase41F_2Ed25519SignatureVerificationResult {
+   |            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ help: convert the identifier to upper camel case: `Phase41f2ed25519signatureVerificationResult`
+
+warning: type `Phase41F_2Ed25519SignatureVerificationBoundaryReport` should have an upper camel case name
+  --> src/verifier/ed25519_signature_verification_boundary.rs:85:12
+   |
+85 | pub struct Phase41F_2Ed25519SignatureVerificationBoundaryReport {
+   |            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ help: convert the identifier to upper camel case: `Phase41f2ed25519signatureVerificationBoundaryReport`
+
+warning: unused import: `Phase41C1RuntimeApiSelection`
+ --> src/verifier/instructions_sysvar_accountinfo_presence_readability_runtime_boundary.rs:6:59
+  |
+6 |     Phase41C1InstructionsSysvarPresenceReadabilityResult, Phase41C1RuntimeApiSelection,
+  |                                                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: use of deprecated module `solana_program::system_instruction`: Use `solana_system_interface` crate instead
+ --> src/processed_event_marking_boundary.rs:3:17
+  |
+3 |     rent::Rent, system_instruction, system_program,
+  |                 ^^^^^^^^^^^^^^^^^^
+  |
+  = note: `#[warn(deprecated)]` on by default
+
+warning: use of deprecated module `solana_program::system_program`: Use `solana_sdk_ids::system_program` instead
+ --> src/processed_event_marking_boundary.rs:3:37
+  |
+3 |     rent::Rent, system_instruction, system_program,
+  |                                     ^^^^^^^^^^^^^^
+
+warning: use of deprecated module `solana_program::system_program`: Use `solana_sdk_ids::system_program` instead
+  --> src/processor.rs:13:62
+   |
+13 |     program_error::ProgramError, pubkey::Pubkey, rent::Rent, system_program, sysvar::Sysvar,
+   |                                                              ^^^^^^^^^^^^^^
+
+warning: unused import: `clock::Clock`
+  --> src/processor.rs:12:32
+   |
+12 |     account_info::AccountInfo, clock::Clock, entrypoint::ProgramResult, msg,
+   |                                ^^^^^^^^^^^^
+   |
+   = note: `#[warn(unused_imports)]` (part of `#[warn(unused)]`) on by default
+
+warning: unused import: `sysvar::Sysvar`
+  --> src/processor.rs:13:78
+   |
+13 |     program_error::ProgramError, pubkey::Pubkey, rent::Rent, system_program, sysvar::Sysvar,
+   |                                                                              ^^^^^^^^^^^^^^
+
+warning: unused variable: `matched_instruction_index`
+   --> src/verifier/prefilter_phase_41c3_candidate_descriptor_runtime_boundary.rs:281:9
+    |
+281 |     let matched_instruction_index = phase_41c3_result.matched_instruction_index;
+    |         ^^^^^^^^^^^^^^^^^^^^^^^^^ help: if this is intentional, prefix it with an underscore: `_matched_instruction_index`
+    |
+    = note: `#[warn(unused_variables)]` (part of `#[warn(unused)]`) on by default
+
+warning: associated function `from_program_controlled_on_chain_source` is never used
+  --> src/verifier/guardian_membership_validation_boundary.rs:33:19
+   |
+32 | impl<'a> AuthoritativeGuardianSetRef<'a> {
+   | ---------------------------------------- associated function in this implementation
+33 |     pub(crate) fn from_program_controlled_on_chain_source(
+   |                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+   |
+   = note: `#[warn(dead_code)]` (part of `#[warn(unused)]`) on by default
+
+warning: use of deprecated function `state::mark_processed_event_consumed_legacy_planning_only`: Use the Phase 41K.4 processed-event marking boundary instead
+  --> src/execution_plan.rs:10:19
+   |
+10 | use crate::state::mark_processed_event_consumed_legacy_planning_only;
+   |                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+   |
+   = note: `#[warn(deprecated)]` on by default
+
+warning: use of deprecated module `solana_program::system_instruction`: Use `solana_system_interface` crate instead
+ --> src/processed_event_marking_boundary.rs:3:17
+  |
+3 |     rent::Rent, system_instruction, system_program,
+  |                 ^^^^^^^^^^^^^^^^^^
+
+warning: use of deprecated function `state::mark_processed_event_consumed_legacy_planning_only`: Use the Phase 41K.4 processed-event marking boundary instead
+   --> src/state.rs:488:9
+    |
+488 |         mark_processed_event_consumed_legacy_planning_only(
+    |         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: use of deprecated function `state::mark_processed_event_consumed_legacy_planning_only`: Use the Phase 41K.4 processed-event marking boundary instead
+   --> src/state.rs:521:13
+    |
+521 |             mark_processed_event_consumed_legacy_planning_only(
+    |             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: use of deprecated function `state::mark_processed_event_consumed_legacy_planning_only`: Use the Phase 41K.4 processed-event marking boundary instead
+   --> src/state.rs:548:13
+    |
+548 |             mark_processed_event_consumed_legacy_planning_only(
+    |             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: function `consume_gateway_mint_account_contract_documents_owner_models` is never used
+   --> src/account_contract.rs:562:8
+    |
+562 |     fn consume_gateway_mint_account_contract_documents_owner_models() {
+    |        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    |
+    = note: `#[warn(dead_code)]` (part of `#[warn(unused)]`) on by default
+
+warning: function `assert_owner_model` is never used
+   --> src/account_contract.rs:626:8
+    |
+626 |     fn assert_owner_model(index: usize, owner_model: AccountOwnerModel) {
+    |        ^^^^^^^^^^^^^^^^^^
+
+warning: function `read_u128_le` is never used
+    --> src/processor.rs:2304:8
+     |
+2304 |     fn read_u128_le(input: &[u8], offset: usize) -> u128 {
+     |        ^^^^^^^^^^^^
+
+warning: function `read_fixed_32` is never used
+    --> src/processor.rs:2316:8
+     |
+2316 |     fn read_fixed_32(input: &[u8], offset: usize) -> [u8; 32] {
+     |        ^^^^^^^^^^^^^
+
+warning: constant `GUARDIAN_3_PUBLIC_KEY_BYTES` is never used
+   --> src/verifier/quorum_authorization_boundary.rs:342:11
+    |
+342 |     const GUARDIAN_3_PUBLIC_KEY_BYTES: [u8; 32] = [0x03; 32];
+    |           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: constant `OTHER_GUARDIAN_SET_ID` is never used
+   --> src/verifier/replay_protection_boundary.rs:415:11
+    |
+415 |     const OTHER_GUARDIAN_SET_ID: [u8; 32] = [0x23; 32];
+    |           ^^^^^^^^^^^^^^^^^^^^^
+
+warning: constant `GUARDIAN_3_PUBLIC_KEY_BYTES` is never used
+   --> src/verifier/replay_protection_boundary.rs:430:11
+    |
+430 |     const GUARDIAN_3_PUBLIC_KEY_BYTES: [u8; 32] = [0x03; 32];
+    |           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: `xxxl-svm` (lib) generated 25 warnings (run `cargo fix --lib -p xxxl-svm` to apply 5 suggestions)
+warning: `xxxl-svm` (lib test) generated 32 warnings (19 duplicates) (run `cargo fix --lib -p xxxl-svm --tests` to apply 1 suggestion)
+warning: use of deprecated module `solana_program::system_program`: Use `solana_sdk_ids::system_program` instead
+ --> tests/disabled_cpi_reachability.rs:3:53
+  |
+3 |     program_pack::Pack, pubkey::Pubkey, rent::Rent, system_program,
+  |                                                     ^^^^^^^^^^^^^^
+  |
+  = note: `#[warn(deprecated)]` on by default
+
+warning: function `processed_event_data` is never used
+   --> tests/disabled_cpi_reachability.rs:571:4
+    |
+571 | fn processed_event_data(
+    |    ^^^^^^^^^^^^^^^^^^^^
+    |
+    = note: `#[warn(dead_code)]` (part of `#[warn(unused)]`) on by default
+
+warning: function `read_u128_le` is never used
+   --> tests/disabled_cpi_reachability.rs:649:4
+    |
+649 | fn read_u128_le(input: &[u8], offset: usize) -> u128 {
+    |    ^^^^^^^^^^^^
+
+warning: function `read_u64_le` is never used
+   --> tests/disabled_cpi_reachability.rs:655:4
+    |
+655 | fn read_u64_le(input: &[u8], offset: usize) -> u64 {
+    |    ^^^^^^^^^^^
+
+warning: function `read_fixed_32` is never used
+   --> tests/disabled_cpi_reachability.rs:661:4
+    |
+661 | fn read_fixed_32(input: &[u8], offset: usize) -> [u8; 32] {
+    |    ^^^^^^^^^^^^^
+
+warning: `xxxl-svm` (test "disabled_cpi_reachability") generated 5 warnings
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 15.41s
+     Running unittests src/lib.rs (target/debug/deps/xxxl_svm-0ad1c373db1503b6)
+
+running 1 test
+XXXL_TESTNET_PROGRAM_ID_CANDIDATE=D7AQmZNtFFFoJbducz93atteeSZhw3jq6RmsqBvaf1my
+GATEWAY_MINT_AUTHORITY_PDA=BLVsQPYXnDsTmfMW9wrXHBFpcmexM47BcAvVcibRtRYG
+GATEWAY_MINT_AUTHORITY_BUMP=252
+OFFCHAIN_ONLY=true
+RPC_USED=false
+DEPLOYED=false
+SOL_SPENT=false
+test pda::x1_testnet_program_id_candidate_dry_run_tests::x1_testnet_program_id_candidate_pda_dry_run ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 774 filtered out; finished in 0.01s
+
+     Running tests/disabled_cpi_reachability.rs (target/debug/deps/disabled_cpi_reachability-d70e1fbdac03c236)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 6 filtered out; finished in 0.00s
+
+     Running tests/instruction_reserved_bytes.rs (target/debug/deps/instruction_reserved_bytes-b4f3ca3d51e9e414)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 3 filtered out; finished in 0.00s
+
+     Running tests/mollusk_consume_gateway_mint.rs (target/debug/deps/mollusk_consume_gateway_mint-4b2c85978050c016)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 65 filtered out; finished in 0.00s
+
+     Running tests/phase_41k4_processed_event_marking_svm.rs (target/debug/deps/phase_41k4_processed_event_marking_svm-79799b4dbf7a8685)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 4 filtered out; finished in 0.00s
+
+     Running tests/phase_41k5_d15_atomic_mark_and_mint_svm.rs (target/debug/deps/phase_41k5_d15_atomic_mark_and_mint_svm-d78c797b45656fd2)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/phase_41k5_d2_production_path_gated_mark_and_mint_e2e.rs (target/debug/deps/phase_41k5_d2_production_path_gated_mark_and_mint_e2e-6a12ae339bd113b2)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/phase_41k5_d3_negative_failure_modes.rs (target/debug/deps/phase_41k5_d3_negative_failure_modes-13d86ff224c17ca8)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/phase_41k6_b2_valid_quorum_live_gated_success.rs (target/debug/deps/phase_41k6_b2_valid_quorum_live_gated_success-c308ac74b91e58ff)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/phase_41k6_b3_hostile_live_gated_matrix.rs (target/debug/deps/phase_41k6_b3_hostile_live_gated_matrix-0b3dcef98b82f119)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s

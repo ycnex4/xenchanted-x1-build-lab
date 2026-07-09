@@ -1,0 +1,12 @@
+package=program-id-dependent-pda-evidence
+material_safety_check_performed=true
+
+public_program_id_recorded=true
+public_pda_recorded=true
+public_bump_recorded=true
+
+keypair_file_committed=false
+private_key_file_committed=false
+wallet_file_committed=false
+json_key_material_committed=false
+sensitive_file_name_hits=false

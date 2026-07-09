@@ -11,10 +11,10 @@ If source/docs/context disagree, source is the runtime ground truth, and this le
 ## Ledger Metadata
 
 - reconciled_source_base_commit: 65a8e83
-- last_updated_package: program-id-binding-source-change
+- last_updated_package: program-id-dependent-pda-evidence
 - ledger_author: Sergey Stepanenko / ChatGPT assisted
 - package_scope: DOCUMENTATION_ONLY
-- next_required_action: continue with program-id-dependent-pda-evidence approval request
+- next_required_action: continue with live-route-spl-cpi-activation-source-plan approval request
 
 ## Authorization Boundary
 
@@ -45,7 +45,7 @@ If source/docs/context disagree, source is the runtime ground truth, and this le
 | Lane | Status | Blocking Condition | Next Step |
 |:---|:---|:---|:---|
 | gateway-state-reconciliation | CLOSED | reconciliation package complete | no further action in this lane |
-| program-id-binding | COMPLETE | PlaceholderProgramId removed from active source blockers | continue with program-id-dependent-pda-evidence approval request |
+| program-id-binding | COMPLETE | PlaceholderProgramId removed from active source blockers | program-id-dependent-pda-evidence complete; continue with live-route-spl-cpi-activation-source-plan approval request |
 | guardian-proof-log | PAUSED | ProductionGuardianSetUnset, ProductionProofLogUnset | future instantiation package |
 | local-only-fixtures | NO-GO | local-only fixture emission not approved | separate future GO required |
 
@@ -137,7 +137,7 @@ Selected next package for approval request:
 
 - external-review-blocker-removal-source-change
 
-program-id-dependent-pda-evidence is the next approval-request candidate.
+live-route-spl-cpi-activation-source-plan is the next approval-request candidate.
 
 Neither is authorized by this ledger.
 
@@ -153,3 +153,38 @@ Neither is authorized by this ledger.
 - upgrade
 - RPC mutation
 - local-only fixture emission
+
+## Program-ID-Dependent PDA Evidence Closure
+
+- package: program-id-dependent-pda-evidence
+- status: COMPLETE
+- scope: PURE_EVIDENCE_DOCUMENTATION_NO_CODE_MUTATION_NO_ACTIVATION
+- Program ID: `D7AQmZNtFFFoJbducz93atteeSZhw3jq6RmsqBvaf1my`
+- gateway_mint_authority PDA: `BLVsQPYXnDsTmfMW9wrXHBFpcmexM47BcAvVcibRtRYG`
+- gateway_mint_authority bump: `252`
+- evidence: `docs/gateway/evidence/program-id-dependent-pda-evidence/program-id-dependent-pda-dry-run.txt`
+- source code mutated: false
+- activation performed: false
+- deploy performed: false
+- upgrade performed: false
+- RPC mutation performed: false
+- route enablement performed: false
+- SPL CPI enablement performed: false
+- local-only fixture emission performed: false
+
+Preserved blocker state after PDA evidence:
+
+| Blocker | Status |
+| --- | --- |
+| ExternalReviewIncomplete | REMOVED |
+| PlaceholderProgramId | REMOVED |
+| LiveRouteDisabled | ACTIVE |
+| SplCpiExecutionDisabled | ACTIVE |
+| ProductionGuardianSetUnset | ACTIVE |
+| ProductionProofLogUnset | ACTIVE |
+
+Runtime remains not deployable. Predeploy gate remains blocked.
+
+Next approval-request candidate:
+
+- live-route-spl-cpi-activation-source-plan

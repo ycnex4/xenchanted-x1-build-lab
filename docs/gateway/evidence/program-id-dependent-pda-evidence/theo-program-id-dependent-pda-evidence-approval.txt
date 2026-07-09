@@ -1,0 +1,40 @@
+package=program-id-dependent-pda-evidence
+approval=APPROVE_PROGRAM_ID_DEPENDENT_PDA_EVIDENCE_NO_ACTIVATION
+approved_by=Theo
+approval_date=2026-07-09
+
+scope=PURE_EVIDENCE_DOCUMENTATION_NO_CODE_MUTATION_NO_ACTIVATION
+
+allowed_changes:
+1. Record Program-ID-dependent PDA evidence.
+2. Record gateway mint authority PDA: BLVsQPYXnDsTmfMW9wrXHBFpcmexM47BcAvVcibRtRYG.
+3. Record bump: 252.
+4. Add evidence/package documentation.
+5. Update docs/gateway/current-runtime-state.md to reflect PDA evidence completion.
+6. Update execution plan if needed.
+
+forbidden_changes:
+activation=false
+deploy=false
+upgrade=false
+rpc_mutation=false
+route_enablement=false
+spl_cpi_enablement=false
+guardian_set_instantiation=false
+proof_log_instantiation=false
+local_only_fixture_emission=NO-GO
+unrelated_cleanup=false
+private_key_or_keypair_material=false
+
+preserved_state_expected:
+ExternalReviewIncomplete=REMOVED
+PlaceholderProgramId=REMOVED
+LiveRouteDisabled=ACTIVE
+SplCpiExecutionDisabled=ACTIVE
+ProductionGuardianSetUnset=ACTIVE
+ProductionProofLogUnset=ACTIVE
+runtime_deployable=false
+predeploy_gate=blocked
+
+review_integrity_condition:
+Program ID binding does not pre-approve deployment readiness. Final deployment-readiness review must re-gate the complete post-PDA-evidence state before any activation or deployment path.
