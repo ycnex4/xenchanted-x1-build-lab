@@ -1,0 +1,7 @@
+ docs/gateway/current-execution-plan.md     |   4 +-
+ docs/gateway/current-runtime-state.md      |  12 ++--
+ programs/xxxl-svm/src/deployment_status.rs |  79 +++++++++++++----------
+ programs/xxxl-svm/src/lib.rs               |  11 +++-
+ programs/xxxl-svm/src/program_id_status.rs | 100 +++++++++++++++++++----------
+ programs/xxxl-svm/src/safety_invariants.rs |  36 +++++++----
+ 6 files changed, 148 insertions(+), 94 deletions(-)

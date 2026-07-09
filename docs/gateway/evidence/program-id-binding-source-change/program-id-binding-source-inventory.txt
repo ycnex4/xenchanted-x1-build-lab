@@ -1,0 +1,270 @@
+### program_id_status.rs
+programs/xxxl-svm/src/program_id_status.rs:3:    XXXL_PROGRAM_ID_PLACEHOLDER,
+programs/xxxl-svm/src/program_id_status.rs:7:pub enum XxxlProgramIdReadinessStatus {
+programs/xxxl-svm/src/program_id_status.rs:8:    X1TestnetProgramIdBoundaryReviewedActivationBlocked,
+programs/xxxl-svm/src/program_id_status.rs:12:pub struct XxxlProgramIdReadinessReport {
+programs/xxxl-svm/src/program_id_status.rs:13:    pub status: XxxlProgramIdReadinessStatus,
+programs/xxxl-svm/src/program_id_status.rs:16:    pub configured_program_id: &'static str,
+programs/xxxl-svm/src/program_id_status.rs:23:pub const XXXL_PROGRAM_ID_READINESS_STATUS: XxxlProgramIdReadinessStatus =
+programs/xxxl-svm/src/program_id_status.rs:24:    XxxlProgramIdReadinessStatus::X1TestnetProgramIdBoundaryReviewedActivationBlocked;
+programs/xxxl-svm/src/program_id_status.rs:26:pub const XXXL_PROGRAM_ID_READINESS_REPORT: XxxlProgramIdReadinessReport =
+programs/xxxl-svm/src/program_id_status.rs:27:    XxxlProgramIdReadinessReport {
+programs/xxxl-svm/src/program_id_status.rs:28:        status: XXXL_PROGRAM_ID_READINESS_STATUS,
+programs/xxxl-svm/src/program_id_status.rs:29:        status_code: "X1_TESTNET_PROGRAM_ID_BOUNDARY_REVIEWED_ACTIVATION_BLOCKED",
+programs/xxxl-svm/src/program_id_status.rs:31:        configured_program_id: XXXL_PROGRAM_ID_PLACEHOLDER,
+programs/xxxl-svm/src/program_id_status.rs:33:        blocker: XxxlRuntimeDeploymentBlocker::PlaceholderProgramId,
+programs/xxxl-svm/src/program_id_status.rs:34:        blocker_code: "PLACEHOLDER_PROGRAM_ID",
+programs/xxxl-svm/src/program_id_status.rs:38:impl XxxlProgramIdReadinessStatus {
+programs/xxxl-svm/src/program_id_status.rs:41:            XxxlProgramIdReadinessStatus::X1TestnetProgramIdBoundaryReviewedActivationBlocked => {
+programs/xxxl-svm/src/program_id_status.rs:42:                "X1_TESTNET_PROGRAM_ID_BOUNDARY_REVIEWED_ACTIVATION_BLOCKED"
+programs/xxxl-svm/src/program_id_status.rs:49:            XxxlProgramIdReadinessStatus::X1TestnetProgramIdBoundaryReviewedActivationBlocked => {
+programs/xxxl-svm/src/program_id_status.rs:56:pub fn xxxl_program_id_readiness_status() -> XxxlProgramIdReadinessStatus {
+programs/xxxl-svm/src/program_id_status.rs:57:    XXXL_PROGRAM_ID_READINESS_STATUS
+programs/xxxl-svm/src/program_id_status.rs:60:pub fn xxxl_program_id_readiness_report() -> &'static XxxlProgramIdReadinessReport {
+programs/xxxl-svm/src/program_id_status.rs:61:    &XXXL_PROGRAM_ID_READINESS_REPORT
+programs/xxxl-svm/src/program_id_status.rs:64:pub fn xxxl_program_id_placeholder_boundary_is_active() -> bool {
+programs/xxxl-svm/src/program_id_status.rs:68:pub fn xxxl_program_id_deployable_path_ready() -> bool {
+programs/xxxl-svm/src/program_id_status.rs:69:    xxxl_program_id_readiness_report().deployable_path_ready
+programs/xxxl-svm/src/program_id_status.rs:72:pub fn xxxl_program_id_placeholder_blocker_is_active_in_deployment_report() -> bool {
+programs/xxxl-svm/src/program_id_status.rs:73:    xxxl_runtime_deployment_report_has_blocker(xxxl_program_id_readiness_report().blocker)
+programs/xxxl-svm/src/program_id_status.rs:81:    fn program_id_readiness_status_is_reviewed_activation_blocked() {
+programs/xxxl-svm/src/program_id_status.rs:82:        let status = xxxl_program_id_readiness_status();
+programs/xxxl-svm/src/program_id_status.rs:86:            XxxlProgramIdReadinessStatus::X1TestnetProgramIdBoundaryReviewedActivationBlocked
+programs/xxxl-svm/src/program_id_status.rs:90:            "X1_TESTNET_PROGRAM_ID_BOUNDARY_REVIEWED_ACTIVATION_BLOCKED"
+programs/xxxl-svm/src/program_id_status.rs:99:    fn program_id_readiness_report_is_reviewed_and_activation_blocked() {
+programs/xxxl-svm/src/program_id_status.rs:100:        let report = xxxl_program_id_readiness_report();
+programs/xxxl-svm/src/program_id_status.rs:104:            XxxlProgramIdReadinessStatus::X1TestnetProgramIdBoundaryReviewedActivationBlocked
+programs/xxxl-svm/src/program_id_status.rs:108:            "X1_TESTNET_PROGRAM_ID_BOUNDARY_REVIEWED_ACTIVATION_BLOCKED"
+programs/xxxl-svm/src/program_id_status.rs:114:        assert_eq!(report.configured_program_id, XXXL_PROGRAM_ID_PLACEHOLDER);
+programs/xxxl-svm/src/program_id_status.rs:118:            XxxlRuntimeDeploymentBlocker::PlaceholderProgramId
+programs/xxxl-svm/src/program_id_status.rs:120:        assert_eq!(report.blocker_code, "PLACEHOLDER_PROGRAM_ID");
+programs/xxxl-svm/src/program_id_status.rs:124:    fn program_id_readiness_report_matches_deployment_blocker_metadata() {
+programs/xxxl-svm/src/program_id_status.rs:125:        let report = xxxl_program_id_readiness_report();
+programs/xxxl-svm/src/program_id_status.rs:132:    fn program_id_placeholder_blocker_is_active_in_deployment_report() {
+programs/xxxl-svm/src/program_id_status.rs:133:        assert!(xxxl_program_id_placeholder_blocker_is_active_in_deployment_report());
+programs/xxxl-svm/src/program_id_status.rs:137:    fn program_id_source_ready_but_placeholder_binding_safety_lock_remains_active() {
+programs/xxxl-svm/src/program_id_status.rs:138:        assert!(xxxl_program_id_placeholder_boundary_is_active());
+programs/xxxl-svm/src/program_id_status.rs:139:        assert!(xxxl_program_id_deployable_path_ready());
+
+### lib.rs
+programs/xxxl-svm/src/lib.rs:41:pub mod program_id_status;
+programs/xxxl-svm/src/lib.rs:52:pub const XXXL_PROGRAM_ID_PLACEHOLDER: &str = "XXXLProgram111111111111111111111111111111111";
+programs/xxxl-svm/src/lib.rs:54:pub const XXXL_TOKEN_PROGRAM_ID: &str = "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA";
+programs/xxxl-svm/src/lib.rs:56:pub const XXXL_RUNTIME_STATUS: &str = "SOURCE_BOUNDARY_READY_ACTIVATION_BLOCKED";
+
+### pda.rs
+programs/xxxl-svm/src/pda.rs:18:    pub depends_on_program_id: bool,
+programs/xxxl-svm/src/pda.rs:26:    pub program_id: Pubkey,
+programs/xxxl-svm/src/pda.rs:27:    pub pda: Pubkey,
+programs/xxxl-svm/src/pda.rs:36:    WrongProgramId { index: usize },
+programs/xxxl-svm/src/pda.rs:47:pub const XXXL_PDA_DERIVATION_INVENTORY: [XxxlPdaDerivationInventoryEntry; 1] =
+programs/xxxl-svm/src/pda.rs:50:        name: "gateway_mint_authority",
+programs/xxxl-svm/src/pda.rs:53:        depends_on_program_id: true,
+programs/xxxl-svm/src/pda.rs:55:            "PDA expected to act as the SPL Token mint authority for gateway-backed XXXL minting.",
+programs/xxxl-svm/src/pda.rs:58:pub fn gateway_mint_authority_seeds() -> [&'static [u8]; 3] {
+programs/xxxl-svm/src/pda.rs:62:pub fn find_gateway_mint_authority(program_id: &Pubkey) -> (Pubkey, u8) {
+programs/xxxl-svm/src/pda.rs:63:    Pubkey::find_program_address(&gateway_mint_authority_seeds(), program_id)
+programs/xxxl-svm/src/pda.rs:66:pub fn derive_gateway_mint_authority_fixture_report(
+programs/xxxl-svm/src/pda.rs:67:    program_id: &Pubkey,
+programs/xxxl-svm/src/pda.rs:69:    let (pda, bump) = find_gateway_mint_authority(program_id);
+programs/xxxl-svm/src/pda.rs:73:        name: "gateway_mint_authority",
+programs/xxxl-svm/src/pda.rs:74:        program_id: *program_id,
+programs/xxxl-svm/src/pda.rs:75:        pda,
+programs/xxxl-svm/src/pda.rs:80:pub fn derive_xxxl_pda_fixture_reports(program_id: &Pubkey) -> [XxxlPdaFixtureDerivationReport; 1] {
+programs/xxxl-svm/src/pda.rs:81:    [derive_gateway_mint_authority_fixture_report(program_id)]
+programs/xxxl-svm/src/pda.rs:84:pub fn verify_xxxl_pda_fixture_reports(
+programs/xxxl-svm/src/pda.rs:85:    program_id: &Pubkey,
+programs/xxxl-svm/src/pda.rs:88:    let expected_reports = derive_xxxl_pda_fixture_reports(program_id);
+programs/xxxl-svm/src/pda.rs:103:        if actual.program_id != expected.program_id {
+programs/xxxl-svm/src/pda.rs:104:            return Err(XxxlPdaFixtureVerificationError::WrongProgramId { index });
+programs/xxxl-svm/src/pda.rs:107:        if actual.pda != expected.pda {
+programs/xxxl-svm/src/pda.rs:119:pub fn xxxl_pda_derivation_inventory() -> &'static [XxxlPdaDerivationInventoryEntry] {
+programs/xxxl-svm/src/pda.rs:120:    &XXXL_PDA_DERIVATION_INVENTORY
+programs/xxxl-svm/src/pda.rs:123:pub fn xxxl_pda_derivation_inventory_entry(
+programs/xxxl-svm/src/pda.rs:126:    XXXL_PDA_DERIVATION_INVENTORY
+programs/xxxl-svm/src/pda.rs:139:    const FIXTURE_PROGRAM_ID: &str = "11111111111111111111111111111111";
+programs/xxxl-svm/src/pda.rs:142:    fn gateway_mint_authority_seeds_are_exact() {
+programs/xxxl-svm/src/pda.rs:143:        let seeds = gateway_mint_authority_seeds();
+programs/xxxl-svm/src/pda.rs:151:    fn pda_derivation_inventory_is_explicit() {
+programs/xxxl-svm/src/pda.rs:152:        let inventory = xxxl_pda_derivation_inventory();
+programs/xxxl-svm/src/pda.rs:158:        assert_eq!(entry.name, "gateway_mint_authority");
+programs/xxxl-svm/src/pda.rs:160:        assert!(entry.depends_on_program_id);
+programs/xxxl-svm/src/pda.rs:161:        assert_eq!(entry.seeds, gateway_mint_authority_seeds());
+programs/xxxl-svm/src/pda.rs:166:    fn pda_derivation_inventory_entry_lookup_is_stable() {
+programs/xxxl-svm/src/pda.rs:168:            xxxl_pda_derivation_inventory_entry(XxxlPdaDerivationKind::GatewayMintAuthority)
+programs/xxxl-svm/src/pda.rs:169:                .expect("gateway mint authority PDA inventory entry");
+programs/xxxl-svm/src/pda.rs:171:        assert_eq!(entry.name, "gateway_mint_authority");
+programs/xxxl-svm/src/pda.rs:178:    fn pda_derivation_inventory_matches_account_contract() {
+programs/xxxl-svm/src/pda.rs:180:            xxxl_pda_derivation_inventory_entry(XxxlPdaDerivationKind::GatewayMintAuthority)
+programs/xxxl-svm/src/pda.rs:181:                .expect("gateway mint authority PDA inventory entry");
+programs/xxxl-svm/src/pda.rs:185:            .find(|entry| entry.name == "mint_authority_pda")
+programs/xxxl-svm/src/pda.rs:186:            .expect("mint authority PDA account contract entry");
+programs/xxxl-svm/src/pda.rs:199:    fn gateway_mint_authority_fixture_report_matches_derivation() {
+programs/xxxl-svm/src/pda.rs:200:        let program_id = Pubkey::from_str(FIXTURE_PROGRAM_ID).expect("valid fixture program id");
+programs/xxxl-svm/src/pda.rs:201:        let report = derive_gateway_mint_authority_fixture_report(&program_id);
+programs/xxxl-svm/src/pda.rs:202:        let (expected_pda, expected_bump) = find_gateway_mint_authority(&program_id);
+programs/xxxl-svm/src/pda.rs:205:        assert_eq!(report.name, "gateway_mint_authority");
+programs/xxxl-svm/src/pda.rs:206:        assert_eq!(report.program_id, program_id);
+programs/xxxl-svm/src/pda.rs:207:        assert_eq!(report.pda, expected_pda);
+programs/xxxl-svm/src/pda.rs:212:    fn pda_fixture_reports_match_inventory() {
+programs/xxxl-svm/src/pda.rs:213:        let program_id = Pubkey::from_str(FIXTURE_PROGRAM_ID).expect("valid fixture program id");
+programs/xxxl-svm/src/pda.rs:214:        let reports = derive_xxxl_pda_fixture_reports(&program_id);
+programs/xxxl-svm/src/pda.rs:215:        let inventory = xxxl_pda_derivation_inventory();
+programs/xxxl-svm/src/pda.rs:220:        assert_eq!(reports[0].program_id, program_id);
+programs/xxxl-svm/src/pda.rs:224:    fn pda_fixture_reports_change_with_program_id() {
+programs/xxxl-svm/src/pda.rs:225:        let first_program_id =
+programs/xxxl-svm/src/pda.rs:227:        let second_program_id = Pubkey::from_str("BPFLoaderUpgradeab1e11111111111111111111111")
+programs/xxxl-svm/src/pda.rs:230:        let first = derive_xxxl_pda_fixture_reports(&first_program_id);
+programs/xxxl-svm/src/pda.rs:231:        let second = derive_xxxl_pda_fixture_reports(&second_program_id);
+programs/xxxl-svm/src/pda.rs:233:        assert_eq!(first[0].program_id, first_program_id);
+programs/xxxl-svm/src/pda.rs:234:        assert_eq!(second[0].program_id, second_program_id);
+programs/xxxl-svm/src/pda.rs:235:        assert_ne!(first[0].pda, second[0].pda);
+programs/xxxl-svm/src/pda.rs:239:    fn pda_fixture_verification_accepts_derived_reports() {
+programs/xxxl-svm/src/pda.rs:240:        let program_id = Pubkey::from_str(FIXTURE_PROGRAM_ID).expect("valid fixture program id");
+programs/xxxl-svm/src/pda.rs:241:        let reports = derive_xxxl_pda_fixture_reports(&program_id);
+programs/xxxl-svm/src/pda.rs:244:            verify_xxxl_pda_fixture_reports(&program_id, &reports),
+programs/xxxl-svm/src/pda.rs:250:    fn pda_fixture_verification_rejects_wrong_report_count() {
+programs/xxxl-svm/src/pda.rs:251:        let program_id = Pubkey::from_str(FIXTURE_PROGRAM_ID).expect("valid fixture program id");
+programs/xxxl-svm/src/pda.rs:255:            verify_xxxl_pda_fixture_reports(&program_id, &reports),
+programs/xxxl-svm/src/pda.rs:261:    fn pda_fixture_verification_rejects_wrong_name() {
+programs/xxxl-svm/src/pda.rs:262:        let program_id = Pubkey::from_str(FIXTURE_PROGRAM_ID).expect("valid fixture program id");
+programs/xxxl-svm/src/pda.rs:263:        let mut reports = derive_xxxl_pda_fixture_reports(&program_id);
+programs/xxxl-svm/src/pda.rs:264:        reports[0].name = "wrong_gateway_mint_authority";
+programs/xxxl-svm/src/pda.rs:267:            verify_xxxl_pda_fixture_reports(&program_id, &reports),
+programs/xxxl-svm/src/pda.rs:273:    fn pda_fixture_verification_rejects_wrong_program_id() {
+programs/xxxl-svm/src/pda.rs:274:        let program_id = Pubkey::from_str(FIXTURE_PROGRAM_ID).expect("valid fixture program id");
+programs/xxxl-svm/src/pda.rs:275:        let other_program_id = Pubkey::from_str("BPFLoaderUpgradeab1e11111111111111111111111")
+programs/xxxl-svm/src/pda.rs:277:        let mut reports = derive_xxxl_pda_fixture_reports(&program_id);
+programs/xxxl-svm/src/pda.rs:278:        reports[0].program_id = other_program_id;
+programs/xxxl-svm/src/pda.rs:281:            verify_xxxl_pda_fixture_reports(&program_id, &reports),
+programs/xxxl-svm/src/pda.rs:282:            Err(XxxlPdaFixtureVerificationError::WrongProgramId { index: 0 })
+programs/xxxl-svm/src/pda.rs:287:    fn pda_fixture_verification_rejects_wrong_pda() {
+programs/xxxl-svm/src/pda.rs:288:        let program_id = Pubkey::from_str(FIXTURE_PROGRAM_ID).expect("valid fixture program id");
+programs/xxxl-svm/src/pda.rs:289:        let other_pda = Pubkey::from_str("BPFLoaderUpgradeab1e11111111111111111111111")
+programs/xxxl-svm/src/pda.rs:290:            .expect("valid fixture pda");
+programs/xxxl-svm/src/pda.rs:291:        let mut reports = derive_xxxl_pda_fixture_reports(&program_id);
+programs/xxxl-svm/src/pda.rs:292:        reports[0].pda = other_pda;
+programs/xxxl-svm/src/pda.rs:295:            verify_xxxl_pda_fixture_reports(&program_id, &reports),
+programs/xxxl-svm/src/pda.rs:301:    fn pda_fixture_verification_rejects_wrong_bump() {
+programs/xxxl-svm/src/pda.rs:302:        let program_id = Pubkey::from_str(FIXTURE_PROGRAM_ID).expect("valid fixture program id");
+programs/xxxl-svm/src/pda.rs:303:        let mut reports = derive_xxxl_pda_fixture_reports(&program_id);
+programs/xxxl-svm/src/pda.rs:307:            verify_xxxl_pda_fixture_reports(&program_id, &reports),
+programs/xxxl-svm/src/pda.rs:313:    fn gateway_mint_authority_uses_real_find_program_address() {
+programs/xxxl-svm/src/pda.rs:314:        let program_id = Pubkey::from_str(FIXTURE_PROGRAM_ID).expect("valid fixture program id");
+programs/xxxl-svm/src/pda.rs:315:        let (pda, bump) = find_gateway_mint_authority(&program_id);
+programs/xxxl-svm/src/pda.rs:316:        let (expected_pda, expected_bump) =
+programs/xxxl-svm/src/pda.rs:317:            Pubkey::find_program_address(&gateway_mint_authority_seeds(), &program_id);
+programs/xxxl-svm/src/pda.rs:319:        assert_eq!(pda, expected_pda);
+programs/xxxl-svm/src/pda.rs:324:    fn gateway_mint_authority_derivation_is_deterministic() {
+programs/xxxl-svm/src/pda.rs:325:        let program_id = Pubkey::from_str(FIXTURE_PROGRAM_ID).expect("valid fixture program id");
+programs/xxxl-svm/src/pda.rs:326:        let left = find_gateway_mint_authority(&program_id);
+programs/xxxl-svm/src/pda.rs:327:        let right = find_gateway_mint_authority(&program_id);
+programs/xxxl-svm/src/pda.rs:333:    fn gateway_mint_authority_changes_with_program_id() {
+programs/xxxl-svm/src/pda.rs:334:        let first_program_id =
+programs/xxxl-svm/src/pda.rs:336:        let second_program_id = Pubkey::from_str("BPFLoaderUpgradeab1e11111111111111111111111")
+programs/xxxl-svm/src/pda.rs:339:        let first = find_gateway_mint_authority(&first_program_id);
+programs/xxxl-svm/src/pda.rs:340:        let second = find_gateway_mint_authority(&second_program_id);
+programs/xxxl-svm/src/pda.rs:346:    fn gateway_mint_authority_fixture_is_not_placeholder_program_id() {
+programs/xxxl-svm/src/pda.rs:347:        let program_id = Pubkey::from_str(FIXTURE_PROGRAM_ID).expect("valid fixture program id");
+programs/xxxl-svm/src/pda.rs:348:        let (pda, _bump) = find_gateway_mint_authority(&program_id);
+programs/xxxl-svm/src/pda.rs:350:        assert_ne!(pda, program_id);
+programs/xxxl-svm/src/pda.rs:355:mod x1_testnet_program_id_candidate_dry_run_tests {
+programs/xxxl-svm/src/pda.rs:361:    #[ignore = "requires XXXL_TESTNET_PROGRAM_ID_CANDIDATE; off-chain only; no RPC, no deploy, no SOL spend"]
+programs/xxxl-svm/src/pda.rs:362:    fn x1_testnet_program_id_candidate_pda_dry_run() {
+programs/xxxl-svm/src/pda.rs:363:        let candidate = std::env::var("XXXL_TESTNET_PROGRAM_ID_CANDIDATE")
+programs/xxxl-svm/src/pda.rs:364:            .expect("set XXXL_TESTNET_PROGRAM_ID_CANDIDATE to the public Program ID candidate");
+programs/xxxl-svm/src/pda.rs:367:        assert_ne!(candidate, crate::XXXL_PROGRAM_ID_PLACEHOLDER);
+programs/xxxl-svm/src/pda.rs:370:        assert_ne!(candidate, crate::XXXL_TOKEN_PROGRAM_ID);
+programs/xxxl-svm/src/pda.rs:372:        let program_id =
+programs/xxxl-svm/src/pda.rs:375:        let reports = derive_xxxl_pda_fixture_reports(&program_id);
+programs/xxxl-svm/src/pda.rs:380:        assert_eq!(report.name, "gateway_mint_authority");
+programs/xxxl-svm/src/pda.rs:381:        assert_eq!(report.program_id, program_id);
+programs/xxxl-svm/src/pda.rs:383:        let (expected_pda, expected_bump) = find_gateway_mint_authority(&program_id);
+programs/xxxl-svm/src/pda.rs:385:        assert_eq!(report.pda, expected_pda);
+programs/xxxl-svm/src/pda.rs:388:        verify_xxxl_pda_fixture_reports(&program_id, &reports)
+programs/xxxl-svm/src/pda.rs:389:            .expect("candidate-derived PDA fixture must verify");
+programs/xxxl-svm/src/pda.rs:391:        let mut wrong_program_id_reports = reports;
+programs/xxxl-svm/src/pda.rs:392:        wrong_program_id_reports[0].program_id = Pubkey::default();
+programs/xxxl-svm/src/pda.rs:394:            verify_xxxl_pda_fixture_reports(&program_id, &wrong_program_id_reports),
+programs/xxxl-svm/src/pda.rs:395:            Err(XxxlPdaFixtureVerificationError::WrongProgramId { index: 0 })
+programs/xxxl-svm/src/pda.rs:398:        let mut wrong_pda_reports = reports;
+programs/xxxl-svm/src/pda.rs:399:        wrong_pda_reports[0].pda = Pubkey::default();
+programs/xxxl-svm/src/pda.rs:401:            verify_xxxl_pda_fixture_reports(&program_id, &wrong_pda_reports),
+programs/xxxl-svm/src/pda.rs:408:            verify_xxxl_pda_fixture_reports(&program_id, &wrong_bump_reports),
+programs/xxxl-svm/src/pda.rs:412:        println!("XXXL_TESTNET_PROGRAM_ID_CANDIDATE={}", program_id);
+programs/xxxl-svm/src/pda.rs:413:        println!("GATEWAY_MINT_AUTHORITY_PDA={}", report.pda);
+
+### deployment_status.rs
+programs/xxxl-svm/src/deployment_status.rs:8:    PlaceholderProgramId,
+programs/xxxl-svm/src/deployment_status.rs:44:pub const XXXL_RUNTIME_DEPLOYMENT_BLOCKERS: [XxxlRuntimeDeploymentBlocker; 5] = [
+programs/xxxl-svm/src/deployment_status.rs:45:    XxxlRuntimeDeploymentBlocker::PlaceholderProgramId,
+programs/xxxl-svm/src/deployment_status.rs:52:pub const XXXL_RUNTIME_DEPLOYMENT_BLOCKER_REPORTS: [XxxlRuntimeDeploymentBlockerReport; 5] = [
+programs/xxxl-svm/src/deployment_status.rs:54:        blocker: XxxlRuntimeDeploymentBlocker::PlaceholderProgramId,
+programs/xxxl-svm/src/deployment_status.rs:55:        code: "PLACEHOLDER_PROGRAM_ID",
+programs/xxxl-svm/src/deployment_status.rs:92:        blockers: &XXXL_RUNTIME_DEPLOYMENT_BLOCKER_REPORTS,
+programs/xxxl-svm/src/deployment_status.rs:116:            XxxlRuntimeDeploymentBlocker::PlaceholderProgramId => "PLACEHOLDER_PROGRAM_ID",
+programs/xxxl-svm/src/deployment_status.rs:135:            XxxlRuntimeDeploymentBlocker::PlaceholderProgramId => {
+programs/xxxl-svm/src/deployment_status.rs:164:            XxxlRuntimeDeploymentBlocker::PlaceholderProgramId => {
+programs/xxxl-svm/src/deployment_status.rs:205:    &XXXL_RUNTIME_DEPLOYMENT_BLOCKERS
+programs/xxxl-svm/src/deployment_status.rs:209:    &XXXL_RUNTIME_DEPLOYMENT_BLOCKER_REPORTS
+programs/xxxl-svm/src/deployment_status.rs:215:    XXXL_RUNTIME_DEPLOYMENT_BLOCKER_REPORTS
+programs/xxxl-svm/src/deployment_status.rs:225:    XXXL_RUNTIME_DEPLOYMENT_BLOCKER_REPORTS
+programs/xxxl-svm/src/deployment_status.rs:297:        assert_eq!(blockers.len(), 5);
+programs/xxxl-svm/src/deployment_status.rs:298:        assert!(blockers.contains(&XxxlRuntimeDeploymentBlocker::PlaceholderProgramId));
+programs/xxxl-svm/src/deployment_status.rs:312:        assert_eq!(blockers[0].code(), "PLACEHOLDER_PROGRAM_ID");
+programs/xxxl-svm/src/deployment_status.rs:344:            XxxlRuntimeDeploymentBlocker::PlaceholderProgramId.resolution(),
+programs/xxxl-svm/src/deployment_status.rs:358:        assert_eq!(reports.len(), blockers.len());
+programs/xxxl-svm/src/deployment_status.rs:373:            XxxlRuntimeDeploymentBlocker::PlaceholderProgramId,
+programs/xxxl-svm/src/deployment_status.rs:379:            XxxlRuntimeDeploymentBlocker::PlaceholderProgramId
+programs/xxxl-svm/src/deployment_status.rs:381:        assert_eq!(report.code, "PLACEHOLDER_PROGRAM_ID");
+programs/xxxl-svm/src/deployment_status.rs:476:                "PLACEHOLDER_PROGRAM_ID",
+programs/xxxl-svm/src/deployment_status.rs:508:        assert_eq!(report.blockers.len(), 5);
+programs/xxxl-svm/src/deployment_status.rs:509:        assert_eq!(report.blockers[0].code, "PLACEHOLDER_PROGRAM_ID");
+programs/xxxl-svm/src/deployment_status.rs:516:            XxxlRuntimeDeploymentBlocker::PlaceholderProgramId.resolution()
+programs/xxxl-svm/src/deployment_status.rs:543:                assert_eq!(report.blockers.len(), 5);
+programs/xxxl-svm/src/deployment_status.rs:563:                assert_eq!(blocked_report.blockers.len(), report.blockers.len());
+programs/xxxl-svm/src/deployment_status.rs:585:            .contains(&XxxlRuntimeDeploymentBlocker::PlaceholderProgramId));
+programs/xxxl-svm/src/deployment_status.rs:587:            XxxlRuntimeDeploymentBlocker::PlaceholderProgramId.description(),
+programs/xxxl-svm/src/deployment_status.rs:591:            XxxlRuntimeDeploymentBlocker::PlaceholderProgramId.resolution(),
+
+### safety_invariants.rs
+programs/xxxl-svm/src/safety_invariants.rs:10:    program_id_status::{
+programs/xxxl-svm/src/safety_invariants.rs:11:        xxxl_program_id_placeholder_blocker_is_active_in_deployment_report,
+programs/xxxl-svm/src/safety_invariants.rs:12:        xxxl_program_id_placeholder_boundary_is_active,
+programs/xxxl-svm/src/safety_invariants.rs:20:    pub program_id_placeholder_boundary_active: bool,
+programs/xxxl-svm/src/safety_invariants.rs:21:    pub program_id_placeholder_blocker_active_in_deployment_report: bool,
+programs/xxxl-svm/src/safety_invariants.rs:30:            && self.program_id_placeholder_boundary_active
+programs/xxxl-svm/src/safety_invariants.rs:31:            && self.program_id_placeholder_blocker_active_in_deployment_report
+programs/xxxl-svm/src/safety_invariants.rs:41:        program_id_placeholder_boundary_active: xxxl_program_id_placeholder_boundary_is_active(),
+programs/xxxl-svm/src/safety_invariants.rs:42:        program_id_placeholder_blocker_active_in_deployment_report:
+programs/xxxl-svm/src/safety_invariants.rs:43:            xxxl_program_id_placeholder_blocker_is_active_in_deployment_report(),
+programs/xxxl-svm/src/safety_invariants.rs:198:    pub program_id_placeholder_boundary_active: bool,
+programs/xxxl-svm/src/safety_invariants.rs:199:    pub placeholder_blocker_active_in_deployment_report: bool,
+programs/xxxl-svm/src/safety_invariants.rs:217:        program_id_placeholder_boundary_active: safety_summary
+programs/xxxl-svm/src/safety_invariants.rs:218:            .program_id_placeholder_boundary_active,
+programs/xxxl-svm/src/safety_invariants.rs:219:        placeholder_blocker_active_in_deployment_report: safety_summary
+programs/xxxl-svm/src/safety_invariants.rs:220:            .program_id_placeholder_blocker_active_in_deployment_report,
+programs/xxxl-svm/src/safety_invariants.rs:225:            && safety_summary.program_id_placeholder_boundary_active
+programs/xxxl-svm/src/safety_invariants.rs:226:            && safety_summary.program_id_placeholder_blocker_active_in_deployment_report
+programs/xxxl-svm/src/safety_invariants.rs:240:    pub placeholder_program_id_blocker_present: bool,
+programs/xxxl-svm/src/safety_invariants.rs:254:    let placeholder_program_id_blocker_present = xxxl_runtime_deployment_report_has_blocker(
+programs/xxxl-svm/src/safety_invariants.rs:255:        XxxlRuntimeDeploymentBlocker::PlaceholderProgramId,
+programs/xxxl-svm/src/safety_invariants.rs:280:        placeholder_program_id_blocker_present,
+programs/xxxl-svm/src/safety_invariants.rs:289:            && placeholder_program_id_blocker_present
+programs/xxxl-svm/src/safety_invariants.rs:307:    pub real_program_id_selected: bool,
+programs/xxxl-svm/src/safety_invariants.rs:309:    pub deployment_blockers_cleared: bool,
+programs/xxxl-svm/src/safety_invariants.rs:320:    let real_program_id_selected = false;
+programs/xxxl-svm/src/safety_invariants.rs:326:    let deployment_blockers_cleared = !xxxl_runtime_deployment_report_has_blocker(
+programs/xxxl-svm/src/safety_invariants.rs:327:        XxxlRuntimeDeploymentBlocker::PlaceholderProgramId,
+programs/xxxl-svm/src/safety_invariants.rs:344:    let unlock_ready = real_program_id_selected
+programs/xxxl-svm/src/safety_invariants.rs:346:        && deployment_blockers_cleared
+programs/xxxl-svm/src/safety_invariants.rs:353:        real_program_id_selected,
+programs/xxxl-svm/src/safety_invariants.rs:355:        deployment_blockers_cleared,
+programs/xxxl-svm/src/safety_invariants.rs:421:        assert!(summary.program_id_placeholder_boundary_active);
+programs/xxxl-svm/src/safety_invariants.rs:422:        assert!(summary.program_id_placeholder_blocker_active_in_deployment_report);
+programs/xxxl-svm/src/safety_invariants.rs:519:        assert!(summary.program_id_placeholder_boundary_active);
+programs/xxxl-svm/src/safety_invariants.rs:520:        assert!(summary.placeholder_blocker_active_in_deployment_report);
+programs/xxxl-svm/src/safety_invariants.rs:536:        assert!(report.placeholder_program_id_blocker_present);
+programs/xxxl-svm/src/safety_invariants.rs:555:            "PLACEHOLDER_PROGRAM_ID"
+programs/xxxl-svm/src/safety_invariants.rs:587:        assert!(!summary.real_program_id_selected);
+programs/xxxl-svm/src/safety_invariants.rs:589:        assert!(!summary.deployment_blockers_cleared);

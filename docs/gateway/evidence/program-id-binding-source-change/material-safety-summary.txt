@@ -1,0 +1,16 @@
+package=program-id-binding-source-change
+material_safety_check_performed=true
+
+public_program_id_recorded=true
+public_programdata_recorded=true
+public_upgrade_authority_recorded=true
+public_pda_recorded=true
+
+keypair_file_committed=false
+private_key_file_committed=false
+wallet_file_committed=false
+json_key_material_committed=false
+
+previous_false_positive=true
+previous_false_positive_reason=the safety evidence file name itself contained private-key wording
+current_sensitive_file_name_hits_expected=false

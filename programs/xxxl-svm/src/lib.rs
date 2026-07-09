@@ -6,8 +6,9 @@
 //! It remains activation-blocked: no RPC mutation, no deploy/upgrade,
 //! no route execution, and no SPL CPI execution are authorized here.
 //!
-//! Program ID, ProgramData, and upgrade-authority bindings are not changed
-//! by this source-only package.
+//! X1 testnet Program ID binding is recorded at source level.
+//! Activation remains blocked: this source package performs no RPC mutation,
+//! no deploy/upgrade, no route enablement, and no SPL CPI enablement.
 
 pub mod account_contract;
 pub mod account_order_skeleton;
@@ -50,6 +51,12 @@ pub mod validation;
 pub mod verifier;
 
 pub const XXXL_PROGRAM_ID_PLACEHOLDER: &str = "XXXLProgram111111111111111111111111111111111";
+pub const XXXL_TESTNET_PROGRAM_ID: &str = "D7AQmZNtFFFoJbducz93atteeSZhw3jq6RmsqBvaf1my";
+pub const XXXL_BOUND_PROGRAM_ID: &str = XXXL_TESTNET_PROGRAM_ID;
+pub const XXXL_TESTNET_PROGRAMDATA_ADDRESS: &str = "9tuesaPoJhrifF49vJewcg6PSWZeHAJiqQ97pq3LMW9T";
+pub const XXXL_TESTNET_UPGRADE_AUTHORITY: &str = "DTfvjtRL63u3XYHXQfgRQCdhEanUK1qqawvfEAM9hxAc";
+pub const XXXL_GATEWAY_MINT_AUTHORITY_PDA: &str = "BLVsQPYXnDsTmfMW9wrXHBFpcmexM47BcAvVcibRtRYG";
+pub const XXXL_GATEWAY_MINT_AUTHORITY_BUMP: u8 = 252;
 
 pub const XXXL_TOKEN_PROGRAM_ID: &str = "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA";
 

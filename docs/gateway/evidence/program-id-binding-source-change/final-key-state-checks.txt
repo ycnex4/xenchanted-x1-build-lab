@@ -1,0 +1,194 @@
+programs/xxxl-svm/src/lib.rs:54:pub const XXXL_TESTNET_PROGRAM_ID: &str = "D7AQmZNtFFFoJbducz93atteeSZhw3jq6RmsqBvaf1my";
+programs/xxxl-svm/src/lib.rs:55:pub const XXXL_BOUND_PROGRAM_ID: &str = XXXL_TESTNET_PROGRAM_ID;
+programs/xxxl-svm/src/program_id_status.rs:3:    XXXL_BOUND_PROGRAM_ID, XXXL_GATEWAY_MINT_AUTHORITY_BUMP, XXXL_GATEWAY_MINT_AUTHORITY_PDA,
+programs/xxxl-svm/src/program_id_status.rs:23:    pub real_program_id_bound: bool,
+programs/xxxl-svm/src/program_id_status.rs:39:        configured_program_id: XXXL_BOUND_PROGRAM_ID,
+programs/xxxl-svm/src/program_id_status.rs:45:        real_program_id_bound: true,
+programs/xxxl-svm/src/program_id_status.rs:47:        transitioned_blocker: XxxlRuntimeDeploymentBlocker::PlaceholderProgramId,
+programs/xxxl-svm/src/program_id_status.rs:48:        transitioned_blocker_code: "PLACEHOLDER_PROGRAM_ID",
+programs/xxxl-svm/src/program_id_status.rs:83:    xxxl_program_id_readiness_report().real_program_id_bound
+programs/xxxl-svm/src/program_id_status.rs:91:    xxxl_runtime_deployment_report_has_blocker(XxxlRuntimeDeploymentBlocker::PlaceholderProgramId)
+programs/xxxl-svm/src/program_id_status.rs:99:        XXXL_TESTNET_PROGRAMDATA_ADDRESS, XXXL_TESTNET_PROGRAM_ID, XXXL_TESTNET_UPGRADE_AUTHORITY,
+programs/xxxl-svm/src/program_id_status.rs:136:        assert_eq!(report.configured_program_id, XXXL_TESTNET_PROGRAM_ID);
+programs/xxxl-svm/src/program_id_status.rs:143:        assert!(report.real_program_id_bound);
+programs/xxxl-svm/src/program_id_status.rs:147:            XxxlRuntimeDeploymentBlocker::PlaceholderProgramId
+programs/xxxl-svm/src/program_id_status.rs:149:        assert_eq!(report.transitioned_blocker_code, "PLACEHOLDER_PROGRAM_ID");
+programs/xxxl-svm/src/deployment_status.rs:8:    PlaceholderProgramId,
+programs/xxxl-svm/src/deployment_status.rs:9:    LiveRouteDisabled,
+programs/xxxl-svm/src/deployment_status.rs:10:    SplCpiExecutionDisabled,
+programs/xxxl-svm/src/deployment_status.rs:13:    ProductionGuardianSetUnset,
+programs/xxxl-svm/src/deployment_status.rs:14:    ProductionProofLogUnset,
+programs/xxxl-svm/src/deployment_status.rs:15:    ExternalReviewIncomplete,
+programs/xxxl-svm/src/deployment_status.rs:44:pub const XXXL_RUNTIME_DEPLOYMENT_BLOCKERS: [XxxlRuntimeDeploymentBlocker; 4] = [
+programs/xxxl-svm/src/deployment_status.rs:45:    XxxlRuntimeDeploymentBlocker::LiveRouteDisabled,
+programs/xxxl-svm/src/deployment_status.rs:46:    XxxlRuntimeDeploymentBlocker::SplCpiExecutionDisabled,
+programs/xxxl-svm/src/deployment_status.rs:47:    XxxlRuntimeDeploymentBlocker::ProductionGuardianSetUnset,
+programs/xxxl-svm/src/deployment_status.rs:48:    XxxlRuntimeDeploymentBlocker::ProductionProofLogUnset,
+programs/xxxl-svm/src/deployment_status.rs:51:pub const XXXL_RUNTIME_DEPLOYMENT_BLOCKER_REPORTS: [XxxlRuntimeDeploymentBlockerReport; 4] = [
+programs/xxxl-svm/src/deployment_status.rs:53:        blocker: XxxlRuntimeDeploymentBlocker::LiveRouteDisabled,
+programs/xxxl-svm/src/deployment_status.rs:59:        blocker: XxxlRuntimeDeploymentBlocker::SplCpiExecutionDisabled,
+programs/xxxl-svm/src/deployment_status.rs:65:        blocker: XxxlRuntimeDeploymentBlocker::ProductionGuardianSetUnset,
+programs/xxxl-svm/src/deployment_status.rs:71:        blocker: XxxlRuntimeDeploymentBlocker::ProductionProofLogUnset,
+programs/xxxl-svm/src/deployment_status.rs:109:            XxxlRuntimeDeploymentBlocker::PlaceholderProgramId => "PLACEHOLDER_PROGRAM_ID",
+programs/xxxl-svm/src/deployment_status.rs:110:            XxxlRuntimeDeploymentBlocker::LiveRouteDisabled => "LIVE_ROUTE_DISABLED",
+programs/xxxl-svm/src/deployment_status.rs:111:            XxxlRuntimeDeploymentBlocker::SplCpiExecutionDisabled => "SPL_CPI_EXECUTION_DISABLED",
+programs/xxxl-svm/src/deployment_status.rs:118:            XxxlRuntimeDeploymentBlocker::ProductionGuardianSetUnset => {
+programs/xxxl-svm/src/deployment_status.rs:121:            XxxlRuntimeDeploymentBlocker::ProductionProofLogUnset => "PRODUCTION_PROOF_LOG_UNSET",
+programs/xxxl-svm/src/deployment_status.rs:122:            XxxlRuntimeDeploymentBlocker::ExternalReviewIncomplete => "EXTERNAL_REVIEW_INCOMPLETE",
+programs/xxxl-svm/src/deployment_status.rs:128:            XxxlRuntimeDeploymentBlocker::PlaceholderProgramId => {
+programs/xxxl-svm/src/deployment_status.rs:131:            XxxlRuntimeDeploymentBlocker::LiveRouteDisabled => {
+programs/xxxl-svm/src/deployment_status.rs:134:            XxxlRuntimeDeploymentBlocker::SplCpiExecutionDisabled => {
+programs/xxxl-svm/src/deployment_status.rs:143:            XxxlRuntimeDeploymentBlocker::ProductionGuardianSetUnset => {
+programs/xxxl-svm/src/deployment_status.rs:146:            XxxlRuntimeDeploymentBlocker::ProductionProofLogUnset => {
+programs/xxxl-svm/src/deployment_status.rs:149:            XxxlRuntimeDeploymentBlocker::ExternalReviewIncomplete => {
+programs/xxxl-svm/src/deployment_status.rs:157:            XxxlRuntimeDeploymentBlocker::PlaceholderProgramId => {
+programs/xxxl-svm/src/deployment_status.rs:160:            XxxlRuntimeDeploymentBlocker::LiveRouteDisabled => {
+programs/xxxl-svm/src/deployment_status.rs:163:            XxxlRuntimeDeploymentBlocker::SplCpiExecutionDisabled => {
+programs/xxxl-svm/src/deployment_status.rs:172:            XxxlRuntimeDeploymentBlocker::ProductionGuardianSetUnset => {
+programs/xxxl-svm/src/deployment_status.rs:175:            XxxlRuntimeDeploymentBlocker::ProductionProofLogUnset => {
+programs/xxxl-svm/src/deployment_status.rs:178:            XxxlRuntimeDeploymentBlocker::ExternalReviewIncomplete => {
+programs/xxxl-svm/src/deployment_status.rs:237:pub fn xxxl_runtime_predeploy_gate_allows_deploy() -> bool {
+programs/xxxl-svm/src/deployment_status.rs:291:        assert!(!blockers.contains(&XxxlRuntimeDeploymentBlocker::PlaceholderProgramId));
+programs/xxxl-svm/src/deployment_status.rs:292:        assert!(blockers.contains(&XxxlRuntimeDeploymentBlocker::LiveRouteDisabled));
+programs/xxxl-svm/src/deployment_status.rs:293:        assert!(blockers.contains(&XxxlRuntimeDeploymentBlocker::SplCpiExecutionDisabled));
+programs/xxxl-svm/src/deployment_status.rs:296:        assert!(blockers.contains(&XxxlRuntimeDeploymentBlocker::ProductionGuardianSetUnset));
+programs/xxxl-svm/src/deployment_status.rs:297:        assert!(blockers.contains(&XxxlRuntimeDeploymentBlocker::ProductionProofLogUnset));
+programs/xxxl-svm/src/deployment_status.rs:298:        assert!(!blockers.contains(&XxxlRuntimeDeploymentBlocker::ExternalReviewIncomplete));
+programs/xxxl-svm/src/deployment_status.rs:319:            XxxlRuntimeDeploymentBlocker::LiveRouteDisabled.description(),
+programs/xxxl-svm/src/deployment_status.rs:323:            XxxlRuntimeDeploymentBlocker::SplCpiExecutionDisabled.description(),
+programs/xxxl-svm/src/deployment_status.rs:336:            XxxlRuntimeDeploymentBlocker::PlaceholderProgramId.resolution(),
+programs/xxxl-svm/src/deployment_status.rs:340:            XxxlRuntimeDeploymentBlocker::LiveRouteDisabled.resolution(),
+programs/xxxl-svm/src/deployment_status.rs:344:            XxxlRuntimeDeploymentBlocker::ProductionGuardianSetUnset.resolution(),
+programs/xxxl-svm/src/deployment_status.rs:369:            XxxlRuntimeDeploymentBlocker::PlaceholderProgramId,
+programs/xxxl-svm/src/deployment_status.rs:373:            XxxlRuntimeDeploymentBlocker::PlaceholderProgramId.code(),
+programs/xxxl-svm/src/deployment_status.rs:374:            "PLACEHOLDER_PROGRAM_ID"
+programs/xxxl-svm/src/deployment_status.rs:376:        assert!(XxxlRuntimeDeploymentBlocker::PlaceholderProgramId
+programs/xxxl-svm/src/deployment_status.rs:379:        assert!(XxxlRuntimeDeploymentBlocker::PlaceholderProgramId
+programs/xxxl-svm/src/deployment_status.rs:383:            "PLACEHOLDER_PROGRAM_ID"
+programs/xxxl-svm/src/deployment_status.rs:448:            XxxlRuntimeDeploymentBlocker::ExternalReviewIncomplete,
+programs/xxxl-svm/src/deployment_status.rs:452:            XxxlRuntimeDeploymentBlocker::ExternalReviewIncomplete.code(),
+programs/xxxl-svm/src/deployment_status.rs:455:        assert!(XxxlRuntimeDeploymentBlocker::ExternalReviewIncomplete
+programs/xxxl-svm/src/deployment_status.rs:458:        assert!(XxxlRuntimeDeploymentBlocker::ExternalReviewIncomplete
+programs/xxxl-svm/src/deployment_status.rs:487:        assert!(!xxxl_runtime_predeploy_gate_allows_deploy());
+programs/xxxl-svm/src/deployment_status.rs:516:            XxxlRuntimeDeploymentBlocker::LiveRouteDisabled.resolution()
+programs/xxxl-svm/src/deployment_status.rs:535:    fn runtime_predeploy_gate_is_blocked_for_current_report() {
+programs/xxxl-svm/src/deployment_status.rs:550:        assert!(!xxxl_runtime_predeploy_gate_allows_deploy());
+programs/xxxl-svm/src/deployment_status.rs:554:    fn runtime_predeploy_gate_uses_the_deployment_report() {
+programs/xxxl-svm/src/deployment_status.rs:590:            .any(|blocker| blocker == XxxlRuntimeDeploymentBlocker::PlaceholderProgramId));
+programs/xxxl-svm/src/deployment_status.rs:592:            XxxlRuntimeDeploymentBlocker::PlaceholderProgramId.code(),
+programs/xxxl-svm/src/deployment_status.rs:593:            "PLACEHOLDER_PROGRAM_ID"
+programs/xxxl-svm/src/deployment_status.rs:596:            XxxlRuntimeDeploymentBlocker::PlaceholderProgramId.description(),
+programs/xxxl-svm/src/deployment_status.rs:600:            XxxlRuntimeDeploymentBlocker::PlaceholderProgramId.resolution(),
+programs/xxxl-svm/src/safety_invariants.rs:8:        xxxl_runtime_predeploy_gate_allows_deploy,
+programs/xxxl-svm/src/safety_invariants.rs:18:    pub runtime_deployable: bool,
+programs/xxxl-svm/src/safety_invariants.rs:19:    pub predeploy_gate_allows_deploy: bool,
+programs/xxxl-svm/src/safety_invariants.rs:22:    pub real_program_id_bound: bool,
+programs/xxxl-svm/src/safety_invariants.rs:29:        !self.runtime_deployable
+programs/xxxl-svm/src/safety_invariants.rs:30:            && !self.predeploy_gate_allows_deploy
+programs/xxxl-svm/src/safety_invariants.rs:33:            && self.real_program_id_bound
+programs/xxxl-svm/src/safety_invariants.rs:41:        runtime_deployable: xxxl_runtime_is_deployable(),
+programs/xxxl-svm/src/safety_invariants.rs:42:        predeploy_gate_allows_deploy: xxxl_runtime_predeploy_gate_allows_deploy(),
+programs/xxxl-svm/src/safety_invariants.rs:46:        real_program_id_bound: xxxl_program_id_real_program_id_is_bound(),
+programs/xxxl-svm/src/safety_invariants.rs:60:    pub predeploy_gate_allows_deploy: bool,
+programs/xxxl-svm/src/safety_invariants.rs:64:pub fn xxxl_predeploy_gate_safety_consistency_report() -> XxxlPredeployGateSafetyConsistencyReport {
+programs/xxxl-svm/src/safety_invariants.rs:69:        predeploy_gate_allows_deploy: summary.predeploy_gate_allows_deploy,
+programs/xxxl-svm/src/safety_invariants.rs:70:        consistent: !(summary.blocking_invariants_hold() && summary.predeploy_gate_allows_deploy),
+programs/xxxl-svm/src/safety_invariants.rs:74:pub fn xxxl_predeploy_gate_is_consistent_with_safety_invariants() -> bool {
+programs/xxxl-svm/src/safety_invariants.rs:75:    xxxl_predeploy_gate_safety_consistency_report().consistent
+programs/xxxl-svm/src/safety_invariants.rs:122:    pub predeploy_gate_consistent: bool,
+programs/xxxl-svm/src/safety_invariants.rs:129:    let predeploy_gate_consistent = xxxl_predeploy_gate_is_consistent_with_safety_invariants();
+programs/xxxl-svm/src/safety_invariants.rs:134:        predeploy_gate_consistent,
+programs/xxxl-svm/src/safety_invariants.rs:137:        all_activation_gates_consistent: predeploy_gate_consistent
+programs/xxxl-svm/src/safety_invariants.rs:151:    pub runtime_deployable: bool,
+programs/xxxl-svm/src/safety_invariants.rs:164:        runtime_deployable: safety_summary.runtime_deployable,
+programs/xxxl-svm/src/safety_invariants.rs:167:            && !safety_summary.runtime_deployable,
+programs/xxxl-svm/src/safety_invariants.rs:178:    pub predeploy_gate_allows_deploy: bool,
+programs/xxxl-svm/src/safety_invariants.rs:185:    let predeploy_report = xxxl_predeploy_gate_safety_consistency_report();
+programs/xxxl-svm/src/safety_invariants.rs:189:        predeploy_gate_allows_deploy: predeploy_report.predeploy_gate_allows_deploy,
+programs/xxxl-svm/src/safety_invariants.rs:190:        consistent: !(lock_summary.runtime_locked && predeploy_report.predeploy_gate_allows_deploy),
+programs/xxxl-svm/src/safety_invariants.rs:201:    pub real_program_id_bound: bool,
+programs/xxxl-svm/src/safety_invariants.rs:206:    pub predeploy_gate_blocked: bool,
+programs/xxxl-svm/src/safety_invariants.rs:213:    let predeploy_report = xxxl_predeploy_gate_safety_consistency_report();
+programs/xxxl-svm/src/safety_invariants.rs:217:    let predeploy_gate_blocked = !predeploy_report.predeploy_gate_allows_deploy;
+programs/xxxl-svm/src/safety_invariants.rs:221:        real_program_id_bound: safety_summary.real_program_id_bound,
+programs/xxxl-svm/src/safety_invariants.rs:228:        predeploy_gate_blocked,
+programs/xxxl-svm/src/safety_invariants.rs:230:            && safety_summary.real_program_id_bound
+programs/xxxl-svm/src/safety_invariants.rs:235:            && predeploy_gate_blocked,
+programs/xxxl-svm/src/safety_invariants.rs:261:        XxxlRuntimeDeploymentBlocker::PlaceholderProgramId,
+programs/xxxl-svm/src/safety_invariants.rs:264:        xxxl_runtime_deployment_report_has_blocker(XxxlRuntimeDeploymentBlocker::LiveRouteDisabled);
+programs/xxxl-svm/src/safety_invariants.rs:266:        XxxlRuntimeDeploymentBlocker::SplCpiExecutionDisabled,
+programs/xxxl-svm/src/safety_invariants.rs:275:        XxxlRuntimeDeploymentBlocker::ProductionGuardianSetUnset,
+programs/xxxl-svm/src/safety_invariants.rs:278:        XxxlRuntimeDeploymentBlocker::ProductionProofLogUnset,
+programs/xxxl-svm/src/safety_invariants.rs:281:        XxxlRuntimeDeploymentBlocker::ExternalReviewIncomplete,
+programs/xxxl-svm/src/safety_invariants.rs:313:    pub real_program_id_selected: bool,
+programs/xxxl-svm/src/safety_invariants.rs:326:    let real_program_id_selected = true;
+programs/xxxl-svm/src/safety_invariants.rs:333:        XxxlRuntimeDeploymentBlocker::PlaceholderProgramId,
+programs/xxxl-svm/src/safety_invariants.rs:335:        XxxlRuntimeDeploymentBlocker::LiveRouteDisabled,
+programs/xxxl-svm/src/safety_invariants.rs:337:        XxxlRuntimeDeploymentBlocker::SplCpiExecutionDisabled,
+programs/xxxl-svm/src/safety_invariants.rs:343:        XxxlRuntimeDeploymentBlocker::ProductionGuardianSetUnset,
+programs/xxxl-svm/src/safety_invariants.rs:345:        XxxlRuntimeDeploymentBlocker::ProductionProofLogUnset,
+programs/xxxl-svm/src/safety_invariants.rs:347:        XxxlRuntimeDeploymentBlocker::ExternalReviewIncomplete,
+programs/xxxl-svm/src/safety_invariants.rs:350:    let unlock_ready = real_program_id_selected
+programs/xxxl-svm/src/safety_invariants.rs:359:        real_program_id_selected,
+programs/xxxl-svm/src/safety_invariants.rs:425:        assert!(!summary.runtime_deployable);
+programs/xxxl-svm/src/safety_invariants.rs:426:        assert!(!summary.predeploy_gate_allows_deploy);
+programs/xxxl-svm/src/safety_invariants.rs:429:        assert!(summary.real_program_id_bound);
+programs/xxxl-svm/src/safety_invariants.rs:442:    fn predeploy_gate_safety_consistency_report_is_blocked_and_consistent() {
+programs/xxxl-svm/src/safety_invariants.rs:443:        let report = xxxl_predeploy_gate_safety_consistency_report();
+programs/xxxl-svm/src/safety_invariants.rs:446:        assert!(!report.predeploy_gate_allows_deploy);
+programs/xxxl-svm/src/safety_invariants.rs:451:    fn predeploy_gate_is_consistent_with_current_safety_invariants() {
+programs/xxxl-svm/src/safety_invariants.rs:452:        assert!(xxxl_predeploy_gate_is_consistent_with_safety_invariants());
+programs/xxxl-svm/src/safety_invariants.rs:484:        assert!(summary.predeploy_gate_consistent);
+programs/xxxl-svm/src/safety_invariants.rs:500:        assert!(!summary.runtime_deployable);
+programs/xxxl-svm/src/safety_invariants.rs:513:        assert!(!report.predeploy_gate_allows_deploy);
+programs/xxxl-svm/src/safety_invariants.rs:526:        assert!(summary.real_program_id_bound);
+programs/xxxl-svm/src/safety_invariants.rs:531:        assert!(summary.predeploy_gate_blocked);
+programs/xxxl-svm/src/safety_invariants.rs:563:            "PLACEHOLDER_PROGRAM_ID"
+programs/xxxl-svm/src/safety_invariants.rs:595:        assert!(summary.real_program_id_selected);
+docs/gateway/current-runtime-state.md:17:- next_required_action: continue with program-id-dependent-pda-evidence approval request
+docs/gateway/current-runtime-state.md:48:| program-id-binding | COMPLETE | PlaceholderProgramId removed from active source blockers | continue with program-id-dependent-pda-evidence approval request |
+docs/gateway/current-runtime-state.md:49:| guardian-proof-log | PAUSED | ProductionGuardianSetUnset, ProductionProofLogUnset | future instantiation package |
+docs/gateway/current-runtime-state.md:58:| PlaceholderProgramId | REMOVED_FROM_ACTIVE_SOURCE_BLOCKERS | program_id_bound_source_changed | REMOVED |
+docs/gateway/current-runtime-state.md:59:| LiveRouteDisabled | ACTIVE | N/A | ACTIVE |
+docs/gateway/current-runtime-state.md:60:| SplCpiExecutionDisabled | ACTIVE | N/A | ACTIVE |
+docs/gateway/current-runtime-state.md:61:| ProductionGuardianSetUnset | ACTIVE | policy_defined_not_instantiated | ACTIVE |
+docs/gateway/current-runtime-state.md:62:| ProductionProofLogUnset | ACTIVE | policy_defined_not_instantiated | ACTIVE |
+docs/gateway/current-runtime-state.md:63:| ExternalReviewIncomplete | REMOVED_FROM_ACTIVE_SOURCE_BLOCKERS | review_approved_source_changed | REMOVED |
+docs/gateway/current-runtime-state.md:69:| ExternalReviewIncomplete | true | true | REMOVED |
+docs/gateway/current-runtime-state.md:70:| ProductionGuardianSetUnset | policy_defined | false | ACTIVE |
+docs/gateway/current-runtime-state.md:71:| ProductionProofLogUnset | policy_defined | false | ACTIVE |
+docs/gateway/current-runtime-state.md:81:| runtime_deployable | false | programs/xxxl-svm/src/deployment_status.rs |
+docs/gateway/current-runtime-state.md:82:| predeploy_gate | blocked | programs/xxxl-svm/src/deployment_status.rs |
+docs/gateway/current-runtime-state.md:98:- ExternalReviewIncomplete drift resolved by external-review-blocker-removal-source-change: source active blocker removed and tests now expect it inactive.
+docs/gateway/current-runtime-state.md:105:1. ExternalReviewIncomplete:
+docs/gateway/current-runtime-state.md:140:program-id-dependent-pda-evidence is the next approval-request candidate.
+docs/gateway/current-runtime-state.md:149:- additional blocker removal beyond ExternalReviewIncomplete and PlaceholderProgramId
+docs/gateway/current-execution-plan.md:30:- ExternalReviewIncomplete effective status: REMOVED
+docs/gateway/current-execution-plan.md:47:- ExternalReviewIncomplete was removed only by the approved dedicated source-change package;
+docs/gateway/current-execution-plan.md:65:- additional blocker removal beyond ExternalReviewIncomplete;
+docs/gateway/current-execution-plan.md:97:| 3 | external-review-blocker-removal-source-change | SOURCE_CHANGE_NO_ACTIVATION | Remove ExternalReviewIncomplete only if explicitly approved; update tests and safety expectations | source blocker removed, no activation |
+docs/gateway/current-execution-plan.md:98:| 4 | program-id-binding-source-change | SOURCE_CHANGE_NO_ACTIVATION | Replace placeholder Program ID model with reviewed real Program ID binding path | PlaceholderProgramId state updated only as approved |
+docs/gateway/current-execution-plan.md:99:| 5 | program-id-dependent-pda-evidence | DOCUMENTATION_ONLY or LOCAL_ONLY_GENERATION | Regenerate/review Program-ID-dependent PDA evidence | evidence reviewed, no live action |
+docs/gateway/current-execution-plan.md:153:Next package for approval request:
+docs/gateway/current-execution-plan.md:155:- program-id-dependent-pda-evidence
+docs/gateway/current-execution-plan.md:160:- keep ExternalReviewIncomplete removed from active source blockers;
+docs/gateway/current-execution-plan.md:161:- keep PlaceholderProgramId removed from active source blockers;
+docs/gateway/program-id-binding-source-change.md:9:It removes `PlaceholderProgramId` from active deployment blockers while preserving the blocker enum/code/resolution as a historical transitioned blocker.
+docs/gateway/program-id-binding-source-change.md:29:- LiveRouteDisabled;
+docs/gateway/program-id-binding-source-change.md:30:- SplCpiExecutionDisabled;
+docs/gateway/program-id-binding-source-change.md:31:- ProductionGuardianSetUnset;
+docs/gateway/program-id-binding-source-change.md:32:- ProductionProofLogUnset.
+docs/gateway/program-id-binding-source-change.md:36:- ExternalReviewIncomplete remains REMOVED.
+docs/gateway/program-id-binding-source-change.md:37:- PlaceholderProgramId becomes REMOVED from active source blockers.
+docs/gateway/program-id-binding-source-change.md:41:The prior removal of `ExternalReviewIncomplete` does not pre-approve Program ID binding as deployment-ready.
+docs/gateway/program-id-binding-source-change.md:47:- real_program_id_bound=true
+docs/gateway/program-id-binding-source-change.md:48:- PlaceholderProgramId_source_blocker_removed=true
+docs/gateway/program-id-binding-source-change.md:49:- PlaceholderProgramId_effective_status=REMOVED
+docs/gateway/program-id-binding-source-change.md:50:- ExternalReviewIncomplete_effective_status=REMOVED
+docs/gateway/program-id-binding-source-change.md:51:- LiveRouteDisabled remains ACTIVE
+docs/gateway/program-id-binding-source-change.md:52:- SplCpiExecutionDisabled remains ACTIVE
+docs/gateway/program-id-binding-source-change.md:53:- ProductionGuardianSetUnset remains ACTIVE
+docs/gateway/program-id-binding-source-change.md:54:- ProductionProofLogUnset remains ACTIVE
+docs/gateway/program-id-binding-source-change.md:55:- runtime_deployable=false
+docs/gateway/program-id-binding-source-change.md:56:- predeploy_gate=blocked
+docs/gateway/program-id-binding-source-change.md:67:program-id-dependent-pda-evidence

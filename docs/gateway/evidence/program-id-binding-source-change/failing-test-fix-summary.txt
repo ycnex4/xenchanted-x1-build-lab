@@ -1,0 +1,16 @@
+package=program-id-binding-source-change
+fix_type=test_expectation_alignment
+
+fixed_test_1=deployment_status::runtime_deployment_blocker_resolutions_are_human_readable
+fixed_test_1_reason=PlaceholderProgramId is now historical/transitioned but its code/resolution remain visible.
+
+fixed_test_2=deployment_status::runtime_deployment_status_keeps_placeholder_program_id_visible
+fixed_test_2_reason=PlaceholderProgramId must remain visible as historical metadata but absent from active blockers.
+
+fixed_test_3=safety_invariants::runtime_safety_lock_evidence_summary_collects_current_evidence
+fixed_test_3_reason=real Program ID is now bound; placeholder boundary and blocker are inactive while safety lock remains active through route/CPI/deployment blockers.
+
+source_model_changed=false
+activation_authorized=false
+deploy_authorized=false
+rpc_mutation_authorized=false

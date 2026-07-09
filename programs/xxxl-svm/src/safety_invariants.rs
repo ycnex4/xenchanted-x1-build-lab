@@ -9,7 +9,7 @@ use crate::{
     },
     program_id_status::{
         xxxl_program_id_placeholder_blocker_is_active_in_deployment_report,
-        xxxl_program_id_placeholder_boundary_is_active,
+        xxxl_program_id_placeholder_boundary_is_active, xxxl_program_id_real_program_id_is_bound,
     },
 };
 
@@ -19,6 +19,7 @@ pub struct XxxlRuntimeSafetyInvariantSummary {
     pub predeploy_gate_allows_deploy: bool,
     pub program_id_placeholder_boundary_active: bool,
     pub program_id_placeholder_blocker_active_in_deployment_report: bool,
+    pub real_program_id_bound: bool,
     pub live_route_activation_enabled: bool,
     pub spl_cpi_execution_enabled: bool,
 }
@@ -27,8 +28,9 @@ impl XxxlRuntimeSafetyInvariantSummary {
     pub fn blocking_invariants_hold(self) -> bool {
         !self.runtime_deployable
             && !self.predeploy_gate_allows_deploy
-            && self.program_id_placeholder_boundary_active
-            && self.program_id_placeholder_blocker_active_in_deployment_report
+            && !self.program_id_placeholder_boundary_active
+            && !self.program_id_placeholder_blocker_active_in_deployment_report
+            && self.real_program_id_bound
             && !self.live_route_activation_enabled
             && !self.spl_cpi_execution_enabled
     }
@@ -41,6 +43,7 @@ pub fn xxxl_runtime_safety_invariant_summary() -> XxxlRuntimeSafetyInvariantSumm
         program_id_placeholder_boundary_active: xxxl_program_id_placeholder_boundary_is_active(),
         program_id_placeholder_blocker_active_in_deployment_report:
             xxxl_program_id_placeholder_blocker_is_active_in_deployment_report(),
+        real_program_id_bound: xxxl_program_id_real_program_id_is_bound(),
         live_route_activation_enabled:
             live_route_activation_from_process_instruction_enabled_for_deployment_status(),
         spl_cpi_execution_enabled: spl_cpi_execution_enabled_for_deployment_status(),
@@ -195,6 +198,7 @@ pub fn xxxl_safety_lock_is_consistent_with_deployment_gate() -> bool {
 #[derive(Clone, Copy, Debug, PartialEq, Eq)]
 pub struct XxxlRuntimeSafetyLockEvidenceSummary {
     pub runtime_safety_lock_active: bool,
+    pub real_program_id_bound: bool,
     pub program_id_placeholder_boundary_active: bool,
     pub placeholder_blocker_active_in_deployment_report: bool,
     pub live_route_disabled: bool,
@@ -214,6 +218,7 @@ pub fn xxxl_runtime_safety_lock_evidence_summary() -> XxxlRuntimeSafetyLockEvide
 
     XxxlRuntimeSafetyLockEvidenceSummary {
         runtime_safety_lock_active: lock_summary.runtime_locked,
+        real_program_id_bound: safety_summary.real_program_id_bound,
         program_id_placeholder_boundary_active: safety_summary
             .program_id_placeholder_boundary_active,
         placeholder_blocker_active_in_deployment_report: safety_summary
@@ -222,8 +227,9 @@ pub fn xxxl_runtime_safety_lock_evidence_summary() -> XxxlRuntimeSafetyLockEvide
         spl_cpi_execution_disabled,
         predeploy_gate_blocked,
         evidence_complete: lock_summary.runtime_locked
-            && safety_summary.program_id_placeholder_boundary_active
-            && safety_summary.program_id_placeholder_blocker_active_in_deployment_report
+            && safety_summary.real_program_id_bound
+            && !safety_summary.program_id_placeholder_boundary_active
+            && !safety_summary.program_id_placeholder_blocker_active_in_deployment_report
             && live_route_disabled
             && spl_cpi_execution_disabled
             && predeploy_gate_blocked,
@@ -286,7 +292,7 @@ pub fn xxxl_deployment_blocker_evidence_consistency_report(
         production_proof_log_unset_blocker_present,
         external_review_incomplete_blocker_present,
         evidence_consistent: safety_lock_evidence_complete
-            && placeholder_program_id_blocker_present
+            && !placeholder_program_id_blocker_present
             && live_route_disabled_blocker_present
             && spl_cpi_execution_disabled_blocker_present
             && !account_contract_unreviewed_blocker_present
@@ -317,7 +323,7 @@ pub struct XxxlRuntimeSafetyUnlockCriteriaSummary {
 pub fn xxxl_runtime_safety_unlock_criteria_summary() -> XxxlRuntimeSafetyUnlockCriteriaSummary {
     let runtime_safety_lock_active = xxxl_runtime_safety_lock_is_active();
 
-    let real_program_id_selected = false;
+    let real_program_id_selected = true;
     let production_pda_fixtures_verified = false;
     let live_route_review_complete = false;
     let spl_cpi_review_complete = false;
@@ -418,8 +424,9 @@ mod tests {
 
         assert!(!summary.runtime_deployable);
         assert!(!summary.predeploy_gate_allows_deploy);
-        assert!(summary.program_id_placeholder_boundary_active);
-        assert!(summary.program_id_placeholder_blocker_active_in_deployment_report);
+        assert!(!summary.program_id_placeholder_boundary_active);
+        assert!(!summary.program_id_placeholder_blocker_active_in_deployment_report);
+        assert!(summary.real_program_id_bound);
         assert!(!summary.live_route_activation_enabled);
         assert!(!summary.spl_cpi_execution_enabled);
     }
@@ -516,8 +523,9 @@ mod tests {
         let summary = xxxl_runtime_safety_lock_evidence_summary();
 
         assert!(summary.runtime_safety_lock_active);
-        assert!(summary.program_id_placeholder_boundary_active);
-        assert!(summary.placeholder_blocker_active_in_deployment_report);
+        assert!(summary.real_program_id_bound);
+        assert!(!summary.program_id_placeholder_boundary_active);
+        assert!(!summary.placeholder_blocker_active_in_deployment_report);
         assert!(summary.live_route_disabled);
         assert!(summary.spl_cpi_execution_disabled);
         assert!(summary.predeploy_gate_blocked);
@@ -533,7 +541,7 @@ mod tests {
         let report = xxxl_deployment_blocker_evidence_consistency_report();
 
         assert!(report.safety_lock_evidence_complete);
-        assert!(report.placeholder_program_id_blocker_present);
+        assert!(!report.placeholder_program_id_blocker_present);
         assert!(report.live_route_disabled_blocker_present);
         assert!(report.spl_cpi_execution_disabled_blocker_present);
         assert!(!report.account_contract_unreviewed_blocker_present);
@@ -551,7 +559,7 @@ mod tests {
 
     #[test]
     fn mollusk_coverage_transition_keeps_runtime_blocked_and_safety_locked() {
-        assert!(xxxl_runtime_deployment_report_has_blocker_code(
+        assert!(!xxxl_runtime_deployment_report_has_blocker_code(
             "PLACEHOLDER_PROGRAM_ID"
         ));
         assert!(xxxl_runtime_deployment_report_has_blocker_code(
@@ -584,7 +592,7 @@ mod tests {
         let summary = xxxl_runtime_safety_unlock_criteria_summary();
 
         assert!(summary.runtime_safety_lock_active);
-        assert!(!summary.real_program_id_selected);
+        assert!(summary.real_program_id_selected);
         assert!(!summary.production_pda_fixtures_verified);
         assert!(!summary.deployment_blockers_cleared);
         assert!(!summary.live_route_review_complete);
