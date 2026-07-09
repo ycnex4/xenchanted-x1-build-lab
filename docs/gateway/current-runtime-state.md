@@ -11,10 +11,10 @@ If source/docs/context disagree, source is the runtime ground truth, and this le
 ## Ledger Metadata
 
 - reconciled_source_base_commit: 65a8e83
-- last_updated_package: external-review-blocker-removal-source-change
+- last_updated_package: program-id-binding-source-change
 - ledger_author: Sergey Stepanenko / ChatGPT assisted
 - package_scope: DOCUMENTATION_ONLY
-- next_required_action: continue with program-id-binding-source-change approval request
+- next_required_action: continue with program-id-dependent-pda-evidence approval request
 
 ## Authorization Boundary
 
@@ -45,7 +45,7 @@ If source/docs/context disagree, source is the runtime ground truth, and this le
 | Lane | Status | Blocking Condition | Next Step |
 |:---|:---|:---|:---|
 | gateway-state-reconciliation | CLOSED | reconciliation package complete | no further action in this lane |
-| program-id-binding | ACTIVE | PlaceholderProgramId | continue with program-id-binding-source-change approval request |
+| program-id-binding | COMPLETE | PlaceholderProgramId removed from active source blockers | continue with program-id-dependent-pda-evidence approval request |
 | guardian-proof-log | PAUSED | ProductionGuardianSetUnset, ProductionProofLogUnset | future instantiation package |
 | local-only-fixtures | NO-GO | local-only fixture emission not approved | separate future GO required |
 
@@ -55,7 +55,7 @@ Ground truth from current main/source state.
 
 | Blocker | Source Status | Review Status | Effective Status |
 |:---|:---|:---|:---|
-| PlaceholderProgramId | ACTIVE | N/A | ACTIVE |
+| PlaceholderProgramId | REMOVED_FROM_ACTIVE_SOURCE_BLOCKERS | program_id_bound_source_changed | REMOVED |
 | LiveRouteDisabled | ACTIVE | N/A | ACTIVE |
 | SplCpiExecutionDisabled | ACTIVE | N/A | ACTIVE |
 | ProductionGuardianSetUnset | ACTIVE | policy_defined_not_instantiated | ACTIVE |
@@ -137,7 +137,7 @@ Selected next package for approval request:
 
 - external-review-blocker-removal-source-change
 
-program-id-binding-source-change is the next approval-request candidate.
+program-id-dependent-pda-evidence is the next approval-request candidate.
 
 Neither is authorized by this ledger.
 
@@ -146,7 +146,7 @@ Neither is authorized by this ledger.
 - source changes
 - blocker removal
 - Program ID source binding
-- additional blocker removal beyond ExternalReviewIncomplete
+- additional blocker removal beyond ExternalReviewIncomplete and PlaceholderProgramId
 - live route enablement
 - SPL CPI execution enablement
 - deployment

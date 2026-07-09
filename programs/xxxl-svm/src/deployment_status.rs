@@ -41,21 +41,14 @@ pub enum XxxlRuntimeDeploymentGateResult {
 pub const XXXL_RUNTIME_DEPLOYMENT_STATUS: XxxlRuntimeDeploymentStatus =
     XxxlRuntimeDeploymentStatus::SourceBoundaryReadyActivationBlocked;
 
-pub const XXXL_RUNTIME_DEPLOYMENT_BLOCKERS: [XxxlRuntimeDeploymentBlocker; 5] = [
-    XxxlRuntimeDeploymentBlocker::PlaceholderProgramId,
+pub const XXXL_RUNTIME_DEPLOYMENT_BLOCKERS: [XxxlRuntimeDeploymentBlocker; 4] = [
     XxxlRuntimeDeploymentBlocker::LiveRouteDisabled,
     XxxlRuntimeDeploymentBlocker::SplCpiExecutionDisabled,
     XxxlRuntimeDeploymentBlocker::ProductionGuardianSetUnset,
     XxxlRuntimeDeploymentBlocker::ProductionProofLogUnset,
 ];
 
-pub const XXXL_RUNTIME_DEPLOYMENT_BLOCKER_REPORTS: [XxxlRuntimeDeploymentBlockerReport; 5] = [
-    XxxlRuntimeDeploymentBlockerReport {
-        blocker: XxxlRuntimeDeploymentBlocker::PlaceholderProgramId,
-        code: "PLACEHOLDER_PROGRAM_ID",
-        description: "The runtime still exposes a placeholder Program ID boundary.",
-        resolution: "Set and review the real Program ID and regenerate all Program-ID-dependent PDA fixtures.",
-    },
+pub const XXXL_RUNTIME_DEPLOYMENT_BLOCKER_REPORTS: [XxxlRuntimeDeploymentBlockerReport; 4] = [
     XxxlRuntimeDeploymentBlockerReport {
         blocker: XxxlRuntimeDeploymentBlocker::LiveRouteDisabled,
         code: "LIVE_ROUTE_DISABLED",
@@ -294,8 +287,8 @@ mod tests {
     fn runtime_deployment_blockers_are_explicit() {
         let blockers = xxxl_runtime_deployment_blockers();
 
-        assert_eq!(blockers.len(), 5);
-        assert!(blockers.contains(&XxxlRuntimeDeploymentBlocker::PlaceholderProgramId));
+        assert_eq!(blockers.len(), 4);
+        assert!(!blockers.contains(&XxxlRuntimeDeploymentBlocker::PlaceholderProgramId));
         assert!(blockers.contains(&XxxlRuntimeDeploymentBlocker::LiveRouteDisabled));
         assert!(blockers.contains(&XxxlRuntimeDeploymentBlocker::SplCpiExecutionDisabled));
         assert!(!blockers.contains(&XxxlRuntimeDeploymentBlocker::AccountContractUnreviewed));
@@ -309,11 +302,10 @@ mod tests {
     fn runtime_deployment_blocker_codes_are_stable() {
         let blockers = xxxl_runtime_deployment_blockers();
 
-        assert_eq!(blockers[0].code(), "PLACEHOLDER_PROGRAM_ID");
-        assert_eq!(blockers[1].code(), "LIVE_ROUTE_DISABLED");
-        assert_eq!(blockers[2].code(), "SPL_CPI_EXECUTION_DISABLED");
-        assert_eq!(blockers[3].code(), "PRODUCTION_GUARDIAN_SET_UNSET");
-        assert_eq!(blockers[4].code(), "PRODUCTION_PROOF_LOG_UNSET");
+        assert_eq!(blockers[0].code(), "LIVE_ROUTE_DISABLED");
+        assert_eq!(blockers[1].code(), "SPL_CPI_EXECUTION_DISABLED");
+        assert_eq!(blockers[2].code(), "PRODUCTION_GUARDIAN_SET_UNSET");
+        assert_eq!(blockers[3].code(), "PRODUCTION_PROOF_LOG_UNSET");
     }
 
     #[test]
@@ -345,6 +337,10 @@ mod tests {
             "Set and review the real Program ID and regenerate all Program-ID-dependent PDA fixtures."
         );
         assert_eq!(
+            XxxlRuntimeDeploymentBlocker::LiveRouteDisabled.resolution(),
+            "Activate the live route only in a reviewed stage after all deployment blockers are resolved."
+        );
+        assert_eq!(
             XxxlRuntimeDeploymentBlocker::ProductionGuardianSetUnset.resolution(),
             "Define, publish, and review the production guardian set, threshold, rotation policy, and key custody model."
         );
@@ -368,18 +364,24 @@ mod tests {
     }
 
     #[test]
-    fn runtime_deployment_blocker_report_lookup_finds_placeholder_program_id() {
-        let report = xxxl_runtime_deployment_blocker_report(
+    fn runtime_deployment_report_has_transitioned_placeholder_program_id_blocker() {
+        assert!(xxxl_runtime_deployment_blocker_report(
             XxxlRuntimeDeploymentBlocker::PlaceholderProgramId,
         )
-        .expect("placeholder Program ID blocker report");
-
+        .is_none());
         assert_eq!(
-            report.blocker,
-            XxxlRuntimeDeploymentBlocker::PlaceholderProgramId
+            XxxlRuntimeDeploymentBlocker::PlaceholderProgramId.code(),
+            "PLACEHOLDER_PROGRAM_ID"
         );
-        assert_eq!(report.code, "PLACEHOLDER_PROGRAM_ID");
-        assert_eq!(report.code, report.blocker.code());
+        assert!(XxxlRuntimeDeploymentBlocker::PlaceholderProgramId
+            .description()
+            .contains("placeholder Program ID"));
+        assert!(XxxlRuntimeDeploymentBlocker::PlaceholderProgramId
+            .resolution()
+            .contains("Program ID"));
+        assert!(!xxxl_runtime_deployment_report_has_blocker_code(
+            "PLACEHOLDER_PROGRAM_ID"
+        ));
     }
 
     #[test]
@@ -473,7 +475,6 @@ mod tests {
         assert_eq!(
             active_codes,
             vec![
-                "PLACEHOLDER_PROGRAM_ID",
                 "LIVE_ROUTE_DISABLED",
                 "SPL_CPI_EXECUTION_DISABLED",
                 "PRODUCTION_GUARDIAN_SET_UNSET",
@@ -505,15 +506,14 @@ mod tests {
             "The XXXL SVM runtime source boundary is ready, but activation remains blocked."
         );
         assert!(!report.deployable);
-        assert_eq!(report.blockers.len(), 5);
-        assert_eq!(report.blockers[0].code, "PLACEHOLDER_PROGRAM_ID");
-        assert_eq!(report.blockers[1].code, "LIVE_ROUTE_DISABLED");
-        assert_eq!(report.blockers[2].code, "SPL_CPI_EXECUTION_DISABLED");
-        assert_eq!(report.blockers[3].code, "PRODUCTION_GUARDIAN_SET_UNSET");
-        assert_eq!(report.blockers[4].code, "PRODUCTION_PROOF_LOG_UNSET");
+        assert_eq!(report.blockers.len(), 4);
+        assert_eq!(report.blockers[0].code, "LIVE_ROUTE_DISABLED");
+        assert_eq!(report.blockers[1].code, "SPL_CPI_EXECUTION_DISABLED");
+        assert_eq!(report.blockers[2].code, "PRODUCTION_GUARDIAN_SET_UNSET");
+        assert_eq!(report.blockers[3].code, "PRODUCTION_PROOF_LOG_UNSET");
         assert_eq!(
             report.blockers[0].resolution,
-            XxxlRuntimeDeploymentBlocker::PlaceholderProgramId.resolution()
+            XxxlRuntimeDeploymentBlocker::LiveRouteDisabled.resolution()
         );
     }
 
@@ -540,7 +540,7 @@ mod tests {
                     "SOURCE_BOUNDARY_READY_ACTIVATION_BLOCKED"
                 );
                 assert!(!report.deployable);
-                assert_eq!(report.blockers.len(), 5);
+                assert_eq!(report.blockers.len(), 4);
             }
             XxxlRuntimeDeploymentGateResult::Ready(_) => {
                 panic!("activation-blocked XXXL runtime must not pass the predeploy gate");
@@ -577,12 +577,21 @@ mod tests {
 
     #[test]
     fn runtime_deployment_status_keeps_placeholder_program_id_visible() {
+        let report = xxxl_runtime_deployment_report();
+
         assert_eq!(
             XXXL_PROGRAM_ID_PLACEHOLDER,
             "XXXLProgram111111111111111111111111111111111"
         );
-        assert!(xxxl_runtime_deployment_blockers()
-            .contains(&XxxlRuntimeDeploymentBlocker::PlaceholderProgramId));
+        assert!(!report
+            .blockers
+            .iter()
+            .map(|blocker_report| blocker_report.blocker)
+            .any(|blocker| blocker == XxxlRuntimeDeploymentBlocker::PlaceholderProgramId));
+        assert_eq!(
+            XxxlRuntimeDeploymentBlocker::PlaceholderProgramId.code(),
+            "PLACEHOLDER_PROGRAM_ID"
+        );
         assert_eq!(
             XxxlRuntimeDeploymentBlocker::PlaceholderProgramId.description(),
             "The runtime still exposes a placeholder Program ID boundary."

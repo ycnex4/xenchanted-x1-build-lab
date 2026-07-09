@@ -1,0 +1,34 @@
+package=program-id-binding-source-change
+scope=SOURCE_CHANGE_NO_ACTIVATION
+
+cargo_test_after_initial_patch_exit=101
+initial_failures_count=3
+initial_failures_reason=old PlaceholderProgramId active-blocker assertions remained after transitioning PlaceholderProgramId to historical metadata
+
+cargo_test_after_rerun_1_exit=0
+cargo_test_log=docs/gateway/evidence/program-id-binding-source-change/cargo-test-after-program-id-binding-rerun-1.txt
+warnings_count=88
+errors_count=0
+failures_count=0
+
+source_change_result=PlaceholderProgramId removed from active source blockers
+historical_enum_code_resolution_preserved=true
+real_program_id_bound=true
+
+program_id=D7AQmZNtFFFoJbducz93atteeSZhw3jq6RmsqBvaf1my
+gateway_mint_authority_pda=BLVsQPYXnDsTmfMW9wrXHBFpcmexM47BcAvVcibRtRYG
+gateway_mint_authority_bump=252
+
+runtime_deployable_expected=false
+predeploy_gate_expected=blocked
+
+activation_authorized=false
+deploy_authorized=false
+upgrade_authorized=false
+rpc_mutation_authorized=false
+route_enablement_authorized=false
+spl_cpi_enablement_authorized=false
+guardian_set_instantiation_authorized=false
+proof_log_instantiation_authorized=false
+local_only_fixture_emission_authorized=false
+cleanup_authorized=false

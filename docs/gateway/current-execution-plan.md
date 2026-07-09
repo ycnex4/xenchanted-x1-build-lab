@@ -152,13 +152,13 @@ Review docs/gateway/program-id-binding-resolution-plan.md and choose the next ap
 
 Next package for approval request:
 
-- program-id-binding-source-change
+- program-id-dependent-pda-evidence
 
 Required behavior until a separate explicit approval is received:
 
 - use docs/gateway/current-runtime-state.md as canonical coordination state;
 - keep ExternalReviewIncomplete removed from active source blockers;
-- keep PlaceholderProgramId as ACTIVE;
+- keep PlaceholderProgramId removed from active source blockers;
 - do not change source;
 - do not remove blockers;
 - do not activate route;

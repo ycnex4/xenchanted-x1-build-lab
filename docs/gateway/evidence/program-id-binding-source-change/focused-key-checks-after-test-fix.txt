@@ -1,0 +1,41 @@
+programs/xxxl-svm/src/deployment_status.rs:8:    PlaceholderProgramId,
+programs/xxxl-svm/src/deployment_status.rs:109:            XxxlRuntimeDeploymentBlocker::PlaceholderProgramId => "PLACEHOLDER_PROGRAM_ID",
+programs/xxxl-svm/src/deployment_status.rs:128:            XxxlRuntimeDeploymentBlocker::PlaceholderProgramId => {
+programs/xxxl-svm/src/deployment_status.rs:157:            XxxlRuntimeDeploymentBlocker::PlaceholderProgramId => {
+programs/xxxl-svm/src/deployment_status.rs:291:        assert!(!blockers.contains(&XxxlRuntimeDeploymentBlocker::PlaceholderProgramId));
+programs/xxxl-svm/src/deployment_status.rs:329:    fn runtime_deployment_blocker_resolutions_are_human_readable() {
+programs/xxxl-svm/src/deployment_status.rs:336:            XxxlRuntimeDeploymentBlocker::PlaceholderProgramId.resolution(),
+programs/xxxl-svm/src/deployment_status.rs:369:            XxxlRuntimeDeploymentBlocker::PlaceholderProgramId,
+programs/xxxl-svm/src/deployment_status.rs:373:            XxxlRuntimeDeploymentBlocker::PlaceholderProgramId.code(),
+programs/xxxl-svm/src/deployment_status.rs:374:            "PLACEHOLDER_PROGRAM_ID"
+programs/xxxl-svm/src/deployment_status.rs:376:        assert!(XxxlRuntimeDeploymentBlocker::PlaceholderProgramId
+programs/xxxl-svm/src/deployment_status.rs:379:        assert!(XxxlRuntimeDeploymentBlocker::PlaceholderProgramId
+programs/xxxl-svm/src/deployment_status.rs:383:            "PLACEHOLDER_PROGRAM_ID"
+programs/xxxl-svm/src/deployment_status.rs:579:    fn runtime_deployment_status_keeps_placeholder_program_id_visible() {
+programs/xxxl-svm/src/deployment_status.rs:590:            .any(|blocker| blocker == XxxlRuntimeDeploymentBlocker::PlaceholderProgramId));
+programs/xxxl-svm/src/deployment_status.rs:592:            XxxlRuntimeDeploymentBlocker::PlaceholderProgramId.code(),
+programs/xxxl-svm/src/deployment_status.rs:593:            "PLACEHOLDER_PROGRAM_ID"
+programs/xxxl-svm/src/deployment_status.rs:596:            XxxlRuntimeDeploymentBlocker::PlaceholderProgramId.description(),
+programs/xxxl-svm/src/deployment_status.rs:600:            XxxlRuntimeDeploymentBlocker::PlaceholderProgramId.resolution(),
+programs/xxxl-svm/src/safety_invariants.rs:22:    pub real_program_id_bound: bool,
+programs/xxxl-svm/src/safety_invariants.rs:33:            && self.real_program_id_bound
+programs/xxxl-svm/src/safety_invariants.rs:46:        real_program_id_bound: xxxl_program_id_real_program_id_is_bound(),
+programs/xxxl-svm/src/safety_invariants.rs:201:    pub real_program_id_bound: bool,
+programs/xxxl-svm/src/safety_invariants.rs:207:    pub evidence_complete: bool,
+programs/xxxl-svm/src/safety_invariants.rs:221:        real_program_id_bound: safety_summary.real_program_id_bound,
+programs/xxxl-svm/src/safety_invariants.rs:229:        evidence_complete: lock_summary.runtime_locked
+programs/xxxl-svm/src/safety_invariants.rs:230:            && safety_summary.real_program_id_bound
+programs/xxxl-svm/src/safety_invariants.rs:240:    xxxl_runtime_safety_lock_evidence_summary().evidence_complete
+programs/xxxl-svm/src/safety_invariants.rs:245:    pub safety_lock_evidence_complete: bool,
+programs/xxxl-svm/src/safety_invariants.rs:259:    let safety_lock_evidence_complete = xxxl_runtime_safety_lock_evidence_is_complete();
+programs/xxxl-svm/src/safety_invariants.rs:261:        XxxlRuntimeDeploymentBlocker::PlaceholderProgramId,
+programs/xxxl-svm/src/safety_invariants.rs:285:        safety_lock_evidence_complete,
+programs/xxxl-svm/src/safety_invariants.rs:294:        evidence_consistent: safety_lock_evidence_complete
+programs/xxxl-svm/src/safety_invariants.rs:333:        XxxlRuntimeDeploymentBlocker::PlaceholderProgramId,
+programs/xxxl-svm/src/safety_invariants.rs:429:        assert!(summary.real_program_id_bound);
+programs/xxxl-svm/src/safety_invariants.rs:522:    fn runtime_safety_lock_evidence_summary_collects_current_evidence() {
+programs/xxxl-svm/src/safety_invariants.rs:526:        assert!(summary.real_program_id_bound);
+programs/xxxl-svm/src/safety_invariants.rs:532:        assert!(summary.evidence_complete);
+programs/xxxl-svm/src/safety_invariants.rs:536:    fn runtime_safety_lock_evidence_is_complete_for_current_scaffold() {
+programs/xxxl-svm/src/safety_invariants.rs:543:        assert!(report.safety_lock_evidence_complete);
+programs/xxxl-svm/src/safety_invariants.rs:563:            "PLACEHOLDER_PROGRAM_ID"

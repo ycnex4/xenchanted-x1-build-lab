@@ -1,0 +1,75 @@
+programs/xxxl-svm/src/deployment_status.rs:8:    PlaceholderProgramId,
+programs/xxxl-svm/src/deployment_status.rs:109:            XxxlRuntimeDeploymentBlocker::PlaceholderProgramId => "PLACEHOLDER_PROGRAM_ID",
+programs/xxxl-svm/src/deployment_status.rs:128:            XxxlRuntimeDeploymentBlocker::PlaceholderProgramId => {
+programs/xxxl-svm/src/deployment_status.rs:157:            XxxlRuntimeDeploymentBlocker::PlaceholderProgramId => {
+programs/xxxl-svm/src/deployment_status.rs:290:        assert_eq!(blockers.len(), 4);
+programs/xxxl-svm/src/deployment_status.rs:291:        assert!(!blockers.contains(&XxxlRuntimeDeploymentBlocker::PlaceholderProgramId));
+programs/xxxl-svm/src/deployment_status.rs:350:        assert_eq!(reports.len(), blockers.len());
+programs/xxxl-svm/src/deployment_status.rs:365:            XxxlRuntimeDeploymentBlocker::PlaceholderProgramId,
+programs/xxxl-svm/src/deployment_status.rs:369:            XxxlRuntimeDeploymentBlocker::PlaceholderProgramId.code(),
+programs/xxxl-svm/src/deployment_status.rs:370:            "PLACEHOLDER_PROGRAM_ID"
+programs/xxxl-svm/src/deployment_status.rs:372:        assert!(XxxlRuntimeDeploymentBlocker::PlaceholderProgramId
+programs/xxxl-svm/src/deployment_status.rs:375:        assert!(XxxlRuntimeDeploymentBlocker::PlaceholderProgramId
+programs/xxxl-svm/src/deployment_status.rs:379:            "PLACEHOLDER_PROGRAM_ID"
+programs/xxxl-svm/src/deployment_status.rs:505:        assert_eq!(report.blockers.len(), 4);
+programs/xxxl-svm/src/deployment_status.rs:539:                assert_eq!(report.blockers.len(), 4);
+programs/xxxl-svm/src/deployment_status.rs:559:                assert_eq!(blocked_report.blockers.len(), report.blockers.len());
+programs/xxxl-svm/src/deployment_status.rs:581:            .contains(&XxxlRuntimeDeploymentBlocker::PlaceholderProgramId));
+programs/xxxl-svm/src/deployment_status.rs:583:            XxxlRuntimeDeploymentBlocker::PlaceholderProgramId.description(),
+programs/xxxl-svm/src/lib.rs:54:pub const XXXL_TESTNET_PROGRAM_ID: &str = "D7AQmZNtFFFoJbducz93atteeSZhw3jq6RmsqBvaf1my";
+programs/xxxl-svm/src/lib.rs:55:pub const XXXL_BOUND_PROGRAM_ID: &str = XXXL_TESTNET_PROGRAM_ID;
+programs/xxxl-svm/src/pda.rs:361:    #[ignore = "requires XXXL_TESTNET_PROGRAM_ID_CANDIDATE; off-chain only; no RPC, no deploy, no SOL spend"]
+programs/xxxl-svm/src/pda.rs:363:        let candidate = std::env::var("XXXL_TESTNET_PROGRAM_ID_CANDIDATE")
+programs/xxxl-svm/src/pda.rs:364:            .expect("set XXXL_TESTNET_PROGRAM_ID_CANDIDATE to the public Program ID candidate");
+programs/xxxl-svm/src/pda.rs:412:        println!("XXXL_TESTNET_PROGRAM_ID_CANDIDATE={}", program_id);
+programs/xxxl-svm/src/program_id_status.rs:3:    XXXL_BOUND_PROGRAM_ID, XXXL_GATEWAY_MINT_AUTHORITY_BUMP, XXXL_GATEWAY_MINT_AUTHORITY_PDA,
+programs/xxxl-svm/src/program_id_status.rs:23:    pub real_program_id_bound: bool,
+programs/xxxl-svm/src/program_id_status.rs:39:        configured_program_id: XXXL_BOUND_PROGRAM_ID,
+programs/xxxl-svm/src/program_id_status.rs:45:        real_program_id_bound: true,
+programs/xxxl-svm/src/program_id_status.rs:47:        transitioned_blocker: XxxlRuntimeDeploymentBlocker::PlaceholderProgramId,
+programs/xxxl-svm/src/program_id_status.rs:48:        transitioned_blocker_code: "PLACEHOLDER_PROGRAM_ID",
+programs/xxxl-svm/src/program_id_status.rs:78:pub fn xxxl_program_id_placeholder_boundary_is_active() -> bool {
+programs/xxxl-svm/src/program_id_status.rs:83:    xxxl_program_id_readiness_report().real_program_id_bound
+programs/xxxl-svm/src/program_id_status.rs:90:pub fn xxxl_program_id_placeholder_blocker_is_active_in_deployment_report() -> bool {
+programs/xxxl-svm/src/program_id_status.rs:91:    xxxl_runtime_deployment_report_has_blocker(XxxlRuntimeDeploymentBlocker::PlaceholderProgramId)
+programs/xxxl-svm/src/program_id_status.rs:99:        XXXL_TESTNET_PROGRAMDATA_ADDRESS, XXXL_TESTNET_PROGRAM_ID, XXXL_TESTNET_UPGRADE_AUTHORITY,
+programs/xxxl-svm/src/program_id_status.rs:136:        assert_eq!(report.configured_program_id, XXXL_TESTNET_PROGRAM_ID);
+programs/xxxl-svm/src/program_id_status.rs:143:        assert!(report.real_program_id_bound);
+programs/xxxl-svm/src/program_id_status.rs:147:            XxxlRuntimeDeploymentBlocker::PlaceholderProgramId
+programs/xxxl-svm/src/program_id_status.rs:149:        assert_eq!(report.transitioned_blocker_code, "PLACEHOLDER_PROGRAM_ID");
+programs/xxxl-svm/src/program_id_status.rs:161:    fn program_id_placeholder_blocker_is_not_active_in_deployment_report() {
+programs/xxxl-svm/src/program_id_status.rs:162:        assert!(!xxxl_program_id_placeholder_blocker_is_active_in_deployment_report());
+programs/xxxl-svm/src/program_id_status.rs:167:        assert!(!xxxl_program_id_placeholder_boundary_is_active());
+programs/xxxl-svm/src/safety_invariants.rs:11:        xxxl_program_id_placeholder_blocker_is_active_in_deployment_report,
+programs/xxxl-svm/src/safety_invariants.rs:12:        xxxl_program_id_placeholder_boundary_is_active, xxxl_program_id_real_program_id_is_bound,
+programs/xxxl-svm/src/safety_invariants.rs:20:    pub program_id_placeholder_boundary_active: bool,
+programs/xxxl-svm/src/safety_invariants.rs:21:    pub program_id_placeholder_blocker_active_in_deployment_report: bool,
+programs/xxxl-svm/src/safety_invariants.rs:22:    pub real_program_id_bound: bool,
+programs/xxxl-svm/src/safety_invariants.rs:31:            && !self.program_id_placeholder_boundary_active
+programs/xxxl-svm/src/safety_invariants.rs:32:            && !self.program_id_placeholder_blocker_active_in_deployment_report
+programs/xxxl-svm/src/safety_invariants.rs:33:            && self.real_program_id_bound
+programs/xxxl-svm/src/safety_invariants.rs:43:        program_id_placeholder_boundary_active: xxxl_program_id_placeholder_boundary_is_active(),
+programs/xxxl-svm/src/safety_invariants.rs:44:        program_id_placeholder_blocker_active_in_deployment_report:
+programs/xxxl-svm/src/safety_invariants.rs:45:            xxxl_program_id_placeholder_blocker_is_active_in_deployment_report(),
+programs/xxxl-svm/src/safety_invariants.rs:46:        real_program_id_bound: xxxl_program_id_real_program_id_is_bound(),
+programs/xxxl-svm/src/safety_invariants.rs:201:    pub real_program_id_bound: bool,
+programs/xxxl-svm/src/safety_invariants.rs:202:    pub program_id_placeholder_boundary_active: bool,
+programs/xxxl-svm/src/safety_invariants.rs:221:        real_program_id_bound: safety_summary.real_program_id_bound,
+programs/xxxl-svm/src/safety_invariants.rs:222:        program_id_placeholder_boundary_active: safety_summary
+programs/xxxl-svm/src/safety_invariants.rs:223:            .program_id_placeholder_boundary_active,
+programs/xxxl-svm/src/safety_invariants.rs:225:            .program_id_placeholder_blocker_active_in_deployment_report,
+programs/xxxl-svm/src/safety_invariants.rs:230:            && safety_summary.real_program_id_bound
+programs/xxxl-svm/src/safety_invariants.rs:231:            && !safety_summary.program_id_placeholder_boundary_active
+programs/xxxl-svm/src/safety_invariants.rs:232:            && !safety_summary.program_id_placeholder_blocker_active_in_deployment_report
+programs/xxxl-svm/src/safety_invariants.rs:261:        XxxlRuntimeDeploymentBlocker::PlaceholderProgramId,
+programs/xxxl-svm/src/safety_invariants.rs:313:    pub real_program_id_selected: bool,
+programs/xxxl-svm/src/safety_invariants.rs:326:    let real_program_id_selected = true;
+programs/xxxl-svm/src/safety_invariants.rs:333:        XxxlRuntimeDeploymentBlocker::PlaceholderProgramId,
+programs/xxxl-svm/src/safety_invariants.rs:350:    let unlock_ready = real_program_id_selected
+programs/xxxl-svm/src/safety_invariants.rs:359:        real_program_id_selected,
+programs/xxxl-svm/src/safety_invariants.rs:427:        assert!(!summary.program_id_placeholder_boundary_active);
+programs/xxxl-svm/src/safety_invariants.rs:428:        assert!(!summary.program_id_placeholder_blocker_active_in_deployment_report);
+programs/xxxl-svm/src/safety_invariants.rs:429:        assert!(summary.real_program_id_bound);
+programs/xxxl-svm/src/safety_invariants.rs:526:        assert!(!summary.program_id_placeholder_boundary_active);
+programs/xxxl-svm/src/safety_invariants.rs:562:            "PLACEHOLDER_PROGRAM_ID"
+programs/xxxl-svm/src/safety_invariants.rs:594:        assert!(summary.real_program_id_selected);
