@@ -25,7 +25,7 @@ If source code conflicts with documentation, source code remains the runtime gro
 The canonical runtime-state ledger currently identifies:
 
 - active runtime lane: pre-go-operational-readiness
-- next required decision: request/review production-guardian-set-instantiation-source-change; exact activation GO is premature and blocked
+- next required decision: request/review production-guardian-set-instantiation-source-change; exact activation GO remains premature and blocked
 - next runtime package scope: PRE_GO_OPERATIONAL_READINESS_REQUIRES_SEPARATE_APPROVAL
 - ExternalReviewIncomplete effective status: REMOVED
 - source blockers removed to date: ExternalReviewIncomplete, PlaceholderProgramId
@@ -260,3 +260,48 @@ Required PRE-GO sequence before any exact activation GO request:
 Codex also recommends staged production-safe SPL CPI gate/source-change and live-route source-change, with live route retained as the final exposure gate.
 
 No source-code mutation, formatting changes, activation, deploy, upgrade, RPC mutation, route enablement, SPL CPI enablement, guardian set instantiation, proof log instantiation, blocker removal, cleanup, or private-key/keypair material handling is authorized by this review.
+
+## Production Guardian Set Instantiation Plan Result
+
+Status: COMPLETE.
+
+Package:
+
+- production-guardian-set-instantiation-plan
+
+Result:
+
+- recommended production guardian set model: program-owned PDA/config account;
+- only public guardian keys may be recorded;
+- exact guardian public key list and threshold must be supplied by the next source/config package;
+- guardian set versioning is required;
+- domain separation is required;
+- duplicate signers must not inflate quorum;
+- unknown signers must not count toward quorum;
+- rotation is out of scope and requires separate approval.
+
+Preserved blockers:
+
+- LiveRouteDisabled = ACTIVE
+- SplCpiExecutionDisabled = ACTIVE
+- ProductionGuardianSetUnset = ACTIVE
+- ProductionProofLogUnset = ACTIVE
+
+Forbidden actions preserved:
+
+- no activation;
+- no deploy;
+- no upgrade;
+- no RPC mutation;
+- no route enablement;
+- no SPL CPI enablement;
+- no guardian set instantiation;
+- no proof log instantiation;
+- no blocker removal;
+- no source code mutation.
+
+Next required package:
+
+- production-guardian-set-instantiation-source-change
+
+The next package must be separately approved and must either keep `ProductionGuardianSetUnset` active with explanation or resolve it only if explicit blocker-removal/source-change approval is granted and tests/evidence prove the production guardian set.

@@ -1,0 +1,17 @@
+package=production-guardian-set-instantiation-plan
+check=unsafe_targeted_grep
+result=no_unsafe_targeted_hits
+
+note:
+The plan intentionally contains negative/forbidden-language references such as "no private key material".
+Those phrases are not key material and are not counted as unsafe hits.
+
+checked_actual_material_patterns:
+- PEM private key headers
+- secretKey JSON fields
+- privateKey JSON fields
+- mnemonic assignment fields
+- seed phrase assignment fields
+- solana-keygen references
+
+private_key_or_keypair_material_committed=false
