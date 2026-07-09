@@ -150,9 +150,11 @@ A package is not closed unless it states:
 
 Review docs/gateway/program-id-binding-resolution-plan.md and choose the next approved package.
 
-Next package for approval request:
+Next required decision:
 
-- activation-package-closure
+- separate exact activation GO
+
+Execution remains blocked until that separate GO.
 
 Required behavior until a separate explicit approval is received:
 
@@ -184,9 +186,11 @@ This package recorded Program-ID-dependent PDA evidence for the already-bound Pr
 
 No source-code mutation, activation, deploy, upgrade, RPC mutation, route enablement, SPL CPI enablement, guardian set instantiation, proof log instantiation, local-only fixture emission, or cleanup was authorized or performed.
 
-Next package for approval request:
+Next required decision:
 
-- activation-package-closure
+- separate exact activation GO
+
+Execution remains blocked until that separate GO.
 
 ## Completed: live-route-spl-cpi-activation-source-plan
 
@@ -204,6 +208,31 @@ It defined:
 
 No source-code mutation, activation, deploy, upgrade, RPC mutation, route enablement, SPL CPI enablement, guardian set instantiation, proof log instantiation, local-only fixture emission, cleanup, or blocker removal was authorized or performed.
 
-Next package for approval request:
+Next required decision:
 
-- activation-package-closure
+- separate exact activation GO
+
+Execution remains blocked until that separate GO.
+
+## Completed: activation-package-closure
+
+Status: COMPLETE.
+
+This package recorded the final non-executing activation package closure.
+
+It summarized completed packages:
+
+- external-review-blocker-removal-source-change;
+- program-id-binding-source-change;
+- program-id-dependent-pda-evidence;
+- live-route-spl-cpi-activation-source-plan.
+
+It recorded the current blocked runtime state and defined the remaining requirements before any exact activation GO.
+
+No source-code mutation, activation, deploy, upgrade, RPC mutation, route enablement, SPL CPI enablement, guardian set instantiation, proof log instantiation, blocker removal, local-only fixture emission, cleanup, or private-key material commit/share was authorized or performed.
+
+Next required decision:
+
+- separate exact activation GO
+
+Execution remains blocked until a separate exact activation GO.

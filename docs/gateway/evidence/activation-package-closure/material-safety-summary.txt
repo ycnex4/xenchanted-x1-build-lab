@@ -1,0 +1,8 @@
+package=activation-package-closure
+material_safety_check_performed=true
+
+keypair_file_committed=false
+private_key_file_committed=false
+wallet_file_committed=false
+json_key_material_committed=false
+sensitive_file_name_hits=false

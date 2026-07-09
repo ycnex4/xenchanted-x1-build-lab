@@ -1,0 +1,48 @@
+package=activation-package-closure
+approval=APPROVE_ACTIVATION_PACKAGE_CLOSURE_NO_ACTIVATION
+approved_by=Theo
+approval_date=2026-07-09
+
+scope=DOCUMENTATION_SUMMARY_ONLY_NO_CODE_MUTATION_NO_ACTIVATION
+
+allowed_changes:
+1. Prepare final non-executing activation-package closure documentation.
+2. Summarize completed sequence packages 7-10.
+3. Record current blocked runtime state.
+4. Define remaining requirements before any exact activation GO.
+5. Define final activation GO checklist.
+6. Define explicit forbidden actions until GO.
+7. Update docs/gateway/current-runtime-state.md and docs/gateway/current-execution-plan.md as needed.
+8. Add package documentation and evidence.
+
+forbidden_changes:
+activation=false
+deploy=false
+upgrade=false
+rpc_mutation=false
+route_enablement=false
+spl_cpi_enablement=false
+guardian_set_instantiation=false
+proof_log_instantiation=false
+blocker_removal=false
+code_mutation=false_unless_explicitly_approved
+local_only_fixture_emission=NO-GO
+unrelated_cleanup=false
+private_key_or_keypair_material=false
+cleanup=false
+
+preserved_state_expected:
+ExternalReviewIncomplete=REMOVED
+PlaceholderProgramId=REMOVED
+Program ID=BOUND
+PDA evidence=COMPLETE
+Activation source plan=COMPLETE
+LiveRouteDisabled=ACTIVE
+SplCpiExecutionDisabled=ACTIVE
+ProductionGuardianSetUnset=ACTIVE
+ProductionProofLogUnset=ACTIVE
+runtime_deployable=false
+predeploy_gate=blocked
+
+review_integrity_condition:
+This closure package must not be treated as activation authorization. It may only package the current evidence and define the remaining exact-GO requirements. Activation execution remains blocked until a separate explicit activation GO is given.

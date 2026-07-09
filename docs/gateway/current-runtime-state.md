@@ -11,10 +11,10 @@ If source/docs/context disagree, source is the runtime ground truth, and this le
 ## Ledger Metadata
 
 - reconciled_source_base_commit: 65a8e83
-- last_updated_package: live-route-spl-cpi-activation-source-plan
+- last_updated_package: activation-package-closure
 - ledger_author: Sergey Stepanenko / ChatGPT assisted
 - package_scope: DOCUMENTATION_ONLY
-- next_required_action: continue with activation-package-closure approval request
+- next_required_action: await separate exact activation GO; execution remains blocked
 
 ## Authorization Boundary
 
@@ -45,7 +45,7 @@ If source/docs/context disagree, source is the runtime ground truth, and this le
 | Lane | Status | Blocking Condition | Next Step |
 |:---|:---|:---|:---|
 | gateway-state-reconciliation | CLOSED | reconciliation package complete | no further action in this lane |
-| program-id-binding | COMPLETE | PlaceholderProgramId removed from active source blockers | program-id-dependent-pda-evidence complete; live-route/SPL-CPI source plan complete; continue with activation-package-closure approval request |
+| program-id-binding | COMPLETE | PlaceholderProgramId removed from active source blockers | program-id-dependent-pda-evidence complete; live-route/SPL-CPI source plan complete; activation-package-closure complete; await separate exact activation GO |
 | guardian-proof-log | PAUSED | ProductionGuardianSetUnset, ProductionProofLogUnset | future instantiation package |
 | local-only-fixtures | NO-GO | local-only fixture emission not approved | separate future GO required |
 
@@ -137,7 +137,7 @@ Selected next package for approval request:
 
 - external-review-blocker-removal-source-change
 
-activation-package-closure is the next approval-request candidate.
+separate exact activation GO is the next required decision; execution remains blocked until explicit GO.
 
 Neither is authorized by this ledger.
 
@@ -223,6 +223,55 @@ Preserved blocker state after source plan:
 
 Runtime remains not deployable. Predeploy gate remains blocked.
 
-Next approval-request candidate:
+Next approval-request candidate at time of live-route/SPL-CPI source-plan closure:
 
 - activation-package-closure
+
+Current next required decision is now tracked at the top-level runtime state as:
+
+- separate exact activation GO
+
+Execution remains blocked until that separate exact GO.
+
+## Activation Package Closure
+
+- package: activation-package-closure
+- status: COMPLETE
+- scope: DOCUMENTATION_SUMMARY_ONLY_NO_CODE_MUTATION_NO_ACTIVATION
+- closure document: `docs/gateway/activation-package-closure.md`
+- source code mutated: false
+- activation authorized: false
+- deploy authorized: false
+- upgrade authorized: false
+- RPC mutation authorized: false
+- route enablement authorized: false
+- SPL CPI enablement authorized: false
+- blocker removal authorized: false
+- activation performed: false
+- deploy performed: false
+- upgrade performed: false
+- RPC mutation performed: false
+- route enablement performed: false
+- SPL CPI enablement performed: false
+- guardian set instantiation performed: false
+- proof log instantiation performed: false
+- local-only fixture emission performed: false
+
+Preserved blocker state after activation package closure:
+
+| Blocker | Status |
+| --- | --- |
+| ExternalReviewIncomplete | REMOVED |
+| PlaceholderProgramId | REMOVED |
+| LiveRouteDisabled | ACTIVE |
+| SplCpiExecutionDisabled | ACTIVE |
+| ProductionGuardianSetUnset | ACTIVE |
+| ProductionProofLogUnset | ACTIVE |
+
+Runtime remains not deployable. Predeploy gate remains blocked.
+
+Next required decision:
+
+- separate exact activation GO
+
+Execution remains blocked until separate exact activation GO.
