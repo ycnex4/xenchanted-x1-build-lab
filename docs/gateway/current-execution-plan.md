@@ -152,7 +152,7 @@ Review docs/gateway/program-id-binding-resolution-plan.md and choose the next ap
 
 Next package for approval request:
 
-- live-route-spl-cpi-activation-source-plan
+- activation-package-closure
 
 Required behavior until a separate explicit approval is received:
 
@@ -186,4 +186,24 @@ No source-code mutation, activation, deploy, upgrade, RPC mutation, route enable
 
 Next package for approval request:
 
-- live-route-spl-cpi-activation-source-plan
+- activation-package-closure
+
+## Completed: live-route-spl-cpi-activation-source-plan
+
+Status: COMPLETE.
+
+This package recorded the non-executing source-readiness and activation-plan boundaries for future live route and SPL CPI activation work.
+
+It defined:
+
+- future boundary for `LiveRouteDisabled` removal;
+- future boundary for `SplCpiExecutionDisabled` removal;
+- guardian set preconditions;
+- proof log preconditions;
+- final deployment-readiness review gates.
+
+No source-code mutation, activation, deploy, upgrade, RPC mutation, route enablement, SPL CPI enablement, guardian set instantiation, proof log instantiation, local-only fixture emission, cleanup, or blocker removal was authorized or performed.
+
+Next package for approval request:
+
+- activation-package-closure

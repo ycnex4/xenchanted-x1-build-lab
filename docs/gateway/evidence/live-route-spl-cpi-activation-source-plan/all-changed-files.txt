@@ -1,0 +1,12 @@
+docs/gateway/current-execution-plan.md
+docs/gateway/current-runtime-state.md
+docs/gateway/evidence/live-route-spl-cpi-activation-source-plan/all-changed-files.txt
+docs/gateway/evidence/live-route-spl-cpi-activation-source-plan/doc-alignment-summary.txt
+docs/gateway/evidence/live-route-spl-cpi-activation-source-plan/future-boundaries-summary.txt
+docs/gateway/evidence/live-route-spl-cpi-activation-source-plan/key-docs-state-check.txt
+docs/gateway/evidence/live-route-spl-cpi-activation-source-plan/material-safety-check.txt
+docs/gateway/evidence/live-route-spl-cpi-activation-source-plan/material-safety-summary.txt
+docs/gateway/evidence/live-route-spl-cpi-activation-source-plan/source-mutation-guard.txt
+docs/gateway/evidence/live-route-spl-cpi-activation-source-plan/source-plan-closure-summary.txt
+docs/gateway/evidence/live-route-spl-cpi-activation-source-plan/theo-live-route-spl-cpi-activation-source-plan-approval.txt
+docs/gateway/live-route-spl-cpi-activation-source-plan.md
