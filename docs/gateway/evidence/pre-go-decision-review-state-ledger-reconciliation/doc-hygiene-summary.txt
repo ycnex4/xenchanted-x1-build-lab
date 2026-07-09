@@ -1,0 +1,11 @@
+package=pre-go-decision-review-state-ledger-reconciliation
+
+reconciled_items:
+- stale program-id-binding-resolution-plan next-step wording in current-runtime-state.md
+- stale program-id-binding-resolution-plan next-step wording in current-execution-plan.md
+- active lane inconsistency by adding pre-go-operational-readiness as ACTIVE
+- premature exact activation GO next wording replaced with PRE-GO operational-readiness sequence
+- current-design-checkpoint status clarified as divergent known non-canonical
+- Codex/Claude/Theo consensus recorded as NOT_READY_REQUIRES_PRE_GO_PACKAGE
+
+exact_activation_GO_status=PREMATURE_BLOCKED

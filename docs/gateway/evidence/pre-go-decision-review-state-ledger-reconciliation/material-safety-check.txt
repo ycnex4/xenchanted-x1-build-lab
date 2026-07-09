@@ -1,0 +1,9 @@
+package=pre-go-decision-review-state-ledger-reconciliation
+guard=material_safety_check
+result=no_sensitive_file_name_hits
+
+keypair_file_committed=false
+private_key_file_committed=false
+wallet_file_committed=false
+json_key_material_committed=false
+private_key_or_keypair_material_committed=false

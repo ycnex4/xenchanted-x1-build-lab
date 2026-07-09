@@ -1,0 +1,31 @@
+package=pre-go-decision-review-state-ledger-reconciliation
+approval=APPROVE_PRE_GO_DECISION_REVIEW_STATE_LEDGER_RECONCILIATION_NO_ACTIVATION
+approved_by=Theo
+approval_date=2026-07-09
+
+scope=DOCUMENTATION_STATE_LEDGER_RECONCILIATION_ONLY_NO_CODE_MUTATION_NO_ACTIVATION
+
+consensus_result=NOT_READY_REQUIRES_PRE_GO_PACKAGE
+
+allowed_changes:
+docs/gateway/current-runtime-state.md=record PRE-GO audit consensus, fix stale wording, replace premature exact GO next with pre-GO operational-readiness sequence
+docs/gateway/current-execution-plan.md=record PRE-GO audit consensus, fix stale wording, fix active-lane inconsistency, replace premature next-step wording
+docs/gateway/evidence/pre-go-decision-review-state-ledger-reconciliation/=add evidence
+
+forbidden_changes:
+activation=false
+deploy=false
+upgrade=false
+rpc_mutation=false
+route_enablement=false
+spl_cpi_enablement=false
+guardian_set_instantiation=false
+proof_log_instantiation=false
+blocker_removal=false
+source_code_mutation=false
+formatting_changes=false
+cleanup_outside_audit_notes=false
+private_key_or_keypair_material=false
+
+execution_remains_blocked=true
+exact_activation_GO_is_premature=true

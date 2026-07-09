@@ -1,0 +1,9 @@
+package=pre-go-decision-review-state-ledger-reconciliation
+check=targeted_stale_grep
+result=no_targeted_stale_hits
+
+checked_patterns:
+Review docs/gateway/program-id-binding-resolution-plan.md and choose the next approved package
+active runtime lane: activation-readiness-closure
+source_blocker_removed=false
+exact activation GO is the next required decision

@@ -1,0 +1,12 @@
+review_target=PRE_GO_ACTIVATION_DECISION_REVIEW_NO_ACTIVATION
+consensus=NOT_READY_REQUIRES_PRE_GO_PACKAGE
+
+Claude=NOT_READY_REQUIRES_PRE_GO_PACKAGE
+Theo=NOT_READY_REQUIRES_PRE_GO_PACKAGE
+Codex=NOT_READY_REQUIRES_PRE_GO_PACKAGE
+
+shared_position:
+- do not request exact activation GO now
+- repository is safely closed/non-executing/blocked
+- operational-readiness packages are required before GO
+- no activation without separate exact GO

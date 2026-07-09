@@ -1,0 +1,10 @@
+package=pre-go-decision-review-state-ledger-reconciliation
+guard=source_mutation_guard
+result=no_source_mutation_hits
+
+source_code_mutation_performed=false
+programs_dir_changed=false
+src_dir_changed=false
+cargo_toml_changed=false
+cargo_lock_changed=false
+formatting_changes_performed=false

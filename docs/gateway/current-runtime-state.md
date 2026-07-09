@@ -11,10 +11,10 @@ If source/docs/context disagree, source is the runtime ground truth, and this le
 ## Ledger Metadata
 
 - reconciled_source_base_commit: 65a8e83
-- last_updated_package: closure-audit-doc-reconciliation
+- last_updated_package: pre-go-decision-review-state-ledger-reconciliation
 - ledger_author: Sergey Stepanenko / ChatGPT assisted
 - package_scope: DOCUMENTATION_ONLY
-- next_required_action: await separate exact activation GO; execution remains blocked
+- next_required_action: complete pre-GO operational-readiness sequence; exact activation GO is premature and blocked
 
 ## Authorization Boundary
 
@@ -45,7 +45,8 @@ If source/docs/context disagree, source is the runtime ground truth, and this le
 | Lane | Status | Blocking Condition | Next Step |
 |:---|:---|:---|:---|
 | gateway-state-reconciliation | CLOSED | reconciliation package complete | no further action in this lane |
-| program-id-binding | COMPLETE | PlaceholderProgramId removed from active source blockers | program-id-dependent-pda-evidence complete; live-route/SPL-CPI source plan complete; activation-package-closure complete; closure-audit-doc-reconciliation complete; await separate exact activation GO |
+| program-id-binding | COMPLETE | PlaceholderProgramId removed from active source blockers | program-id-dependent-pda-evidence complete; live-route/SPL-CPI source plan complete; activation-package-closure complete; closure-audit-doc-reconciliation complete |
+| pre-go-operational-readiness | ACTIVE | PRE-GO consensus: NOT_READY_REQUIRES_PRE_GO_PACKAGE | request/review production-guardian-set-instantiation-source-change; exact GO blocked |
 | guardian-proof-log | PAUSED | ProductionGuardianSetUnset, ProductionProofLogUnset | future instantiation package |
 | local-only-fixtures | NO-GO | local-only fixture emission not approved | separate future GO required |
 
@@ -87,10 +88,10 @@ Ground truth from current main/source state.
 | Document | Status | Required Action |
 |:---|:---|:---|
 | docs/gateway/current-runtime-state.md | CANONICAL | keep updated in future state-changing package closures |
-| docs/checkpoints/current-design-checkpoint.md | DIVERGENT | update during this reconciliation package |
+| docs/checkpoints/current-design-checkpoint.md | DIVERGENT_KNOWN_NON_CANONICAL | do not use as current truth; future checkpoint cleanup only if separately approved |
 | docs/gateway/guardian-set-public-policy-1.md | CONSISTENT_AS_POLICY | no source instantiation yet |
 | docs/gateway/proof-log-public-policy-1.md | CONSISTENT_AS_POLICY | no source instantiation yet |
-| docs/gateway/external-review-packet-1.md | REVIEW_APPROVED | blocker still active in source |
+| docs/gateway/external-review-packet-1.md | REVIEW_APPROVED_SOURCE_RECONCILED | ExternalReviewIncomplete removed from active source blockers |
 | docs/gateway/phase-41k6-b6-57-local-only-fixture-emission-go-form.md | NO_GO_LANE | do not mix with Program ID binding |
 
 ## State Drift Discovered Before Program ID Binding Plan
@@ -98,7 +99,7 @@ Ground truth from current main/source state.
 - ExternalReviewIncomplete drift resolved by external-review-blocker-removal-source-change: source active blocker removed and tests now expect it inactive.
 - current-design-checkpoint.md is stale relative to later B6.55/B6.56/B6.57 documents and guardian/proof-log policy packages.
 - Program ID binding planning must inventory actual main/source state, not assumed context state.
-- Program ID source-change must wait until this reconciliation package is closed.
+- Program ID source-change is closed; future source/config packages require separate explicit PRE-GO approvals.
 
 ## Pending Reconciliations
 
@@ -109,8 +110,9 @@ Ground truth from current main/source state.
    - review_integrity_condition=removal_does_not_preapprove_subsequent_program_id_binding
 
 2. current-design-checkpoint.md:
-   - status=DIVERGENT
-   - future action inside this package: update checkpoint to reference current-runtime-state.md as canonical
+   - status=DIVERGENT_KNOWN_NON_CANONICAL
+   - future action: update only in a separately approved checkpoint cleanup package if still useful
+   - canonical coordination state remains docs/gateway/current-runtime-state.md
 
 3. Program ID binding:
    - status=COMPLETE
@@ -125,7 +127,7 @@ Ground truth from current main/source state.
 ## Required Before Next Source Change
 
 - [x] current-runtime-state.md exists and matches main/source state
-- [x] current-design-checkpoint.md updated to stop acting as stale current truth
+- [x] current-design-checkpoint.md marked non-canonical/stale in this ledger; direct checkpoint cleanup deferred unless separately approved
 - [x] all known divergences documented with reconciliation plans
 - [x] exactly one lane marked ACTIVE
 - [x] no source blocker removed by this package
@@ -133,17 +135,18 @@ Ground truth from current main/source state.
 
 ## Next Required Decision
 
-Review docs/gateway/program-id-binding-resolution-plan.md and choose the next approved package.
+Do not request exact activation GO yet. Complete PRE-GO operational-readiness packages first.
 
 Selected next required decision:
 
-- separate exact activation GO
+- request/review production-guardian-set-instantiation-source-change
+- then production-proof-log-instantiation-source-change
+- then programdata-upgrade-authority-evidence
+- then pre-go-deployment-readiness-review
 
-Execution remains blocked until explicit GO.
+Exact activation GO is premature and remains blocked until those PRE-GO packages are complete.
 
-separate exact activation GO is the next required decision; execution remains blocked until explicit GO.
-
-Neither is authorized by this ledger.
+No activation, deploy, RPC mutation, route enablement, SPL CPI enablement, guardian/proof-log instantiation, blocker removal, or source mutation is authorized by this ledger.
 
 ## Forbidden Next Actions Without Separate Explicit Approval
 
@@ -279,3 +282,44 @@ Next required decision:
 - separate exact activation GO
 
 Execution remains blocked until separate exact activation GO.
+
+## PRE-GO Decision Review State-Ledger Reconciliation
+
+- package: pre-go-decision-review-state-ledger-reconciliation
+- status: COMPLETE
+- scope: DOCUMENTATION_STATE_LEDGER_RECONCILIATION_ONLY_NO_CODE_MUTATION_NO_ACTIVATION
+- review target: PRE_GO_ACTIVATION_DECISION_REVIEW_NO_ACTIVATION
+- Claude result: NOT_READY_REQUIRES_PRE_GO_PACKAGE
+- Theo result: NOT_READY_REQUIRES_PRE_GO_PACKAGE
+- Codex result: NOT_READY_REQUIRES_PRE_GO_PACKAGE
+- consensus: NOT_READY_REQUIRES_PRE_GO_PACKAGE
+- source code mutated: false
+- formatting changes performed: false
+- activation authorized: false
+- deploy authorized: false
+- upgrade authorized: false
+- RPC mutation authorized: false
+- route enablement authorized: false
+- SPL CPI enablement authorized: false
+- guardian set instantiation authorized: false
+- proof log instantiation authorized: false
+- blocker removal authorized: false
+
+Preserved blocker state after PRE-GO decision review:
+
+| Blocker | Status |
+| --- | --- |
+| ExternalReviewIncomplete | REMOVED |
+| PlaceholderProgramId | REMOVED |
+| LiveRouteDisabled | ACTIVE |
+| SplCpiExecutionDisabled | ACTIVE |
+| ProductionGuardianSetUnset | ACTIVE |
+| ProductionProofLogUnset | ACTIVE |
+
+Runtime remains not deployable. Predeploy gate remains blocked.
+
+Next required action:
+
+- request/review production-guardian-set-instantiation-source-change
+
+Exact activation GO is premature and blocked until PRE-GO operational-readiness packages are complete.
