@@ -1,0 +1,72 @@
+docs/gateway/current-runtime-state.md:14:- last_updated_package: production-guardian-set-instantiation-plan
+docs/gateway/current-runtime-state.md:17:- next_required_action: request/review production-guardian-set-instantiation-source-change; exact activation GO remains premature and blocked
+docs/gateway/current-runtime-state.md:49:| pre-go-operational-readiness | ACTIVE | production-guardian-set-instantiation-plan complete | request/review production-guardian-set-instantiation-source-change; exact GO blocked |
+docs/gateway/current-runtime-state.md:50:| guardian-proof-log | PAUSED | ProductionGuardianSetUnset, ProductionProofLogUnset | future instantiation package |
+docs/gateway/current-runtime-state.md:60:| LiveRouteDisabled | ACTIVE | N/A | ACTIVE |
+docs/gateway/current-runtime-state.md:61:| SplCpiExecutionDisabled | ACTIVE | N/A | ACTIVE |
+docs/gateway/current-runtime-state.md:62:| ProductionGuardianSetUnset | ACTIVE | policy_defined_not_instantiated | ACTIVE |
+docs/gateway/current-runtime-state.md:63:| ProductionProofLogUnset | ACTIVE | policy_defined_not_instantiated | ACTIVE |
+docs/gateway/current-runtime-state.md:71:| ProductionGuardianSetUnset | policy_defined | false | ACTIVE |
+docs/gateway/current-runtime-state.md:72:| ProductionProofLogUnset | policy_defined | false | ACTIVE |
+docs/gateway/current-runtime-state.md:142:- request/review production-guardian-set-instantiation-source-change
+docs/gateway/current-runtime-state.md:173:- source code mutated: false
+docs/gateway/current-runtime-state.md:188:| LiveRouteDisabled | ACTIVE |
+docs/gateway/current-runtime-state.md:189:| SplCpiExecutionDisabled | ACTIVE |
+docs/gateway/current-runtime-state.md:190:| ProductionGuardianSetUnset | ACTIVE |
+docs/gateway/current-runtime-state.md:191:| ProductionProofLogUnset | ACTIVE |
+docs/gateway/current-runtime-state.md:209:- source code mutated: false
+docs/gateway/current-runtime-state.md:226:| LiveRouteDisabled | ACTIVE |
+docs/gateway/current-runtime-state.md:227:| SplCpiExecutionDisabled | ACTIVE |
+docs/gateway/current-runtime-state.md:228:| ProductionGuardianSetUnset | ACTIVE |
+docs/gateway/current-runtime-state.md:229:| ProductionProofLogUnset | ACTIVE |
+docs/gateway/current-runtime-state.md:249:- source code mutated: false
+docs/gateway/current-runtime-state.md:250:- activation authorized: false
+docs/gateway/current-runtime-state.md:251:- deploy authorized: false
+docs/gateway/current-runtime-state.md:253:- RPC mutation authorized: false
+docs/gateway/current-runtime-state.md:273:| LiveRouteDisabled | ACTIVE |
+docs/gateway/current-runtime-state.md:274:| SplCpiExecutionDisabled | ACTIVE |
+docs/gateway/current-runtime-state.md:275:| ProductionGuardianSetUnset | ACTIVE |
+docs/gateway/current-runtime-state.md:276:| ProductionProofLogUnset | ACTIVE |
+docs/gateway/current-runtime-state.md:296:- source code mutated: false
+docs/gateway/current-runtime-state.md:298:- activation authorized: false
+docs/gateway/current-runtime-state.md:299:- deploy authorized: false
+docs/gateway/current-runtime-state.md:301:- RPC mutation authorized: false
+docs/gateway/current-runtime-state.md:314:| LiveRouteDisabled | ACTIVE |
+docs/gateway/current-runtime-state.md:315:| SplCpiExecutionDisabled | ACTIVE |
+docs/gateway/current-runtime-state.md:316:| ProductionGuardianSetUnset | ACTIVE |
+docs/gateway/current-runtime-state.md:317:| ProductionProofLogUnset | ACTIVE |
+docs/gateway/current-runtime-state.md:323:- request/review production-guardian-set-instantiation-source-change
+docs/gateway/current-runtime-state.md:329:- package: production-guardian-set-instantiation-plan
+docs/gateway/current-runtime-state.md:333:- recommended model: program-owned PDA/config account
+docs/gateway/current-runtime-state.md:340:- ProductionGuardianSetUnset: remains ACTIVE
+docs/gateway/current-runtime-state.md:341:- source code mutated: false
+docs/gateway/current-runtime-state.md:342:- guardian set instantiated: false
+docs/gateway/current-runtime-state.md:344:- activation authorized: false
+docs/gateway/current-runtime-state.md:348:- request separate approval for production-guardian-set-instantiation-source-change.
+docs/gateway/current-execution-plan.md:28:- next required decision: request/review production-guardian-set-instantiation-source-change; exact activation GO remains premature and blocked
+docs/gateway/current-execution-plan.md:155:- request/review production-guardian-set-instantiation-source-change
+docs/gateway/current-execution-plan.md:204:- future boundary for `LiveRouteDisabled` removal;
+docs/gateway/current-execution-plan.md:205:- future boundary for `SplCpiExecutionDisabled` removal;
+docs/gateway/current-execution-plan.md:255:1. production-guardian-set-instantiation-source-change;
+docs/gateway/current-execution-plan.md:270:- production-guardian-set-instantiation-plan
+docs/gateway/current-execution-plan.md:274:- recommended production guardian set model: program-owned PDA/config account;
+docs/gateway/current-execution-plan.md:285:- LiveRouteDisabled = ACTIVE
+docs/gateway/current-execution-plan.md:286:- SplCpiExecutionDisabled = ACTIVE
+docs/gateway/current-execution-plan.md:287:- ProductionGuardianSetUnset = ACTIVE
+docs/gateway/current-execution-plan.md:288:- ProductionProofLogUnset = ACTIVE
+docs/gateway/current-execution-plan.md:305:- production-guardian-set-instantiation-source-change
+docs/gateway/current-execution-plan.md:307:The next package must be separately approved and must either keep `ProductionGuardianSetUnset` active with explanation or resolve it only if explicit blocker-removal/source-change approval is granted and tests/evidence prove the production guardian set.
+docs/gateway/production-guardian-set-instantiation-plan.md:7:- production-guardian-set-instantiation-plan
+docs/gateway/production-guardian-set-instantiation-plan.md:27:- request separate approval for `production-guardian-set-instantiation-source-change`.
+docs/gateway/production-guardian-set-instantiation-plan.md:35:| LiveRouteDisabled | ACTIVE |
+docs/gateway/production-guardian-set-instantiation-plan.md:36:| SplCpiExecutionDisabled | ACTIVE |
+docs/gateway/production-guardian-set-instantiation-plan.md:37:| ProductionGuardianSetUnset | ACTIVE |
+docs/gateway/production-guardian-set-instantiation-plan.md:38:| ProductionProofLogUnset | ACTIVE |
+docs/gateway/production-guardian-set-instantiation-plan.md:176:- program-owned PDA/config account for production guardian set.
+docs/gateway/production-guardian-set-instantiation-plan.md:238:### Resolution Condition for ProductionGuardianSetUnset
+docs/gateway/production-guardian-set-instantiation-plan.md:240:`ProductionGuardianSetUnset` may be considered ready for removal only after a separate source/config package proves all of the following:
+docs/gateway/production-guardian-set-instantiation-plan.md:287:- `production-guardian-set-instantiation-source-change`
+docs/gateway/production-guardian-set-instantiation-plan.md:303:- deployment status / blocker evidence logic only if resolving `ProductionGuardianSetUnset` is explicitly approved;
+docs/gateway/production-guardian-set-instantiation-plan.md:307:- docs/gateway/evidence/production-guardian-set-instantiation-source-change/.
+docs/gateway/production-guardian-set-instantiation-plan.md:350:- `ProductionGuardianSetUnset` remains ACTIVE with explanation, or
+docs/gateway/production-guardian-set-instantiation-plan.md:351:- `ProductionGuardianSetUnset` is resolved/removed only if explicitly approved and proven by source/tests/evidence.

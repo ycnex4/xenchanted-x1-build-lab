@@ -1,0 +1,14 @@
+docs/gateway/current-execution-plan.md
+docs/gateway/current-runtime-state.md
+docs/gateway/evidence/production-guardian-set-instantiation-plan/abort-rules-summary.txt
+docs/gateway/evidence/production-guardian-set-instantiation-plan/all-changed-files.txt
+docs/gateway/evidence/production-guardian-set-instantiation-plan/material-safety-check.txt
+docs/gateway/evidence/production-guardian-set-instantiation-plan/next-source-package-shape.txt
+docs/gateway/evidence/production-guardian-set-instantiation-plan/patch-change-log.txt
+docs/gateway/evidence/production-guardian-set-instantiation-plan/plan-summary.txt
+docs/gateway/evidence/production-guardian-set-instantiation-plan/review-check.txt
+docs/gateway/evidence/production-guardian-set-instantiation-plan/source-mutation-guard.txt
+docs/gateway/evidence/production-guardian-set-instantiation-plan/source-runtime-state-preservation.txt
+docs/gateway/evidence/production-guardian-set-instantiation-plan/theo-approval.txt
+docs/gateway/evidence/production-guardian-set-instantiation-plan/unsafe-targeted-grep.txt
+docs/gateway/production-guardian-set-instantiation-plan.md

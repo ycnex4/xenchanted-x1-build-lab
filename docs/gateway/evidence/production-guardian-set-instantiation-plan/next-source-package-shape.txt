@@ -1,0 +1,31 @@
+next_package=production-guardian-set-instantiation-source-change
+
+purpose:
+- implement or bind production guardian set model
+- prove guardian quorum validation
+- preserve route/CPI/activation blockers
+
+must_request_separate_approval=true
+
+expected_evidence:
+- guardian-set-public-keys.txt
+- guardian-set-threshold.txt
+- guardian-set-version.txt
+- guardian-set-pda-or-account-derivation.txt
+- guardian-set-layout.txt
+- guardian-set-abort-rules.txt
+- guardian-set-test-results.txt
+- no-private-key-material-check.txt
+- source-mutation-guard.txt
+- route-cpi-activation-preservation-check.txt
+
+forbidden_even_in_next_package_unless_explicitly_approved:
+activation
+deploy
+upgrade
+rpc_mutation
+route_enablement
+spl_cpi_enablement
+proof_log_instantiation
+unrelated_blocker_removal
+private_key_or_keypair_material

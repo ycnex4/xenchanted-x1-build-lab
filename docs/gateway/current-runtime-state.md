@@ -11,10 +11,10 @@ If source/docs/context disagree, source is the runtime ground truth, and this le
 ## Ledger Metadata
 
 - reconciled_source_base_commit: 65a8e83
-- last_updated_package: pre-go-decision-review-state-ledger-reconciliation
+- last_updated_package: production-guardian-set-instantiation-plan
 - ledger_author: Sergey Stepanenko / ChatGPT assisted
 - package_scope: DOCUMENTATION_ONLY
-- next_required_action: complete pre-GO operational-readiness sequence; exact activation GO is premature and blocked
+- next_required_action: request/review production-guardian-set-instantiation-source-change; exact activation GO remains premature and blocked
 
 ## Authorization Boundary
 
@@ -46,7 +46,7 @@ If source/docs/context disagree, source is the runtime ground truth, and this le
 |:---|:---|:---|:---|
 | gateway-state-reconciliation | CLOSED | reconciliation package complete | no further action in this lane |
 | program-id-binding | COMPLETE | PlaceholderProgramId removed from active source blockers | program-id-dependent-pda-evidence complete; live-route/SPL-CPI source plan complete; activation-package-closure complete; closure-audit-doc-reconciliation complete |
-| pre-go-operational-readiness | ACTIVE | PRE-GO consensus: NOT_READY_REQUIRES_PRE_GO_PACKAGE | request/review production-guardian-set-instantiation-source-change; exact GO blocked |
+| pre-go-operational-readiness | ACTIVE | production-guardian-set-instantiation-plan complete | request/review production-guardian-set-instantiation-source-change; exact GO blocked |
 | guardian-proof-log | PAUSED | ProductionGuardianSetUnset, ProductionProofLogUnset | future instantiation package |
 | local-only-fixtures | NO-GO | local-only fixture emission not approved | separate future GO required |
 
@@ -323,3 +323,28 @@ Next required action:
 - request/review production-guardian-set-instantiation-source-change
 
 Exact activation GO is premature and blocked until PRE-GO operational-readiness packages are complete.
+
+## Production Guardian Set Instantiation Plan
+
+- package: production-guardian-set-instantiation-plan
+- status: COMPLETE
+- scope: PLANNING_DOCUMENTATION_ONLY_NO_SOURCE_CHANGE_NO_INSTANTIATION_NO_ACTIVATION
+- approval: APPROVE_PRODUCTION_GUARDIAN_SET_INSTANTIATION_PLAN_NO_ACTIVATION
+- recommended model: program-owned PDA/config account
+- guardian keys: public-only, exact production list deferred to separate source/config package
+- threshold rule: threshold > 0 and threshold <= guardian_count
+- duplicate guardian rule: must not inflate quorum; recommended explicit rejection
+- unknown guardian rule: must not count toward quorum; recommended explicit rejection
+- domain separation: required
+- rotation policy: not in scope; requires separate future approval
+- ProductionGuardianSetUnset: remains ACTIVE
+- source code mutated: false
+- guardian set instantiated: false
+- blocker removed: false
+- activation authorized: false
+
+Exit condition:
+
+- request separate approval for production-guardian-set-instantiation-source-change.
+
+This plan is intentionally bounded and must not become an endless planning chain. Its next action is a concrete source/config package request while preserving route/CPI/activation blockers.
