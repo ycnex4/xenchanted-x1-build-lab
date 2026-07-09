@@ -1,0 +1,9 @@
+## Active Lanes
+
+| Lane | Status | Blocking Condition | Next Step |
+|:---|:---|:---|:---|
+| gateway-state-reconciliation | CLOSED | reconciliation package complete | no further action in this lane |
+| program-id-binding | COMPLETE | PlaceholderProgramId removed from active source blockers | program-id-dependent-pda-evidence complete; live-route/SPL-CPI source plan complete; activation-package-closure complete; closure-audit-doc-reconciliation complete |
+| pre-go-operational-readiness | ACTIVE | PRE-GO consensus: NOT_READY_REQUIRES_PRE_GO_PACKAGE | request/review production-guardian-set-instantiation-source-change; exact GO blocked |
+| guardian-proof-log | PAUSED | ProductionGuardianSetUnset, ProductionProofLogUnset | future instantiation package |
+| local-only-fixtures | NO-GO | local-only fixture emission not approved | separate future GO required |

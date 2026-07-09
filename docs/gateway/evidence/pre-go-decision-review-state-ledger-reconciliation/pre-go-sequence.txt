@@ -1,0 +1,13 @@
+consensus_sequence_after_pre_go_review:
+
+Step 13: pre-go-decision-review-state-ledger-reconciliation COMPLETE_AFTER_THIS_PACKAGE
+Step 14: production-guardian-set-instantiation-source-change PENDING_REQUIRES_SEPARATE_APPROVAL
+Step 15: production-proof-log-instantiation-source-change PENDING_REQUIRES_SEPARATE_APPROVAL
+Step 16: programdata-upgrade-authority-evidence PENDING_REQUIRES_SEPARATE_APPROVAL
+Step 17: pre-go-deployment-readiness-review PENDING_REQUIRES_SEPARATE_APPROVAL
+Step 18: separate exact activation GO BLOCKED_UNTIL_14_17_COMPLETE
+Step 19: activation execution BLOCKED_UNTIL_GO
+
+note:
+Codex also recommends staged production-safe SPL CPI gate/source-change and live-route source-change,
+with live route retained as final exposure gate.

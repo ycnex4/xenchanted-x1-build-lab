@@ -1,0 +1,14 @@
+docs/gateway/current-execution-plan.md
+docs/gateway/current-runtime-state.md
+docs/gateway/evidence/pre-go-decision-review-state-ledger-reconciliation/all-changed-files.txt
+docs/gateway/evidence/pre-go-decision-review-state-ledger-reconciliation/codex-local-audit-summary.txt
+docs/gateway/evidence/pre-go-decision-review-state-ledger-reconciliation/doc-hygiene-summary.txt
+docs/gateway/evidence/pre-go-decision-review-state-ledger-reconciliation/material-safety-check.txt
+docs/gateway/evidence/pre-go-decision-review-state-ledger-reconciliation/patch-change-log.txt
+docs/gateway/evidence/pre-go-decision-review-state-ledger-reconciliation/pre-go-sequence.txt
+docs/gateway/evidence/pre-go-decision-review-state-ledger-reconciliation/review-check.txt
+docs/gateway/evidence/pre-go-decision-review-state-ledger-reconciliation/reviewer-consensus.txt
+docs/gateway/evidence/pre-go-decision-review-state-ledger-reconciliation/source-mutation-guard.txt
+docs/gateway/evidence/pre-go-decision-review-state-ledger-reconciliation/source-runtime-state-preservation.txt
+docs/gateway/evidence/pre-go-decision-review-state-ledger-reconciliation/stale-targeted-grep.txt
+docs/gateway/evidence/pre-go-decision-review-state-ledger-reconciliation/theo-approval.txt

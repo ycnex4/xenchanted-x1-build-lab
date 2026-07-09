@@ -24,11 +24,11 @@ If source code conflicts with documentation, source code remains the runtime gro
 
 The canonical runtime-state ledger currently identifies:
 
-- active runtime lane: activation-readiness-closure
-- next required decision: separate exact activation GO; execution remains blocked
-- next runtime package scope: PLANNING_ONLY
+- active runtime lane: pre-go-operational-readiness
+- next required decision: request/review production-guardian-set-instantiation-source-change; exact activation GO is premature and blocked
+- next runtime package scope: PRE_GO_OPERATIONAL_READINESS_REQUIRES_SEPARATE_APPROVAL
 - ExternalReviewIncomplete effective status: REMOVED
-- source_blocker_removed=false
+- source blockers removed to date: ExternalReviewIncomplete, PlaceholderProgramId
 - activation_authorized=false
 - deploy_authorized=false
 - route_enablement_authorized=false
@@ -148,13 +148,14 @@ A package is not closed unless it states:
 
 ## Next Immediate Step
 
-Review docs/gateway/program-id-binding-resolution-plan.md and choose the next approved package.
+Do not request exact activation GO yet. Complete PRE-GO operational-readiness packages first.
 
 Next required decision:
 
-- separate exact activation GO
+- request/review production-guardian-set-instantiation-source-change
+- exact activation GO remains blocked until PRE-GO operational-readiness packages complete
 
-Execution remains blocked until that separate GO.
+Execution remains blocked.
 
 Required behavior until a separate explicit approval is received:
 
@@ -236,3 +237,26 @@ Next required decision:
 - separate exact activation GO
 
 Execution remains blocked until a separate exact activation GO.
+
+## PRE-GO Decision Review Result
+
+Status: COMPLETE.
+
+Reviewer consensus:
+
+- Claude: NOT_READY_REQUIRES_PRE_GO_PACKAGE
+- Theo: NOT_READY_REQUIRES_PRE_GO_PACKAGE
+- Codex: NOT_READY_REQUIRES_PRE_GO_PACKAGE
+
+The project is safely closed, non-executing, and blocked, but it is not ready to request exact activation GO.
+
+Required PRE-GO sequence before any exact activation GO request:
+
+1. production-guardian-set-instantiation-source-change;
+2. production-proof-log-instantiation-source-change;
+3. programdata-upgrade-authority-evidence;
+4. pre-go-deployment-readiness-review.
+
+Codex also recommends staged production-safe SPL CPI gate/source-change and live-route source-change, with live route retained as the final exposure gate.
+
+No source-code mutation, formatting changes, activation, deploy, upgrade, RPC mutation, route enablement, SPL CPI enablement, guardian set instantiation, proof log instantiation, blocker removal, cleanup, or private-key/keypair material handling is authorized by this review.

@@ -1,0 +1,15 @@
+docs/gateway/current-runtime-state.md:14:- last_updated_package: pre-go-decision-review-state-ledger-reconciliation
+docs/gateway/current-runtime-state.md:17:- next_required_action: complete pre-GO operational-readiness sequence; exact activation GO is premature and blocked
+docs/gateway/current-runtime-state.md:49:| pre-go-operational-readiness | ACTIVE | PRE-GO consensus: NOT_READY_REQUIRES_PRE_GO_PACKAGE | request/review production-guardian-set-instantiation-source-change; exact GO blocked |
+docs/gateway/current-runtime-state.md:142:- request/review production-guardian-set-instantiation-source-change
+docs/gateway/current-runtime-state.md:292:- Claude result: NOT_READY_REQUIRES_PRE_GO_PACKAGE
+docs/gateway/current-runtime-state.md:293:- Theo result: NOT_READY_REQUIRES_PRE_GO_PACKAGE
+docs/gateway/current-runtime-state.md:294:- Codex result: NOT_READY_REQUIRES_PRE_GO_PACKAGE
+docs/gateway/current-runtime-state.md:295:- consensus: NOT_READY_REQUIRES_PRE_GO_PACKAGE
+docs/gateway/current-runtime-state.md:323:- request/review production-guardian-set-instantiation-source-change
+docs/gateway/current-execution-plan.md:27:- active runtime lane: pre-go-operational-readiness
+docs/gateway/current-execution-plan.md:28:- next required decision: request/review production-guardian-set-instantiation-source-change; exact activation GO is premature and blocked
+docs/gateway/current-execution-plan.md:155:- request/review production-guardian-set-instantiation-source-change
+docs/gateway/current-execution-plan.md:247:- Claude: NOT_READY_REQUIRES_PRE_GO_PACKAGE
+docs/gateway/current-execution-plan.md:248:- Theo: NOT_READY_REQUIRES_PRE_GO_PACKAGE
+docs/gateway/current-execution-plan.md:249:- Codex: NOT_READY_REQUIRES_PRE_GO_PACKAGE

@@ -1,0 +1,51 @@
+docs/gateway/current-runtime-state.md:14:- last_updated_package: pre-go-decision-review-state-ledger-reconciliation
+docs/gateway/current-runtime-state.md:17:- next_required_action: complete pre-GO operational-readiness sequence; exact activation GO is premature and blocked
+docs/gateway/current-runtime-state.md:49:| pre-go-operational-readiness | ACTIVE | PRE-GO consensus: NOT_READY_REQUIRES_PRE_GO_PACKAGE | request/review production-guardian-set-instantiation-source-change; exact GO blocked |
+docs/gateway/current-runtime-state.md:50:| guardian-proof-log | PAUSED | ProductionGuardianSetUnset, ProductionProofLogUnset | future instantiation package |
+docs/gateway/current-runtime-state.md:60:| LiveRouteDisabled | ACTIVE | N/A | ACTIVE |
+docs/gateway/current-runtime-state.md:61:| SplCpiExecutionDisabled | ACTIVE | N/A | ACTIVE |
+docs/gateway/current-runtime-state.md:62:| ProductionGuardianSetUnset | ACTIVE | policy_defined_not_instantiated | ACTIVE |
+docs/gateway/current-runtime-state.md:63:| ProductionProofLogUnset | ACTIVE | policy_defined_not_instantiated | ACTIVE |
+docs/gateway/current-runtime-state.md:71:| ProductionGuardianSetUnset | policy_defined | false | ACTIVE |
+docs/gateway/current-runtime-state.md:72:| ProductionProofLogUnset | policy_defined | false | ACTIVE |
+docs/gateway/current-runtime-state.md:82:| runtime_deployable | false | programs/xxxl-svm/src/deployment_status.rs |
+docs/gateway/current-runtime-state.md:83:| predeploy_gate | blocked | programs/xxxl-svm/src/deployment_status.rs |
+docs/gateway/current-runtime-state.md:142:- request/review production-guardian-set-instantiation-source-change
+docs/gateway/current-runtime-state.md:188:| LiveRouteDisabled | ACTIVE |
+docs/gateway/current-runtime-state.md:189:| SplCpiExecutionDisabled | ACTIVE |
+docs/gateway/current-runtime-state.md:190:| ProductionGuardianSetUnset | ACTIVE |
+docs/gateway/current-runtime-state.md:191:| ProductionProofLogUnset | ACTIVE |
+docs/gateway/current-runtime-state.md:226:| LiveRouteDisabled | ACTIVE |
+docs/gateway/current-runtime-state.md:227:| SplCpiExecutionDisabled | ACTIVE |
+docs/gateway/current-runtime-state.md:228:| ProductionGuardianSetUnset | ACTIVE |
+docs/gateway/current-runtime-state.md:229:| ProductionProofLogUnset | ACTIVE |
+docs/gateway/current-runtime-state.md:250:- activation authorized: false
+docs/gateway/current-runtime-state.md:251:- deploy authorized: false
+docs/gateway/current-runtime-state.md:253:- RPC mutation authorized: false
+docs/gateway/current-runtime-state.md:256:- blocker removal authorized: false
+docs/gateway/current-runtime-state.md:273:| LiveRouteDisabled | ACTIVE |
+docs/gateway/current-runtime-state.md:274:| SplCpiExecutionDisabled | ACTIVE |
+docs/gateway/current-runtime-state.md:275:| ProductionGuardianSetUnset | ACTIVE |
+docs/gateway/current-runtime-state.md:276:| ProductionProofLogUnset | ACTIVE |
+docs/gateway/current-runtime-state.md:292:- Claude result: NOT_READY_REQUIRES_PRE_GO_PACKAGE
+docs/gateway/current-runtime-state.md:293:- Theo result: NOT_READY_REQUIRES_PRE_GO_PACKAGE
+docs/gateway/current-runtime-state.md:294:- Codex result: NOT_READY_REQUIRES_PRE_GO_PACKAGE
+docs/gateway/current-runtime-state.md:295:- consensus: NOT_READY_REQUIRES_PRE_GO_PACKAGE
+docs/gateway/current-runtime-state.md:298:- activation authorized: false
+docs/gateway/current-runtime-state.md:299:- deploy authorized: false
+docs/gateway/current-runtime-state.md:301:- RPC mutation authorized: false
+docs/gateway/current-runtime-state.md:306:- blocker removal authorized: false
+docs/gateway/current-runtime-state.md:314:| LiveRouteDisabled | ACTIVE |
+docs/gateway/current-runtime-state.md:315:| SplCpiExecutionDisabled | ACTIVE |
+docs/gateway/current-runtime-state.md:316:| ProductionGuardianSetUnset | ACTIVE |
+docs/gateway/current-runtime-state.md:317:| ProductionProofLogUnset | ACTIVE |
+docs/gateway/current-runtime-state.md:323:- request/review production-guardian-set-instantiation-source-change
+docs/gateway/current-execution-plan.md:27:- active runtime lane: pre-go-operational-readiness
+docs/gateway/current-execution-plan.md:28:- next required decision: request/review production-guardian-set-instantiation-source-change; exact activation GO is premature and blocked
+docs/gateway/current-execution-plan.md:155:- request/review production-guardian-set-instantiation-source-change
+docs/gateway/current-execution-plan.md:204:- future boundary for `LiveRouteDisabled` removal;
+docs/gateway/current-execution-plan.md:205:- future boundary for `SplCpiExecutionDisabled` removal;
+docs/gateway/current-execution-plan.md:247:- Claude: NOT_READY_REQUIRES_PRE_GO_PACKAGE
+docs/gateway/current-execution-plan.md:248:- Theo: NOT_READY_REQUIRES_PRE_GO_PACKAGE
+docs/gateway/current-execution-plan.md:249:- Codex: NOT_READY_REQUIRES_PRE_GO_PACKAGE
+docs/gateway/current-execution-plan.md:255:1. production-guardian-set-instantiation-source-change;
