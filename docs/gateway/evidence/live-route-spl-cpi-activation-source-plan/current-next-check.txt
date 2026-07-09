@@ -1,0 +1,18 @@
+docs/gateway/current-runtime-state.md:14:- last_updated_package: live-route-spl-cpi-activation-source-plan
+docs/gateway/current-runtime-state.md:17:- next_required_action: continue with activation-package-closure approval request
+docs/gateway/current-runtime-state.md:48:| program-id-binding | COMPLETE | PlaceholderProgramId removed from active source blockers | program-id-dependent-pda-evidence complete; live-route/SPL-CPI source plan complete; continue with activation-package-closure approval request |
+docs/gateway/current-runtime-state.md:140:activation-package-closure is the next approval-request candidate.
+docs/gateway/current-runtime-state.md:188:Next approval-request candidate at time of PDA evidence closure:
+docs/gateway/current-runtime-state.md:190:- live-route-spl-cpi-activation-source-plan
+docs/gateway/current-runtime-state.md:192:Current next approval-request candidate is now tracked at the top-level runtime state as:
+docs/gateway/current-runtime-state.md:194:- activation-package-closure
+docs/gateway/current-runtime-state.md:198:- package: live-route-spl-cpi-activation-source-plan
+docs/gateway/current-runtime-state.md:201:- source plan: `docs/gateway/live-route-spl-cpi-activation-source-plan.md`
+docs/gateway/current-runtime-state.md:226:Next approval-request candidate:
+docs/gateway/current-runtime-state.md:228:- activation-package-closure
+docs/gateway/current-execution-plan.md:155:- activation-package-closure
+docs/gateway/current-execution-plan.md:189:- activation-package-closure
+docs/gateway/current-execution-plan.md:191:## Completed: live-route-spl-cpi-activation-source-plan
+docs/gateway/current-execution-plan.md:209:- activation-package-closure
+docs/gateway/live-route-spl-cpi-activation-source-plan.md:4:Package: live-route-spl-cpi-activation-source-plan
+docs/gateway/live-route-spl-cpi-activation-source-plan.md:126:activation-package-closure

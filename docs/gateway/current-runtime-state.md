@@ -11,10 +11,10 @@ If source/docs/context disagree, source is the runtime ground truth, and this le
 ## Ledger Metadata
 
 - reconciled_source_base_commit: 65a8e83
-- last_updated_package: program-id-dependent-pda-evidence
+- last_updated_package: live-route-spl-cpi-activation-source-plan
 - ledger_author: Sergey Stepanenko / ChatGPT assisted
 - package_scope: DOCUMENTATION_ONLY
-- next_required_action: continue with live-route-spl-cpi-activation-source-plan approval request
+- next_required_action: continue with activation-package-closure approval request
 
 ## Authorization Boundary
 
@@ -45,7 +45,7 @@ If source/docs/context disagree, source is the runtime ground truth, and this le
 | Lane | Status | Blocking Condition | Next Step |
 |:---|:---|:---|:---|
 | gateway-state-reconciliation | CLOSED | reconciliation package complete | no further action in this lane |
-| program-id-binding | COMPLETE | PlaceholderProgramId removed from active source blockers | program-id-dependent-pda-evidence complete; continue with live-route-spl-cpi-activation-source-plan approval request |
+| program-id-binding | COMPLETE | PlaceholderProgramId removed from active source blockers | program-id-dependent-pda-evidence complete; live-route/SPL-CPI source plan complete; continue with activation-package-closure approval request |
 | guardian-proof-log | PAUSED | ProductionGuardianSetUnset, ProductionProofLogUnset | future instantiation package |
 | local-only-fixtures | NO-GO | local-only fixture emission not approved | separate future GO required |
 
@@ -137,7 +137,7 @@ Selected next package for approval request:
 
 - external-review-blocker-removal-source-change
 
-live-route-spl-cpi-activation-source-plan is the next approval-request candidate.
+activation-package-closure is the next approval-request candidate.
 
 Neither is authorized by this ledger.
 
@@ -185,6 +185,44 @@ Preserved blocker state after PDA evidence:
 
 Runtime remains not deployable. Predeploy gate remains blocked.
 
-Next approval-request candidate:
+Next approval-request candidate at time of PDA evidence closure:
 
 - live-route-spl-cpi-activation-source-plan
+
+Current next approval-request candidate is now tracked at the top-level runtime state as:
+
+- activation-package-closure
+
+## Live Route / SPL CPI Activation Source Plan Closure
+
+- package: live-route-spl-cpi-activation-source-plan
+- status: COMPLETE
+- scope: PLANNING_DOCUMENTATION_ONLY_NO_CODE_MUTATION_NO_ACTIVATION
+- source plan: `docs/gateway/live-route-spl-cpi-activation-source-plan.md`
+- source code mutated: false
+- activation performed: false
+- deploy performed: false
+- upgrade performed: false
+- RPC mutation performed: false
+- route enablement performed: false
+- SPL CPI enablement performed: false
+- guardian set instantiation performed: false
+- proof log instantiation performed: false
+- local-only fixture emission performed: false
+
+Preserved blocker state after source plan:
+
+| Blocker | Status |
+| --- | --- |
+| ExternalReviewIncomplete | REMOVED |
+| PlaceholderProgramId | REMOVED |
+| LiveRouteDisabled | ACTIVE |
+| SplCpiExecutionDisabled | ACTIVE |
+| ProductionGuardianSetUnset | ACTIVE |
+| ProductionProofLogUnset | ACTIVE |
+
+Runtime remains not deployable. Predeploy gate remains blocked.
+
+Next approval-request candidate:
+
+- activation-package-closure

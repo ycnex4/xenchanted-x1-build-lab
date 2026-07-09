@@ -1,0 +1,10 @@
+package=live-route-spl-cpi-activation-source-plan
+fix_type=doc_state_alignment
+
+runtime_state_pda_closure_next_candidate_disambiguated=true
+current_top_level_next_required_action=activation-package-closure_approval_request
+
+source_code_mutation_performed=false
+activation_performed=false
+deploy_performed=false
+rpc_mutation_performed=false

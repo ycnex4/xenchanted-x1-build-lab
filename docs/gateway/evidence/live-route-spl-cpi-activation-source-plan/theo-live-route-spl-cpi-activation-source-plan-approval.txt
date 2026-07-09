@@ -1,0 +1,45 @@
+package=live-route-spl-cpi-activation-source-plan
+approval=APPROVE_LIVE_ROUTE_SPL_CPI_ACTIVATION_SOURCE_PLAN_NO_ACTIVATION
+approved_by=Theo
+approval_date=2026-07-09
+
+scope=PLANNING_DOCUMENTATION_ONLY_NO_CODE_MUTATION_NO_ACTIVATION
+
+allowed_changes:
+1. Prepare source-readiness / activation-plan documentation.
+2. Review and document required source changes for future activation-ready state.
+3. Define exact boundaries for LiveRouteDisabled and SplCpiExecutionDisabled removal in a future package.
+4. Define required preconditions for guardian set instantiation.
+5. Define required preconditions for proof log instantiation.
+6. Define final deployment-readiness review gates.
+7. Update docs/gateway/current-runtime-state.md and docs/gateway/current-execution-plan.md as needed.
+8. Add package documentation and evidence.
+
+forbidden_changes:
+activation=false
+deploy=false
+upgrade=false
+rpc_mutation=false
+route_enablement=false
+spl_cpi_enablement=false
+guardian_set_instantiation=false
+proof_log_instantiation=false
+local_only_fixture_emission=NO-GO
+unrelated_cleanup=false
+private_key_or_keypair_material=false
+cleanup=false
+
+preserved_state_expected:
+ExternalReviewIncomplete=REMOVED
+PlaceholderProgramId=REMOVED
+Program ID=BOUND
+PDA evidence=COMPLETE
+LiveRouteDisabled=ACTIVE
+SplCpiExecutionDisabled=ACTIVE
+ProductionGuardianSetUnset=ACTIVE
+ProductionProofLogUnset=ACTIVE
+runtime_deployable=false
+predeploy_gate=blocked
+
+review_integrity_condition:
+This package must not convert planning into activation. Final deployment-readiness review and separate exact activation GO remain required before any deployment, RPC mutation, route enablement, SPL CPI execution, or live activation path.

@@ -1,0 +1,89 @@
+docs/gateway/current-runtime-state.md:14:- last_updated_package: live-route-spl-cpi-activation-source-plan
+docs/gateway/current-runtime-state.md:17:- next_required_action: continue with activation-package-closure approval request
+docs/gateway/current-runtime-state.md:38:4. Exactly one work lane should be marked ACTIVE at a time.
+docs/gateway/current-runtime-state.md:48:| program-id-binding | COMPLETE | PlaceholderProgramId removed from active source blockers | program-id-dependent-pda-evidence complete; live-route/SPL-CPI source plan complete; continue with activation-package-closure approval request |
+docs/gateway/current-runtime-state.md:49:| guardian-proof-log | PAUSED | ProductionGuardianSetUnset, ProductionProofLogUnset | future instantiation package |
+docs/gateway/current-runtime-state.md:58:| PlaceholderProgramId | REMOVED_FROM_ACTIVE_SOURCE_BLOCKERS | program_id_bound_source_changed | REMOVED |
+docs/gateway/current-runtime-state.md:59:| LiveRouteDisabled | ACTIVE | N/A | ACTIVE |
+docs/gateway/current-runtime-state.md:60:| SplCpiExecutionDisabled | ACTIVE | N/A | ACTIVE |
+docs/gateway/current-runtime-state.md:61:| ProductionGuardianSetUnset | ACTIVE | policy_defined_not_instantiated | ACTIVE |
+docs/gateway/current-runtime-state.md:62:| ProductionProofLogUnset | ACTIVE | policy_defined_not_instantiated | ACTIVE |
+docs/gateway/current-runtime-state.md:63:| ExternalReviewIncomplete | REMOVED_FROM_ACTIVE_SOURCE_BLOCKERS | review_approved_source_changed | REMOVED |
+docs/gateway/current-runtime-state.md:69:| ExternalReviewIncomplete | true | true | REMOVED |
+docs/gateway/current-runtime-state.md:70:| ProductionGuardianSetUnset | policy_defined | false | ACTIVE |
+docs/gateway/current-runtime-state.md:71:| ProductionProofLogUnset | policy_defined | false | ACTIVE |
+docs/gateway/current-runtime-state.md:81:| runtime_deployable | false | programs/xxxl-svm/src/deployment_status.rs |
+docs/gateway/current-runtime-state.md:82:| predeploy_gate | blocked | programs/xxxl-svm/src/deployment_status.rs |
+docs/gateway/current-runtime-state.md:108:   - effective_blocker_status=REMOVED
+docs/gateway/current-runtime-state.md:128:- [x] exactly one lane marked ACTIVE
+docs/gateway/current-runtime-state.md:140:activation-package-closure is the next approval-request candidate.
+docs/gateway/current-runtime-state.md:160:- status: COMPLETE
+docs/gateway/current-runtime-state.md:166:- source code mutated: false
+docs/gateway/current-runtime-state.md:167:- activation performed: false
+docs/gateway/current-runtime-state.md:171:- route enablement performed: false
+docs/gateway/current-runtime-state.md:172:- SPL CPI enablement performed: false
+docs/gateway/current-runtime-state.md:179:| ExternalReviewIncomplete | REMOVED |
+docs/gateway/current-runtime-state.md:180:| PlaceholderProgramId | REMOVED |
+docs/gateway/current-runtime-state.md:181:| LiveRouteDisabled | ACTIVE |
+docs/gateway/current-runtime-state.md:182:| SplCpiExecutionDisabled | ACTIVE |
+docs/gateway/current-runtime-state.md:183:| ProductionGuardianSetUnset | ACTIVE |
+docs/gateway/current-runtime-state.md:184:| ProductionProofLogUnset | ACTIVE |
+docs/gateway/current-runtime-state.md:190:- live-route-spl-cpi-activation-source-plan
+docs/gateway/current-runtime-state.md:192:## Live Route / SPL CPI Activation Source Plan Closure
+docs/gateway/current-runtime-state.md:194:- package: live-route-spl-cpi-activation-source-plan
+docs/gateway/current-runtime-state.md:195:- status: COMPLETE
+docs/gateway/current-runtime-state.md:197:- source plan: `docs/gateway/live-route-spl-cpi-activation-source-plan.md`
+docs/gateway/current-runtime-state.md:198:- source code mutated: false
+docs/gateway/current-runtime-state.md:199:- activation performed: false
+docs/gateway/current-runtime-state.md:203:- route enablement performed: false
+docs/gateway/current-runtime-state.md:204:- SPL CPI enablement performed: false
+docs/gateway/current-runtime-state.md:213:| ExternalReviewIncomplete | REMOVED |
+docs/gateway/current-runtime-state.md:214:| PlaceholderProgramId | REMOVED |
+docs/gateway/current-runtime-state.md:215:| LiveRouteDisabled | ACTIVE |
+docs/gateway/current-runtime-state.md:216:| SplCpiExecutionDisabled | ACTIVE |
+docs/gateway/current-runtime-state.md:217:| ProductionGuardianSetUnset | ACTIVE |
+docs/gateway/current-runtime-state.md:218:| ProductionProofLogUnset | ACTIVE |
+docs/gateway/current-runtime-state.md:224:- activation-package-closure
+docs/gateway/current-execution-plan.md:30:- ExternalReviewIncomplete effective status: REMOVED
+docs/gateway/current-execution-plan.md:99:| 5 | program-id-dependent-pda-evidence | PURE_EVIDENCE_DOCUMENTATION_NO_CODE_MUTATION_NO_ACTIVATION | Record/review Program-ID-dependent PDA evidence | COMPLETE; evidence reviewed, no live action |
+docs/gateway/current-execution-plan.md:155:- activation-package-closure
+docs/gateway/current-execution-plan.md:177:Status: COMPLETE.
+docs/gateway/current-execution-plan.md:189:- activation-package-closure
+docs/gateway/current-execution-plan.md:191:## Completed: live-route-spl-cpi-activation-source-plan
+docs/gateway/current-execution-plan.md:193:Status: COMPLETE.
+docs/gateway/current-execution-plan.md:199:- future boundary for `LiveRouteDisabled` removal;
+docs/gateway/current-execution-plan.md:200:- future boundary for `SplCpiExecutionDisabled` removal;
+docs/gateway/current-execution-plan.md:209:- activation-package-closure
+docs/gateway/live-route-spl-cpi-activation-source-plan.md:3:Status: COMPLETE
+docs/gateway/live-route-spl-cpi-activation-source-plan.md:4:Package: live-route-spl-cpi-activation-source-plan
+docs/gateway/live-route-spl-cpi-activation-source-plan.md:15:- ExternalReviewIncomplete: REMOVED.
+docs/gateway/live-route-spl-cpi-activation-source-plan.md:16:- PlaceholderProgramId: REMOVED.
+docs/gateway/live-route-spl-cpi-activation-source-plan.md:18:- Program-ID-dependent PDA evidence: COMPLETE.
+docs/gateway/live-route-spl-cpi-activation-source-plan.md:19:- LiveRouteDisabled: ACTIVE.
+docs/gateway/live-route-spl-cpi-activation-source-plan.md:20:- SplCpiExecutionDisabled: ACTIVE.
+docs/gateway/live-route-spl-cpi-activation-source-plan.md:21:- ProductionGuardianSetUnset: ACTIVE.
+docs/gateway/live-route-spl-cpi-activation-source-plan.md:22:- ProductionProofLogUnset: ACTIVE.
+docs/gateway/live-route-spl-cpi-activation-source-plan.md:23:- runtime_deployable: false.
+docs/gateway/live-route-spl-cpi-activation-source-plan.md:24:- predeploy_gate: blocked.
+docs/gateway/live-route-spl-cpi-activation-source-plan.md:26:## Future Boundary: LiveRouteDisabled Removal
+docs/gateway/live-route-spl-cpi-activation-source-plan.md:28:`LiveRouteDisabled` may be removed only in a later separately approved source-change package.
+docs/gateway/live-route-spl-cpi-activation-source-plan.md:37:6. The package name and approval text explicitly authorize `LiveRouteDisabled` removal.
+docs/gateway/live-route-spl-cpi-activation-source-plan.md:39:This current package does not remove `LiveRouteDisabled`.
+docs/gateway/live-route-spl-cpi-activation-source-plan.md:41:## Future Boundary: SplCpiExecutionDisabled Removal
+docs/gateway/live-route-spl-cpi-activation-source-plan.md:43:`SplCpiExecutionDisabled` may be removed only in a later separately approved source-change package.
+docs/gateway/live-route-spl-cpi-activation-source-plan.md:53:7. The package name and approval text explicitly authorize `SplCpiExecutionDisabled` removal.
+docs/gateway/live-route-spl-cpi-activation-source-plan.md:55:This current package does not remove `SplCpiExecutionDisabled`.
+docs/gateway/live-route-spl-cpi-activation-source-plan.md:59:Before `ProductionGuardianSetUnset` can be removed, a future package must define and review:
+docs/gateway/live-route-spl-cpi-activation-source-plan.md:74:Before `ProductionProofLogUnset` can be removed, a future package must define and review:
+docs/gateway/live-route-spl-cpi-activation-source-plan.md:126:activation-package-closure
+docs/gateway/evidence/live-route-spl-cpi-activation-source-plan/source-plan-closure-summary.txt:1:package=live-route-spl-cpi-activation-source-plan
+docs/gateway/evidence/live-route-spl-cpi-activation-source-plan/source-plan-closure-summary.txt:12:ExternalReviewIncomplete_effective_status_after=REMOVED
+docs/gateway/evidence/live-route-spl-cpi-activation-source-plan/source-plan-closure-summary.txt:13:PlaceholderProgramId_effective_status_after=REMOVED
+docs/gateway/evidence/live-route-spl-cpi-activation-source-plan/source-plan-closure-summary.txt:15:PDA_evidence_status_after=COMPLETE
+docs/gateway/evidence/live-route-spl-cpi-activation-source-plan/source-plan-closure-summary.txt:16:LiveRouteDisabled_effective_status_after=ACTIVE
+docs/gateway/evidence/live-route-spl-cpi-activation-source-plan/source-plan-closure-summary.txt:17:SplCpiExecutionDisabled_effective_status_after=ACTIVE
+docs/gateway/evidence/live-route-spl-cpi-activation-source-plan/source-plan-closure-summary.txt:18:ProductionGuardianSetUnset_effective_status_after=ACTIVE
+docs/gateway/evidence/live-route-spl-cpi-activation-source-plan/source-plan-closure-summary.txt:19:ProductionProofLogUnset_effective_status_after=ACTIVE
+docs/gateway/evidence/live-route-spl-cpi-activation-source-plan/source-plan-closure-summary.txt:21:runtime_deployable_after=false
+docs/gateway/evidence/live-route-spl-cpi-activation-source-plan/source-plan-closure-summary.txt:22:predeploy_gate_after=blocked
+docs/gateway/evidence/live-route-spl-cpi-activation-source-plan/source-plan-closure-summary.txt:36:next_required_decision=activation-package-closure_approval_request
