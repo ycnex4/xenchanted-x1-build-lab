@@ -1,0 +1,16 @@
+docs/gateway/current-execution-plan.md
+docs/gateway/current-runtime-state.md
+docs/gateway/evidence/program-id-dependent-pda-evidence/all-changed-files.txt
+docs/gateway/evidence/program-id-dependent-pda-evidence/doc-drift-fix-summary.txt
+docs/gateway/evidence/program-id-dependent-pda-evidence/key-docs-state-check.txt
+docs/gateway/evidence/program-id-dependent-pda-evidence/material-safety-check.txt
+docs/gateway/evidence/program-id-dependent-pda-evidence/material-safety-summary.txt
+docs/gateway/evidence/program-id-dependent-pda-evidence/pda-evidence-closure-summary.txt
+docs/gateway/evidence/program-id-dependent-pda-evidence/pda-evidence-inputs.txt
+docs/gateway/evidence/program-id-dependent-pda-evidence/program-id-dependent-pda-dry-run-summary.txt
+docs/gateway/evidence/program-id-dependent-pda-evidence/program-id-dependent-pda-dry-run.txt
+docs/gateway/evidence/program-id-dependent-pda-evidence/source-bound-program-id-check.txt
+docs/gateway/evidence/program-id-dependent-pda-evidence/source-change-scope-check.txt
+docs/gateway/evidence/program-id-dependent-pda-evidence/source-mutation-guard.txt
+docs/gateway/evidence/program-id-dependent-pda-evidence/theo-program-id-dependent-pda-evidence-approval.txt
+docs/gateway/program-id-dependent-pda-evidence.md

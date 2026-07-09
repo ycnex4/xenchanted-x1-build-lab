@@ -1,0 +1,47 @@
+docs/gateway/current-runtime-state.md:14:- last_updated_package: program-id-dependent-pda-evidence
+docs/gateway/current-runtime-state.md:17:- next_required_action: continue with live-route-spl-cpi-activation-source-plan approval request
+docs/gateway/current-runtime-state.md:48:| program-id-binding | COMPLETE | PlaceholderProgramId removed from active source blockers | program-id-dependent-pda-evidence complete; continue with live-route-spl-cpi-activation-source-plan approval request |
+docs/gateway/current-runtime-state.md:58:| PlaceholderProgramId | REMOVED_FROM_ACTIVE_SOURCE_BLOCKERS | program_id_bound_source_changed | REMOVED |
+docs/gateway/current-runtime-state.md:59:| LiveRouteDisabled | ACTIVE | N/A | ACTIVE |
+docs/gateway/current-runtime-state.md:60:| SplCpiExecutionDisabled | ACTIVE | N/A | ACTIVE |
+docs/gateway/current-runtime-state.md:63:| ExternalReviewIncomplete | REMOVED_FROM_ACTIVE_SOURCE_BLOCKERS | review_approved_source_changed | REMOVED |
+docs/gateway/current-runtime-state.md:69:| ExternalReviewIncomplete | true | true | REMOVED |
+docs/gateway/current-runtime-state.md:81:| runtime_deployable | false | programs/xxxl-svm/src/deployment_status.rs |
+docs/gateway/current-runtime-state.md:82:| predeploy_gate | blocked | programs/xxxl-svm/src/deployment_status.rs |
+docs/gateway/current-runtime-state.md:98:- ExternalReviewIncomplete drift resolved by external-review-blocker-removal-source-change: source active blocker removed and tests now expect it inactive.
+docs/gateway/current-runtime-state.md:105:1. ExternalReviewIncomplete:
+docs/gateway/current-runtime-state.md:140:live-route-spl-cpi-activation-source-plan is the next approval-request candidate.
+docs/gateway/current-runtime-state.md:149:- additional blocker removal beyond ExternalReviewIncomplete and PlaceholderProgramId
+docs/gateway/current-runtime-state.md:157:## Program-ID-Dependent PDA Evidence Closure
+docs/gateway/current-runtime-state.md:159:- package: program-id-dependent-pda-evidence
+docs/gateway/current-runtime-state.md:160:- status: COMPLETE
+docs/gateway/current-runtime-state.md:161:- scope: PURE_EVIDENCE_DOCUMENTATION_NO_CODE_MUTATION_NO_ACTIVATION
+docs/gateway/current-runtime-state.md:165:- evidence: `docs/gateway/evidence/program-id-dependent-pda-evidence/program-id-dependent-pda-dry-run.txt`
+docs/gateway/current-runtime-state.md:179:| ExternalReviewIncomplete | REMOVED |
+docs/gateway/current-runtime-state.md:180:| PlaceholderProgramId | REMOVED |
+docs/gateway/current-runtime-state.md:181:| LiveRouteDisabled | ACTIVE |
+docs/gateway/current-runtime-state.md:182:| SplCpiExecutionDisabled | ACTIVE |
+docs/gateway/current-runtime-state.md:190:- live-route-spl-cpi-activation-source-plan
+docs/gateway/current-execution-plan.md:30:- ExternalReviewIncomplete effective status: REMOVED
+docs/gateway/current-execution-plan.md:47:- ExternalReviewIncomplete was removed only by the approved dedicated source-change package;
+docs/gateway/current-execution-plan.md:65:- additional blocker removal beyond ExternalReviewIncomplete;
+docs/gateway/current-execution-plan.md:97:| 3 | external-review-blocker-removal-source-change | SOURCE_CHANGE_NO_ACTIVATION | Remove ExternalReviewIncomplete only if explicitly approved; update tests and safety expectations | source blocker removed, no activation |
+docs/gateway/current-execution-plan.md:98:| 4 | program-id-binding-source-change | SOURCE_CHANGE_NO_ACTIVATION | Replace placeholder Program ID model with reviewed real Program ID binding path | PlaceholderProgramId state updated only as approved |
+docs/gateway/current-execution-plan.md:99:| 5 | program-id-dependent-pda-evidence | PURE_EVIDENCE_DOCUMENTATION_NO_CODE_MUTATION_NO_ACTIVATION | Record/review Program-ID-dependent PDA evidence | COMPLETE; evidence reviewed, no live action |
+docs/gateway/current-execution-plan.md:155:- live-route-spl-cpi-activation-source-plan
+docs/gateway/current-execution-plan.md:160:- keep ExternalReviewIncomplete removed from active source blockers;
+docs/gateway/current-execution-plan.md:161:- keep PlaceholderProgramId removed from active source blockers;
+docs/gateway/current-execution-plan.md:175:## Completed: program-id-dependent-pda-evidence
+docs/gateway/current-execution-plan.md:177:Status: COMPLETE.
+docs/gateway/current-execution-plan.md:189:- live-route-spl-cpi-activation-source-plan
+docs/gateway/program-id-dependent-pda-evidence.md:3:Status: COMPLETE
+docs/gateway/program-id-dependent-pda-evidence.md:4:Package: program-id-dependent-pda-evidence
+docs/gateway/program-id-dependent-pda-evidence.md:36:- `docs/gateway/evidence/program-id-dependent-pda-evidence/program-id-dependent-pda-dry-run.txt`
+docs/gateway/program-id-dependent-pda-evidence.md:40:- `docs/gateway/evidence/program-id-dependent-pda-evidence/program-id-dependent-pda-dry-run-summary.txt`
+docs/gateway/program-id-dependent-pda-evidence.md:51:- ExternalReviewIncomplete remains REMOVED.
+docs/gateway/program-id-dependent-pda-evidence.md:52:- PlaceholderProgramId remains REMOVED.
+docs/gateway/program-id-dependent-pda-evidence.md:53:- LiveRouteDisabled remains ACTIVE.
+docs/gateway/program-id-dependent-pda-evidence.md:54:- SplCpiExecutionDisabled remains ACTIVE.
+docs/gateway/program-id-dependent-pda-evidence.md:57:- runtime_deployable=false.
+docs/gateway/program-id-dependent-pda-evidence.md:58:- predeploy_gate=blocked.
+docs/gateway/program-id-dependent-pda-evidence.md:70:live-route-spl-cpi-activation-source-plan
