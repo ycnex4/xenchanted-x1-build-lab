@@ -1,0 +1,12 @@
+docs/gateway/activation-package-closure.md
+docs/gateway/current-execution-plan.md
+docs/gateway/current-runtime-state.md
+docs/gateway/evidence/activation-package-closure/all-changed-files.txt
+docs/gateway/evidence/activation-package-closure/closure-summary.txt
+docs/gateway/evidence/activation-package-closure/doc-alignment-summary.txt
+docs/gateway/evidence/activation-package-closure/final-go-checklist.txt
+docs/gateway/evidence/activation-package-closure/key-closure-state-check.txt
+docs/gateway/evidence/activation-package-closure/material-safety-check.txt
+docs/gateway/evidence/activation-package-closure/material-safety-summary.txt
+docs/gateway/evidence/activation-package-closure/source-mutation-guard.txt
+docs/gateway/evidence/activation-package-closure/theo-activation-package-closure-approval.txt

@@ -1,0 +1,108 @@
+docs/gateway/current-runtime-state.md:14:- last_updated_package: activation-package-closure
+docs/gateway/current-runtime-state.md:17:- next_required_action: await separate exact activation GO; execution remains blocked
+docs/gateway/current-runtime-state.md:38:4. Exactly one work lane should be marked ACTIVE at a time.
+docs/gateway/current-runtime-state.md:48:| program-id-binding | COMPLETE | PlaceholderProgramId removed from active source blockers | program-id-dependent-pda-evidence complete; live-route/SPL-CPI source plan complete; activation-package-closure complete; await separate exact activation GO |
+docs/gateway/current-runtime-state.md:49:| guardian-proof-log | PAUSED | ProductionGuardianSetUnset, ProductionProofLogUnset | future instantiation package |
+docs/gateway/current-runtime-state.md:58:| PlaceholderProgramId | REMOVED_FROM_ACTIVE_SOURCE_BLOCKERS | program_id_bound_source_changed | REMOVED |
+docs/gateway/current-runtime-state.md:59:| LiveRouteDisabled | ACTIVE | N/A | ACTIVE |
+docs/gateway/current-runtime-state.md:60:| SplCpiExecutionDisabled | ACTIVE | N/A | ACTIVE |
+docs/gateway/current-runtime-state.md:61:| ProductionGuardianSetUnset | ACTIVE | policy_defined_not_instantiated | ACTIVE |
+docs/gateway/current-runtime-state.md:62:| ProductionProofLogUnset | ACTIVE | policy_defined_not_instantiated | ACTIVE |
+docs/gateway/current-runtime-state.md:63:| ExternalReviewIncomplete | REMOVED_FROM_ACTIVE_SOURCE_BLOCKERS | review_approved_source_changed | REMOVED |
+docs/gateway/current-runtime-state.md:69:| ExternalReviewIncomplete | true | true | REMOVED |
+docs/gateway/current-runtime-state.md:70:| ProductionGuardianSetUnset | policy_defined | false | ACTIVE |
+docs/gateway/current-runtime-state.md:71:| ProductionProofLogUnset | policy_defined | false | ACTIVE |
+docs/gateway/current-runtime-state.md:81:| runtime_deployable | false | programs/xxxl-svm/src/deployment_status.rs |
+docs/gateway/current-runtime-state.md:82:| predeploy_gate | blocked | programs/xxxl-svm/src/deployment_status.rs |
+docs/gateway/current-runtime-state.md:108:   - effective_blocker_status=REMOVED
+docs/gateway/current-runtime-state.md:128:- [x] exactly one lane marked ACTIVE
+docs/gateway/current-runtime-state.md:140:separate exact activation GO is the next required decision; execution remains blocked until explicit GO.
+docs/gateway/current-runtime-state.md:160:- status: COMPLETE
+docs/gateway/current-runtime-state.md:167:- activation performed: false
+docs/gateway/current-runtime-state.md:168:- deploy performed: false
+docs/gateway/current-runtime-state.md:179:| ExternalReviewIncomplete | REMOVED |
+docs/gateway/current-runtime-state.md:180:| PlaceholderProgramId | REMOVED |
+docs/gateway/current-runtime-state.md:181:| LiveRouteDisabled | ACTIVE |
+docs/gateway/current-runtime-state.md:182:| SplCpiExecutionDisabled | ACTIVE |
+docs/gateway/current-runtime-state.md:183:| ProductionGuardianSetUnset | ACTIVE |
+docs/gateway/current-runtime-state.md:184:| ProductionProofLogUnset | ACTIVE |
+docs/gateway/current-runtime-state.md:194:- activation-package-closure
+docs/gateway/current-runtime-state.md:199:- status: COMPLETE
+docs/gateway/current-runtime-state.md:203:- activation performed: false
+docs/gateway/current-runtime-state.md:204:- deploy performed: false
+docs/gateway/current-runtime-state.md:217:| ExternalReviewIncomplete | REMOVED |
+docs/gateway/current-runtime-state.md:218:| PlaceholderProgramId | REMOVED |
+docs/gateway/current-runtime-state.md:219:| LiveRouteDisabled | ACTIVE |
+docs/gateway/current-runtime-state.md:220:| SplCpiExecutionDisabled | ACTIVE |
+docs/gateway/current-runtime-state.md:221:| ProductionGuardianSetUnset | ACTIVE |
+docs/gateway/current-runtime-state.md:222:| ProductionProofLogUnset | ACTIVE |
+docs/gateway/current-runtime-state.md:228:- activation-package-closure
+docs/gateway/current-runtime-state.md:230:## Activation Package Closure
+docs/gateway/current-runtime-state.md:232:- package: activation-package-closure
+docs/gateway/current-runtime-state.md:233:- status: COMPLETE
+docs/gateway/current-runtime-state.md:235:- closure document: `docs/gateway/activation-package-closure.md`
+docs/gateway/current-runtime-state.md:237:- activation authorized: false
+docs/gateway/current-runtime-state.md:238:- deploy authorized: false
+docs/gateway/current-runtime-state.md:240:- RPC mutation authorized: false
+docs/gateway/current-runtime-state.md:241:- route enablement authorized: false
+docs/gateway/current-runtime-state.md:242:- SPL CPI enablement authorized: false
+docs/gateway/current-runtime-state.md:243:- blocker removal authorized: false
+docs/gateway/current-runtime-state.md:244:- activation performed: false
+docs/gateway/current-runtime-state.md:245:- deploy performed: false
+docs/gateway/current-runtime-state.md:258:| ExternalReviewIncomplete | REMOVED |
+docs/gateway/current-runtime-state.md:259:| PlaceholderProgramId | REMOVED |
+docs/gateway/current-runtime-state.md:260:| LiveRouteDisabled | ACTIVE |
+docs/gateway/current-runtime-state.md:261:| SplCpiExecutionDisabled | ACTIVE |
+docs/gateway/current-runtime-state.md:262:| ProductionGuardianSetUnset | ACTIVE |
+docs/gateway/current-runtime-state.md:263:| ProductionProofLogUnset | ACTIVE |
+docs/gateway/current-runtime-state.md:269:- separate exact activation GO
+docs/gateway/current-runtime-state.md:271:Execution remains blocked until separate exact activation GO.
+docs/gateway/current-execution-plan.md:30:- ExternalReviewIncomplete effective status: REMOVED
+docs/gateway/current-execution-plan.md:99:| 5 | program-id-dependent-pda-evidence | PURE_EVIDENCE_DOCUMENTATION_NO_CODE_MUTATION_NO_ACTIVATION | Record/review Program-ID-dependent PDA evidence | COMPLETE; evidence reviewed, no live action |
+docs/gateway/current-execution-plan.md:155:- separate exact activation GO
+docs/gateway/current-execution-plan.md:179:Status: COMPLETE.
+docs/gateway/current-execution-plan.md:191:- separate exact activation GO
+docs/gateway/current-execution-plan.md:197:Status: COMPLETE.
+docs/gateway/current-execution-plan.md:203:- future boundary for `LiveRouteDisabled` removal;
+docs/gateway/current-execution-plan.md:204:- future boundary for `SplCpiExecutionDisabled` removal;
+docs/gateway/current-execution-plan.md:213:- separate exact activation GO
+docs/gateway/current-execution-plan.md:217:## Completed: activation-package-closure
+docs/gateway/current-execution-plan.md:219:Status: COMPLETE.
+docs/gateway/current-execution-plan.md:236:- separate exact activation GO
+docs/gateway/current-execution-plan.md:238:Execution remains blocked until a separate exact activation GO.
+docs/gateway/activation-package-closure.md:1:# Activation Package Closure
+docs/gateway/activation-package-closure.md:3:Status: COMPLETE
+docs/gateway/activation-package-closure.md:4:Package: activation-package-closure
+docs/gateway/activation-package-closure.md:17:Activation remains blocked until a separate exact activation GO is explicitly approved.
+docs/gateway/activation-package-closure.md:23:| 7 | external-review-blocker-removal-source-change | COMPLETE |
+docs/gateway/activation-package-closure.md:24:| 8 | program-id-binding-source-change | COMPLETE |
+docs/gateway/activation-package-closure.md:25:| 9 | program-id-dependent-pda-evidence | COMPLETE |
+docs/gateway/activation-package-closure.md:26:| 10 | live-route-spl-cpi-activation-source-plan | COMPLETE |
+docs/gateway/activation-package-closure.md:27:| 11 | activation-package-closure | COMPLETE, NO_ACTIVATION |
+docs/gateway/activation-package-closure.md:33:| ExternalReviewIncomplete | REMOVED |
+docs/gateway/activation-package-closure.md:34:| PlaceholderProgramId | REMOVED |
+docs/gateway/activation-package-closure.md:36:| Program-ID-dependent PDA evidence | COMPLETE |
+docs/gateway/activation-package-closure.md:37:| Activation source plan | COMPLETE |
+docs/gateway/activation-package-closure.md:38:| LiveRouteDisabled | ACTIVE |
+docs/gateway/activation-package-closure.md:39:| SplCpiExecutionDisabled | ACTIVE |
+docs/gateway/activation-package-closure.md:40:| ProductionGuardianSetUnset | ACTIVE |
+docs/gateway/activation-package-closure.md:41:| ProductionProofLogUnset | ACTIVE |
+docs/gateway/activation-package-closure.md:42:| runtime_deployable | false |
+docs/gateway/activation-package-closure.md:43:| predeploy_gate | blocked |
+docs/gateway/activation-package-closure.md:106:Final deployment-readiness review and a separate exact activation GO remain required before any deployment, RPC mutation, route enablement, SPL CPI execution, or live activation path.
+docs/gateway/evidence/activation-package-closure/closure-summary.txt:1:package=activation-package-closure
+docs/gateway/evidence/activation-package-closure/closure-summary.txt:8:external-review-blocker-removal-source-change=COMPLETE
+docs/gateway/evidence/activation-package-closure/closure-summary.txt:9:program-id-binding-source-change=COMPLETE
+docs/gateway/evidence/activation-package-closure/closure-summary.txt:10:program-id-dependent-pda-evidence=COMPLETE
+docs/gateway/evidence/activation-package-closure/closure-summary.txt:11:live-route-spl-cpi-activation-source-plan=COMPLETE
+docs/gateway/evidence/activation-package-closure/closure-summary.txt:12:activation-package-closure=COMPLETE_NO_ACTIVATION
+docs/gateway/evidence/activation-package-closure/closure-summary.txt:14:ExternalReviewIncomplete_effective_status_after=REMOVED
+docs/gateway/evidence/activation-package-closure/closure-summary.txt:15:PlaceholderProgramId_effective_status_after=REMOVED
+docs/gateway/evidence/activation-package-closure/closure-summary.txt:17:PDA_evidence_status_after=COMPLETE
+docs/gateway/evidence/activation-package-closure/closure-summary.txt:18:Activation_source_plan_status_after=COMPLETE
+docs/gateway/evidence/activation-package-closure/closure-summary.txt:19:LiveRouteDisabled_effective_status_after=ACTIVE
+docs/gateway/evidence/activation-package-closure/closure-summary.txt:20:SplCpiExecutionDisabled_effective_status_after=ACTIVE
+docs/gateway/evidence/activation-package-closure/closure-summary.txt:21:ProductionGuardianSetUnset_effective_status_after=ACTIVE
+docs/gateway/evidence/activation-package-closure/closure-summary.txt:22:ProductionProofLogUnset_effective_status_after=ACTIVE
+docs/gateway/evidence/activation-package-closure/closure-summary.txt:24:runtime_deployable_after=false
+docs/gateway/evidence/activation-package-closure/closure-summary.txt:25:predeploy_gate_after=blocked

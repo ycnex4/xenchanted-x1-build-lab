@@ -1,0 +1,12 @@
+package=activation-package-closure
+fix_type=doc_state_alignment
+
+runtime_state_source_plan_closure_next_candidate_disambiguated=true
+current_top_level_next_required_decision=separate_exact_activation_GO
+execution_remains_blocked=true
+
+source_code_mutation_performed=false
+activation_performed=false
+deploy_performed=false
+rpc_mutation_performed=false
+blocker_removal_performed=false
