@@ -1,0 +1,37 @@
+[main headings]
+1:# Canonical Runtime State
+11:## Ledger Metadata
+19:## Authorization Boundary
+33:## State Model Rules
+43:## Active Lanes
+52:## Source Blockers
+65:## Review Approval vs Source Removal
+73:## Safety Invariants
+85:## Doc/Source Sync Status
+96:## State Drift Discovered Before Program ID Binding Plan
+103:## Pending Reconciliations
+123:## Required Before Next Source Change
+132:## Next Required Decision
+144:## Forbidden Next Actions Without Separate Explicit Approval
+157:## Program-ID-Dependent PDA Evidence Closure
+196:## Live Route / SPL CPI Activation Source Plan Closure
+236:## Activation Package Closure
+
+[patched headings]
+1:# Canonical Runtime State
+11:## Ledger Metadata
+19:## Authorization Boundary
+33:## State Model Rules
+43:## Active Lanes
+52:## Source Blockers
+65:## Review Approval vs Source Removal
+73:## Safety Invariants
+85:## Doc/Source Sync Status
+96:## State Drift Discovered Before Program ID Binding Plan
+103:## Pending Reconciliations
+125:## Required Before Next Source Change
+134:## Next Required Decision
+148:## Forbidden Next Actions Without Separate Explicit Approval
+161:## Program-ID-Dependent PDA Evidence Closure
+200:## Live Route / SPL CPI Activation Source Plan Closure
+240:## Activation Package Closure

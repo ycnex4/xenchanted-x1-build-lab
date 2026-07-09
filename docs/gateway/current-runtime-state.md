@@ -74,8 +74,8 @@ Ground truth from current main/source state.
 
 | Invariant | Value | Source Location |
 |:---|:---|:---|
-| program_id_placeholder_binding | active | programs/xxxl-svm/src/lib.rs::XXXL_PROGRAM_ID_PLACEHOLDER |
-| program_id_placeholder_blocker | active | programs/xxxl-svm/src/program_id_status.rs |
+| program_id_real_binding | bound (D7AQmZNtFFFoJbducz93atteeSZhw3jq6RmsqBvaf1my) | programs/xxxl-svm/src/lib.rs::XXXL_BOUND_PROGRAM_ID |
+| program_id_placeholder_blocker | removed_from_active_blockers | programs/xxxl-svm/src/program_id_status.rs::xxxl_program_id_placeholder_boundary_is_active()==false |
 | live_route_activation | disabled | programs/xxxl-svm/src/processor.rs::LIVE_ROUTE_ACTIVATION_FROM_PROCESS_INSTRUCTION_ENABLED |
 | spl_cpi_execution | disabled | programs/xxxl-svm/src/cpi.rs |
 | runtime_deployable | false | programs/xxxl-svm/src/deployment_status.rs |
@@ -113,8 +113,10 @@ Ground truth from current main/source state.
    - future action inside this package: update checkpoint to reference current-runtime-state.md as canonical
 
 3. Program ID binding:
-   - status=PAUSED
-   - current action: review program-id-binding-resolution-plan and choose next approved package
+   - status=COMPLETE
+   - program-id-binding-source-change closed
+   - Program ID bound
+   - Program-ID-dependent PDA evidence complete
 
 4. Local-only fixture lane:
    - status=NO-GO
@@ -133,9 +135,11 @@ Ground truth from current main/source state.
 
 Review docs/gateway/program-id-binding-resolution-plan.md and choose the next approved package.
 
-Selected next package for approval request:
+Selected next required decision:
 
-- external-review-blocker-removal-source-change
+- separate exact activation GO
+
+Execution remains blocked until explicit GO.
 
 separate exact activation GO is the next required decision; execution remains blocked until explicit GO.
 

@@ -1,0 +1,12 @@
+package=activation-package-closure
+guard=source_mutation_guard
+result=no_source_mutation_hits
+
+source_code_mutation_performed=false
+programs_dir_changed=false
+src_dir_changed=false
+cargo_toml_changed=false
+cargo_lock_changed=false
+
+changed_paths_scope=docs/gateway only
+note=This file was filled by closure-audit-doc-reconciliation after Claude noted the previous guard artifact was an empty stub.
