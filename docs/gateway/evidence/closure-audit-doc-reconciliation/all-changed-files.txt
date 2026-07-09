@@ -1,0 +1,15 @@
+docs/gateway/current-execution-plan.md
+docs/gateway/current-runtime-state.md
+docs/gateway/evidence/activation-package-closure/material-safety-check.txt
+docs/gateway/evidence/activation-package-closure/source-mutation-guard.txt
+docs/gateway/evidence/closure-audit-doc-reconciliation/all-changed-files.txt
+docs/gateway/evidence/closure-audit-doc-reconciliation/audit-note-reconciliation-check.txt
+docs/gateway/evidence/closure-audit-doc-reconciliation/claude-audit-summary.txt
+docs/gateway/evidence/closure-audit-doc-reconciliation/material-safety-check.txt
+docs/gateway/evidence/closure-audit-doc-reconciliation/material-safety-summary.txt
+docs/gateway/evidence/closure-audit-doc-reconciliation/patch-change-log.txt
+docs/gateway/evidence/closure-audit-doc-reconciliation/reconciliation-summary.txt
+docs/gateway/evidence/closure-audit-doc-reconciliation/runtime-state-heading-compare-after-safe-patch.txt
+docs/gateway/evidence/closure-audit-doc-reconciliation/source-mutation-guard.txt
+docs/gateway/evidence/closure-audit-doc-reconciliation/stale-targeted-grep.txt
+docs/gateway/evidence/closure-audit-doc-reconciliation/theo-closure-audit-doc-reconciliation-approval.txt

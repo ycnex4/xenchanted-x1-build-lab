@@ -1,4 +1,4 @@
-package=activation-package-closure
+package=closure-audit-doc-reconciliation
 guard=material_safety_check
 result=no_sensitive_file_name_hits
 
@@ -7,5 +7,3 @@ private_key_file_committed=false
 wallet_file_committed=false
 json_key_material_committed=false
 private_key_or_keypair_material_committed=false
-
-note=This file was filled by closure-audit-doc-reconciliation after Claude noted the previous material-safety artifact was an empty stub.

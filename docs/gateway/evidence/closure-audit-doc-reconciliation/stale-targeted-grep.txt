@@ -1,0 +1,11 @@
+package=closure-audit-doc-reconciliation
+check=stale_targeted_grep
+result=no_stale_targeted_hits
+
+checked_patterns:
+program_id_placeholder_binding
+Selected next package for approval request:
+active runtime lane: program-id-binding
+next runtime package: program-id-binding-resolution-plan
+status=PAUSED
+current action: review program-id-binding-resolution-plan

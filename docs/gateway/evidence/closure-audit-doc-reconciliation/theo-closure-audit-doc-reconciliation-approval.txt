@@ -1,0 +1,43 @@
+package=closure-audit-doc-reconciliation
+approval=APPROVE_CLOSURE_AUDIT_DOC_RECONCILIATION_NO_ACTIVATION
+approved_by=Theo
+approval_date=2026-07-09
+
+scope=DOCUMENTATION_EVIDENCE_HYGIENE_ONLY_NO_CODE_MUTATION_NO_ACTIVATION
+
+allowed_changes:
+docs/gateway/current-runtime-state.md=stale wording fix
+docs/gateway/current-execution-plan.md=stale wording fix
+docs/gateway/evidence/activation-package-closure/source-mutation-guard.txt=fill empty guard file
+docs/gateway/evidence/activation-package-closure/material-safety-check.txt=fill empty guard file
+docs/gateway/evidence/closure-audit-doc-reconciliation/=add reconciliation evidence
+
+forbidden_changes:
+activation=false
+deploy=false
+upgrade=false
+rpc_mutation=false
+route_enablement=false
+spl_cpi_enablement=false
+guardian_set_instantiation=false
+proof_log_instantiation=false
+blocker_removal=false
+source_code_mutation=false
+cleanup_outside_audit_notes=false
+private_key_or_keypair_material=false
+
+preserved_state_expected:
+ExternalReviewIncomplete=REMOVED
+PlaceholderProgramId=REMOVED
+Program ID=BOUND
+PDA evidence=COMPLETE
+Activation source plan=COMPLETE
+Activation package closure=COMPLETE
+LiveRouteDisabled=ACTIVE
+SplCpiExecutionDisabled=ACTIVE
+ProductionGuardianSetUnset=ACTIVE
+ProductionProofLogUnset=ACTIVE
+runtime_deployable=false
+predeploy_gate=blocked
+next_required_action=separate_exact_activation_GO
+execution_remains_blocked=true

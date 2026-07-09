@@ -24,8 +24,8 @@ If source code conflicts with documentation, source code remains the runtime gro
 
 The canonical runtime-state ledger currently identifies:
 
-- active runtime lane: program-id-binding
-- next runtime package: program-id-binding-resolution-plan
+- active runtime lane: activation-readiness-closure
+- next required decision: separate exact activation GO; execution remains blocked
 - next runtime package scope: PLANNING_ONLY
 - ExternalReviewIncomplete effective status: REMOVED
 - source_blocker_removed=false
