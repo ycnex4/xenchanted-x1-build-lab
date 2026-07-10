@@ -1,0 +1,3 @@
+guardian_count=5
+threshold=3
+quorum_model=3-of-5

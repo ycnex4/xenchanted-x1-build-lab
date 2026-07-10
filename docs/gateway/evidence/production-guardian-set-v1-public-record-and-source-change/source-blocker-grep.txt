@@ -1,0 +1,29 @@
+44:pub const XXXL_RUNTIME_DEPLOYMENT_BLOCKERS: [XxxlRuntimeDeploymentBlocker; 3] = [
+53:        code: "LIVE_ROUTE_DISABLED",
+59:        code: "SPL_CPI_EXECUTION_DISABLED",
+65:        code: "PRODUCTION_PROOF_LOG_UNSET",
+103:            XxxlRuntimeDeploymentBlocker::LiveRouteDisabled => "LIVE_ROUTE_DISABLED",
+104:            XxxlRuntimeDeploymentBlocker::SplCpiExecutionDisabled => "SPL_CPI_EXECUTION_DISABLED",
+112:                "PRODUCTION_GUARDIAN_SET_UNSET"
+114:            XxxlRuntimeDeploymentBlocker::ProductionProofLogUnset => "PRODUCTION_PROOF_LOG_UNSET",
+191:    &XXXL_RUNTIME_DEPLOYMENT_BLOCKERS
+283:        assert_eq!(blockers.len(), 3);
+298:        assert_eq!(blockers[0].code(), "LIVE_ROUTE_DISABLED");
+299:        assert_eq!(blockers[1].code(), "SPL_CPI_EXECUTION_DISABLED");
+300:        assert_eq!(blockers[2].code(), "PRODUCTION_PROOF_LOG_UNSET");
+346:        assert_eq!(reports.len(), blockers.len());
+446:            "PRODUCTION_GUARDIAN_SET_UNSET"
+455:            "PRODUCTION_GUARDIAN_SET_UNSET"
+484:        let active_codes: Vec<&str> = report
+491:            active_codes,
+493:                "LIVE_ROUTE_DISABLED",
+494:                "SPL_CPI_EXECUTION_DISABLED",
+495:                "PRODUCTION_PROOF_LOG_UNSET",
+498:        assert!(!active_codes.contains(&"ACCOUNT_CONTRACT_UNREVIEWED"));
+499:        assert!(!active_codes.contains(&"MOLLUSK_COVERAGE_INCOMPLETE"));
+523:        assert_eq!(report.blockers.len(), 3);
+524:        assert_eq!(report.blockers[0].code, "LIVE_ROUTE_DISABLED");
+525:        assert_eq!(report.blockers[1].code, "SPL_CPI_EXECUTION_DISABLED");
+526:        assert_eq!(report.blockers[2].code, "PRODUCTION_PROOF_LOG_UNSET");
+556:                assert_eq!(report.blockers.len(), 3);
+576:                assert_eq!(blocked_report.blockers.len(), report.blockers.len());

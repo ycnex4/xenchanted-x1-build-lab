@@ -1,0 +1,6 @@
+./000_CLAUDE_UPLOAD_ONLY__NO_SECRETS/phase10-audit/Cargo.toml
+./000_CLAUDE_UPLOAD_ONLY__NO_SECRETS/phase11-audit/Cargo.toml
+./000_CLAUDE_UPLOAD_ONLY__NO_SECRETS/phase13-audit/Cargo.toml
+./000_CLAUDE_UPLOAD_ONLY__NO_SECRETS/phase14-17-audit/Cargo.toml
+./000_CLAUDE_UPLOAD_ONLY__NO_SECRETS/phase18-audit/Cargo.toml
+./programs/xxxl-svm/Cargo.toml

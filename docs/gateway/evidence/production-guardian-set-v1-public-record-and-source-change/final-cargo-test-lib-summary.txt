@@ -1,0 +1,12 @@
+safety_invariants_test_exit=0
+125:13 |     program_error::ProgramError, pubkey::Pubkey, rent::Rent, system_program, sysvar::Sysvar,
+149:13 |     program_error::ProgramError, pubkey::Pubkey, rent::Rent, system_program, sysvar::Sysvar,
+208:running 23 tests
+233:test result: ok. 23 passed; 0 failed; 0 ignored; 0 measured; 763 filtered out; finished in 0.01s
+
+full_lib_test_exit=0
+124:13 |     program_error::ProgramError, pubkey::Pubkey, rent::Rent, system_program, sysvar::Sysvar,
+148:13 |     program_error::ProgramError, pubkey::Pubkey, rent::Rent, system_program, sysvar::Sysvar,
+207:running 786 tests
+974:test verifier::quorum_authorization_boundary::tests::failed_attempt_does_not_kill_valid_m_of_n_and_error_is_preserved ... ok
+995:test result: ok. 785 passed; 0 failed; 1 ignored; 0 measured; 0 filtered out; finished in 0.34s

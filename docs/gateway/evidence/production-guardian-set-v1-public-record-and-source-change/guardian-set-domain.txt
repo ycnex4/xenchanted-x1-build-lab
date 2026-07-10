@@ -1,0 +1,1 @@
+signature_domain=xxxl:x1-testnet:gateway-mint:v1:guardian-set-v1
