@@ -1,0 +1,5 @@
+=== guardian set errors ===
+1:error: could not find `Cargo.toml` in `/mnt/c/Users/user/xenchanted-x1-build-lab` or any parent directory
+
+=== deployment status errors ===
+1:error: could not find `Cargo.toml` in `/mnt/c/Users/user/xenchanted-x1-build-lab` or any parent directory

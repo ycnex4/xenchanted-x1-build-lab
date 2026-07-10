@@ -11,10 +11,10 @@ If source/docs/context disagree, source is the runtime ground truth, and this le
 ## Ledger Metadata
 
 - reconciled_source_base_commit: 65a8e83
-- last_updated_package: production-guardian-set-instantiation-plan
+- last_updated_package: production-guardian-set-v1-public-record-and-source-change
 - ledger_author: Sergey Stepanenko / ChatGPT assisted
 - package_scope: DOCUMENTATION_ONLY
-- next_required_action: request/review production-guardian-set-instantiation-source-change; exact activation GO remains premature and blocked
+- next_required_action: request/review production-proof-log-instantiation-plan; exact activation GO remains premature and blocked
 
 ## Authorization Boundary
 
@@ -46,8 +46,8 @@ If source/docs/context disagree, source is the runtime ground truth, and this le
 |:---|:---|:---|:---|
 | gateway-state-reconciliation | CLOSED | reconciliation package complete | no further action in this lane |
 | program-id-binding | COMPLETE | PlaceholderProgramId removed from active source blockers | program-id-dependent-pda-evidence complete; live-route/SPL-CPI source plan complete; activation-package-closure complete; closure-audit-doc-reconciliation complete |
-| pre-go-operational-readiness | ACTIVE | production-guardian-set-instantiation-plan complete | request/review production-guardian-set-instantiation-source-change; exact GO blocked |
-| guardian-proof-log | PAUSED | ProductionGuardianSetUnset, ProductionProofLogUnset | future instantiation package |
+| pre-go-operational-readiness | ACTIVE | production-guardian-set-v1 public record and source binding complete | request/review production-proof-log-instantiation-plan; exact GO blocked |
+| guardian-proof-log | PAUSED | ProductionProofLogUnset | production guardian set v1 source-bound; proof log pending |
 | local-only-fixtures | NO-GO | local-only fixture emission not approved | separate future GO required |
 
 ## Source Blockers
@@ -59,7 +59,7 @@ Ground truth from current main/source state.
 | PlaceholderProgramId | REMOVED_FROM_ACTIVE_SOURCE_BLOCKERS | program_id_bound_source_changed | REMOVED |
 | LiveRouteDisabled | ACTIVE | N/A | ACTIVE |
 | SplCpiExecutionDisabled | ACTIVE | N/A | ACTIVE |
-| ProductionGuardianSetUnset | ACTIVE | policy_defined_not_instantiated | ACTIVE |
+| ProductionGuardianSetUnset | REMOVED | production_guardian_set_v1_source_bound | REMOVED |
 | ProductionProofLogUnset | ACTIVE | policy_defined_not_instantiated | ACTIVE |
 | ExternalReviewIncomplete | REMOVED_FROM_ACTIVE_SOURCE_BLOCKERS | review_approved_source_changed | REMOVED |
 
@@ -68,7 +68,7 @@ Ground truth from current main/source state.
 | Item | Review Approved | Source Blocker Removed | Effective Runtime Status |
 |:---|:---:|:---:|:---|
 | ExternalReviewIncomplete | true | true | REMOVED |
-| ProductionGuardianSetUnset | policy_defined | false | ACTIVE |
+| ProductionGuardianSetUnset | source_config_bound_public_record | true | REMOVED |
 | ProductionProofLogUnset | policy_defined | false | ACTIVE |
 
 ## Safety Invariants
@@ -348,3 +348,38 @@ Exit condition:
 - request separate approval for production-guardian-set-instantiation-source-change.
 
 This plan is intentionally bounded and must not become an endless planning chain. Its next action is a concrete source/config package request while preserving route/CPI/activation blockers.
+
+## Production Guardian Set V1 Public Record and Source Change
+
+- package: production-guardian-set-v1-public-record-and-source-change
+- status: COMPLETE
+- approval: APPROVE_PRODUCTION_GUARDIAN_SET_V1_PUBLIC_RECORD_AND_SOURCE_CHANGE_NO_ACTIVATION
+- guardian_set_version: 1
+- guardian_count: 5
+- threshold: 3
+- quorum_model: 3-of-5
+- key_type: Ed25519 / Solana public keys
+- descriptor_hash_sha256: 4088a1f71870e617f3635d1c29aedd9fc53a0c136c6f69e0cb343d217ab1cd83
+- source binding: programs/xxxl-svm/src/production_guardian_set_v1.rs
+- public record: docs/gateway/production-guardian-set-v1-public-record.md
+- ProductionGuardianSetUnset: REMOVED
+- LiveRouteDisabled: ACTIVE
+- SplCpiExecutionDisabled: ACTIVE
+- ProductionProofLogUnset: ACTIVE
+- runtime_deployable: false
+- predeploy_gate: blocked
+- activation authorized: false
+- deploy authorized: false
+- RPC mutation authorized: false
+- route enablement authorized: false
+- SPL CPI enablement authorized: false
+- proof log instantiation authorized: false
+- private key/keypair material committed: false
+- signing package constructed: false
+- execution remains blocked: true
+
+Next required action:
+
+- request/review production-proof-log-instantiation-plan.
+
+Exact activation GO remains premature and blocked.

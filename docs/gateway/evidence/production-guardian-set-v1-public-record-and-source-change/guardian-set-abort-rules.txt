@@ -1,0 +1,14 @@
+abort_rules:
+empty_guardian_list=reject
+duplicate_guardian_public_key=reject
+threshold_zero=reject
+threshold_greater_than_guardian_count=reject
+unknown_signer=reject
+duplicate_signer=reject
+insufficient_quorum=reject
+wrong_signature_domain=reject
+wrong_guardian_set_id=reject
+private_key_or_keypair_material_in_diff=hard_stop
+route_enabled_unexpectedly=hard_stop
+spl_cpi_enabled_unexpectedly=hard_stop
+activation_authorized_unexpectedly=hard_stop

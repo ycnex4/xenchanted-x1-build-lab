@@ -36,6 +36,7 @@ pub mod pda;
 #[cfg(feature = "phase-41k5-spl-mint-to-cpi-test-gate")]
 pub mod phase_41k5_d15_atomic_mark_and_mint_svm_harness;
 pub mod processed_event_marking_boundary;
+pub mod production_guardian_set_v1;
 #[cfg(feature = "phase-41k4-svm-test-harness")]
 pub mod processed_event_marking_svm_harness;
 pub mod processor;

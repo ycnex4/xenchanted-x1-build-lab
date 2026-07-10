@@ -1,0 +1,15 @@
+package=production-guardian-set-v1-public-record-and-source-change
+
+note:
+Some grep hits in docs/gateway/current-runtime-state.md and docs/gateway/current-execution-plan.md show historical prior-package sections where ProductionGuardianSetUnset was ACTIVE.
+Those historical sections are preserved for audit history.
+
+Canonical current state after this package:
+ProductionGuardianSetUnset=REMOVED
+LiveRouteDisabled=ACTIVE
+SplCpiExecutionDisabled=ACTIVE
+ProductionProofLogUnset=ACTIVE
+runtime_deployable=false
+predeploy_gate=blocked
+activation_authorized=false
+execution_remains_blocked=true

@@ -1,0 +1,119 @@
+docs/gateway/current-runtime-state.md:50:| guardian-proof-log | PAUSED | ProductionProofLogUnset | production guardian set v1 source-bound; proof log pending |
+docs/gateway/current-runtime-state.md:60:| LiveRouteDisabled | ACTIVE | N/A | ACTIVE |
+docs/gateway/current-runtime-state.md:61:| SplCpiExecutionDisabled | ACTIVE | N/A | ACTIVE |
+docs/gateway/current-runtime-state.md:62:| ProductionGuardianSetUnset | REMOVED | production_guardian_set_v1_source_bound | REMOVED |
+docs/gateway/current-runtime-state.md:63:| ProductionProofLogUnset | ACTIVE | policy_defined_not_instantiated | ACTIVE |
+docs/gateway/current-runtime-state.md:71:| ProductionGuardianSetUnset | source_config_bound_public_record | true | REMOVED |
+docs/gateway/current-runtime-state.md:72:| ProductionProofLogUnset | policy_defined | false | ACTIVE |
+docs/gateway/current-runtime-state.md:82:| runtime_deployable | false | programs/xxxl-svm/src/deployment_status.rs |
+docs/gateway/current-runtime-state.md:83:| predeploy_gate | blocked | programs/xxxl-svm/src/deployment_status.rs |
+docs/gateway/current-runtime-state.md:188:| LiveRouteDisabled | ACTIVE |
+docs/gateway/current-runtime-state.md:189:| SplCpiExecutionDisabled | ACTIVE |
+docs/gateway/current-runtime-state.md:190:| ProductionGuardianSetUnset | ACTIVE |
+docs/gateway/current-runtime-state.md:191:| ProductionProofLogUnset | ACTIVE |
+docs/gateway/current-runtime-state.md:226:| LiveRouteDisabled | ACTIVE |
+docs/gateway/current-runtime-state.md:227:| SplCpiExecutionDisabled | ACTIVE |
+docs/gateway/current-runtime-state.md:228:| ProductionGuardianSetUnset | ACTIVE |
+docs/gateway/current-runtime-state.md:229:| ProductionProofLogUnset | ACTIVE |
+docs/gateway/current-runtime-state.md:250:- activation authorized: false
+docs/gateway/current-runtime-state.md:254:- route enablement authorized: false
+docs/gateway/current-runtime-state.md:255:- SPL CPI enablement authorized: false
+docs/gateway/current-runtime-state.md:273:| LiveRouteDisabled | ACTIVE |
+docs/gateway/current-runtime-state.md:274:| SplCpiExecutionDisabled | ACTIVE |
+docs/gateway/current-runtime-state.md:275:| ProductionGuardianSetUnset | ACTIVE |
+docs/gateway/current-runtime-state.md:276:| ProductionProofLogUnset | ACTIVE |
+docs/gateway/current-runtime-state.md:298:- activation authorized: false
+docs/gateway/current-runtime-state.md:302:- route enablement authorized: false
+docs/gateway/current-runtime-state.md:303:- SPL CPI enablement authorized: false
+docs/gateway/current-runtime-state.md:305:- proof log instantiation authorized: false
+docs/gateway/current-runtime-state.md:314:| LiveRouteDisabled | ACTIVE |
+docs/gateway/current-runtime-state.md:315:| SplCpiExecutionDisabled | ACTIVE |
+docs/gateway/current-runtime-state.md:316:| ProductionGuardianSetUnset | ACTIVE |
+docs/gateway/current-runtime-state.md:317:| ProductionProofLogUnset | ACTIVE |
+docs/gateway/current-runtime-state.md:340:- ProductionGuardianSetUnset: remains ACTIVE
+docs/gateway/current-runtime-state.md:344:- activation authorized: false
+docs/gateway/current-runtime-state.md:365:- ProductionGuardianSetUnset: REMOVED
+docs/gateway/current-runtime-state.md:366:- LiveRouteDisabled: ACTIVE
+docs/gateway/current-runtime-state.md:367:- SplCpiExecutionDisabled: ACTIVE
+docs/gateway/current-runtime-state.md:368:- ProductionProofLogUnset: ACTIVE
+docs/gateway/current-runtime-state.md:369:- runtime_deployable: false
+docs/gateway/current-runtime-state.md:370:- predeploy_gate: blocked
+docs/gateway/current-runtime-state.md:371:- activation authorized: false
+docs/gateway/current-runtime-state.md:374:- route enablement authorized: false
+docs/gateway/current-runtime-state.md:375:- SPL CPI enablement authorized: false
+docs/gateway/current-runtime-state.md:376:- proof log instantiation authorized: false
+docs/gateway/current-runtime-state.md:379:- execution remains blocked: true
+docs/gateway/current-execution-plan.md:204:- future boundary for `LiveRouteDisabled` removal;
+docs/gateway/current-execution-plan.md:205:- future boundary for `SplCpiExecutionDisabled` removal;
+docs/gateway/current-execution-plan.md:285:- LiveRouteDisabled = ACTIVE
+docs/gateway/current-execution-plan.md:286:- SplCpiExecutionDisabled = ACTIVE
+docs/gateway/current-execution-plan.md:287:- ProductionGuardianSetUnset = ACTIVE
+docs/gateway/current-execution-plan.md:288:- ProductionProofLogUnset = ACTIVE
+docs/gateway/current-execution-plan.md:307:The next package must be separately approved and must either keep `ProductionGuardianSetUnset` active with explanation or resolve it only if explicit blocker-removal/source-change approval is granted and tests/evidence prove the production guardian set.
+docs/gateway/current-execution-plan.md:327:- ProductionGuardianSetUnset = REMOVED
+docs/gateway/current-execution-plan.md:331:- LiveRouteDisabled = ACTIVE
+docs/gateway/current-execution-plan.md:332:- SplCpiExecutionDisabled = ACTIVE
+docs/gateway/current-execution-plan.md:333:- ProductionProofLogUnset = ACTIVE
+docs/gateway/evidence/production-guardian-set-v1-public-record-and-source-change/package-summary.txt:8:ProductionGuardianSetUnset=REMOVED
+docs/gateway/evidence/production-guardian-set-v1-public-record-and-source-change/package-summary.txt:9:LiveRouteDisabled=ACTIVE
+docs/gateway/evidence/production-guardian-set-v1-public-record-and-source-change/package-summary.txt:10:SplCpiExecutionDisabled=ACTIVE
+docs/gateway/evidence/production-guardian-set-v1-public-record-and-source-change/package-summary.txt:11:ProductionProofLogUnset=ACTIVE
+docs/gateway/evidence/production-guardian-set-v1-public-record-and-source-change/route-cpi-activation-preservation-check.txt:1:docs/gateway/current-runtime-state.md:50:| guardian-proof-log | PAUSED | ProductionProofLogUnset | production guardian set v1 source-bound; proof log pending |
+docs/gateway/evidence/production-guardian-set-v1-public-record-and-source-change/route-cpi-activation-preservation-check.txt:2:docs/gateway/current-runtime-state.md:60:| LiveRouteDisabled | ACTIVE | N/A | ACTIVE |
+docs/gateway/evidence/production-guardian-set-v1-public-record-and-source-change/route-cpi-activation-preservation-check.txt:3:docs/gateway/current-runtime-state.md:61:| SplCpiExecutionDisabled | ACTIVE | N/A | ACTIVE |
+docs/gateway/evidence/production-guardian-set-v1-public-record-and-source-change/route-cpi-activation-preservation-check.txt:4:docs/gateway/current-runtime-state.md:62:| ProductionGuardianSetUnset | REMOVED | production_guardian_set_v1_source_bound | REMOVED |
+docs/gateway/evidence/production-guardian-set-v1-public-record-and-source-change/route-cpi-activation-preservation-check.txt:5:docs/gateway/current-runtime-state.md:63:| ProductionProofLogUnset | ACTIVE | policy_defined_not_instantiated | ACTIVE |
+docs/gateway/evidence/production-guardian-set-v1-public-record-and-source-change/route-cpi-activation-preservation-check.txt:6:docs/gateway/current-runtime-state.md:71:| ProductionGuardianSetUnset | source_config_bound_public_record | true | REMOVED |
+docs/gateway/evidence/production-guardian-set-v1-public-record-and-source-change/route-cpi-activation-preservation-check.txt:7:docs/gateway/current-runtime-state.md:72:| ProductionProofLogUnset | policy_defined | false | ACTIVE |
+docs/gateway/evidence/production-guardian-set-v1-public-record-and-source-change/route-cpi-activation-preservation-check.txt:8:docs/gateway/current-runtime-state.md:82:| runtime_deployable | false | programs/xxxl-svm/src/deployment_status.rs |
+docs/gateway/evidence/production-guardian-set-v1-public-record-and-source-change/route-cpi-activation-preservation-check.txt:9:docs/gateway/current-runtime-state.md:83:| predeploy_gate | blocked | programs/xxxl-svm/src/deployment_status.rs |
+docs/gateway/evidence/production-guardian-set-v1-public-record-and-source-change/route-cpi-activation-preservation-check.txt:10:docs/gateway/current-runtime-state.md:188:| LiveRouteDisabled | ACTIVE |
+docs/gateway/evidence/production-guardian-set-v1-public-record-and-source-change/route-cpi-activation-preservation-check.txt:11:docs/gateway/current-runtime-state.md:189:| SplCpiExecutionDisabled | ACTIVE |
+docs/gateway/evidence/production-guardian-set-v1-public-record-and-source-change/route-cpi-activation-preservation-check.txt:12:docs/gateway/current-runtime-state.md:190:| ProductionGuardianSetUnset | ACTIVE |
+docs/gateway/evidence/production-guardian-set-v1-public-record-and-source-change/route-cpi-activation-preservation-check.txt:13:docs/gateway/current-runtime-state.md:191:| ProductionProofLogUnset | ACTIVE |
+docs/gateway/evidence/production-guardian-set-v1-public-record-and-source-change/route-cpi-activation-preservation-check.txt:14:docs/gateway/current-runtime-state.md:226:| LiveRouteDisabled | ACTIVE |
+docs/gateway/evidence/production-guardian-set-v1-public-record-and-source-change/route-cpi-activation-preservation-check.txt:15:docs/gateway/current-runtime-state.md:227:| SplCpiExecutionDisabled | ACTIVE |
+docs/gateway/evidence/production-guardian-set-v1-public-record-and-source-change/route-cpi-activation-preservation-check.txt:16:docs/gateway/current-runtime-state.md:228:| ProductionGuardianSetUnset | ACTIVE |
+docs/gateway/evidence/production-guardian-set-v1-public-record-and-source-change/route-cpi-activation-preservation-check.txt:17:docs/gateway/current-runtime-state.md:229:| ProductionProofLogUnset | ACTIVE |
+docs/gateway/evidence/production-guardian-set-v1-public-record-and-source-change/route-cpi-activation-preservation-check.txt:18:docs/gateway/current-runtime-state.md:250:- activation authorized: false
+docs/gateway/evidence/production-guardian-set-v1-public-record-and-source-change/route-cpi-activation-preservation-check.txt:19:docs/gateway/current-runtime-state.md:254:- route enablement authorized: false
+docs/gateway/evidence/production-guardian-set-v1-public-record-and-source-change/route-cpi-activation-preservation-check.txt:20:docs/gateway/current-runtime-state.md:255:- SPL CPI enablement authorized: false
+docs/gateway/evidence/production-guardian-set-v1-public-record-and-source-change/route-cpi-activation-preservation-check.txt:21:docs/gateway/current-runtime-state.md:273:| LiveRouteDisabled | ACTIVE |
+docs/gateway/evidence/production-guardian-set-v1-public-record-and-source-change/route-cpi-activation-preservation-check.txt:22:docs/gateway/current-runtime-state.md:274:| SplCpiExecutionDisabled | ACTIVE |
+docs/gateway/evidence/production-guardian-set-v1-public-record-and-source-change/route-cpi-activation-preservation-check.txt:23:docs/gateway/current-runtime-state.md:275:| ProductionGuardianSetUnset | ACTIVE |
+docs/gateway/evidence/production-guardian-set-v1-public-record-and-source-change/route-cpi-activation-preservation-check.txt:24:docs/gateway/current-runtime-state.md:276:| ProductionProofLogUnset | ACTIVE |
+docs/gateway/evidence/production-guardian-set-v1-public-record-and-source-change/route-cpi-activation-preservation-check.txt:25:docs/gateway/current-runtime-state.md:298:- activation authorized: false
+docs/gateway/evidence/production-guardian-set-v1-public-record-and-source-change/route-cpi-activation-preservation-check.txt:26:docs/gateway/current-runtime-state.md:302:- route enablement authorized: false
+docs/gateway/evidence/production-guardian-set-v1-public-record-and-source-change/route-cpi-activation-preservation-check.txt:27:docs/gateway/current-runtime-state.md:303:- SPL CPI enablement authorized: false
+docs/gateway/evidence/production-guardian-set-v1-public-record-and-source-change/route-cpi-activation-preservation-check.txt:28:docs/gateway/current-runtime-state.md:305:- proof log instantiation authorized: false
+docs/gateway/evidence/production-guardian-set-v1-public-record-and-source-change/route-cpi-activation-preservation-check.txt:29:docs/gateway/current-runtime-state.md:314:| LiveRouteDisabled | ACTIVE |
+docs/gateway/evidence/production-guardian-set-v1-public-record-and-source-change/route-cpi-activation-preservation-check.txt:30:docs/gateway/current-runtime-state.md:315:| SplCpiExecutionDisabled | ACTIVE |
+docs/gateway/evidence/production-guardian-set-v1-public-record-and-source-change/route-cpi-activation-preservation-check.txt:31:docs/gateway/current-runtime-state.md:316:| ProductionGuardianSetUnset | ACTIVE |
+docs/gateway/evidence/production-guardian-set-v1-public-record-and-source-change/route-cpi-activation-preservation-check.txt:32:docs/gateway/current-runtime-state.md:317:| ProductionProofLogUnset | ACTIVE |
+docs/gateway/evidence/production-guardian-set-v1-public-record-and-source-change/route-cpi-activation-preservation-check.txt:33:docs/gateway/current-runtime-state.md:340:- ProductionGuardianSetUnset: remains ACTIVE
+docs/gateway/evidence/production-guardian-set-v1-public-record-and-source-change/route-cpi-activation-preservation-check.txt:34:docs/gateway/current-runtime-state.md:344:- activation authorized: false
+docs/gateway/evidence/production-guardian-set-v1-public-record-and-source-change/route-cpi-activation-preservation-check.txt:35:docs/gateway/current-runtime-state.md:365:- ProductionGuardianSetUnset: REMOVED
+docs/gateway/evidence/production-guardian-set-v1-public-record-and-source-change/route-cpi-activation-preservation-check.txt:36:docs/gateway/current-runtime-state.md:366:- LiveRouteDisabled: ACTIVE
+docs/gateway/evidence/production-guardian-set-v1-public-record-and-source-change/route-cpi-activation-preservation-check.txt:37:docs/gateway/current-runtime-state.md:367:- SplCpiExecutionDisabled: ACTIVE
+docs/gateway/evidence/production-guardian-set-v1-public-record-and-source-change/route-cpi-activation-preservation-check.txt:38:docs/gateway/current-runtime-state.md:368:- ProductionProofLogUnset: ACTIVE
+docs/gateway/evidence/production-guardian-set-v1-public-record-and-source-change/route-cpi-activation-preservation-check.txt:39:docs/gateway/current-runtime-state.md:369:- runtime_deployable: false
+docs/gateway/evidence/production-guardian-set-v1-public-record-and-source-change/route-cpi-activation-preservation-check.txt:40:docs/gateway/current-runtime-state.md:370:- predeploy_gate: blocked
+docs/gateway/evidence/production-guardian-set-v1-public-record-and-source-change/route-cpi-activation-preservation-check.txt:41:docs/gateway/current-runtime-state.md:371:- activation authorized: false
+docs/gateway/evidence/production-guardian-set-v1-public-record-and-source-change/route-cpi-activation-preservation-check.txt:42:docs/gateway/current-runtime-state.md:374:- route enablement authorized: false
+docs/gateway/evidence/production-guardian-set-v1-public-record-and-source-change/route-cpi-activation-preservation-check.txt:43:docs/gateway/current-runtime-state.md:375:- SPL CPI enablement authorized: false
+docs/gateway/evidence/production-guardian-set-v1-public-record-and-source-change/route-cpi-activation-preservation-check.txt:44:docs/gateway/current-runtime-state.md:376:- proof log instantiation authorized: false
+docs/gateway/evidence/production-guardian-set-v1-public-record-and-source-change/route-cpi-activation-preservation-check.txt:45:docs/gateway/current-runtime-state.md:379:- execution remains blocked: true
+docs/gateway/evidence/production-guardian-set-v1-public-record-and-source-change/route-cpi-activation-preservation-check.txt:46:docs/gateway/current-execution-plan.md:204:- future boundary for `LiveRouteDisabled` removal;
+docs/gateway/evidence/production-guardian-set-v1-public-record-and-source-change/route-cpi-activation-preservation-check.txt:47:docs/gateway/current-execution-plan.md:205:- future boundary for `SplCpiExecutionDisabled` removal;
+docs/gateway/evidence/production-guardian-set-v1-public-record-and-source-change/source-runtime-state-preservation.txt:16:ProductionGuardianSetUnset_effective_status_after=REMOVED
+docs/gateway/evidence/production-guardian-set-v1-public-record-and-source-change/source-runtime-state-preservation.txt:17:LiveRouteDisabled_effective_status_after=ACTIVE
+docs/gateway/evidence/production-guardian-set-v1-public-record-and-source-change/source-runtime-state-preservation.txt:18:SplCpiExecutionDisabled_effective_status_after=ACTIVE
+docs/gateway/evidence/production-guardian-set-v1-public-record-and-source-change/source-runtime-state-preservation.txt:19:ProductionProofLogUnset_effective_status_after=ACTIVE
+docs/gateway/evidence/production-guardian-set-v1-public-record-and-source-change/source-runtime-state-preservation.txt:20:runtime_deployable_after=false
+docs/gateway/evidence/production-guardian-set-v1-public-record-and-source-change/source-runtime-state-preservation.txt:21:predeploy_gate_after=blocked
+docs/gateway/evidence/production-guardian-set-v1-public-record-and-source-change/theo-approval.txt:14:conditional_blocker_resolution=ProductionGuardianSetUnset
+docs/gateway/evidence/production-guardian-set-v1-public-record-and-source-change/theo-approval.txt:30:LiveRouteDisabled=ACTIVE
+docs/gateway/evidence/production-guardian-set-v1-public-record-and-source-change/theo-approval.txt:31:SplCpiExecutionDisabled=ACTIVE
+docs/gateway/evidence/production-guardian-set-v1-public-record-and-source-change/theo-approval.txt:32:ProductionProofLogUnset=ACTIVE
+docs/gateway/evidence/production-guardian-set-v1-public-record-and-source-change/theo-approval.txt:33:runtime_deployable=false
+docs/gateway/evidence/production-guardian-set-v1-public-record-and-source-change/theo-approval.txt:34:predeploy_gate=blocked

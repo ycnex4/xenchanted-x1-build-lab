@@ -25,7 +25,7 @@ If source code conflicts with documentation, source code remains the runtime gro
 The canonical runtime-state ledger currently identifies:
 
 - active runtime lane: pre-go-operational-readiness
-- next required decision: request/review production-guardian-set-instantiation-source-change; exact activation GO remains premature and blocked
+- next required decision: request/review production-proof-log-instantiation-plan; exact activation GO remains premature and blocked
 - next runtime package scope: PRE_GO_OPERATIONAL_READINESS_REQUIRES_SEPARATE_APPROVAL
 - ExternalReviewIncomplete effective status: REMOVED
 - source blockers removed to date: ExternalReviewIncomplete, PlaceholderProgramId
@@ -152,7 +152,7 @@ Do not request exact activation GO yet. Complete PRE-GO operational-readiness pa
 
 Next required decision:
 
-- request/review production-guardian-set-instantiation-source-change
+- request/review production-proof-log-instantiation-plan
 - exact activation GO remains blocked until PRE-GO operational-readiness packages complete
 
 Execution remains blocked.
@@ -305,3 +305,49 @@ Next required package:
 - production-guardian-set-instantiation-source-change
 
 The next package must be separately approved and must either keep `ProductionGuardianSetUnset` active with explanation or resolve it only if explicit blocker-removal/source-change approval is granted and tests/evidence prove the production guardian set.
+
+## Production Guardian Set V1 Source Binding Result
+
+Status: COMPLETE.
+
+Package:
+
+- production-guardian-set-v1-public-record-and-source-change
+
+Result:
+
+- guardian_set_version = 1
+- guardian_count = 5
+- threshold = 3
+- quorum_model = 3-of-5
+- key_type = Ed25519 / Solana public keys
+- descriptor_hash_sha256 = 4088a1f71870e617f3635d1c29aedd9fc53a0c136c6f69e0cb343d217ab1cd83
+- public record = docs/gateway/production-guardian-set-v1-public-record.md
+- source binding = programs/xxxl-svm/src/production_guardian_set_v1.rs
+- ProductionGuardianSetUnset = REMOVED
+
+Preserved blockers:
+
+- LiveRouteDisabled = ACTIVE
+- SplCpiExecutionDisabled = ACTIVE
+- ProductionProofLogUnset = ACTIVE
+
+Preserved forbidden actions:
+
+- no activation;
+- no deploy;
+- no upgrade;
+- no RPC mutation;
+- no route enablement;
+- no SPL CPI enablement;
+- no proof log instantiation;
+- no unrelated blocker removal;
+- no private key or keypair material;
+- no signing package construction;
+- no exact activation GO.
+
+Next required package:
+
+- production-proof-log-instantiation-plan
+
+Execution remains blocked.

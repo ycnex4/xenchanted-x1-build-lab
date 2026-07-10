@@ -41,14 +41,13 @@ pub enum XxxlRuntimeDeploymentGateResult {
 pub const XXXL_RUNTIME_DEPLOYMENT_STATUS: XxxlRuntimeDeploymentStatus =
     XxxlRuntimeDeploymentStatus::SourceBoundaryReadyActivationBlocked;
 
-pub const XXXL_RUNTIME_DEPLOYMENT_BLOCKERS: [XxxlRuntimeDeploymentBlocker; 4] = [
+pub const XXXL_RUNTIME_DEPLOYMENT_BLOCKERS: [XxxlRuntimeDeploymentBlocker; 3] = [
     XxxlRuntimeDeploymentBlocker::LiveRouteDisabled,
     XxxlRuntimeDeploymentBlocker::SplCpiExecutionDisabled,
-    XxxlRuntimeDeploymentBlocker::ProductionGuardianSetUnset,
     XxxlRuntimeDeploymentBlocker::ProductionProofLogUnset,
 ];
 
-pub const XXXL_RUNTIME_DEPLOYMENT_BLOCKER_REPORTS: [XxxlRuntimeDeploymentBlockerReport; 4] = [
+pub const XXXL_RUNTIME_DEPLOYMENT_BLOCKER_REPORTS: [XxxlRuntimeDeploymentBlockerReport; 3] = [
     XxxlRuntimeDeploymentBlockerReport {
         blocker: XxxlRuntimeDeploymentBlocker::LiveRouteDisabled,
         code: "LIVE_ROUTE_DISABLED",
@@ -60,12 +59,6 @@ pub const XXXL_RUNTIME_DEPLOYMENT_BLOCKER_REPORTS: [XxxlRuntimeDeploymentBlocker
         code: "SPL_CPI_EXECUTION_DISABLED",
         description: "SPL Token mint_to CPI execution remains disabled.",
         resolution: "Enable SPL Token mint_to CPI execution only after live route activation, PDA authority, account contract, and Mollusk coverage are complete.",
-    },
-    XxxlRuntimeDeploymentBlockerReport {
-        blocker: XxxlRuntimeDeploymentBlocker::ProductionGuardianSetUnset,
-        code: "PRODUCTION_GUARDIAN_SET_UNSET",
-        description: "The production guardian set is not configured or externally documented.",
-        resolution: "Define, publish, and review the production guardian set, threshold, rotation policy, and key custody model.",
     },
     XxxlRuntimeDeploymentBlockerReport {
         blocker: XxxlRuntimeDeploymentBlocker::ProductionProofLogUnset,
@@ -287,13 +280,13 @@ mod tests {
     fn runtime_deployment_blockers_are_explicit() {
         let blockers = xxxl_runtime_deployment_blockers();
 
-        assert_eq!(blockers.len(), 4);
+        assert_eq!(blockers.len(), 3);
         assert!(!blockers.contains(&XxxlRuntimeDeploymentBlocker::PlaceholderProgramId));
         assert!(blockers.contains(&XxxlRuntimeDeploymentBlocker::LiveRouteDisabled));
         assert!(blockers.contains(&XxxlRuntimeDeploymentBlocker::SplCpiExecutionDisabled));
         assert!(!blockers.contains(&XxxlRuntimeDeploymentBlocker::AccountContractUnreviewed));
         assert!(!blockers.contains(&XxxlRuntimeDeploymentBlocker::MolluskCoverageIncomplete));
-        assert!(blockers.contains(&XxxlRuntimeDeploymentBlocker::ProductionGuardianSetUnset));
+        assert!(!blockers.contains(&XxxlRuntimeDeploymentBlocker::ProductionGuardianSetUnset));
         assert!(blockers.contains(&XxxlRuntimeDeploymentBlocker::ProductionProofLogUnset));
         assert!(!blockers.contains(&XxxlRuntimeDeploymentBlocker::ExternalReviewIncomplete));
     }
@@ -304,8 +297,7 @@ mod tests {
 
         assert_eq!(blockers[0].code(), "LIVE_ROUTE_DISABLED");
         assert_eq!(blockers[1].code(), "SPL_CPI_EXECUTION_DISABLED");
-        assert_eq!(blockers[2].code(), "PRODUCTION_GUARDIAN_SET_UNSET");
-        assert_eq!(blockers[3].code(), "PRODUCTION_PROOF_LOG_UNSET");
+        assert_eq!(blockers[2].code(), "PRODUCTION_PROOF_LOG_UNSET");
     }
 
     #[test]
@@ -442,6 +434,29 @@ mod tests {
         ));
     }
 
+
+    #[test]
+    fn runtime_deployment_report_has_transitioned_production_guardian_set_blocker() {
+        assert!(xxxl_runtime_deployment_blocker_report(
+            XxxlRuntimeDeploymentBlocker::ProductionGuardianSetUnset,
+        )
+        .is_none());
+        assert_eq!(
+            XxxlRuntimeDeploymentBlocker::ProductionGuardianSetUnset.code(),
+            "PRODUCTION_GUARDIAN_SET_UNSET"
+        );
+        assert!(XxxlRuntimeDeploymentBlocker::ProductionGuardianSetUnset
+            .description()
+            .contains("production guardian set"));
+        assert!(XxxlRuntimeDeploymentBlocker::ProductionGuardianSetUnset
+            .resolution()
+            .contains("guardian set"));
+        assert!(!xxxl_runtime_deployment_report_has_blocker_code(
+            "PRODUCTION_GUARDIAN_SET_UNSET"
+        ));
+        assert!(crate::production_guardian_set_v1::production_guardian_set_v1_source_binding_complete());
+    }
+
     #[test]
     fn runtime_deployment_report_has_transitioned_external_review_blocker() {
         assert!(xxxl_runtime_deployment_blocker_report(
@@ -477,7 +492,6 @@ mod tests {
             vec![
                 "LIVE_ROUTE_DISABLED",
                 "SPL_CPI_EXECUTION_DISABLED",
-                "PRODUCTION_GUARDIAN_SET_UNSET",
                 "PRODUCTION_PROOF_LOG_UNSET",
             ]
         );
@@ -506,11 +520,10 @@ mod tests {
             "The XXXL SVM runtime source boundary is ready, but activation remains blocked."
         );
         assert!(!report.deployable);
-        assert_eq!(report.blockers.len(), 4);
+        assert_eq!(report.blockers.len(), 3);
         assert_eq!(report.blockers[0].code, "LIVE_ROUTE_DISABLED");
         assert_eq!(report.blockers[1].code, "SPL_CPI_EXECUTION_DISABLED");
-        assert_eq!(report.blockers[2].code, "PRODUCTION_GUARDIAN_SET_UNSET");
-        assert_eq!(report.blockers[3].code, "PRODUCTION_PROOF_LOG_UNSET");
+        assert_eq!(report.blockers[2].code, "PRODUCTION_PROOF_LOG_UNSET");
         assert_eq!(
             report.blockers[0].resolution,
             XxxlRuntimeDeploymentBlocker::LiveRouteDisabled.resolution()
@@ -540,7 +553,7 @@ mod tests {
                     "SOURCE_BOUNDARY_READY_ACTIVATION_BLOCKED"
                 );
                 assert!(!report.deployable);
-                assert_eq!(report.blockers.len(), 4);
+                assert_eq!(report.blockers.len(), 3);
             }
             XxxlRuntimeDeploymentGateResult::Ready(_) => {
                 panic!("activation-blocked XXXL runtime must not pass the predeploy gate");

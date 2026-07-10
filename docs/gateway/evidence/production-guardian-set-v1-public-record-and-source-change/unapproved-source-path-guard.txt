@@ -1,0 +1,3 @@
+package=production-guardian-set-v1-public-record-and-source-change
+guard=unapproved_source_path_guard
+result=no_unapproved_source_path_hits

@@ -1,0 +1,8 @@
+package=production-guardian-set-v1-public-record-and-source-change
+guard=sensitive_filename_guard
+result=no_sensitive_filename_hits
+
+guardian_keypair_json_committed=false
+wallet_file_committed=false
+seed_phrase_file_committed=false
+private_or_secret_key_file_committed=false

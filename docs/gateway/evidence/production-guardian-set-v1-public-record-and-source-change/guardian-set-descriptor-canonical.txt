@@ -1,0 +1,17 @@
+descriptor_type=production_guardian_set_v1
+project=xenchanted_x1_build_lab
+network=x1_testnet
+route=gateway_mint
+guardian_set_version=1
+guardian_count=5
+threshold=3
+quorum_model=3-of-5
+key_type=ed25519_solana_public_key
+ordering_rule=explicit_descriptor_order_guardian_01_to_guardian_05
+signature_domain=xxxl:x1-testnet:gateway-mint:v1:guardian-set-v1
+effective_package=production-guardian-set-v1-public-record-and-source-change
+guardian_01_public_key=7TqrbZeX5t3eVNMEYMpp4MuYRd1RF4Hj7raHRouCoNLf
+guardian_02_public_key=GN995izQ4ktAd2RCrv7Np8Hes7xK7hBu5trC7UWQNwQp
+guardian_03_public_key=6BjFvTkng4ViT8Kpywh726YqUfVTVqPQhq6pEYQWy5ih
+guardian_04_public_key=9xP4DDWP5B9RErNCSSTnLH8ej85drMabWc8y3MfYJwrY
+guardian_05_public_key=UB3nJ3qN8rNqe5F6MKyxG3kQBadfVwHGzYAXZJaZsjg

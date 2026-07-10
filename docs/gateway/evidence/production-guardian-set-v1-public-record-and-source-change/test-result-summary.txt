@@ -1,0 +1,11 @@
+guardian_set_test_exit=0
+125:13 |     program_error::ProgramError, pubkey::Pubkey, rent::Rent, system_program, sysvar::Sysvar,
+149:13 |     program_error::ProgramError, pubkey::Pubkey, rent::Rent, system_program, sysvar::Sysvar,
+208:running 10 tests
+220:test result: ok. 10 passed; 0 failed; 0 ignored; 0 measured; 776 filtered out; finished in 0.01s
+
+deployment_status_test_exit=0
+124:13 |     program_error::ProgramError, pubkey::Pubkey, rent::Rent, system_program, sysvar::Sysvar,
+148:13 |     program_error::ProgramError, pubkey::Pubkey, rent::Rent, system_program, sysvar::Sysvar,
+207:running 21 tests
+230:test result: ok. 21 passed; 0 failed; 0 ignored; 0 measured; 765 filtered out; finished in 0.01s

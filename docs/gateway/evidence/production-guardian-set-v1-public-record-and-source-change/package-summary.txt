@@ -1,0 +1,14 @@
+package=production-guardian-set-v1-public-record-and-source-change
+status=source_config_bound_public_record_complete
+guardian_set_version=1
+guardian_count=5
+threshold=3
+quorum_model=3-of-5
+descriptor_hash_sha256=4088a1f71870e617f3635d1c29aedd9fc53a0c136c6f69e0cb343d217ab1cd83
+ProductionGuardianSetUnset=REMOVED
+LiveRouteDisabled=ACTIVE
+SplCpiExecutionDisabled=ACTIVE
+ProductionProofLogUnset=ACTIVE
+activation_authorized=false
+execution_remains_blocked=true
+safety_invariants_reconciled=true
