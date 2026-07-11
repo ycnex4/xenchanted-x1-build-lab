@@ -1,0 +1,44 @@
+{
+  "canonicalization": {
+    "encoding": "utf-8",
+    "format": "json",
+    "hash": "sha256(canonical_json_bytes)",
+    "object_keys": "lexicographic_sort",
+    "separators": "compact_comma_colon",
+    "unicode": "preserve_utf8"
+  },
+  "config_version": "production-proof-log-config-v1",
+  "environment": "x1_testnet",
+  "fixture_path": "docs/gateway/proof-log/fixtures/gateway-mint-proof-v1-dry-run-record.json",
+  "guardian_set": {
+    "descriptor_hash_sha256": "4088a1f71870e617f3635d1c29aedd9fc53a0c136c6f69e0cb343d217ab1cd83",
+    "guardian_count": 5,
+    "quorum_model": "3-of-5",
+    "signature_domain": "xxxl:x1-testnet:gateway-mint:v1:guardian-set-v1",
+    "threshold": 3,
+    "version": 1
+  },
+  "publication_model": {
+    "append_only_required": true,
+    "batches_path_future": "docs/gateway/proof-log/batches/",
+    "external_production_publication_enabled": false,
+    "local_repo_publication_path": "docs/gateway/proof-log/",
+    "previous_record_hash_required": true,
+    "record_hash_required": true,
+    "records_path_future": "docs/gateway/proof-log/records/"
+  },
+  "route": "gateway_mint",
+  "safety": {
+    "activation_authorized": false,
+    "deploy_authorized": false,
+    "external_production_endpoint_publication_authorized": false,
+    "live_mint_execution_authorized": false,
+    "private_key_material_allowed": false,
+    "route_enablement_authorized": false,
+    "rpc_mutation_authorized": false,
+    "signing_package_construction_authorized": false,
+    "spl_cpi_enablement_authorized": false
+  },
+  "schema_path": "docs/gateway/proof-log/schema/gateway-mint-proof-v1.schema.json",
+  "verification_doc": "docs/gateway/proof-log/verification.md"
+}

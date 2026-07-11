@@ -1,0 +1,321 @@
+{
+  "$id": "xenchanted.gateway-mint-proof.v1",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "batch_id": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "batch_merkle_root": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "consumed_event": {
+      "additionalProperties": false,
+      "properties": {
+        "consumed_at_x1_slot": {
+          "minimum": 0,
+          "type": [
+            "integer",
+            "null"
+          ]
+        },
+        "consumed_event_key": {
+          "type": "string"
+        },
+        "consumed_event_marker_hash": {
+          "pattern": "^[0-9a-f]{64}$",
+          "type": "string"
+        },
+        "consumed_status": {
+          "enum": [
+            "dry_run_fixture",
+            "pending",
+            "consumed",
+            "rejected"
+          ]
+        }
+      },
+      "required": [
+        "consumed_event_key",
+        "consumed_event_marker_hash",
+        "consumed_status",
+        "consumed_at_x1_slot"
+      ],
+      "type": "object"
+    },
+    "created_at_utc": {
+      "type": "string"
+    },
+    "destination_mint": {
+      "additionalProperties": false,
+      "properties": {
+        "destination_mint": {
+          "type": "string"
+        },
+        "destination_recipient": {
+          "type": "string"
+        },
+        "destination_token_program": {
+          "type": "string"
+        },
+        "gateway_mint_authority_bump": {
+          "type": "integer"
+        },
+        "gateway_mint_authority_pda": {
+          "type": "string"
+        },
+        "mint_amount": {
+          "type": "string"
+        },
+        "mint_instruction_hash": {
+          "pattern": "^[0-9a-f]{64}$",
+          "type": "string"
+        },
+        "mint_message_hash": {
+          "pattern": "^[0-9a-f]{64}$",
+          "type": "string"
+        },
+        "x1_instruction_index": {
+          "minimum": 0,
+          "type": "integer"
+        },
+        "x1_mint_tx_signature": {
+          "type": "string"
+        },
+        "x1_program_id": {
+          "type": "string"
+        },
+        "x1_slot": {
+          "minimum": 0,
+          "type": "integer"
+        }
+      },
+      "required": [
+        "x1_program_id",
+        "gateway_mint_authority_pda",
+        "gateway_mint_authority_bump",
+        "destination_mint",
+        "destination_token_program",
+        "destination_recipient",
+        "mint_amount",
+        "mint_message_hash",
+        "mint_instruction_hash",
+        "x1_mint_tx_signature",
+        "x1_slot",
+        "x1_instruction_index"
+      ],
+      "type": "object"
+    },
+    "environment": {
+      "type": "string"
+    },
+    "guardian_quorum": {
+      "additionalProperties": false,
+      "properties": {
+        "guardian_approval_count": {
+          "minimum": 0,
+          "type": "integer"
+        },
+        "guardian_approvals": {
+          "type": "array"
+        },
+        "guardian_count": {
+          "minimum": 1,
+          "type": "integer"
+        },
+        "guardian_quorum_transcript_hash": {
+          "pattern": "^[0-9a-f]{64}$",
+          "type": "string"
+        },
+        "guardian_set_descriptor_hash_sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "type": "string"
+        },
+        "guardian_set_version": {
+          "minimum": 1,
+          "type": "integer"
+        },
+        "quorum_model": {
+          "type": "string"
+        },
+        "signature_domain": {
+          "type": "string"
+        },
+        "threshold": {
+          "minimum": 1,
+          "type": "integer"
+        }
+      },
+      "required": [
+        "guardian_set_version",
+        "guardian_set_descriptor_hash_sha256",
+        "guardian_count",
+        "threshold",
+        "quorum_model",
+        "signature_domain",
+        "guardian_approval_count",
+        "guardian_quorum_transcript_hash",
+        "guardian_approvals"
+      ],
+      "type": "object"
+    },
+    "previous_record_hash": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "publication": {
+      "additionalProperties": false,
+      "properties": {
+        "correction_of_record_hash": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "notes": {
+          "type": "string"
+        },
+        "publication_commit": {
+          "type": "string"
+        },
+        "publication_location": {
+          "type": "string"
+        },
+        "publisher_identity": {
+          "type": "string"
+        },
+        "reviewer_identity": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      },
+      "required": [
+        "publication_location",
+        "publication_commit",
+        "publisher_identity",
+        "reviewer_identity",
+        "correction_of_record_hash",
+        "notes"
+      ],
+      "type": "object"
+    },
+    "record_hash": {
+      "pattern": "^[0-9a-f]{64}$",
+      "type": "string"
+    },
+    "record_status": {
+      "enum": [
+        "dry_run_fixture",
+        "pending",
+        "accepted",
+        "rejected",
+        "superseded",
+        "correction"
+      ]
+    },
+    "record_type": {
+      "const": "gateway_mint_proof"
+    },
+    "route": {
+      "const": "gateway_mint"
+    },
+    "schema_version": {
+      "const": "gateway-mint-proof-v1"
+    },
+    "sequence_number": {
+      "minimum": 0,
+      "type": "integer"
+    },
+    "source_burn": {
+      "additionalProperties": false,
+      "properties": {
+        "burn_amount": {
+          "type": "string"
+        },
+        "canonical_event_hash": {
+          "pattern": "^[0-9a-f]{64}$",
+          "type": "string"
+        },
+        "canonical_event_key": {
+          "type": "string"
+        },
+        "source_block_hash": {
+          "type": "string"
+        },
+        "source_block_number": {
+          "minimum": 0,
+          "type": "integer"
+        },
+        "source_burn_contract": {
+          "type": "string"
+        },
+        "source_burner": {
+          "type": "string"
+        },
+        "source_chain_id": {
+          "type": "string"
+        },
+        "source_chain_name": {
+          "type": "string"
+        },
+        "source_event_signature": {
+          "type": "string"
+        },
+        "source_log_index": {
+          "minimum": 0,
+          "type": "integer"
+        },
+        "source_token": {
+          "type": "string"
+        },
+        "source_tx_hash": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "source_chain_id",
+        "source_chain_name",
+        "source_block_number",
+        "source_block_hash",
+        "source_tx_hash",
+        "source_log_index",
+        "source_event_signature",
+        "source_burn_contract",
+        "source_token",
+        "source_burner",
+        "burn_amount",
+        "canonical_event_key",
+        "canonical_event_hash"
+      ],
+      "type": "object"
+    }
+  },
+  "required": [
+    "schema_version",
+    "record_type",
+    "record_status",
+    "environment",
+    "route",
+    "created_at_utc",
+    "sequence_number",
+    "previous_record_hash",
+    "record_hash",
+    "source_burn",
+    "destination_mint",
+    "guardian_quorum",
+    "consumed_event",
+    "publication"
+  ],
+  "title": "xEnchanted Gateway Mint Proof Log Record v1",
+  "type": "object"
+}

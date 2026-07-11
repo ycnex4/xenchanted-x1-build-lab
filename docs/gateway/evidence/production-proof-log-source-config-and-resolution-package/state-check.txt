@@ -1,0 +1,50 @@
+deployment_status active blocker grep:
+44:pub const XXXL_RUNTIME_DEPLOYMENT_BLOCKERS: [XxxlRuntimeDeploymentBlocker; 2] = [
+45:    XxxlRuntimeDeploymentBlocker::LiveRouteDisabled,
+46:    XxxlRuntimeDeploymentBlocker::SplCpiExecutionDisabled,
+51:        blocker: XxxlRuntimeDeploymentBlocker::LiveRouteDisabled,
+57:        blocker: XxxlRuntimeDeploymentBlocker::SplCpiExecutionDisabled,
+96:            XxxlRuntimeDeploymentBlocker::LiveRouteDisabled => "LIVE_ROUTE_DISABLED",
+97:            XxxlRuntimeDeploymentBlocker::SplCpiExecutionDisabled => "SPL_CPI_EXECUTION_DISABLED",
+107:            XxxlRuntimeDeploymentBlocker::ProductionProofLogUnset => "PRODUCTION_PROOF_LOG_UNSET",
+117:            XxxlRuntimeDeploymentBlocker::LiveRouteDisabled => {
+120:            XxxlRuntimeDeploymentBlocker::SplCpiExecutionDisabled => {
+132:            XxxlRuntimeDeploymentBlocker::ProductionProofLogUnset => {
+146:            XxxlRuntimeDeploymentBlocker::LiveRouteDisabled => {
+149:            XxxlRuntimeDeploymentBlocker::SplCpiExecutionDisabled => {
+161:            XxxlRuntimeDeploymentBlocker::ProductionProofLogUnset => {
+184:    &XXXL_RUNTIME_DEPLOYMENT_BLOCKERS
+278:        assert!(blockers.contains(&XxxlRuntimeDeploymentBlocker::LiveRouteDisabled));
+279:        assert!(blockers.contains(&XxxlRuntimeDeploymentBlocker::SplCpiExecutionDisabled));
+283:        assert!(!blockers.contains(&XxxlRuntimeDeploymentBlocker::ProductionProofLogUnset));
+303:            XxxlRuntimeDeploymentBlocker::LiveRouteDisabled.description(),
+307:            XxxlRuntimeDeploymentBlocker::SplCpiExecutionDisabled.description(),
+324:            XxxlRuntimeDeploymentBlocker::LiveRouteDisabled.resolution(),
+456:            XxxlRuntimeDeploymentBlocker::ProductionProofLogUnset,
+460:            XxxlRuntimeDeploymentBlocker::ProductionProofLogUnset.code(),
+463:        assert!(XxxlRuntimeDeploymentBlocker::ProductionProofLogUnset
+466:        assert!(XxxlRuntimeDeploymentBlocker::ProductionProofLogUnset
+541:            XxxlRuntimeDeploymentBlocker::LiveRouteDisabled.resolution()
+
+runtime state doc grep:
+60:| LiveRouteDisabled | ACTIVE | N/A | ACTIVE |
+61:| SplCpiExecutionDisabled | ACTIVE | N/A | ACTIVE |
+82:| runtime_deployable | false | programs/xxxl-svm/src/deployment_status.rs |
+83:| predeploy_gate | blocked | programs/xxxl-svm/src/deployment_status.rs |
+188:| LiveRouteDisabled | ACTIVE |
+189:| SplCpiExecutionDisabled | ACTIVE |
+226:| LiveRouteDisabled | ACTIVE |
+227:| SplCpiExecutionDisabled | ACTIVE |
+273:| LiveRouteDisabled | ACTIVE |
+274:| SplCpiExecutionDisabled | ACTIVE |
+314:| LiveRouteDisabled | ACTIVE |
+315:| SplCpiExecutionDisabled | ACTIVE |
+402:| LiveRouteDisabled | ACTIVE |
+403:| SplCpiExecutionDisabled | ACTIVE |
+405:| runtime_deployable | false |
+406:| predeploy_gate | blocked |
+444:| ProductionProofLogUnset | REMOVED |
+445:| LiveRouteDisabled | ACTIVE |
+446:| SplCpiExecutionDisabled | ACTIVE |
+447:| runtime_deployable | false |
+448:| predeploy_gate | blocked |

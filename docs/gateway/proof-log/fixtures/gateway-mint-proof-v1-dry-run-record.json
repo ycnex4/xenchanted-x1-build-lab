@@ -1,0 +1,92 @@
+{
+  "batch_id": null,
+  "batch_merkle_root": null,
+  "consumed_event": {
+    "consumed_at_x1_slot": null,
+    "consumed_event_key": "dry-run-source-chain:dry_run_source_tx_hash:0",
+    "consumed_event_marker_hash": "aa8c9d3d0849f8d4c282c2d15025b576a120cf9ddd93377134b63a3ecc3f6881",
+    "consumed_status": "dry_run_fixture"
+  },
+  "created_at_utc": "1970-01-01T00:00:00Z",
+  "destination_mint": {
+    "destination_mint": "dry_run_destination_mint",
+    "destination_recipient": "dry_run_destination_recipient",
+    "destination_token_program": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA",
+    "gateway_mint_authority_bump": 252,
+    "gateway_mint_authority_pda": "BLVsQPYXnDsTmfMW9wrXHBFpcmexM47BcAvVcibRtRYG",
+    "mint_amount": "100000000",
+    "mint_instruction_hash": "2c48577b7cbea47af61b79a24ee90a619117f1d55c3ba1d237defbcb6907b397",
+    "mint_message_hash": "795230013d6d76c765d80fe1d90a2f9ec5c1f0d9962545cfa988c486f9d4a7bf",
+    "x1_instruction_index": 0,
+    "x1_mint_tx_signature": "dry_run_no_live_transaction",
+    "x1_program_id": "D7AQmZNtFFFoJbducz93atteeSZhw3jq6RmsqBvaf1my",
+    "x1_slot": 0
+  },
+  "environment": "x1_testnet",
+  "guardian_quorum": {
+    "guardian_approval_count": 3,
+    "guardian_approvals": [
+      {
+        "attestation_payload_hash": "4efcd50487318d346ec59aafa79d3b7ab9fdcd4403e259584605ce603fdb61db",
+        "guardian_index": 1,
+        "guardian_public_key": "7TqrbZeX5t3eVNMEYMpp4MuYRd1RF4Hj7raHRouCoNLf",
+        "rejection_reason": null,
+        "signature_hash": "eb148556d030afefd2f63292d171ad64cae9a38ed49efd21021c3668800496e4",
+        "verification_status": "dry_run_fixture_not_live_signature"
+      },
+      {
+        "attestation_payload_hash": "7090789c2cfbf76f58c4797892f24e7503f6f98176b2817bf426289cba9941ac",
+        "guardian_index": 2,
+        "guardian_public_key": "GN995izQ4ktAd2RCrv7Np8Hes7xK7hBu5trC7UWQNwQp",
+        "rejection_reason": null,
+        "signature_hash": "58a8ecfe42d9e663ce1779a518065bb464276fb53b4a68e8db580616acc94ce3",
+        "verification_status": "dry_run_fixture_not_live_signature"
+      },
+      {
+        "attestation_payload_hash": "a399cfd6609edf549ef6e648eaff72312c11d3fc4691c0333bb93b6ba458c462",
+        "guardian_index": 3,
+        "guardian_public_key": "6BjFvTkng4ViT8Kpywh726YqUfVTVqPQhq6pEYQWy5ih",
+        "rejection_reason": null,
+        "signature_hash": "720e805304e7a42d78f3d424a0fcbfaf3326382c09cfc64a8da8b95425d5800b",
+        "verification_status": "dry_run_fixture_not_live_signature"
+      }
+    ],
+    "guardian_count": 5,
+    "guardian_quorum_transcript_hash": "8b1f2fd55565e9e9d35688d1465918b4896fcf1e0a70f1891d4b1a216347db92",
+    "guardian_set_descriptor_hash_sha256": "4088a1f71870e617f3635d1c29aedd9fc53a0c136c6f69e0cb343d217ab1cd83",
+    "guardian_set_version": 1,
+    "quorum_model": "3-of-5",
+    "signature_domain": "xxxl:x1-testnet:gateway-mint:v1:guardian-set-v1",
+    "threshold": 3
+  },
+  "previous_record_hash": null,
+  "publication": {
+    "correction_of_record_hash": null,
+    "notes": "Dry-run fixture only. No live signature, no live mint, no external production publication.",
+    "publication_commit": "local_dry_run_fixture_no_external_publication",
+    "publication_location": "docs/gateway/proof-log/fixtures/gateway-mint-proof-v1-dry-run-record.json",
+    "publisher_identity": "xenchanted_build_lab_dry_run",
+    "reviewer_identity": null
+  },
+  "record_hash": "af15b7458967f224c24745d88ccd4fb2e52c82906df9df404091b3400acc5c01",
+  "record_status": "dry_run_fixture",
+  "record_type": "gateway_mint_proof",
+  "route": "gateway_mint",
+  "schema_version": "gateway-mint-proof-v1",
+  "sequence_number": 0,
+  "source_burn": {
+    "burn_amount": "100000000",
+    "canonical_event_hash": "c53ae092710e017776f045a001bc5560e57a0abb455baf73ff50c5d9a75a8e27",
+    "canonical_event_key": "dry-run-source-chain:dry_run_source_tx_hash:0",
+    "source_block_hash": "dry_run_source_block_hash",
+    "source_block_number": 0,
+    "source_burn_contract": "dry_run_source_burn_contract",
+    "source_burner": "dry_run_source_burner",
+    "source_chain_id": "dry-run-source-chain",
+    "source_chain_name": "dry-run-source",
+    "source_event_signature": "DryRunBurn(address,uint256,bytes32)",
+    "source_log_index": 0,
+    "source_token": "dry_run_source_token",
+    "source_tx_hash": "dry_run_source_tx_hash"
+  }
+}
