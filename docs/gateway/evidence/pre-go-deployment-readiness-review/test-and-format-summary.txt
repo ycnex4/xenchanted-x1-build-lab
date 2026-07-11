@@ -1,0 +1,144 @@
+cargo_test_lib_exit=0
+125:13 |     program_error::ProgramError, pubkey::Pubkey, rent::Rent, system_program, sysvar::Sysvar,
+149:13 |     program_error::ProgramError, pubkey::Pubkey, rent::Rent, system_program, sysvar::Sysvar,
+208:running 791 tests
+980:test verifier::quorum_authorization_boundary::tests::failed_attempt_does_not_kill_valid_m_of_n_and_error_is_preserved ... ok
+1001:test result: ok. 790 passed; 0 failed; 1 ignored; 0 measured; 0 filtered out; finished in 0.30s
+
+cargo_fmt_check_exit=1
+1:Diff in /mnt/c/Users/user/xenchanted-x1-build-lab/programs/xxxl-svm/examples/emit_local_fixtures_b6_58.rs:20:
+5:[31m-        return Err(boxed_error("output directory does not match the B6.58 approved path"));
+6:(B[m[32m+        return Err(boxed_error(
+12:Diff in /mnt/c/Users/user/xenchanted-x1-build-lab/programs/xxxl-svm/examples/emit_local_fixtures_b6_58.rs:47:
+16:[31m-        return Err(boxed_error(format!("unsafe fixture file name: {file_name}")));
+17:(B[m[32m+        return Err(boxed_error(format!(
+23:Diff in /mnt/c/Users/user/xenchanted-x1-build-lab/programs/xxxl-svm/examples/emit_local_fixtures_b6_58.rs:104:
+27:[31m-        return Err(boxed_error("approved output path exists but is not a directory"));
+28:(B[m[32m+        return Err(boxed_error(
+34:Diff in /mnt/c/Users/user/xenchanted-x1-build-lab/programs/xxxl-svm/examples/emit_local_fixtures_b6_58.rs:138:
+38:[31m-        return Err(boxed_error("execution/testnet/live/upgrade flag unexpectedly enabled"));
+39:(B[m[32m+        return Err(boxed_error(
+45:Diff in /mnt/c/Users/user/xenchanted-x1-build-lab/programs/xxxl-svm/examples/emit_local_fixtures_b6_58.rs:179:
+49:[31m-            return Err(boxed_error("unexpected non-file entry in fixture output directory"));
+50:(B[m[32m+            return Err(boxed_error(
+56:Diff in /mnt/c/Users/user/xenchanted-x1-build-lab/programs/xxxl-svm/src/account_validation_skeleton.rs:1:
+65:Diff in /mnt/c/Users/user/xenchanted-x1-build-lab/programs/xxxl-svm/src/account_validation_skeleton.rs:68:
+84:Diff in /mnt/c/Users/user/xenchanted-x1-build-lab/programs/xxxl-svm/src/account_validation_skeleton.rs:209:
+103:Diff in /mnt/c/Users/user/xenchanted-x1-build-lab/programs/xxxl-svm/src/consume_execution_plan_skeleton.rs:3:
+113:Diff in /mnt/c/Users/user/xenchanted-x1-build-lab/programs/xxxl-svm/src/consume_execution_plan_skeleton.rs:64:
+130:Diff in /mnt/c/Users/user/xenchanted-x1-build-lab/programs/xxxl-svm/src/consume_execution_plan_skeleton.rs:74:
+146:Diff in /mnt/c/Users/user/xenchanted-x1-build-lab/programs/xxxl-svm/src/consume_execution_plan_skeleton.rs:83:
+173:Diff in /mnt/c/Users/user/xenchanted-x1-build-lab/programs/xxxl-svm/src/consume_execution_plan_skeleton.rs:128:
+196:Diff in /mnt/c/Users/user/xenchanted-x1-build-lab/programs/xxxl-svm/src/consume_execution_plan_skeleton.rs:174:
+208:Diff in /mnt/c/Users/user/xenchanted-x1-build-lab/programs/xxxl-svm/src/consume_execution_plan_skeleton.rs:185:
+232:Diff in /mnt/c/Users/user/xenchanted-x1-build-lab/programs/xxxl-svm/src/consume_execution_plan_skeleton.rs:212:
+249:Diff in /mnt/c/Users/user/xenchanted-x1-build-lab/programs/xxxl-svm/src/consume_state_transition_skeleton.rs:1:
+265:Diff in /mnt/c/Users/user/xenchanted-x1-build-lab/programs/xxxl-svm/src/consume_state_transition_skeleton.rs:163:
+277:Diff in /mnt/c/Users/user/xenchanted-x1-build-lab/programs/xxxl-svm/src/cpi.rs:287:
+285:Diff in /mnt/c/Users/user/xenchanted-x1-build-lab/programs/xxxl-svm/src/deployment_status.rs:329:
+293:Diff in /mnt/c/Users/user/xenchanted-x1-build-lab/programs/xxxl-svm/src/deployment_status.rs:455:
+301:Diff in /mnt/c/Users/user/xenchanted-x1-build-lab/programs/xxxl-svm/src/deployment_status.rs:475:
+314:Diff in /mnt/c/Users/user/xenchanted-x1-build-lab/programs/xxxl-svm/src/dispatch_skeleton.rs:91:
+338:Diff in /mnt/c/Users/user/xenchanted-x1-build-lab/programs/xxxl-svm/src/dispatch_skeleton.rs:111:
+360:Diff in /mnt/c/Users/user/xenchanted-x1-build-lab/programs/xxxl-svm/src/dispatch_skeleton.rs:130:
+376:Diff in /mnt/c/Users/user/xenchanted-x1-build-lab/programs/xxxl-svm/src/dispatch_skeleton.rs:147:
+398:Diff in /mnt/c/Users/user/xenchanted-x1-build-lab/programs/xxxl-svm/src/dispatch_skeleton.rs:178:
+422:Diff in /mnt/c/Users/user/xenchanted-x1-build-lab/programs/xxxl-svm/src/initialization_execution_plan_skeleton.rs:11:
+435:Diff in /mnt/c/Users/user/xenchanted-x1-build-lab/programs/xxxl-svm/src/initialization_execution_plan_skeleton.rs:25:
+445:Diff in /mnt/c/Users/user/xenchanted-x1-build-lab/programs/xxxl-svm/src/initialization_execution_plan_skeleton.rs:106:
+462:Diff in /mnt/c/Users/user/xenchanted-x1-build-lab/programs/xxxl-svm/src/initialization_execution_plan_skeleton.rs:130:
+479:Diff in /mnt/c/Users/user/xenchanted-x1-build-lab/programs/xxxl-svm/src/initialization_execution_plan_skeleton.rs:171:
+496:Diff in /mnt/c/Users/user/xenchanted-x1-build-lab/programs/xxxl-svm/src/initialization_execution_plan_skeleton.rs:212:
+513:Diff in /mnt/c/Users/user/xenchanted-x1-build-lab/programs/xxxl-svm/src/initialization_execution_plan_skeleton.rs:270:
+537:Diff in /mnt/c/Users/user/xenchanted-x1-build-lab/programs/xxxl-svm/src/initialization_execution_plan_skeleton.rs:303:
+549:Diff in /mnt/c/Users/user/xenchanted-x1-build-lab/programs/xxxl-svm/src/initialization_execution_plan_skeleton.rs:310:
+569:Diff in /mnt/c/Users/user/xenchanted-x1-build-lab/programs/xxxl-svm/src/initialization_execution_plan_skeleton.rs:351:
+584:Diff in /mnt/c/Users/user/xenchanted-x1-build-lab/programs/xxxl-svm/src/initialization_execution_plan_skeleton.rs:382:
+596:Diff in /mnt/c/Users/user/xenchanted-x1-build-lab/programs/xxxl-svm/src/initialization_execution_plan_skeleton.rs:389:
+616:Diff in /mnt/c/Users/user/xenchanted-x1-build-lab/programs/xxxl-svm/src/initialization_execution_plan_skeleton.rs:408:
+633:Diff in /mnt/c/Users/user/xenchanted-x1-build-lab/programs/xxxl-svm/src/initialization_execution_plan_skeleton.rs:418:
+656:Diff in /mnt/c/Users/user/xenchanted-x1-build-lab/programs/xxxl-svm/src/instruction_payload_skeleton.rs:225:
+667:Diff in /mnt/c/Users/user/xenchanted-x1-build-lab/programs/xxxl-svm/src/instruction_payload_skeleton.rs:233:
+675:Diff in /mnt/c/Users/user/xenchanted-x1-build-lab/programs/xxxl-svm/src/lib.rs:36:
+683:Diff in /mnt/c/Users/user/xenchanted-x1-build-lab/programs/xxxl-svm/src/lib.rs:43:
+688:Diff in /mnt/c/Users/user/xenchanted-x1-build-lab/programs/xxxl-svm/src/local_execution_plan_skeleton.rs:1:
+701:Diff in /mnt/c/Users/user/xenchanted-x1-build-lab/programs/xxxl-svm/src/local_execution_plan_skeleton.rs:129:
+718:Diff in /mnt/c/Users/user/xenchanted-x1-build-lab/programs/xxxl-svm/src/local_execution_plan_skeleton.rs:246:
+742:Diff in /mnt/c/Users/user/xenchanted-x1-build-lab/programs/xxxl-svm/src/local_execution_plan_skeleton.rs:285:
+764:Diff in /mnt/c/Users/user/xenchanted-x1-build-lab/programs/xxxl-svm/src/local_execution_plan_skeleton.rs:325:
+779:Diff in /mnt/c/Users/user/xenchanted-x1-build-lab/programs/xxxl-svm/src/local_execution_plan_skeleton.rs:360:
+801:Diff in /mnt/c/Users/user/xenchanted-x1-build-lab/programs/xxxl-svm/src/local_execution_plan_skeleton.rs:407:
+825:Diff in /mnt/c/Users/user/xenchanted-x1-build-lab/programs/xxxl-svm/src/local_execution_plan_skeleton.rs:434:
+842:Diff in /mnt/c/Users/user/xenchanted-x1-build-lab/programs/xxxl-svm/src/local_execution_plan_skeleton.rs:444:
+863:Diff in /mnt/c/Users/user/xenchanted-x1-build-lab/programs/xxxl-svm/src/local_execution_scenario_skeleton.rs:14:
+874:Diff in /mnt/c/Users/user/xenchanted-x1-build-lab/programs/xxxl-svm/src/local_execution_scenario_skeleton.rs:23:
+881:Diff in /mnt/c/Users/user/xenchanted-x1-build-lab/programs/xxxl-svm/src/local_execution_scenario_skeleton.rs:76:
+905:Diff in /mnt/c/Users/user/xenchanted-x1-build-lab/programs/xxxl-svm/src/local_execution_scenario_skeleton.rs:91:
+928:Diff in /mnt/c/Users/user/xenchanted-x1-build-lab/programs/xxxl-svm/src/local_execution_scenario_skeleton.rs:106:
+950:Diff in /mnt/c/Users/user/xenchanted-x1-build-lab/programs/xxxl-svm/src/local_execution_scenario_skeleton.rs:120:
+973:Diff in /mnt/c/Users/user/xenchanted-x1-build-lab/programs/xxxl-svm/src/local_execution_scenario_skeleton.rs:135:
+989:Diff in /mnt/c/Users/user/xenchanted-x1-build-lab/programs/xxxl-svm/src/local_execution_scenario_skeleton.rs:147:
+1020:Diff in /mnt/c/Users/user/xenchanted-x1-build-lab/programs/xxxl-svm/src/local_execution_scenario_skeleton.rs:166:
+1042:Diff in /mnt/c/Users/user/xenchanted-x1-build-lab/programs/xxxl-svm/src/local_execution_scenario_skeleton.rs:180:
+1073:Diff in /mnt/c/Users/user/xenchanted-x1-build-lab/programs/xxxl-svm/src/local_fixture_file_emitter_skeleton.rs:371:
+1090:Diff in /mnt/c/Users/user/xenchanted-x1-build-lab/programs/xxxl-svm/src/local_fixture_file_emitter_skeleton.rs:389:
+1107:Diff in /mnt/c/Users/user/xenchanted-x1-build-lab/programs/xxxl-svm/src/local_fixture_file_emitter_skeleton.rs:403:
+1118:Diff in /mnt/c/Users/user/xenchanted-x1-build-lab/programs/xxxl-svm/src/local_fixture_generator_skeleton.rs:187:
+1130:Diff in /mnt/c/Users/user/xenchanted-x1-build-lab/programs/xxxl-svm/src/local_fixture_generator_skeleton.rs:296:
+1146:Diff in /mnt/c/Users/user/xenchanted-x1-build-lab/programs/xxxl-svm/src/local_fixture_generator_skeleton.rs:345:
+1159:Diff in /mnt/c/Users/user/xenchanted-x1-build-lab/programs/xxxl-svm/src/local_fixture_generator_skeleton.rs:396:
+1176:Diff in /mnt/c/Users/user/xenchanted-x1-build-lab/programs/xxxl-svm/src/local_guardian_descriptor_skeleton.rs:377:
+1191:Diff in /mnt/c/Users/user/xenchanted-x1-build-lab/programs/xxxl-svm/src/local_guardian_descriptor_skeleton.rs:579:
+1201:Diff in /mnt/c/Users/user/xenchanted-x1-build-lab/programs/xxxl-svm/src/local_guardian_failure_matrix_skeleton.rs:1:
+1211:Diff in /mnt/c/Users/user/xenchanted-x1-build-lab/programs/xxxl-svm/src/local_guardian_failure_matrix_skeleton.rs:101:
+1222:Diff in /mnt/c/Users/user/xenchanted-x1-build-lab/programs/xxxl-svm/src/local_guardian_failure_matrix_skeleton.rs:116:
+1237:Diff in /mnt/c/Users/user/xenchanted-x1-build-lab/programs/xxxl-svm/src/local_guardian_failure_matrix_skeleton.rs:150:
+1247:Diff in /mnt/c/Users/user/xenchanted-x1-build-lab/programs/xxxl-svm/src/local_guardian_failure_matrix_skeleton.rs:395:
+1258:Diff in /mnt/c/Users/user/xenchanted-x1-build-lab/programs/xxxl-svm/src/local_guardian_failure_matrix_skeleton.rs:589:
+1270:Diff in /mnt/c/Users/user/xenchanted-x1-build-lab/programs/xxxl-svm/src/local_guardian_fixture_integration_skeleton.rs:144:
+1283:Diff in /mnt/c/Users/user/xenchanted-x1-build-lab/programs/xxxl-svm/src/processor.rs:817:
+1291:Diff in /mnt/c/Users/user/xenchanted-x1-build-lab/programs/xxxl-svm/src/production_guardian_set_v1.rs:24:
+1304:Diff in /mnt/c/Users/user/xenchanted-x1-build-lab/programs/xxxl-svm/src/production_guardian_set_v1.rs:36:
+1341:Diff in /mnt/c/Users/user/xenchanted-x1-build-lab/programs/xxxl-svm/src/production_guardian_set_v1.rs:187:
+1353:Diff in /mnt/c/Users/user/xenchanted-x1-build-lab/programs/xxxl-svm/src/production_guardian_set_v1.rs:222:
+1365:Diff in /mnt/c/Users/user/xenchanted-x1-build-lab/programs/xxxl-svm/src/production_guardian_set_v1.rs:298:
+1375:         assert!(err.structural_error.is_none());
+1377:Diff in /mnt/c/Users/user/xenchanted-x1-build-lab/programs/xxxl-svm/src/production_guardian_set_v1.rs:353:
+1389:Diff in /mnt/c/Users/user/xenchanted-x1-build-lab/programs/xxxl-svm/src/production_guardian_set_v1.rs:371:
+1401:Diff in /mnt/c/Users/user/xenchanted-x1-build-lab/programs/xxxl-svm/src/program_id_status.rs:95:
+1413:Diff in /mnt/c/Users/user/xenchanted-x1-build-lab/programs/xxxl-svm/src/program_id_status.rs:138:
+1430:Diff in /mnt/c/Users/user/xenchanted-x1-build-lab/programs/xxxl-svm/src/program_id_status.rs:153:
+1442:Diff in /mnt/c/Users/user/xenchanted-x1-build-lab/programs/xxxl-svm/src/state_account_layout_skeleton.rs:209:
+1453:Diff in /mnt/c/Users/user/xenchanted-x1-build-lab/programs/xxxl-svm/src/state_initialization_skeleton.rs:6:
+1474:Diff in /mnt/c/Users/user/xenchanted-x1-build-lab/programs/xxxl-svm/src/state_initialization_skeleton.rs:269:
+1485:Diff in /mnt/c/Users/user/xenchanted-x1-build-lab/programs/xxxl-svm/src/state_initialization_skeleton.rs:311:
+1496:Diff in /mnt/c/Users/user/xenchanted-x1-build-lab/programs/xxxl-svm/src/state_initialization_skeleton.rs:340:
+1506:Diff in /mnt/c/Users/user/xenchanted-x1-build-lab/programs/xxxl-svm/src/state_instruction_skeleton.rs:138:
+1518:Diff in /mnt/c/Users/user/xenchanted-x1-build-lab/programs/xxxl-svm/src/state_instruction_skeleton.rs:178:
+1535:Diff in /mnt/c/Users/user/xenchanted-x1-build-lab/programs/xxxl-svm/src/typed_instruction_skeleton.rs:1:
+1544:Diff in /mnt/c/Users/user/xenchanted-x1-build-lab/programs/xxxl-svm/src/typed_instruction_skeleton.rs:11:
+1560:Diff in /mnt/c/Users/user/xenchanted-x1-build-lab/programs/xxxl-svm/src/typed_instruction_skeleton.rs:120:
+1584:Diff in /mnt/c/Users/user/xenchanted-x1-build-lab/programs/xxxl-svm/src/typed_instruction_skeleton.rs:138:
+1606:Diff in /mnt/c/Users/user/xenchanted-x1-build-lab/programs/xxxl-svm/src/typed_instruction_skeleton.rs:155:
+1622:Diff in /mnt/c/Users/user/xenchanted-x1-build-lab/programs/xxxl-svm/src/typed_instruction_skeleton.rs:170:
+1644:Diff in /mnt/c/Users/user/xenchanted-x1-build-lab/programs/xxxl-svm/src/validated_dispatch_skeleton.rs:1:
+1653:Diff in /mnt/c/Users/user/xenchanted-x1-build-lab/programs/xxxl-svm/src/validated_dispatch_skeleton.rs:73:
+1677:Diff in /mnt/c/Users/user/xenchanted-x1-build-lab/programs/xxxl-svm/src/validated_dispatch_skeleton.rs:99:
+1699:Diff in /mnt/c/Users/user/xenchanted-x1-build-lab/programs/xxxl-svm/src/validated_dispatch_skeleton.rs:113:
+1711:Diff in /mnt/c/Users/user/xenchanted-x1-build-lab/programs/xxxl-svm/src/validated_dispatch_skeleton.rs:134:
+1735:Diff in /mnt/c/Users/user/xenchanted-x1-build-lab/programs/xxxl-svm/src/validated_dispatch_skeleton.rs:159:
+1759:Diff in /mnt/c/Users/user/xenchanted-x1-build-lab/programs/xxxl-svm/src/validated_dispatch_skeleton.rs:189:
+1783:Diff in /mnt/c/Users/user/xenchanted-x1-build-lab/programs/xxxl-svm/src/validated_dispatch_skeleton.rs:219:
+1807:Diff in /mnt/c/Users/user/xenchanted-x1-build-lab/programs/xxxl-svm/src/verifier/b1c_payload_hash_binding.rs:296:
+1820:Diff in /mnt/c/Users/user/xenchanted-x1-build-lab/programs/xxxl-svm/src/verifier/b1c_payload_hash_binding.rs:305:
+1830:Diff in /mnt/c/Users/user/xenchanted-x1-build-lab/programs/xxxl-svm/src/verifier/b1c_payload_hash_binding.rs:341:
+1842:Diff in /mnt/c/Users/user/xenchanted-x1-build-lab/programs/xxxl-svm/src/verifier/processed_registry_account_loading_boundary.rs:1:
+1853:Diff in /mnt/c/Users/user/xenchanted-x1-build-lab/programs/xxxl-svm/src/verifier/processed_registry_account_loading_boundary.rs:72:
+1864:Diff in /mnt/c/Users/user/xenchanted-x1-build-lab/programs/xxxl-svm/src/verifier/processed_registry_account_loading_boundary.rs:1012:
+1882:Diff in /mnt/c/Users/user/xenchanted-x1-build-lab/programs/xxxl-svm/src/verifier/processed_registry_account_loading_boundary.rs:1405:
+1894:Diff in /mnt/c/Users/user/xenchanted-x1-build-lab/programs/xxxl-svm/src/verifier/processed_registry_account_loading_boundary.rs:1539:
+1904:Diff in /mnt/c/Users/user/xenchanted-x1-build-lab/programs/xxxl-svm/src/verifier/replay_protection_boundary.rs:1:
+1910:Diff in /mnt/c/Users/user/xenchanted-x1-build-lab/programs/xxxl-svm/src/verifier/replay_protection_boundary.rs:5:
+1916:Diff in /mnt/c/Users/user/xenchanted-x1-build-lab/programs/xxxl-svm/tests/phase_41k6_b2_valid_quorum_live_gated_success.rs:97:
+1926:Diff in /mnt/c/Users/user/xenchanted-x1-build-lab/programs/xxxl-svm/tests/phase_41k6_b2_valid_quorum_live_gated_success.rs:108:
+1939:Diff in /mnt/c/Users/user/xenchanted-x1-build-lab/programs/xxxl-svm/tests/phase_41k6_b3_hostile_live_gated_matrix.rs:188:

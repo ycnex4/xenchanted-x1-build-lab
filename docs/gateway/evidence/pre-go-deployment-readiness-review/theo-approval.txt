@@ -1,0 +1,36 @@
+APPROVE_PRE_GO_DEPLOYMENT_READINESS_REVIEW_NO_ACTIVATION
+
+Scope:
+- Final PRE-GO deployment-readiness review only.
+- Documentation, evidence, checklist, tests, and explicit PASS / PASS_WITH_NOTES / FAIL decision.
+
+Allowed:
+- Add docs/gateway/pre-go-deployment-readiness-review.md
+- Add docs/gateway/evidence/pre-go-deployment-readiness-review/
+- Update current-runtime-state.md
+- Update current-execution-plan.md
+- Add review evidence/checklists
+- Run tests and record results
+- Record explicit decision
+
+Forbidden:
+- activation
+- deploy
+- upgrade
+- RPC mutation
+- live-chain transaction
+- live mint execution
+- external production route enablement
+- external SPL CPI execution
+- exact activation GO
+- private key / keypair / seed / mnemonic material
+- guardian set mutation
+- proof-log production publication mutation
+- source code mutation without separately approved blocker package
+- blocker removal without separate approval
+- new planning-only stages without concrete blocker
+
+Decision criteria:
+- PASS: repository ready to request separate exact activation GO.
+- PASS_WITH_NOTES: ready with documented non-blocking items.
+- FAIL: concrete blocker identified; stop and request separately approved blocker-resolution package.

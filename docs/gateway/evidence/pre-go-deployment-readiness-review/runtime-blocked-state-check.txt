@@ -1,0 +1,43 @@
+deployment_status_blocker_arrays:
+44:pub const XXXL_RUNTIME_DEPLOYMENT_BLOCKERS: [XxxlRuntimeDeploymentBlocker; 0] = [];
+46:pub const XXXL_RUNTIME_DEPLOYMENT_BLOCKER_REPORTS: [XxxlRuntimeDeploymentBlockerReport; 0] = [];
+55:        blockers: &XXXL_RUNTIME_DEPLOYMENT_BLOCKER_REPORTS,
+168:    &XXXL_RUNTIME_DEPLOYMENT_BLOCKERS
+172:    &XXXL_RUNTIME_DEPLOYMENT_BLOCKER_REPORTS
+178:    XXXL_RUNTIME_DEPLOYMENT_BLOCKER_REPORTS
+188:    XXXL_RUNTIME_DEPLOYMENT_BLOCKER_REPORTS
+
+runtime_deployable:
+214:pub fn xxxl_runtime_is_deployable() -> bool {
+215-    false
+216-}
+217-
+218-pub fn live_route_activation_from_process_instruction_enabled_for_deployment_status() -> bool {
+
+predeploy_gate:
+207:pub fn xxxl_runtime_predeploy_gate_allows_deploy() -> bool {
+208-    matches!(
+209-        xxxl_runtime_deployment_gate_result(),
+210-        XxxlRuntimeDeploymentGateResult::Ready(_)
+211-    )
+212-}
+213-
+214-pub fn xxxl_runtime_is_deployable() -> bool {
+215-    false
+
+live_route_flags:
+100:pub const LIVE_ROUTE_ACTIVATION_FROM_PROCESS_INSTRUCTION_ENABLED: bool = false;
+107:pub fn live_route_repository_local_readiness_complete() -> bool {
+113:        && !LIVE_ROUTE_ACTIVATION_FROM_PROCESS_INSTRUCTION_ENABLED
+816:        assert!(crate::processor::live_route_repository_local_readiness_complete());
+817:        assert!(!crate::processor::LIVE_ROUTE_ACTIVATION_FROM_PROCESS_INSTRUCTION_ENABLED);
+
+spl_cpi_flags:
+44:pub fn spl_cpi_repository_local_readiness_complete() -> bool {
+52:        && !spl_mint_to_cpi_execution_enabled()
+144:pub fn spl_mint_to_cpi_execution_enabled() -> bool {
+155:pub fn spl_mint_to_cpi_execution_enabled() -> bool {
+181:    if !spl_mint_to_cpi_execution_enabled() {
+286:        assert!(crate::cpi::spl_cpi_repository_local_readiness_complete());
+287:        assert!(!crate::cpi::spl_mint_to_cpi_execution_enabled());
+414:        assert!(!spl_mint_to_cpi_execution_enabled());

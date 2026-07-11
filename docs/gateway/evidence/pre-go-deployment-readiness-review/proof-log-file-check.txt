@@ -1,0 +1,4 @@
+schema_exists=true
+config_exists=true
+fixture_exists=true
+verification_checklist_exists=true
