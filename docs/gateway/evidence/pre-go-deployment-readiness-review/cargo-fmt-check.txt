@@ -1,0 +1,1948 @@
+Diff in /mnt/c/Users/user/xenchanted-x1-build-lab/programs/xxxl-svm/examples/emit_local_fixtures_b6_58.rs:20:
+
+ fn validate_output_directory(output_directory: &str) -> Result<(), Box<dyn Error>> {
+     if output_directory != OUTPUT_DIRECTORY {
+[31m-        return Err(boxed_error("output directory does not match the B6.58 approved path"));
+(B[m[32m+        return Err(boxed_error(
+(B[m[32m+            "output directory does not match the B6.58 approved path",
+(B[m[32m+        ));
+(B[m     }
+
+     let path = Path::new(output_directory);
+Diff in /mnt/c/Users/user/xenchanted-x1-build-lab/programs/xxxl-svm/examples/emit_local_fixtures_b6_58.rs:47:
+         || file_name.contains('\\')
+         || file_name.contains("..")
+     {
+[31m-        return Err(boxed_error(format!("unsafe fixture file name: {file_name}")));
+(B[m[32m+        return Err(boxed_error(format!(
+(B[m[32m+            "unsafe fixture file name: {file_name}"
+(B[m[32m+        )));
+(B[m     }
+
+     Ok(())
+Diff in /mnt/c/Users/user/xenchanted-x1-build-lab/programs/xxxl-svm/examples/emit_local_fixtures_b6_58.rs:104:
+     }
+
+     if !path.is_dir() {
+[31m-        return Err(boxed_error("approved output path exists but is not a directory"));
+(B[m[32m+        return Err(boxed_error(
+(B[m[32m+            "approved output path exists but is not a directory",
+(B[m[32m+        ));
+(B[m     }
+
+     let mut entries = fs::read_dir(path)?;
+Diff in /mnt/c/Users/user/xenchanted-x1-build-lab/programs/xxxl-svm/examples/emit_local_fixtures_b6_58.rs:138:
+         || plan.live_rpc_enabled
+         || plan.upgrade_enabled
+     {
+[31m-        return Err(boxed_error("execution/testnet/live/upgrade flag unexpectedly enabled"));
+(B[m[32m+        return Err(boxed_error(
+(B[m[32m+            "execution/testnet/live/upgrade flag unexpectedly enabled",
+(B[m[32m+        ));
+(B[m     }
+
+     if plan.output_directory != OUTPUT_DIRECTORY {
+Diff in /mnt/c/Users/user/xenchanted-x1-build-lab/programs/xxxl-svm/examples/emit_local_fixtures_b6_58.rs:179:
+     for entry in fs::read_dir(output_path)? {
+         let entry = entry?;
+         if !entry.file_type()?.is_file() {
+[31m-            return Err(boxed_error("unexpected non-file entry in fixture output directory"));
+(B[m[32m+            return Err(boxed_error(
+(B[m[32m+                "unexpected non-file entry in fixture output directory",
+(B[m[32m+            ));
+(B[m         }
+
+         let name = entry
+Diff in /mnt/c/Users/user/xenchanted-x1-build-lab/programs/xxxl-svm/src/account_validation_skeleton.rs:1:
+ use crate::{
+[31m-    account_order_skeleton::{
+(B[m[31m-        account_requirements_for_tag, XxxlAccountOwnerExpectationSkeleton,
+(B[m[31m-    },
+(B[m[32m+    account_order_skeleton::{account_requirements_for_tag, XxxlAccountOwnerExpectationSkeleton},
+(B[m     state_instruction_skeleton::XxxlGatewayInstructionTag,
+ };
+
+Diff in /mnt/c/Users/user/xenchanted-x1-build-lab/programs/xxxl-svm/src/account_validation_skeleton.rs:68:
+         }
+
+         if actual.owner_expectation != expected.owner_expectation {
+[31m-            return Err(XxxlAccountValidationSkeletonError::OwnerExpectationMismatch {
+(B[m[31m-                index: expected.index,
+(B[m[31m-                expected: expected.owner_expectation,
+(B[m[31m-                actual: actual.owner_expectation,
+(B[m[31m-            });
+(B[m[32m+            return Err(
+(B[m[32m+                XxxlAccountValidationSkeletonError::OwnerExpectationMismatch {
+(B[m[32m+                    index: expected.index,
+(B[m[32m+                    expected: expected.owner_expectation,
+(B[m[32m+                    actual: actual.owner_expectation,
+(B[m[32m+                },
+(B[m[32m+            );
+(B[m         }
+     }
+
+Diff in /mnt/c/Users/user/xenchanted-x1-build-lab/programs/xxxl-svm/src/account_validation_skeleton.rs:209:
+
+         assert_eq!(
+             validate_account_metas_for_tag(XxxlGatewayInstructionTag::InitializeMintState, &metas),
+[31m-            Err(XxxlAccountValidationSkeletonError::OwnerExpectationMismatch {
+(B[m[31m-                index: 4,
+(B[m[31m-                expected: XxxlAccountOwnerExpectationSkeleton::SplTokenProgram,
+(B[m[31m-                actual: XxxlAccountOwnerExpectationSkeleton::SystemProgram
+(B[m[31m-            })
+(B[m[32m+            Err(
+(B[m[32m+                XxxlAccountValidationSkeletonError::OwnerExpectationMismatch {
+(B[m[32m+                    index: 4,
+(B[m[32m+                    expected: XxxlAccountOwnerExpectationSkeleton::SplTokenProgram,
+(B[m[32m+                    actual: XxxlAccountOwnerExpectationSkeleton::SystemProgram
+(B[m[32m+                }
+(B[m[32m+            )
+(B[m         );
+     }
+
+Diff in /mnt/c/Users/user/xenchanted-x1-build-lab/programs/xxxl-svm/src/consume_execution_plan_skeleton.rs:3:
+     consume_state_transition_skeleton::{
+         apply_consume_gateway_mint_state_transition_skeleton,
+         ConsumeGatewayMintStateTransitionSkeletonInput,
+[31m-        ConsumeGatewayMintStateTransitionSkeletonOutput,
+(B[m[31m-        XxxlConsumeStateTransitionSkeletonError,
+(B[m[32m+        ConsumeGatewayMintStateTransitionSkeletonOutput, XxxlConsumeStateTransitionSkeletonError,
+(B[m     },
+     state_account_layout_skeleton::MintStateAccountLayoutSkeleton,
+     state_instruction_skeleton::XxxlGatewayInstructionTag,
+Diff in /mnt/c/Users/user/xenchanted-x1-build-lab/programs/xxxl-svm/src/consume_execution_plan_skeleton.rs:64:
+         plan_validated_dispatch_skeleton(input.instruction_data, input.account_metas)?;
+
+     if validated_dispatch_plan.dispatch_plan.tag != XxxlGatewayInstructionTag::ConsumeGatewayMint {
+[31m-        return Err(XxxlConsumeExecutionPlanSkeletonError::InvalidInstructionKind {
+(B[m[31m-            expected: XxxlGatewayInstructionTag::ConsumeGatewayMint,
+(B[m[31m-            actual: validated_dispatch_plan.dispatch_plan.tag,
+(B[m[31m-        });
+(B[m[32m+        return Err(
+(B[m[32m+            XxxlConsumeExecutionPlanSkeletonError::InvalidInstructionKind {
+(B[m[32m+                expected: XxxlGatewayInstructionTag::ConsumeGatewayMint,
+(B[m[32m+                actual: validated_dispatch_plan.dispatch_plan.tag,
+(B[m[32m+            },
+(B[m[32m+        );
+(B[m     }
+
+     let payload = match validated_dispatch_plan.dispatch_plan.instruction {
+Diff in /mnt/c/Users/user/xenchanted-x1-build-lab/programs/xxxl-svm/src/consume_execution_plan_skeleton.rs:74:
+         XxxlTypedInstructionSkeleton::ConsumeGatewayMintBoundary(payload) => payload,
+         _ => {
+[31m-            return Err(XxxlConsumeExecutionPlanSkeletonError::InvalidInstructionKind {
+(B[m[31m-                expected: XxxlGatewayInstructionTag::ConsumeGatewayMint,
+(B[m[31m-                actual: validated_dispatch_plan.dispatch_plan.tag,
+(B[m[31m-            });
+(B[m[32m+            return Err(
+(B[m[32m+                XxxlConsumeExecutionPlanSkeletonError::InvalidInstructionKind {
+(B[m[32m+                    expected: XxxlGatewayInstructionTag::ConsumeGatewayMint,
+(B[m[32m+                    actual: validated_dispatch_plan.dispatch_plan.tag,
+(B[m[32m+                },
+(B[m[32m+            );
+(B[m         }
+     };
+
+Diff in /mnt/c/Users/user/xenchanted-x1-build-lab/programs/xxxl-svm/src/consume_execution_plan_skeleton.rs:83:
+[31m-    let state_transition_output =
+(B[m[31m-        apply_consume_gateway_mint_state_transition_skeleton(
+(B[m[31m-            ConsumeGatewayMintStateTransitionSkeletonInput {
+(B[m[31m-                current_mint_state: input.current_mint_state,
+(B[m[31m-                payload,
+(B[m[31m-                processed_event_bump: input.processed_event_bump,
+(B[m[31m-                source_burn_tx_hash: input.source_burn_tx_hash,
+(B[m[31m-                source_burn_event_index: input.source_burn_event_index,
+(B[m[31m-                recipient_hash: input.recipient_hash,
+(B[m[31m-                processed_at_slot: input.processed_at_slot,
+(B[m[31m-            },
+(B[m[31m-        )?;
+(B[m[32m+    let state_transition_output = apply_consume_gateway_mint_state_transition_skeleton(
+(B[m[32m+        ConsumeGatewayMintStateTransitionSkeletonInput {
+(B[m[32m+            current_mint_state: input.current_mint_state,
+(B[m[32m+            payload,
+(B[m[32m+            processed_event_bump: input.processed_event_bump,
+(B[m[32m+            source_burn_tx_hash: input.source_burn_tx_hash,
+(B[m[32m+            source_burn_event_index: input.source_burn_event_index,
+(B[m[32m+            recipient_hash: input.recipient_hash,
+(B[m[32m+            processed_at_slot: input.processed_at_slot,
+(B[m[32m+        },
+(B[m[32m+    )?;
+(B[m
+     Ok(ConsumeGatewayMintExecutionPlanSkeletonOutput {
+         validated_dispatch_plan,
+Diff in /mnt/c/Users/user/xenchanted-x1-build-lab/programs/xxxl-svm/src/consume_execution_plan_skeleton.rs:128:
+     }
+
+     fn consume_instruction_data(mint_amount: u128) -> Vec<u8> {
+[31m-        encode_typed_instruction_skeleton(
+(B[m[31m-            XxxlTypedInstructionSkeleton::ConsumeGatewayMintBoundary(
+(B[m[31m-                ConsumeGatewayMintPayloadBoundarySkeleton {
+(B[m[31m-                    message_hash: [0x22; 32],
+(B[m[31m-                    canonical_event_key: [0x33; 32],
+(B[m[31m-                    mint_amount,
+(B[m[31m-                },
+(B[m[31m-            ),
+(B[m[31m-        )
+(B[m[32m+        encode_typed_instruction_skeleton(XxxlTypedInstructionSkeleton::ConsumeGatewayMintBoundary(
+(B[m[32m+            ConsumeGatewayMintPayloadBoundarySkeleton {
+(B[m[32m+                message_hash: [0x22; 32],
+(B[m[32m+                canonical_event_key: [0x33; 32],
+(B[m[32m+                mint_amount,
+(B[m[32m+            },
+(B[m[32m+        ))
+(B[m     }
+
+     #[test]
+Diff in /mnt/c/Users/user/xenchanted-x1-build-lab/programs/xxxl-svm/src/consume_execution_plan_skeleton.rs:174:
+             123
+         );
+         assert_eq!(
+[31m-            output.state_transition_output.processed_event.canonical_event_key,
+(B[m[32m+            output
+(B[m[32m+                .state_transition_output
+(B[m[32m+                .processed_event
+(B[m[32m+                .canonical_event_key,
+(B[m             [0x33; 32]
+         );
+         assert_eq!(
+Diff in /mnt/c/Users/user/xenchanted-x1-build-lab/programs/xxxl-svm/src/consume_execution_plan_skeleton.rs:185:
+
+     #[test]
+     fn consume_execution_plan_rejects_non_consume_instruction() {
+[31m-        let instruction =
+(B[m[31m-            XxxlTypedInstructionSkeleton::InitializeGatewayConfig(
+(B[m[31m-                InitializeGatewayConfigPayloadSkeleton {
+(B[m[31m-                    route_id: [0x11; 32],
+(B[m[31m-                    source_chain_id: 1,
+(B[m[31m-                    guardian_set_id: 7,
+(B[m[31m-                    is_active: true,
+(B[m[31m-                },
+(B[m[31m-            );
+(B[m[32m+        let instruction = XxxlTypedInstructionSkeleton::InitializeGatewayConfig(
+(B[m[32m+            InitializeGatewayConfigPayloadSkeleton {
+(B[m[32m+                route_id: [0x11; 32],
+(B[m[32m+                source_chain_id: 1,
+(B[m[32m+                guardian_set_id: 7,
+(B[m[32m+                is_active: true,
+(B[m[32m+            },
+(B[m[32m+        );
+(B[m
+         let data = encode_typed_instruction_skeleton(instruction);
+         let metas =
+Diff in /mnt/c/Users/user/xenchanted-x1-build-lab/programs/xxxl-svm/src/consume_execution_plan_skeleton.rs:212:
+
+         assert_eq!(
+             plan_consume_gateway_mint_execution_skeleton(input),
+[31m-            Err(XxxlConsumeExecutionPlanSkeletonError::InvalidInstructionKind {
+(B[m[31m-                expected: XxxlGatewayInstructionTag::ConsumeGatewayMint,
+(B[m[31m-                actual: XxxlGatewayInstructionTag::InitializeGatewayConfig,
+(B[m[31m-            })
+(B[m[32m+            Err(
+(B[m[32m+                XxxlConsumeExecutionPlanSkeletonError::InvalidInstructionKind {
+(B[m[32m+                    expected: XxxlGatewayInstructionTag::ConsumeGatewayMint,
+(B[m[32m+                    actual: XxxlGatewayInstructionTag::InitializeGatewayConfig,
+(B[m[32m+                }
+(B[m[32m+            )
+(B[m         );
+     }
+
+Diff in /mnt/c/Users/user/xenchanted-x1-build-lab/programs/xxxl-svm/src/consume_state_transition_skeleton.rs:1:
+ use crate::{
+     instruction_payload_skeleton::ConsumeGatewayMintPayloadBoundarySkeleton,
+     state_account_layout_skeleton::{
+[31m-        decode_mint_state_account_layout_skeleton,
+(B[m[31m-        decode_processed_event_account_layout_skeleton,
+(B[m[31m-        encode_mint_state_account_layout_skeleton,
+(B[m[31m-        encode_processed_event_account_layout_skeleton,
+(B[m[31m-        MintStateAccountLayoutSkeleton,
+(B[m[31m-        ProcessedEventAccountLayoutSkeleton,
+(B[m[32m+        decode_mint_state_account_layout_skeleton, decode_processed_event_account_layout_skeleton,
+(B[m[32m+        encode_mint_state_account_layout_skeleton, encode_processed_event_account_layout_skeleton,
+(B[m[32m+        MintStateAccountLayoutSkeleton, ProcessedEventAccountLayoutSkeleton,
+(B[m         XxxlStateAccountLayoutSkeletonError,
+     },
+     state_initialization_skeleton::{
+Diff in /mnt/c/Users/user/xenchanted-x1-build-lab/programs/xxxl-svm/src/consume_state_transition_skeleton.rs:163:
+             output.next_mint_state.mint_authority_pda,
+             mint_state.mint_authority_pda
+         );
+[31m-        assert_eq!(output.encoded_next_mint_state.len(), MINT_STATE_ACCOUNT_SKELETON_LEN);
+(B[m[32m+        assert_eq!(
+(B[m[32m+            output.encoded_next_mint_state.len(),
+(B[m[32m+            MINT_STATE_ACCOUNT_SKELETON_LEN
+(B[m[32m+        );
+(B[m     }
+
+     #[test]
+Diff in /mnt/c/Users/user/xenchanted-x1-build-lab/programs/xxxl-svm/src/cpi.rs:287:
+         assert!(!crate::cpi::spl_mint_to_cpi_execution_enabled());
+     }
+
+[31m-
+(B[m     use super::*;
+     use solana_program::{account_info::AccountInfo, pubkey::Pubkey};
+     use std::str::FromStr;
+Diff in /mnt/c/Users/user/xenchanted-x1-build-lab/programs/xxxl-svm/src/deployment_status.rs:329:
+         }
+     }
+
+[31m-
+(B[m     #[test]
+     fn runtime_deployment_report_has_transitioned_live_route_blocker() {
+         assert!(xxxl_runtime_deployment_blocker_report(
+Diff in /mnt/c/Users/user/xenchanted-x1-build-lab/programs/xxxl-svm/src/deployment_status.rs:455:
+         ));
+     }
+
+[31m-
+(B[m     #[test]
+     fn runtime_deployment_report_has_transitioned_production_guardian_set_blocker() {
+         assert!(xxxl_runtime_deployment_blocker_report(
+Diff in /mnt/c/Users/user/xenchanted-x1-build-lab/programs/xxxl-svm/src/deployment_status.rs:475:
+         assert!(!xxxl_runtime_deployment_report_has_blocker_code(
+             "PRODUCTION_GUARDIAN_SET_UNSET"
+         ));
+[31m-        assert!(crate::production_guardian_set_v1::production_guardian_set_v1_source_binding_complete());
+(B[m[32m+        assert!(
+(B[m[32m+            crate::production_guardian_set_v1::production_guardian_set_v1_source_binding_complete()
+(B[m[32m+        );
+(B[m     }
+[31m-
+(B[m
+     #[test]
+     fn runtime_deployment_report_has_transitioned_production_proof_log_blocker() {
+Diff in /mnt/c/Users/user/xenchanted-x1-build-lab/programs/xxxl-svm/src/dispatch_skeleton.rs:91:
+
+     #[test]
+     fn dispatch_plans_initialize_gateway_config_with_expected_accounts() {
+[31m-        let instruction =
+(B[m[31m-            XxxlTypedInstructionSkeleton::InitializeGatewayConfig(
+(B[m[31m-                InitializeGatewayConfigPayloadSkeleton {
+(B[m[31m-                    route_id: [0x11; 32],
+(B[m[31m-                    source_chain_id: 1,
+(B[m[31m-                    guardian_set_id: 7,
+(B[m[31m-                    is_active: true,
+(B[m[31m-                },
+(B[m[31m-            );
+(B[m[32m+        let instruction = XxxlTypedInstructionSkeleton::InitializeGatewayConfig(
+(B[m[32m+            InitializeGatewayConfigPayloadSkeleton {
+(B[m[32m+                route_id: [0x11; 32],
+(B[m[32m+                source_chain_id: 1,
+(B[m[32m+                guardian_set_id: 7,
+(B[m[32m+                is_active: true,
+(B[m[32m+            },
+(B[m[32m+        );
+(B[m
+         let data = encode_typed_instruction_skeleton(instruction);
+         let plan = plan_dispatch_skeleton(&data, 4).expect("dispatch plan ok");
+Diff in /mnt/c/Users/user/xenchanted-x1-build-lab/programs/xxxl-svm/src/dispatch_skeleton.rs:111:
+
+     #[test]
+     fn dispatch_plans_initialize_guardian_set_with_expected_accounts() {
+[31m-        let instruction =
+(B[m[31m-            XxxlTypedInstructionSkeleton::InitializeGuardianSetHeader(
+(B[m[31m-                InitializeGuardianSetHeaderPayloadSkeleton {
+(B[m[31m-                    guardian_set_id: 7,
+(B[m[31m-                    threshold: 2,
+(B[m[31m-                    guardian_count: 3,
+(B[m[31m-                },
+(B[m[31m-            );
+(B[m[32m+        let instruction = XxxlTypedInstructionSkeleton::InitializeGuardianSetHeader(
+(B[m[32m+            InitializeGuardianSetHeaderPayloadSkeleton {
+(B[m[32m+                guardian_set_id: 7,
+(B[m[32m+                threshold: 2,
+(B[m[32m+                guardian_count: 3,
+(B[m[32m+            },
+(B[m[32m+        );
+(B[m
+         let data = encode_typed_instruction_skeleton(instruction);
+         let plan = plan_dispatch_skeleton(&data, 4).expect("dispatch plan ok");
+Diff in /mnt/c/Users/user/xenchanted-x1-build-lab/programs/xxxl-svm/src/dispatch_skeleton.rs:130:
+
+     #[test]
+     fn dispatch_plans_initialize_mint_state_with_expected_accounts() {
+[31m-        let instruction = XxxlTypedInstructionSkeleton::InitializeMintState(
+(B[m[31m-            InitializeMintStatePayloadSkeleton {
+(B[m[32m+        let instruction =
+(B[m[32m+            XxxlTypedInstructionSkeleton::InitializeMintState(InitializeMintStatePayloadSkeleton {
+(B[m                 mint: Pubkey::new_unique(),
+                 decimals: 9,
+[31m-            },
+(B[m[31m-        );
+(B[m[32m+            });
+(B[m
+         let data = encode_typed_instruction_skeleton(instruction);
+         let plan = plan_dispatch_skeleton(&data, 7).expect("dispatch plan ok");
+Diff in /mnt/c/Users/user/xenchanted-x1-build-lab/programs/xxxl-svm/src/dispatch_skeleton.rs:147:
+
+     #[test]
+     fn dispatch_plans_consume_gateway_mint_with_expected_accounts() {
+[31m-        let instruction =
+(B[m[31m-            XxxlTypedInstructionSkeleton::ConsumeGatewayMintBoundary(
+(B[m[31m-                ConsumeGatewayMintPayloadBoundarySkeleton {
+(B[m[31m-                    message_hash: [0x22; 32],
+(B[m[31m-                    canonical_event_key: [0x33; 32],
+(B[m[31m-                    mint_amount: 123_456,
+(B[m[31m-                },
+(B[m[31m-            );
+(B[m[32m+        let instruction = XxxlTypedInstructionSkeleton::ConsumeGatewayMintBoundary(
+(B[m[32m+            ConsumeGatewayMintPayloadBoundarySkeleton {
+(B[m[32m+                message_hash: [0x22; 32],
+(B[m[32m+                canonical_event_key: [0x33; 32],
+(B[m[32m+                mint_amount: 123_456,
+(B[m[32m+            },
+(B[m[32m+        );
+(B[m
+         let data = encode_typed_instruction_skeleton(instruction);
+         let plan = plan_dispatch_skeleton(&data, 11).expect("dispatch plan ok");
+Diff in /mnt/c/Users/user/xenchanted-x1-build-lab/programs/xxxl-svm/src/dispatch_skeleton.rs:178:
+
+     #[test]
+     fn dispatch_rejects_wrong_account_count_after_decode() {
+[31m-        let instruction =
+(B[m[31m-            XxxlTypedInstructionSkeleton::InitializeGatewayConfig(
+(B[m[31m-                InitializeGatewayConfigPayloadSkeleton {
+(B[m[31m-                    route_id: [0x11; 32],
+(B[m[31m-                    source_chain_id: 1,
+(B[m[31m-                    guardian_set_id: 7,
+(B[m[31m-                    is_active: true,
+(B[m[31m-                },
+(B[m[31m-            );
+(B[m[32m+        let instruction = XxxlTypedInstructionSkeleton::InitializeGatewayConfig(
+(B[m[32m+            InitializeGatewayConfigPayloadSkeleton {
+(B[m[32m+                route_id: [0x11; 32],
+(B[m[32m+                source_chain_id: 1,
+(B[m[32m+                guardian_set_id: 7,
+(B[m[32m+                is_active: true,
+(B[m[32m+            },
+(B[m[32m+        );
+(B[m
+         let data = encode_typed_instruction_skeleton(instruction);
+
+Diff in /mnt/c/Users/user/xenchanted-x1-build-lab/programs/xxxl-svm/src/initialization_execution_plan_skeleton.rs:11:
+         encode_and_verify_gateway_config_initialization_skeleton,
+         encode_and_verify_guardian_set_header_initialization_skeleton,
+         encode_and_verify_mint_state_initialization_skeleton,
+[31m-        GatewayConfigInitializationSkeletonInput,
+(B[m[31m-        GuardianSetHeaderInitializationSkeletonInput,
+(B[m[31m-        MintStateInitializationSkeletonInput,
+(B[m[31m-        XxxlStateInitializationSkeletonError,
+(B[m[32m+        GatewayConfigInitializationSkeletonInput, GuardianSetHeaderInitializationSkeletonInput,
+(B[m[32m+        MintStateInitializationSkeletonInput, XxxlStateInitializationSkeletonError,
+(B[m     },
+     state_instruction_skeleton::XxxlGatewayInstructionTag,
+     typed_instruction_skeleton::XxxlTypedInstructionSkeleton,
+Diff in /mnt/c/Users/user/xenchanted-x1-build-lab/programs/xxxl-svm/src/initialization_execution_plan_skeleton.rs:25:
+ };
+ use solana_program::pubkey::Pubkey;
+
+[31m-pub const XXXL_INITIALIZATION_EXECUTION_PLAN_SKELETON_STATUS: &str =
+(B[m[31m-    "LOCAL_ONLY_NOT_DEPLOYABLE";
+(B[m[32m+pub const XXXL_INITIALIZATION_EXECUTION_PLAN_SKELETON_STATUS: &str = "LOCAL_ONLY_NOT_DEPLOYABLE";
+(B[m
+ #[derive(Clone, Debug, PartialEq, Eq)]
+ pub enum XxxlInitializationExecutionPlanSkeletonError {
+Diff in /mnt/c/Users/user/xenchanted-x1-build-lab/programs/xxxl-svm/src/initialization_execution_plan_skeleton.rs:106:
+     if actual == expected {
+         Ok(())
+     } else {
+[31m-        Err(XxxlInitializationExecutionPlanSkeletonError::InvalidInstructionKind {
+(B[m[31m-            expected,
+(B[m[31m-            actual,
+(B[m[31m-        })
+(B[m[32m+        Err(
+(B[m[32m+            XxxlInitializationExecutionPlanSkeletonError::InvalidInstructionKind {
+(B[m[32m+                expected,
+(B[m[32m+                actual,
+(B[m[32m+            },
+(B[m[32m+        )
+(B[m     }
+ }
+
+Diff in /mnt/c/Users/user/xenchanted-x1-build-lab/programs/xxxl-svm/src/initialization_execution_plan_skeleton.rs:130:
+     let payload = match validated_dispatch_plan.dispatch_plan.instruction {
+         XxxlTypedInstructionSkeleton::InitializeGatewayConfig(payload) => payload,
+         _ => {
+[31m-            return Err(XxxlInitializationExecutionPlanSkeletonError::InvalidInstructionKind {
+(B[m[31m-                expected: XxxlGatewayInstructionTag::InitializeGatewayConfig,
+(B[m[31m-                actual: validated_dispatch_plan.dispatch_plan.tag,
+(B[m[31m-            });
+(B[m[32m+            return Err(
+(B[m[32m+                XxxlInitializationExecutionPlanSkeletonError::InvalidInstructionKind {
+(B[m[32m+                    expected: XxxlGatewayInstructionTag::InitializeGatewayConfig,
+(B[m[32m+                    actual: validated_dispatch_plan.dispatch_plan.tag,
+(B[m[32m+                },
+(B[m[32m+            );
+(B[m         }
+     };
+
+Diff in /mnt/c/Users/user/xenchanted-x1-build-lab/programs/xxxl-svm/src/initialization_execution_plan_skeleton.rs:171:
+     let payload = match validated_dispatch_plan.dispatch_plan.instruction {
+         XxxlTypedInstructionSkeleton::InitializeGuardianSetHeader(payload) => payload,
+         _ => {
+[31m-            return Err(XxxlInitializationExecutionPlanSkeletonError::InvalidInstructionKind {
+(B[m[31m-                expected: XxxlGatewayInstructionTag::InitializeGuardianSet,
+(B[m[31m-                actual: validated_dispatch_plan.dispatch_plan.tag,
+(B[m[31m-            });
+(B[m[32m+            return Err(
+(B[m[32m+                XxxlInitializationExecutionPlanSkeletonError::InvalidInstructionKind {
+(B[m[32m+                    expected: XxxlGatewayInstructionTag::InitializeGuardianSet,
+(B[m[32m+                    actual: validated_dispatch_plan.dispatch_plan.tag,
+(B[m[32m+                },
+(B[m[32m+            );
+(B[m         }
+     };
+
+Diff in /mnt/c/Users/user/xenchanted-x1-build-lab/programs/xxxl-svm/src/initialization_execution_plan_skeleton.rs:212:
+     let payload = match validated_dispatch_plan.dispatch_plan.instruction {
+         XxxlTypedInstructionSkeleton::InitializeMintState(payload) => payload,
+         _ => {
+[31m-            return Err(XxxlInitializationExecutionPlanSkeletonError::InvalidInstructionKind {
+(B[m[31m-                expected: XxxlGatewayInstructionTag::InitializeMintState,
+(B[m[31m-                actual: validated_dispatch_plan.dispatch_plan.tag,
+(B[m[31m-            });
+(B[m[32m+            return Err(
+(B[m[32m+                XxxlInitializationExecutionPlanSkeletonError::InvalidInstructionKind {
+(B[m[32m+                    expected: XxxlGatewayInstructionTag::InitializeMintState,
+(B[m[32m+                    actual: validated_dispatch_plan.dispatch_plan.tag,
+(B[m[32m+                },
+(B[m[32m+            );
+(B[m         }
+     };
+
+Diff in /mnt/c/Users/user/xenchanted-x1-build-lab/programs/xxxl-svm/src/initialization_execution_plan_skeleton.rs:270:
+     fn initialize_gateway_config_execution_plan_accepts_valid_instruction() {
+         let mint_authority = Pubkey::new_unique();
+
+[31m-        let instruction =
+(B[m[31m-            XxxlTypedInstructionSkeleton::InitializeGatewayConfig(
+(B[m[31m-                InitializeGatewayConfigPayloadSkeleton {
+(B[m[31m-                    route_id: [0x11; 32],
+(B[m[31m-                    source_chain_id: 1,
+(B[m[31m-                    guardian_set_id: 7,
+(B[m[31m-                    is_active: true,
+(B[m[31m-                },
+(B[m[31m-            );
+(B[m[32m+        let instruction = XxxlTypedInstructionSkeleton::InitializeGatewayConfig(
+(B[m[32m+            InitializeGatewayConfigPayloadSkeleton {
+(B[m[32m+                route_id: [0x11; 32],
+(B[m[32m+                source_chain_id: 1,
+(B[m[32m+                guardian_set_id: 7,
+(B[m[32m+                is_active: true,
+(B[m[32m+            },
+(B[m[32m+        );
+(B[m
+         let data = encode_typed_instruction_skeleton(instruction);
+         let metas =
+Diff in /mnt/c/Users/user/xenchanted-x1-build-lab/programs/xxxl-svm/src/initialization_execution_plan_skeleton.rs:303:
+         assert_eq!(output.account.guardian_set_id, 7);
+         assert_eq!(output.account.gateway_mint_authority_pda, mint_authority);
+         assert!(output.account.is_active);
+[31m-        assert_eq!(output.encoded_account.len(), GATEWAY_CONFIG_ACCOUNT_SKELETON_LEN);
+(B[m[32m+        assert_eq!(
+(B[m[32m+            output.encoded_account.len(),
+(B[m[32m+            GATEWAY_CONFIG_ACCOUNT_SKELETON_LEN
+(B[m[32m+        );
+(B[m     }
+
+     #[test]
+Diff in /mnt/c/Users/user/xenchanted-x1-build-lab/programs/xxxl-svm/src/initialization_execution_plan_skeleton.rs:310:
+     fn initialize_guardian_set_execution_plan_accepts_valid_instruction() {
+[31m-        let instruction =
+(B[m[31m-            XxxlTypedInstructionSkeleton::InitializeGuardianSetHeader(
+(B[m[31m-                InitializeGuardianSetHeaderPayloadSkeleton {
+(B[m[31m-                    guardian_set_id: 7,
+(B[m[31m-                    threshold: 2,
+(B[m[31m-                    guardian_count: 3,
+(B[m[31m-                },
+(B[m[31m-            );
+(B[m[32m+        let instruction = XxxlTypedInstructionSkeleton::InitializeGuardianSetHeader(
+(B[m[32m+            InitializeGuardianSetHeaderPayloadSkeleton {
+(B[m[32m+                guardian_set_id: 7,
+(B[m[32m+                threshold: 2,
+(B[m[32m+                guardian_count: 3,
+(B[m[32m+            },
+(B[m[32m+        );
+(B[m
+         let data = encode_typed_instruction_skeleton(instruction);
+         let metas =
+Diff in /mnt/c/Users/user/xenchanted-x1-build-lab/programs/xxxl-svm/src/initialization_execution_plan_skeleton.rs:351:
+         let mint_authority = Pubkey::new_unique();
+         let token_program = Pubkey::new_unique();
+
+[31m-        let instruction = XxxlTypedInstructionSkeleton::InitializeMintState(
+(B[m[31m-            InitializeMintStatePayloadSkeleton { mint, decimals: 9 },
+(B[m[31m-        );
+(B[m[32m+        let instruction =
+(B[m[32m+            XxxlTypedInstructionSkeleton::InitializeMintState(InitializeMintStatePayloadSkeleton {
+(B[m[32m+                mint,
+(B[m[32m+                decimals: 9,
+(B[m[32m+            });
+(B[m
+         let data = encode_typed_instruction_skeleton(instruction);
+         let metas = expected_account_metas_for_tag(XxxlGatewayInstructionTag::InitializeMintState);
+Diff in /mnt/c/Users/user/xenchanted-x1-build-lab/programs/xxxl-svm/src/initialization_execution_plan_skeleton.rs:382:
+         assert_eq!(output.account.decimals, 9);
+         assert_eq!(output.account.total_minted, 0);
+         assert!(output.account.is_active);
+[31m-        assert_eq!(output.encoded_account.len(), MINT_STATE_ACCOUNT_SKELETON_LEN);
+(B[m[32m+        assert_eq!(
+(B[m[32m+            output.encoded_account.len(),
+(B[m[32m+            MINT_STATE_ACCOUNT_SKELETON_LEN
+(B[m[32m+        );
+(B[m     }
+
+     #[test]
+Diff in /mnt/c/Users/user/xenchanted-x1-build-lab/programs/xxxl-svm/src/initialization_execution_plan_skeleton.rs:389:
+     fn initialize_gateway_config_execution_plan_rejects_non_gateway_config_instruction() {
+[31m-        let instruction =
+(B[m[31m-            XxxlTypedInstructionSkeleton::ConsumeGatewayMintBoundary(
+(B[m[31m-                ConsumeGatewayMintPayloadBoundarySkeleton {
+(B[m[31m-                    message_hash: [0x22; 32],
+(B[m[31m-                    canonical_event_key: [0x33; 32],
+(B[m[31m-                    mint_amount: 1,
+(B[m[31m-                },
+(B[m[31m-            );
+(B[m[32m+        let instruction = XxxlTypedInstructionSkeleton::ConsumeGatewayMintBoundary(
+(B[m[32m+            ConsumeGatewayMintPayloadBoundarySkeleton {
+(B[m[32m+                message_hash: [0x22; 32],
+(B[m[32m+                canonical_event_key: [0x33; 32],
+(B[m[32m+                mint_amount: 1,
+(B[m[32m+            },
+(B[m[32m+        );
+(B[m
+         let data = encode_typed_instruction_skeleton(instruction);
+         let metas = expected_account_metas_for_tag(XxxlGatewayInstructionTag::ConsumeGatewayMint);
+Diff in /mnt/c/Users/user/xenchanted-x1-build-lab/programs/xxxl-svm/src/initialization_execution_plan_skeleton.rs:408:
+                     gateway_mint_authority_pda: Pubkey::new_unique(),
+                 },
+             ),
+[31m-            Err(XxxlInitializationExecutionPlanSkeletonError::InvalidInstructionKind {
+(B[m[31m-                expected: XxxlGatewayInstructionTag::InitializeGatewayConfig,
+(B[m[31m-                actual: XxxlGatewayInstructionTag::ConsumeGatewayMint,
+(B[m[31m-            })
+(B[m[32m+            Err(
+(B[m[32m+                XxxlInitializationExecutionPlanSkeletonError::InvalidInstructionKind {
+(B[m[32m+                    expected: XxxlGatewayInstructionTag::InitializeGatewayConfig,
+(B[m[32m+                    actual: XxxlGatewayInstructionTag::ConsumeGatewayMint,
+(B[m[32m+                }
+(B[m[32m+            )
+(B[m         );
+     }
+
+Diff in /mnt/c/Users/user/xenchanted-x1-build-lab/programs/xxxl-svm/src/initialization_execution_plan_skeleton.rs:418:
+     #[test]
+     fn initialize_gateway_config_execution_plan_rejects_invalid_account_metas() {
+[31m-        let instruction =
+(B[m[31m-            XxxlTypedInstructionSkeleton::InitializeGatewayConfig(
+(B[m[31m-                InitializeGatewayConfigPayloadSkeleton {
+(B[m[31m-                    route_id: [0x11; 32],
+(B[m[31m-                    source_chain_id: 1,
+(B[m[31m-                    guardian_set_id: 7,
+(B[m[31m-                    is_active: true,
+(B[m[31m-                },
+(B[m[31m-            );
+(B[m[32m+        let instruction = XxxlTypedInstructionSkeleton::InitializeGatewayConfig(
+(B[m[32m+            InitializeGatewayConfigPayloadSkeleton {
+(B[m[32m+                route_id: [0x11; 32],
+(B[m[32m+                source_chain_id: 1,
+(B[m[32m+                guardian_set_id: 7,
+(B[m[32m+                is_active: true,
+(B[m[32m+            },
+(B[m[32m+        );
+(B[m
+         let data = encode_typed_instruction_skeleton(instruction);
+         let mut metas =
+Diff in /mnt/c/Users/user/xenchanted-x1-build-lab/programs/xxxl-svm/src/instruction_payload_skeleton.rs:225:
+
+     #[test]
+     fn gateway_config_payload_rejects_invalid_bool() {
+[31m-        let mut encoded =
+(B[m[31m-            encode_initialize_gateway_config_payload_skeleton(InitializeGatewayConfigPayloadSkeleton {
+(B[m[32m+        let mut encoded = encode_initialize_gateway_config_payload_skeleton(
+(B[m[32m+            InitializeGatewayConfigPayloadSkeleton {
+(B[m                 route_id: [0x11; 32],
+                 source_chain_id: 1,
+                 guardian_set_id: 1,
+Diff in /mnt/c/Users/user/xenchanted-x1-build-lab/programs/xxxl-svm/src/instruction_payload_skeleton.rs:233:
+                 is_active: true,
+[31m-            });
+(B[m[32m+            },
+(B[m[32m+        );
+(B[m
+         encoded[48] = 2;
+
+Diff in /mnt/c/Users/user/xenchanted-x1-build-lab/programs/xxxl-svm/src/lib.rs:36:
+ #[cfg(feature = "phase-41k5-spl-mint-to-cpi-test-gate")]
+ pub mod phase_41k5_d15_atomic_mark_and_mint_svm_harness;
+ pub mod processed_event_marking_boundary;
+[31m-pub mod production_guardian_set_v1;
+(B[m #[cfg(feature = "phase-41k4-svm-test-harness")]
+ pub mod processed_event_marking_svm_harness;
+ pub mod processor;
+Diff in /mnt/c/Users/user/xenchanted-x1-build-lab/programs/xxxl-svm/src/lib.rs:43:
+[32m+pub mod production_guardian_set_v1;
+(B[m pub mod program_id_status;
+ pub mod safety_invariants;
+ pub mod state;
+Diff in /mnt/c/Users/user/xenchanted-x1-build-lab/programs/xxxl-svm/src/local_execution_plan_skeleton.rs:1:
+ use crate::{
+     account_validation_skeleton::XxxlAccountMetaSkeleton,
+     consume_execution_plan_skeleton::{
+[31m-        plan_consume_gateway_mint_execution_skeleton,
+(B[m[31m-        ConsumeGatewayMintExecutionPlanSkeletonInput,
+(B[m[31m-        ConsumeGatewayMintExecutionPlanSkeletonOutput,
+(B[m[31m-        XxxlConsumeExecutionPlanSkeletonError,
+(B[m[32m+        plan_consume_gateway_mint_execution_skeleton, ConsumeGatewayMintExecutionPlanSkeletonInput,
+(B[m[32m+        ConsumeGatewayMintExecutionPlanSkeletonOutput, XxxlConsumeExecutionPlanSkeletonError,
+(B[m     },
+     initialization_execution_plan_skeleton::{
+         plan_initialize_gateway_config_execution_skeleton,
+Diff in /mnt/c/Users/user/xenchanted-x1-build-lab/programs/xxxl-svm/src/local_execution_plan_skeleton.rs:129:
+     let actual_tag = validated_dispatch_plan.dispatch_plan.tag;
+
+     if expected_tag != actual_tag {
+[31m-        return Err(XxxlLocalExecutionPlanSkeletonError::ContextInstructionMismatch {
+(B[m[31m-            expected: expected_tag,
+(B[m[31m-            actual: actual_tag,
+(B[m[31m-        });
+(B[m[32m+        return Err(
+(B[m[32m+            XxxlLocalExecutionPlanSkeletonError::ContextInstructionMismatch {
+(B[m[32m+                expected: expected_tag,
+(B[m[32m+                actual: actual_tag,
+(B[m[32m+            },
+(B[m[32m+        );
+(B[m     }
+
+     match input.context {
+Diff in /mnt/c/Users/user/xenchanted-x1-build-lab/programs/xxxl-svm/src/local_execution_plan_skeleton.rs:246:
+     fn local_execution_plans_initialize_gateway_config() {
+         let mint_authority = Pubkey::new_unique();
+
+[31m-        let instruction =
+(B[m[31m-            XxxlTypedInstructionSkeleton::InitializeGatewayConfig(
+(B[m[31m-                InitializeGatewayConfigPayloadSkeleton {
+(B[m[31m-                    route_id: [0x11; 32],
+(B[m[31m-                    source_chain_id: 1,
+(B[m[31m-                    guardian_set_id: 7,
+(B[m[31m-                    is_active: true,
+(B[m[31m-                },
+(B[m[31m-            );
+(B[m[32m+        let instruction = XxxlTypedInstructionSkeleton::InitializeGatewayConfig(
+(B[m[32m+            InitializeGatewayConfigPayloadSkeleton {
+(B[m[32m+                route_id: [0x11; 32],
+(B[m[32m+                source_chain_id: 1,
+(B[m[32m+                guardian_set_id: 7,
+(B[m[32m+                is_active: true,
+(B[m[32m+            },
+(B[m[32m+        );
+(B[m
+         let data = encode_typed_instruction_skeleton(instruction);
+         let metas =
+Diff in /mnt/c/Users/user/xenchanted-x1-build-lab/programs/xxxl-svm/src/local_execution_plan_skeleton.rs:285:
+
+     #[test]
+     fn local_execution_plans_initialize_guardian_set() {
+[31m-        let instruction =
+(B[m[31m-            XxxlTypedInstructionSkeleton::InitializeGuardianSetHeader(
+(B[m[31m-                InitializeGuardianSetHeaderPayloadSkeleton {
+(B[m[31m-                    guardian_set_id: 7,
+(B[m[31m-                    threshold: 2,
+(B[m[31m-                    guardian_count: 3,
+(B[m[31m-                },
+(B[m[31m-            );
+(B[m[32m+        let instruction = XxxlTypedInstructionSkeleton::InitializeGuardianSetHeader(
+(B[m[32m+            InitializeGuardianSetHeaderPayloadSkeleton {
+(B[m[32m+                guardian_set_id: 7,
+(B[m[32m+                threshold: 2,
+(B[m[32m+                guardian_count: 3,
+(B[m[32m+            },
+(B[m[32m+        );
+(B[m
+         let data = encode_typed_instruction_skeleton(instruction);
+         let metas =
+Diff in /mnt/c/Users/user/xenchanted-x1-build-lab/programs/xxxl-svm/src/local_execution_plan_skeleton.rs:325:
+         let mint_authority = Pubkey::new_unique();
+         let token_program = Pubkey::new_unique();
+
+[31m-        let instruction = XxxlTypedInstructionSkeleton::InitializeMintState(
+(B[m[31m-            InitializeMintStatePayloadSkeleton { mint, decimals: 9 },
+(B[m[31m-        );
+(B[m[32m+        let instruction =
+(B[m[32m+            XxxlTypedInstructionSkeleton::InitializeMintState(InitializeMintStatePayloadSkeleton {
+(B[m[32m+                mint,
+(B[m[32m+                decimals: 9,
+(B[m[32m+            });
+(B[m
+         let data = encode_typed_instruction_skeleton(instruction);
+         let metas = expected_account_metas_for_tag(XxxlGatewayInstructionTag::InitializeMintState);
+Diff in /mnt/c/Users/user/xenchanted-x1-build-lab/programs/xxxl-svm/src/local_execution_plan_skeleton.rs:360:
+
+     #[test]
+     fn local_execution_plans_consume_gateway_mint() {
+[31m-        let instruction =
+(B[m[31m-            XxxlTypedInstructionSkeleton::ConsumeGatewayMintBoundary(
+(B[m[31m-                ConsumeGatewayMintPayloadBoundarySkeleton {
+(B[m[31m-                    message_hash: [0x22; 32],
+(B[m[31m-                    canonical_event_key: [0x33; 32],
+(B[m[31m-                    mint_amount: 23,
+(B[m[31m-                },
+(B[m[31m-            );
+(B[m[32m+        let instruction = XxxlTypedInstructionSkeleton::ConsumeGatewayMintBoundary(
+(B[m[32m+            ConsumeGatewayMintPayloadBoundarySkeleton {
+(B[m[32m+                message_hash: [0x22; 32],
+(B[m[32m+                canonical_event_key: [0x33; 32],
+(B[m[32m+                mint_amount: 23,
+(B[m[32m+            },
+(B[m[32m+        );
+(B[m
+         let data = encode_typed_instruction_skeleton(instruction);
+         let metas = expected_account_metas_for_tag(XxxlGatewayInstructionTag::ConsumeGatewayMint);
+Diff in /mnt/c/Users/user/xenchanted-x1-build-lab/programs/xxxl-svm/src/local_execution_plan_skeleton.rs:407:
+
+     #[test]
+     fn local_execution_rejects_context_instruction_mismatch() {
+[31m-        let instruction =
+(B[m[31m-            XxxlTypedInstructionSkeleton::InitializeGatewayConfig(
+(B[m[31m-                InitializeGatewayConfigPayloadSkeleton {
+(B[m[31m-                    route_id: [0x11; 32],
+(B[m[31m-                    source_chain_id: 1,
+(B[m[31m-                    guardian_set_id: 7,
+(B[m[31m-                    is_active: true,
+(B[m[31m-                },
+(B[m[31m-            );
+(B[m[32m+        let instruction = XxxlTypedInstructionSkeleton::InitializeGatewayConfig(
+(B[m[32m+            InitializeGatewayConfigPayloadSkeleton {
+(B[m[32m+                route_id: [0x11; 32],
+(B[m[32m+                source_chain_id: 1,
+(B[m[32m+                guardian_set_id: 7,
+(B[m[32m+                is_active: true,
+(B[m[32m+            },
+(B[m[32m+        );
+(B[m
+         let data = encode_typed_instruction_skeleton(instruction);
+         let metas =
+Diff in /mnt/c/Users/user/xenchanted-x1-build-lab/programs/xxxl-svm/src/local_execution_plan_skeleton.rs:434:
+                     processed_at_slot: 99,
+                 },
+             }),
+[31m-            Err(XxxlLocalExecutionPlanSkeletonError::ContextInstructionMismatch {
+(B[m[31m-                expected: XxxlGatewayInstructionTag::ConsumeGatewayMint,
+(B[m[31m-                actual: XxxlGatewayInstructionTag::InitializeGatewayConfig,
+(B[m[31m-            })
+(B[m[32m+            Err(
+(B[m[32m+                XxxlLocalExecutionPlanSkeletonError::ContextInstructionMismatch {
+(B[m[32m+                    expected: XxxlGatewayInstructionTag::ConsumeGatewayMint,
+(B[m[32m+                    actual: XxxlGatewayInstructionTag::InitializeGatewayConfig,
+(B[m[32m+                }
+(B[m[32m+            )
+(B[m         );
+     }
+
+Diff in /mnt/c/Users/user/xenchanted-x1-build-lab/programs/xxxl-svm/src/local_execution_plan_skeleton.rs:444:
+     #[test]
+     fn local_execution_rejects_invalid_account_metas_before_context_execution() {
+[31m-        let instruction =
+(B[m[31m-            XxxlTypedInstructionSkeleton::ConsumeGatewayMintBoundary(
+(B[m[31m-                ConsumeGatewayMintPayloadBoundarySkeleton {
+(B[m[31m-                    message_hash: [0x22; 32],
+(B[m[31m-                    canonical_event_key: [0x33; 32],
+(B[m[31m-                    mint_amount: 23,
+(B[m[31m-                },
+(B[m[31m-            );
+(B[m[32m+        let instruction = XxxlTypedInstructionSkeleton::ConsumeGatewayMintBoundary(
+(B[m[32m+            ConsumeGatewayMintPayloadBoundarySkeleton {
+(B[m[32m+                message_hash: [0x22; 32],
+(B[m[32m+                canonical_event_key: [0x33; 32],
+(B[m[32m+                mint_amount: 23,
+(B[m[32m+            },
+(B[m[32m+        );
+(B[m
+         let data = encode_typed_instruction_skeleton(instruction);
+         let mut metas =
+Diff in /mnt/c/Users/user/xenchanted-x1-build-lab/programs/xxxl-svm/src/local_execution_scenario_skeleton.rs:14:
+         MintStateAccountLayoutSkeleton, ProcessedEventAccountLayoutSkeleton,
+     },
+     state_instruction_skeleton::XxxlGatewayInstructionTag,
+[31m-    typed_instruction_skeleton::{
+(B[m[31m-        encode_typed_instruction_skeleton, XxxlTypedInstructionSkeleton,
+(B[m[31m-    },
+(B[m[32m+    typed_instruction_skeleton::{encode_typed_instruction_skeleton, XxxlTypedInstructionSkeleton},
+(B[m };
+ use solana_program::pubkey::Pubkey;
+
+Diff in /mnt/c/Users/user/xenchanted-x1-build-lab/programs/xxxl-svm/src/local_execution_scenario_skeleton.rs:23:
+[31m-pub const XXXL_LOCAL_EXECUTION_SCENARIO_SKELETON_STATUS: &str =
+(B[m[31m-    "LOCAL_ONLY_NOT_DEPLOYABLE";
+(B[m[32m+pub const XXXL_LOCAL_EXECUTION_SCENARIO_SKELETON_STATUS: &str = "LOCAL_ONLY_NOT_DEPLOYABLE";
+(B[m
+ #[derive(Clone, Debug, PartialEq, Eq)]
+ pub enum XxxlLocalExecutionScenarioSkeletonError {
+Diff in /mnt/c/Users/user/xenchanted-x1-build-lab/programs/xxxl-svm/src/local_execution_scenario_skeleton.rs:76:
+ pub fn run_local_execution_scenario_skeleton(
+     input: XxxlLocalExecutionScenarioSkeletonInput,
+ ) -> Result<XxxlLocalExecutionScenarioSkeletonOutput, XxxlLocalExecutionScenarioSkeletonError> {
+[31m-    let gateway_config_instruction =
+(B[m[31m-        XxxlTypedInstructionSkeleton::InitializeGatewayConfig(
+(B[m[31m-            InitializeGatewayConfigPayloadSkeleton {
+(B[m[31m-                route_id: input.route_id,
+(B[m[31m-                source_chain_id: input.source_chain_id,
+(B[m[31m-                guardian_set_id: input.guardian_set_id,
+(B[m[31m-                is_active: true,
+(B[m[31m-            },
+(B[m[31m-        );
+(B[m[32m+    let gateway_config_instruction = XxxlTypedInstructionSkeleton::InitializeGatewayConfig(
+(B[m[32m+        InitializeGatewayConfigPayloadSkeleton {
+(B[m[32m+            route_id: input.route_id,
+(B[m[32m+            source_chain_id: input.source_chain_id,
+(B[m[32m+            guardian_set_id: input.guardian_set_id,
+(B[m[32m+            is_active: true,
+(B[m[32m+        },
+(B[m[32m+    );
+(B[m
+     let gateway_config_data = encode_typed_instruction_skeleton(gateway_config_instruction);
+     let gateway_config_metas =
+Diff in /mnt/c/Users/user/xenchanted-x1-build-lab/programs/xxxl-svm/src/local_execution_scenario_skeleton.rs:91:
+         expected_account_metas_for_tag(XxxlGatewayInstructionTag::InitializeGatewayConfig);
+
+[31m-    let gateway_config_plan = plan_local_execution_skeleton(
+(B[m[31m-        XxxlLocalExecutionPlanSkeletonInput {
+(B[m[31m-            instruction_data: &gateway_config_data,
+(B[m[31m-            account_metas: &gateway_config_metas,
+(B[m[31m-            context: XxxlLocalExecutionContextSkeleton::InitializeGatewayConfig {
+(B[m[31m-                bump: input.gateway_config_bump,
+(B[m[31m-                gateway_mint_authority_pda: input.gateway_mint_authority_pda,
+(B[m[31m-            },
+(B[m[32m+    let gateway_config_plan = plan_local_execution_skeleton(XxxlLocalExecutionPlanSkeletonInput {
+(B[m[32m+        instruction_data: &gateway_config_data,
+(B[m[32m+        account_metas: &gateway_config_metas,
+(B[m[32m+        context: XxxlLocalExecutionContextSkeleton::InitializeGatewayConfig {
+(B[m[32m+            bump: input.gateway_config_bump,
+(B[m[32m+            gateway_mint_authority_pda: input.gateway_mint_authority_pda,
+(B[m         },
+[31m-    )?;
+(B[m[32m+    })?;
+(B[m
+     let gateway_config = match gateway_config_plan {
+         XxxlLocalExecutionPlanSkeleton::InitializeGatewayConfig(output) => output.account,
+Diff in /mnt/c/Users/user/xenchanted-x1-build-lab/programs/xxxl-svm/src/local_execution_scenario_skeleton.rs:106:
+         _ => return Err(XxxlLocalExecutionScenarioSkeletonError::UnexpectedPlanVariant),
+     };
+
+[31m-    let guardian_set_instruction =
+(B[m[31m-        XxxlTypedInstructionSkeleton::InitializeGuardianSetHeader(
+(B[m[31m-            InitializeGuardianSetHeaderPayloadSkeleton {
+(B[m[31m-                guardian_set_id: input.guardian_set_id,
+(B[m[31m-                threshold: input.guardian_threshold,
+(B[m[31m-                guardian_count: input.guardian_count,
+(B[m[31m-            },
+(B[m[31m-        );
+(B[m[32m+    let guardian_set_instruction = XxxlTypedInstructionSkeleton::InitializeGuardianSetHeader(
+(B[m[32m+        InitializeGuardianSetHeaderPayloadSkeleton {
+(B[m[32m+            guardian_set_id: input.guardian_set_id,
+(B[m[32m+            threshold: input.guardian_threshold,
+(B[m[32m+            guardian_count: input.guardian_count,
+(B[m[32m+        },
+(B[m[32m+    );
+(B[m
+     let guardian_set_data = encode_typed_instruction_skeleton(guardian_set_instruction);
+     let guardian_set_metas =
+Diff in /mnt/c/Users/user/xenchanted-x1-build-lab/programs/xxxl-svm/src/local_execution_scenario_skeleton.rs:120:
+         expected_account_metas_for_tag(XxxlGatewayInstructionTag::InitializeGuardianSet);
+
+[31m-    let guardian_set_plan = plan_local_execution_skeleton(
+(B[m[31m-        XxxlLocalExecutionPlanSkeletonInput {
+(B[m[31m-            instruction_data: &guardian_set_data,
+(B[m[31m-            account_metas: &guardian_set_metas,
+(B[m[31m-            context: XxxlLocalExecutionContextSkeleton::InitializeGuardianSet {
+(B[m[31m-                bump: input.guardian_set_bump,
+(B[m[31m-                status: input.guardian_status,
+(B[m[31m-            },
+(B[m[32m+    let guardian_set_plan = plan_local_execution_skeleton(XxxlLocalExecutionPlanSkeletonInput {
+(B[m[32m+        instruction_data: &guardian_set_data,
+(B[m[32m+        account_metas: &guardian_set_metas,
+(B[m[32m+        context: XxxlLocalExecutionContextSkeleton::InitializeGuardianSet {
+(B[m[32m+            bump: input.guardian_set_bump,
+(B[m[32m+            status: input.guardian_status,
+(B[m         },
+[31m-    )?;
+(B[m[32m+    })?;
+(B[m
+     let guardian_set = match guardian_set_plan {
+         XxxlLocalExecutionPlanSkeleton::InitializeGuardianSet(output) => output.account,
+Diff in /mnt/c/Users/user/xenchanted-x1-build-lab/programs/xxxl-svm/src/local_execution_scenario_skeleton.rs:135:
+         _ => return Err(XxxlLocalExecutionScenarioSkeletonError::UnexpectedPlanVariant),
+     };
+
+[31m-    let mint_state_instruction = XxxlTypedInstructionSkeleton::InitializeMintState(
+(B[m[31m-        InitializeMintStatePayloadSkeleton {
+(B[m[32m+    let mint_state_instruction =
+(B[m[32m+        XxxlTypedInstructionSkeleton::InitializeMintState(InitializeMintStatePayloadSkeleton {
+(B[m             mint: input.mint,
+             decimals: input.decimals,
+[31m-        },
+(B[m[31m-    );
+(B[m[32m+        });
+(B[m
+     let mint_state_data = encode_typed_instruction_skeleton(mint_state_instruction);
+     let mint_state_metas =
+Diff in /mnt/c/Users/user/xenchanted-x1-build-lab/programs/xxxl-svm/src/local_execution_scenario_skeleton.rs:147:
+         expected_account_metas_for_tag(XxxlGatewayInstructionTag::InitializeMintState);
+
+[31m-    let mint_state_plan = plan_local_execution_skeleton(
+(B[m[31m-        XxxlLocalExecutionPlanSkeletonInput {
+(B[m[31m-            instruction_data: &mint_state_data,
+(B[m[31m-            account_metas: &mint_state_metas,
+(B[m[31m-            context: XxxlLocalExecutionContextSkeleton::InitializeMintState {
+(B[m[31m-                bump: input.mint_state_bump,
+(B[m[31m-                mint_authority_pda: input.mint_authority_pda,
+(B[m[31m-                mint_authority_bump: input.mint_authority_bump,
+(B[m[31m-                token_program: input.token_program,
+(B[m[31m-                total_minted: input.initial_total_minted,
+(B[m[31m-                is_active: input.mint_state_is_active,
+(B[m[31m-            },
+(B[m[32m+    let mint_state_plan = plan_local_execution_skeleton(XxxlLocalExecutionPlanSkeletonInput {
+(B[m[32m+        instruction_data: &mint_state_data,
+(B[m[32m+        account_metas: &mint_state_metas,
+(B[m[32m+        context: XxxlLocalExecutionContextSkeleton::InitializeMintState {
+(B[m[32m+            bump: input.mint_state_bump,
+(B[m[32m+            mint_authority_pda: input.mint_authority_pda,
+(B[m[32m+            mint_authority_bump: input.mint_authority_bump,
+(B[m[32m+            token_program: input.token_program,
+(B[m[32m+            total_minted: input.initial_total_minted,
+(B[m[32m+            is_active: input.mint_state_is_active,
+(B[m         },
+[31m-    )?;
+(B[m[32m+    })?;
+(B[m
+     let initial_mint_state = match mint_state_plan {
+         XxxlLocalExecutionPlanSkeleton::InitializeMintState(output) => output.account,
+Diff in /mnt/c/Users/user/xenchanted-x1-build-lab/programs/xxxl-svm/src/local_execution_scenario_skeleton.rs:166:
+         _ => return Err(XxxlLocalExecutionScenarioSkeletonError::UnexpectedPlanVariant),
+     };
+
+[31m-    let consume_instruction =
+(B[m[31m-        XxxlTypedInstructionSkeleton::ConsumeGatewayMintBoundary(
+(B[m[31m-            ConsumeGatewayMintPayloadBoundarySkeleton {
+(B[m[31m-                message_hash: input.message_hash,
+(B[m[31m-                canonical_event_key: input.canonical_event_key,
+(B[m[31m-                mint_amount: input.mint_amount,
+(B[m[31m-            },
+(B[m[31m-        );
+(B[m[32m+    let consume_instruction = XxxlTypedInstructionSkeleton::ConsumeGatewayMintBoundary(
+(B[m[32m+        ConsumeGatewayMintPayloadBoundarySkeleton {
+(B[m[32m+            message_hash: input.message_hash,
+(B[m[32m+            canonical_event_key: input.canonical_event_key,
+(B[m[32m+            mint_amount: input.mint_amount,
+(B[m[32m+        },
+(B[m[32m+    );
+(B[m
+     let consume_data = encode_typed_instruction_skeleton(consume_instruction);
+     let consume_metas =
+Diff in /mnt/c/Users/user/xenchanted-x1-build-lab/programs/xxxl-svm/src/local_execution_scenario_skeleton.rs:180:
+         expected_account_metas_for_tag(XxxlGatewayInstructionTag::ConsumeGatewayMint);
+
+[31m-    let consume_plan = plan_local_execution_skeleton(
+(B[m[31m-        XxxlLocalExecutionPlanSkeletonInput {
+(B[m[31m-            instruction_data: &consume_data,
+(B[m[31m-            account_metas: &consume_metas,
+(B[m[31m-            context: XxxlLocalExecutionContextSkeleton::ConsumeGatewayMint {
+(B[m[31m-                current_mint_state: initial_mint_state,
+(B[m[31m-                processed_event_bump: input.processed_event_bump,
+(B[m[31m-                source_burn_tx_hash: input.source_burn_tx_hash,
+(B[m[31m-                source_burn_event_index: input.source_burn_event_index,
+(B[m[31m-                recipient_hash: input.recipient_hash,
+(B[m[31m-                processed_at_slot: input.processed_at_slot,
+(B[m[31m-            },
+(B[m[32m+    let consume_plan = plan_local_execution_skeleton(XxxlLocalExecutionPlanSkeletonInput {
+(B[m[32m+        instruction_data: &consume_data,
+(B[m[32m+        account_metas: &consume_metas,
+(B[m[32m+        context: XxxlLocalExecutionContextSkeleton::ConsumeGatewayMint {
+(B[m[32m+            current_mint_state: initial_mint_state,
+(B[m[32m+            processed_event_bump: input.processed_event_bump,
+(B[m[32m+            source_burn_tx_hash: input.source_burn_tx_hash,
+(B[m[32m+            source_burn_event_index: input.source_burn_event_index,
+(B[m[32m+            recipient_hash: input.recipient_hash,
+(B[m[32m+            processed_at_slot: input.processed_at_slot,
+(B[m         },
+[31m-    )?;
+(B[m[32m+    })?;
+(B[m
+     let (next_mint_state, processed_event) = match consume_plan {
+         XxxlLocalExecutionPlanSkeleton::ConsumeGatewayMint(output) => (
+Diff in /mnt/c/Users/user/xenchanted-x1-build-lab/programs/xxxl-svm/src/local_fixture_file_emitter_skeleton.rs:371:
+
+     #[test]
+     fn local_fixture_files_are_built_without_disk_writes() {
+[31m-        let fixture_set = build_local_fixture_set_skeleton(
+(B[m[31m-            "fixture_alpha",
+(B[m[31m-            "fixture alpha",
+(B[m[31m-            "seed alpha",
+(B[m[31m-            0x42,
+(B[m[31m-        )
+(B[m[31m-        .expect("fixture set ok");
+(B[m[32m+        let fixture_set =
+(B[m[32m+            build_local_fixture_set_skeleton("fixture_alpha", "fixture alpha", "seed alpha", 0x42)
+(B[m[32m+                .expect("fixture set ok");
+(B[m
+         let files = build_local_fixture_files_skeleton(&fixture_set).expect("files ok");
+
+Diff in /mnt/c/Users/user/xenchanted-x1-build-lab/programs/xxxl-svm/src/local_fixture_file_emitter_skeleton.rs:389:
+
+     #[test]
+     fn rendered_files_include_manifest_and_safety_report() {
+[31m-        let fixture_set = build_local_fixture_set_skeleton(
+(B[m[31m-            "fixture_alpha",
+(B[m[31m-            "fixture alpha",
+(B[m[31m-            "seed alpha",
+(B[m[31m-            0x42,
+(B[m[31m-        )
+(B[m[31m-        .expect("fixture set ok");
+(B[m[32m+        let fixture_set =
+(B[m[32m+            build_local_fixture_set_skeleton("fixture_alpha", "fixture alpha", "seed alpha", 0x42)
+(B[m[32m+                .expect("fixture set ok");
+(B[m
+         let files = build_local_fixture_files_skeleton(&fixture_set).expect("files ok");
+
+Diff in /mnt/c/Users/user/xenchanted-x1-build-lab/programs/xxxl-svm/src/local_fixture_file_emitter_skeleton.rs:403:
+             .iter()
+             .find(|file| file.file_name == "manifest.json")
+             .expect("manifest");
+[31m-        assert!(manifest.rendered_text.contains("LOCAL_VALIDATOR_ONLY_FIXTURE_SET"));
+(B[m[32m+        assert!(manifest
+(B[m[32m+            .rendered_text
+(B[m[32m+            .contains("LOCAL_VALIDATOR_ONLY_FIXTURE_SET"));
+(B[m         assert!(manifest.rendered_text.contains("fixture_alpha"));
+
+         let safety = files
+Diff in /mnt/c/Users/user/xenchanted-x1-build-lab/programs/xxxl-svm/src/local_fixture_generator_skeleton.rs:187:
+         ],
+         mutation_invariance_ids: vec![
+             format!("{}_mutation_invariance_wrong_account_order", fixture_set_id),
+[31m-            format!("{}_mutation_invariance_replayed_processed_event", fixture_set_id),
+(B[m[32m+            format!(
+(B[m[32m+                "{}_mutation_invariance_replayed_processed_event",
+(B[m[32m+                fixture_set_id
+(B[m[32m+            ),
+(B[m             format!("{}_mutation_invariance_zero_amount", fixture_set_id),
+             format!("{}_mutation_invariance_inactive_mint_state", fixture_set_id),
+         ],
+Diff in /mnt/c/Users/user/xenchanted-x1-build-lab/programs/xxxl-svm/src/local_fixture_generator_skeleton.rs:296:
+
+     #[test]
+     fn fixture_manifest_uses_safe_local_defaults() {
+[31m-        let manifest = build_local_fixture_manifest_skeleton(
+(B[m[31m-            "fixture_alpha",
+(B[m[31m-            "fixture alpha",
+(B[m[31m-            "seed alpha",
+(B[m[31m-        )
+(B[m[31m-        .expect("manifest ok");
+(B[m[32m+        let manifest =
+(B[m[32m+            build_local_fixture_manifest_skeleton("fixture_alpha", "fixture alpha", "seed alpha")
+(B[m[32m+                .expect("manifest ok");
+(B[m
+         assert_eq!(manifest.manifest_version, "1");
+         assert_eq!(manifest.status, "LOCAL_VALIDATOR_ONLY_FIXTURE_SET");
+Diff in /mnt/c/Users/user/xenchanted-x1-build-lab/programs/xxxl-svm/src/local_fixture_generator_skeleton.rs:345:
+         );
+
+         assert_eq!(
+[31m-            build_local_fixture_manifest_skeleton(
+(B[m[31m-                "fixture_alpha",
+(B[m[31m-                "fixture alpha",
+(B[m[31m-                "testnet seed"
+(B[m[31m-            ),
+(B[m[32m+            build_local_fixture_manifest_skeleton("fixture_alpha", "fixture alpha", "testnet seed"),
+(B[m             Err(XxxlLocalFixtureGeneratorSkeletonError::UnsafeTextPattern)
+         );
+     }
+Diff in /mnt/c/Users/user/xenchanted-x1-build-lab/programs/xxxl-svm/src/local_fixture_generator_skeleton.rs:396:
+
+     #[test]
+     fn full_fixture_set_builds_with_guard_intact_and_live_route_disabled() {
+[31m-        let fixture_set = build_local_fixture_set_skeleton(
+(B[m[31m-            "fixture_alpha",
+(B[m[31m-            "fixture alpha",
+(B[m[31m-            "seed alpha",
+(B[m[31m-            0x42,
+(B[m[31m-        )
+(B[m[31m-        .expect("fixture set ok");
+(B[m[32m+        let fixture_set =
+(B[m[32m+            build_local_fixture_set_skeleton("fixture_alpha", "fixture alpha", "seed alpha", 0x42)
+(B[m[32m+                .expect("fixture set ok");
+(B[m
+         assert_eq!(fixture_set.manifest.fixture_set_id, "fixture_alpha");
+         assert_eq!(fixture_set.safety_report.result, "PASS");
+Diff in /mnt/c/Users/user/xenchanted-x1-build-lab/programs/xxxl-svm/src/local_guardian_descriptor_skeleton.rs:377:
+         assert!(contains_signing_material_marker_skeleton("keypair path"));
+         assert!(contains_signing_material_marker_skeleton("mnemonic words"));
+         assert!(contains_signing_material_marker_skeleton("seed_phrase"));
+[31m-        assert!(contains_signing_material_marker_skeleton("BEGIN PRIVATE KEY"));
+(B[m[31m-        assert!(!contains_signing_material_marker_skeleton("local descriptor fixture"));
+(B[m[32m+        assert!(contains_signing_material_marker_skeleton(
+(B[m[32m+            "BEGIN PRIVATE KEY"
+(B[m[32m+        ));
+(B[m[32m+        assert!(!contains_signing_material_marker_skeleton(
+(B[m[32m+            "local descriptor fixture"
+(B[m[32m+        ));
+(B[m     }
+
+     #[test]
+Diff in /mnt/c/Users/user/xenchanted-x1-build-lab/programs/xxxl-svm/src/local_guardian_descriptor_skeleton.rs:579:
+         )
+         .expect("descriptor");
+
+[31m-        validate_local_guardian_descriptor_safety_skeleton(&descriptor)
+(B[m[31m-            .expect("safe descriptor");
+(B[m[32m+        validate_local_guardian_descriptor_safety_skeleton(&descriptor).expect("safe descriptor");
+(B[m     }
+
+     #[test]
+Diff in /mnt/c/Users/user/xenchanted-x1-build-lab/programs/xxxl-svm/src/local_guardian_failure_matrix_skeleton.rs:1:
+ use crate::local_guardian_fixture_integration_skeleton::{
+     build_local_guardian_fixture_integration_skeleton,
+     validate_local_guardian_fixture_integration_safety_skeleton,
+[31m-    XxxlLocalGuardianFixtureIntegrationSkeleton,
+(B[m[31m-    XxxlLocalGuardianFixtureIntegrationSkeletonError,
+(B[m[32m+    XxxlLocalGuardianFixtureIntegrationSkeleton, XxxlLocalGuardianFixtureIntegrationSkeletonError,
+(B[m };
+
+ pub const XXXL_LOCAL_GUARDIAN_FAILURE_MATRIX_SKELETON_STATUS: &str =
+Diff in /mnt/c/Users/user/xenchanted-x1-build-lab/programs/xxxl-svm/src/local_guardian_failure_matrix_skeleton.rs:101:
+         || lowered.contains("raw_signing_material=")
+ }
+
+[31m-pub fn classify_guardian_failure_case_skeleton(
+(B[m[31m-    failure_case_id: &str,
+(B[m[31m-) -> &'static str {
+(B[m[32m+pub fn classify_guardian_failure_case_skeleton(failure_case_id: &str) -> &'static str {
+(B[m     if failure_case_id.contains("descriptor_id")
+         || failure_case_id.contains("missing_guardian_descriptor")
+         || failure_case_id.contains("empty_guardian_descriptor")
+Diff in /mnt/c/Users/user/xenchanted-x1-build-lab/programs/xxxl-svm/src/local_guardian_failure_matrix_skeleton.rs:116:
+         || failure_case_id.contains("file_path")
+     {
+         "descriptor_integrity"
+[31m-    } else if failure_case_id.contains("guardian_set")
+(B[m[31m-    {
+(B[m[32m+    } else if failure_case_id.contains("guardian_set") {
+(B[m         "guardian_set_mapping"
+[31m-    } else if failure_case_id.contains("threshold")
+(B[m[31m-        || failure_case_id.contains("approval_count")
+(B[m[31m-    {
+(B[m[32m+    } else if failure_case_id.contains("threshold") || failure_case_id.contains("approval_count") {
+(B[m         "threshold"
+     } else if failure_case_id.contains("fixture")
+         || failure_case_id.contains("production_key")
+Diff in /mnt/c/Users/user/xenchanted-x1-build-lab/programs/xxxl-svm/src/local_guardian_failure_matrix_skeleton.rs:150:
+         || failure_case_id.contains("seed_phrase")
+     {
+         "signing_material_safety"
+[31m-    } else if failure_case_id.contains("package")
+(B[m[31m-    {
+(B[m[32m+    } else if failure_case_id.contains("package") {
+(B[m         "package_construction_safety"
+     } else {
+         "live_testnet_production_safety"
+Diff in /mnt/c/Users/user/xenchanted-x1-build-lab/programs/xxxl-svm/src/local_guardian_failure_matrix_skeleton.rs:395:
+
+     #[test]
+     fn failure_case_builder_defaults_to_no_mutation_no_execution() {
+[31m-        let case = build_local_guardian_failure_case_skeleton("guardian_threshold_zero")
+(B[m[31m-            .expect("case");
+(B[m[32m+        let case =
+(B[m[32m+            build_local_guardian_failure_case_skeleton("guardian_threshold_zero").expect("case");
+(B[m
+         assert_eq!(case.failure_group, "threshold");
+         assert!(case.local_only);
+Diff in /mnt/c/Users/user/xenchanted-x1-build-lab/programs/xxxl-svm/src/local_guardian_failure_matrix_skeleton.rs:589:
+         )
+         .expect_err("empty matrix id should fail");
+
+[31m-        assert_eq!(err, XxxlLocalGuardianFailureMatrixSkeletonError::EmptyMatrixId);
+(B[m[32m+        assert_eq!(
+(B[m[32m+            err,
+(B[m[32m+            XxxlLocalGuardianFailureMatrixSkeletonError::EmptyMatrixId
+(B[m[32m+        );
+(B[m     }
+ }
+
+Diff in /mnt/c/Users/user/xenchanted-x1-build-lab/programs/xxxl-svm/src/local_guardian_fixture_integration_skeleton.rs:144:
+     threshold: u8,
+     guardian_count: u8,
+     guardian_seed_label: &str,
+[31m-) -> Result<XxxlLocalGuardianFixtureIntegrationSkeleton, XxxlLocalGuardianFixtureIntegrationSkeletonError>
+(B[m[31m-{
+(B[m[32m+) -> Result<
+(B[m[32m+    XxxlLocalGuardianFixtureIntegrationSkeleton,
+(B[m[32m+    XxxlLocalGuardianFixtureIntegrationSkeletonError,
+(B[m[32m+> {
+(B[m     validate_local_guardian_integration_text_skeleton(integration_id)?;
+
+     let fixture_set = build_local_fixture_set_skeleton(
+Diff in /mnt/c/Users/user/xenchanted-x1-build-lab/programs/xxxl-svm/src/processor.rs:817:
+         assert!(!crate::processor::LIVE_ROUTE_ACTIVATION_FROM_PROCESS_INSTRUCTION_ENABLED);
+     }
+
+[31m-
+(B[m     use super::*;
+     #[cfg(feature = "phase-41k6-b1c7-handler-integration-test-gate")]
+     use crate::verifier::B1C7HandlerAuthorizationRejectionKind;
+Diff in /mnt/c/Users/user/xenchanted-x1-build-lab/programs/xxxl-svm/src/production_guardian_set_v1.rs:24:
+     "production-guardian-set-v1-public-record-and-source-change";
+ pub const PRODUCTION_GUARDIAN_SET_V1_DESCRIPTOR_HASH_SHA256: &str =
+     "4088a1f71870e617f3635d1c29aedd9fc53a0c136c6f69e0cb343d217ab1cd83";
+[31m-pub const PRODUCTION_GUARDIAN_SET_V1_GUARDIAN_SET_ID: [u8; 32] =
+(B[m[31m-    [0x40, 0x88, 0xa1, 0xf7, 0x18, 0x70, 0xe6, 0x17, 0xf3, 0x63, 0x5d, 0x1c, 0x29, 0xae, 0xdd, 0x9f, 0xc5, 0x3a, 0x0c, 0x13, 0x6c, 0x6f, 0x69, 0xe0, 0xcb, 0x34, 0x3d, 0x21, 0x7a, 0xb1, 0xcd, 0x83];
+(B[m[32m+pub const PRODUCTION_GUARDIAN_SET_V1_GUARDIAN_SET_ID: [u8; 32] = [
+(B[m[32m+    0x40, 0x88, 0xa1, 0xf7, 0x18, 0x70, 0xe6, 0x17, 0xf3, 0x63, 0x5d, 0x1c, 0x29, 0xae, 0xdd, 0x9f,
+(B[m[32m+    0xc5, 0x3a, 0x0c, 0x13, 0x6c, 0x6f, 0x69, 0xe0, 0xcb, 0x34, 0x3d, 0x21, 0x7a, 0xb1, 0xcd, 0x83,
+(B[m[32m+];
+(B[m
+ pub const PRODUCTION_GUARDIAN_SET_V1_PUBLIC_KEYS_BASE58: [&str; 5] = [
+     "7TqrbZeX5t3eVNMEYMpp4MuYRd1RF4Hj7raHRouCoNLf",
+Diff in /mnt/c/Users/user/xenchanted-x1-build-lab/programs/xxxl-svm/src/production_guardian_set_v1.rs:36:
+ ];
+
+ pub const PRODUCTION_GUARDIAN_SET_V1_PUBLIC_KEYS: [GuardianPublicKey; 5] = [
+[31m-    GuardianPublicKey([0x60, 0x06, 0x76, 0x96, 0x7f, 0x93, 0x4a, 0xef, 0x83, 0xcb, 0x57, 0x88, 0x70, 0x8a, 0xc1, 0x28, 0x0f, 0x3c, 0xd7, 0x4d, 0xc8, 0x82, 0x36, 0xa2, 0x7c, 0xf0, 0x04, 0x87, 0x7d, 0x7e, 0xb9, 0x48]),
+(B[m[31m-    GuardianPublicKey([0xe4, 0x49, 0xb4, 0x3d, 0x62, 0x05, 0x7e, 0x52, 0x7c, 0x3a, 0x29, 0x4d, 0x99, 0xd1, 0xad, 0x3d, 0x88, 0xda, 0x45, 0xeb, 0x01, 0xea, 0x30, 0x0a, 0x0c, 0x07, 0xd7, 0x96, 0x0e, 0x93, 0x08, 0x95]),
+(B[m[31m-    GuardianPublicKey([0x4d, 0x0a, 0x05, 0xee, 0x94, 0xd3, 0xc9, 0x60, 0x6e, 0xad, 0x16, 0xc2, 0xbd, 0x76, 0x25, 0x5b, 0x98, 0xeb, 0xdb, 0x2b, 0x45, 0x1d, 0xf6, 0x9e, 0xf0, 0x45, 0x28, 0xaa, 0x58, 0xa4, 0xce, 0x32]),
+(B[m[31m-    GuardianPublicKey([0x85, 0x0d, 0x60, 0xc3, 0x49, 0x20, 0xf2, 0x8f, 0x68, 0x12, 0x43, 0xa0, 0x16, 0x6d, 0x81, 0xfd, 0x13, 0x69, 0x9b, 0x96, 0x58, 0x9d, 0x93, 0xa9, 0x26, 0x71, 0xfa, 0x2b, 0x7a, 0xc3, 0x6c, 0x29]),
+(B[m[31m-    GuardianPublicKey([0x06, 0xf6, 0x0b, 0x08, 0x46, 0x1c, 0x3c, 0xe5, 0x64, 0x90, 0xc9, 0xbb, 0x54, 0x21, 0x0d, 0x83, 0x44, 0x15, 0x0a, 0x80, 0x49, 0x97, 0x4c, 0x94, 0x09, 0xa1, 0x78, 0xc7, 0x17, 0x05, 0x8c, 0x63]),
+(B[m[32m+    GuardianPublicKey([
+(B[m[32m+        0x60, 0x06, 0x76, 0x96, 0x7f, 0x93, 0x4a, 0xef, 0x83, 0xcb, 0x57, 0x88, 0x70, 0x8a, 0xc1,
+(B[m[32m+        0x28, 0x0f, 0x3c, 0xd7, 0x4d, 0xc8, 0x82, 0x36, 0xa2, 0x7c, 0xf0, 0x04, 0x87, 0x7d, 0x7e,
+(B[m[32m+        0xb9, 0x48,
+(B[m[32m+    ]),
+(B[m[32m+    GuardianPublicKey([
+(B[m[32m+        0xe4, 0x49, 0xb4, 0x3d, 0x62, 0x05, 0x7e, 0x52, 0x7c, 0x3a, 0x29, 0x4d, 0x99, 0xd1, 0xad,
+(B[m[32m+        0x3d, 0x88, 0xda, 0x45, 0xeb, 0x01, 0xea, 0x30, 0x0a, 0x0c, 0x07, 0xd7, 0x96, 0x0e, 0x93,
+(B[m[32m+        0x08, 0x95,
+(B[m[32m+    ]),
+(B[m[32m+    GuardianPublicKey([
+(B[m[32m+        0x4d, 0x0a, 0x05, 0xee, 0x94, 0xd3, 0xc9, 0x60, 0x6e, 0xad, 0x16, 0xc2, 0xbd, 0x76, 0x25,
+(B[m[32m+        0x5b, 0x98, 0xeb, 0xdb, 0x2b, 0x45, 0x1d, 0xf6, 0x9e, 0xf0, 0x45, 0x28, 0xaa, 0x58, 0xa4,
+(B[m[32m+        0xce, 0x32,
+(B[m[32m+    ]),
+(B[m[32m+    GuardianPublicKey([
+(B[m[32m+        0x85, 0x0d, 0x60, 0xc3, 0x49, 0x20, 0xf2, 0x8f, 0x68, 0x12, 0x43, 0xa0, 0x16, 0x6d, 0x81,
+(B[m[32m+        0xfd, 0x13, 0x69, 0x9b, 0x96, 0x58, 0x9d, 0x93, 0xa9, 0x26, 0x71, 0xfa, 0x2b, 0x7a, 0xc3,
+(B[m[32m+        0x6c, 0x29,
+(B[m[32m+    ]),
+(B[m[32m+    GuardianPublicKey([
+(B[m[32m+        0x06, 0xf6, 0x0b, 0x08, 0x46, 0x1c, 0x3c, 0xe5, 0x64, 0x90, 0xc9, 0xbb, 0x54, 0x21, 0x0d,
+(B[m[32m+        0x83, 0x44, 0x15, 0x0a, 0x80, 0x49, 0x97, 0x4c, 0x94, 0x09, 0xa1, 0x78, 0xc7, 0x17, 0x05,
+(B[m[32m+        0x8c, 0x63,
+(B[m[32m+    ]),
+(B[m ];
+
+ #[derive(Clone, Copy, Debug, PartialEq, Eq)]
+Diff in /mnt/c/Users/user/xenchanted-x1-build-lab/programs/xxxl-svm/src/production_guardian_set_v1.rs:187:
+     fn public_record_constants_match_approved_3_of_5_model() {
+         let report = production_guardian_set_v1_report();
+
+[31m-        assert_eq!(report.status, "SOURCE_CONFIG_BOUND_PUBLIC_KEYS_ONLY_NO_ACTIVATION");
+(B[m[32m+        assert_eq!(
+(B[m[32m+            report.status,
+(B[m[32m+            "SOURCE_CONFIG_BOUND_PUBLIC_KEYS_ONLY_NO_ACTIVATION"
+(B[m[32m+        );
+(B[m         assert_eq!(report.version, 1);
+         assert_eq!(report.guardian_count, 5);
+         assert_eq!(report.threshold, 3);
+Diff in /mnt/c/Users/user/xenchanted-x1-build-lab/programs/xxxl-svm/src/production_guardian_set_v1.rs:222:
+         let result = verify_production_guardian_set_v1_approvals(&approvals)
+             .expect("valid production guardian set v1 quorum");
+
+[31m-        assert_eq!(result.guardian_set_id, &PRODUCTION_GUARDIAN_SET_V1_GUARDIAN_SET_ID);
+(B[m[32m+        assert_eq!(
+(B[m[32m+            result.guardian_set_id,
+(B[m[32m+            &PRODUCTION_GUARDIAN_SET_V1_GUARDIAN_SET_ID
+(B[m[32m+        );
+(B[m         assert_eq!(result.threshold, 3);
+         assert_eq!(result.guardian_count, 5);
+         assert_eq!(result.unique_known_approval_count, 3);
+Diff in /mnt/c/Users/user/xenchanted-x1-build-lab/programs/xxxl-svm/src/production_guardian_set_v1.rs:298:
+         let err = verify_production_guardian_set_v1_approvals(&approvals)
+             .expect_err("wrong signature domain must be rejected");
+
+[31m-        assert_eq!(err.kind, ProductionGuardianSetV1ErrorKind::WrongSignatureDomain);
+(B[m[32m+        assert_eq!(
+(B[m[32m+            err.kind,
+(B[m[32m+            ProductionGuardianSetV1ErrorKind::WrongSignatureDomain
+(B[m[32m+        );
+(B[m         assert_eq!(err.approval_index, Some(1));
+         assert!(err.structural_error.is_none());
+     }
+Diff in /mnt/c/Users/user/xenchanted-x1-build-lab/programs/xxxl-svm/src/production_guardian_set_v1.rs:353:
+         let err = verify_guardian_quorum_structural(guardian_set, &approvals)
+             .expect_err("duplicate guardian list must be rejected");
+
+[31m-        assert_eq!(err.kind, GuardianQuorumStructuralErrorKind::DuplicateGuardianPublicKey);
+(B[m[32m+        assert_eq!(
+(B[m[32m+            err.kind,
+(B[m[32m+            GuardianQuorumStructuralErrorKind::DuplicateGuardianPublicKey
+(B[m[32m+        );
+(B[m     }
+
+     #[test]
+Diff in /mnt/c/Users/user/xenchanted-x1-build-lab/programs/xxxl-svm/src/production_guardian_set_v1.rs:371:
+         let err = verify_guardian_quorum_structural(guardian_set, &approvals)
+             .expect_err("threshold greater than guardian count must be rejected");
+
+[31m-        assert_eq!(err.kind, GuardianQuorumStructuralErrorKind::ThresholdExceedsGuardianSet);
+(B[m[32m+        assert_eq!(
+(B[m[32m+            err.kind,
+(B[m[32m+            GuardianQuorumStructuralErrorKind::ThresholdExceedsGuardianSet
+(B[m[32m+        );
+(B[m     }
+ }
+
+Diff in /mnt/c/Users/user/xenchanted-x1-build-lab/programs/xxxl-svm/src/program_id_status.rs:95:
+ mod tests {
+     use super::*;
+     use crate::{
+[31m-        XXXL_GATEWAY_MINT_AUTHORITY_BUMP, XXXL_GATEWAY_MINT_AUTHORITY_PDA, XXXL_PROGRAM_ID_PLACEHOLDER,
+(B[m[31m-        XXXL_TESTNET_PROGRAMDATA_ADDRESS, XXXL_TESTNET_PROGRAM_ID, XXXL_TESTNET_UPGRADE_AUTHORITY,
+(B[m[32m+        XXXL_GATEWAY_MINT_AUTHORITY_BUMP, XXXL_GATEWAY_MINT_AUTHORITY_PDA,
+(B[m[32m+        XXXL_PROGRAM_ID_PLACEHOLDER, XXXL_TESTNET_PROGRAMDATA_ADDRESS, XXXL_TESTNET_PROGRAM_ID,
+(B[m[32m+        XXXL_TESTNET_UPGRADE_AUTHORITY,
+(B[m     };
+
+     #[test]
+Diff in /mnt/c/Users/user/xenchanted-x1-build-lab/programs/xxxl-svm/src/program_id_status.rs:138:
+         assert_ne!(report.configured_program_id, report.placeholder_program_id);
+         assert_eq!(report.programdata_address, XXXL_TESTNET_PROGRAMDATA_ADDRESS);
+         assert_eq!(report.upgrade_authority, XXXL_TESTNET_UPGRADE_AUTHORITY);
+[31m-        assert_eq!(report.gateway_mint_authority_pda, XXXL_GATEWAY_MINT_AUTHORITY_PDA);
+(B[m[31m-        assert_eq!(report.gateway_mint_authority_bump, XXXL_GATEWAY_MINT_AUTHORITY_BUMP);
+(B[m[32m+        assert_eq!(
+(B[m[32m+            report.gateway_mint_authority_pda,
+(B[m[32m+            XXXL_GATEWAY_MINT_AUTHORITY_PDA
+(B[m[32m+        );
+(B[m[32m+        assert_eq!(
+(B[m[32m+            report.gateway_mint_authority_bump,
+(B[m[32m+            XXXL_GATEWAY_MINT_AUTHORITY_BUMP
+(B[m[32m+        );
+(B[m         assert!(report.real_program_id_bound);
+         assert!(report.deployable_path_ready);
+         assert_eq!(
+Diff in /mnt/c/Users/user/xenchanted-x1-build-lab/programs/xxxl-svm/src/program_id_status.rs:153:
+     fn program_id_readiness_report_preserves_transitioned_blocker_metadata() {
+         let report = xxxl_program_id_readiness_report();
+
+[31m-        assert_eq!(report.transitioned_blocker.code(), report.transitioned_blocker_code);
+(B[m[32m+        assert_eq!(
+(B[m[32m+            report.transitioned_blocker.code(),
+(B[m[32m+            report.transitioned_blocker_code
+(B[m[32m+        );
+(B[m         assert!(report.resolution.contains("Program ID is bound"));
+     }
+
+Diff in /mnt/c/Users/user/xenchanted-x1-build-lab/programs/xxxl-svm/src/state_account_layout_skeleton.rs:209:
+     Ok(account)
+ }
+
+[31m-pub fn encode_mint_state_account_layout_skeleton(account: MintStateAccountLayoutSkeleton) -> Vec<u8> {
+(B[m[32m+pub fn encode_mint_state_account_layout_skeleton(
+(B[m[32m+    account: MintStateAccountLayoutSkeleton,
+(B[m[32m+) -> Vec<u8> {
+(B[m     let mut output = Vec::with_capacity(MINT_STATE_ACCOUNT_SKELETON_LEN);
+     output.extend_from_slice(&MINT_STATE_DISCRIMINATOR);
+     output.push(account.version);
+Diff in /mnt/c/Users/user/xenchanted-x1-build-lab/programs/xxxl-svm/src/state_initialization_skeleton.rs:6:
+     state_account_layout_skeleton::{
+         decode_gateway_config_account_layout_skeleton,
+         decode_guardian_set_header_account_layout_skeleton,
+[31m-        decode_mint_state_account_layout_skeleton,
+(B[m[31m-        decode_processed_event_account_layout_skeleton,
+(B[m[32m+        decode_mint_state_account_layout_skeleton, decode_processed_event_account_layout_skeleton,
+(B[m         encode_gateway_config_account_layout_skeleton,
+         encode_guardian_set_header_account_layout_skeleton,
+[31m-        encode_mint_state_account_layout_skeleton,
+(B[m[31m-        encode_processed_event_account_layout_skeleton,
+(B[m[31m-        GatewayConfigAccountLayoutSkeleton,
+(B[m[31m-        GuardianSetHeaderAccountLayoutSkeleton,
+(B[m[31m-        MintStateAccountLayoutSkeleton,
+(B[m[31m-        ProcessedEventAccountLayoutSkeleton,
+(B[m[32m+        encode_mint_state_account_layout_skeleton, encode_processed_event_account_layout_skeleton,
+(B[m[32m+        GatewayConfigAccountLayoutSkeleton, GuardianSetHeaderAccountLayoutSkeleton,
+(B[m[32m+        MintStateAccountLayoutSkeleton, ProcessedEventAccountLayoutSkeleton,
+(B[m         XxxlStateAccountLayoutSkeletonError,
+     },
+ };
+Diff in /mnt/c/Users/user/xenchanted-x1-build-lab/programs/xxxl-svm/src/state_initialization_skeleton.rs:269:
+             status: 1,
+         };
+
+[31m-        let encoded =
+(B[m[31m-            encode_and_verify_guardian_set_header_initialization_skeleton(input).expect("encode ok");
+(B[m[32m+        let encoded = encode_and_verify_guardian_set_header_initialization_skeleton(input)
+(B[m[32m+            .expect("encode ok");
+(B[m
+         assert_eq!(encoded.len(), GUARDIAN_SET_HEADER_ACCOUNT_SKELETON_LEN);
+     }
+Diff in /mnt/c/Users/user/xenchanted-x1-build-lab/programs/xxxl-svm/src/state_initialization_skeleton.rs:311:
+             is_active: true,
+         };
+
+[31m-        let encoded = encode_and_verify_mint_state_initialization_skeleton(input)
+(B[m[31m-            .expect("encode ok");
+(B[m[32m+        let encoded =
+(B[m[32m+            encode_and_verify_mint_state_initialization_skeleton(input).expect("encode ok");
+(B[m
+         assert_eq!(encoded.len(), MINT_STATE_ACCOUNT_SKELETON_LEN);
+
+Diff in /mnt/c/Users/user/xenchanted-x1-build-lab/programs/xxxl-svm/src/state_initialization_skeleton.rs:340:
+             processed_at_slot: 99,
+         };
+
+[31m-        let encoded =
+(B[m[31m-            encode_and_verify_processed_event_marking_skeleton(input).expect("encode ok");
+(B[m[32m+        let encoded = encode_and_verify_processed_event_marking_skeleton(input).expect("encode ok");
+(B[m
+         assert_eq!(encoded.len(), PROCESSED_EVENT_ACCOUNT_SKELETON_LEN);
+
+Diff in /mnt/c/Users/user/xenchanted-x1-build-lab/programs/xxxl-svm/src/state_instruction_skeleton.rs:138:
+ }
+
+ pub fn mint_state_pda(program_id: &Pubkey, mint: &Pubkey) -> (Pubkey, u8) {
+[31m-    Pubkey::find_program_address(&[MINT_STATE_SEED_0, MINT_STATE_SEED_1, mint.as_ref()], program_id)
+(B[m[32m+    Pubkey::find_program_address(
+(B[m[32m+        &[MINT_STATE_SEED_0, MINT_STATE_SEED_1, mint.as_ref()],
+(B[m[32m+        program_id,
+(B[m[32m+    )
+(B[m }
+
+ pub fn processed_event_pda(program_id: &Pubkey, canonical_event_key: &[u8; 32]) -> (Pubkey, u8) {
+Diff in /mnt/c/Users/user/xenchanted-x1-build-lab/programs/xxxl-svm/src/state_instruction_skeleton.rs:178:
+
+     #[test]
+     fn instruction_tags_are_reserved_and_stable() {
+[31m-        assert_eq!(u8::from(XxxlGatewayInstructionTag::InitializeGatewayConfig), 0);
+(B[m[31m-        assert_eq!(u8::from(XxxlGatewayInstructionTag::InitializeGuardianSet), 1);
+(B[m[32m+        assert_eq!(
+(B[m[32m+            u8::from(XxxlGatewayInstructionTag::InitializeGatewayConfig),
+(B[m[32m+            0
+(B[m[32m+        );
+(B[m[32m+        assert_eq!(
+(B[m[32m+            u8::from(XxxlGatewayInstructionTag::InitializeGuardianSet),
+(B[m[32m+            1
+(B[m[32m+        );
+(B[m         assert_eq!(u8::from(XxxlGatewayInstructionTag::InitializeMintState), 2);
+         assert_eq!(u8::from(XxxlGatewayInstructionTag::ConsumeGatewayMint), 3);
+     }
+Diff in /mnt/c/Users/user/xenchanted-x1-build-lab/programs/xxxl-svm/src/typed_instruction_skeleton.rs:1:
+ use crate::{
+     instruction_codec_skeleton::{
+[31m-        decode_instruction_skeleton, encode_instruction_skeleton,
+(B[m[31m-        XxxlInstructionCodecSkeletonError,
+(B[m[32m+        decode_instruction_skeleton, encode_instruction_skeleton, XxxlInstructionCodecSkeletonError,
+(B[m     },
+     instruction_payload_skeleton::{
+         decode_consume_gateway_mint_payload_boundary_skeleton,
+Diff in /mnt/c/Users/user/xenchanted-x1-build-lab/programs/xxxl-svm/src/typed_instruction_skeleton.rs:11:
+         encode_consume_gateway_mint_payload_boundary_skeleton,
+         encode_initialize_gateway_config_payload_skeleton,
+         encode_initialize_guardian_set_header_payload_skeleton,
+[31m-        encode_initialize_mint_state_payload_skeleton,
+(B[m[31m-        ConsumeGatewayMintPayloadBoundarySkeleton,
+(B[m[31m-        InitializeGatewayConfigPayloadSkeleton,
+(B[m[31m-        InitializeGuardianSetHeaderPayloadSkeleton,
+(B[m[31m-        InitializeMintStatePayloadSkeleton,
+(B[m[31m-        XxxlInstructionPayloadSkeletonError,
+(B[m[32m+        encode_initialize_mint_state_payload_skeleton, ConsumeGatewayMintPayloadBoundarySkeleton,
+(B[m[32m+        InitializeGatewayConfigPayloadSkeleton, InitializeGuardianSetHeaderPayloadSkeleton,
+(B[m[32m+        InitializeMintStatePayloadSkeleton, XxxlInstructionPayloadSkeletonError,
+(B[m     },
+     state_instruction_skeleton::XxxlGatewayInstructionTag,
+ };
+Diff in /mnt/c/Users/user/xenchanted-x1-build-lab/programs/xxxl-svm/src/typed_instruction_skeleton.rs:120:
+
+     #[test]
+     fn gateway_config_typed_instruction_round_trips() {
+[31m-        let instruction =
+(B[m[31m-            XxxlTypedInstructionSkeleton::InitializeGatewayConfig(
+(B[m[31m-                InitializeGatewayConfigPayloadSkeleton {
+(B[m[31m-                    route_id: [0x11; 32],
+(B[m[31m-                    source_chain_id: 1,
+(B[m[31m-                    guardian_set_id: 7,
+(B[m[31m-                    is_active: true,
+(B[m[31m-                },
+(B[m[31m-            );
+(B[m[32m+        let instruction = XxxlTypedInstructionSkeleton::InitializeGatewayConfig(
+(B[m[32m+            InitializeGatewayConfigPayloadSkeleton {
+(B[m[32m+                route_id: [0x11; 32],
+(B[m[32m+                source_chain_id: 1,
+(B[m[32m+                guardian_set_id: 7,
+(B[m[32m+                is_active: true,
+(B[m[32m+            },
+(B[m[32m+        );
+(B[m
+         let encoded = encode_typed_instruction_skeleton(instruction);
+         let decoded = decode_typed_instruction_skeleton(&encoded).expect("decode ok");
+Diff in /mnt/c/Users/user/xenchanted-x1-build-lab/programs/xxxl-svm/src/typed_instruction_skeleton.rs:138:
+
+     #[test]
+     fn guardian_set_typed_instruction_round_trips() {
+[31m-        let instruction =
+(B[m[31m-            XxxlTypedInstructionSkeleton::InitializeGuardianSetHeader(
+(B[m[31m-                InitializeGuardianSetHeaderPayloadSkeleton {
+(B[m[31m-                    guardian_set_id: 7,
+(B[m[31m-                    threshold: 2,
+(B[m[31m-                    guardian_count: 3,
+(B[m[31m-                },
+(B[m[31m-            );
+(B[m[32m+        let instruction = XxxlTypedInstructionSkeleton::InitializeGuardianSetHeader(
+(B[m[32m+            InitializeGuardianSetHeaderPayloadSkeleton {
+(B[m[32m+                guardian_set_id: 7,
+(B[m[32m+                threshold: 2,
+(B[m[32m+                guardian_count: 3,
+(B[m[32m+            },
+(B[m[32m+        );
+(B[m
+         let encoded = encode_typed_instruction_skeleton(instruction);
+         let decoded = decode_typed_instruction_skeleton(&encoded).expect("decode ok");
+Diff in /mnt/c/Users/user/xenchanted-x1-build-lab/programs/xxxl-svm/src/typed_instruction_skeleton.rs:155:
+
+     #[test]
+     fn mint_state_typed_instruction_round_trips() {
+[31m-        let instruction = XxxlTypedInstructionSkeleton::InitializeMintState(
+(B[m[31m-            InitializeMintStatePayloadSkeleton {
+(B[m[32m+        let instruction =
+(B[m[32m+            XxxlTypedInstructionSkeleton::InitializeMintState(InitializeMintStatePayloadSkeleton {
+(B[m                 mint: Pubkey::new_unique(),
+                 decimals: 9,
+[31m-            },
+(B[m[31m-        );
+(B[m[32m+            });
+(B[m
+         let encoded = encode_typed_instruction_skeleton(instruction);
+         let decoded = decode_typed_instruction_skeleton(&encoded).expect("decode ok");
+Diff in /mnt/c/Users/user/xenchanted-x1-build-lab/programs/xxxl-svm/src/typed_instruction_skeleton.rs:170:
+
+     #[test]
+     fn consume_gateway_mint_boundary_typed_instruction_round_trips() {
+[31m-        let instruction =
+(B[m[31m-            XxxlTypedInstructionSkeleton::ConsumeGatewayMintBoundary(
+(B[m[31m-                ConsumeGatewayMintPayloadBoundarySkeleton {
+(B[m[31m-                    message_hash: [0x22; 32],
+(B[m[31m-                    canonical_event_key: [0x33; 32],
+(B[m[31m-                    mint_amount: 123_456,
+(B[m[31m-                },
+(B[m[31m-            );
+(B[m[32m+        let instruction = XxxlTypedInstructionSkeleton::ConsumeGatewayMintBoundary(
+(B[m[32m+            ConsumeGatewayMintPayloadBoundarySkeleton {
+(B[m[32m+                message_hash: [0x22; 32],
+(B[m[32m+                canonical_event_key: [0x33; 32],
+(B[m[32m+                mint_amount: 123_456,
+(B[m[32m+            },
+(B[m[32m+        );
+(B[m
+         let encoded = encode_typed_instruction_skeleton(instruction);
+         let decoded = decode_typed_instruction_skeleton(&encoded).expect("decode ok");
+Diff in /mnt/c/Users/user/xenchanted-x1-build-lab/programs/xxxl-svm/src/validated_dispatch_skeleton.rs:1:
+ use crate::{
+     account_validation_skeleton::{
+[31m-        validate_account_metas_for_tag, XxxlAccountMetaSkeleton,
+(B[m[31m-        XxxlAccountValidationSkeletonError,
+(B[m[32m+        validate_account_metas_for_tag, XxxlAccountMetaSkeleton, XxxlAccountValidationSkeletonError,
+(B[m     },
+     dispatch_skeleton::{
+         plan_dispatch_skeleton, XxxlDispatchSkeletonError, XxxlDispatchSkeletonPlan,
+Diff in /mnt/c/Users/user/xenchanted-x1-build-lab/programs/xxxl-svm/src/validated_dispatch_skeleton.rs:73:
+
+     #[test]
+     fn validated_dispatch_accepts_initialize_gateway_config() {
+[31m-        let instruction =
+(B[m[31m-            XxxlTypedInstructionSkeleton::InitializeGatewayConfig(
+(B[m[31m-                InitializeGatewayConfigPayloadSkeleton {
+(B[m[31m-                    route_id: [0x11; 32],
+(B[m[31m-                    source_chain_id: 1,
+(B[m[31m-                    guardian_set_id: 7,
+(B[m[31m-                    is_active: true,
+(B[m[31m-                },
+(B[m[31m-            );
+(B[m[32m+        let instruction = XxxlTypedInstructionSkeleton::InitializeGatewayConfig(
+(B[m[32m+            InitializeGatewayConfigPayloadSkeleton {
+(B[m[32m+                route_id: [0x11; 32],
+(B[m[32m+                source_chain_id: 1,
+(B[m[32m+                guardian_set_id: 7,
+(B[m[32m+                is_active: true,
+(B[m[32m+            },
+(B[m[32m+        );
+(B[m
+         let data = encode_typed_instruction_skeleton(instruction);
+         let metas =
+Diff in /mnt/c/Users/user/xenchanted-x1-build-lab/programs/xxxl-svm/src/validated_dispatch_skeleton.rs:99:
+
+     #[test]
+     fn validated_dispatch_accepts_consume_gateway_mint_boundary() {
+[31m-        let instruction =
+(B[m[31m-            XxxlTypedInstructionSkeleton::ConsumeGatewayMintBoundary(
+(B[m[31m-                ConsumeGatewayMintPayloadBoundarySkeleton {
+(B[m[31m-                    message_hash: [0x22; 32],
+(B[m[31m-                    canonical_event_key: [0x33; 32],
+(B[m[31m-                    mint_amount: 123_456,
+(B[m[31m-                },
+(B[m[31m-            );
+(B[m[32m+        let instruction = XxxlTypedInstructionSkeleton::ConsumeGatewayMintBoundary(
+(B[m[32m+            ConsumeGatewayMintPayloadBoundarySkeleton {
+(B[m[32m+                message_hash: [0x22; 32],
+(B[m[32m+                canonical_event_key: [0x33; 32],
+(B[m[32m+                mint_amount: 123_456,
+(B[m[32m+            },
+(B[m[32m+        );
+(B[m
+         let data = encode_typed_instruction_skeleton(instruction);
+         let metas = expected_account_metas_for_tag(XxxlGatewayInstructionTag::ConsumeGatewayMint);
+Diff in /mnt/c/Users/user/xenchanted-x1-build-lab/programs/xxxl-svm/src/validated_dispatch_skeleton.rs:113:
+
+         let plan = plan_validated_dispatch_skeleton(&data, &metas).expect("validated dispatch ok");
+
+[31m-        assert_eq!(plan.dispatch_plan.tag, XxxlGatewayInstructionTag::ConsumeGatewayMint);
+(B[m[32m+        assert_eq!(
+(B[m[32m+            plan.dispatch_plan.tag,
+(B[m[32m+            XxxlGatewayInstructionTag::ConsumeGatewayMint
+(B[m[32m+        );
+(B[m         assert_eq!(plan.dispatch_plan.instruction, instruction);
+         assert_eq!(plan.dispatch_plan.required_accounts.len(), 11);
+     }
+Diff in /mnt/c/Users/user/xenchanted-x1-build-lab/programs/xxxl-svm/src/validated_dispatch_skeleton.rs:134:
+
+     #[test]
+     fn validated_dispatch_rejects_wrong_account_count() {
+[31m-        let instruction =
+(B[m[31m-            XxxlTypedInstructionSkeleton::InitializeGatewayConfig(
+(B[m[31m-                InitializeGatewayConfigPayloadSkeleton {
+(B[m[31m-                    route_id: [0x11; 32],
+(B[m[31m-                    source_chain_id: 1,
+(B[m[31m-                    guardian_set_id: 7,
+(B[m[31m-                    is_active: true,
+(B[m[31m-                },
+(B[m[31m-            );
+(B[m[32m+        let instruction = XxxlTypedInstructionSkeleton::InitializeGatewayConfig(
+(B[m[32m+            InitializeGatewayConfigPayloadSkeleton {
+(B[m[32m+                route_id: [0x11; 32],
+(B[m[32m+                source_chain_id: 1,
+(B[m[32m+                guardian_set_id: 7,
+(B[m[32m+                is_active: true,
+(B[m[32m+            },
+(B[m[32m+        );
+(B[m
+         let data = encode_typed_instruction_skeleton(instruction);
+         let metas = expected_account_metas_for_tag(XxxlGatewayInstructionTag::InitializeMintState);
+Diff in /mnt/c/Users/user/xenchanted-x1-build-lab/programs/xxxl-svm/src/validated_dispatch_skeleton.rs:159:
+
+     #[test]
+     fn validated_dispatch_rejects_signer_mismatch() {
+[31m-        let instruction =
+(B[m[31m-            XxxlTypedInstructionSkeleton::InitializeGatewayConfig(
+(B[m[31m-                InitializeGatewayConfigPayloadSkeleton {
+(B[m[31m-                    route_id: [0x11; 32],
+(B[m[31m-                    source_chain_id: 1,
+(B[m[31m-                    guardian_set_id: 7,
+(B[m[31m-                    is_active: true,
+(B[m[31m-                },
+(B[m[31m-            );
+(B[m[32m+        let instruction = XxxlTypedInstructionSkeleton::InitializeGatewayConfig(
+(B[m[32m+            InitializeGatewayConfigPayloadSkeleton {
+(B[m[32m+                route_id: [0x11; 32],
+(B[m[32m+                source_chain_id: 1,
+(B[m[32m+                guardian_set_id: 7,
+(B[m[32m+                is_active: true,
+(B[m[32m+            },
+(B[m[32m+        );
+(B[m
+         let data = encode_typed_instruction_skeleton(instruction);
+         let mut metas =
+Diff in /mnt/c/Users/user/xenchanted-x1-build-lab/programs/xxxl-svm/src/validated_dispatch_skeleton.rs:189:
+
+     #[test]
+     fn validated_dispatch_rejects_writable_mismatch() {
+[31m-        let instruction =
+(B[m[31m-            XxxlTypedInstructionSkeleton::InitializeGatewayConfig(
+(B[m[31m-                InitializeGatewayConfigPayloadSkeleton {
+(B[m[31m-                    route_id: [0x11; 32],
+(B[m[31m-                    source_chain_id: 1,
+(B[m[31m-                    guardian_set_id: 7,
+(B[m[31m-                    is_active: true,
+(B[m[31m-                },
+(B[m[31m-            );
+(B[m[32m+        let instruction = XxxlTypedInstructionSkeleton::InitializeGatewayConfig(
+(B[m[32m+            InitializeGatewayConfigPayloadSkeleton {
+(B[m[32m+                route_id: [0x11; 32],
+(B[m[32m+                source_chain_id: 1,
+(B[m[32m+                guardian_set_id: 7,
+(B[m[32m+                is_active: true,
+(B[m[32m+            },
+(B[m[32m+        );
+(B[m
+         let data = encode_typed_instruction_skeleton(instruction);
+         let mut metas =
+Diff in /mnt/c/Users/user/xenchanted-x1-build-lab/programs/xxxl-svm/src/validated_dispatch_skeleton.rs:219:
+
+     #[test]
+     fn validated_dispatch_rejects_owner_expectation_mismatch() {
+[31m-        let instruction =
+(B[m[31m-            XxxlTypedInstructionSkeleton::InitializeGatewayConfig(
+(B[m[31m-                InitializeGatewayConfigPayloadSkeleton {
+(B[m[31m-                    route_id: [0x11; 32],
+(B[m[31m-                    source_chain_id: 1,
+(B[m[31m-                    guardian_set_id: 7,
+(B[m[31m-                    is_active: true,
+(B[m[31m-                },
+(B[m[31m-            );
+(B[m[32m+        let instruction = XxxlTypedInstructionSkeleton::InitializeGatewayConfig(
+(B[m[32m+            InitializeGatewayConfigPayloadSkeleton {
+(B[m[32m+                route_id: [0x11; 32],
+(B[m[32m+                source_chain_id: 1,
+(B[m[32m+                guardian_set_id: 7,
+(B[m[32m+                is_active: true,
+(B[m[32m+            },
+(B[m[32m+        );
+(B[m
+         let data = encode_typed_instruction_skeleton(instruction);
+         let mut metas =
+Diff in /mnt/c/Users/user/xenchanted-x1-build-lab/programs/xxxl-svm/src/verifier/b1c_payload_hash_binding.rs:296:
+     }
+
+     const PHASE_41K6_B2_KNOWN_ANSWER_PAYLOAD_HASH: [u8; 32] = [
+[31m-        0x56, 0xa3, 0x18, 0x44, 0x0e, 0x18, 0x8d, 0x86, 0x40, 0x52, 0xb8, 0x51,
+(B[m[31m-        0x8f, 0x41, 0xde, 0xb7, 0xe4, 0xf9, 0x98, 0xa9, 0x75, 0xe3, 0xb6, 0xe1,
+(B[m[31m-        0x9c, 0xa6, 0x38, 0x15, 0x53, 0x5e, 0xc7, 0x7d,
+(B[m[32m+        0x56, 0xa3, 0x18, 0x44, 0x0e, 0x18, 0x8d, 0x86, 0x40, 0x52, 0xb8, 0x51, 0x8f, 0x41, 0xde,
+(B[m[32m+        0xb7, 0xe4, 0xf9, 0x98, 0xa9, 0x75, 0xe3, 0xb6, 0xe1, 0x9c, 0xa6, 0x38, 0x15, 0x53, 0x5e,
+(B[m[32m+        0xc7, 0x7d,
+(B[m     ];
+
+     const PHASE_41K6_B2_U64_MAX_KNOWN_ANSWER_PAYLOAD_HASH: [u8; 32] = [
+Diff in /mnt/c/Users/user/xenchanted-x1-build-lab/programs/xxxl-svm/src/verifier/b1c_payload_hash_binding.rs:305:
+[31m-        0xa6, 0xb9, 0xe3, 0x90, 0x1a, 0x04, 0xa6, 0xda, 0x11, 0xd1, 0x00, 0x91,
+(B[m[31m-        0x2c, 0xb1, 0xf5, 0xeb, 0xf2, 0x94, 0x46, 0x4d, 0x5b, 0x11, 0x37, 0x6f,
+(B[m[31m-        0x2b, 0x7e, 0xb7, 0x1a, 0x0c, 0xb9, 0xf8, 0x93,
+(B[m[32m+        0xa6, 0xb9, 0xe3, 0x90, 0x1a, 0x04, 0xa6, 0xda, 0x11, 0xd1, 0x00, 0x91, 0x2c, 0xb1, 0xf5,
+(B[m[32m+        0xeb, 0xf2, 0x94, 0x46, 0x4d, 0x5b, 0x11, 0x37, 0x6f, 0x2b, 0x7e, 0xb7, 0x1a, 0x0c, 0xb9,
+(B[m[32m+        0xf8, 0x93,
+(B[m     ];
+
+     #[test]
+Diff in /mnt/c/Users/user/xenchanted-x1-build-lab/programs/xxxl-svm/src/verifier/b1c_payload_hash_binding.rs:341:
+             B1C_AUTHORIZATION_PAYLOAD_DOMAIN,
+             b"consume_gateway_mint_authorization_v2"
+         );
+[31m-        assert_eq!(fixture.expected_payload_hash.len(), B1C_AUTHORIZATION_PAYLOAD_HASH_LEN);
+(B[m[32m+        assert_eq!(
+(B[m[32m+            fixture.expected_payload_hash.len(),
+(B[m[32m+            B1C_AUTHORIZATION_PAYLOAD_HASH_LEN
+(B[m[32m+        );
+(B[m         assert_ne!(fixture.expected_payload_hash, [0; 32]);
+
+         let mut changed = fixture.context;
+Diff in /mnt/c/Users/user/xenchanted-x1-build-lab/programs/xxxl-svm/src/verifier/processed_registry_account_loading_boundary.rs:1:
+ use solana_program::{account_info::AccountInfo, pubkey::Pubkey};
+
+ use crate::state::{
+[31m-    ACCOUNT_DISCRIMINATOR_LEN, PROCESSED_EVENT_ACCOUNT_DISCRIMINATOR,
+(B[m[31m-    PROCESSED_EVENT_ACCOUNT_LEN, RUNTIME_LAYOUT_VERSION,
+(B[m[32m+    ACCOUNT_DISCRIMINATOR_LEN, PROCESSED_EVENT_ACCOUNT_DISCRIMINATOR, PROCESSED_EVENT_ACCOUNT_LEN,
+(B[m[32m+    RUNTIME_LAYOUT_VERSION,
+(B[m };
+
+ use super::replay_protection_boundary::AuthoritativeProcessedRegistryViewRef;
+Diff in /mnt/c/Users/user/xenchanted-x1-build-lab/programs/xxxl-svm/src/verifier/processed_registry_account_loading_boundary.rs:72:
+     pub fn to_authoritative_processed_registry_view(
+         &self,
+     ) -> AuthoritativeProcessedRegistryViewRef<'_> {
+[31m-        AuthoritativeProcessedRegistryViewRef::from_phase_41k_3_processed_registry_load_witness(self)
+(B[m[32m+        AuthoritativeProcessedRegistryViewRef::from_phase_41k_3_processed_registry_load_witness(
+(B[m[32m+            self,
+(B[m[32m+        )
+(B[m     }
+
+     pub(crate) fn processed_canonical_event_key_ref(&self) -> Option<&[u8; 32]> {
+Diff in /mnt/c/Users/user/xenchanted-x1-build-lab/programs/xxxl-svm/src/verifier/processed_registry_account_loading_boundary.rs:1012:
+     fn processed_event_pda_uses_exact_canonical_seed_format() {
+         let program_id = Pubkey::new_unique();
+
+[31m-        let (pda, bump) =
+(B[m[31m-            find_phase_41k_3_processed_event_pda(&program_id, &CANONICAL_EVENT_KEY);
+(B[m[32m+        let (pda, bump) = find_phase_41k_3_processed_event_pda(&program_id, &CANONICAL_EVENT_KEY);
+(B[m
+         let (expected_pda, expected_bump) = Pubkey::find_program_address(
+[31m-            &[
+(B[m[31m-                b"xxxl",
+(B[m[31m-                b"processed-event",
+(B[m[31m-                CANONICAL_EVENT_KEY.as_ref(),
+(B[m[31m-            ],
+(B[m[32m+            &[b"xxxl", b"processed-event", CANONICAL_EVENT_KEY.as_ref()],
+(B[m             &program_id,
+         );
+
+Diff in /mnt/c/Users/user/xenchanted-x1-build-lab/programs/xxxl-svm/src/verifier/processed_registry_account_loading_boundary.rs:1405:
+             .expect("processed witness");
+         let view = witness.to_authoritative_processed_registry_view();
+
+[31m-        assert_eq!(view.processed_canonical_event_keys(), &[CANONICAL_EVENT_KEY]);
+(B[m[32m+        assert_eq!(
+(B[m[32m+            view.processed_canonical_event_keys(),
+(B[m[32m+            &[CANONICAL_EVENT_KEY]
+(B[m[32m+        );
+(B[m     }
+
+     #[test]
+Diff in /mnt/c/Users/user/xenchanted-x1-build-lab/programs/xxxl-svm/src/verifier/processed_registry_account_loading_boundary.rs:1539:
+
+     fn valid_processed_event_account_data(consumed_flag: u8) -> Vec<u8> {
+         let mut data = vec![0u8; PROCESSED_EVENT_ACCOUNT_LEN];
+[31m-        data[0..ACCOUNT_DISCRIMINATOR_LEN]
+(B[m[31m-            .copy_from_slice(&PROCESSED_EVENT_ACCOUNT_DISCRIMINATOR);
+(B[m[32m+        data[0..ACCOUNT_DISCRIMINATOR_LEN].copy_from_slice(&PROCESSED_EVENT_ACCOUNT_DISCRIMINATOR);
+(B[m         data[8..10].copy_from_slice(&RUNTIME_LAYOUT_VERSION.to_le_bytes());
+         data[PROCESSED_EVENT_CONSUMED_OFFSET] = consumed_flag;
+         data[PROCESSED_EVENT_CANONICAL_EVENT_KEY_OFFSET
+Diff in /mnt/c/Users/user/xenchanted-x1-build-lab/programs/xxxl-svm/src/verifier/replay_protection_boundary.rs:1:
+ use super::guardian_membership_validation_boundary::AuthoritativeGuardianSetRef;
+[32m+use super::processed_registry_account_loading_boundary::Phase41K3ProcessedRegistryLoadWitness;
+(B[m use super::quorum_authorization_boundary::{
+     establish_guardian_quorum_authorization, GuardianQuorumAuthorizationAttempt,
+     GuardianQuorumAuthorizationError,
+Diff in /mnt/c/Users/user/xenchanted-x1-build-lab/programs/xxxl-svm/src/verifier/replay_protection_boundary.rs:5:
+ };
+[31m-use super::processed_registry_account_loading_boundary::Phase41K3ProcessedRegistryLoadWitness;
+(B[m use super::raw_payload::{decode_guardian_payload_raw, RawPayloadDecodeError};
+
+ pub const REPLAY_PROTECTION_BOUNDARY_PHASE_41J: &str = "41J";
+Diff in /mnt/c/Users/user/xenchanted-x1-build-lab/programs/xxxl-svm/tests/phase_41k6_b2_valid_quorum_live_gated_success.rs:97:
+     )
+     .expect("expected consumed processed_event image");
+
+[31m-    let expected_spl_mint_data = packed_mint_with_supply(fixture.keys.mint_authority_pda, true, AMOUNT);
+(B[m[32m+    let expected_spl_mint_data =
+(B[m[32m+        packed_mint_with_supply(fixture.keys.mint_authority_pda, true, AMOUNT);
+(B[m     let expected_recipient_token_account_data = packed_token_account_with_amount(
+         fixture.keys.spl_mint,
+         fixture.keys.recipient_owner,
+Diff in /mnt/c/Users/user/xenchanted-x1-build-lab/programs/xxxl-svm/tests/phase_41k6_b2_valid_quorum_live_gated_success.rs:108:
+     let recipient_balance_before = &accounts[ACCOUNT_INDEX_RECIPIENT_BALANCE].1;
+
+     mollusk.process_and_validate_transaction_instructions(
+[31m-        &[guardian_one_instruction, guardian_two_instruction, current_instruction],
+(B[m[32m+        &[
+(B[m[32m+            guardian_one_instruction,
+(B[m[32m+            guardian_two_instruction,
+(B[m[32m+            current_instruction,
+(B[m[32m+        ],
+(B[m         &accounts,
+         &[
+             Check::success(),
+Diff in /mnt/c/Users/user/xenchanted-x1-build-lab/programs/xxxl-svm/tests/phase_41k6_b3_hostile_live_gated_matrix.rs:188:
+         new_spl_mint,
+         SOURCE_CHAIN_WEIGHT_BPS,
+     );
+[31m-    fixture.data.recipient_balance = recipient_balance_data(fixture.keys.recipient_owner, new_spl_mint);
+(B[m[32m+    fixture.data.recipient_balance =
+(B[m[32m+        recipient_balance_data(fixture.keys.recipient_owner, new_spl_mint);
+(B[m     fixture.data.spl_mint = packed_mint_with_supply(fixture.keys.mint_authority_pda, true, 0);
+     fixture.data.recipient_token_account = packed_token_account_with_amount(
+         new_spl_mint,

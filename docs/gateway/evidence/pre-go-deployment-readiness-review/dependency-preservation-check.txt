@@ -1,0 +1,12 @@
+guardian_quorum_dependency=preserved
+proof_log_dependency=preserved
+replay_protection_dependency=preserved
+processed_event_dependency=preserved
+account_contract_dependency=preserved
+token_program_mint_recipient_authority_constraints=documented
+live_route_readiness=repository_local_only
+spl_cpi_readiness=repository_local_only
+live_chain_transaction=false
+rpc_mutation=false
+live_mint_execution=false
+exact_activation_go=false

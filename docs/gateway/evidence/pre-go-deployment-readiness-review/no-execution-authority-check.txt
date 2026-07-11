@@ -1,0 +1,11 @@
+activation_authorized=false
+deploy_authorized=false
+upgrade_authorized=false
+rpc_mutation_authorized=false
+live_chain_transaction_authorized=false
+live_mint_execution_authorized=false
+external_route_enablement_authorized=false
+external_spl_cpi_execution_authorized=false
+exact_activation_go_authorized=false
+source_code_mutation_authorized=false
+blocker_removal_authorized=false
