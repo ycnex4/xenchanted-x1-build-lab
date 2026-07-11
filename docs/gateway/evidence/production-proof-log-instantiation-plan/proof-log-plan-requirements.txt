@@ -1,0 +1,13 @@
+required_sections_present=true
+
+proof_log_purpose=defined
+canonical_record_fields=defined
+required_hashes=defined
+link_model=defined
+publication_location_model=defined
+retention_policy=defined
+operator_publication_responsibility=defined
+append_only_tamper_evidence_expectations=defined
+verification_checklist=defined
+future_source_config_package_criteria=defined
+ProductionProofLogUnset_resolution_criteria=defined

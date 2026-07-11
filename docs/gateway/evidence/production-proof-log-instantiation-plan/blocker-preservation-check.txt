@@ -1,0 +1,31 @@
+Expected preserved blocker state:
+ProductionProofLogUnset=ACTIVE
+LiveRouteDisabled=ACTIVE
+SplCpiExecutionDisabled=ACTIVE
+ProductionGuardianSetUnset=REMOVED
+
+Runtime doc matches:
+60:| LiveRouteDisabled | ACTIVE | N/A | ACTIVE |
+61:| SplCpiExecutionDisabled | ACTIVE | N/A | ACTIVE |
+62:| ProductionGuardianSetUnset | REMOVED | production_guardian_set_v1_source_bound | REMOVED |
+63:| ProductionProofLogUnset | ACTIVE | policy_defined_not_instantiated | ACTIVE |
+82:| runtime_deployable | false | programs/xxxl-svm/src/deployment_status.rs |
+83:| predeploy_gate | blocked | programs/xxxl-svm/src/deployment_status.rs |
+188:| LiveRouteDisabled | ACTIVE |
+189:| SplCpiExecutionDisabled | ACTIVE |
+191:| ProductionProofLogUnset | ACTIVE |
+226:| LiveRouteDisabled | ACTIVE |
+227:| SplCpiExecutionDisabled | ACTIVE |
+229:| ProductionProofLogUnset | ACTIVE |
+273:| LiveRouteDisabled | ACTIVE |
+274:| SplCpiExecutionDisabled | ACTIVE |
+276:| ProductionProofLogUnset | ACTIVE |
+314:| LiveRouteDisabled | ACTIVE |
+315:| SplCpiExecutionDisabled | ACTIVE |
+317:| ProductionProofLogUnset | ACTIVE |
+401:| ProductionGuardianSetUnset | REMOVED |
+402:| LiveRouteDisabled | ACTIVE |
+403:| SplCpiExecutionDisabled | ACTIVE |
+404:| ProductionProofLogUnset | ACTIVE |
+405:| runtime_deployable | false |
+406:| predeploy_gate | blocked |

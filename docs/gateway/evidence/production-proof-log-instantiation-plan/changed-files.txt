@@ -1,0 +1,13 @@
+docs/gateway/current-execution-plan.md
+docs/gateway/current-runtime-state.md
+docs/gateway/evidence/production-proof-log-instantiation-plan/allowed-path-guard.txt
+docs/gateway/evidence/production-proof-log-instantiation-plan/blocker-preservation-check.txt
+docs/gateway/evidence/production-proof-log-instantiation-plan/changed-files.txt
+docs/gateway/evidence/production-proof-log-instantiation-plan/forbidden-action-guard.txt
+docs/gateway/evidence/production-proof-log-instantiation-plan/material-safety-guard.txt
+docs/gateway/evidence/production-proof-log-instantiation-plan/package-summary.txt
+docs/gateway/evidence/production-proof-log-instantiation-plan/proof-log-plan-requirements.txt
+docs/gateway/evidence/production-proof-log-instantiation-plan/source-mutation-guard.txt
+docs/gateway/evidence/production-proof-log-instantiation-plan/state-preservation.txt
+docs/gateway/evidence/production-proof-log-instantiation-plan/theo-approval.txt
+docs/gateway/production-proof-log-instantiation-plan.md

@@ -1,0 +1,9 @@
+package=production-proof-log-instantiation-plan
+guard=material_safety_guard
+result=no_private_material_hits
+
+private_key_or_keypair_material_committed=false
+keypair_json_committed=false
+seed_phrase_committed=false
+mnemonic_committed=false
+signing_package_constructed=false

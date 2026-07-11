@@ -1,0 +1,14 @@
+activation_authorized=false
+deploy_authorized=false
+upgrade_authorized=false
+rpc_mutation_authorized=false
+route_enablement_authorized=false
+spl_cpi_enablement_authorized=false
+proof_log_instantiation_authorized=false
+guardian_set_mutation_authorized=false
+source_code_mutation_authorized=false
+blocker_removal_authorized=false
+signing_package_construction_authorized=false
+private_key_or_keypair_material_allowed=false
+exact_activation_go_authorized=false
+unrelated_cleanup_authorized=false
