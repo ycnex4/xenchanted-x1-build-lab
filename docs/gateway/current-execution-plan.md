@@ -351,3 +351,45 @@ Next required package:
 - production-proof-log-instantiation-plan
 
 Execution remains blocked.
+
+<!-- BEGIN production-proof-log-instantiation-plan -->
+## Production Proof Log Instantiation Plan
+
+Updated at UTC: 2026-07-11T05:04:53Z
+Package: production-proof-log-instantiation-plan
+Approval: APPROVE_PRODUCTION_PROOF_LOG_INSTANTIATION_PLAN_NO_ACTIVATION
+
+### Completed in this package
+
+This package defines the production proof-log model and the criteria required for a future separately approved proof-log source/config package.
+
+No proof-log instantiation occurs in this package.
+
+### Preserved restrictions
+
+| Action | State |
+| --- | --- |
+| Activation | BLOCKED |
+| Deploy | BLOCKED |
+| Upgrade | BLOCKED |
+| RPC mutation | BLOCKED |
+| Route enablement | BLOCKED |
+| SPL CPI enablement | BLOCKED |
+| Proof-log instantiation | BLOCKED |
+| Guardian set mutation | BLOCKED |
+| Source code mutation | BLOCKED |
+| Blocker removal | BLOCKED |
+| Signing package construction | BLOCKED |
+| Exact activation GO | BLOCKED |
+
+### Next required action
+
+Request separate approval for:
+
+production-proof-log-source-config-package
+
+or equivalent separately approved package.
+
+The next package must not imply activation. ProductionProofLogUnset may only be removed after separate approval and evidence that the proof-log publication model has been instantiated.
+
+<!-- END production-proof-log-instantiation-plan -->

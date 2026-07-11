@@ -1,0 +1,10 @@
+ExternalReviewIncomplete=REMOVED
+PlaceholderProgramId=REMOVED
+ProductionGuardianSetUnset=REMOVED
+LiveRouteDisabled=ACTIVE
+SplCpiExecutionDisabled=ACTIVE
+ProductionProofLogUnset=ACTIVE
+
+runtime_deployable=false
+predeploy_gate=blocked
+execution_remains_blocked=true

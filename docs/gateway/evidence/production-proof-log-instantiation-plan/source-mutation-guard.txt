@@ -1,0 +1,3 @@
+package=production-proof-log-instantiation-plan
+guard=source_mutation_guard
+result=no_source_code_mutation_hits

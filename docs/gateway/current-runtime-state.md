@@ -383,3 +383,45 @@ Next required action:
 - request/review production-proof-log-instantiation-plan.
 
 Exact activation GO remains premature and blocked.
+
+<!-- BEGIN production-proof-log-instantiation-plan -->
+## Production Proof Log Instantiation Plan
+
+Updated at UTC: 2026-07-11T05:04:52Z
+Package: production-proof-log-instantiation-plan
+Approval: APPROVE_PRODUCTION_PROOF_LOG_INSTANTIATION_PLAN_NO_ACTIVATION
+Package type: docs/evidence planning only
+
+### Current blocker state
+
+| Blocker / State | Status |
+| --- | --- |
+| ExternalReviewIncomplete | REMOVED |
+| PlaceholderProgramId | REMOVED |
+| ProductionGuardianSetUnset | REMOVED |
+| LiveRouteDisabled | ACTIVE |
+| SplCpiExecutionDisabled | ACTIVE |
+| ProductionProofLogUnset | ACTIVE |
+| runtime_deployable | false |
+| predeploy_gate | blocked |
+| activation_authorized | false |
+| deploy_authorized | false |
+| rpc_mutation_authorized | false |
+| route_enablement_authorized | false |
+| spl_cpi_enablement_authorized | false |
+| proof_log_instantiation_authorized | false |
+| blocker_removal_authorized | false |
+| source_code_mutation_authorized | false |
+
+### Runtime conclusion
+
+The production proof-log model is planned but not instantiated.
+
+ProductionProofLogUnset remains ACTIVE.
+LiveRouteDisabled remains ACTIVE.
+SplCpiExecutionDisabled remains ACTIVE.
+Runtime remains non-deployable.
+Predeploy gate remains blocked.
+Execution remains blocked.
+
+<!-- END production-proof-log-instantiation-plan -->

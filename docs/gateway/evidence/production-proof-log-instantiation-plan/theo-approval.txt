@@ -1,0 +1,72 @@
+APPROVE_PRODUCTION_PROOF_LOG_INSTANTIATION_PLAN_NO_ACTIVATION
+
+Approval Basis:
+- Prior package: production-guardian-set-v1-public-record-and-source-change COMPLETE
+- Consensus: NOT_READY_REQUIRES_PRE_GO_PACKAGE
+- Active lane: pre-go-operational-readiness
+- Scope: Documentation/evidence planning only
+- Safety preservation: all blockers preserved, no execution
+
+Verified Current State:
+- ExternalReviewIncomplete = REMOVED
+- PlaceholderProgramId = REMOVED(bound)
+- ProductionGuardianSetUnset = REMOVED
+- LiveRouteDisabled = ACTIVE
+- SplCpiExecutionDisabled = ACTIVE
+- ProductionProofLogUnset = ACTIVE
+- runtime_deployable = false
+- predeploy_gate = blocked
+- activation_authorized = false
+- deploy_authorized = false
+- rpc_mutation_authorized = false
+- route_enablement_authorized = false
+- spl_cpi_enablement_authorized = false
+- blocker_removal_authorized = false
+
+Allowed Changes:
+- docs/gateway/production-proof-log-instantiation-plan.md
+- docs/gateway/current-runtime-state.md
+- docs/gateway/current-execution-plan.md
+- docs/gateway/evidence/production-proof-log-instantiation-plan/
+
+Required Plan Content:
+- Proof-log purpose
+- Canonical record fields
+- Required hashes
+- Link model
+- Publication location/model
+- Retention policy
+- Operator/publication responsibility
+- Append-only / tamper-evidence expectations
+- Verification checklist
+- Criteria for future source/config package
+- Criteria for ProductionProofLogUnset resolution
+
+Forbidden:
+- Activation
+- Deploy
+- Upgrade
+- RPC mutation
+- Route enablement
+- SPL CPI enablement
+- Proof-log instantiation
+- Guardian set mutation
+- Source code mutation
+- Blocker removal
+- Signing package construction
+- Private key/keypair material
+- Exact activation GO
+- Unrelated cleanup
+
+Expected Preserved State:
+- ProductionProofLogUnset remains ACTIVE
+- LiveRouteDisabled remains ACTIVE
+- SplCpiExecutionDisabled remains ACTIVE
+- runtime_deployable remains false
+- predeploy_gate remains blocked
+- execution remains blocked
+- next required action becomes production-proof-log-source-config-package or equivalent separately approved package
+
+Review-integrity:
+This package must not be treated as activation authorization.
+Instantiation and blocker removal remain blocked until separately approved.

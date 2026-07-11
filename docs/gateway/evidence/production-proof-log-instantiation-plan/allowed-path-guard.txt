@@ -1,0 +1,3 @@
+package=production-proof-log-instantiation-plan
+guard=allowed_path_guard
+result=no_unapproved_path_hits
