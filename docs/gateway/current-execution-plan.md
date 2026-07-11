@@ -393,3 +393,42 @@ or equivalent separately approved package.
 The next package must not imply activation. ProductionProofLogUnset may only be removed after separate approval and evidence that the proof-log publication model has been instantiated.
 
 <!-- END production-proof-log-instantiation-plan -->
+
+<!-- BEGIN production-proof-log-source-config-and-resolution-package -->
+## Production Proof Log Source/Config and Resolution
+
+Updated at UTC: 2026-07-11T05:28:51Z
+Package: production-proof-log-source-config-and-resolution-package
+Approval: APPROVE_PRODUCTION_PROOF_LOG_SOURCE_CONFIG_AND_RESOLUTION_PACKAGE_NO_ACTIVATION
+Frozen roadmap stage: Stage 17 / Frozen Stage 1
+
+### Completed in this package
+
+- proof-log schema/config path is instantiated,
+- dry-run fixture record exists,
+- verification checklist exists,
+- guardian set v1 descriptor hash linkage exists,
+- consumed-event / replay-protection linkage exists,
+- ProductionProofLogUnset is removed if tests and evidence pass.
+
+### Preserved restrictions
+
+| Action | State |
+| --- | --- |
+| Activation | BLOCKED |
+| Deploy | BLOCKED |
+| Upgrade | BLOCKED |
+| RPC mutation | BLOCKED |
+| Route enablement | BLOCKED |
+| SPL CPI enablement | BLOCKED |
+| Live mint execution | BLOCKED |
+| External production proof-log publication | BLOCKED |
+| Guardian set mutation | BLOCKED |
+| Signing package construction | BLOCKED |
+| Exact activation GO | BLOCKED |
+
+### Next frozen roadmap stage
+
+live-route-spl-cpi-final-readiness-package
+
+<!-- END production-proof-log-source-config-and-resolution-package -->

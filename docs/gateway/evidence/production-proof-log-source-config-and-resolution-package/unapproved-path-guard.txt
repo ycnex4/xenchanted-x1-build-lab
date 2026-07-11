@@ -1,0 +1,3 @@
+package=production-proof-log-source-config-and-resolution-package
+guard=unapproved_path_guard
+result=no_unapproved_path_hits

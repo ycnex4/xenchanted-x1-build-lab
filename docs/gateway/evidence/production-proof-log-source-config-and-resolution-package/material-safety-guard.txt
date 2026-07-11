@@ -1,0 +1,11 @@
+package=production-proof-log-source-config-and-resolution-package
+guard=material_safety_guard
+result=no_private_material_hits
+
+private_key_or_keypair_material_committed=false
+keypair_json_committed=false
+seed_phrase_committed=false
+mnemonic_committed=false
+signing_package_constructed=false
+
+note=policy_mentions_of_private_key_seed_mnemonic_are_allowed_when_no_secret_material_value_or_keypair_payload_is_present
