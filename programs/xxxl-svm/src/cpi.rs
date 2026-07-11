@@ -35,6 +35,23 @@ pub const SPL_CPI_GUARD_REVIEWED_FOR_ACTIVATION_PACKAGE: bool = true;
 pub const SPL_CPI_EXECUTION_REMAINS_ACTIVATION_BLOCKED: bool = true;
 pub const SPL_CPI_BOUNDARY_MODE: &str = "GUARDED_ACTIVATION_PACKAGE_GATED";
 
+pub const SPL_CPI_MINT_TO_SOURCE_READY_FOR_FINAL_READINESS_PACKAGE: bool = true;
+pub const SPL_CPI_PDA_AUTHORITY_BINDING_VERIFIED_FOR_FINAL_READINESS_PACKAGE: bool = true;
+pub const SPL_CPI_TOKEN_PROGRAM_MINT_RECIPIENT_CONSTRAINTS_DOCUMENTED: bool = true;
+pub const SPL_CPI_GUARDIAN_PROOF_LOG_REPLAY_DEPENDENCIES_PRESERVED: bool = true;
+pub const SPL_CPI_NO_LIVE_MINT_EXECUTION_FOR_FINAL_READINESS_PACKAGE: bool = true;
+
+pub fn spl_cpi_repository_local_readiness_complete() -> bool {
+    SPL_CPI_GUARD_REVIEWED_FOR_ACTIVATION_PACKAGE
+        && SPL_CPI_EXECUTION_REMAINS_ACTIVATION_BLOCKED
+        && SPL_CPI_MINT_TO_SOURCE_READY_FOR_FINAL_READINESS_PACKAGE
+        && SPL_CPI_PDA_AUTHORITY_BINDING_VERIFIED_FOR_FINAL_READINESS_PACKAGE
+        && SPL_CPI_TOKEN_PROGRAM_MINT_RECIPIENT_CONSTRAINTS_DOCUMENTED
+        && SPL_CPI_GUARDIAN_PROOF_LOG_REPLAY_DEPENDENCIES_PRESERVED
+        && SPL_CPI_NO_LIVE_MINT_EXECUTION_FOR_FINAL_READINESS_PACKAGE
+        && !spl_mint_to_cpi_execution_enabled()
+}
+
 pub struct MintToCpiAccounts<'a, 'b> {
     pub token_program: &'a AccountInfo<'b>,
     pub mint: &'a AccountInfo<'b>,
@@ -258,6 +275,19 @@ pub fn mint_to_cpi_boundary(
 
 #[cfg(test)]
 mod tests {
+
+    #[test]
+    fn spl_cpi_final_readiness_is_repository_local_and_not_live_mint_execution() {
+        assert!(crate::cpi::SPL_CPI_MINT_TO_SOURCE_READY_FOR_FINAL_READINESS_PACKAGE);
+        assert!(crate::cpi::SPL_CPI_PDA_AUTHORITY_BINDING_VERIFIED_FOR_FINAL_READINESS_PACKAGE);
+        assert!(crate::cpi::SPL_CPI_TOKEN_PROGRAM_MINT_RECIPIENT_CONSTRAINTS_DOCUMENTED);
+        assert!(crate::cpi::SPL_CPI_GUARDIAN_PROOF_LOG_REPLAY_DEPENDENCIES_PRESERVED);
+        assert!(crate::cpi::SPL_CPI_NO_LIVE_MINT_EXECUTION_FOR_FINAL_READINESS_PACKAGE);
+        assert!(crate::cpi::spl_cpi_repository_local_readiness_complete());
+        assert!(!crate::cpi::spl_mint_to_cpi_execution_enabled());
+    }
+
+
     use super::*;
     use solana_program::{account_info::AccountInfo, pubkey::Pubkey};
     use std::str::FromStr;

@@ -432,3 +432,39 @@ Frozen roadmap stage: Stage 17 / Frozen Stage 1
 live-route-spl-cpi-final-readiness-package
 
 <!-- END production-proof-log-source-config-and-resolution-package -->
+
+<!-- BEGIN live-route-spl-cpi-final-readiness-package -->
+## Live Route + SPL CPI Final Readiness
+
+Updated at UTC: 2026-07-11T06:08:20Z
+Package: live-route-spl-cpi-final-readiness-package
+Approval: APPROVE_LIVE_ROUTE_SPL_CPI_FINAL_READINESS_PACKAGE_NO_ACTIVATION
+Frozen roadmap stage: Stage 18 / Frozen Stage 2
+
+### Completed in this package
+
+- live route source path readiness recorded,
+- process_instruction boundary documented/tested,
+- SPL Token mint_to CPI path readiness recorded,
+- PDA authority binding documented,
+- ProgramData / upgrade authority documented,
+- LiveRouteDisabled removed if tests/evidence pass,
+- SplCpiExecutionDisabled removed if tests/evidence pass.
+
+### Preserved restrictions
+
+| Action | State |
+| --- | --- |
+| Activation | BLOCKED |
+| Deploy | BLOCKED |
+| Upgrade | BLOCKED |
+| RPC mutation | BLOCKED |
+| Live-chain transaction | BLOCKED |
+| Live mint execution | BLOCKED |
+| Exact activation GO | BLOCKED |
+
+### Next frozen roadmap stage
+
+pre-go-deployment-readiness-review
+
+<!-- END live-route-spl-cpi-final-readiness-package -->

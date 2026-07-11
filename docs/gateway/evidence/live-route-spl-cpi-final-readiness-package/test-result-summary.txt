@@ -1,0 +1,30 @@
+deployment_status_test_exit=0
+125:13 |     program_error::ProgramError, pubkey::Pubkey, rent::Rent, system_program, sysvar::Sysvar,
+149:13 |     program_error::ProgramError, pubkey::Pubkey, rent::Rent, system_program, sysvar::Sysvar,
+208:running 24 tests
+234:test result: ok. 24 passed; 0 failed; 0 ignored; 0 measured; 767 filtered out; finished in 0.01s
+
+safety_invariants_test_exit=0
+124:13 |     program_error::ProgramError, pubkey::Pubkey, rent::Rent, system_program, sysvar::Sysvar,
+148:13 |     program_error::ProgramError, pubkey::Pubkey, rent::Rent, system_program, sysvar::Sysvar,
+207:running 23 tests
+232:test result: ok. 23 passed; 0 failed; 0 ignored; 0 measured; 768 filtered out; finished in 0.01s
+
+processor_test_exit=0
+124:13 |     program_error::ProgramError, pubkey::Pubkey, rent::Rent, system_program, sysvar::Sysvar,
+148:13 |     program_error::ProgramError, pubkey::Pubkey, rent::Rent, system_program, sysvar::Sysvar,
+207:running 50 tests
+259:test result: ok. 50 passed; 0 failed; 0 ignored; 0 measured; 741 filtered out; finished in 0.02s
+
+cpi_test_exit=0
+124:13 |     program_error::ProgramError, pubkey::Pubkey, rent::Rent, system_program, sysvar::Sysvar,
+148:13 |     program_error::ProgramError, pubkey::Pubkey, rent::Rent, system_program, sysvar::Sysvar,
+207:running 40 tests
+249:test result: ok. 40 passed; 0 failed; 0 ignored; 0 measured; 751 filtered out; finished in 0.02s
+
+full_lib_test_exit=0
+124:13 |     program_error::ProgramError, pubkey::Pubkey, rent::Rent, system_program, sysvar::Sysvar,
+148:13 |     program_error::ProgramError, pubkey::Pubkey, rent::Rent, system_program, sysvar::Sysvar,
+207:running 791 tests
+979:test verifier::quorum_authorization_boundary::tests::failed_attempt_does_not_kill_valid_m_of_n_and_error_is_preserved ... ok
+1000:test result: ok. 790 passed; 0 failed; 1 ignored; 0 measured; 0 filtered out; finished in 0.29s
