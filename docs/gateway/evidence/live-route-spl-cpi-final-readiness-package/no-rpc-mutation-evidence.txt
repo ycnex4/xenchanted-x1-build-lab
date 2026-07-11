@@ -1,0 +1,7 @@
+package=live-route-spl-cpi-final-readiness-package
+rpc_mutation_authorized=false
+live_chain_transaction_authorized=false
+live_mint_execution_authorized=false
+deployment_authorized=false
+upgrade_authorized=false
+evidence_type=local_repo_only

@@ -1,0 +1,249 @@
+warning: unused import: `clock::Clock`
+  --> src/processor.rs:12:32
+   |
+12 |     account_info::AccountInfo, clock::Clock, entrypoint::ProgramResult, msg,
+   |                                ^^^^^^^^^^^^
+   |
+   = note: `#[warn(unused_imports)]` (part of `#[warn(unused)]`) on by default
+
+warning: type `Phase41F_1CheckedByteExtractionStatus` should have an upper camel case name
+  --> src/verifier/checked_ed25519_byte_extraction_boundary.rs:18:10
+   |
+18 | pub enum Phase41F_1CheckedByteExtractionStatus {
+   |          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ help: convert the identifier to upper camel case: `Phase41f1checkedByteExtractionStatus`
+   |
+   = note: `#[warn(non_camel_case_types)]` (part of `#[warn(nonstandard_style)]`) on by default
+
+warning: type `Phase41F_1ExtractedEd25519ByteSlices` should have an upper camel case name
+  --> src/verifier/checked_ed25519_byte_extraction_boundary.rs:32:12
+   |
+32 | pub struct Phase41F_1ExtractedEd25519ByteSlices<'a> {
+   |            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ help: convert the identifier to upper camel case: `Phase41f1extractedEd25519byteSlices`
+
+warning: type `Phase41F_1CheckedByteExtractionResult` should have an upper camel case name
+  --> src/verifier/checked_ed25519_byte_extraction_boundary.rs:42:12
+   |
+42 | pub struct Phase41F_1CheckedByteExtractionResult<'a> {
+   |            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ help: convert the identifier to upper camel case: `Phase41f1checkedByteExtractionResult`
+
+warning: type `Phase41F_1CheckedByteExtractionBoundaryReport` should have an upper camel case name
+  --> src/verifier/checked_ed25519_byte_extraction_boundary.rs:76:12
+   |
+76 | pub struct Phase41F_1CheckedByteExtractionBoundaryReport {
+   |            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ help: convert the identifier to upper camel case: `Phase41f1checkedByteExtractionBoundaryReport`
+
+warning: type `Phase41E_1Ed25519ByteParsingStatus` should have an upper camel case name
+  --> src/verifier/ed25519_instruction_byte_parsing_boundary.rs:26:10
+   |
+26 | pub enum Phase41E_1Ed25519ByteParsingStatus {
+   |          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ help: convert the identifier to upper camel case: `Phase41e1ed25519byteParsingStatus`
+
+warning: type `Phase41E_1ByteRange` should have an upper camel case name
+  --> src/verifier/ed25519_instruction_byte_parsing_boundary.rs:46:12
+   |
+46 | pub struct Phase41E_1ByteRange {
+   |            ^^^^^^^^^^^^^^^^^^^ help: convert the identifier to upper camel case: `Phase41e1byteRange`
+
+warning: type `Phase41E_1Ed25519InstructionIndexReferences` should have an upper camel case name
+  --> src/verifier/ed25519_instruction_byte_parsing_boundary.rs:52:12
+   |
+52 | pub struct Phase41E_1Ed25519InstructionIndexReferences {
+   |            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ help: convert the identifier to upper camel case: `Phase41e1ed25519instructionIndexReferences`
+
+warning: type `Phase41E_1ParsedEd25519Offsets` should have an upper camel case name
+  --> src/verifier/ed25519_instruction_byte_parsing_boundary.rs:59:12
+   |
+59 | pub struct Phase41E_1ParsedEd25519Offsets {
+   |            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ help: convert the identifier to upper camel case: `Phase41e1parsedEd25519offsets`
+
+warning: type `Phase41E_1Ed25519ByteParsingResult` should have an upper camel case name
+  --> src/verifier/ed25519_instruction_byte_parsing_boundary.rs:71:12
+   |
+71 | pub struct Phase41E_1Ed25519ByteParsingResult {
+   |            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ help: convert the identifier to upper camel case: `Phase41e1ed25519byteParsingResult`
+
+warning: type `Phase41E_1Ed25519ByteParsingBoundaryReport` should have an upper camel case name
+   --> src/verifier/ed25519_instruction_byte_parsing_boundary.rs:107:12
+    |
+107 | pub struct Phase41E_1Ed25519ByteParsingBoundaryReport {
+    |            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ help: convert the identifier to upper camel case: `Phase41e1ed25519byteParsingBoundaryReport`
+
+warning: type `Phase41F_2Ed25519VerificationModel` should have an upper camel case name
+  --> src/verifier/ed25519_signature_verification_boundary.rs:21:10
+   |
+21 | pub enum Phase41F_2Ed25519VerificationModel {
+   |          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ help: convert the identifier to upper camel case: `Phase41f2ed25519verificationModel`
+
+warning: type `Phase41F_2Ed25519SignatureVerificationStatus` should have an upper camel case name
+  --> src/verifier/ed25519_signature_verification_boundary.rs:26:10
+   |
+26 | pub enum Phase41F_2Ed25519SignatureVerificationStatus {
+   |          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ help: convert the identifier to upper camel case: `Phase41f2ed25519signatureVerificationStatus`
+
+warning: type `Phase41F_2VerifiedEd25519SignatureRanges` should have an upper camel case name
+  --> src/verifier/ed25519_signature_verification_boundary.rs:41:12
+   |
+41 | pub struct Phase41F_2VerifiedEd25519SignatureRanges {
+   |            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ help: convert the identifier to upper camel case: `Phase41f2verifiedEd25519signatureRanges`
+
+warning: type `Phase41F_2Ed25519SignatureVerificationResult` should have an upper camel case name
+  --> src/verifier/ed25519_signature_verification_boundary.rs:48:12
+   |
+48 | pub struct Phase41F_2Ed25519SignatureVerificationResult {
+   |            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ help: convert the identifier to upper camel case: `Phase41f2ed25519signatureVerificationResult`
+
+warning: type `Phase41F_2Ed25519SignatureVerificationBoundaryReport` should have an upper camel case name
+  --> src/verifier/ed25519_signature_verification_boundary.rs:85:12
+   |
+85 | pub struct Phase41F_2Ed25519SignatureVerificationBoundaryReport {
+   |            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ help: convert the identifier to upper camel case: `Phase41f2ed25519signatureVerificationBoundaryReport`
+
+warning: use of deprecated function `state::mark_processed_event_consumed_legacy_planning_only`: Use the Phase 41K.4 processed-event marking boundary instead
+  --> src/execution_plan.rs:10:19
+   |
+10 | use crate::state::mark_processed_event_consumed_legacy_planning_only;
+   |                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+   |
+   = note: `#[warn(deprecated)]` on by default
+
+warning: use of deprecated module `solana_program::system_instruction`: Use `solana_system_interface` crate instead
+ --> src/processed_event_marking_boundary.rs:3:17
+  |
+3 |     rent::Rent, system_instruction, system_program,
+  |                 ^^^^^^^^^^^^^^^^^^
+
+warning: use of deprecated module `solana_program::system_program`: Use `solana_sdk_ids::system_program` instead
+ --> src/processed_event_marking_boundary.rs:3:37
+  |
+3 |     rent::Rent, system_instruction, system_program,
+  |                                     ^^^^^^^^^^^^^^
+
+warning: use of deprecated module `solana_program::system_program`: Use `solana_sdk_ids::system_program` instead
+  --> src/processor.rs:13:62
+   |
+13 |     program_error::ProgramError, pubkey::Pubkey, rent::Rent, system_program, sysvar::Sysvar,
+   |                                                              ^^^^^^^^^^^^^^
+
+warning: use of deprecated function `state::mark_processed_event_consumed_legacy_planning_only`: Use the Phase 41K.4 processed-event marking boundary instead
+   --> src/state.rs:488:9
+    |
+488 |         mark_processed_event_consumed_legacy_planning_only(
+    |         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: use of deprecated function `state::mark_processed_event_consumed_legacy_planning_only`: Use the Phase 41K.4 processed-event marking boundary instead
+   --> src/state.rs:521:13
+    |
+521 |             mark_processed_event_consumed_legacy_planning_only(
+    |             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: use of deprecated function `state::mark_processed_event_consumed_legacy_planning_only`: Use the Phase 41K.4 processed-event marking boundary instead
+   --> src/state.rs:548:13
+    |
+548 |             mark_processed_event_consumed_legacy_planning_only(
+    |             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: unused import: `sysvar::Sysvar`
+  --> src/processor.rs:13:78
+   |
+13 |     program_error::ProgramError, pubkey::Pubkey, rent::Rent, system_program, sysvar::Sysvar,
+   |                                                                              ^^^^^^^^^^^^^^
+
+warning: unused variable: `matched_instruction_index`
+   --> src/verifier/prefilter_phase_41c3_candidate_descriptor_runtime_boundary.rs:281:9
+    |
+281 |     let matched_instruction_index = phase_41c3_result.matched_instruction_index;
+    |         ^^^^^^^^^^^^^^^^^^^^^^^^^ help: if this is intentional, prefix it with an underscore: `_matched_instruction_index`
+    |
+    = note: `#[warn(unused_variables)]` (part of `#[warn(unused)]`) on by default
+
+warning: function `consume_gateway_mint_account_contract_documents_owner_models` is never used
+   --> src/account_contract.rs:562:8
+    |
+562 |     fn consume_gateway_mint_account_contract_documents_owner_models() {
+    |        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    |
+    = note: `#[warn(dead_code)]` (part of `#[warn(unused)]`) on by default
+
+warning: function `assert_owner_model` is never used
+   --> src/account_contract.rs:626:8
+    |
+626 |     fn assert_owner_model(index: usize, owner_model: AccountOwnerModel) {
+    |        ^^^^^^^^^^^^^^^^^^
+
+warning: function `read_u128_le` is never used
+    --> src/processor.rs:2330:8
+     |
+2330 |     fn read_u128_le(input: &[u8], offset: usize) -> u128 {
+     |        ^^^^^^^^^^^^
+
+warning: function `read_fixed_32` is never used
+    --> src/processor.rs:2342:8
+     |
+2342 |     fn read_fixed_32(input: &[u8], offset: usize) -> [u8; 32] {
+     |        ^^^^^^^^^^^^^
+
+warning: constant `GUARDIAN_3_PUBLIC_KEY_BYTES` is never used
+   --> src/verifier/quorum_authorization_boundary.rs:342:11
+    |
+342 |     const GUARDIAN_3_PUBLIC_KEY_BYTES: [u8; 32] = [0x03; 32];
+    |           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: constant `OTHER_GUARDIAN_SET_ID` is never used
+   --> src/verifier/replay_protection_boundary.rs:415:11
+    |
+415 |     const OTHER_GUARDIAN_SET_ID: [u8; 32] = [0x23; 32];
+    |           ^^^^^^^^^^^^^^^^^^^^^
+
+warning: constant `GUARDIAN_3_PUBLIC_KEY_BYTES` is never used
+   --> src/verifier/replay_protection_boundary.rs:430:11
+    |
+430 |     const GUARDIAN_3_PUBLIC_KEY_BYTES: [u8; 32] = [0x03; 32];
+    |           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: `xxxl-svm` (lib test) generated 32 warnings (run `cargo fix --lib -p xxxl-svm --tests` to apply 2 suggestions)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 3.62s
+     Running unittests src/lib.rs (programs/xxxl-svm/target/debug/deps/xxxl_svm-0ad1c373db1503b6)
+
+running 40 tests
+test cpi::tests::mint_to_cpi_planning_boundary_rejects_live_route_flag ... ok
+test cpi::tests::gateway_mint_authority_pda_rejects_wrong_pda ... ok
+test cpi::tests::mint_to_cpi_planning_boundary_rejects_mint_to_flag ... ok
+test cpi::tests::gateway_mint_authority_pda_accepts_real_derived_fixture ... ok
+test cpi::tests::mint_to_boundary_rejects_wrong_pda_before_invoke_signed ... ok
+test cpi::tests::gateway_mint_authority_pda_rejects_wrong_bump ... ok
+test cpi::tests::mint_to_cpi_planning_boundary_rejects_amount_mismatch ... ok
+test cpi::tests::guarded_mint_to_cpi_execution_gate_boundary_rejects_wrong_pda_before_gate ... ok
+test cpi::tests::guarded_mint_to_cpi_execution_gate_boundary_rejects_live_route_flag_before_cpi ... ok
+test cpi::tests::mint_to_cpi_planning_boundary_builds_plan_without_invoke_signed ... ok
+test cpi::tests::mint_to_cpi_planning_boundary_rejects_wrong_bump ... ok
+test cpi::tests::guarded_mint_to_cpi_execution_gate_boundary_rejects_planning_boundary_mismatch ... ok
+test cpi::tests::guarded_mint_to_cpi_execution_gate_boundary_rejects_when_gate_disabled ... ok
+test cpi::tests::mint_to_cpi_planning_boundary_rejects_wrong_mint_mapping ... ok
+test cpi::tests::mint_to_cpi_planning_boundary_rejects_wrong_pda ... ok
+test cpi::tests::mint_to_cpi_planning_boundary_rejects_wrong_token_program ... ok
+test cpi::tests::mint_to_cpi_planning_boundary_rejects_zero_boundary_amount ... ok
+test cpi::tests::mint_to_instruction_rejects_zero_amount ... ok
+test cpi::tests::mint_to_instruction_uses_spl_token_program_and_expected_accounts ... ok
+test cpi::tests::signer_seeds_are_exact_and_include_bump ... ok
+test cpi::tests::spl_cpi_final_readiness_is_repository_local_and_not_live_mint_execution ... ok
+test deployment_status::tests::live_route_spl_cpi_transition_keeps_no_active_deployment_blockers_but_runtime_blocked ... ok
+test execution_plan::tests::atomic_execution_plan_is_built_from_prepared_cpi_boundary ... ok
+test deployment_status::tests::runtime_deployment_report_has_transitioned_spl_cpi_execution_blocker ... ok
+test processed_event_marking_boundary::tests::executable_processed_event_rejects_before_cpi_or_mutation ... ok
+test processed_event_marking_boundary::tests::already_consumed_processed_event_rejects_before_cpi_or_mutation ... ok
+test processed_event_marking_boundary::tests::readonly_processed_event_rejects_before_cpi_or_mutation ... ok
+test processed_event_marking_boundary::tests::signer_processed_event_rejects_before_cpi_or_mutation ... ok
+test processed_event_marking_boundary::tests::system_owned_nonzero_data_rejects_before_cpi_or_mutation ... ok
+test processed_event_marking_boundary::tests::wrong_pda_rejects_before_cpi_or_mutation ... ok
+test processed_event_marking_boundary::tests::wrong_system_program_account_rejects_before_cpi_or_mutation ... ok
+test processor::tests::runtime_disabled_spl_cpi_gate_boundary_rejects_at_gate_without_mutation ... ok
+test processor::tests::handler_integration_prepares_cpi_boundary_after_decode_and_validation ... ok
+test processor::tests::runtime_disabled_spl_cpi_gate_boundary_rejects_consumed_event_before_gate_without_mutation ... ok
+test processor::tests::runtime_disabled_spl_cpi_gate_boundary_rejects_wrong_recipient_token_account_without_mutation ... ok
+test processor::tests::runtime_disabled_spl_cpi_gate_boundary_rejects_zero_amount_without_mutation ... ok
+test processor::tests::runtime_planning_composition_boundary_builds_execution_and_cpi_plans_without_mutation ... ok
+test safety_invariants::tests::live_route_spl_cpi_transition_keeps_runtime_blocked_and_safety_locked ... ok
+test safety_invariants::tests::spl_cpi_is_consistent_with_current_safety_invariants ... ok
+test safety_invariants::tests::spl_cpi_safety_consistency_report_is_disabled_and_consistent ... ok
+
+test result: ok. 40 passed; 0 failed; 0 ignored; 0 measured; 751 filtered out; finished in 0.02s

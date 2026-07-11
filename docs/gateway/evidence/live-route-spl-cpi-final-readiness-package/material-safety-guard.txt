@@ -1,0 +1,10 @@
+package=live-route-spl-cpi-final-readiness-package
+guard=material_safety_guard
+scope=package_changed_files_only
+result=no_private_material_hits
+
+private_key_or_keypair_material_committed=false
+keypair_json_committed=false
+seed_phrase_committed=false
+mnemonic_committed=false
+signing_package_constructed=false

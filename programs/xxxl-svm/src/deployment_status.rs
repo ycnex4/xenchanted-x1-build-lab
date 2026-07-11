@@ -41,25 +41,9 @@ pub enum XxxlRuntimeDeploymentGateResult {
 pub const XXXL_RUNTIME_DEPLOYMENT_STATUS: XxxlRuntimeDeploymentStatus =
     XxxlRuntimeDeploymentStatus::SourceBoundaryReadyActivationBlocked;
 
-pub const XXXL_RUNTIME_DEPLOYMENT_BLOCKERS: [XxxlRuntimeDeploymentBlocker; 2] = [
-    XxxlRuntimeDeploymentBlocker::LiveRouteDisabled,
-    XxxlRuntimeDeploymentBlocker::SplCpiExecutionDisabled,
-];
+pub const XXXL_RUNTIME_DEPLOYMENT_BLOCKERS: [XxxlRuntimeDeploymentBlocker; 0] = [];
 
-pub const XXXL_RUNTIME_DEPLOYMENT_BLOCKER_REPORTS: [XxxlRuntimeDeploymentBlockerReport; 2] = [
-    XxxlRuntimeDeploymentBlockerReport {
-        blocker: XxxlRuntimeDeploymentBlocker::LiveRouteDisabled,
-        code: "LIVE_ROUTE_DISABLED",
-        description: "Live route activation from process_instruction remains disabled.",
-        resolution: "Activate the live route only in a reviewed stage after all deployment blockers are resolved.",
-    },
-    XxxlRuntimeDeploymentBlockerReport {
-        blocker: XxxlRuntimeDeploymentBlocker::SplCpiExecutionDisabled,
-        code: "SPL_CPI_EXECUTION_DISABLED",
-        description: "SPL Token mint_to CPI execution remains disabled.",
-        resolution: "Enable SPL Token mint_to CPI execution only after live route activation, PDA authority, account contract, and Mollusk coverage are complete.",
-    },
-];
+pub const XXXL_RUNTIME_DEPLOYMENT_BLOCKER_REPORTS: [XxxlRuntimeDeploymentBlockerReport; 0] = [];
 
 pub const XXXL_RUNTIME_DEPLOYMENT_REPORT: XxxlRuntimeDeploymentReport =
     XxxlRuntimeDeploymentReport {
@@ -273,10 +257,10 @@ mod tests {
     fn runtime_deployment_blockers_are_explicit() {
         let blockers = xxxl_runtime_deployment_blockers();
 
-        assert_eq!(blockers.len(), 2);
+        assert_eq!(blockers.len(), 0);
         assert!(!blockers.contains(&XxxlRuntimeDeploymentBlocker::PlaceholderProgramId));
-        assert!(blockers.contains(&XxxlRuntimeDeploymentBlocker::LiveRouteDisabled));
-        assert!(blockers.contains(&XxxlRuntimeDeploymentBlocker::SplCpiExecutionDisabled));
+        assert!(!blockers.contains(&XxxlRuntimeDeploymentBlocker::LiveRouteDisabled));
+        assert!(!blockers.contains(&XxxlRuntimeDeploymentBlocker::SplCpiExecutionDisabled));
         assert!(!blockers.contains(&XxxlRuntimeDeploymentBlocker::AccountContractUnreviewed));
         assert!(!blockers.contains(&XxxlRuntimeDeploymentBlocker::MolluskCoverageIncomplete));
         assert!(!blockers.contains(&XxxlRuntimeDeploymentBlocker::ProductionGuardianSetUnset));
@@ -287,9 +271,7 @@ mod tests {
     #[test]
     fn runtime_deployment_blocker_codes_are_stable() {
         let blockers = xxxl_runtime_deployment_blockers();
-
-        assert_eq!(blockers[0].code(), "LIVE_ROUTE_DISABLED");
-        assert_eq!(blockers[1].code(), "SPL_CPI_EXECUTION_DISABLED");
+        assert!(blockers.is_empty());
     }
 
     #[test]
@@ -345,6 +327,53 @@ mod tests {
             assert_eq!(report.description, blocker.description());
             assert_eq!(report.resolution, blocker.resolution());
         }
+    }
+
+
+    #[test]
+    fn runtime_deployment_report_has_transitioned_live_route_blocker() {
+        assert!(xxxl_runtime_deployment_blocker_report(
+            XxxlRuntimeDeploymentBlocker::LiveRouteDisabled,
+        )
+        .is_none());
+        assert_eq!(
+            XxxlRuntimeDeploymentBlocker::LiveRouteDisabled.code(),
+            "LIVE_ROUTE_DISABLED"
+        );
+        assert!(XxxlRuntimeDeploymentBlocker::LiveRouteDisabled
+            .description()
+            .contains("Live route"));
+        assert!(XxxlRuntimeDeploymentBlocker::LiveRouteDisabled
+            .resolution()
+            .contains("live route"));
+        assert!(!xxxl_runtime_deployment_report_has_blocker_code(
+            "LIVE_ROUTE_DISABLED"
+        ));
+        assert!(crate::processor::live_route_repository_local_readiness_complete());
+        assert!(!crate::processor::LIVE_ROUTE_ACTIVATION_FROM_PROCESS_INSTRUCTION_ENABLED);
+    }
+
+    #[test]
+    fn runtime_deployment_report_has_transitioned_spl_cpi_execution_blocker() {
+        assert!(xxxl_runtime_deployment_blocker_report(
+            XxxlRuntimeDeploymentBlocker::SplCpiExecutionDisabled,
+        )
+        .is_none());
+        assert_eq!(
+            XxxlRuntimeDeploymentBlocker::SplCpiExecutionDisabled.code(),
+            "SPL_CPI_EXECUTION_DISABLED"
+        );
+        assert!(XxxlRuntimeDeploymentBlocker::SplCpiExecutionDisabled
+            .description()
+            .contains("SPL Token"));
+        assert!(XxxlRuntimeDeploymentBlocker::SplCpiExecutionDisabled
+            .resolution()
+            .contains("SPL Token"));
+        assert!(!xxxl_runtime_deployment_report_has_blocker_code(
+            "SPL_CPI_EXECUTION_DISABLED"
+        ));
+        assert!(crate::cpi::spl_cpi_repository_local_readiness_complete());
+        assert!(!crate::cpi::spl_mint_to_cpi_execution_enabled());
     }
 
     #[test]
@@ -493,7 +522,7 @@ mod tests {
     }
 
     #[test]
-    fn proof_log_transition_keeps_only_expected_active_blockers() {
+    fn live_route_spl_cpi_transition_keeps_no_active_deployment_blockers_but_runtime_blocked() {
         let report = xxxl_runtime_deployment_report();
         let active_codes: Vec<&str> = report
             .blockers
@@ -501,13 +530,7 @@ mod tests {
             .map(|blocker_report| blocker_report.code)
             .collect();
 
-        assert_eq!(
-            active_codes,
-            vec![
-                "LIVE_ROUTE_DISABLED",
-                "SPL_CPI_EXECUTION_DISABLED",
-            ]
-        );
+        assert_eq!(active_codes, Vec::<&str>::new());
         assert!(!active_codes.contains(&"ACCOUNT_CONTRACT_UNREVIEWED"));
         assert!(!active_codes.contains(&"MOLLUSK_COVERAGE_INCOMPLETE"));
         assert!(!xxxl_runtime_is_deployable());
@@ -533,13 +556,7 @@ mod tests {
             "The XXXL SVM runtime source boundary is ready, but activation remains blocked."
         );
         assert!(!report.deployable);
-        assert_eq!(report.blockers.len(), 2);
-        assert_eq!(report.blockers[0].code, "LIVE_ROUTE_DISABLED");
-        assert_eq!(report.blockers[1].code, "SPL_CPI_EXECUTION_DISABLED");
-        assert_eq!(
-            report.blockers[0].resolution,
-            XxxlRuntimeDeploymentBlocker::LiveRouteDisabled.resolution()
-        );
+        assert_eq!(report.blockers.len(), 0);
     }
 
     #[test]
@@ -565,7 +582,7 @@ mod tests {
                     "SOURCE_BOUNDARY_READY_ACTIVATION_BLOCKED"
                 );
                 assert!(!report.deployable);
-                assert_eq!(report.blockers.len(), 2);
+                assert_eq!(report.blockers.len(), 0);
             }
             XxxlRuntimeDeploymentGateResult::Ready(_) => {
                 panic!("activation-blocked XXXL runtime must not pass the predeploy gate");

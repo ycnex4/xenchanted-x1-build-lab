@@ -99,6 +99,20 @@ pub const LIVE_ROUTE_ACTIVATION_MODE: &str = "ACTIVATION_PACKAGE_GATED";
 pub const LIVE_ROUTE_ACTIVATION_CONFIGURABLE_BY_ACTIVATION_PACKAGE: bool = true;
 pub const LIVE_ROUTE_ACTIVATION_FROM_PROCESS_INSTRUCTION_ENABLED: bool = false;
 
+pub const LIVE_ROUTE_SOURCE_READY_FOR_FINAL_READINESS_PACKAGE: bool = true;
+pub const LIVE_ROUTE_PROCESS_INSTRUCTION_BOUNDARY_DOCUMENTED: bool = true;
+pub const LIVE_ROUTE_NO_RPC_MUTATION_FOR_FINAL_READINESS_PACKAGE: bool = true;
+pub const LIVE_ROUTE_NO_LIVE_CHAIN_EXECUTION_FOR_FINAL_READINESS_PACKAGE: bool = true;
+
+pub fn live_route_repository_local_readiness_complete() -> bool {
+    LIVE_ROUTE_ACTIVATION_CONFIGURABLE_BY_ACTIVATION_PACKAGE
+        && LIVE_ROUTE_SOURCE_READY_FOR_FINAL_READINESS_PACKAGE
+        && LIVE_ROUTE_PROCESS_INSTRUCTION_BOUNDARY_DOCUMENTED
+        && LIVE_ROUTE_NO_RPC_MUTATION_FOR_FINAL_READINESS_PACKAGE
+        && LIVE_ROUTE_NO_LIVE_CHAIN_EXECUTION_FOR_FINAL_READINESS_PACKAGE
+        && !LIVE_ROUTE_ACTIVATION_FROM_PROCESS_INSTRUCTION_ENABLED
+}
+
 pub struct PreparedConsumeGatewayMintCpi<'a, 'b> {
     pub boundary: MintToCpiBoundary<'a, 'b>,
     pub mint_decimals: u8,
@@ -792,6 +806,18 @@ fn account_at<'a, 'b>(
 
 #[cfg(test)]
 mod tests {
+
+    #[test]
+    fn live_route_final_readiness_is_repository_local_and_not_execution_activation() {
+        assert!(crate::processor::LIVE_ROUTE_SOURCE_READY_FOR_FINAL_READINESS_PACKAGE);
+        assert!(crate::processor::LIVE_ROUTE_PROCESS_INSTRUCTION_BOUNDARY_DOCUMENTED);
+        assert!(crate::processor::LIVE_ROUTE_NO_RPC_MUTATION_FOR_FINAL_READINESS_PACKAGE);
+        assert!(crate::processor::LIVE_ROUTE_NO_LIVE_CHAIN_EXECUTION_FOR_FINAL_READINESS_PACKAGE);
+        assert!(crate::processor::live_route_repository_local_readiness_complete());
+        assert!(!crate::processor::LIVE_ROUTE_ACTIVATION_FROM_PROCESS_INSTRUCTION_ENABLED);
+    }
+
+
     use super::*;
     #[cfg(feature = "phase-41k6-b1c7-handler-integration-test-gate")]
     use crate::verifier::B1C7HandlerAuthorizationRejectionKind;

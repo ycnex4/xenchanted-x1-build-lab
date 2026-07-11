@@ -1,0 +1,36 @@
+deployment_status active blockers:
+44:pub const XXXL_RUNTIME_DEPLOYMENT_BLOCKERS: [XxxlRuntimeDeploymentBlocker; 0] = [];
+46:pub const XXXL_RUNTIME_DEPLOYMENT_BLOCKER_REPORTS: [XxxlRuntimeDeploymentBlockerReport; 0] = [];
+55:        blockers: &XXXL_RUNTIME_DEPLOYMENT_BLOCKER_REPORTS,
+168:    &XXXL_RUNTIME_DEPLOYMENT_BLOCKERS
+172:    &XXXL_RUNTIME_DEPLOYMENT_BLOCKER_REPORTS
+178:    XXXL_RUNTIME_DEPLOYMENT_BLOCKER_REPORTS
+188:    XXXL_RUNTIME_DEPLOYMENT_BLOCKER_REPORTS
+
+runtime flags:
+programs/xxxl-svm/src/processor.rs:100:pub const LIVE_ROUTE_ACTIVATION_FROM_PROCESS_INSTRUCTION_ENABLED: bool = false;
+programs/xxxl-svm/src/processor.rs:107:pub fn live_route_repository_local_readiness_complete() -> bool {
+programs/xxxl-svm/src/processor.rs:113:        && !LIVE_ROUTE_ACTIVATION_FROM_PROCESS_INSTRUCTION_ENABLED
+programs/xxxl-svm/src/processor.rs:345:    if !crate::cpi::spl_mint_to_cpi_execution_enabled() {
+programs/xxxl-svm/src/processor.rs:816:        assert!(crate::processor::live_route_repository_local_readiness_complete());
+programs/xxxl-svm/src/processor.rs:817:        assert!(!crate::processor::LIVE_ROUTE_ACTIVATION_FROM_PROCESS_INSTRUCTION_ENABLED);
+programs/xxxl-svm/src/cpi.rs:44:pub fn spl_cpi_repository_local_readiness_complete() -> bool {
+programs/xxxl-svm/src/cpi.rs:52:        && !spl_mint_to_cpi_execution_enabled()
+programs/xxxl-svm/src/cpi.rs:144:pub fn spl_mint_to_cpi_execution_enabled() -> bool {
+programs/xxxl-svm/src/cpi.rs:155:pub fn spl_mint_to_cpi_execution_enabled() -> bool {
+programs/xxxl-svm/src/cpi.rs:181:    if !spl_mint_to_cpi_execution_enabled() {
+programs/xxxl-svm/src/cpi.rs:286:        assert!(crate::cpi::spl_cpi_repository_local_readiness_complete());
+programs/xxxl-svm/src/cpi.rs:287:        assert!(!crate::cpi::spl_mint_to_cpi_execution_enabled());
+programs/xxxl-svm/src/cpi.rs:414:        assert!(!spl_mint_to_cpi_execution_enabled());
+
+runtime docs:
+82:| runtime_deployable | false | programs/xxxl-svm/src/deployment_status.rs |
+83:| predeploy_gate | blocked | programs/xxxl-svm/src/deployment_status.rs |
+405:| runtime_deployable | false |
+406:| predeploy_gate | blocked |
+447:| runtime_deployable | false |
+448:| predeploy_gate | blocked |
+485:| LiveRouteDisabled | REMOVED |
+486:| SplCpiExecutionDisabled | REMOVED |
+487:| runtime_deployable | false |
+488:| predeploy_gate | blocked |

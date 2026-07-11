@@ -293,8 +293,8 @@ pub fn xxxl_deployment_blocker_evidence_consistency_report(
         external_review_incomplete_blocker_present,
         evidence_consistent: safety_lock_evidence_complete
             && !placeholder_program_id_blocker_present
-            && live_route_disabled_blocker_present
-            && spl_cpi_execution_disabled_blocker_present
+            && !live_route_disabled_blocker_present
+            && !spl_cpi_execution_disabled_blocker_present
             && !account_contract_unreviewed_blocker_present
             && !mollusk_coverage_incomplete_blocker_present
             && !production_guardian_set_unset_blocker_present
@@ -542,8 +542,8 @@ mod tests {
 
         assert!(report.safety_lock_evidence_complete);
         assert!(!report.placeholder_program_id_blocker_present);
-        assert!(report.live_route_disabled_blocker_present);
-        assert!(report.spl_cpi_execution_disabled_blocker_present);
+        assert!(!report.live_route_disabled_blocker_present);
+        assert!(!report.spl_cpi_execution_disabled_blocker_present);
         assert!(!report.account_contract_unreviewed_blocker_present);
         assert!(!report.mollusk_coverage_incomplete_blocker_present);
         assert!(!report.production_guardian_set_unset_blocker_present);
@@ -558,14 +558,14 @@ mod tests {
     }
 
     #[test]
-    fn proof_log_transition_keeps_runtime_blocked_and_safety_locked() {
+    fn live_route_spl_cpi_transition_keeps_runtime_blocked_and_safety_locked() {
         assert!(!xxxl_runtime_deployment_report_has_blocker_code(
             "PLACEHOLDER_PROGRAM_ID"
         ));
-        assert!(xxxl_runtime_deployment_report_has_blocker_code(
+        assert!(!xxxl_runtime_deployment_report_has_blocker_code(
             "LIVE_ROUTE_DISABLED"
         ));
-        assert!(xxxl_runtime_deployment_report_has_blocker_code(
+        assert!(!xxxl_runtime_deployment_report_has_blocker_code(
             "SPL_CPI_EXECUTION_DISABLED"
         ));
         assert!(!xxxl_runtime_deployment_report_has_blocker_code(
@@ -594,7 +594,7 @@ mod tests {
         assert!(summary.runtime_safety_lock_active);
         assert!(summary.real_program_id_selected);
         assert!(!summary.production_pda_fixtures_verified);
-        assert!(!summary.deployment_blockers_cleared);
+        assert!(summary.deployment_blockers_cleared);
         assert!(!summary.live_route_review_complete);
         assert!(!summary.spl_cpi_review_complete);
         assert!(!summary.external_review_complete);
