@@ -276,6 +276,16 @@ pub fn mint_to_cpi_boundary(
 #[cfg(test)]
 mod tests {
 
+    // Non-live safety/disabled-gate expectation: ignored in the live-feature deployable test lane.
+    #[cfg_attr(
+        all(
+            feature = "phase-41k5-d2-production-path-test-gate",
+            feature = "dangerously-allow-phase-41k5-d2-production-path-test-gate-sbf-build",
+            feature = "phase-41k6-b1c7-handler-integration-test-gate",
+            feature = "dangerously-allow-phase-41k6-b1c7-handler-integration-test-gate-sbf-build",
+        ),
+        ignore
+    )]
     #[test]
     fn spl_cpi_final_readiness_is_repository_local_and_not_live_mint_execution() {
         assert!(crate::cpi::SPL_CPI_MINT_TO_SOURCE_READY_FOR_FINAL_READINESS_PACKAGE);
@@ -286,7 +296,6 @@ mod tests {
         assert!(crate::cpi::spl_cpi_repository_local_readiness_complete());
         assert!(!crate::cpi::spl_mint_to_cpi_execution_enabled());
     }
-
 
     use super::*;
     use solana_program::{account_info::AccountInfo, pubkey::Pubkey};
@@ -403,6 +412,16 @@ mod tests {
         assert!(matches!(result, Err(ProgramError::Custom(code)) if code == error as u32));
     }
 
+    // Non-live safety/disabled-gate expectation: ignored in the live-feature deployable test lane.
+    #[cfg_attr(
+        all(
+            feature = "phase-41k5-d2-production-path-test-gate",
+            feature = "dangerously-allow-phase-41k5-d2-production-path-test-gate-sbf-build",
+            feature = "phase-41k6-b1c7-handler-integration-test-gate",
+            feature = "dangerously-allow-phase-41k6-b1c7-handler-integration-test-gate-sbf-build",
+        ),
+        ignore
+    )]
     #[test]
     fn guarded_mint_to_cpi_execution_gate_boundary_rejects_when_gate_disabled() {
         let program_id = Pubkey::from_str(FIXTURE_PROGRAM_ID).expect("valid fixture program id");

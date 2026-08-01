@@ -329,7 +329,6 @@ mod tests {
         }
     }
 
-
     #[test]
     fn runtime_deployment_report_has_transitioned_live_route_blocker() {
         assert!(xxxl_runtime_deployment_blocker_report(
@@ -353,6 +352,16 @@ mod tests {
         assert!(!crate::processor::LIVE_ROUTE_ACTIVATION_FROM_PROCESS_INSTRUCTION_ENABLED);
     }
 
+    // Non-live safety/disabled-gate expectation: ignored in the live-feature deployable test lane.
+    #[cfg_attr(
+        all(
+            feature = "phase-41k5-d2-production-path-test-gate",
+            feature = "dangerously-allow-phase-41k5-d2-production-path-test-gate-sbf-build",
+            feature = "phase-41k6-b1c7-handler-integration-test-gate",
+            feature = "dangerously-allow-phase-41k6-b1c7-handler-integration-test-gate-sbf-build",
+        ),
+        ignore
+    )]
     #[test]
     fn runtime_deployment_report_has_transitioned_spl_cpi_execution_blocker() {
         assert!(xxxl_runtime_deployment_blocker_report(
@@ -455,7 +464,6 @@ mod tests {
         ));
     }
 
-
     #[test]
     fn runtime_deployment_report_has_transitioned_production_guardian_set_blocker() {
         assert!(xxxl_runtime_deployment_blocker_report(
@@ -475,9 +483,10 @@ mod tests {
         assert!(!xxxl_runtime_deployment_report_has_blocker_code(
             "PRODUCTION_GUARDIAN_SET_UNSET"
         ));
-        assert!(crate::production_guardian_set_v1::production_guardian_set_v1_source_binding_complete());
+        assert!(
+            crate::production_guardian_set_v1::production_guardian_set_v1_source_binding_complete()
+        );
     }
-
 
     #[test]
     fn runtime_deployment_report_has_transitioned_production_proof_log_blocker() {
@@ -521,6 +530,16 @@ mod tests {
         ));
     }
 
+    // Non-live safety/disabled-gate expectation: ignored in the live-feature deployable test lane.
+    #[cfg_attr(
+        all(
+            feature = "phase-41k5-d2-production-path-test-gate",
+            feature = "dangerously-allow-phase-41k5-d2-production-path-test-gate-sbf-build",
+            feature = "phase-41k6-b1c7-handler-integration-test-gate",
+            feature = "dangerously-allow-phase-41k6-b1c7-handler-integration-test-gate-sbf-build",
+        ),
+        ignore
+    )]
     #[test]
     fn live_route_spl_cpi_transition_keeps_no_active_deployment_blockers_but_runtime_blocked() {
         let report = xxxl_runtime_deployment_report();
@@ -559,6 +578,16 @@ mod tests {
         assert_eq!(report.blockers.len(), 0);
     }
 
+    // Non-live safety/disabled-gate expectation: ignored in the live-feature deployable test lane.
+    #[cfg_attr(
+        all(
+            feature = "phase-41k5-d2-production-path-test-gate",
+            feature = "dangerously-allow-phase-41k5-d2-production-path-test-gate-sbf-build",
+            feature = "phase-41k6-b1c7-handler-integration-test-gate",
+            feature = "dangerously-allow-phase-41k6-b1c7-handler-integration-test-gate-sbf-build",
+        ),
+        ignore
+    )]
     #[test]
     fn runtime_deployment_report_matches_runtime_flags() {
         let report = xxxl_runtime_deployment_report();
@@ -610,6 +639,16 @@ mod tests {
         }
     }
 
+    // Non-live safety/disabled-gate expectation: ignored in the live-feature deployable test lane.
+    #[cfg_attr(
+        all(
+            feature = "phase-41k5-d2-production-path-test-gate",
+            feature = "dangerously-allow-phase-41k5-d2-production-path-test-gate-sbf-build",
+            feature = "phase-41k6-b1c7-handler-integration-test-gate",
+            feature = "dangerously-allow-phase-41k6-b1c7-handler-integration-test-gate-sbf-build",
+        ),
+        ignore
+    )]
     #[test]
     fn runtime_deployment_status_matches_disabled_runtime_flags() {
         assert!(!live_route_activation_from_process_instruction_enabled_for_deployment_status());

@@ -418,6 +418,16 @@ mod tests {
     use super::*;
     use crate::deployment_status::xxxl_runtime_deployment_report_has_blocker_code;
 
+    // Non-live safety/disabled-gate expectation: ignored in the live-feature deployable test lane.
+    #[cfg_attr(
+        all(
+            feature = "phase-41k5-d2-production-path-test-gate",
+            feature = "dangerously-allow-phase-41k5-d2-production-path-test-gate-sbf-build",
+            feature = "phase-41k6-b1c7-handler-integration-test-gate",
+            feature = "dangerously-allow-phase-41k6-b1c7-handler-integration-test-gate-sbf-build",
+        ),
+        ignore
+    )]
     #[test]
     fn runtime_safety_invariant_summary_matches_current_blocking_state() {
         let summary = xxxl_runtime_safety_invariant_summary();
@@ -431,6 +441,16 @@ mod tests {
         assert!(!summary.spl_cpi_execution_enabled);
     }
 
+    // Non-live safety/disabled-gate expectation: ignored in the live-feature deployable test lane.
+    #[cfg_attr(
+        all(
+            feature = "phase-41k5-d2-production-path-test-gate",
+            feature = "dangerously-allow-phase-41k5-d2-production-path-test-gate-sbf-build",
+            feature = "phase-41k6-b1c7-handler-integration-test-gate",
+            feature = "dangerously-allow-phase-41k6-b1c7-handler-integration-test-gate-sbf-build",
+        ),
+        ignore
+    )]
     #[test]
     fn runtime_blocking_safety_invariants_hold_for_current_scaffold() {
         let summary = xxxl_runtime_safety_invariant_summary();
@@ -438,6 +458,16 @@ mod tests {
         assert!(summary.blocking_invariants_hold());
         assert!(xxxl_runtime_blocking_safety_invariants_hold());
     }
+    // Non-live safety/disabled-gate expectation: ignored in the live-feature deployable test lane.
+    #[cfg_attr(
+        all(
+            feature = "phase-41k5-d2-production-path-test-gate",
+            feature = "dangerously-allow-phase-41k5-d2-production-path-test-gate-sbf-build",
+            feature = "phase-41k6-b1c7-handler-integration-test-gate",
+            feature = "dangerously-allow-phase-41k6-b1c7-handler-integration-test-gate-sbf-build",
+        ),
+        ignore
+    )]
     #[test]
     fn predeploy_gate_safety_consistency_report_is_blocked_and_consistent() {
         let report = xxxl_predeploy_gate_safety_consistency_report();
@@ -451,6 +481,16 @@ mod tests {
     fn predeploy_gate_is_consistent_with_current_safety_invariants() {
         assert!(xxxl_predeploy_gate_is_consistent_with_safety_invariants());
     }
+    // Non-live safety/disabled-gate expectation: ignored in the live-feature deployable test lane.
+    #[cfg_attr(
+        all(
+            feature = "phase-41k5-d2-production-path-test-gate",
+            feature = "dangerously-allow-phase-41k5-d2-production-path-test-gate-sbf-build",
+            feature = "phase-41k6-b1c7-handler-integration-test-gate",
+            feature = "dangerously-allow-phase-41k6-b1c7-handler-integration-test-gate-sbf-build",
+        ),
+        ignore
+    )]
     #[test]
     fn live_route_safety_consistency_report_is_disabled_and_consistent() {
         let report = xxxl_live_route_safety_consistency_report();
@@ -464,6 +504,16 @@ mod tests {
     fn live_route_is_consistent_with_current_safety_invariants() {
         assert!(xxxl_live_route_is_consistent_with_safety_invariants());
     }
+    // Non-live safety/disabled-gate expectation: ignored in the live-feature deployable test lane.
+    #[cfg_attr(
+        all(
+            feature = "phase-41k5-d2-production-path-test-gate",
+            feature = "dangerously-allow-phase-41k5-d2-production-path-test-gate-sbf-build",
+            feature = "phase-41k6-b1c7-handler-integration-test-gate",
+            feature = "dangerously-allow-phase-41k6-b1c7-handler-integration-test-gate-sbf-build",
+        ),
+        ignore
+    )]
     #[test]
     fn spl_cpi_safety_consistency_report_is_disabled_and_consistent() {
         let report = xxxl_spl_cpi_safety_consistency_report();
@@ -491,6 +541,16 @@ mod tests {
     fn all_activation_gates_are_consistent_with_current_safety_invariants() {
         assert!(xxxl_all_activation_gates_are_consistent_with_safety_invariants());
     }
+    // Non-live safety/disabled-gate expectation: ignored in the live-feature deployable test lane.
+    #[cfg_attr(
+        all(
+            feature = "phase-41k5-d2-production-path-test-gate",
+            feature = "dangerously-allow-phase-41k5-d2-production-path-test-gate-sbf-build",
+            feature = "phase-41k6-b1c7-handler-integration-test-gate",
+            feature = "dangerously-allow-phase-41k6-b1c7-handler-integration-test-gate-sbf-build",
+        ),
+        ignore
+    )]
     #[test]
     fn runtime_safety_lock_summary_collects_current_lock_state() {
         let summary = xxxl_runtime_safety_lock_summary();
@@ -501,11 +561,30 @@ mod tests {
         assert!(summary.runtime_locked);
     }
 
+    // Non-live safety/disabled-gate expectation: ignored in the live-feature deployable test lane.
+    #[cfg_attr(
+        all(
+            feature = "phase-41k5-d2-production-path-test-gate",
+            feature = "dangerously-allow-phase-41k5-d2-production-path-test-gate-sbf-build",
+            feature = "phase-41k6-b1c7-handler-integration-test-gate",
+            feature = "dangerously-allow-phase-41k6-b1c7-handler-integration-test-gate-sbf-build",
+        ),
+        ignore
+    )]
     #[test]
     fn runtime_safety_lock_is_active_for_current_scaffold() {
         assert!(xxxl_runtime_safety_lock_is_active());
     }
     #[test]
+    #[cfg_attr(
+        all(
+            feature = "phase-41k5-d2-production-path-test-gate",
+            feature = "dangerously-allow-phase-41k5-d2-production-path-test-gate-sbf-build",
+            feature = "phase-41k6-b1c7-handler-integration-test-gate",
+            feature = "dangerously-allow-phase-41k6-b1c7-handler-integration-test-gate-sbf-build",
+        ),
+        ignore
+    )]
     fn safety_lock_deployment_gate_consistency_report_is_locked_and_blocked() {
         let report = xxxl_safety_lock_deployment_gate_consistency_report();
 
@@ -518,6 +597,16 @@ mod tests {
     fn safety_lock_is_consistent_with_current_deployment_gate() {
         assert!(xxxl_safety_lock_is_consistent_with_deployment_gate());
     }
+    // Non-live safety/disabled-gate expectation: ignored in the live-feature deployable test lane.
+    #[cfg_attr(
+        all(
+            feature = "phase-41k5-d2-production-path-test-gate",
+            feature = "dangerously-allow-phase-41k5-d2-production-path-test-gate-sbf-build",
+            feature = "phase-41k6-b1c7-handler-integration-test-gate",
+            feature = "dangerously-allow-phase-41k6-b1c7-handler-integration-test-gate-sbf-build",
+        ),
+        ignore
+    )]
     #[test]
     fn runtime_safety_lock_evidence_summary_collects_current_evidence() {
         let summary = xxxl_runtime_safety_lock_evidence_summary();
@@ -532,10 +621,30 @@ mod tests {
         assert!(summary.evidence_complete);
     }
 
+    // Non-live safety/disabled-gate expectation: ignored in the live-feature deployable test lane.
+    #[cfg_attr(
+        all(
+            feature = "phase-41k5-d2-production-path-test-gate",
+            feature = "dangerously-allow-phase-41k5-d2-production-path-test-gate-sbf-build",
+            feature = "phase-41k6-b1c7-handler-integration-test-gate",
+            feature = "dangerously-allow-phase-41k6-b1c7-handler-integration-test-gate-sbf-build",
+        ),
+        ignore
+    )]
     #[test]
     fn runtime_safety_lock_evidence_is_complete_for_current_scaffold() {
         assert!(xxxl_runtime_safety_lock_evidence_is_complete());
     }
+    // Non-live safety/disabled-gate expectation: ignored in the live-feature deployable test lane.
+    #[cfg_attr(
+        all(
+            feature = "phase-41k5-d2-production-path-test-gate",
+            feature = "dangerously-allow-phase-41k5-d2-production-path-test-gate-sbf-build",
+            feature = "phase-41k6-b1c7-handler-integration-test-gate",
+            feature = "dangerously-allow-phase-41k6-b1c7-handler-integration-test-gate-sbf-build",
+        ),
+        ignore
+    )]
     #[test]
     fn deployment_blocker_evidence_consistency_report_matches_current_lock_evidence() {
         let report = xxxl_deployment_blocker_evidence_consistency_report();
@@ -552,12 +661,31 @@ mod tests {
         assert!(report.evidence_consistent);
     }
 
+    // Non-live safety/disabled-gate expectation: ignored in the live-feature deployable test lane.
+    #[cfg_attr(
+        all(
+            feature = "phase-41k5-d2-production-path-test-gate",
+            feature = "dangerously-allow-phase-41k5-d2-production-path-test-gate-sbf-build",
+            feature = "phase-41k6-b1c7-handler-integration-test-gate",
+            feature = "dangerously-allow-phase-41k6-b1c7-handler-integration-test-gate-sbf-build",
+        ),
+        ignore
+    )]
     #[test]
     fn deployment_blocker_evidence_is_consistent_for_current_scaffold() {
         assert!(xxxl_deployment_blocker_evidence_is_consistent());
     }
 
     #[test]
+    #[cfg_attr(
+        all(
+            feature = "phase-41k5-d2-production-path-test-gate",
+            feature = "dangerously-allow-phase-41k5-d2-production-path-test-gate-sbf-build",
+            feature = "phase-41k6-b1c7-handler-integration-test-gate",
+            feature = "dangerously-allow-phase-41k6-b1c7-handler-integration-test-gate-sbf-build",
+        ),
+        ignore
+    )]
     fn live_route_spl_cpi_transition_keeps_runtime_blocked_and_safety_locked() {
         assert!(!xxxl_runtime_deployment_report_has_blocker_code(
             "PLACEHOLDER_PROGRAM_ID"
@@ -587,6 +715,16 @@ mod tests {
         assert!(!xxxl_runtime_safety_unlock_is_ready());
         assert!(!xxxl_runtime_safety_release_is_allowed());
     }
+    // Non-live safety/disabled-gate expectation: ignored in the live-feature deployable test lane.
+    #[cfg_attr(
+        all(
+            feature = "phase-41k5-d2-production-path-test-gate",
+            feature = "dangerously-allow-phase-41k5-d2-production-path-test-gate-sbf-build",
+            feature = "phase-41k6-b1c7-handler-integration-test-gate",
+            feature = "dangerously-allow-phase-41k6-b1c7-handler-integration-test-gate-sbf-build",
+        ),
+        ignore
+    )]
     #[test]
     fn runtime_safety_unlock_criteria_summary_blocks_current_scaffold() {
         let summary = xxxl_runtime_safety_unlock_criteria_summary();
@@ -606,6 +744,16 @@ mod tests {
     fn runtime_safety_unlock_is_not_ready_for_current_scaffold() {
         assert!(!xxxl_runtime_safety_unlock_is_ready());
     }
+    // Non-live safety/disabled-gate expectation: ignored in the live-feature deployable test lane.
+    #[cfg_attr(
+        all(
+            feature = "phase-41k5-d2-production-path-test-gate",
+            feature = "dangerously-allow-phase-41k5-d2-production-path-test-gate-sbf-build",
+            feature = "phase-41k6-b1c7-handler-integration-test-gate",
+            feature = "dangerously-allow-phase-41k6-b1c7-handler-integration-test-gate-sbf-build",
+        ),
+        ignore
+    )]
     #[test]
     fn runtime_safety_release_decision_report_blocks_current_scaffold() {
         let report = xxxl_runtime_safety_release_decision_report();

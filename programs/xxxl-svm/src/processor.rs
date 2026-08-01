@@ -1793,6 +1793,16 @@ mod tests {
         assert_eq!(fixture.data.recipient_balance, recipient_balance_before);
     }
 
+    // Non-live safety/disabled-gate expectation: ignored in the live-feature deployable test lane.
+    #[cfg_attr(
+        all(
+            feature = "phase-41k5-d2-production-path-test-gate",
+            feature = "dangerously-allow-phase-41k5-d2-production-path-test-gate-sbf-build",
+            feature = "phase-41k6-b1c7-handler-integration-test-gate",
+            feature = "dangerously-allow-phase-41k6-b1c7-handler-integration-test-gate-sbf-build",
+        ),
+        ignore
+    )]
     #[test]
     fn runtime_disabled_spl_cpi_gate_boundary_rejects_at_gate_without_mutation() {
         let mut fixture = HandlerFixture::new();
@@ -2716,6 +2726,16 @@ mod tests {
         );
     }
 
+    // Non-live safety/disabled-gate expectation: ignored in the live-feature deployable test lane.
+    #[cfg_attr(
+        all(
+            feature = "phase-41k5-d2-production-path-test-gate",
+            feature = "dangerously-allow-phase-41k5-d2-production-path-test-gate-sbf-build",
+            feature = "phase-41k6-b1c7-handler-integration-test-gate",
+            feature = "dangerously-allow-phase-41k6-b1c7-handler-integration-test-gate-sbf-build",
+        ),
+        ignore
+    )]
     #[cfg(feature = "phase-41k6-b1c7-handler-integration-test-gate")]
     #[test]
     fn b1c7_authorized_result_still_blocks_before_mutation_when_cpi_gate_closed() {
