@@ -36,10 +36,10 @@ pub mod pda;
 #[cfg(feature = "phase-41k5-spl-mint-to-cpi-test-gate")]
 pub mod phase_41k5_d15_atomic_mark_and_mint_svm_harness;
 pub mod processed_event_marking_boundary;
-pub mod production_guardian_set_v1;
 #[cfg(feature = "phase-41k4-svm-test-harness")]
 pub mod processed_event_marking_svm_harness;
 pub mod processor;
+pub mod production_guardian_set_v1;
 pub mod program_id_status;
 pub mod safety_invariants;
 pub mod state;
@@ -56,6 +56,10 @@ pub const XXXL_TESTNET_PROGRAM_ID: &str = "D7AQmZNtFFFoJbducz93atteeSZhw3jq6Rmsq
 pub const XXXL_BOUND_PROGRAM_ID: &str = XXXL_TESTNET_PROGRAM_ID;
 pub const XXXL_TESTNET_PROGRAMDATA_ADDRESS: &str = "9tuesaPoJhrifF49vJewcg6PSWZeHAJiqQ97pq3LMW9T";
 pub const XXXL_TESTNET_UPGRADE_AUTHORITY: &str = "DTfvjtRL63u3XYHXQfgRQCdhEanUK1qqawvfEAM9hxAc";
+pub const XXXL_TESTNET_UPGRADE_AUTHORITY_BYTES: [u8; 32] = [
+    185, 33, 91, 200, 214, 108, 223, 187, 221, 160, 175, 145, 207, 143, 113, 31, 246, 190, 174, 23,
+    51, 75, 250, 85, 40, 52, 189, 225, 156, 240, 108, 233,
+];
 pub const XXXL_GATEWAY_MINT_AUTHORITY_PDA: &str = "BLVsQPYXnDsTmfMW9wrXHBFpcmexM47BcAvVcibRtRYG";
 pub const XXXL_GATEWAY_MINT_AUTHORITY_BUMP: u8 = 252;
 

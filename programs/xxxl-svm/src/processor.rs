@@ -8,6 +8,7 @@
 #[cfg(test)]
 use crate::execution_plan::apply_atomic_state_mutation_composition_boundary;
 
+use crate::XXXL_TESTNET_UPGRADE_AUTHORITY_BYTES;
 use solana_program::{
     account_info::{next_account_info, AccountInfo},
     clock::Clock,
@@ -601,6 +602,14 @@ fn process_initialize_recipient_balance(
     Ok(())
 }
 
+fn expected_state_provisioning_authority() -> Pubkey {
+    Pubkey::new_from_array(XXXL_TESTNET_UPGRADE_AUTHORITY_BYTES)
+}
+
+fn is_expected_state_provisioning_authority(authority: &Pubkey) -> bool {
+    *authority == expected_state_provisioning_authority()
+}
+
 fn create_state_pda_account_for_initialization<'a>(
     program_id: &Pubkey,
     state_account: &AccountInfo<'a>,
@@ -621,6 +630,10 @@ fn create_state_pda_account_for_initialization<'a>(
     }
 
     if !authority_account.is_signer || !rent_payer_account.is_signer {
+        return Err(XxxlError::InvalidAuthority.into());
+    }
+
+    if !is_expected_state_provisioning_authority(authority_account.key) {
         return Err(XxxlError::InvalidAuthority.into());
     }
 
@@ -1074,6 +1087,26 @@ fn account_at<'a, 'b>(
 
 #[cfg(test)]
 mod tests {
+
+    #[test]
+    fn state_provisioning_authority_is_hard_bound_to_testnet_upgrade_authority() {
+        let expected_from_bytes = solana_program::pubkey::Pubkey::new_from_array(
+            crate::XXXL_TESTNET_UPGRADE_AUTHORITY_BYTES,
+        );
+        let expected_from_string =
+            <solana_program::pubkey::Pubkey as core::str::FromStr>::from_str(
+                crate::XXXL_TESTNET_UPGRADE_AUTHORITY,
+            )
+            .expect("testnet upgrade authority must be a valid pubkey");
+
+        assert_eq!(expected_from_bytes, expected_from_string);
+        assert!(super::is_expected_state_provisioning_authority(
+            &expected_from_bytes
+        ));
+        assert!(!super::is_expected_state_provisioning_authority(
+            &solana_program::pubkey::Pubkey::new_unique()
+        ));
+    }
 
     #[test]
     fn live_route_final_readiness_is_repository_local_and_not_execution_activation() {
