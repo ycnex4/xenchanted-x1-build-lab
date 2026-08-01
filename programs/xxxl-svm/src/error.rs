@@ -1,6 +1,7 @@
 use solana_program::program_error::ProgramError;
 
 #[repr(u32)]
+#[derive(Clone, Copy, Debug, PartialEq, Eq)]
 pub enum XxxlError {
     InvalidInstruction = 1,
     InvalidAccountOwner = 2,
@@ -12,6 +13,10 @@ pub enum XxxlError {
     CpiBoundaryNotReady = 8,
     InvalidSourceChain = 9,
     InvalidInstructionReserved = 10,
+    InvalidAccountData = 11,
+    InvalidAuthority = 12,
+    AccountAlreadyInitialized = 13,
+    InsufficientRent = 14,
 }
 
 impl From<XxxlError> for ProgramError {

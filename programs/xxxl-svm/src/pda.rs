@@ -63,6 +63,56 @@ pub fn find_gateway_mint_authority(program_id: &Pubkey) -> (Pubkey, u8) {
     Pubkey::find_program_address(&gateway_mint_authority_seeds(), program_id)
 }
 
+pub const GATEWAY_CONFIG_SEED_1: &[u8] = b"gateway-config";
+pub const GUARDIAN_SET_SEED_1: &[u8] = b"guardian-set";
+pub const MINT_STATE_SEED_1: &[u8] = b"mint-state";
+pub const RECIPIENT_BALANCE_SEED_1: &[u8] = b"recipient-balance";
+
+pub fn find_gateway_config(program_id: &Pubkey, route_id: &[u8; 32]) -> (Pubkey, u8) {
+    Pubkey::find_program_address(
+        &[
+            GATEWAY_MINT_AUTHORITY_SEED_0,
+            GATEWAY_CONFIG_SEED_1,
+            route_id,
+        ],
+        program_id,
+    )
+}
+
+pub fn find_guardian_set(program_id: &Pubkey, guardian_set_id: &[u8; 32]) -> (Pubkey, u8) {
+    Pubkey::find_program_address(
+        &[
+            GATEWAY_MINT_AUTHORITY_SEED_0,
+            GUARDIAN_SET_SEED_1,
+            guardian_set_id,
+        ],
+        program_id,
+    )
+}
+
+pub fn find_mint_state(program_id: &Pubkey, mint_id: &[u8; 32]) -> (Pubkey, u8) {
+    Pubkey::find_program_address(
+        &[GATEWAY_MINT_AUTHORITY_SEED_0, MINT_STATE_SEED_1, mint_id],
+        program_id,
+    )
+}
+
+pub fn find_recipient_balance(
+    program_id: &Pubkey,
+    recipient: &[u8; 32],
+    mint: &[u8; 32],
+) -> (Pubkey, u8) {
+    Pubkey::find_program_address(
+        &[
+            GATEWAY_MINT_AUTHORITY_SEED_0,
+            RECIPIENT_BALANCE_SEED_1,
+            recipient,
+            mint,
+        ],
+        program_id,
+    )
+}
+
 pub fn derive_gateway_mint_authority_fixture_report(
     program_id: &Pubkey,
 ) -> XxxlPdaFixtureDerivationReport {
@@ -416,5 +466,54 @@ mod x1_testnet_program_id_candidate_dry_run_tests {
         println!("RPC_USED=false");
         println!("DEPLOYED=false");
         println!("SOL_SPENT=false");
+    }
+}
+
+#[cfg(test)]
+mod state_provisioning_pda_tests {
+    use super::*;
+    use solana_program::pubkey::Pubkey;
+
+    #[test]
+    fn state_provisioning_pda_families_are_deterministic_and_distinct() {
+        let program_id = Pubkey::new_unique();
+        let route_id = [1u8; 32];
+        let guardian_set_id = [2u8; 32];
+        let mint_id = [3u8; 32];
+        let recipient = [4u8; 32];
+        let mint = [5u8; 32];
+
+        let (gateway_config, gateway_config_bump) = find_gateway_config(&program_id, &route_id);
+        let (guardian_set, guardian_set_bump) = find_guardian_set(&program_id, &guardian_set_id);
+        let (mint_state, mint_state_bump) = find_mint_state(&program_id, &mint_id);
+        let (recipient_balance, recipient_balance_bump) =
+            find_recipient_balance(&program_id, &recipient, &mint);
+
+        assert_eq!(
+            Pubkey::find_program_address(&[b"xxxl", b"gateway-config", &route_id], &program_id),
+            (gateway_config, gateway_config_bump)
+        );
+        assert_eq!(
+            Pubkey::find_program_address(
+                &[b"xxxl", b"guardian-set", &guardian_set_id],
+                &program_id
+            ),
+            (guardian_set, guardian_set_bump)
+        );
+        assert_eq!(
+            Pubkey::find_program_address(&[b"xxxl", b"mint-state", &mint_id], &program_id),
+            (mint_state, mint_state_bump)
+        );
+        assert_eq!(
+            Pubkey::find_program_address(
+                &[b"xxxl", b"recipient-balance", &recipient, &mint],
+                &program_id
+            ),
+            (recipient_balance, recipient_balance_bump)
+        );
+
+        assert_ne!(gateway_config, guardian_set);
+        assert_ne!(gateway_config, mint_state);
+        assert_ne!(gateway_config, recipient_balance);
     }
 }

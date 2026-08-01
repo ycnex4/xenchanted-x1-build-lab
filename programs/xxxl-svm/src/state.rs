@@ -203,6 +203,146 @@ impl<'a> RecipientBalanceAccountView<'a> {
 //
 // Do not use this helper for replay protection, 41K.4 marking, or any
 // live burn-to-mint route.
+
+fn assert_zero_initialized(data: &[u8]) -> Result<(), ProgramError> {
+    if data.iter().any(|byte| *byte != 0) {
+        return Err(XxxlError::AccountAlreadyInitialized.into());
+    }
+
+    Ok(())
+}
+
+fn write_account_header(
+    data: &mut [u8],
+    expected_len: usize,
+    discriminator: &[u8; ACCOUNT_DISCRIMINATOR_LEN],
+) -> Result<(), ProgramError> {
+    if data.len() != expected_len {
+        return Err(XxxlError::InvalidAccountData.into());
+    }
+
+    assert_zero_initialized(data)?;
+    data.fill(0);
+    data[0..ACCOUNT_DISCRIMINATOR_LEN].copy_from_slice(discriminator);
+    data[8..10].copy_from_slice(&RUNTIME_LAYOUT_VERSION.to_le_bytes());
+
+    Ok(())
+}
+
+pub fn initialize_gateway_config_account_data(
+    data: &mut [u8],
+    route_id: [u8; 32],
+    source_chain_id: u64,
+    source_chain_weight_bps: u16,
+    target_mint: [u8; 32],
+    guardian_set_id: [u8; 32],
+) -> Result<(), ProgramError> {
+    if source_chain_id == 0 || source_chain_weight_bps == 0 || source_chain_weight_bps > 10_000 {
+        return Err(XxxlError::InvalidSourceChain.into());
+    }
+
+    write_account_header(
+        data,
+        GATEWAY_CONFIG_ACCOUNT_LEN,
+        &GATEWAY_CONFIG_ACCOUNT_DISCRIMINATOR,
+    )?;
+
+    data[12..14].copy_from_slice(&source_chain_weight_bps.to_le_bytes());
+    data[16..48].copy_from_slice(&route_id);
+    data[48..56].copy_from_slice(&source_chain_id.to_le_bytes());
+    data[88..120].copy_from_slice(&target_mint);
+    data[120..152].copy_from_slice(&guardian_set_id);
+
+    Ok(())
+}
+
+pub fn initialize_guardian_set_account_data(
+    data: &mut [u8],
+    guardian_set_id: [u8; 32],
+    quorum_threshold: u16,
+    guardian_count: u8,
+    guardians: &[[u8; 32]],
+) -> Result<(), ProgramError> {
+    if guardian_count == 0
+        || guardian_count as usize > guardians.len()
+        || guardian_count as usize > 8
+        || quorum_threshold == 0
+        || quorum_threshold > guardian_count as u16
+    {
+        return Err(XxxlError::InvalidInstruction.into());
+    }
+
+    for left in 0..guardian_count as usize {
+        if guardians[left] == [0u8; 32] {
+            return Err(XxxlError::InvalidInstruction.into());
+        }
+
+        for right in left + 1..guardian_count as usize {
+            if guardians[left] == guardians[right] {
+                return Err(XxxlError::InvalidInstruction.into());
+            }
+        }
+    }
+
+    write_account_header(
+        data,
+        GUARDIAN_SET_ACCOUNT_LEN,
+        &GUARDIAN_SET_ACCOUNT_DISCRIMINATOR,
+    )?;
+
+    data[12..14].copy_from_slice(&quorum_threshold.to_le_bytes());
+    data[14] = guardian_count;
+
+    for index in 0..guardian_count as usize {
+        let offset = 16 + index * 32;
+        data[offset..offset + 32].copy_from_slice(&guardians[index]);
+    }
+
+    data[272..304].copy_from_slice(&guardian_set_id);
+
+    Ok(())
+}
+
+pub fn initialize_mint_state_account_data(
+    data: &mut [u8],
+    mint_pubkey: [u8; 32],
+    decimals: u8,
+    gateway_mint_authority_pda: [u8; 32],
+    gateway_mint_authority_bump: u8,
+) -> Result<(), ProgramError> {
+    write_account_header(
+        data,
+        MINT_STATE_ACCOUNT_LEN,
+        &MINT_STATE_ACCOUNT_DISCRIMINATOR,
+    )?;
+
+    data[10] = decimals;
+    data[13] = gateway_mint_authority_bump;
+    data[16..48].copy_from_slice(&mint_pubkey);
+    data[48..64].copy_from_slice(&0u128.to_le_bytes());
+    data[64..96].copy_from_slice(&gateway_mint_authority_pda);
+
+    Ok(())
+}
+
+pub fn initialize_recipient_balance_account_data(
+    data: &mut [u8],
+    owner: [u8; 32],
+    mint: [u8; 32],
+) -> Result<(), ProgramError> {
+    write_account_header(
+        data,
+        RECIPIENT_BALANCE_ACCOUNT_LEN,
+        &RECIPIENT_BALANCE_ACCOUNT_DISCRIMINATOR,
+    )?;
+
+    data[16..48].copy_from_slice(&owner);
+    data[48..80].copy_from_slice(&mint);
+    data[80..96].copy_from_slice(&0u128.to_le_bytes());
+
+    Ok(())
+}
+
 #[cfg(test)]
 #[deprecated(note = "Use the Phase 41K.4 processed-event marking boundary instead")]
 pub(crate) fn mark_processed_event_consumed_legacy_planning_only(
@@ -631,6 +771,97 @@ mod tests {
     }
 
     fn assert_custom_error<T>(result: Result<T, ProgramError>, error: XxxlError) {
+        assert!(matches!(result, Err(ProgramError::Custom(code)) if code == error as u32));
+    }
+}
+
+#[cfg(test)]
+mod state_provisioning_initialization_tests {
+    use super::*;
+    use solana_program::program_error::ProgramError;
+
+    #[test]
+    fn initializes_gateway_config_account_data() {
+        let mut data = vec![0u8; GATEWAY_CONFIG_ACCOUNT_LEN];
+
+        initialize_gateway_config_account_data(&mut data, [1; 32], 42, 10_000, [2; 32], [3; 32])
+            .expect("initialize gateway config");
+
+        let view = GatewayConfigAccountView::new(&data).expect("gateway config view");
+        assert_eq!(view.route_id(), [1; 32]);
+        assert_eq!(view.source_chain_id(), 42);
+        assert_eq!(view.source_chain_weight_bps(), 10_000);
+        assert_eq!(view.target_mint(), [2; 32]);
+        assert_eq!(view.guardian_set_id(), [3; 32]);
+    }
+
+    #[test]
+    fn initializes_guardian_set_account_data() {
+        let mut data = vec![0u8; GUARDIAN_SET_ACCOUNT_LEN];
+        let guardians = [[1u8; 32], [2u8; 32], [3u8; 32]];
+
+        initialize_guardian_set_account_data(&mut data, [9; 32], 2, 3, &guardians)
+            .expect("initialize guardian set");
+
+        let view = GuardianSetAccountView::new(&data).expect("guardian set view");
+        assert_eq!(view.guardian_set_id(), [9; 32]);
+        assert_eq!(view.quorum_threshold(), 2);
+        assert_eq!(view.guardian_count(), 3);
+    }
+
+    #[test]
+    fn guardian_set_rejects_duplicate_guardians() {
+        let mut data = vec![0u8; GUARDIAN_SET_ACCOUNT_LEN];
+        let guardians = [[1u8; 32], [1u8; 32]];
+
+        assert_custom_error(
+            initialize_guardian_set_account_data(&mut data, [9; 32], 2, 2, &guardians),
+            XxxlError::InvalidInstruction,
+        );
+    }
+
+    #[test]
+    fn initializes_mint_state_account_data() {
+        let mut data = vec![0u8; MINT_STATE_ACCOUNT_LEN];
+
+        initialize_mint_state_account_data(&mut data, [7; 32], 9, [8; 32], 252)
+            .expect("initialize mint state");
+
+        let view = MintStateAccountView::new(&data).expect("mint state view");
+        assert_eq!(view.mint_pubkey(), [7; 32]);
+        assert_eq!(view.decimals(), 9);
+        assert_eq!(view.gateway_mint_authority_pda(), [8; 32]);
+        assert_eq!(view.gateway_mint_authority_bump(), 252);
+        assert_eq!(view.total_supply(), 0);
+    }
+
+    #[test]
+    fn initializes_recipient_balance_account_data() {
+        let mut data = vec![0u8; RECIPIENT_BALANCE_ACCOUNT_LEN];
+
+        initialize_recipient_balance_account_data(&mut data, [4; 32], [5; 32])
+            .expect("initialize recipient balance");
+
+        let view = RecipientBalanceAccountView::new(&data).expect("recipient balance view");
+        assert_eq!(view.owner(), [4; 32]);
+        assert_eq!(view.mint(), [5; 32]);
+        assert_eq!(view.balance(), 0);
+    }
+
+    #[test]
+    fn initialization_rejects_reinitialization() {
+        let mut data = vec![0u8; RECIPIENT_BALANCE_ACCOUNT_LEN];
+
+        initialize_recipient_balance_account_data(&mut data, [4; 32], [5; 32])
+            .expect("first initialization");
+
+        assert_custom_error(
+            initialize_recipient_balance_account_data(&mut data, [4; 32], [5; 32]),
+            XxxlError::AccountAlreadyInitialized,
+        );
+    }
+
+    fn assert_custom_error(result: Result<(), ProgramError>, error: XxxlError) {
         assert!(matches!(result, Err(ProgramError::Custom(code)) if code == error as u32));
     }
 }

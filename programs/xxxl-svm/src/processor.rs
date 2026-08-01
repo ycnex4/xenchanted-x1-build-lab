@@ -9,8 +9,16 @@
 use crate::execution_plan::apply_atomic_state_mutation_composition_boundary;
 
 use solana_program::{
-    account_info::AccountInfo, clock::Clock, entrypoint::ProgramResult, msg,
-    program_error::ProgramError, pubkey::Pubkey, rent::Rent, system_program, sysvar::Sysvar,
+    account_info::{next_account_info, AccountInfo},
+    clock::Clock,
+    entrypoint::ProgramResult,
+    msg,
+    program::invoke_signed,
+    program_error::ProgramError,
+    pubkey::Pubkey,
+    rent::Rent,
+    system_instruction, system_program,
+    sysvar::Sysvar,
 };
 
 #[cfg(feature = "phase-41k6-b1c7-handler-integration-test-gate")]
@@ -42,12 +50,18 @@ use crate::{
         build_atomic_consume_gateway_mint_execution_plan, AtomicConsumeGatewayMintExecutionPlan,
     },
     instruction::{
-        ConsumeGatewayMintArgs, XxxlInstruction, CONSUME_GATEWAY_MINT_ACCOUNT_META_COUNT,
+        ConsumeGatewayMintArgs, InitializeGatewayConfigArgs, InitializeGuardianSetArgs,
+        InitializeMintStateArgs, InitializeRecipientBalanceArgs, XxxlInstruction,
+        CONSUME_GATEWAY_MINT_ACCOUNT_META_COUNT,
     },
+    pda::{find_gateway_config, find_guardian_set, find_mint_state, find_recipient_balance},
     processed_event_marking_boundary::{mark_processed_event_atomic, ProcessedEventMarkingWitness},
     state::{
+        initialize_gateway_config_account_data, initialize_guardian_set_account_data,
+        initialize_mint_state_account_data, initialize_recipient_balance_account_data,
         GatewayConfigAccountView, GuardianSetAccountView, MintStateAccountView,
-        RecipientBalanceAccountView,
+        RecipientBalanceAccountView, GATEWAY_CONFIG_ACCOUNT_LEN, GUARDIAN_SET_ACCOUNT_LEN,
+        MINT_STATE_ACCOUNT_LEN, RECIPIENT_BALANCE_ACCOUNT_LEN,
     },
     validation::{
         assert_account_owner, assert_initialized_mint_account, assert_recipient_ata_boundary,
@@ -396,7 +410,261 @@ pub fn process_instruction(
         XxxlInstruction::ConsumeGatewayMint(args) => {
             process_consume_gateway_mint(program_id, accounts, &args)
         }
+        XxxlInstruction::InitializeGatewayConfig(args) => {
+            process_initialize_gateway_config(program_id, accounts, &args)
+        }
+        XxxlInstruction::InitializeGuardianSet(args) => {
+            process_initialize_guardian_set(program_id, accounts, &args)
+        }
+        XxxlInstruction::InitializeMintState(args) => {
+            process_initialize_mint_state(program_id, accounts, &args)
+        }
+        XxxlInstruction::InitializeRecipientBalance(args) => {
+            process_initialize_recipient_balance(program_id, accounts, &args)
+        }
     }
+}
+
+fn process_initialize_gateway_config(
+    program_id: &Pubkey,
+    accounts: &[AccountInfo],
+    args: &InitializeGatewayConfigArgs,
+) -> ProgramResult {
+    let rent = Rent::get()?;
+    let account_info_iter = &mut accounts.iter();
+    let gateway_config_account = next_account_info(account_info_iter)?;
+    let authority_account = next_account_info(account_info_iter)?;
+    let rent_payer_account = next_account_info(account_info_iter)?;
+    let system_program_account = next_account_info(account_info_iter)?;
+
+    let (expected_pda, bump) = find_gateway_config(program_id, &args.route_id);
+    let bump_seed = [bump];
+    let signer_seeds: &[&[u8]] = &[b"xxxl", b"gateway-config", &args.route_id, &bump_seed];
+
+    create_state_pda_account_for_initialization(
+        program_id,
+        gateway_config_account,
+        authority_account,
+        rent_payer_account,
+        system_program_account,
+        &expected_pda,
+        signer_seeds,
+        GATEWAY_CONFIG_ACCOUNT_LEN,
+        &rent,
+    )?;
+
+    {
+        let mut data = gateway_config_account.try_borrow_mut_data()?;
+        initialize_gateway_config_account_data(
+            &mut data[..],
+            args.route_id,
+            args.source_chain_id,
+            args.source_chain_weight_bps,
+            args.target_mint,
+            args.guardian_set_id,
+        )?;
+    }
+
+    msg!("XXXL gateway_config initialized");
+    Ok(())
+}
+
+fn process_initialize_guardian_set(
+    program_id: &Pubkey,
+    accounts: &[AccountInfo],
+    args: &InitializeGuardianSetArgs,
+) -> ProgramResult {
+    let rent = Rent::get()?;
+    let account_info_iter = &mut accounts.iter();
+    let guardian_set_account = next_account_info(account_info_iter)?;
+    let authority_account = next_account_info(account_info_iter)?;
+    let rent_payer_account = next_account_info(account_info_iter)?;
+    let system_program_account = next_account_info(account_info_iter)?;
+
+    let (expected_pda, bump) = find_guardian_set(program_id, &args.guardian_set_id);
+    let bump_seed = [bump];
+    let signer_seeds: &[&[u8]] = &[b"xxxl", b"guardian-set", &args.guardian_set_id, &bump_seed];
+
+    create_state_pda_account_for_initialization(
+        program_id,
+        guardian_set_account,
+        authority_account,
+        rent_payer_account,
+        system_program_account,
+        &expected_pda,
+        signer_seeds,
+        GUARDIAN_SET_ACCOUNT_LEN,
+        &rent,
+    )?;
+
+    {
+        let mut data = guardian_set_account.try_borrow_mut_data()?;
+        initialize_guardian_set_account_data(
+            &mut data[..],
+            args.guardian_set_id,
+            args.quorum_threshold,
+            args.guardian_count,
+            &args.guardians[..args.guardian_count as usize],
+        )?;
+    }
+
+    msg!("XXXL guardian_set initialized");
+    Ok(())
+}
+
+fn process_initialize_mint_state(
+    program_id: &Pubkey,
+    accounts: &[AccountInfo],
+    args: &InitializeMintStateArgs,
+) -> ProgramResult {
+    let rent = Rent::get()?;
+    let account_info_iter = &mut accounts.iter();
+    let mint_state_account = next_account_info(account_info_iter)?;
+    let authority_account = next_account_info(account_info_iter)?;
+    let rent_payer_account = next_account_info(account_info_iter)?;
+    let system_program_account = next_account_info(account_info_iter)?;
+
+    let (expected_pda, bump) = find_mint_state(program_id, &args.mint_id);
+    let (gateway_mint_authority_pda, gateway_mint_authority_bump) =
+        crate::pda::find_gateway_mint_authority(program_id);
+
+    let bump_seed = [bump];
+    let signer_seeds: &[&[u8]] = &[b"xxxl", b"mint-state", &args.mint_id, &bump_seed];
+
+    create_state_pda_account_for_initialization(
+        program_id,
+        mint_state_account,
+        authority_account,
+        rent_payer_account,
+        system_program_account,
+        &expected_pda,
+        signer_seeds,
+        MINT_STATE_ACCOUNT_LEN,
+        &rent,
+    )?;
+
+    {
+        let mut data = mint_state_account.try_borrow_mut_data()?;
+        initialize_mint_state_account_data(
+            &mut data[..],
+            args.mint_pubkey,
+            args.decimals,
+            gateway_mint_authority_pda.to_bytes(),
+            gateway_mint_authority_bump,
+        )?;
+    }
+
+    msg!("XXXL mint_state initialized");
+    Ok(())
+}
+
+fn process_initialize_recipient_balance(
+    program_id: &Pubkey,
+    accounts: &[AccountInfo],
+    args: &InitializeRecipientBalanceArgs,
+) -> ProgramResult {
+    let rent = Rent::get()?;
+    let account_info_iter = &mut accounts.iter();
+    let recipient_balance_account = next_account_info(account_info_iter)?;
+    let authority_account = next_account_info(account_info_iter)?;
+    let rent_payer_account = next_account_info(account_info_iter)?;
+    let system_program_account = next_account_info(account_info_iter)?;
+
+    let (expected_pda, bump) = find_recipient_balance(program_id, &args.recipient, &args.mint);
+    let bump_seed = [bump];
+    let signer_seeds: &[&[u8]] = &[
+        b"xxxl",
+        b"recipient-balance",
+        &args.recipient,
+        &args.mint,
+        &bump_seed,
+    ];
+
+    create_state_pda_account_for_initialization(
+        program_id,
+        recipient_balance_account,
+        authority_account,
+        rent_payer_account,
+        system_program_account,
+        &expected_pda,
+        signer_seeds,
+        RECIPIENT_BALANCE_ACCOUNT_LEN,
+        &rent,
+    )?;
+
+    {
+        let mut data = recipient_balance_account.try_borrow_mut_data()?;
+        initialize_recipient_balance_account_data(&mut data[..], args.recipient, args.mint)?;
+    }
+
+    msg!("XXXL recipient_balance initialized");
+    Ok(())
+}
+
+fn create_state_pda_account_for_initialization<'a>(
+    program_id: &Pubkey,
+    state_account: &AccountInfo<'a>,
+    authority_account: &AccountInfo<'a>,
+    rent_payer_account: &AccountInfo<'a>,
+    system_program_account: &AccountInfo<'a>,
+    expected_pda: &Pubkey,
+    signer_seeds: &[&[u8]],
+    space: usize,
+    rent: &Rent,
+) -> ProgramResult {
+    if state_account.key != expected_pda {
+        return Err(XxxlError::InvalidPda.into());
+    }
+
+    if !state_account.is_writable || !rent_payer_account.is_writable {
+        return Err(XxxlError::InvalidInstruction.into());
+    }
+
+    if !authority_account.is_signer || !rent_payer_account.is_signer {
+        return Err(XxxlError::InvalidAuthority.into());
+    }
+
+    if *system_program_account.key != system_program::id() {
+        return Err(XxxlError::InvalidInstruction.into());
+    }
+
+    if state_account.owner == program_id {
+        return Err(XxxlError::AccountAlreadyInitialized.into());
+    }
+
+    if state_account.owner != &system_program::id() {
+        return Err(XxxlError::InvalidAccountOwner.into());
+    }
+
+    if state_account.lamports() != 0 || !state_account.data_is_empty() {
+        return Err(XxxlError::AccountAlreadyInitialized.into());
+    }
+
+    let required_lamports = rent.minimum_balance(space);
+
+    let create_account_instruction = system_instruction::create_account(
+        rent_payer_account.key,
+        state_account.key,
+        required_lamports,
+        space as u64,
+        program_id,
+    );
+
+    invoke_signed(
+        &create_account_instruction,
+        &[
+            rent_payer_account.clone(),
+            state_account.clone(),
+            system_program_account.clone(),
+        ],
+        &[signer_seeds],
+    )?;
+
+    if !rent.is_exempt(state_account.lamports(), space) {
+        return Err(XxxlError::InvalidRentExemption.into());
+    }
+
+    Ok(())
 }
 
 #[cfg(not(feature = "phase-41k6-b1c7-handler-integration-test-gate"))]
@@ -816,7 +1084,6 @@ mod tests {
         assert!(crate::processor::live_route_repository_local_readiness_complete());
         assert!(!crate::processor::LIVE_ROUTE_ACTIVATION_FROM_PROCESS_INSTRUCTION_ENABLED);
     }
-
 
     use super::*;
     #[cfg(feature = "phase-41k6-b1c7-handler-integration-test-gate")]
