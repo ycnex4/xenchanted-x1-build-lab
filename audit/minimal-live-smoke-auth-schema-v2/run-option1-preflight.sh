@@ -63,13 +63,19 @@ export RPC_URL
 export PAYER_KEYPAIR
 export EVIDENCE_DIR
 
+# The repository package.json uses "type": "module". The preflight script is
+# intentionally CommonJS, so run a temporary .cjs copy from the evidence dir.
+SCRIPT_CJS="$EVIDENCE_DIR/option1-preflight.cjs"
+cp "$SCRIPT" "$SCRIPT_CJS"
+
 echo "=== option1 preflight runner ==="
 echo "evidence_dir=$EVIDENCE_DIR"
 echo "script=$SCRIPT"
+echo "runtime_script=$SCRIPT_CJS"
 echo "transactions_executed=false"
 echo
 
-node "$SCRIPT" 2>&1 | tee "$EVIDENCE_DIR/logs/option1-preflight.log"
+node "$SCRIPT_CJS" 2>&1 | tee "$EVIDENCE_DIR/logs/option1-preflight.log"
 
 echo
 echo "=== option1 preflight saved files ==="
