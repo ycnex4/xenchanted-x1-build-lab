@@ -14,7 +14,7 @@ use xxxl_svm::{
         AtomicConsumeGatewayMintExecutionPlan, ATOMIC_CONSUME_GATEWAY_MINT_STEP_ORDER,
     },
     instruction::{ConsumeGatewayMintArgs, CONSUME_GATEWAY_MINT_INSTRUCTION_LEN},
-    pda::find_gateway_mint_authority,
+    pda::{find_gateway_mint_authority, find_mint_state},
     processor::build_runtime_consume_gateway_mint_disabled_spl_cpi_gate_boundary,
     state::{
         GATEWAY_CONFIG_ACCOUNT_DISCRIMINATOR, GATEWAY_CONFIG_ACCOUNT_LEN,
@@ -226,7 +226,7 @@ fn with_valid_disabled_cpi_fixture<T>(
         canonical_event_key: [1u8; 32],
         route_id: [2u8; 32],
         recipient: [3u8; 32],
-        mint: mint_key.to_bytes(),
+        target_mint_pubkey: mint_key.to_bytes(),
         amount: 1_000,
         consumed_slot: 123,
         source_chain_weight_bps: 10_000,
@@ -338,7 +338,7 @@ impl RuntimeFixture {
         };
 
         let keys = RuntimeFixtureKeys {
-            mint_state: Pubkey::new_unique(),
+            mint_state: find_mint_state(&program_id, &spl_mint.to_bytes()).0,
             gateway_config: Pubkey::new_unique(),
             guardian_set: Pubkey::new_unique(),
             processed_event,
@@ -400,7 +400,7 @@ impl RuntimeFixture {
             recipient_balance_account_index: 4,
             route_id,
             guardian_set_id,
-            mint_id: spl_mint.to_bytes(),
+            canonical_asset_id: spl_mint.to_bytes(),
             canonical_event_key,
             recipient: recipient_owner.to_bytes(),
             amount: 1_000,

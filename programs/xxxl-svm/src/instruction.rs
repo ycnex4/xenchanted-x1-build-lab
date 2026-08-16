@@ -64,7 +64,7 @@ pub struct ConsumeGatewayMintArgs {
     pub recipient_balance_account_index: u8,
     pub route_id: [u8; 32],
     pub guardian_set_id: [u8; 32],
-    pub mint_id: [u8; 32],
+    pub canonical_asset_id: [u8; 32],
     pub canonical_event_key: [u8; 32],
     pub recipient: [u8; 32],
     pub amount: u128,
@@ -94,7 +94,7 @@ pub struct InitializeGuardianSetArgs {
 #[derive(Clone, Copy, Debug, PartialEq, Eq)]
 pub struct InitializeMintStateArgs {
     pub raw: [u8; INITIALIZE_MINT_STATE_INSTRUCTION_LEN],
-    pub mint_id: [u8; 32],
+    pub canonical_asset_id: [u8; 32],
     pub mint_pubkey: [u8; 32],
     pub decimals: u8,
 }
@@ -187,7 +187,7 @@ fn unpack_consume_gateway_mint(input: &[u8]) -> Result<XxxlInstruction, ProgramE
             recipient_balance_account_index,
             route_id: read_fixed_32(input, 16),
             guardian_set_id: read_fixed_32(input, 48),
-            mint_id: read_fixed_32(input, 80),
+            canonical_asset_id: read_fixed_32(input, 80),
             canonical_event_key: read_fixed_32(input, 112),
             recipient: read_fixed_32(input, 144),
             amount: read_u128_le(input, 176),
@@ -271,7 +271,7 @@ fn unpack_initialize_mint_state(input: &[u8]) -> Result<XxxlInstruction, Program
     Ok(XxxlInstruction::InitializeMintState(
         InitializeMintStateArgs {
             raw,
-            mint_id: read_fixed_32(input, 16),
+            canonical_asset_id: read_fixed_32(input, 16),
             mint_pubkey: read_fixed_32(input, 48),
             decimals: input[80],
         },
@@ -358,7 +358,7 @@ mod tests {
             assert_eq!(args.recipient_balance_account_index, 4);
             assert_eq!(args.route_id, [0x11; 32]);
             assert_eq!(args.guardian_set_id, [0x22; 32]);
-            assert_eq!(args.mint_id, [0x33; 32]);
+            assert_eq!(args.canonical_asset_id, [0x33; 32]);
             assert_eq!(args.canonical_event_key, [0x44; 32]);
             assert_eq!(args.recipient, [0x55; 32]);
             assert_eq!(args.amount, 1_000);
@@ -550,7 +550,7 @@ mod tests {
         let instruction = XxxlInstruction::unpack(&bytes).expect("valid init mint state");
 
         if let XxxlInstruction::InitializeMintState(args) = instruction {
-            assert_eq!(args.mint_id, [0x66; 32]);
+            assert_eq!(args.canonical_asset_id, [0x66; 32]);
             assert_eq!(args.mint_pubkey, [0x77; 32]);
             assert_eq!(args.decimals, 9);
         } else {

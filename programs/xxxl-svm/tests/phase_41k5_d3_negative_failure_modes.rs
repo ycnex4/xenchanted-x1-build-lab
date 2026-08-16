@@ -827,7 +827,7 @@ fn to_program_pubkey(pubkey: Pubkey) -> ProgramPubkey {
 fn instruction_data_from_fields(
     route_id: [u8; 32],
     guardian_set_id: [u8; 32],
-    mint_id: Pubkey,
+    canonical_asset_id: Pubkey,
     canonical_event_key: [u8; 32],
     recipient: Pubkey,
     amount: u128,
@@ -846,7 +846,7 @@ fn instruction_data_from_fields(
     bytes[15] = CONSUME_GATEWAY_MINT_RECIPIENT_BALANCE_ACCOUNT_INDEX;
     bytes[16..48].copy_from_slice(&route_id);
     bytes[48..80].copy_from_slice(&guardian_set_id);
-    bytes[80..112].copy_from_slice(&mint_id.to_bytes());
+    bytes[80..112].copy_from_slice(&canonical_asset_id.to_bytes());
     bytes[112..144].copy_from_slice(&canonical_event_key);
     bytes[144..176].copy_from_slice(&recipient.to_bytes());
     bytes[176..192].copy_from_slice(&amount.to_le_bytes());

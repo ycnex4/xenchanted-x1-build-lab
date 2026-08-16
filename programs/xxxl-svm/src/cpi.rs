@@ -95,7 +95,7 @@ pub fn plan_mint_to_cpi_boundary(
         return Err(XxxlError::InvalidAccountOwner.into());
     }
 
-    if boundary.accounts.mint.key.to_bytes() != execution_plan.mint {
+    if boundary.accounts.mint.key.to_bytes() != execution_plan.target_mint_pubkey {
         return Err(XxxlError::InvalidInstruction.into());
     }
 
@@ -399,7 +399,7 @@ mod tests {
             canonical_event_key: [0x44; 32],
             route_id: [0x11; 32],
             recipient: [0x55; 32],
-            mint: mint.to_bytes(),
+            target_mint_pubkey: mint.to_bytes(),
             amount: 1_000,
             consumed_slot: 77,
             source_chain_weight_bps: 10_000,

@@ -25,12 +25,13 @@ fn consume_gateway_mint_v2_parses_source_chain_id_from_bytes_194_201() {
             assert_eq!(args.source_chain_id, source_chain_id);
             assert_eq!(args.route_id, [0x11; 32]);
             assert_eq!(args.guardian_set_id, [0x22; 32]);
-            assert_eq!(args.mint_id, [0x33; 32]);
+            assert_eq!(args.canonical_asset_id, [0x33; 32]);
             assert_eq!(args.canonical_event_key, [0x44; 32]);
             assert_eq!(args.recipient, [0x55; 32]);
             assert_eq!(args.amount, 1_000);
             assert_eq!(args.source_chain_weight_bps, 10_000);
         }
+        _ => panic!("expected ConsumeGatewayMint instruction"),
     }
 }
 

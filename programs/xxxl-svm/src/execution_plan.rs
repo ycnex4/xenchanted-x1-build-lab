@@ -37,7 +37,7 @@ pub struct AtomicConsumeGatewayMintExecutionPlan {
     pub canonical_event_key: [u8; 32],
     pub route_id: [u8; 32],
     pub recipient: [u8; 32],
-    pub mint: [u8; 32],
+    pub target_mint_pubkey: [u8; 32],
     pub amount: u64,
     pub consumed_slot: u64,
     pub source_chain_weight_bps: u16,
@@ -73,7 +73,7 @@ pub fn build_atomic_consume_gateway_mint_execution_plan(
         canonical_event_key: args.canonical_event_key,
         route_id: args.route_id,
         recipient: args.recipient,
-        mint: args.mint_id,
+        target_mint_pubkey: prepared.boundary.accounts.mint.key.to_bytes(),
         amount: args.amount as u64,
         consumed_slot,
         source_chain_weight_bps: args.source_chain_weight_bps,
@@ -123,7 +123,7 @@ pub fn apply_recipient_balance_mutation_boundary(
     credit_recipient_balance(
         recipient_balance_data,
         execution_plan.recipient,
-        execution_plan.mint,
+        execution_plan.target_mint_pubkey,
         execution_plan.amount as u128,
         execution_plan.canonical_event_key,
     )
@@ -160,7 +160,7 @@ pub fn apply_atomic_state_mutation_composition_boundary(
         let recipient_balance = RecipientBalanceAccountView::new(recipient_balance_data)?;
 
         if recipient_balance.owner() != execution_plan.recipient
-            || recipient_balance.mint() != execution_plan.mint
+            || recipient_balance.mint() != execution_plan.target_mint_pubkey
         {
             return Err(XxxlError::InvalidRecipientAta.into());
         }
@@ -202,7 +202,9 @@ pub fn apply_atomic_state_mutations_fixture(
     {
         let recipient_balance = RecipientBalanceAccountView::new(recipient_balance_data)?;
 
-        if recipient_balance.owner() != args.recipient || recipient_balance.mint() != args.mint_id {
+        if recipient_balance.owner() != args.recipient
+            || recipient_balance.mint() != args.canonical_asset_id
+        {
             return Err(XxxlError::InvalidRecipientAta.into());
         }
 
@@ -224,7 +226,7 @@ pub fn apply_atomic_state_mutations_fixture(
     credit_recipient_balance(
         recipient_balance_data,
         args.recipient,
-        args.mint_id,
+        args.canonical_asset_id,
         args.amount,
         args.canonical_event_key,
     )
@@ -273,7 +275,7 @@ mod tests {
         let args = valid_args();
 
         let token_program_key = spl_token::id();
-        let mint_key = Pubkey::new_from_array(args.mint_id);
+        let mint_key = Pubkey::new_from_array(args.canonical_asset_id);
         let recipient_token_account_key = Pubkey::new_unique();
         let mint_authority_pda_key = Pubkey::new_unique();
         let owner = Pubkey::new_unique();
@@ -352,7 +354,7 @@ mod tests {
         assert_eq!(plan.consumed_slot, 77);
         assert_eq!(plan.canonical_event_key, args.canonical_event_key);
         assert_eq!(plan.recipient, args.recipient);
-        assert_eq!(plan.mint, args.mint_id);
+        assert_eq!(plan.target_mint_pubkey, args.canonical_asset_id);
         assert!(!plan.live_route_activation_enabled);
         assert!(!plan.mint_to_invocation_from_process_instruction_enabled);
     }
@@ -362,7 +364,7 @@ mod tests {
         let args = valid_args();
 
         let token_program_key = spl_token::id();
-        let mint_key = Pubkey::new_from_array(args.mint_id);
+        let mint_key = Pubkey::new_from_array(args.canonical_asset_id);
         let recipient_token_account_key = Pubkey::new_unique();
         let mint_authority_pda_key = Pubkey::new_unique();
         let owner = Pubkey::new_unique();
@@ -1080,7 +1082,7 @@ mod tests {
             recipient_balance_account_index: 4,
             route_id: [0x11; 32],
             guardian_set_id: [0x22; 32],
-            mint_id: [0x33; 32],
+            canonical_asset_id: [0x33; 32],
             canonical_event_key: [0x44; 32],
             recipient: [0x55; 32],
             amount: 1_000,
@@ -1097,7 +1099,7 @@ mod tests {
             canonical_event_key: args.canonical_event_key,
             route_id: args.route_id,
             recipient: args.recipient,
-            mint: args.mint_id,
+            target_mint_pubkey: args.canonical_asset_id,
             amount: args.amount as u64,
             consumed_slot: 77,
             source_chain_weight_bps: args.source_chain_weight_bps,
@@ -1127,7 +1129,7 @@ mod tests {
         );
 
         data[16..48].copy_from_slice(&args.recipient);
-        data[48..80].copy_from_slice(&args.mint_id);
+        data[48..80].copy_from_slice(&args.canonical_asset_id);
         data[80..96].copy_from_slice(&balance.to_le_bytes());
 
         data

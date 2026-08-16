@@ -90,9 +90,13 @@ pub fn find_guardian_set(program_id: &Pubkey, guardian_set_id: &[u8; 32]) -> (Pu
     )
 }
 
-pub fn find_mint_state(program_id: &Pubkey, mint_id: &[u8; 32]) -> (Pubkey, u8) {
+pub fn find_mint_state(program_id: &Pubkey, canonical_asset_id: &[u8; 32]) -> (Pubkey, u8) {
     Pubkey::find_program_address(
-        &[GATEWAY_MINT_AUTHORITY_SEED_0, MINT_STATE_SEED_1, mint_id],
+        &[
+            GATEWAY_MINT_AUTHORITY_SEED_0,
+            MINT_STATE_SEED_1,
+            canonical_asset_id,
+        ],
         program_id,
     )
 }
@@ -479,13 +483,13 @@ mod state_provisioning_pda_tests {
         let program_id = Pubkey::new_unique();
         let route_id = [1u8; 32];
         let guardian_set_id = [2u8; 32];
-        let mint_id = [3u8; 32];
+        let canonical_asset_id = [3u8; 32];
         let recipient = [4u8; 32];
         let mint = [5u8; 32];
 
         let (gateway_config, gateway_config_bump) = find_gateway_config(&program_id, &route_id);
         let (guardian_set, guardian_set_bump) = find_guardian_set(&program_id, &guardian_set_id);
-        let (mint_state, mint_state_bump) = find_mint_state(&program_id, &mint_id);
+        let (mint_state, mint_state_bump) = find_mint_state(&program_id, &canonical_asset_id);
         let (recipient_balance, recipient_balance_bump) =
             find_recipient_balance(&program_id, &recipient, &mint);
 
@@ -501,7 +505,10 @@ mod state_provisioning_pda_tests {
             (guardian_set, guardian_set_bump)
         );
         assert_eq!(
-            Pubkey::find_program_address(&[b"xxxl", b"mint-state", &mint_id], &program_id),
+            Pubkey::find_program_address(
+                &[b"xxxl", b"mint-state", &canonical_asset_id],
+                &program_id
+            ),
             (mint_state, mint_state_bump)
         );
         assert_eq!(

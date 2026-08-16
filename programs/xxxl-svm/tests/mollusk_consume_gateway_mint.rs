@@ -42,7 +42,8 @@ fn mollusk_harness_rejects_malformed_instruction_without_live_route() {
     let program_id = Pubkey::new_unique();
     let mollusk = mollusk_for_program(&program_id);
 
-    let instruction_data = vec![0u8; CONSUME_GATEWAY_MINT_INSTRUCTION_LEN - 1];
+    let mut instruction_data = vec![0u8; CONSUME_GATEWAY_MINT_INSTRUCTION_LEN - 1];
+    instruction_data[0..8].copy_from_slice(&CONSUME_GATEWAY_MINT_DISCRIMINATOR);
     let instruction = Instruction::new_with_bytes(program_id, &instruction_data, Vec::new());
     let accounts: Vec<(Pubkey, Account)> = Vec::new();
 
@@ -1718,11 +1719,32 @@ impl ScaffoldFixture {
         );
 
         let keys = FixtureKeys {
-            mint_state: Pubkey::new_unique(),
-            gateway_config: Pubkey::new_unique(),
-            guardian_set: Pubkey::new_unique(),
+            mint_state: Pubkey::find_program_address(
+                &[b"xxxl", b"mint-state", &spl_mint.to_bytes()],
+                &program_id,
+            )
+            .0,
+            gateway_config: Pubkey::find_program_address(
+                &[b"xxxl", b"gateway-config", &route_id],
+                &program_id,
+            )
+            .0,
+            guardian_set: Pubkey::find_program_address(
+                &[b"xxxl", b"guardian-set", &guardian_set_id],
+                &program_id,
+            )
+            .0,
             processed_event,
-            recipient_balance: Pubkey::new_unique(),
+            recipient_balance: Pubkey::find_program_address(
+                &[
+                    b"xxxl",
+                    b"recipient-balance",
+                    &recipient_owner.to_bytes(),
+                    &spl_mint.to_bytes(),
+                ],
+                &program_id,
+            )
+            .0,
             recipient_owner,
             spl_mint,
             recipient_token_account: Pubkey::new_unique(),
@@ -2016,7 +2038,7 @@ fn read_fixed_32(input: &[u8], offset: usize) -> [u8; 32] {
 fn instruction_data_from_fields(
     route_id: [u8; 32],
     guardian_set_id: [u8; 32],
-    mint_id: Pubkey,
+    canonical_asset_id: Pubkey,
     canonical_event_key: [u8; 32],
     recipient: Pubkey,
     amount: u128,
@@ -2035,7 +2057,7 @@ fn instruction_data_from_fields(
     bytes[15] = CONSUME_GATEWAY_MINT_RECIPIENT_BALANCE_ACCOUNT_INDEX;
     bytes[16..48].copy_from_slice(&route_id);
     bytes[48..80].copy_from_slice(&guardian_set_id);
-    bytes[80..112].copy_from_slice(&mint_id.to_bytes());
+    bytes[80..112].copy_from_slice(&canonical_asset_id.to_bytes());
     bytes[112..144].copy_from_slice(&canonical_event_key);
     bytes[144..176].copy_from_slice(&recipient.to_bytes());
     bytes[176..192].copy_from_slice(&amount.to_le_bytes());

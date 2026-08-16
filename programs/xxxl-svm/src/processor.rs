@@ -525,12 +525,12 @@ fn process_initialize_mint_state(
     let rent_payer_account = next_account_info(account_info_iter)?;
     let system_program_account = next_account_info(account_info_iter)?;
 
-    let (expected_pda, bump) = find_mint_state(program_id, &args.mint_id);
+    let (expected_pda, bump) = find_mint_state(program_id, &args.canonical_asset_id);
     let (gateway_mint_authority_pda, gateway_mint_authority_bump) =
         crate::pda::find_gateway_mint_authority(program_id);
 
     let bump_seed = [bump];
-    let signer_seeds: &[&[u8]] = &[b"xxxl", b"mint-state", &args.mint_id, &bump_seed];
+    let signer_seeds: &[&[u8]] = &[b"xxxl", b"mint-state", &args.canonical_asset_id, &bump_seed];
 
     create_state_pda_account_for_initialization(
         program_id,
@@ -1001,8 +1001,14 @@ pub fn prepare_consume_gateway_mint_cpi_boundary<'a, 'b>(
     let gateway_config = GatewayConfigAccountView::new(&gateway_config_data)?;
     let guardian_set = GuardianSetAccountView::new(&guardian_set_data)?;
     let recipient_balance = RecipientBalanceAccountView::new(&recipient_balance_data)?;
+    let target_mint_pubkey_bytes = spl_token_mint_account.key.to_bytes();
 
-    if mint_state.mint_pubkey() != args.mint_id
+    let (expected_mint_state_pda, _) = find_mint_state(program_id, &args.canonical_asset_id);
+    if mint_state_account.key != &expected_mint_state_pda {
+        return Err(XxxlError::InvalidPda.into());
+    }
+
+    if mint_state.mint_pubkey() != target_mint_pubkey_bytes
         || mint_state.gateway_mint_authority_pda() != mint_authority_pda.key.to_bytes()
     {
         return Err(XxxlError::InvalidInstruction.into());
@@ -1016,7 +1022,7 @@ pub fn prepare_consume_gateway_mint_cpi_boundary<'a, 'b>(
 
     if gateway_config.route_id() != args.route_id
         || gateway_config.guardian_set_id() != args.guardian_set_id
-        || gateway_config.target_mint() != args.mint_id
+        || gateway_config.target_mint() != target_mint_pubkey_bytes
         || gateway_config.source_chain_weight_bps() != args.source_chain_weight_bps
     {
         return Err(XxxlError::InvalidInstruction.into());
@@ -1044,17 +1050,23 @@ pub fn prepare_consume_gateway_mint_cpi_boundary<'a, 'b>(
         return Err(XxxlError::InvalidInstruction.into());
     }
 
-    if recipient_balance.owner() != args.recipient || recipient_balance.mint() != args.mint_id {
+    if recipient_balance.owner() != args.recipient
+        || recipient_balance.mint() != target_mint_pubkey_bytes
+    {
         return Err(XxxlError::InvalidRecipientAta.into());
     }
 
-    let mint_pubkey = Pubkey::new_from_array(args.mint_id);
+    let target_mint_pubkey = Pubkey::new_from_array(target_mint_pubkey_bytes);
     let recipient_owner = Pubkey::new_from_array(args.recipient);
 
     let mint_decimals =
         assert_initialized_mint_account(spl_token_mint_account, mint_authority_pda.key)?;
 
-    assert_recipient_ata_boundary(recipient_token_account, &recipient_owner, &mint_pubkey)?;
+    assert_recipient_ata_boundary(
+        recipient_token_account,
+        &recipient_owner,
+        &target_mint_pubkey,
+    )?;
 
     if args.amount == 0 || args.amount > u64::MAX as u128 {
         return Err(XxxlError::InvalidInstruction.into());
@@ -1186,6 +1198,32 @@ mod tests {
             .expect("v2 source_chain_id matches GatewayConfig");
 
         assert_eq!(args.source_chain_id, 1);
+    }
+
+    #[test]
+    fn handler_integration_allows_canonical_asset_id_distinct_from_target_spl_mint() {
+        let mut fixture = HandlerFixture::new();
+        let target_spl_mint = fixture.keys.spl_mint;
+        let canonical_asset_id = [0x42; 32];
+        let (canonical_mint_state, _) = find_mint_state(&fixture.program_id, &canonical_asset_id);
+
+        fixture.keys.mint_state = canonical_mint_state;
+        fixture.args.canonical_asset_id = canonical_asset_id;
+
+        let program_id = fixture.program_id;
+        let args = fixture.args;
+        let rent = Rent::default();
+        let accounts = fixture.accounts();
+
+        let prepared =
+            prepare_consume_gateway_mint_cpi_boundary(&program_id, &accounts, &args, &rent)
+                .expect("canonical asset id may differ from target SPL mint");
+
+        assert_ne!(args.canonical_asset_id, target_spl_mint.to_bytes());
+        assert_eq!(
+            prepared.boundary.accounts.mint.key.to_bytes(),
+            target_spl_mint.to_bytes()
+        );
     }
 
     #[test]
@@ -1482,7 +1520,7 @@ mod tests {
         assert_eq!(plan.canonical_event_key, args.canonical_event_key);
         assert_eq!(plan.route_id, args.route_id);
         assert_eq!(plan.recipient, args.recipient);
-        assert_eq!(plan.mint, args.mint_id);
+        assert_eq!(plan.target_mint_pubkey, args.canonical_asset_id);
         assert_eq!(plan.amount, 1_000);
         assert_eq!(plan.consumed_slot, 77);
         assert_eq!(plan.source_chain_weight_bps, 10_000);
@@ -1534,7 +1572,7 @@ mod tests {
         assert_eq!(execution_plan.canonical_event_key, args.canonical_event_key);
         assert_eq!(execution_plan.route_id, args.route_id);
         assert_eq!(execution_plan.recipient, args.recipient);
-        assert_eq!(execution_plan.mint, args.mint_id);
+        assert_eq!(execution_plan.target_mint_pubkey, args.canonical_asset_id);
         assert_eq!(execution_plan.source_chain_weight_bps, 10_000);
         assert!(!execution_plan.live_route_activation_enabled);
         assert!(!execution_plan.mint_to_invocation_from_process_instruction_enabled);
@@ -1569,7 +1607,10 @@ mod tests {
         );
         assert_eq!(composition.execution_plan.route_id, args.route_id);
         assert_eq!(composition.execution_plan.recipient, args.recipient);
-        assert_eq!(composition.execution_plan.mint, args.mint_id);
+        assert_eq!(
+            composition.execution_plan.target_mint_pubkey,
+            args.canonical_asset_id
+        );
         assert_eq!(composition.execution_plan.source_chain_weight_bps, 10_000);
         assert!(!composition.execution_plan.live_route_activation_enabled);
         assert!(
@@ -1579,7 +1620,10 @@ mod tests {
         );
 
         assert_eq!(composition.mint_to_cpi_plan.token_program, spl_token::id());
-        assert_eq!(composition.mint_to_cpi_plan.mint.to_bytes(), args.mint_id);
+        assert_eq!(
+            composition.mint_to_cpi_plan.mint.to_bytes(),
+            args.canonical_asset_id
+        );
         assert_eq!(composition.mint_to_cpi_plan.amount, 1_000);
         assert_eq!(
             composition.mint_to_cpi_plan.mint_authority_pda,
@@ -2328,7 +2372,7 @@ mod tests {
             };
 
             let keys = FixtureKeys {
-                mint_state: Pubkey::new_unique(),
+                mint_state: find_mint_state(&program_id, &spl_mint.to_bytes()).0,
                 gateway_config: Pubkey::new_unique(),
                 guardian_set: Pubkey::new_unique(),
                 processed_event,
@@ -2392,7 +2436,7 @@ mod tests {
                 recipient_balance_account_index: 4,
                 route_id,
                 guardian_set_id,
-                mint_id: spl_mint.to_bytes(),
+                canonical_asset_id: spl_mint.to_bytes(),
                 canonical_event_key,
                 recipient: recipient_owner.to_bytes(),
                 amount: 1_000,
