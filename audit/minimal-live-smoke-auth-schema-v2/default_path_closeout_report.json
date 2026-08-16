@@ -1,0 +1,32 @@
+{
+  "generated_utc": "2026-08-16T15:41:54Z",
+  "branch": "audit/minimal-live-smoke-auth-schema-v2-20260814T165358Z",
+  "head": "6da71d76fde8f0da7ead25781b4c3c125fa2d77d",
+  "audited_source_checkpoint": "240e3e89100893939339ee5cc1476298e1ea4571",
+  "program_id": "D7AQmZNtFFFoJbducz93atteeSZhw3jq6RmsqBvaf1my",
+  "default_path_status": "PASS",
+  "post_upgrade_smoke": {
+    "tx_signature": "3Uoo62L9r8H1Y1GiZr9ktP4p2oJ3bb18v6mMCURYPV6oe7YQAGReaQb1nyyfGvesBZ6iYAr2z19YivVZzSTTWhFF",
+    "slot": 181033864,
+    "custom_error_code": 8,
+    "expected_failure": "CpiBoundaryNotReady",
+    "changed_accounts": [],
+    "option1_success": true
+  },
+  "upgrade": {
+    "signature": "417K1VNG2DKLkj5UFeNWPdet25KC3DHW6DKjNXV4wZm46fxrnnqzHooL1Gbn3WsCZwnaatCETFuBGRBxN2dvgXrG",
+    "last_deployed_slot": 181033350,
+    "candidate_sha256": "035e9d4ba25b455e80ff8b791d69c6aff2a91c3ca22bc6955d9b6b080605a1e9",
+    "candidate_size": 82056,
+    "deployed_dump_sha256": "abcb64fd18c57c6204ce8cd577176d2210c14e411047c35e4b08b625bc041185",
+    "deployed_dump_size": 186376,
+    "candidate_matches_deployed_prefix": true,
+    "deployed_tail_zero_padding_only": true
+  },
+  "rollback": {
+    "available": true,
+    "sha256": "8e8410070d31f0a50cdb851d40896dd8e6656e28e840ad95fa4fda0b79eb7e97",
+    "size": 186376
+  },
+  "next_gate": "D2/B1C7 dangerous-gated mint requires separate explicit approval"
+}
