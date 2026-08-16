@@ -1,0 +1,128 @@
+Canonical Asset ID Refactor - phase_41k5_d3 negative failure modes diff for daemon
+
+Primary commit: 705d957 Refactor consume mint identity to canonical asset id
+
+BEGIN GIT SHOW OUTPUT
+
+commit 705d957024fa6eef16d2d76fb465007db2959753
+subject Refactor consume mint identity to canonical asset id
+
+
+diff --git a/programs/xxxl-svm/tests/phase_41k5_d3_negative_failure_modes.rs b/programs/xxxl-svm/tests/phase_41k5_d3_negative_failure_modes.rs
+index 2e79907..4c817c9 100644
+--- a/programs/xxxl-svm/tests/phase_41k5_d3_negative_failure_modes.rs
++++ b/programs/xxxl-svm/tests/phase_41k5_d3_negative_failure_modes.rs
+@@ -750,111 +750,111 @@ fn mint_state_data(mint: Pubkey, pda: Pubkey, bump: u8) -> Vec<u8> {
+ fn gateway_config_data(
+     route_id: [u8; 32],
+     source_chain_id: u64,
+     guardian_set_id: [u8; 32],
+     target_mint: Pubkey,
+     weight_bps: u16,
+ ) -> Vec<u8> {
+     let mut data = account_data(
+         GATEWAY_CONFIG_ACCOUNT_LEN,
+         GATEWAY_CONFIG_ACCOUNT_DISCRIMINATOR,
+     );
+     data[12..14].copy_from_slice(&weight_bps.to_le_bytes());
+     data[16..48].copy_from_slice(&route_id);
+     data[48..56].copy_from_slice(&source_chain_id.to_le_bytes());
+     data[88..120].copy_from_slice(&target_mint.to_bytes());
+     data[120..152].copy_from_slice(&guardian_set_id);
+     data
+ }
+
+ fn guardian_set_data(guardian_set_id: [u8; 32]) -> Vec<u8> {
+     let mut data = account_data(GUARDIAN_SET_ACCOUNT_LEN, GUARDIAN_SET_ACCOUNT_DISCRIMINATOR);
+     data[272..304].copy_from_slice(&guardian_set_id);
+     data
+ }
+
+ fn recipient_balance_data(owner: Pubkey, mint: Pubkey) -> Vec<u8> {
+     let mut data = account_data(
+         RECIPIENT_BALANCE_ACCOUNT_LEN,
+         RECIPIENT_BALANCE_ACCOUNT_DISCRIMINATOR,
+     );
+     data[16..48].copy_from_slice(&owner.to_bytes());
+     data[48..80].copy_from_slice(&mint.to_bytes());
+     data
+ }
+
+ fn account_data(len: usize, discriminator: [u8; 8]) -> Vec<u8> {
+     let mut data = vec![0u8; len];
+     data[0..8].copy_from_slice(&discriminator);
+     data[8..10].copy_from_slice(&RUNTIME_LAYOUT_VERSION.to_le_bytes());
+     data
+ }
+
+ fn packed_mint(mint_authority: Pubkey, initialized: bool) -> Vec<u8> {
+     let mut data = vec![0u8; SplTokenMint::LEN];
+     let mint = SplTokenMint {
+         mint_authority: COption::Some(to_program_pubkey(mint_authority)),
+         supply: 0,
+         decimals: 18,
+         is_initialized: initialized,
+         freeze_authority: COption::None,
+     };
+
+     SplTokenMint::pack(mint, &mut data).expect("pack SPL mint");
+     data
+ }
+
+ fn packed_token_account(mint: Pubkey, owner: Pubkey, state: AccountState) -> Vec<u8> {
+     let mut data = vec![0u8; SplTokenAccount::LEN];
+     let account = SplTokenAccount {
+         mint: to_program_pubkey(mint),
+         owner: to_program_pubkey(owner),
+         amount: 0,
+         delegate: COption::None,
+         state,
+         is_native: COption::None,
+         delegated_amount: 0,
+         close_authority: COption::None,
+     };
+
+     SplTokenAccount::pack(account, &mut data).expect("pack SPL token account");
+     data
+ }
+
+ fn to_program_pubkey(pubkey: Pubkey) -> ProgramPubkey {
+     ProgramPubkey::new_from_array(pubkey.to_bytes())
+ }
+
+ fn instruction_data_from_fields(
+     route_id: [u8; 32],
+     guardian_set_id: [u8; 32],
+-    mint_id: Pubkey,
++    canonical_asset_id: Pubkey,
+     canonical_event_key: [u8; 32],
+     recipient: Pubkey,
+     amount: u128,
+     source_chain_weight_bps: u16,
+     source_chain_id: u64,
+ ) -> [u8; CONSUME_GATEWAY_MINT_INSTRUCTION_LEN] {
+     let mut bytes = [0u8; CONSUME_GATEWAY_MINT_INSTRUCTION_LEN];
+
+     bytes[0..8].copy_from_slice(&CONSUME_GATEWAY_MINT_DISCRIMINATOR);
+     bytes[8..10].copy_from_slice(&INSTRUCTION_LAYOUT_VERSION.to_le_bytes());
+     bytes[10] = CONSUME_GATEWAY_MINT_ACCOUNT_META_COUNT;
+     bytes[11] = CONSUME_GATEWAY_MINT_ROUTE_ACCOUNT_INDEX;
+     bytes[12] = CONSUME_GATEWAY_MINT_GUARDIAN_SET_ACCOUNT_INDEX;
+     bytes[13] = CONSUME_GATEWAY_MINT_MINT_STATE_ACCOUNT_INDEX;
+     bytes[14] = CONSUME_GATEWAY_MINT_PROCESSED_EVENT_ACCOUNT_INDEX;
+     bytes[15] = CONSUME_GATEWAY_MINT_RECIPIENT_BALANCE_ACCOUNT_INDEX;
+     bytes[16..48].copy_from_slice(&route_id);
+     bytes[48..80].copy_from_slice(&guardian_set_id);
+-    bytes[80..112].copy_from_slice(&mint_id.to_bytes());
++    bytes[80..112].copy_from_slice(&canonical_asset_id.to_bytes());
+     bytes[112..144].copy_from_slice(&canonical_event_key);
+     bytes[144..176].copy_from_slice(&recipient.to_bytes());
+     bytes[176..192].copy_from_slice(&amount.to_le_bytes());
+     bytes[192..194].copy_from_slice(&source_chain_weight_bps.to_le_bytes());
+     bytes[194..202].copy_from_slice(&source_chain_id.to_le_bytes());
+     bytes
+ }
+
+ fn native_loader_id() -> Pubkey {
+     Pubkey::from_str(NATIVE_LOADER_ID).expect("native loader id")
+ }

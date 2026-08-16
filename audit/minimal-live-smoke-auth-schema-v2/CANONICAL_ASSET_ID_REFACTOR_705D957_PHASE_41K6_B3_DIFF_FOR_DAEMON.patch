@@ -1,0 +1,292 @@
+Canonical Asset ID Refactor - phase_41k6_b3 hostile live gated matrix diff for daemon
+
+Primary commit: 705d957 Refactor consume mint identity to canonical asset id
+
+BEGIN GIT SHOW OUTPUT
+
+commit 705d957024fa6eef16d2d76fb465007db2959753
+subject Refactor consume mint identity to canonical asset id
+
+
+diff --git a/programs/xxxl-svm/tests/phase_41k6_b3_hostile_live_gated_matrix.rs b/programs/xxxl-svm/tests/phase_41k6_b3_hostile_live_gated_matrix.rs
+index 7258bdf..4f60a73 100644
+--- a/programs/xxxl-svm/tests/phase_41k6_b3_hostile_live_gated_matrix.rs
++++ b/programs/xxxl-svm/tests/phase_41k6_b3_hostile_live_gated_matrix.rs
+@@ -111,161 +111,162 @@ fn phase_41k6_b3_guardian_set_id_binding_mismatch_rejects_before_mark_and_mint()
+     let mut fixture = B2LiveGatedSuccessFixture::new();
+     let payload_hash_bound_to_original_guardian_set_id = fixture.payload_hash();
+     let new_guardian_set_id = [0x99; 32];
+
+     let (new_guardian_set, _) = Pubkey::find_program_address(
+         &[b"xxxl", b"guardian-set", &new_guardian_set_id],
+         &fixture.program_id,
+     );
+
+     fixture.keys.guardian_set = new_guardian_set;
+     fixture.data.guardian_set = guardian_set_data(new_guardian_set_id);
+     fixture.data.gateway_config = gateway_config_data(
+         ROUTE_ID,
+         SOURCE_CHAIN_ID,
+         new_guardian_set_id,
+         fixture.keys.spl_mint,
+         SOURCE_CHAIN_WEIGHT_BPS,
+     );
+     fixture.instruction_data = instruction_data_from_fields(
+         ROUTE_ID,
+         new_guardian_set_id,
+         fixture.keys.spl_mint,
+         CANONICAL_EVENT_KEY,
+         fixture.keys.recipient_owner,
+         AMOUNT as u128,
+         SOURCE_CHAIN_WEIGHT_BPS,
+         SOURCE_CHAIN_ID,
+     );
+
+     run_b3_hostile_case_before_mutation(
+         fixture,
+         vec![
+             ed25519_precompile_instruction(
+                 payload_hash_bound_to_original_guardian_set_id,
+                 GUARDIAN_ONE,
+             ),
+             ed25519_precompile_instruction(
+                 payload_hash_bound_to_original_guardian_set_id,
+                 GUARDIAN_TWO,
+             ),
+         ],
+     );
+ }
+
+ #[test]
+ fn phase_41k6_b3_recipient_binding_mismatch_rejects_before_mark_and_mint() {
+     let mut fixture = B2LiveGatedSuccessFixture::new();
+     let payload_hash_bound_to_original_recipient = fixture.payload_hash();
+
+     fixture.keys.recipient_token_account = Pubkey::new_unique();
+     fixture.data.recipient_token_account = packed_token_account_with_amount(
+         fixture.keys.spl_mint,
+         fixture.keys.recipient_owner,
+         AccountState::Initialized,
+         0,
+     );
+
+     run_b3_hostile_case_before_mutation(
+         fixture,
+         vec![
+             ed25519_precompile_instruction(payload_hash_bound_to_original_recipient, GUARDIAN_ONE),
+             ed25519_precompile_instruction(payload_hash_bound_to_original_recipient, GUARDIAN_TWO),
+         ],
+     );
+ }
+
+ #[test]
+ fn phase_41k6_b3_mint_binding_mismatch_rejects_before_mark_and_mint() {
+     let mut fixture = B2LiveGatedSuccessFixture::new();
+     let payload_hash_bound_to_original_mint = fixture.payload_hash();
+
+     let new_spl_mint = Pubkey::new_unique();
+     fixture.keys.spl_mint = new_spl_mint;
+     fixture.data.gateway_config = gateway_config_data(
+         ROUTE_ID,
+         SOURCE_CHAIN_ID,
+         GUARDIAN_SET_ID,
+         new_spl_mint,
+         SOURCE_CHAIN_WEIGHT_BPS,
+     );
+-    fixture.data.recipient_balance = recipient_balance_data(fixture.keys.recipient_owner, new_spl_mint);
++    fixture.data.recipient_balance =
++        recipient_balance_data(fixture.keys.recipient_owner, new_spl_mint);
+     fixture.data.spl_mint = packed_mint_with_supply(fixture.keys.mint_authority_pda, true, 0);
+     fixture.data.recipient_token_account = packed_token_account_with_amount(
+         new_spl_mint,
+         fixture.keys.recipient_owner,
+         AccountState::Initialized,
+         0,
+     );
+     fixture.instruction_data = instruction_data_from_fields(
+         ROUTE_ID,
+         GUARDIAN_SET_ID,
+         new_spl_mint,
+         CANONICAL_EVENT_KEY,
+         fixture.keys.recipient_owner,
+         AMOUNT as u128,
+         SOURCE_CHAIN_WEIGHT_BPS,
+         SOURCE_CHAIN_ID,
+     );
+
+     run_b3_hostile_case_before_mutation(
+         fixture,
+         vec![
+             ed25519_precompile_instruction(payload_hash_bound_to_original_mint, GUARDIAN_ONE),
+             ed25519_precompile_instruction(payload_hash_bound_to_original_mint, GUARDIAN_TWO),
+         ],
+     );
+ }
+
+ #[test]
+ fn phase_41k6_b3_processed_event_replay_rejects_before_second_mark_and_mint() {
+     let fixture = B2LiveGatedSuccessFixture::new();
+     let payload_hash = fixture.payload_hash();
+
+     let mut accounts = fixture.accounts_b1_v3();
+     let consumed_processed_event_data = build_final_consumed_processed_event_account_image(
+         &CANONICAL_EVENT_KEY,
+         &ROUTE_ID,
+         &fixture.keys.recipient_owner.to_bytes(),
+         AMOUNT as u128,
+         0,
+     )
+     .expect("consumed processed_event replay fixture");
+
+     accounts[ACCOUNT_INDEX_PROCESSED_EVENT].1 = account(
+         10_000_000_000,
+         consumed_processed_event_data.to_vec(),
+         fixture.program_id,
+         false,
+     );
+
+     run_b3_hostile_case_with_accounts_before_mutation(
+         fixture,
+         vec![
+             ed25519_precompile_instruction(payload_hash, GUARDIAN_ONE),
+             ed25519_precompile_instruction(payload_hash, GUARDIAN_TWO),
+         ],
+         accounts,
+     );
+ }
+
+ #[test]
+ fn phase_41k6_b3_duplicate_guardian_evidence_rejects_before_mark_and_mint() {
+     let fixture = B2LiveGatedSuccessFixture::new();
+     let payload_hash = fixture.payload_hash();
+
+     run_b3_hostile_case_before_mutation(
+         fixture,
+         vec![
+             ed25519_precompile_instruction(payload_hash, GUARDIAN_ONE),
+             ed25519_precompile_instruction(payload_hash, GUARDIAN_ONE),
+         ],
+     );
+ }
+
+ #[test]
+ fn phase_41k6_b3_insufficient_quorum_rejects_before_mark_and_mint() {
+     let fixture = B2LiveGatedSuccessFixture::new();
+     let payload_hash = fixture.payload_hash();
+
+     run_b3_hostile_case_before_mutation(
+         fixture,
+@@ -784,111 +785,111 @@ fn gateway_config_data(
+     data[12..14].copy_from_slice(&weight_bps.to_le_bytes());
+     data[16..48].copy_from_slice(&route_id);
+     data[48..56].copy_from_slice(&source_chain_id.to_le_bytes());
+     data[88..120].copy_from_slice(&target_mint.to_bytes());
+     data[120..152].copy_from_slice(&guardian_set_id);
+     data
+ }
+
+ fn guardian_set_data(guardian_set_id: [u8; 32]) -> Vec<u8> {
+     let mut data = account_data(GUARDIAN_SET_ACCOUNT_LEN, GUARDIAN_SET_ACCOUNT_DISCRIMINATOR);
+     data[10] = 1;
+     data[12..14].copy_from_slice(&GUARDIAN_THRESHOLD.to_le_bytes());
+     data[14] = GUARDIAN_COUNT;
+     data[16..48].copy_from_slice(&GUARDIAN_ONE);
+     data[48..80].copy_from_slice(&GUARDIAN_TWO);
+     data[80..112].copy_from_slice(&GUARDIAN_THREE);
+     data[272..304].copy_from_slice(&guardian_set_id);
+     data
+ }
+
+ fn recipient_balance_data(owner: Pubkey, mint: Pubkey) -> Vec<u8> {
+     let mut data = account_data(
+         RECIPIENT_BALANCE_ACCOUNT_LEN,
+         RECIPIENT_BALANCE_ACCOUNT_DISCRIMINATOR,
+     );
+     data[16..48].copy_from_slice(&owner.to_bytes());
+     data[48..80].copy_from_slice(&mint.to_bytes());
+     data
+ }
+
+ fn account_data(len: usize, discriminator: [u8; 8]) -> Vec<u8> {
+     let mut data = vec![0u8; len];
+     data[0..8].copy_from_slice(&discriminator);
+     data[8..10].copy_from_slice(&RUNTIME_LAYOUT_VERSION.to_le_bytes());
+     data
+ }
+
+ fn packed_mint_with_supply(mint_authority: Pubkey, initialized: bool, supply: u64) -> Vec<u8> {
+     let mut data = vec![0u8; SplTokenMint::LEN];
+     let mint = SplTokenMint {
+         mint_authority: COption::Some(to_program_pubkey(mint_authority)),
+         supply,
+         decimals: 18,
+         is_initialized: initialized,
+         freeze_authority: COption::None,
+     };
+
+     SplTokenMint::pack(mint, &mut data).expect("pack SPL mint");
+     data
+ }
+
+ fn packed_token_account_with_amount(
+     mint: Pubkey,
+     owner: Pubkey,
+     state: AccountState,
+     amount: u64,
+ ) -> Vec<u8> {
+     let mut data = vec![0u8; SplTokenAccount::LEN];
+     let account = SplTokenAccount {
+         mint: to_program_pubkey(mint),
+         owner: to_program_pubkey(owner),
+         amount,
+         delegate: COption::None,
+         state,
+         is_native: COption::None,
+         delegated_amount: 0,
+         close_authority: COption::None,
+     };
+
+     SplTokenAccount::pack(account, &mut data).expect("pack SPL token account");
+     data
+ }
+
+ fn to_program_pubkey(pubkey: Pubkey) -> ProgramPubkey {
+     ProgramPubkey::new_from_array(pubkey.to_bytes())
+ }
+
+ fn instruction_data_from_fields(
+     route_id: [u8; 32],
+     guardian_set_id: [u8; 32],
+-    mint_id: Pubkey,
++    canonical_asset_id: Pubkey,
+     canonical_event_key: [u8; 32],
+     recipient: Pubkey,
+     amount: u128,
+     source_chain_weight_bps: u16,
+     source_chain_id: u64,
+ ) -> [u8; CONSUME_GATEWAY_MINT_INSTRUCTION_LEN] {
+     let mut bytes = [0u8; CONSUME_GATEWAY_MINT_INSTRUCTION_LEN];
+
+     bytes[0..8].copy_from_slice(&CONSUME_GATEWAY_MINT_DISCRIMINATOR);
+     bytes[8..10].copy_from_slice(&INSTRUCTION_LAYOUT_VERSION.to_le_bytes());
+     bytes[10] = CONSUME_GATEWAY_MINT_ACCOUNT_META_COUNT;
+     bytes[11] = CONSUME_GATEWAY_MINT_ROUTE_ACCOUNT_INDEX;
+     bytes[12] = CONSUME_GATEWAY_MINT_GUARDIAN_SET_ACCOUNT_INDEX;
+     bytes[13] = CONSUME_GATEWAY_MINT_MINT_STATE_ACCOUNT_INDEX;
+     bytes[14] = CONSUME_GATEWAY_MINT_PROCESSED_EVENT_ACCOUNT_INDEX;
+     bytes[15] = CONSUME_GATEWAY_MINT_RECIPIENT_BALANCE_ACCOUNT_INDEX;
+     bytes[16..48].copy_from_slice(&route_id);
+     bytes[48..80].copy_from_slice(&guardian_set_id);
+-    bytes[80..112].copy_from_slice(&mint_id.to_bytes());
++    bytes[80..112].copy_from_slice(&canonical_asset_id.to_bytes());
+     bytes[112..144].copy_from_slice(&canonical_event_key);
+     bytes[144..176].copy_from_slice(&recipient.to_bytes());
+     bytes[176..192].copy_from_slice(&amount.to_le_bytes());
+     bytes[192..194].copy_from_slice(&source_chain_weight_bps.to_le_bytes());
+     bytes[194..202].copy_from_slice(&source_chain_id.to_le_bytes());
+     bytes
+ }
+
+ fn native_loader_id() -> Pubkey {
+     Pubkey::from_str(NATIVE_LOADER_ID).expect("native loader id")
+ }
