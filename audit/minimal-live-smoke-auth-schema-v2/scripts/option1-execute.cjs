@@ -34,7 +34,7 @@ const TOKEN_PROGRAM_ID = new PublicKey("TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ
 
 const ROUTE_ID = Buffer.from("d3ddc75b33c427328cdcdd783cc68e447836f8f7456a0d3c810927f1de314e9c", "hex");
 const GUARDIAN_SET_ID = Buffer.from("4088a1f71870e617f3635d1c29aedd9fc53a0c136c6f69e0cb343d217ab1cd83", "hex");
-const MINT_ID = Buffer.from("479f84fd9f7f0c239516a8492cb58b6f8b389d2595f3a48d7e24708f07a5a458", "hex");
+const CANONICAL_ASSET_ID = Buffer.from("479f84fd9f7f0c239516a8492cb58b6f8b389d2595f3a48d7e24708f07a5a458", "hex");
 const CANONICAL_EVENT_KEY = Buffer.from("e0c871d52145b2fb50b989259f43a622774c3898361c73dc7f9396b5be90f102", "hex");
 
 const CONSUME_GATEWAY_MINT_DISCRIMINATOR = Buffer.from([0xf2, 0xf4, 0xa8, 0x68, 0xbb, 0x89, 0xfe, 0x52]);
@@ -211,7 +211,7 @@ function buildConsumeData() {
   data[15] = 4; // recipient_balance account index
   ROUTE_ID.copy(data, 16);
   GUARDIAN_SET_ID.copy(data, 48);
-  MINT_ID.copy(data, 80);
+  CANONICAL_ASSET_ID.copy(data, 80);
   CANONICAL_EVENT_KEY.copy(data, 112);
   RECIPIENT_OWNER.toBuffer().copy(data, 144);
   writeU128LE(data, 176, AMOUNT_ATOMIC);
@@ -299,7 +299,7 @@ async function main() {
   const consumeIx = new TransactionInstruction({
     programId: PROGRAM_ID,
     keys: [
-      { pubkey: MINT_STATE_PDA, isSigner: false, isWritable: true },
+      { pubkey: MINT_STATE_PDA, isSigner: false, isWritable: false },
       { pubkey: GATEWAY_CONFIG_PDA, isSigner: false, isWritable: false },
       { pubkey: GUARDIAN_SET_PDA, isSigner: false, isWritable: false },
       { pubkey: processedEventPda, isSigner: false, isWritable: true },

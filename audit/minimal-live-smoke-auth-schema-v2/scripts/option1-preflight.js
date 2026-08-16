@@ -21,7 +21,7 @@ const RECIPIENT_BALANCE_PDA = new PublicKey("5YtuhQQJRBCi3Z2W25s2VUnX22hxXsu2o4i
 
 const ROUTE_ID = Buffer.from("d3ddc75b33c427328cdcdd783cc68e447836f8f7456a0d3c810927f1de314e9c", "hex");
 const GUARDIAN_SET_ID = Buffer.from("4088a1f71870e617f3635d1c29aedd9fc53a0c136c6f69e0cb343d217ab1cd83", "hex");
-const MINT_ID = Buffer.from("479f84fd9f7f0c239516a8492cb58b6f8b389d2595f3a48d7e24708f07a5a458", "hex");
+const CANONICAL_ASSET_ID = Buffer.from("479f84fd9f7f0c239516a8492cb58b6f8b389d2595f3a48d7e24708f07a5a458", "hex");
 const CANONICAL_EVENT_KEY = Buffer.from("e0c871d52145b2fb50b989259f43a622774c3898361c73dc7f9396b5be90f102", "hex");
 
 const EXPECTED_GUARDIANS = [
@@ -168,7 +168,7 @@ async function main() {
     PROGRAM_ID
   );
   const [mintStateDerived] = PublicKey.findProgramAddressSync(
-    [Buffer.from("xxxl"), Buffer.from("mint-state"), MINT_ID],
+    [Buffer.from("xxxl"), Buffer.from("mint-state"), CANONICAL_ASSET_ID],
     PROGRAM_ID
   );
   const [recipientBalanceDerived] = PublicKey.findProgramAddressSync(
