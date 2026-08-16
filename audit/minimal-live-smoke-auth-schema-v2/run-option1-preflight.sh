@@ -5,7 +5,7 @@ ROOT="$(git rev-parse --show-toplevel 2>/dev/null || pwd)"
 cd "$ROOT"
 
 SOURCE_COMMIT="6b3a2c6ffa1c7da3b61c0e080fc551ece49d716f"
-SCRIPT="audit/minimal-live-smoke-auth-schema-v2/scripts/option1-preflight.js"
+SCRIPT="audit/minimal-live-smoke-auth-schema-v2/scripts/option1-preflight.cjs"
 BASE="$HOME/xenchanted-stage20-activation-evidence-c332814"
 EVIDENCE_DIR="$BASE/runtime-state-provisioning-minimal-live-smoke-option1-builder-preflight-no-execution-$(date -u +%Y%m%dT%H%M%SZ)"
 mkdir -p "$EVIDENCE_DIR/logs" "$EVIDENCE_DIR/results"
