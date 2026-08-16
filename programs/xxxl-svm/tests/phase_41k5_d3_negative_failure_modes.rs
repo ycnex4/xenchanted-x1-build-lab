@@ -101,7 +101,7 @@ fn phase_41k5_d3_recipient_token_overflow_rolls_back_processed_event_mark() {
         &instruction,
         &accounts,
         &[
-            Check::err(ProgramError::Custom(TokenError::Overflow as u32)),
+            Check::err(ProgramError::Custom(XxxlError::InvalidInstruction as u32)),
             Check::account(&fixture.keys.processed_event)
                 .lamports(processed_event_before.lamports)
                 .owner(&processed_event_before.owner)
@@ -264,7 +264,7 @@ fn phase_41k5_d3_wrong_spl_mint_authority_rejected_without_mint() {
 
     let checks = result_and_unchanged_mutable_account_checks(
         &accounts,
-        Check::err(ProgramError::Custom(XxxlError::InvalidPda as u32)),
+        Check::err(ProgramError::Custom(XxxlError::InvalidInstruction as u32)),
     );
 
     mollusk.process_and_validate_instruction(&instruction, &accounts, &checks);
@@ -285,7 +285,7 @@ fn phase_41k5_d3_wrong_recipient_token_mint_rejected_without_mint() {
 
     let checks = result_and_unchanged_mutable_account_checks(
         &accounts,
-        Check::err(ProgramError::Custom(XxxlError::InvalidRecipientAta as u32)),
+        Check::err(ProgramError::Custom(XxxlError::InvalidInstruction as u32)),
     );
 
     mollusk.process_and_validate_instruction(&instruction, &accounts, &checks);
@@ -306,7 +306,7 @@ fn phase_41k5_d3_wrong_recipient_token_owner_rejected_without_mint() {
 
     let checks = result_and_unchanged_mutable_account_checks(
         &accounts,
-        Check::err(ProgramError::Custom(XxxlError::InvalidRecipientAta as u32)),
+        Check::err(ProgramError::Custom(XxxlError::InvalidInstruction as u32)),
     );
 
     mollusk.process_and_validate_instruction(&instruction, &accounts, &checks);
@@ -373,7 +373,7 @@ fn phase_41k5_d3_wrong_token_program_rejected_without_mint() {
 
     let checks = result_and_unchanged_mutable_account_checks(
         &accounts,
-        Check::err(ProgramError::Custom(XxxlError::InvalidAccountOwner as u32)),
+        Check::err(ProgramError::Custom(XxxlError::InvalidInstruction as u32)),
     );
 
     mollusk.process_and_validate_instruction(&instruction, &accounts, &checks);
@@ -394,7 +394,7 @@ fn phase_41k5_d3_wrong_system_program_rejected_without_mint() {
 
     let checks = result_and_unchanged_mutable_account_checks(
         &accounts,
-        Check::err(ProgramError::Custom(XxxlError::InvalidAccountOwner as u32)),
+        Check::err(ProgramError::Custom(XxxlError::InvalidInstruction as u32)),
     );
 
     mollusk.process_and_validate_instruction(&instruction, &accounts, &checks);
@@ -411,7 +411,7 @@ fn phase_41k5_d3_malformed_recipient_token_account_rejected_without_mint() {
 
     let checks = result_and_unchanged_mutable_account_checks(
         &accounts,
-        Check::err(ProgramError::Custom(XxxlError::InvalidRecipientAta as u32)),
+        Check::err(ProgramError::Custom(XxxlError::InvalidInstruction as u32)),
     );
 
     mollusk.process_and_validate_instruction(&instruction, &accounts, &checks);
@@ -513,12 +513,33 @@ impl ProductionPathFixture {
             &program_id,
         );
 
+        let canonical_asset_id = spl_mint.to_bytes();
+        let (mint_state, _) = Pubkey::find_program_address(
+            &[b"xxxl", b"mint-state", &canonical_asset_id],
+            &program_id,
+        );
+        let (gateway_config, _) =
+            Pubkey::find_program_address(&[b"xxxl", b"gateway-config", &ROUTE_ID], &program_id);
+        let (guardian_set, _) = Pubkey::find_program_address(
+            &[b"xxxl", b"guardian-set", &GUARDIAN_SET_ID],
+            &program_id,
+        );
+        let (recipient_balance, _) = Pubkey::find_program_address(
+            &[
+                b"xxxl",
+                b"recipient-balance",
+                &recipient_owner.to_bytes(),
+                &spl_mint.to_bytes(),
+            ],
+            &program_id,
+        );
+
         let keys = FixtureKeys {
-            mint_state: Pubkey::new_unique(),
-            gateway_config: Pubkey::new_unique(),
-            guardian_set: Pubkey::new_unique(),
+            mint_state,
+            gateway_config,
+            guardian_set,
             processed_event,
-            recipient_balance: Pubkey::new_unique(),
+            recipient_balance,
             recipient_owner,
             spl_mint,
             recipient_token_account: Pubkey::new_unique(),

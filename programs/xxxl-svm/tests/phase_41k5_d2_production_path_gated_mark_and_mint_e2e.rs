@@ -170,12 +170,33 @@ impl ProductionPathFixture {
             &program_id,
         );
 
+        let canonical_asset_id = spl_mint.to_bytes();
+        let (mint_state, _) = Pubkey::find_program_address(
+            &[b"xxxl", b"mint-state", &canonical_asset_id],
+            &program_id,
+        );
+        let (gateway_config, _) =
+            Pubkey::find_program_address(&[b"xxxl", b"gateway-config", &ROUTE_ID], &program_id);
+        let (guardian_set, _) = Pubkey::find_program_address(
+            &[b"xxxl", b"guardian-set", &GUARDIAN_SET_ID],
+            &program_id,
+        );
+        let (recipient_balance, _) = Pubkey::find_program_address(
+            &[
+                b"xxxl",
+                b"recipient-balance",
+                &recipient_owner.to_bytes(),
+                &spl_mint.to_bytes(),
+            ],
+            &program_id,
+        );
+
         let keys = FixtureKeys {
-            mint_state: Pubkey::new_unique(),
-            gateway_config: Pubkey::new_unique(),
-            guardian_set: Pubkey::new_unique(),
+            mint_state,
+            gateway_config,
+            guardian_set,
             processed_event,
-            recipient_balance: Pubkey::new_unique(),
+            recipient_balance,
             recipient_owner,
             spl_mint,
             recipient_token_account: Pubkey::new_unique(),

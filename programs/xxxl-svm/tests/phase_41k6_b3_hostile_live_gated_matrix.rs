@@ -208,12 +208,13 @@ fn phase_41k6_b3_mint_binding_mismatch_rejects_before_mark_and_mint() {
         SOURCE_CHAIN_ID,
     );
 
-    run_b3_hostile_case_before_mutation(
+    run_b3_hostile_case_before_mutation_with_expected_error(
         fixture,
         vec![
             ed25519_precompile_instruction(payload_hash_bound_to_original_mint, GUARDIAN_ONE),
             ed25519_precompile_instruction(payload_hash_bound_to_original_mint, GUARDIAN_TWO),
         ],
+        ProgramError::Custom(XxxlError::InvalidPda as u32),
     );
 }
 
@@ -246,6 +247,7 @@ fn phase_41k6_b3_processed_event_replay_rejects_before_second_mark_and_mint() {
             ed25519_precompile_instruction(payload_hash, GUARDIAN_TWO),
         ],
         accounts,
+        ProgramError::Custom(XxxlError::InvalidInstruction as u32),
     );
 }
 
@@ -278,12 +280,25 @@ fn run_b3_hostile_case_before_mutation(
     fixture: B2LiveGatedSuccessFixture,
     prior_ed25519_instructions: Vec<Instruction>,
 ) {
+    run_b3_hostile_case_before_mutation_with_expected_error(
+        fixture,
+        prior_ed25519_instructions,
+        ProgramError::Custom(XxxlError::InvalidInstruction as u32),
+    );
+}
+
+fn run_b3_hostile_case_before_mutation_with_expected_error(
+    fixture: B2LiveGatedSuccessFixture,
+    prior_ed25519_instructions: Vec<Instruction>,
+    expected_error: ProgramError,
+) {
     let accounts = fixture.accounts_b1_v3();
 
     run_b3_hostile_case_with_accounts_before_mutation(
         fixture,
         prior_ed25519_instructions,
         accounts,
+        expected_error,
     );
 }
 
@@ -291,6 +306,7 @@ fn run_b3_hostile_case_with_accounts_before_mutation(
     fixture: B2LiveGatedSuccessFixture,
     prior_ed25519_instructions: Vec<Instruction>,
     accounts: Vec<(Pubkey, Account)>,
+    expected_error: ProgramError,
 ) {
     let mollusk = mollusk_for_program(&fixture.program_id);
     let current_instruction = fixture.instruction_b1_v3();
@@ -308,7 +324,7 @@ fn run_b3_hostile_case_with_accounts_before_mutation(
         &transaction_instructions,
         &accounts,
         &[
-            Check::err(ProgramError::Custom(XxxlError::InvalidInstruction as u32)),
+            Check::err(expected_error),
             Check::account(&fixture.keys.processed_event)
                 .owner(&processed_event_before.owner)
                 .space(processed_event_before.data.len())
@@ -397,12 +413,29 @@ impl B2LiveGatedSuccessFixture {
             &program_id,
         );
 
+        let canonical_asset_id = spl_mint.to_bytes();
+        let (mint_state, _) = Pubkey::find_program_address(
+            &[b"xxxl", b"mint-state", &canonical_asset_id],
+            &program_id,
+        );
+        let (gateway_config, _) =
+            Pubkey::find_program_address(&[b"xxxl", b"gateway-config", &ROUTE_ID], &program_id);
+        let (recipient_balance, _) = Pubkey::find_program_address(
+            &[
+                b"xxxl",
+                b"recipient-balance",
+                &recipient_owner.to_bytes(),
+                &spl_mint.to_bytes(),
+            ],
+            &program_id,
+        );
+
         let keys = FixtureKeys {
-            mint_state: Pubkey::new_unique(),
-            gateway_config: Pubkey::new_unique(),
+            mint_state,
+            gateway_config,
             guardian_set,
             processed_event,
-            recipient_balance: Pubkey::new_unique(),
+            recipient_balance,
             recipient_owner,
             spl_mint,
             recipient_token_account: Pubkey::new_unique(),
