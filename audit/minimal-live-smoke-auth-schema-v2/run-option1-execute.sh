@@ -4,7 +4,7 @@ set -euo pipefail
 ROOT="$(git rev-parse --show-toplevel 2>/dev/null || pwd)"
 cd "$ROOT"
 
-SOURCE_COMMIT="6b3a2c6ffa1c7da3b61c0e080fc551ece49d716f"
+SOURCE_COMMIT="240e3e89100893939339ee5cc1476298e1ea4571"
 SCRIPT="audit/minimal-live-smoke-auth-schema-v2/scripts/option1-execute.cjs"
 BASE="$HOME/xenchanted-stage20-activation-evidence-c332814"
 EVIDENCE_DIR="$BASE/runtime-state-provisioning-minimal-live-smoke-option1-structure-only-execution-$(date -u +%Y%m%dT%H%M%SZ)"
