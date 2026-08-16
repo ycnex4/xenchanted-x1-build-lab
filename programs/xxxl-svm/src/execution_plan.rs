@@ -181,6 +181,7 @@ pub fn apply_atomic_state_mutations_fixture(
     processed_event_data: &mut [u8],
     recipient_balance_data: &mut [u8],
     args: &ConsumeGatewayMintArgs,
+    target_mint_pubkey: [u8; 32],
     consumed_slot: u64,
 ) -> Result<u128, ProgramError> {
     if args.amount == 0 {
@@ -203,7 +204,7 @@ pub fn apply_atomic_state_mutations_fixture(
         let recipient_balance = RecipientBalanceAccountView::new(recipient_balance_data)?;
 
         if recipient_balance.owner() != args.recipient
-            || recipient_balance.mint() != args.canonical_asset_id
+            || recipient_balance.mint() != target_mint_pubkey
         {
             return Err(XxxlError::InvalidRecipientAta.into());
         }
@@ -226,7 +227,7 @@ pub fn apply_atomic_state_mutations_fixture(
     credit_recipient_balance(
         recipient_balance_data,
         args.recipient,
-        args.canonical_asset_id,
+        target_mint_pubkey,
         args.amount,
         args.canonical_event_key,
     )
@@ -990,6 +991,7 @@ mod tests {
             &mut processed_event_data,
             &mut recipient_balance_data,
             &args,
+            args.canonical_asset_id,
             77,
         )
         .expect("atomic state mutations");
@@ -1010,6 +1012,38 @@ mod tests {
     }
 
     #[test]
+    fn atomic_state_mutation_fixture_allows_canonical_asset_id_distinct_from_target_mint() {
+        let args = valid_args();
+        let target_mint_pubkey = [0x66; 32];
+        let mut processed_event_data = valid_processed_event_data(&args, false);
+        let mut recipient_balance_data =
+            valid_recipient_balance_data_for_mint(&args, target_mint_pubkey, 200);
+
+        let next_balance = apply_atomic_state_mutations_fixture(
+            &mut processed_event_data,
+            &mut recipient_balance_data,
+            &args,
+            target_mint_pubkey,
+            77,
+        )
+        .expect("atomic state mutations with distinct target mint");
+
+        let processed_event =
+            ProcessedEventAccountView::new(&processed_event_data).expect("processed event");
+        let recipient_balance =
+            RecipientBalanceAccountView::new(&recipient_balance_data).expect("recipient balance");
+
+        assert_eq!(next_balance, 1_200);
+        assert!(processed_event.consumed());
+        assert_eq!(recipient_balance.balance(), 1_200);
+        assert_eq!(recipient_balance.mint(), target_mint_pubkey);
+        assert_eq!(
+            read_fixed_32(&recipient_balance_data, 96),
+            args.canonical_event_key
+        );
+    }
+
+    #[test]
     fn atomic_state_mutation_fixture_rejects_replay_before_credit() {
         let args = valid_args();
         let mut processed_event_data = valid_processed_event_data(&args, true);
@@ -1020,6 +1054,7 @@ mod tests {
                 &mut processed_event_data,
                 &mut recipient_balance_data,
                 &args,
+                args.canonical_asset_id,
                 77,
             ),
             XxxlError::InvalidInstruction,
@@ -1042,6 +1077,7 @@ mod tests {
                 &mut processed_event_data,
                 &mut recipient_balance_data,
                 &args,
+                args.canonical_asset_id,
                 77,
             ),
             XxxlError::InvalidInstruction,
@@ -1065,6 +1101,7 @@ mod tests {
                 &mut processed_event_data,
                 &mut recipient_balance_data,
                 &args,
+                args.canonical_asset_id,
                 77,
             ),
             XxxlError::InvalidRecipientAta,
@@ -1123,13 +1160,21 @@ mod tests {
     }
 
     fn valid_recipient_balance_data(args: &ConsumeGatewayMintArgs, balance: u128) -> Vec<u8> {
+        valid_recipient_balance_data_for_mint(args, args.canonical_asset_id, balance)
+    }
+
+    fn valid_recipient_balance_data_for_mint(
+        args: &ConsumeGatewayMintArgs,
+        mint: [u8; 32],
+        balance: u128,
+    ) -> Vec<u8> {
         let mut data = account_data(
             RECIPIENT_BALANCE_ACCOUNT_LEN,
             RECIPIENT_BALANCE_ACCOUNT_DISCRIMINATOR,
         );
 
         data[16..48].copy_from_slice(&args.recipient);
-        data[48..80].copy_from_slice(&args.canonical_asset_id);
+        data[48..80].copy_from_slice(&mint);
         data[80..96].copy_from_slice(&balance.to_le_bytes());
 
         data

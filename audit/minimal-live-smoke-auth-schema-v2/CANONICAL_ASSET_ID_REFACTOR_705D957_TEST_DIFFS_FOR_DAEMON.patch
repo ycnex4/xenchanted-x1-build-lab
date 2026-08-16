@@ -1,0 +1,1805 @@
+Canonical Asset ID Refactor - test diffs for daemon
+
+Primary commit: 705d957 Refactor consume mint identity to canonical asset id
+
+This file exists because the daemon reported that GitHub patch/blob fetch was blocked/truncated for the seven named test files.
+
+Included files:
+programs/xxxl-svm/tests/disabled_cpi_reachability.rs
+programs/xxxl-svm/tests/instruction_reserved_bytes.rs
+programs/xxxl-svm/tests/mollusk_consume_gateway_mint.rs
+programs/xxxl-svm/tests/phase_41k5_d2_production_path_gated_mark_and_mint_e2e.rs
+programs/xxxl-svm/tests/phase_41k5_d3_negative_failure_modes.rs
+programs/xxxl-svm/tests/phase_41k6_b2_valid_quorum_live_gated_success.rs
+programs/xxxl-svm/tests/phase_41k6_b3_hostile_live_gated_matrix.rs
+
+BEGIN GIT SHOW OUTPUT
+
+commit 705d957024fa6eef16d2d76fb465007db2959753
+subject Refactor consume mint identity to canonical asset id
+
+
+diff --git a/programs/xxxl-svm/tests/disabled_cpi_reachability.rs b/programs/xxxl-svm/tests/disabled_cpi_reachability.rs
+index 0133af8..2c2f6c8 100644
+--- a/programs/xxxl-svm/tests/disabled_cpi_reachability.rs
++++ b/programs/xxxl-svm/tests/disabled_cpi_reachability.rs
+@@ -1,97 +1,97 @@
+ use solana_program::{
+     account_info::AccountInfo, program_error::ProgramError, program_option::COption,
+     program_pack::Pack, pubkey::Pubkey, rent::Rent, system_program,
+ };
+ use spl_token::state::{Account as SplTokenAccount, AccountState, Mint as SplTokenMint};
+
+ use xxxl_svm::{
+     cpi::{
+         guarded_mint_to_cpi_execution_gate_boundary, spl_mint_to_cpi_execution_enabled,
+         MintToCpiAccounts, MintToCpiBoundary, MintToCpiPlanningBoundary,
+     },
+     error::XxxlError,
+     execution_plan::{
+         AtomicConsumeGatewayMintExecutionPlan, ATOMIC_CONSUME_GATEWAY_MINT_STEP_ORDER,
+     },
+     instruction::{ConsumeGatewayMintArgs, CONSUME_GATEWAY_MINT_INSTRUCTION_LEN},
+-    pda::find_gateway_mint_authority,
++    pda::{find_gateway_mint_authority, find_mint_state},
+     processor::build_runtime_consume_gateway_mint_disabled_spl_cpi_gate_boundary,
+     state::{
+         GATEWAY_CONFIG_ACCOUNT_DISCRIMINATOR, GATEWAY_CONFIG_ACCOUNT_LEN,
+         GUARDIAN_SET_ACCOUNT_DISCRIMINATOR, GUARDIAN_SET_ACCOUNT_LEN,
+         MINT_STATE_ACCOUNT_DISCRIMINATOR, MINT_STATE_ACCOUNT_LEN,
+         PROCESSED_EVENT_ACCOUNT_DISCRIMINATOR, PROCESSED_EVENT_ACCOUNT_LEN,
+         RECIPIENT_BALANCE_ACCOUNT_DISCRIMINATOR, RECIPIENT_BALANCE_ACCOUNT_LEN,
+         RUNTIME_LAYOUT_VERSION,
+     },
+ };
+
+ #[test]
+ fn spl_mint_to_cpi_execution_gate_is_disabled() {
+     assert!(!spl_mint_to_cpi_execution_enabled());
+ }
+
+ #[test]
+ fn guarded_mint_to_cpi_boundary_rejects_before_invoke_signed_when_global_gate_disabled() {
+     with_valid_disabled_cpi_fixture(|program_id, execution_plan, planning_boundary, boundary| {
+         let result = guarded_mint_to_cpi_execution_gate_boundary(
+             program_id,
+             execution_plan,
+             planning_boundary,
+             boundary,
+         );
+
+         assert_eq!(
+             result,
+             Err(ProgramError::Custom(XxxlError::CpiBoundaryNotReady as u32))
+         );
+     });
+ }
+
+ #[test]
+ fn guarded_mint_to_cpi_boundary_rejects_when_execution_plan_live_route_flag_set() {
+     with_valid_disabled_cpi_fixture(|program_id, execution_plan, planning_boundary, boundary| {
+         let mut live_execution_plan = *execution_plan;
+         live_execution_plan.live_route_activation_enabled = true;
+
+         let result = guarded_mint_to_cpi_execution_gate_boundary(
+             program_id,
+             &live_execution_plan,
+             planning_boundary,
+             boundary,
+         );
+
+         assert_eq!(
+             result,
+             Err(ProgramError::Custom(XxxlError::CpiBoundaryNotReady as u32))
+         );
+     });
+ }
+
+ #[test]
+ fn guarded_mint_to_cpi_boundary_rejects_invoke_signed_planning_flag() {
+     with_valid_disabled_cpi_fixture(|program_id, execution_plan, planning_boundary, boundary| {
+         let mut invoke_signed_planning_boundary = *planning_boundary;
+         invoke_signed_planning_boundary.invoke_signed_from_process_instruction_enabled = true;
+
+         let result = guarded_mint_to_cpi_execution_gate_boundary(
+             program_id,
+             execution_plan,
+             &invoke_signed_planning_boundary,
+             boundary,
+         );
+
+         assert_eq!(
+             result,
+             Err(ProgramError::Custom(XxxlError::CpiBoundaryNotReady as u32))
+         );
+     });
+ }
+
+ #[test]
+ fn guarded_mint_to_cpi_boundary_rejects_planning_boundary_mismatch_after_expected_plan() {
+     with_valid_disabled_cpi_fixture(|program_id, execution_plan, planning_boundary, boundary| {
+         let mut mismatched_planning_boundary = *planning_boundary;
+         mismatched_planning_boundary.amount += 1;
+
+         let result = guarded_mint_to_cpi_execution_gate_boundary(
+@@ -149,335 +149,335 @@ fn disabled_spl_cpi_gate_rejects_before_live_atomicity_mutations() {
+         recipient_token_account_before
+     );
+     assert_spl_supply_and_recipient_amount(&fixture, 0, 0);
+ }
+
+ fn with_valid_disabled_cpi_fixture<T>(
+     f: impl FnOnce(
+         &Pubkey,
+         &AtomicConsumeGatewayMintExecutionPlan,
+         &MintToCpiPlanningBoundary,
+         &MintToCpiBoundary<'_, '_>,
+     ) -> T,
+ ) -> T {
+     let program_id = Pubkey::new_unique();
+     let token_program_key = spl_token::id();
+     let mint_key = Pubkey::new_unique();
+     let recipient_token_account_key = Pubkey::new_unique();
+     let (mint_authority_pda_key, mint_authority_bump) = find_gateway_mint_authority(&program_id);
+
+     let owner = Pubkey::new_unique();
+
+     let mut token_program_lamports = 0;
+     let mut mint_lamports = 0;
+     let mut recipient_token_account_lamports = 0;
+     let mut mint_authority_pda_lamports = 0;
+
+     let mut token_program_data = [];
+     let mut mint_data = [];
+     let mut recipient_token_account_data = [];
+     let mut mint_authority_pda_data = [];
+
+     let token_program = AccountInfo::new(
+         &token_program_key,
+         false,
+         false,
+         &mut token_program_lamports,
+         &mut token_program_data,
+         &owner,
+         true,
+         0,
+     );
+
+     let mint = AccountInfo::new(
+         &mint_key,
+         false,
+         true,
+         &mut mint_lamports,
+         &mut mint_data,
+         &owner,
+         false,
+         0,
+     );
+
+     let recipient_token_account = AccountInfo::new(
+         &recipient_token_account_key,
+         false,
+         true,
+         &mut recipient_token_account_lamports,
+         &mut recipient_token_account_data,
+         &owner,
+         false,
+         0,
+     );
+
+     let mint_authority_pda = AccountInfo::new(
+         &mint_authority_pda_key,
+         false,
+         false,
+         &mut mint_authority_pda_lamports,
+         &mut mint_authority_pda_data,
+         &program_id,
+         false,
+         0,
+     );
+
+     let execution_plan = AtomicConsumeGatewayMintExecutionPlan {
+         steps: ATOMIC_CONSUME_GATEWAY_MINT_STEP_ORDER,
+         canonical_event_key: [1u8; 32],
+         route_id: [2u8; 32],
+         recipient: [3u8; 32],
+-        mint: mint_key.to_bytes(),
++        target_mint_pubkey: mint_key.to_bytes(),
+         amount: 1_000,
+         consumed_slot: 123,
+         source_chain_weight_bps: 10_000,
+         live_route_activation_enabled: false,
+         mint_to_invocation_from_process_instruction_enabled: false,
+     };
+
+     let planning_boundary = MintToCpiPlanningBoundary {
+         token_program: token_program_key,
+         mint: mint_key,
+         recipient_token_account: recipient_token_account_key,
+         mint_authority_pda: mint_authority_pda_key,
+         mint_authority_bump,
+         amount: execution_plan.amount,
+         live_route_activation_enabled: false,
+         invoke_signed_from_process_instruction_enabled: false,
+     };
+
+     let boundary = MintToCpiBoundary {
+         accounts: MintToCpiAccounts {
+             token_program: &token_program,
+             mint: &mint,
+             recipient_token_account: &recipient_token_account,
+             mint_authority_pda: &mint_authority_pda,
+         },
+         mint_authority_bump,
+         amount: execution_plan.amount,
+     };
+
+     f(&program_id, &execution_plan, &planning_boundary, &boundary)
+ }
+
+ struct RuntimeFixture {
+     program_id: Pubkey,
+     owners: RuntimeFixtureOwners,
+     keys: RuntimeFixtureKeys,
+     lamports: RuntimeFixtureLamports,
+     data: RuntimeFixtureData,
+     args: ConsumeGatewayMintArgs,
+ }
+
+ struct RuntimeFixtureOwners {
+     program: Pubkey,
+     spl_token: Pubkey,
+     token_program_owner: Pubkey,
+ }
+
+ struct RuntimeFixtureKeys {
+     mint_state: Pubkey,
+     gateway_config: Pubkey,
+     guardian_set: Pubkey,
+     processed_event: Pubkey,
+     recipient_balance: Pubkey,
+     spl_mint: Pubkey,
+     recipient_token_account: Pubkey,
+     mint_authority_pda: Pubkey,
+     token_program: Pubkey,
+     rent_payer: Pubkey,
+     system_program: Pubkey,
+ }
+
+ struct RuntimeFixtureLamports {
+     mint_state: u64,
+     gateway_config: u64,
+     guardian_set: u64,
+     processed_event: u64,
+     recipient_balance: u64,
+     spl_mint: u64,
+     recipient_token_account: u64,
+     mint_authority_pda: u64,
+     token_program: u64,
+     rent_payer: u64,
+     system_program: u64,
+ }
+
+ struct RuntimeFixtureData {
+     mint_state: Vec<u8>,
+     gateway_config: Vec<u8>,
+     guardian_set: Vec<u8>,
+     processed_event: Vec<u8>,
+     recipient_balance: Vec<u8>,
+     spl_mint: Vec<u8>,
+     recipient_token_account: Vec<u8>,
+     mint_authority_pda: Vec<u8>,
+     token_program: Vec<u8>,
+     rent_payer: Vec<u8>,
+     system_program: Vec<u8>,
+ }
+
+ impl RuntimeFixture {
+     fn new() -> Self {
+         let program_id = Pubkey::new_unique();
+         let (mint_authority_pda, bump) = find_gateway_mint_authority(&program_id);
+         let spl_mint = Pubkey::new_unique();
+         let recipient_owner = Pubkey::new_unique();
+         let route_id = [0x11; 32];
+         let guardian_set_id = [0x22; 32];
+         let canonical_event_key = [0x44; 32];
+         let source_chain_id = 1;
+         let (processed_event, _) = Pubkey::find_program_address(
+             &[b"xxxl", b"processed-event", &canonical_event_key],
+             &program_id,
+         );
+
+         let owners = RuntimeFixtureOwners {
+             program: program_id,
+             spl_token: spl_token::id(),
+             token_program_owner: Pubkey::new_unique(),
+         };
+
+         let keys = RuntimeFixtureKeys {
+-            mint_state: Pubkey::new_unique(),
++            mint_state: find_mint_state(&program_id, &spl_mint.to_bytes()).0,
+             gateway_config: Pubkey::new_unique(),
+             guardian_set: Pubkey::new_unique(),
+             processed_event,
+             recipient_balance: Pubkey::new_unique(),
+             spl_mint,
+             recipient_token_account: Pubkey::new_unique(),
+             mint_authority_pda,
+             token_program: spl_token::id(),
+             rent_payer: Pubkey::new_unique(),
+             system_program: system_program::id(),
+         };
+
+         let data = RuntimeFixtureData {
+             mint_state: mint_state_data(spl_mint, mint_authority_pda, bump),
+             gateway_config: gateway_config_data(
+                 route_id,
+                 source_chain_id,
+                 guardian_set_id,
+                 spl_mint,
+                 10_000,
+             ),
+             guardian_set: guardian_set_data(guardian_set_id),
+             processed_event: Vec::new(),
+             recipient_balance: recipient_balance_data(recipient_owner, spl_mint),
+             spl_mint: packed_mint(mint_authority_pda, true),
+             recipient_token_account: packed_token_account(
+                 spl_mint,
+                 recipient_owner,
+                 AccountState::Initialized,
+             ),
+             mint_authority_pda: Vec::new(),
+             token_program: Vec::new(),
+             rent_payer: Vec::new(),
+             system_program: Vec::new(),
+         };
+
+         let rent = Rent::default();
+         let lamports = RuntimeFixtureLamports {
+             mint_state: rent.minimum_balance(data.mint_state.len()),
+             gateway_config: rent.minimum_balance(data.gateway_config.len()),
+             guardian_set: rent.minimum_balance(data.guardian_set.len()),
+             processed_event: 1,
+             recipient_balance: rent.minimum_balance(data.recipient_balance.len()),
+             spl_mint: rent.minimum_balance(data.spl_mint.len()),
+             recipient_token_account: rent.minimum_balance(data.recipient_token_account.len()),
+             mint_authority_pda: 0,
+             token_program: 0,
+             rent_payer: 10_000_000,
+             system_program: 0,
+         };
+
+         let args = ConsumeGatewayMintArgs {
+             raw: [0u8; CONSUME_GATEWAY_MINT_INSTRUCTION_LEN],
+             account_meta_count: 11,
+             route_account_index: 1,
+             guardian_set_account_index: 2,
+             mint_state_account_index: 0,
+             processed_event_account_index: 3,
+             recipient_balance_account_index: 4,
+             route_id,
+             guardian_set_id,
+-            mint_id: spl_mint.to_bytes(),
++            canonical_asset_id: spl_mint.to_bytes(),
+             canonical_event_key,
+             recipient: recipient_owner.to_bytes(),
+             amount: 1_000,
+             source_chain_id,
+             source_chain_weight_bps: 10_000,
+         };
+
+         Self {
+             program_id,
+             owners,
+             keys,
+             lamports,
+             data,
+             args,
+         }
+     }
+
+     fn accounts(&mut self) -> Vec<AccountInfo<'_>> {
+         vec![
+             AccountInfo::new(
+                 &self.keys.mint_state,
+                 false,
+                 false,
+                 &mut self.lamports.mint_state,
+                 &mut self.data.mint_state,
+                 &self.owners.program,
+                 false,
+                 0,
+             ),
+             AccountInfo::new(
+                 &self.keys.gateway_config,
+                 false,
+                 false,
+                 &mut self.lamports.gateway_config,
+                 &mut self.data.gateway_config,
+                 &self.owners.program,
+                 false,
+                 0,
+             ),
+             AccountInfo::new(
+                 &self.keys.guardian_set,
+                 false,
+                 false,
+                 &mut self.lamports.guardian_set,
+                 &mut self.data.guardian_set,
+                 &self.owners.program,
+                 false,
+                 0,
+             ),
+             AccountInfo::new(
+                 &self.keys.processed_event,
+                 false,
+                 true,
+                 &mut self.lamports.processed_event,
+                 &mut self.data.processed_event,
+                 &self.keys.system_program,
+                 false,
+                 0,
+             ),
+             AccountInfo::new(
+                 &self.keys.recipient_balance,
+                 false,
+                 true,
+                 &mut self.lamports.recipient_balance,
+                 &mut self.data.recipient_balance,
+                 &self.owners.program,
+                 false,
+                 0,
+             ),
+             AccountInfo::new(
+                 &self.keys.spl_mint,
+                 false,
+                 true,
+                 &mut self.lamports.spl_mint,
+                 &mut self.data.spl_mint,
+                 &self.owners.spl_token,
+                 false,
+                 0,
+             ),
+             AccountInfo::new(
+diff --git a/programs/xxxl-svm/tests/instruction_reserved_bytes.rs b/programs/xxxl-svm/tests/instruction_reserved_bytes.rs
+index 4278e0d..16a8cb6 100644
+--- a/programs/xxxl-svm/tests/instruction_reserved_bytes.rs
++++ b/programs/xxxl-svm/tests/instruction_reserved_bytes.rs
+@@ -1,85 +1,86 @@
+ use solana_program::program_error::ProgramError;
+ use xxxl_svm::{
+     error::XxxlError,
+     instruction::{
+         XxxlInstruction, CONSUME_GATEWAY_MINT_ACCOUNT_META_COUNT,
+         CONSUME_GATEWAY_MINT_DISCRIMINATOR, CONSUME_GATEWAY_MINT_GUARDIAN_SET_ACCOUNT_INDEX,
+         CONSUME_GATEWAY_MINT_INSTRUCTION_LEN, CONSUME_GATEWAY_MINT_MINT_STATE_ACCOUNT_INDEX,
+         CONSUME_GATEWAY_MINT_PROCESSED_EVENT_ACCOUNT_INDEX,
+         CONSUME_GATEWAY_MINT_RECIPIENT_BALANCE_ACCOUNT_INDEX,
+         CONSUME_GATEWAY_MINT_ROUTE_ACCOUNT_INDEX, INSTRUCTION_LAYOUT_VERSION,
+     },
+ };
+
+ #[test]
+ fn consume_gateway_mint_v2_parses_source_chain_id_from_bytes_194_201() {
+     let mut bytes = valid_consume_gateway_mint_instruction();
+     let source_chain_id = 0xa7a6_a5a4_a3a2_a1a0u64;
+     bytes[194..202].copy_from_slice(&source_chain_id.to_le_bytes());
+
+     let instruction = XxxlInstruction::unpack(&bytes).expect("valid v2 source_chain_id");
+
+     match instruction {
+         XxxlInstruction::ConsumeGatewayMint(args) => {
+             assert_eq!(args.raw[194..202], bytes[194..202]);
+             assert_eq!(args.source_chain_id, source_chain_id);
+             assert_eq!(args.route_id, [0x11; 32]);
+             assert_eq!(args.guardian_set_id, [0x22; 32]);
+-            assert_eq!(args.mint_id, [0x33; 32]);
++            assert_eq!(args.canonical_asset_id, [0x33; 32]);
+             assert_eq!(args.canonical_event_key, [0x44; 32]);
+             assert_eq!(args.recipient, [0x55; 32]);
+             assert_eq!(args.amount, 1_000);
+             assert_eq!(args.source_chain_weight_bps, 10_000);
+         }
++        _ => panic!("expected ConsumeGatewayMint instruction"),
+     }
+ }
+
+ #[test]
+ fn consume_gateway_mint_v2_rejects_nonzero_reserved_bytes_202_207() {
+     for index in 202..208 {
+         let mut bytes = valid_consume_gateway_mint_instruction();
+         bytes[index] = 0xff;
+
+         assert_custom_error(
+             XxxlInstruction::unpack(&bytes),
+             XxxlError::InvalidInstructionReserved,
+         );
+     }
+ }
+
+ #[test]
+ fn consume_gateway_mint_v1_rejects_before_reserved_or_source_chain_semantics() {
+     let mut bytes = valid_consume_gateway_mint_instruction();
+     bytes[8..10].copy_from_slice(&1u16.to_le_bytes());
+     bytes[194..202].copy_from_slice(&u64::MAX.to_le_bytes());
+     bytes[202] = 1;
+
+     assert_custom_error(XxxlInstruction::unpack(&bytes), XxxlError::InvalidVersion);
+ }
+
+ fn valid_consume_gateway_mint_instruction() -> [u8; CONSUME_GATEWAY_MINT_INSTRUCTION_LEN] {
+     let mut bytes = [0u8; CONSUME_GATEWAY_MINT_INSTRUCTION_LEN];
+
+     bytes[0..8].copy_from_slice(&CONSUME_GATEWAY_MINT_DISCRIMINATOR);
+     bytes[8..10].copy_from_slice(&INSTRUCTION_LAYOUT_VERSION.to_le_bytes());
+     bytes[10] = CONSUME_GATEWAY_MINT_ACCOUNT_META_COUNT;
+     bytes[11] = CONSUME_GATEWAY_MINT_ROUTE_ACCOUNT_INDEX;
+     bytes[12] = CONSUME_GATEWAY_MINT_GUARDIAN_SET_ACCOUNT_INDEX;
+     bytes[13] = CONSUME_GATEWAY_MINT_MINT_STATE_ACCOUNT_INDEX;
+     bytes[14] = CONSUME_GATEWAY_MINT_PROCESSED_EVENT_ACCOUNT_INDEX;
+     bytes[15] = CONSUME_GATEWAY_MINT_RECIPIENT_BALANCE_ACCOUNT_INDEX;
+     bytes[16..48].copy_from_slice(&[0x11; 32]);
+     bytes[48..80].copy_from_slice(&[0x22; 32]);
+     bytes[80..112].copy_from_slice(&[0x33; 32]);
+     bytes[112..144].copy_from_slice(&[0x44; 32]);
+     bytes[144..176].copy_from_slice(&[0x55; 32]);
+     bytes[176..192].copy_from_slice(&1_000u128.to_le_bytes());
+     bytes[192..194].copy_from_slice(&10_000u16.to_le_bytes());
+     bytes[194..202].copy_from_slice(&1u64.to_le_bytes());
+
+     bytes
+ }
+
+ fn assert_custom_error(result: Result<XxxlInstruction, ProgramError>, error: XxxlError) {
+     assert!(matches!(result, Err(ProgramError::Custom(code)) if code == error as u32));
+ }
+diff --git a/programs/xxxl-svm/tests/mollusk_consume_gateway_mint.rs b/programs/xxxl-svm/tests/mollusk_consume_gateway_mint.rs
+index e5f5d39..af75787 100644
+--- a/programs/xxxl-svm/tests/mollusk_consume_gateway_mint.rs
++++ b/programs/xxxl-svm/tests/mollusk_consume_gateway_mint.rs
+@@ -1,125 +1,126 @@
+ use std::path::PathBuf;
+
+ use mollusk_svm::{result::Check, Mollusk};
+ use solana_account::Account;
+ use solana_instruction::{AccountMeta, Instruction};
+ use solana_program::{
+     program_option::COption, program_pack::Pack, pubkey::Pubkey as ProgramPubkey,
+ };
+ use solana_program_error::ProgramError;
+ use solana_pubkey::Pubkey;
+ use spl_token::state::{Account as SplTokenAccount, AccountState, Mint as SplTokenMint};
+ use xxxl_svm::{
+     error::XxxlError,
+     instruction::{
+         XxxlInstruction, CONSUME_GATEWAY_MINT_ACCOUNT_META_COUNT,
+         CONSUME_GATEWAY_MINT_DISCRIMINATOR, CONSUME_GATEWAY_MINT_GUARDIAN_SET_ACCOUNT_INDEX,
+         CONSUME_GATEWAY_MINT_INSTRUCTION_LEN, CONSUME_GATEWAY_MINT_MINT_STATE_ACCOUNT_INDEX,
+         CONSUME_GATEWAY_MINT_PROCESSED_EVENT_ACCOUNT_INDEX,
+         CONSUME_GATEWAY_MINT_RECIPIENT_BALANCE_ACCOUNT_INDEX,
+         CONSUME_GATEWAY_MINT_ROUTE_ACCOUNT_INDEX, INSTRUCTION_LAYOUT_VERSION,
+     },
+     state::{
+         GATEWAY_CONFIG_ACCOUNT_DISCRIMINATOR, GATEWAY_CONFIG_ACCOUNT_LEN,
+         GUARDIAN_SET_ACCOUNT_DISCRIMINATOR, GUARDIAN_SET_ACCOUNT_LEN,
+         MINT_STATE_ACCOUNT_DISCRIMINATOR, MINT_STATE_ACCOUNT_LEN,
+         PROCESSED_EVENT_ACCOUNT_DISCRIMINATOR, PROCESSED_EVENT_ACCOUNT_LEN,
+         RECIPIENT_BALANCE_ACCOUNT_DISCRIMINATOR, RECIPIENT_BALANCE_ACCOUNT_LEN,
+         RUNTIME_LAYOUT_VERSION,
+     },
+ };
+
+ const PROGRAM_NAME: &str = "xxxl_svm";
+ const TOKEN_PROGRAM_ID: &str = "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA";
+ const SYSTEM_PROGRAM_ID: &str = "11111111111111111111111111111111";
+ const NATIVE_LOADER_ID: &str = "NativeLoader1111111111111111111111111111111";
+ const SPL_MINT_ACCOUNT_INDEX: usize = 5;
+ const RECIPIENT_TOKEN_ACCOUNT_INDEX: usize = 6;
+ const MINT_AUTHORITY_PDA_ACCOUNT_INDEX: usize = 7;
+
+ #[test]
+ fn mollusk_harness_rejects_malformed_instruction_without_live_route() {
+     let program_id = Pubkey::new_unique();
+     let mollusk = mollusk_for_program(&program_id);
+
+-    let instruction_data = vec![0u8; CONSUME_GATEWAY_MINT_INSTRUCTION_LEN - 1];
++    let mut instruction_data = vec![0u8; CONSUME_GATEWAY_MINT_INSTRUCTION_LEN - 1];
++    instruction_data[0..8].copy_from_slice(&CONSUME_GATEWAY_MINT_DISCRIMINATOR);
+     let instruction = Instruction::new_with_bytes(program_id, &instruction_data, Vec::new());
+     let accounts: Vec<(Pubkey, Account)> = Vec::new();
+
+     mollusk.process_and_validate_instruction(
+         &instruction,
+         &accounts,
+         &[Check::err(ProgramError::Custom(
+             XxxlError::InvalidInstruction as u32,
+         ))],
+     );
+ }
+
+ #[test]
+ fn mollusk_rejects_wrong_instruction_discriminator_without_live_route() {
+     let fixture = ScaffoldFixture::new();
+     let mollusk = mollusk_for_program(&fixture.program_id);
+
+     let mut instruction_data = fixture.instruction_data;
+     instruction_data[0] ^= 0xff;
+
+     let instruction =
+         Instruction::new_with_bytes(fixture.program_id, &instruction_data, Vec::new());
+     let accounts: Vec<(Pubkey, Account)> = Vec::new();
+
+     mollusk.process_and_validate_instruction(
+         &instruction,
+         &accounts,
+         &[Check::err(ProgramError::Custom(
+             XxxlError::InvalidDiscriminator as u32,
+         ))],
+     );
+ }
+
+ #[test]
+ fn mollusk_rejects_wrong_instruction_version_without_live_route() {
+     let fixture = ScaffoldFixture::new();
+     let mollusk = mollusk_for_program(&fixture.program_id);
+
+     let mut instruction_data = fixture.instruction_data;
+     instruction_data[8..10].copy_from_slice(&3u16.to_le_bytes());
+
+     let instruction =
+         Instruction::new_with_bytes(fixture.program_id, &instruction_data, Vec::new());
+     let accounts: Vec<(Pubkey, Account)> = Vec::new();
+
+     mollusk.process_and_validate_instruction(
+         &instruction,
+         &accounts,
+         &[Check::err(ProgramError::Custom(
+             XxxlError::InvalidVersion as u32,
+         ))],
+     );
+ }
+
+ #[test]
+ fn mollusk_rejects_extra_instruction_bytes_without_live_route() {
+     let fixture = ScaffoldFixture::new();
+     let mollusk = mollusk_for_program(&fixture.program_id);
+
+     let mut instruction_data = fixture.instruction_data.to_vec();
+     instruction_data.push(0);
+
+     let instruction =
+         Instruction::new_with_bytes(fixture.program_id, &instruction_data, Vec::new());
+     let accounts: Vec<(Pubkey, Account)> = Vec::new();
+
+     mollusk.process_and_validate_instruction(
+         &instruction,
+         &accounts,
+         &[Check::err(ProgramError::Custom(
+             XxxlError::InvalidInstruction as u32,
+         ))],
+     );
+ }
+
+ #[test]
+ fn mollusk_nonzero_reserved_202_207_rejects_before_scaffold_path() {
+     let fixture = ScaffoldFixture::new();
+     let mollusk = mollusk_for_program(&fixture.program_id);
+
+@@ -1641,165 +1642,186 @@ fn assert_live_atomicity_accounts_start_unmutated(accounts: &[(Pubkey, Account)]
+             .1
+             .data
+             .is_empty()
+     );
+     assert_eq!(
+         read_u128_le(
+             &accounts[CONSUME_GATEWAY_MINT_RECIPIENT_BALANCE_ACCOUNT_INDEX as usize]
+                 .1
+                 .data,
+             80,
+         ),
+         0
+     );
+
+     let spl_mint =
+         SplTokenMint::unpack(&accounts[SPL_MINT_ACCOUNT_INDEX].1.data).expect("valid SPL mint");
+     assert_eq!(spl_mint.supply, 0);
+
+     let recipient_token_account =
+         SplTokenAccount::unpack(&accounts[RECIPIENT_TOKEN_ACCOUNT_INDEX].1.data)
+             .expect("valid recipient token account");
+     assert_eq!(recipient_token_account.amount, 0);
+ }
+
+ struct ScaffoldFixture {
+     program_id: Pubkey,
+     keys: FixtureKeys,
+     data: FixtureData,
+     instruction_data: [u8; CONSUME_GATEWAY_MINT_INSTRUCTION_LEN],
+ }
+
+ struct FixtureKeys {
+     mint_state: Pubkey,
+     gateway_config: Pubkey,
+     guardian_set: Pubkey,
+     processed_event: Pubkey,
+     recipient_balance: Pubkey,
+     recipient_owner: Pubkey,
+     spl_mint: Pubkey,
+     recipient_token_account: Pubkey,
+     mint_authority_pda: Pubkey,
+     token_program: Pubkey,
+     rent_payer: Pubkey,
+     system_program: Pubkey,
+ }
+
+ struct FixtureData {
+     mint_state: Vec<u8>,
+     gateway_config: Vec<u8>,
+     guardian_set: Vec<u8>,
+     processed_event: Vec<u8>,
+     recipient_balance: Vec<u8>,
+     spl_mint: Vec<u8>,
+     recipient_token_account: Vec<u8>,
+ }
+
+ impl ScaffoldFixture {
+     fn new() -> Self {
+         let program_id = Pubkey::new_unique();
+         let token_program = TOKEN_PROGRAM_ID
+             .parse::<Pubkey>()
+             .expect("SPL Token program id");
+         let system_program = SYSTEM_PROGRAM_ID
+             .parse::<Pubkey>()
+             .expect("system program id");
+         let spl_mint = Pubkey::new_unique();
+         let recipient_owner = Pubkey::new_unique();
+         let (mint_authority_pda, bump) =
+             Pubkey::find_program_address(&[b"xxxl", b"gateway-mint-authority", b"v1"], &program_id);
+
+         let route_id = [0x11; 32];
+         let guardian_set_id = [0x22; 32];
+         let canonical_event_key = [0x44; 32];
+         let source_chain_id = 1;
+         let (processed_event, _) = Pubkey::find_program_address(
+             &[b"xxxl", b"processed-event", &canonical_event_key],
+             &program_id,
+         );
+
+         let keys = FixtureKeys {
+-            mint_state: Pubkey::new_unique(),
+-            gateway_config: Pubkey::new_unique(),
+-            guardian_set: Pubkey::new_unique(),
++            mint_state: Pubkey::find_program_address(
++                &[b"xxxl", b"mint-state", &spl_mint.to_bytes()],
++                &program_id,
++            )
++            .0,
++            gateway_config: Pubkey::find_program_address(
++                &[b"xxxl", b"gateway-config", &route_id],
++                &program_id,
++            )
++            .0,
++            guardian_set: Pubkey::find_program_address(
++                &[b"xxxl", b"guardian-set", &guardian_set_id],
++                &program_id,
++            )
++            .0,
+             processed_event,
+-            recipient_balance: Pubkey::new_unique(),
++            recipient_balance: Pubkey::find_program_address(
++                &[
++                    b"xxxl",
++                    b"recipient-balance",
++                    &recipient_owner.to_bytes(),
++                    &spl_mint.to_bytes(),
++                ],
++                &program_id,
++            )
++            .0,
+             recipient_owner,
+             spl_mint,
+             recipient_token_account: Pubkey::new_unique(),
+             mint_authority_pda,
+             token_program,
+             rent_payer: Pubkey::new_unique(),
+             system_program,
+         };
+
+         let data = FixtureData {
+             mint_state: mint_state_data(spl_mint, mint_authority_pda, bump),
+             gateway_config: gateway_config_data(
+                 route_id,
+                 source_chain_id,
+                 guardian_set_id,
+                 spl_mint,
+                 10_000,
+             ),
+             guardian_set: guardian_set_data(guardian_set_id),
+             processed_event: Vec::new(),
+             recipient_balance: recipient_balance_data(recipient_owner, spl_mint),
+             spl_mint: packed_mint(mint_authority_pda, true),
+             recipient_token_account: packed_token_account(
+                 spl_mint,
+                 recipient_owner,
+                 AccountState::Initialized,
+             ),
+         };
+
+         let instruction_data = instruction_data_from_fields(
+             route_id,
+             guardian_set_id,
+             spl_mint,
+             canonical_event_key,
+             recipient_owner,
+             1_000,
+             10_000,
+             source_chain_id,
+         );
+
+         Self {
+             program_id,
+             keys,
+             data,
+             instruction_data,
+         }
+     }
+
+     fn instruction(&self) -> Instruction {
+         Instruction::new_with_bytes(
+             self.program_id,
+             &self.instruction_data,
+             vec![
+                 AccountMeta::new_readonly(self.keys.mint_state, false),
+                 AccountMeta::new_readonly(self.keys.gateway_config, false),
+                 AccountMeta::new_readonly(self.keys.guardian_set, false),
+                 AccountMeta::new(self.keys.processed_event, false),
+                 AccountMeta::new(self.keys.recipient_balance, false),
+                 AccountMeta::new(self.keys.spl_mint, false),
+                 AccountMeta::new(self.keys.recipient_token_account, false),
+                 AccountMeta::new_readonly(self.keys.mint_authority_pda, false),
+                 AccountMeta::new_readonly(self.keys.token_program, false),
+                 AccountMeta::new(self.keys.rent_payer, true),
+                 AccountMeta::new_readonly(self.keys.system_program, false),
+             ],
+         )
+     }
+
+     fn accounts(&self) -> Vec<(Pubkey, Account)> {
+         let token_program_owner = Pubkey::new_unique();
+         let native_loader = NATIVE_LOADER_ID
+             .parse::<Pubkey>()
+             .expect("native loader id");
+         let lamports = 10_000_000_000;
+
+         vec![
+             (
+                 self.keys.mint_state,
+                 account(
+                     lamports,
+@@ -1939,108 +1961,108 @@ fn processed_event_data(
+     data[10] = u8::from(consumed);
+     data[16..48].copy_from_slice(&canonical_event_key);
+     data[48..80].copy_from_slice(&route_id);
+     data[80..112].copy_from_slice(&recipient.to_bytes());
+     data
+ }
+
+ fn recipient_balance_data(owner: Pubkey, mint: Pubkey) -> Vec<u8> {
+     let mut data = account_data(
+         RECIPIENT_BALANCE_ACCOUNT_LEN,
+         RECIPIENT_BALANCE_ACCOUNT_DISCRIMINATOR,
+     );
+     data[16..48].copy_from_slice(&owner.to_bytes());
+     data[48..80].copy_from_slice(&mint.to_bytes());
+     data
+ }
+
+ fn account_data(len: usize, discriminator: [u8; 8]) -> Vec<u8> {
+     let mut data = vec![0u8; len];
+     data[0..8].copy_from_slice(&discriminator);
+     data[8..10].copy_from_slice(&RUNTIME_LAYOUT_VERSION.to_le_bytes());
+     data
+ }
+
+ fn packed_mint(mint_authority: Pubkey, initialized: bool) -> Vec<u8> {
+     let mut data = vec![0u8; SplTokenMint::LEN];
+     let mint = SplTokenMint {
+         mint_authority: COption::Some(to_program_pubkey(mint_authority)),
+         supply: 0,
+         decimals: 18,
+         is_initialized: initialized,
+         freeze_authority: COption::None,
+     };
+
+     SplTokenMint::pack(mint, &mut data).expect("pack SPL mint");
+     data
+ }
+
+ fn packed_token_account(mint: Pubkey, owner: Pubkey, state: AccountState) -> Vec<u8> {
+     let mut data = vec![0u8; SplTokenAccount::LEN];
+     let account = SplTokenAccount {
+         mint: to_program_pubkey(mint),
+         owner: to_program_pubkey(owner),
+         amount: 0,
+         delegate: COption::None,
+         state,
+         is_native: COption::None,
+         delegated_amount: 0,
+         close_authority: COption::None,
+     };
+
+     SplTokenAccount::pack(account, &mut data).expect("pack SPL token account");
+     data
+ }
+
+ fn to_program_pubkey(pubkey: Pubkey) -> ProgramPubkey {
+     ProgramPubkey::new_from_array(pubkey.to_bytes())
+ }
+
+ fn read_u128_le(input: &[u8], offset: usize) -> u128 {
+     let mut bytes = [0u8; 16];
+     bytes.copy_from_slice(&input[offset..offset + 16]);
+     u128::from_le_bytes(bytes)
+ }
+
+ fn read_u64_le(input: &[u8], offset: usize) -> u64 {
+     let mut bytes = [0u8; 8];
+     bytes.copy_from_slice(&input[offset..offset + 8]);
+     u64::from_le_bytes(bytes)
+ }
+
+ fn read_fixed_32(input: &[u8], offset: usize) -> [u8; 32] {
+     let mut bytes = [0u8; 32];
+     bytes.copy_from_slice(&input[offset..offset + 32]);
+     bytes
+ }
+
+ fn instruction_data_from_fields(
+     route_id: [u8; 32],
+     guardian_set_id: [u8; 32],
+-    mint_id: Pubkey,
++    canonical_asset_id: Pubkey,
+     canonical_event_key: [u8; 32],
+     recipient: Pubkey,
+     amount: u128,
+     source_chain_weight_bps: u16,
+     source_chain_id: u64,
+ ) -> [u8; CONSUME_GATEWAY_MINT_INSTRUCTION_LEN] {
+     let mut bytes = [0u8; CONSUME_GATEWAY_MINT_INSTRUCTION_LEN];
+
+     bytes[0..8].copy_from_slice(&CONSUME_GATEWAY_MINT_DISCRIMINATOR);
+     bytes[8..10].copy_from_slice(&INSTRUCTION_LAYOUT_VERSION.to_le_bytes());
+     bytes[10] = CONSUME_GATEWAY_MINT_ACCOUNT_META_COUNT;
+     bytes[11] = CONSUME_GATEWAY_MINT_ROUTE_ACCOUNT_INDEX;
+     bytes[12] = CONSUME_GATEWAY_MINT_GUARDIAN_SET_ACCOUNT_INDEX;
+     bytes[13] = CONSUME_GATEWAY_MINT_MINT_STATE_ACCOUNT_INDEX;
+     bytes[14] = CONSUME_GATEWAY_MINT_PROCESSED_EVENT_ACCOUNT_INDEX;
+     bytes[15] = CONSUME_GATEWAY_MINT_RECIPIENT_BALANCE_ACCOUNT_INDEX;
+     bytes[16..48].copy_from_slice(&route_id);
+     bytes[48..80].copy_from_slice(&guardian_set_id);
+-    bytes[80..112].copy_from_slice(&mint_id.to_bytes());
++    bytes[80..112].copy_from_slice(&canonical_asset_id.to_bytes());
+     bytes[112..144].copy_from_slice(&canonical_event_key);
+     bytes[144..176].copy_from_slice(&recipient.to_bytes());
+     bytes[176..192].copy_from_slice(&amount.to_le_bytes());
+     bytes[192..194].copy_from_slice(&source_chain_weight_bps.to_le_bytes());
+     bytes[194..202].copy_from_slice(&source_chain_id.to_le_bytes());
+
+     bytes
+ }
+diff --git a/programs/xxxl-svm/tests/phase_41k5_d2_production_path_gated_mark_and_mint_e2e.rs b/programs/xxxl-svm/tests/phase_41k5_d2_production_path_gated_mark_and_mint_e2e.rs
+index e60382d..8dc6ae3 100644
+--- a/programs/xxxl-svm/tests/phase_41k5_d2_production_path_gated_mark_and_mint_e2e.rs
++++ b/programs/xxxl-svm/tests/phase_41k5_d2_production_path_gated_mark_and_mint_e2e.rs
+@@ -407,111 +407,111 @@ fn mint_state_data(mint: Pubkey, pda: Pubkey, bump: u8) -> Vec<u8> {
+ fn gateway_config_data(
+     route_id: [u8; 32],
+     source_chain_id: u64,
+     guardian_set_id: [u8; 32],
+     target_mint: Pubkey,
+     weight_bps: u16,
+ ) -> Vec<u8> {
+     let mut data = account_data(
+         GATEWAY_CONFIG_ACCOUNT_LEN,
+         GATEWAY_CONFIG_ACCOUNT_DISCRIMINATOR,
+     );
+     data[12..14].copy_from_slice(&weight_bps.to_le_bytes());
+     data[16..48].copy_from_slice(&route_id);
+     data[48..56].copy_from_slice(&source_chain_id.to_le_bytes());
+     data[88..120].copy_from_slice(&target_mint.to_bytes());
+     data[120..152].copy_from_slice(&guardian_set_id);
+     data
+ }
+
+ fn guardian_set_data(guardian_set_id: [u8; 32]) -> Vec<u8> {
+     let mut data = account_data(GUARDIAN_SET_ACCOUNT_LEN, GUARDIAN_SET_ACCOUNT_DISCRIMINATOR);
+     data[272..304].copy_from_slice(&guardian_set_id);
+     data
+ }
+
+ fn recipient_balance_data(owner: Pubkey, mint: Pubkey) -> Vec<u8> {
+     let mut data = account_data(
+         RECIPIENT_BALANCE_ACCOUNT_LEN,
+         RECIPIENT_BALANCE_ACCOUNT_DISCRIMINATOR,
+     );
+     data[16..48].copy_from_slice(&owner.to_bytes());
+     data[48..80].copy_from_slice(&mint.to_bytes());
+     data
+ }
+
+ fn account_data(len: usize, discriminator: [u8; 8]) -> Vec<u8> {
+     let mut data = vec![0u8; len];
+     data[0..8].copy_from_slice(&discriminator);
+     data[8..10].copy_from_slice(&RUNTIME_LAYOUT_VERSION.to_le_bytes());
+     data
+ }
+
+ fn packed_mint(mint_authority: Pubkey, initialized: bool) -> Vec<u8> {
+     let mut data = vec![0u8; SplTokenMint::LEN];
+     let mint = SplTokenMint {
+         mint_authority: COption::Some(to_program_pubkey(mint_authority)),
+         supply: 0,
+         decimals: 18,
+         is_initialized: initialized,
+         freeze_authority: COption::None,
+     };
+
+     SplTokenMint::pack(mint, &mut data).expect("pack SPL mint");
+     data
+ }
+
+ fn packed_token_account(mint: Pubkey, owner: Pubkey, state: AccountState) -> Vec<u8> {
+     let mut data = vec![0u8; SplTokenAccount::LEN];
+     let account = SplTokenAccount {
+         mint: to_program_pubkey(mint),
+         owner: to_program_pubkey(owner),
+         amount: 0,
+         delegate: COption::None,
+         state,
+         is_native: COption::None,
+         delegated_amount: 0,
+         close_authority: COption::None,
+     };
+
+     SplTokenAccount::pack(account, &mut data).expect("pack SPL token account");
+     data
+ }
+
+ fn to_program_pubkey(pubkey: Pubkey) -> ProgramPubkey {
+     ProgramPubkey::new_from_array(pubkey.to_bytes())
+ }
+
+ fn instruction_data_from_fields(
+     route_id: [u8; 32],
+     guardian_set_id: [u8; 32],
+-    mint_id: Pubkey,
++    canonical_asset_id: Pubkey,
+     canonical_event_key: [u8; 32],
+     recipient: Pubkey,
+     amount: u128,
+     source_chain_weight_bps: u16,
+     source_chain_id: u64,
+ ) -> [u8; CONSUME_GATEWAY_MINT_INSTRUCTION_LEN] {
+     let mut bytes = [0u8; CONSUME_GATEWAY_MINT_INSTRUCTION_LEN];
+
+     bytes[0..8].copy_from_slice(&CONSUME_GATEWAY_MINT_DISCRIMINATOR);
+     bytes[8..10].copy_from_slice(&INSTRUCTION_LAYOUT_VERSION.to_le_bytes());
+     bytes[10] = CONSUME_GATEWAY_MINT_ACCOUNT_META_COUNT;
+     bytes[11] = CONSUME_GATEWAY_MINT_ROUTE_ACCOUNT_INDEX;
+     bytes[12] = CONSUME_GATEWAY_MINT_GUARDIAN_SET_ACCOUNT_INDEX;
+     bytes[13] = CONSUME_GATEWAY_MINT_MINT_STATE_ACCOUNT_INDEX;
+     bytes[14] = CONSUME_GATEWAY_MINT_PROCESSED_EVENT_ACCOUNT_INDEX;
+     bytes[15] = CONSUME_GATEWAY_MINT_RECIPIENT_BALANCE_ACCOUNT_INDEX;
+     bytes[16..48].copy_from_slice(&route_id);
+     bytes[48..80].copy_from_slice(&guardian_set_id);
+-    bytes[80..112].copy_from_slice(&mint_id.to_bytes());
++    bytes[80..112].copy_from_slice(&canonical_asset_id.to_bytes());
+     bytes[112..144].copy_from_slice(&canonical_event_key);
+     bytes[144..176].copy_from_slice(&recipient.to_bytes());
+     bytes[176..192].copy_from_slice(&amount.to_le_bytes());
+     bytes[192..194].copy_from_slice(&source_chain_weight_bps.to_le_bytes());
+     bytes[194..202].copy_from_slice(&source_chain_id.to_le_bytes());
+     bytes
+ }
+
+ fn native_loader_id() -> Pubkey {
+     Pubkey::from_str(NATIVE_LOADER_ID).expect("native loader id")
+ }
+diff --git a/programs/xxxl-svm/tests/phase_41k5_d3_negative_failure_modes.rs b/programs/xxxl-svm/tests/phase_41k5_d3_negative_failure_modes.rs
+index 2e79907..4c817c9 100644
+--- a/programs/xxxl-svm/tests/phase_41k5_d3_negative_failure_modes.rs
++++ b/programs/xxxl-svm/tests/phase_41k5_d3_negative_failure_modes.rs
+@@ -750,111 +750,111 @@ fn mint_state_data(mint: Pubkey, pda: Pubkey, bump: u8) -> Vec<u8> {
+ fn gateway_config_data(
+     route_id: [u8; 32],
+     source_chain_id: u64,
+     guardian_set_id: [u8; 32],
+     target_mint: Pubkey,
+     weight_bps: u16,
+ ) -> Vec<u8> {
+     let mut data = account_data(
+         GATEWAY_CONFIG_ACCOUNT_LEN,
+         GATEWAY_CONFIG_ACCOUNT_DISCRIMINATOR,
+     );
+     data[12..14].copy_from_slice(&weight_bps.to_le_bytes());
+     data[16..48].copy_from_slice(&route_id);
+     data[48..56].copy_from_slice(&source_chain_id.to_le_bytes());
+     data[88..120].copy_from_slice(&target_mint.to_bytes());
+     data[120..152].copy_from_slice(&guardian_set_id);
+     data
+ }
+
+ fn guardian_set_data(guardian_set_id: [u8; 32]) -> Vec<u8> {
+     let mut data = account_data(GUARDIAN_SET_ACCOUNT_LEN, GUARDIAN_SET_ACCOUNT_DISCRIMINATOR);
+     data[272..304].copy_from_slice(&guardian_set_id);
+     data
+ }
+
+ fn recipient_balance_data(owner: Pubkey, mint: Pubkey) -> Vec<u8> {
+     let mut data = account_data(
+         RECIPIENT_BALANCE_ACCOUNT_LEN,
+         RECIPIENT_BALANCE_ACCOUNT_DISCRIMINATOR,
+     );
+     data[16..48].copy_from_slice(&owner.to_bytes());
+     data[48..80].copy_from_slice(&mint.to_bytes());
+     data
+ }
+
+ fn account_data(len: usize, discriminator: [u8; 8]) -> Vec<u8> {
+     let mut data = vec![0u8; len];
+     data[0..8].copy_from_slice(&discriminator);
+     data[8..10].copy_from_slice(&RUNTIME_LAYOUT_VERSION.to_le_bytes());
+     data
+ }
+
+ fn packed_mint(mint_authority: Pubkey, initialized: bool) -> Vec<u8> {
+     let mut data = vec![0u8; SplTokenMint::LEN];
+     let mint = SplTokenMint {
+         mint_authority: COption::Some(to_program_pubkey(mint_authority)),
+         supply: 0,
+         decimals: 18,
+         is_initialized: initialized,
+         freeze_authority: COption::None,
+     };
+
+     SplTokenMint::pack(mint, &mut data).expect("pack SPL mint");
+     data
+ }
+
+ fn packed_token_account(mint: Pubkey, owner: Pubkey, state: AccountState) -> Vec<u8> {
+     let mut data = vec![0u8; SplTokenAccount::LEN];
+     let account = SplTokenAccount {
+         mint: to_program_pubkey(mint),
+         owner: to_program_pubkey(owner),
+         amount: 0,
+         delegate: COption::None,
+         state,
+         is_native: COption::None,
+         delegated_amount: 0,
+         close_authority: COption::None,
+     };
+
+     SplTokenAccount::pack(account, &mut data).expect("pack SPL token account");
+     data
+ }
+
+ fn to_program_pubkey(pubkey: Pubkey) -> ProgramPubkey {
+     ProgramPubkey::new_from_array(pubkey.to_bytes())
+ }
+
+ fn instruction_data_from_fields(
+     route_id: [u8; 32],
+     guardian_set_id: [u8; 32],
+-    mint_id: Pubkey,
++    canonical_asset_id: Pubkey,
+     canonical_event_key: [u8; 32],
+     recipient: Pubkey,
+     amount: u128,
+     source_chain_weight_bps: u16,
+     source_chain_id: u64,
+ ) -> [u8; CONSUME_GATEWAY_MINT_INSTRUCTION_LEN] {
+     let mut bytes = [0u8; CONSUME_GATEWAY_MINT_INSTRUCTION_LEN];
+
+     bytes[0..8].copy_from_slice(&CONSUME_GATEWAY_MINT_DISCRIMINATOR);
+     bytes[8..10].copy_from_slice(&INSTRUCTION_LAYOUT_VERSION.to_le_bytes());
+     bytes[10] = CONSUME_GATEWAY_MINT_ACCOUNT_META_COUNT;
+     bytes[11] = CONSUME_GATEWAY_MINT_ROUTE_ACCOUNT_INDEX;
+     bytes[12] = CONSUME_GATEWAY_MINT_GUARDIAN_SET_ACCOUNT_INDEX;
+     bytes[13] = CONSUME_GATEWAY_MINT_MINT_STATE_ACCOUNT_INDEX;
+     bytes[14] = CONSUME_GATEWAY_MINT_PROCESSED_EVENT_ACCOUNT_INDEX;
+     bytes[15] = CONSUME_GATEWAY_MINT_RECIPIENT_BALANCE_ACCOUNT_INDEX;
+     bytes[16..48].copy_from_slice(&route_id);
+     bytes[48..80].copy_from_slice(&guardian_set_id);
+-    bytes[80..112].copy_from_slice(&mint_id.to_bytes());
++    bytes[80..112].copy_from_slice(&canonical_asset_id.to_bytes());
+     bytes[112..144].copy_from_slice(&canonical_event_key);
+     bytes[144..176].copy_from_slice(&recipient.to_bytes());
+     bytes[176..192].copy_from_slice(&amount.to_le_bytes());
+     bytes[192..194].copy_from_slice(&source_chain_weight_bps.to_le_bytes());
+     bytes[194..202].copy_from_slice(&source_chain_id.to_le_bytes());
+     bytes
+ }
+
+ fn native_loader_id() -> Pubkey {
+     Pubkey::from_str(NATIVE_LOADER_ID).expect("native loader id")
+ }
+diff --git a/programs/xxxl-svm/tests/phase_41k6_b2_valid_quorum_live_gated_success.rs b/programs/xxxl-svm/tests/phase_41k6_b2_valid_quorum_live_gated_success.rs
+index 8bff356..8a95767 100644
+--- a/programs/xxxl-svm/tests/phase_41k6_b2_valid_quorum_live_gated_success.rs
++++ b/programs/xxxl-svm/tests/phase_41k6_b2_valid_quorum_live_gated_success.rs
+@@ -20,172 +20,177 @@ use solana_program::sysvar::instructions::{BorrowedAccountMeta, BorrowedInstruct
+ use solana_program::{
+     ed25519_program, program_option::COption, program_pack::Pack, pubkey::Pubkey as ProgramPubkey,
+     sysvar,
+ };
+ use solana_program_error::ProgramError;
+ use solana_pubkey::Pubkey;
+ use spl_token::state::{Account as SplTokenAccount, AccountState, Mint as SplTokenMint};
+ use xxxl_svm::{
+     error::XxxlError,
+     instruction::{
+         CONSUME_GATEWAY_MINT_ACCOUNT_META_COUNT, CONSUME_GATEWAY_MINT_DISCRIMINATOR,
+         CONSUME_GATEWAY_MINT_GUARDIAN_SET_ACCOUNT_INDEX, CONSUME_GATEWAY_MINT_INSTRUCTION_LEN,
+         CONSUME_GATEWAY_MINT_MINT_STATE_ACCOUNT_INDEX,
+         CONSUME_GATEWAY_MINT_PROCESSED_EVENT_ACCOUNT_INDEX,
+         CONSUME_GATEWAY_MINT_RECIPIENT_BALANCE_ACCOUNT_INDEX,
+         CONSUME_GATEWAY_MINT_ROUTE_ACCOUNT_INDEX, INSTRUCTION_LAYOUT_VERSION,
+     },
+     processed_event_marking_boundary::build_final_consumed_processed_event_account_image,
+     state::{
+         GATEWAY_CONFIG_ACCOUNT_DISCRIMINATOR, GATEWAY_CONFIG_ACCOUNT_LEN,
+         GUARDIAN_SET_ACCOUNT_DISCRIMINATOR, GUARDIAN_SET_ACCOUNT_LEN,
+         MINT_STATE_ACCOUNT_DISCRIMINATOR, MINT_STATE_ACCOUNT_LEN, PROCESSED_EVENT_ACCOUNT_LEN,
+         RECIPIENT_BALANCE_ACCOUNT_DISCRIMINATOR, RECIPIENT_BALANCE_ACCOUNT_LEN,
+         RUNTIME_LAYOUT_VERSION,
+     },
+     verifier::{compute_b1c_expected_authorization_payload_hash, B1CAuthorizationPayloadContext},
+ };
+
+ const PROGRAM_NAME: &str = "xxxl_svm";
+ const TOKEN_PROGRAM_ID: &str = "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA";
+ const SYSTEM_PROGRAM_ID: &str = "11111111111111111111111111111111";
+ const NATIVE_LOADER_ID: &str = "NativeLoader1111111111111111111111111111111";
+
+ const ROUTE_ID: [u8; 32] = [0x11; 32];
+ const GUARDIAN_SET_ID: [u8; 32] = [0x22; 32];
+ const CANONICAL_EVENT_KEY: [u8; 32] = [0x44; 32];
+ const SOURCE_CHAIN_ID: u64 = 1;
+ const SOURCE_CHAIN_WEIGHT_BPS: u16 = 10_000;
+ const AMOUNT: u64 = 1_000;
+
+ const GUARDIAN_ONE: [u8; 32] = [0xA1; 32];
+ const GUARDIAN_TWO: [u8; 32] = [0xA2; 32];
+ const GUARDIAN_THREE: [u8; 32] = [0xA3; 32];
+ const GUARDIAN_THRESHOLD: u16 = 2;
+ const GUARDIAN_COUNT: u8 = 3;
+
+ const ACCOUNT_INDEX_PROCESSED_EVENT: usize = 3;
+ const ACCOUNT_INDEX_RECIPIENT_BALANCE: usize = 4;
+ const ACCOUNT_INDEX_SPL_MINT: usize = 5;
+ const ACCOUNT_INDEX_RECIPIENT_TOKEN_ACCOUNT: usize = 6;
+ const ACCOUNT_INDEX_RENT_PAYER: usize = 9;
+
+ const ED25519_SIGNATURE_LEN: usize = 64;
+ const ED25519_PUBLIC_KEY_LEN: usize = 32;
+ const ED25519_SINGLE_SIGNATURE_HEADER_LEN: usize = 16;
+ const ED25519_CURRENT_INSTRUCTION_INDEX_SENTINEL: u16 = u16::MAX;
+
+ static SBF_BUILD: Once = Once::new();
+
+ #[test]
+ fn phase_41k6_b2_valid_quorum_live_gated_success_marks_processed_event_and_mints_spl() {
+     let fixture = B2LiveGatedSuccessFixture::new();
+     let mollusk = mollusk_for_program(&fixture.program_id);
+
+     let current_instruction = fixture.instruction_b1_v3();
+     let guardian_one_instruction =
+         ed25519_precompile_instruction(fixture.payload_hash(), GUARDIAN_ONE);
+     let guardian_two_instruction =
+         ed25519_precompile_instruction(fixture.payload_hash(), GUARDIAN_TWO);
+     let accounts = fixture.accounts_b1_v3();
+
+     let expected_processed_event_data = build_final_consumed_processed_event_account_image(
+         &CANONICAL_EVENT_KEY,
+         &ROUTE_ID,
+         &fixture.keys.recipient_owner.to_bytes(),
+         AMOUNT as u128,
+         0,
+     )
+     .expect("expected consumed processed_event image");
+
+-    let expected_spl_mint_data = packed_mint_with_supply(fixture.keys.mint_authority_pda, true, AMOUNT);
++    let expected_spl_mint_data =
++        packed_mint_with_supply(fixture.keys.mint_authority_pda, true, AMOUNT);
+     let expected_recipient_token_account_data = packed_token_account_with_amount(
+         fixture.keys.spl_mint,
+         fixture.keys.recipient_owner,
+         AccountState::Initialized,
+         AMOUNT,
+     );
+
+     let recipient_balance_before = &accounts[ACCOUNT_INDEX_RECIPIENT_BALANCE].1;
+
+     mollusk.process_and_validate_transaction_instructions(
+-        &[guardian_one_instruction, guardian_two_instruction, current_instruction],
++        &[
++            guardian_one_instruction,
++            guardian_two_instruction,
++            current_instruction,
++        ],
+         &accounts,
+         &[
+             Check::success(),
+             Check::account(&fixture.keys.processed_event)
+                 .owner(&fixture.program_id)
+                 .space(PROCESSED_EVENT_ACCOUNT_LEN)
+                 .data(&expected_processed_event_data)
+                 .build(),
+             Check::account(&fixture.keys.spl_mint)
+                 .owner(&fixture.keys.token_program)
+                 .space(SplTokenMint::LEN)
+                 .data(&expected_spl_mint_data)
+                 .build(),
+             Check::account(&fixture.keys.recipient_token_account)
+                 .owner(&fixture.keys.token_program)
+                 .space(SplTokenAccount::LEN)
+                 .data(&expected_recipient_token_account_data)
+                 .build(),
+             Check::account(&fixture.keys.recipient_balance)
+                 .owner(&recipient_balance_before.owner)
+                 .space(recipient_balance_before.data.len())
+                 .data(&recipient_balance_before.data)
+                 .build(),
+         ],
+     );
+ }
+
+ struct B2LiveGatedSuccessFixture {
+     program_id: Pubkey,
+     keys: FixtureKeys,
+     data: FixtureData,
+     instruction_data: [u8; CONSUME_GATEWAY_MINT_INSTRUCTION_LEN],
+ }
+
+ struct FixtureKeys {
+     mint_state: Pubkey,
+     gateway_config: Pubkey,
+     guardian_set: Pubkey,
+     processed_event: Pubkey,
+     recipient_balance: Pubkey,
+     recipient_owner: Pubkey,
+     spl_mint: Pubkey,
+     recipient_token_account: Pubkey,
+     mint_authority_pda: Pubkey,
+     token_program: Pubkey,
+     rent_payer: Pubkey,
+     system_program: Pubkey,
+     instructions_sysvar: Pubkey,
+ }
+
+ struct FixtureData {
+     mint_state: Vec<u8>,
+     gateway_config: Vec<u8>,
+     guardian_set: Vec<u8>,
+     processed_event: Vec<u8>,
+     recipient_balance: Vec<u8>,
+     spl_mint: Vec<u8>,
+     recipient_token_account: Vec<u8>,
+ }
+
+ impl B2LiveGatedSuccessFixture {
+     fn new() -> Self {
+         let program_id = Pubkey::new_unique();
+         let token_program = TOKEN_PROGRAM_ID
+             .parse::<Pubkey>()
+             .expect("SPL Token program id");
+         let system_program = SYSTEM_PROGRAM_ID
+             .parse::<Pubkey>()
+             .expect("system program id");
+         let instructions_sysvar = Pubkey::new_from_array(sysvar::instructions::id().to_bytes());
+         let spl_mint = Pubkey::new_unique();
+         let recipient_owner = Pubkey::new_unique();
+
+         let (mint_authority_pda, mint_authority_bump) =
+             Pubkey::find_program_address(&[b"xxxl", b"gateway-mint-authority", b"v1"], &program_id);
+
+         let (guardian_set, _) = Pubkey::find_program_address(
+             &[b"xxxl", b"guardian-set", &GUARDIAN_SET_ID],
+             &program_id,
+         );
+@@ -583,111 +588,111 @@ fn gateway_config_data(
+     data[12..14].copy_from_slice(&weight_bps.to_le_bytes());
+     data[16..48].copy_from_slice(&route_id);
+     data[48..56].copy_from_slice(&source_chain_id.to_le_bytes());
+     data[88..120].copy_from_slice(&target_mint.to_bytes());
+     data[120..152].copy_from_slice(&guardian_set_id);
+     data
+ }
+
+ fn guardian_set_data(guardian_set_id: [u8; 32]) -> Vec<u8> {
+     let mut data = account_data(GUARDIAN_SET_ACCOUNT_LEN, GUARDIAN_SET_ACCOUNT_DISCRIMINATOR);
+     data[10] = 1;
+     data[12..14].copy_from_slice(&GUARDIAN_THRESHOLD.to_le_bytes());
+     data[14] = GUARDIAN_COUNT;
+     data[16..48].copy_from_slice(&GUARDIAN_ONE);
+     data[48..80].copy_from_slice(&GUARDIAN_TWO);
+     data[80..112].copy_from_slice(&GUARDIAN_THREE);
+     data[272..304].copy_from_slice(&guardian_set_id);
+     data
+ }
+
+ fn recipient_balance_data(owner: Pubkey, mint: Pubkey) -> Vec<u8> {
+     let mut data = account_data(
+         RECIPIENT_BALANCE_ACCOUNT_LEN,
+         RECIPIENT_BALANCE_ACCOUNT_DISCRIMINATOR,
+     );
+     data[16..48].copy_from_slice(&owner.to_bytes());
+     data[48..80].copy_from_slice(&mint.to_bytes());
+     data
+ }
+
+ fn account_data(len: usize, discriminator: [u8; 8]) -> Vec<u8> {
+     let mut data = vec![0u8; len];
+     data[0..8].copy_from_slice(&discriminator);
+     data[8..10].copy_from_slice(&RUNTIME_LAYOUT_VERSION.to_le_bytes());
+     data
+ }
+
+ fn packed_mint_with_supply(mint_authority: Pubkey, initialized: bool, supply: u64) -> Vec<u8> {
+     let mut data = vec![0u8; SplTokenMint::LEN];
+     let mint = SplTokenMint {
+         mint_authority: COption::Some(to_program_pubkey(mint_authority)),
+         supply,
+         decimals: 18,
+         is_initialized: initialized,
+         freeze_authority: COption::None,
+     };
+
+     SplTokenMint::pack(mint, &mut data).expect("pack SPL mint");
+     data
+ }
+
+ fn packed_token_account_with_amount(
+     mint: Pubkey,
+     owner: Pubkey,
+     state: AccountState,
+     amount: u64,
+ ) -> Vec<u8> {
+     let mut data = vec![0u8; SplTokenAccount::LEN];
+     let account = SplTokenAccount {
+         mint: to_program_pubkey(mint),
+         owner: to_program_pubkey(owner),
+         amount,
+         delegate: COption::None,
+         state,
+         is_native: COption::None,
+         delegated_amount: 0,
+         close_authority: COption::None,
+     };
+
+     SplTokenAccount::pack(account, &mut data).expect("pack SPL token account");
+     data
+ }
+
+ fn to_program_pubkey(pubkey: Pubkey) -> ProgramPubkey {
+     ProgramPubkey::new_from_array(pubkey.to_bytes())
+ }
+
+ fn instruction_data_from_fields(
+     route_id: [u8; 32],
+     guardian_set_id: [u8; 32],
+-    mint_id: Pubkey,
++    canonical_asset_id: Pubkey,
+     canonical_event_key: [u8; 32],
+     recipient: Pubkey,
+     amount: u128,
+     source_chain_weight_bps: u16,
+     source_chain_id: u64,
+ ) -> [u8; CONSUME_GATEWAY_MINT_INSTRUCTION_LEN] {
+     let mut bytes = [0u8; CONSUME_GATEWAY_MINT_INSTRUCTION_LEN];
+
+     bytes[0..8].copy_from_slice(&CONSUME_GATEWAY_MINT_DISCRIMINATOR);
+     bytes[8..10].copy_from_slice(&INSTRUCTION_LAYOUT_VERSION.to_le_bytes());
+     bytes[10] = CONSUME_GATEWAY_MINT_ACCOUNT_META_COUNT;
+     bytes[11] = CONSUME_GATEWAY_MINT_ROUTE_ACCOUNT_INDEX;
+     bytes[12] = CONSUME_GATEWAY_MINT_GUARDIAN_SET_ACCOUNT_INDEX;
+     bytes[13] = CONSUME_GATEWAY_MINT_MINT_STATE_ACCOUNT_INDEX;
+     bytes[14] = CONSUME_GATEWAY_MINT_PROCESSED_EVENT_ACCOUNT_INDEX;
+     bytes[15] = CONSUME_GATEWAY_MINT_RECIPIENT_BALANCE_ACCOUNT_INDEX;
+     bytes[16..48].copy_from_slice(&route_id);
+     bytes[48..80].copy_from_slice(&guardian_set_id);
+-    bytes[80..112].copy_from_slice(&mint_id.to_bytes());
++    bytes[80..112].copy_from_slice(&canonical_asset_id.to_bytes());
+     bytes[112..144].copy_from_slice(&canonical_event_key);
+     bytes[144..176].copy_from_slice(&recipient.to_bytes());
+     bytes[176..192].copy_from_slice(&amount.to_le_bytes());
+     bytes[192..194].copy_from_slice(&source_chain_weight_bps.to_le_bytes());
+     bytes[194..202].copy_from_slice(&source_chain_id.to_le_bytes());
+     bytes
+ }
+
+ fn native_loader_id() -> Pubkey {
+     Pubkey::from_str(NATIVE_LOADER_ID).expect("native loader id")
+ }
+diff --git a/programs/xxxl-svm/tests/phase_41k6_b3_hostile_live_gated_matrix.rs b/programs/xxxl-svm/tests/phase_41k6_b3_hostile_live_gated_matrix.rs
+index 7258bdf..4f60a73 100644
+--- a/programs/xxxl-svm/tests/phase_41k6_b3_hostile_live_gated_matrix.rs
++++ b/programs/xxxl-svm/tests/phase_41k6_b3_hostile_live_gated_matrix.rs
+@@ -111,161 +111,162 @@ fn phase_41k6_b3_guardian_set_id_binding_mismatch_rejects_before_mark_and_mint()
+     let mut fixture = B2LiveGatedSuccessFixture::new();
+     let payload_hash_bound_to_original_guardian_set_id = fixture.payload_hash();
+     let new_guardian_set_id = [0x99; 32];
+
+     let (new_guardian_set, _) = Pubkey::find_program_address(
+         &[b"xxxl", b"guardian-set", &new_guardian_set_id],
+         &fixture.program_id,
+     );
+
+     fixture.keys.guardian_set = new_guardian_set;
+     fixture.data.guardian_set = guardian_set_data(new_guardian_set_id);
+     fixture.data.gateway_config = gateway_config_data(
+         ROUTE_ID,
+         SOURCE_CHAIN_ID,
+         new_guardian_set_id,
+         fixture.keys.spl_mint,
+         SOURCE_CHAIN_WEIGHT_BPS,
+     );
+     fixture.instruction_data = instruction_data_from_fields(
+         ROUTE_ID,
+         new_guardian_set_id,
+         fixture.keys.spl_mint,
+         CANONICAL_EVENT_KEY,
+         fixture.keys.recipient_owner,
+         AMOUNT as u128,
+         SOURCE_CHAIN_WEIGHT_BPS,
+         SOURCE_CHAIN_ID,
+     );
+
+     run_b3_hostile_case_before_mutation(
+         fixture,
+         vec![
+             ed25519_precompile_instruction(
+                 payload_hash_bound_to_original_guardian_set_id,
+                 GUARDIAN_ONE,
+             ),
+             ed25519_precompile_instruction(
+                 payload_hash_bound_to_original_guardian_set_id,
+                 GUARDIAN_TWO,
+             ),
+         ],
+     );
+ }
+
+ #[test]
+ fn phase_41k6_b3_recipient_binding_mismatch_rejects_before_mark_and_mint() {
+     let mut fixture = B2LiveGatedSuccessFixture::new();
+     let payload_hash_bound_to_original_recipient = fixture.payload_hash();
+
+     fixture.keys.recipient_token_account = Pubkey::new_unique();
+     fixture.data.recipient_token_account = packed_token_account_with_amount(
+         fixture.keys.spl_mint,
+         fixture.keys.recipient_owner,
+         AccountState::Initialized,
+         0,
+     );
+
+     run_b3_hostile_case_before_mutation(
+         fixture,
+         vec![
+             ed25519_precompile_instruction(payload_hash_bound_to_original_recipient, GUARDIAN_ONE),
+             ed25519_precompile_instruction(payload_hash_bound_to_original_recipient, GUARDIAN_TWO),
+         ],
+     );
+ }
+
+ #[test]
+ fn phase_41k6_b3_mint_binding_mismatch_rejects_before_mark_and_mint() {
+     let mut fixture = B2LiveGatedSuccessFixture::new();
+     let payload_hash_bound_to_original_mint = fixture.payload_hash();
+
+     let new_spl_mint = Pubkey::new_unique();
+     fixture.keys.spl_mint = new_spl_mint;
+     fixture.data.gateway_config = gateway_config_data(
+         ROUTE_ID,
+         SOURCE_CHAIN_ID,
+         GUARDIAN_SET_ID,
+         new_spl_mint,
+         SOURCE_CHAIN_WEIGHT_BPS,
+     );
+-    fixture.data.recipient_balance = recipient_balance_data(fixture.keys.recipient_owner, new_spl_mint);
++    fixture.data.recipient_balance =
++        recipient_balance_data(fixture.keys.recipient_owner, new_spl_mint);
+     fixture.data.spl_mint = packed_mint_with_supply(fixture.keys.mint_authority_pda, true, 0);
+     fixture.data.recipient_token_account = packed_token_account_with_amount(
+         new_spl_mint,
+         fixture.keys.recipient_owner,
+         AccountState::Initialized,
+         0,
+     );
+     fixture.instruction_data = instruction_data_from_fields(
+         ROUTE_ID,
+         GUARDIAN_SET_ID,
+         new_spl_mint,
+         CANONICAL_EVENT_KEY,
+         fixture.keys.recipient_owner,
+         AMOUNT as u128,
+         SOURCE_CHAIN_WEIGHT_BPS,
+         SOURCE_CHAIN_ID,
+     );
+
+     run_b3_hostile_case_before_mutation(
+         fixture,
+         vec![
+             ed25519_precompile_instruction(payload_hash_bound_to_original_mint, GUARDIAN_ONE),
+             ed25519_precompile_instruction(payload_hash_bound_to_original_mint, GUARDIAN_TWO),
+         ],
+     );
+ }
+
+ #[test]
+ fn phase_41k6_b3_processed_event_replay_rejects_before_second_mark_and_mint() {
+     let fixture = B2LiveGatedSuccessFixture::new();
+     let payload_hash = fixture.payload_hash();
+
+     let mut accounts = fixture.accounts_b1_v3();
+     let consumed_processed_event_data = build_final_consumed_processed_event_account_image(
+         &CANONICAL_EVENT_KEY,
+         &ROUTE_ID,
+         &fixture.keys.recipient_owner.to_bytes(),
+         AMOUNT as u128,
+         0,
+     )
+     .expect("consumed processed_event replay fixture");
+
+     accounts[ACCOUNT_INDEX_PROCESSED_EVENT].1 = account(
+         10_000_000_000,
+         consumed_processed_event_data.to_vec(),
+         fixture.program_id,
+         false,
+     );
+
+     run_b3_hostile_case_with_accounts_before_mutation(
+         fixture,
+         vec![
+             ed25519_precompile_instruction(payload_hash, GUARDIAN_ONE),
+             ed25519_precompile_instruction(payload_hash, GUARDIAN_TWO),
+         ],
+         accounts,
+     );
+ }
+
+ #[test]
+ fn phase_41k6_b3_duplicate_guardian_evidence_rejects_before_mark_and_mint() {
+     let fixture = B2LiveGatedSuccessFixture::new();
+     let payload_hash = fixture.payload_hash();
+
+     run_b3_hostile_case_before_mutation(
+         fixture,
+         vec![
+             ed25519_precompile_instruction(payload_hash, GUARDIAN_ONE),
+             ed25519_precompile_instruction(payload_hash, GUARDIAN_ONE),
+         ],
+     );
+ }
+
+ #[test]
+ fn phase_41k6_b3_insufficient_quorum_rejects_before_mark_and_mint() {
+     let fixture = B2LiveGatedSuccessFixture::new();
+     let payload_hash = fixture.payload_hash();
+
+     run_b3_hostile_case_before_mutation(
+         fixture,
+@@ -784,111 +785,111 @@ fn gateway_config_data(
+     data[12..14].copy_from_slice(&weight_bps.to_le_bytes());
+     data[16..48].copy_from_slice(&route_id);
+     data[48..56].copy_from_slice(&source_chain_id.to_le_bytes());
+     data[88..120].copy_from_slice(&target_mint.to_bytes());
+     data[120..152].copy_from_slice(&guardian_set_id);
+     data
+ }
+
+ fn guardian_set_data(guardian_set_id: [u8; 32]) -> Vec<u8> {
+     let mut data = account_data(GUARDIAN_SET_ACCOUNT_LEN, GUARDIAN_SET_ACCOUNT_DISCRIMINATOR);
+     data[10] = 1;
+     data[12..14].copy_from_slice(&GUARDIAN_THRESHOLD.to_le_bytes());
+     data[14] = GUARDIAN_COUNT;
+     data[16..48].copy_from_slice(&GUARDIAN_ONE);
+     data[48..80].copy_from_slice(&GUARDIAN_TWO);
+     data[80..112].copy_from_slice(&GUARDIAN_THREE);
+     data[272..304].copy_from_slice(&guardian_set_id);
+     data
+ }
+
+ fn recipient_balance_data(owner: Pubkey, mint: Pubkey) -> Vec<u8> {
+     let mut data = account_data(
+         RECIPIENT_BALANCE_ACCOUNT_LEN,
+         RECIPIENT_BALANCE_ACCOUNT_DISCRIMINATOR,
+     );
+     data[16..48].copy_from_slice(&owner.to_bytes());
+     data[48..80].copy_from_slice(&mint.to_bytes());
+     data
+ }
+
+ fn account_data(len: usize, discriminator: [u8; 8]) -> Vec<u8> {
+     let mut data = vec![0u8; len];
+     data[0..8].copy_from_slice(&discriminator);
+     data[8..10].copy_from_slice(&RUNTIME_LAYOUT_VERSION.to_le_bytes());
+     data
+ }
+
+ fn packed_mint_with_supply(mint_authority: Pubkey, initialized: bool, supply: u64) -> Vec<u8> {
+     let mut data = vec![0u8; SplTokenMint::LEN];
+     let mint = SplTokenMint {
+         mint_authority: COption::Some(to_program_pubkey(mint_authority)),
+         supply,
+         decimals: 18,
+         is_initialized: initialized,
+         freeze_authority: COption::None,
+     };
+
+     SplTokenMint::pack(mint, &mut data).expect("pack SPL mint");
+     data
+ }
+
+ fn packed_token_account_with_amount(
+     mint: Pubkey,
+     owner: Pubkey,
+     state: AccountState,
+     amount: u64,
+ ) -> Vec<u8> {
+     let mut data = vec![0u8; SplTokenAccount::LEN];
+     let account = SplTokenAccount {
+         mint: to_program_pubkey(mint),
+         owner: to_program_pubkey(owner),
+         amount,
+         delegate: COption::None,
+         state,
+         is_native: COption::None,
+         delegated_amount: 0,
+         close_authority: COption::None,
+     };
+
+     SplTokenAccount::pack(account, &mut data).expect("pack SPL token account");
+     data
+ }
+
+ fn to_program_pubkey(pubkey: Pubkey) -> ProgramPubkey {
+     ProgramPubkey::new_from_array(pubkey.to_bytes())
+ }
+
+ fn instruction_data_from_fields(
+     route_id: [u8; 32],
+     guardian_set_id: [u8; 32],
+-    mint_id: Pubkey,
++    canonical_asset_id: Pubkey,
+     canonical_event_key: [u8; 32],
+     recipient: Pubkey,
+     amount: u128,
+     source_chain_weight_bps: u16,
+     source_chain_id: u64,
+ ) -> [u8; CONSUME_GATEWAY_MINT_INSTRUCTION_LEN] {
+     let mut bytes = [0u8; CONSUME_GATEWAY_MINT_INSTRUCTION_LEN];
+
+     bytes[0..8].copy_from_slice(&CONSUME_GATEWAY_MINT_DISCRIMINATOR);
+     bytes[8..10].copy_from_slice(&INSTRUCTION_LAYOUT_VERSION.to_le_bytes());
+     bytes[10] = CONSUME_GATEWAY_MINT_ACCOUNT_META_COUNT;
+     bytes[11] = CONSUME_GATEWAY_MINT_ROUTE_ACCOUNT_INDEX;
+     bytes[12] = CONSUME_GATEWAY_MINT_GUARDIAN_SET_ACCOUNT_INDEX;
+     bytes[13] = CONSUME_GATEWAY_MINT_MINT_STATE_ACCOUNT_INDEX;
+     bytes[14] = CONSUME_GATEWAY_MINT_PROCESSED_EVENT_ACCOUNT_INDEX;
+     bytes[15] = CONSUME_GATEWAY_MINT_RECIPIENT_BALANCE_ACCOUNT_INDEX;
+     bytes[16..48].copy_from_slice(&route_id);
+     bytes[48..80].copy_from_slice(&guardian_set_id);
+-    bytes[80..112].copy_from_slice(&mint_id.to_bytes());
++    bytes[80..112].copy_from_slice(&canonical_asset_id.to_bytes());
+     bytes[112..144].copy_from_slice(&canonical_event_key);
+     bytes[144..176].copy_from_slice(&recipient.to_bytes());
+     bytes[176..192].copy_from_slice(&amount.to_le_bytes());
+     bytes[192..194].copy_from_slice(&source_chain_weight_bps.to_le_bytes());
+     bytes[194..202].copy_from_slice(&source_chain_id.to_le_bytes());
+     bytes
+ }
+
+ fn native_loader_id() -> Pubkey {
+     Pubkey::from_str(NATIVE_LOADER_ID).expect("native loader id")
+ }
