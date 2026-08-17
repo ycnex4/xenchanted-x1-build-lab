@@ -11,20 +11,6 @@ Current working branch:
 Current branch is the operational source of truth for D2/B1C7 / Gate 6.1 work.
 `main` is not yet updated with this branch.
 
-## Role boundaries
-
-Sergey controls the repository and operational decisions.
-
-Assistant prepares commands, reviews outputs, checks consistency, and helps maintain process discipline.
-
-Theo may provide advice, calculations, review comments, and suggested content.
-Theo is not an executor by default.
-
-Daemon provides PASS / BLOCKED review only.
-Daemon does not receive authority to execute, distribute, collect, mint, replay, rollback, deploy, or mutate state.
-
-Guardians sign only after a separate Sergey-controlled signature request decision.
-
 ## Current roadmap state
 
 U3 testnet upgrade: DONE.
@@ -143,5 +129,5 @@ Any live mint requires:
 
 1. signature quorum report,
 2. read-only pre-mint verification,
-3. separate explicit Sergey GO,
+3. separate explicit GO,
 4. no conditional authorization.

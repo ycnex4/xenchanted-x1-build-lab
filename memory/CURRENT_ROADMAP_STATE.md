@@ -86,7 +86,7 @@ Production deployment: NOT AUTHORIZED.
    - secret/raw signature/signed tx scan
    - stale v3/current v4 scan
 3. Commit hygiene/status repair.
-4. Decide separately whether to start Sergey-controlled signature request distribution.
+4. Decide separately whether to start signature request distribution.
 
 ## Decision rule
 
@@ -96,4 +96,4 @@ Correct process:
 
 1. Run/check step X.
 2. Review result.
-3. Sergey separately decides whether to proceed to step Y.
+3. Proceed to step Y only after a separate explicit GO.
