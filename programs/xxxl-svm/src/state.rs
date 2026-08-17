@@ -290,6 +290,8 @@ pub fn initialize_guardian_set_account_data(
         &GUARDIAN_SET_ACCOUNT_DISCRIMINATOR,
     )?;
 
+    // B1B/B1C7 strict guardian_set loader requires ACTIVE=1 at offset 10.
+    data[10] = 1;
     data[12..14].copy_from_slice(&quorum_threshold.to_le_bytes());
     data[14] = guardian_count;
 
@@ -863,5 +865,41 @@ mod state_provisioning_initialization_tests {
 
     fn assert_custom_error(result: Result<(), ProgramError>, error: XxxlError) {
         assert!(matches!(result, Err(ProgramError::Custom(code)) if code == error as u32));
+    }
+}
+
+#[cfg(test)]
+mod guardian_set_active_status_regression_tests {
+    use super::{initialize_guardian_set_account_data, GUARDIAN_SET_ACCOUNT_LEN};
+    use crate::verifier::guardian_set_account_loading_boundary::{
+        decode_phase_41k_2_guardian_set_account_data, Phase41K2GuardianSetAccountLoadingStatus,
+        GUARDIAN_SET_ACTIVE_STATUS_OFFSET, GUARDIAN_SET_STATUS_ACTIVE,
+    };
+
+    #[test]
+    fn initialize_guardian_set_marks_active_for_strict_b1b_loader() {
+        let guardian_set_id = [0x44; 32];
+        let guardians = [[0x11; 32], [0x22; 32], [0x33; 32], [0x44; 32], [0x55; 32]];
+        let mut data = vec![0u8; GUARDIAN_SET_ACCOUNT_LEN];
+
+        initialize_guardian_set_account_data(&mut data, guardian_set_id, 3, 5, &guardians)
+            .expect("guardian_set initializes");
+
+        assert_eq!(
+            data[GUARDIAN_SET_ACTIVE_STATUS_OFFSET],
+            GUARDIAN_SET_STATUS_ACTIVE
+        );
+
+        let decoded = decode_phase_41k_2_guardian_set_account_data(&data, &guardian_set_id);
+
+        assert_eq!(
+            decoded.status,
+            Phase41K2GuardianSetAccountLoadingStatus::GuardianSetAccountDataDecoded
+        );
+        assert_eq!(decoded.rejection_case, None);
+        assert_eq!(decoded.threshold, Some(3));
+        assert_eq!(decoded.guardian_count, 5);
+        assert_eq!(decoded.guardian_set_id, Some(guardian_set_id));
+        assert!(decoded.active);
     }
 }
