@@ -7,3 +7,30 @@ coverage/
 
 # Local disposable validator ledgers, generated fixtures, and runtime scratch output
 tmp/
+# Rust / Solana build output
+target/
+**/target/
+
+# Local-only secret, signature, and transaction material
+.local/
+**/.local/
+.signatures/
+**/.signatures/
+*.keypair
+*.keypair.json
+*keypair*.json
+*secret*.json
+*private*.json
+*seed*.json
+*signature-bundle*.json
+*signatures-bundle*.json
+*signed-transaction*.json
+*signed-tx*.json
+*.sig
+*.sigs
+
+# Local Solana / X1 execution scratch
+ledger/
+test-ledger/
+.validator/
+.anchor/
