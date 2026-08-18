@@ -77,28 +77,28 @@ Repository status after checks: clean.
 
 ## Known issue
 
-Default Rust command currently must not be treated as a clean PASS:
+`mollusk_consume_gateway_mint` contains artifact-runtime tests.
 
-`cargo test --manifest-path programs/xxxl-svm/Cargo.toml`
+These tests depend on mutable local `.so` artifacts and must not run as part of default Rust tests.
 
-Observed failure source:
+Current fix:
 
-- failing target: `mollusk_consume_gateway_mint`
-- default Mollusk loader reads `programs/xxxl-svm/target/deploy/xxxl_svm.so`
-- that local artifact has sha256 `402a94a23feff7b87af25b9e83137b33bc1359bd7c495618e9c11f1222686bd4`
-- this artifact is already recorded as the wrong target/deploy artifact in U3 evidence
+- artifact-runtime tests are ignored by default.
+- non-artifact boundary test remains active.
+- `cargo test --manifest-path programs/xxxl-svm/Cargo.toml` now passes.
+- `mollusk_consume_gateway_mint` default result: 1 passed, 64 ignored.
 
-Current deployed/candidate artifact:
+Observed local artifact mismatch:
 
-- path: `programs/xxxl-svm/target/sbpf-solana-solana/release/deps/xxxl_svm.so`
+- `programs/xxxl-svm/target/deploy/xxxl_svm.so` did not match U3 candidate.
+- `programs/xxxl-svm/target/sbpf-solana-solana/release/deps/xxxl_svm.so` did not match U3 candidate.
+
+Recorded U3 candidate artifact:
+
 - sha256: `ca97970eb6c4c2977918fd4ff63a97f11069ba84cd85c33693f440383b2cfc06`
 - size: `201160`
 
-Temporary local harness patch was reverted.
-
-Repository returned to clean state.
-
-Do not mark default Rust audit as fully resolved until the Mollusk artifact-loading path is fixed and rerun successfully.
+Do not run artifact-runtime Mollusk tests without an explicit artifact path/hash guard.
 
 ## Static scan notes
 

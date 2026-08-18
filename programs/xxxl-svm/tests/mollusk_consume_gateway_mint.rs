@@ -38,6 +38,7 @@ const RECIPIENT_TOKEN_ACCOUNT_INDEX: usize = 6;
 const MINT_AUTHORITY_PDA_ACCOUNT_INDEX: usize = 7;
 
 #[test]
+#[ignore = "artifact-runtime: requires explicit Mollusk artifact run"]
 fn mollusk_harness_rejects_malformed_instruction_without_live_route() {
     let program_id = Pubkey::new_unique();
     let mollusk = mollusk_for_program(&program_id);
@@ -57,6 +58,7 @@ fn mollusk_harness_rejects_malformed_instruction_without_live_route() {
 }
 
 #[test]
+#[ignore = "artifact-runtime: requires explicit Mollusk artifact run"]
 fn mollusk_rejects_wrong_instruction_discriminator_without_live_route() {
     let fixture = ScaffoldFixture::new();
     let mollusk = mollusk_for_program(&fixture.program_id);
@@ -78,6 +80,7 @@ fn mollusk_rejects_wrong_instruction_discriminator_without_live_route() {
 }
 
 #[test]
+#[ignore = "artifact-runtime: requires explicit Mollusk artifact run"]
 fn mollusk_rejects_wrong_instruction_version_without_live_route() {
     let fixture = ScaffoldFixture::new();
     let mollusk = mollusk_for_program(&fixture.program_id);
@@ -99,6 +102,7 @@ fn mollusk_rejects_wrong_instruction_version_without_live_route() {
 }
 
 #[test]
+#[ignore = "artifact-runtime: requires explicit Mollusk artifact run"]
 fn mollusk_rejects_extra_instruction_bytes_without_live_route() {
     let fixture = ScaffoldFixture::new();
     let mollusk = mollusk_for_program(&fixture.program_id);
@@ -120,6 +124,7 @@ fn mollusk_rejects_extra_instruction_bytes_without_live_route() {
 }
 
 #[test]
+#[ignore = "artifact-runtime: requires explicit Mollusk artifact run"]
 fn mollusk_nonzero_reserved_202_207_rejects_before_scaffold_path() {
     let fixture = ScaffoldFixture::new();
     let mollusk = mollusk_for_program(&fixture.program_id);
@@ -141,6 +146,7 @@ fn mollusk_nonzero_reserved_202_207_rejects_before_scaffold_path() {
 }
 
 #[test]
+#[ignore = "artifact-runtime: requires explicit Mollusk artifact run"]
 fn mollusk_rejects_wrong_encoded_account_meta_count_without_live_route() {
     let fixture = ScaffoldFixture::new();
     let mollusk = mollusk_for_program(&fixture.program_id);
@@ -165,6 +171,7 @@ fn mollusk_rejects_wrong_encoded_account_meta_count_without_live_route() {
 }
 
 #[test]
+#[ignore = "artifact-runtime: requires explicit Mollusk artifact run"]
 fn mollusk_rejects_wrong_encoded_processed_event_account_index_without_live_route() {
     let fixture = ScaffoldFixture::new();
     let mollusk = mollusk_for_program(&fixture.program_id);
@@ -189,6 +196,7 @@ fn mollusk_rejects_wrong_encoded_processed_event_account_index_without_live_rout
 }
 
 #[test]
+#[ignore = "artifact-runtime: requires explicit Mollusk artifact run"]
 fn mollusk_rejects_wrong_encoded_recipient_balance_account_index_without_live_route() {
     let fixture = ScaffoldFixture::new();
     let mollusk = mollusk_for_program(&fixture.program_id);
@@ -213,6 +221,7 @@ fn mollusk_rejects_wrong_encoded_recipient_balance_account_index_without_live_ro
 }
 
 #[test]
+#[ignore = "artifact-runtime: requires explicit Mollusk artifact run"]
 fn mollusk_rejects_wrong_account_count_without_live_route() {
     let fixture = ScaffoldFixture::new();
     let mollusk = mollusk_for_program(&fixture.program_id);
@@ -233,6 +242,7 @@ fn mollusk_rejects_wrong_account_count_without_live_route() {
 }
 
 #[test]
+#[ignore = "artifact-runtime: requires explicit Mollusk artifact run"]
 fn mollusk_rejects_wrong_account_order_without_live_route() {
     let fixture = ScaffoldFixture::new();
     let mollusk = mollusk_for_program(&fixture.program_id);
@@ -253,6 +263,7 @@ fn mollusk_rejects_wrong_account_order_without_live_route() {
 }
 
 #[test]
+#[ignore = "artifact-runtime: requires explicit Mollusk artifact run"]
 fn mollusk_rejects_unexpected_signer_without_live_route() {
     let fixture = ScaffoldFixture::new();
     let mollusk = mollusk_for_program(&fixture.program_id);
@@ -272,6 +283,7 @@ fn mollusk_rejects_unexpected_signer_without_live_route() {
 }
 
 #[test]
+#[ignore = "artifact-runtime: requires explicit Mollusk artifact run"]
 fn mollusk_rejects_writable_readonly_mismatch_without_live_route() {
     let fixture = ScaffoldFixture::new();
     let mollusk = mollusk_for_program(&fixture.program_id);
@@ -291,6 +303,7 @@ fn mollusk_rejects_writable_readonly_mismatch_without_live_route() {
 }
 
 #[test]
+#[ignore = "artifact-runtime: requires explicit Mollusk artifact run"]
 fn mollusk_rejects_wrong_mint_state_owner_without_live_route() {
     let fixture = ScaffoldFixture::new();
     let mollusk = mollusk_for_program(&fixture.program_id);
@@ -311,6 +324,7 @@ fn mollusk_rejects_wrong_mint_state_owner_without_live_route() {
 }
 
 #[test]
+#[ignore = "artifact-runtime: requires explicit Mollusk artifact run"]
 fn mollusk_rejects_wrong_gateway_config_owner_without_live_route() {
     let fixture = ScaffoldFixture::new();
     let mollusk = mollusk_for_program(&fixture.program_id);
@@ -331,6 +345,7 @@ fn mollusk_rejects_wrong_gateway_config_owner_without_live_route() {
 }
 
 #[test]
+#[ignore = "artifact-runtime: requires explicit Mollusk artifact run"]
 fn mollusk_rejects_wrong_guardian_set_owner_without_live_route() {
     let fixture = ScaffoldFixture::new();
     let mollusk = mollusk_for_program(&fixture.program_id);
@@ -351,6 +366,7 @@ fn mollusk_rejects_wrong_guardian_set_owner_without_live_route() {
 }
 
 #[test]
+#[ignore = "artifact-runtime: requires explicit Mollusk artifact run"]
 fn mollusk_rejects_wrong_mint_state_discriminator_without_live_route() {
     let fixture = ScaffoldFixture::new();
     let mollusk = mollusk_for_program(&fixture.program_id);
@@ -371,6 +387,7 @@ fn mollusk_rejects_wrong_mint_state_discriminator_without_live_route() {
 }
 
 #[test]
+#[ignore = "artifact-runtime: requires explicit Mollusk artifact run"]
 fn mollusk_rejects_truncated_gateway_config_without_live_route() {
     let fixture = ScaffoldFixture::new();
     let mollusk = mollusk_for_program(&fixture.program_id);
@@ -392,6 +409,7 @@ fn mollusk_rejects_truncated_gateway_config_without_live_route() {
 }
 
 #[test]
+#[ignore = "artifact-runtime: requires explicit Mollusk artifact run"]
 fn mollusk_rejects_low_rent_mint_state_without_live_route() {
     let fixture = ScaffoldFixture::new();
     let mollusk = mollusk_for_program(&fixture.program_id);
@@ -412,6 +430,7 @@ fn mollusk_rejects_low_rent_mint_state_without_live_route() {
 }
 
 #[test]
+#[ignore = "artifact-runtime: requires explicit Mollusk artifact run"]
 fn mollusk_rejects_low_rent_gateway_config_without_live_route() {
     let fixture = ScaffoldFixture::new();
     let mollusk = mollusk_for_program(&fixture.program_id);
@@ -430,6 +449,7 @@ fn mollusk_rejects_low_rent_gateway_config_without_live_route() {
 }
 
 #[test]
+#[ignore = "artifact-runtime: requires explicit Mollusk artifact run"]
 fn mollusk_rejects_low_rent_guardian_set_without_live_route() {
     let fixture = ScaffoldFixture::new();
     let mollusk = mollusk_for_program(&fixture.program_id);
@@ -450,6 +470,7 @@ fn mollusk_rejects_low_rent_guardian_set_without_live_route() {
 }
 
 #[test]
+#[ignore = "artifact-runtime: requires explicit Mollusk artifact run"]
 fn mollusk_accepts_dusted_system_owned_empty_processed_event_without_live_route() {
     let fixture = ScaffoldFixture::new();
     let mollusk = mollusk_for_program(&fixture.program_id);
@@ -480,6 +501,7 @@ fn mollusk_accepts_dusted_system_owned_empty_processed_event_without_live_route(
 }
 
 #[test]
+#[ignore = "artifact-runtime: requires explicit Mollusk artifact run"]
 fn mollusk_rejects_low_rent_recipient_balance_without_live_route() {
     let fixture = ScaffoldFixture::new();
     let mollusk = mollusk_for_program(&fixture.program_id);
@@ -500,6 +522,7 @@ fn mollusk_rejects_low_rent_recipient_balance_without_live_route() {
 }
 
 #[test]
+#[ignore = "artifact-runtime: requires explicit Mollusk artifact run"]
 fn mollusk_rejects_low_rent_spl_token_mint_without_live_route() {
     let fixture = ScaffoldFixture::new();
     let mollusk = mollusk_for_program(&fixture.program_id);
@@ -517,6 +540,7 @@ fn mollusk_rejects_low_rent_spl_token_mint_without_live_route() {
 }
 
 #[test]
+#[ignore = "artifact-runtime: requires explicit Mollusk artifact run"]
 fn mollusk_rejects_low_rent_recipient_token_account_without_live_route() {
     let fixture = ScaffoldFixture::new();
     let mollusk = mollusk_for_program(&fixture.program_id);
@@ -534,6 +558,7 @@ fn mollusk_rejects_low_rent_recipient_token_account_without_live_route() {
 }
 
 #[test]
+#[ignore = "artifact-runtime: requires explicit Mollusk artifact run"]
 fn mollusk_rejects_wrong_spl_mint_owner_without_live_route() {
     let fixture = ScaffoldFixture::new();
     let mollusk = mollusk_for_program(&fixture.program_id);
@@ -552,6 +577,7 @@ fn mollusk_rejects_wrong_spl_mint_owner_without_live_route() {
 }
 
 #[test]
+#[ignore = "artifact-runtime: requires explicit Mollusk artifact run"]
 fn mollusk_rejects_wrong_spl_mint_authority_without_live_route() {
     let fixture = ScaffoldFixture::new();
     let mollusk = mollusk_for_program(&fixture.program_id);
@@ -570,6 +596,7 @@ fn mollusk_rejects_wrong_spl_mint_authority_without_live_route() {
 }
 
 #[test]
+#[ignore = "artifact-runtime: requires explicit Mollusk artifact run"]
 fn mollusk_rejects_uninitialized_spl_mint_without_live_route() {
     let fixture = ScaffoldFixture::new();
     let mollusk = mollusk_for_program(&fixture.program_id);
@@ -588,6 +615,7 @@ fn mollusk_rejects_uninitialized_spl_mint_without_live_route() {
 }
 
 #[test]
+#[ignore = "artifact-runtime: requires explicit Mollusk artifact run"]
 fn mollusk_rejects_wrong_recipient_token_mint_without_live_route() {
     let fixture = ScaffoldFixture::new();
     let mollusk = mollusk_for_program(&fixture.program_id);
@@ -610,6 +638,7 @@ fn mollusk_rejects_wrong_recipient_token_mint_without_live_route() {
 }
 
 #[test]
+#[ignore = "artifact-runtime: requires explicit Mollusk artifact run"]
 fn mollusk_rejects_wrong_recipient_token_owner_without_live_route() {
     let fixture = ScaffoldFixture::new();
     let mollusk = mollusk_for_program(&fixture.program_id);
@@ -632,6 +661,7 @@ fn mollusk_rejects_wrong_recipient_token_owner_without_live_route() {
 }
 
 #[test]
+#[ignore = "artifact-runtime: requires explicit Mollusk artifact run"]
 fn mollusk_rejects_uninitialized_recipient_token_account_without_live_route() {
     let fixture = ScaffoldFixture::new();
     let mollusk = mollusk_for_program(&fixture.program_id);
@@ -654,6 +684,7 @@ fn mollusk_rejects_uninitialized_recipient_token_account_without_live_route() {
 }
 
 #[test]
+#[ignore = "artifact-runtime: requires explicit Mollusk artifact run"]
 fn mollusk_rejects_wrong_mint_authority_pda_without_live_route() {
     let fixture = ScaffoldFixture::new();
     let mollusk = mollusk_for_program(&fixture.program_id);
@@ -676,6 +707,7 @@ fn mollusk_rejects_wrong_mint_authority_pda_without_live_route() {
 }
 
 #[test]
+#[ignore = "artifact-runtime: requires explicit Mollusk artifact run"]
 fn mollusk_rejects_wrong_mint_authority_bump_without_live_route() {
     let fixture = ScaffoldFixture::new();
     let mollusk = mollusk_for_program(&fixture.program_id);
@@ -699,6 +731,7 @@ fn mollusk_rejects_wrong_mint_authority_bump_without_live_route() {
 }
 
 #[test]
+#[ignore = "artifact-runtime: requires explicit Mollusk artifact run"]
 fn mollusk_rejects_mint_authority_pda_for_wrong_program_id_without_live_route() {
     let fixture = ScaffoldFixture::new();
     let mollusk = mollusk_for_program(&fixture.program_id);
@@ -732,6 +765,7 @@ fn mollusk_rejects_mint_authority_pda_for_wrong_program_id_without_live_route() 
 }
 
 #[test]
+#[ignore = "artifact-runtime: requires explicit Mollusk artifact run"]
 fn mollusk_rejects_mint_authority_pda_semantic_mismatch_without_live_route() {
     let fixture = ScaffoldFixture::new();
     let mollusk = mollusk_for_program(&fixture.program_id);
@@ -753,6 +787,7 @@ fn mollusk_rejects_mint_authority_pda_semantic_mismatch_without_live_route() {
 }
 
 #[test]
+#[ignore = "artifact-runtime: requires explicit Mollusk artifact run"]
 fn mollusk_valid_scaffold_entrypoint_leaves_mutable_accounts_unchanged() {
     let fixture = ScaffoldFixture::new();
     let mollusk = mollusk_for_program(&fixture.program_id);
@@ -771,6 +806,7 @@ fn mollusk_valid_scaffold_entrypoint_leaves_mutable_accounts_unchanged() {
 }
 
 #[test]
+#[ignore = "artifact-runtime: requires explicit Mollusk artifact run"]
 fn mollusk_valid_v2_matching_source_chain_id_leaves_mutable_accounts_unchanged() {
     let fixture = ScaffoldFixture::new();
     let mollusk = mollusk_for_program(&fixture.program_id);
@@ -802,6 +838,7 @@ fn mollusk_valid_v2_matching_source_chain_id_leaves_mutable_accounts_unchanged()
 }
 
 #[test]
+#[ignore = "artifact-runtime: requires explicit Mollusk artifact run"]
 fn process_instruction_v2_still_disabled_plan() {
     let fixture = ScaffoldFixture::new();
     let mollusk = mollusk_for_program(&fixture.program_id);
@@ -938,7 +975,7 @@ fn phase20_current_runtime_boundary_matrix_separates_unrepresented_stage1_classe
 }
 
 #[test]
-#[ignore = "requires cargo build-sbf and target/deploy/xxxl_svm.so"]
+#[ignore = "artifact-runtime: requires explicit Mollusk artifact run"]
 fn invalid_consume_gateway_mint_account_count_rejects_before_live_route() {
     let fixture = ScaffoldFixture::new();
     let mollusk = mollusk_for_program(&fixture.program_id);
@@ -959,7 +996,7 @@ fn invalid_consume_gateway_mint_account_count_rejects_before_live_route() {
 }
 
 #[test]
-#[ignore = "requires cargo build-sbf and target/deploy/xxxl_svm.so"]
+#[ignore = "artifact-runtime: requires explicit Mollusk artifact run"]
 fn invalid_consume_gateway_mint_readonly_account_passed_writable_rejects_before_validation() {
     let fixture = ScaffoldFixture::new();
     let mollusk = mollusk_for_program(&fixture.program_id);
@@ -979,7 +1016,7 @@ fn invalid_consume_gateway_mint_readonly_account_passed_writable_rejects_before_
 }
 
 #[test]
-#[ignore = "requires cargo build-sbf and target/deploy/xxxl_svm.so"]
+#[ignore = "artifact-runtime: requires explicit Mollusk artifact run"]
 fn invalid_consume_gateway_mint_required_writable_account_passed_readonly_rejects_before_validation(
 ) {
     let fixture = ScaffoldFixture::new();
@@ -1000,7 +1037,7 @@ fn invalid_consume_gateway_mint_required_writable_account_passed_readonly_reject
 }
 
 #[test]
-#[ignore = "requires cargo build-sbf and target/deploy/xxxl_svm.so"]
+#[ignore = "artifact-runtime: requires explicit Mollusk artifact run"]
 fn invalid_consume_gateway_mint_unexpected_signer_rejects_before_validation() {
     let fixture = ScaffoldFixture::new();
     let mollusk = mollusk_for_program(&fixture.program_id);
@@ -1020,7 +1057,7 @@ fn invalid_consume_gateway_mint_unexpected_signer_rejects_before_validation() {
 }
 
 #[test]
-#[ignore = "requires cargo build-sbf and target/deploy/xxxl_svm.so"]
+#[ignore = "artifact-runtime: requires explicit Mollusk artifact run"]
 fn invalid_consume_gateway_mint_wrong_program_account_owner_rejects_before_live_route() {
     let fixture = ScaffoldFixture::new();
     let mollusk = mollusk_for_program(&fixture.program_id);
@@ -1039,6 +1076,7 @@ fn invalid_consume_gateway_mint_wrong_program_account_owner_rejects_before_live_
 }
 
 #[test]
+#[ignore = "artifact-runtime: requires explicit Mollusk artifact run"]
 fn mollusk_consumed_processed_event_rejection_leaves_mutable_accounts_unchanged() {
     let fixture = ScaffoldFixture::new();
     let mollusk = mollusk_for_program(&fixture.program_id);
@@ -1057,6 +1095,7 @@ fn mollusk_consumed_processed_event_rejection_leaves_mutable_accounts_unchanged(
 }
 
 #[test]
+#[ignore = "artifact-runtime: requires explicit Mollusk artifact run"]
 fn mollusk_zero_amount_rejection_leaves_mutable_accounts_unchanged() {
     let fixture = ScaffoldFixture::new();
     let mollusk = mollusk_for_program(&fixture.program_id);
@@ -1081,6 +1120,7 @@ fn mollusk_zero_amount_rejection_leaves_mutable_accounts_unchanged() {
 }
 
 #[test]
+#[ignore = "artifact-runtime: requires explicit Mollusk artifact run"]
 fn mollusk_amount_above_u64_rejection_leaves_mutable_accounts_unchanged() {
     let fixture = ScaffoldFixture::new();
     let mollusk = mollusk_for_program(&fixture.program_id);
@@ -1105,6 +1145,7 @@ fn mollusk_amount_above_u64_rejection_leaves_mutable_accounts_unchanged() {
 }
 
 #[test]
+#[ignore = "artifact-runtime: requires explicit Mollusk artifact run"]
 fn mollusk_wrong_mint_state_mint_id_rejection_leaves_mutable_accounts_unchanged() {
     let fixture = ScaffoldFixture::new();
     let mollusk = mollusk_for_program(&fixture.program_id);
@@ -1125,6 +1166,7 @@ fn mollusk_wrong_mint_state_mint_id_rejection_leaves_mutable_accounts_unchanged(
 }
 
 #[test]
+#[ignore = "artifact-runtime: requires explicit Mollusk artifact run"]
 fn mollusk_wrong_gateway_config_route_id_rejection_leaves_mutable_accounts_unchanged() {
     let fixture = ScaffoldFixture::new();
     let mollusk = mollusk_for_program(&fixture.program_id);
@@ -1145,6 +1187,7 @@ fn mollusk_wrong_gateway_config_route_id_rejection_leaves_mutable_accounts_uncha
 }
 
 #[test]
+#[ignore = "artifact-runtime: requires explicit Mollusk artifact run"]
 fn mollusk_wrong_gateway_config_guardian_set_id_rejection_leaves_mutable_accounts_unchanged() {
     let fixture = ScaffoldFixture::new();
     let mollusk = mollusk_for_program(&fixture.program_id);
@@ -1165,6 +1208,7 @@ fn mollusk_wrong_gateway_config_guardian_set_id_rejection_leaves_mutable_account
 }
 
 #[test]
+#[ignore = "artifact-runtime: requires explicit Mollusk artifact run"]
 fn mollusk_wrong_gateway_config_target_mint_rejection_leaves_mutable_accounts_unchanged() {
     let fixture = ScaffoldFixture::new();
     let mollusk = mollusk_for_program(&fixture.program_id);
@@ -1185,6 +1229,7 @@ fn mollusk_wrong_gateway_config_target_mint_rejection_leaves_mutable_accounts_un
 }
 
 #[test]
+#[ignore = "artifact-runtime: requires explicit Mollusk artifact run"]
 fn mollusk_wrong_gateway_config_source_chain_weight_rejection_leaves_mutable_accounts_unchanged() {
     let fixture = ScaffoldFixture::new();
     let mollusk = mollusk_for_program(&fixture.program_id);
@@ -1205,6 +1250,7 @@ fn mollusk_wrong_gateway_config_source_chain_weight_rejection_leaves_mutable_acc
 }
 
 #[test]
+#[ignore = "artifact-runtime: requires explicit Mollusk artifact run"]
 fn mollusk_source_chain_id_mismatch_rejection_leaves_mutable_accounts_unchanged() {
     let fixture = ScaffoldFixture::new();
     let mollusk = mollusk_for_program(&fixture.program_id);
@@ -1229,6 +1275,7 @@ fn mollusk_source_chain_id_mismatch_rejection_leaves_mutable_accounts_unchanged(
 }
 
 #[test]
+#[ignore = "artifact-runtime: requires explicit Mollusk artifact run"]
 fn mollusk_wrong_guardian_set_id_rejection_leaves_mutable_accounts_unchanged() {
     let fixture = ScaffoldFixture::new();
     let mollusk = mollusk_for_program(&fixture.program_id);
@@ -1249,6 +1296,7 @@ fn mollusk_wrong_guardian_set_id_rejection_leaves_mutable_accounts_unchanged() {
 }
 
 #[test]
+#[ignore = "artifact-runtime: requires explicit Mollusk artifact run"]
 fn mollusk_wrong_recipient_token_account_rejection_leaves_mutable_accounts_unchanged() {
     let fixture = ScaffoldFixture::new();
     let mollusk = mollusk_for_program(&fixture.program_id);
@@ -1271,6 +1319,7 @@ fn mollusk_wrong_recipient_token_account_rejection_leaves_mutable_accounts_uncha
 }
 
 #[test]
+#[ignore = "artifact-runtime: requires explicit Mollusk artifact run"]
 fn mollusk_wrong_processed_event_recipient_rejection_leaves_mutable_accounts_unchanged() {
     let fixture = ScaffoldFixture::new();
     let mollusk = mollusk_for_program(&fixture.program_id);
@@ -1293,6 +1342,7 @@ fn mollusk_wrong_processed_event_recipient_rejection_leaves_mutable_accounts_unc
 }
 
 #[test]
+#[ignore = "artifact-runtime: requires explicit Mollusk artifact run"]
 fn mollusk_wrong_processed_event_canonical_event_key_rejection_leaves_mutable_accounts_unchanged() {
     let fixture = ScaffoldFixture::new();
     let mollusk = mollusk_for_program(&fixture.program_id);
@@ -1314,6 +1364,7 @@ fn mollusk_wrong_processed_event_canonical_event_key_rejection_leaves_mutable_ac
 }
 
 #[test]
+#[ignore = "artifact-runtime: requires explicit Mollusk artifact run"]
 fn mollusk_wrong_processed_event_route_id_rejection_leaves_mutable_accounts_unchanged() {
     let fixture = ScaffoldFixture::new();
     let mollusk = mollusk_for_program(&fixture.program_id);
@@ -1335,6 +1386,7 @@ fn mollusk_wrong_processed_event_route_id_rejection_leaves_mutable_accounts_unch
 }
 
 #[test]
+#[ignore = "artifact-runtime: requires explicit Mollusk artifact run"]
 fn mollusk_wrong_processed_event_recipient_bit_flip_rejection_leaves_mutable_accounts_unchanged() {
     let fixture = ScaffoldFixture::new();
     let mollusk = mollusk_for_program(&fixture.program_id);
@@ -1356,6 +1408,7 @@ fn mollusk_wrong_processed_event_recipient_bit_flip_rejection_leaves_mutable_acc
 }
 
 #[test]
+#[ignore = "artifact-runtime: requires explicit Mollusk artifact run"]
 fn mollusk_wrong_recipient_balance_owner_rejection_leaves_mutable_accounts_unchanged() {
     let fixture = ScaffoldFixture::new();
     let mollusk = mollusk_for_program(&fixture.program_id);
@@ -1376,6 +1429,7 @@ fn mollusk_wrong_recipient_balance_owner_rejection_leaves_mutable_accounts_uncha
 }
 
 #[test]
+#[ignore = "artifact-runtime: requires explicit Mollusk artifact run"]
 fn mollusk_wrong_recipient_balance_mint_rejection_leaves_mutable_accounts_unchanged() {
     let fixture = ScaffoldFixture::new();
     let mollusk = mollusk_for_program(&fixture.program_id);
@@ -1396,7 +1450,7 @@ fn mollusk_wrong_recipient_balance_mint_rejection_leaves_mutable_accounts_unchan
 }
 
 #[test]
-#[ignore = "requires cargo build-sbf and target/deploy/xxxl_svm.so"]
+#[ignore = "artifact-runtime: requires explicit Mollusk artifact run"]
 fn invalid_consume_gateway_mint_wrong_recipient_token_owner_rejects_before_live_route() {
     let fixture = ScaffoldFixture::new();
     let mollusk = mollusk_for_program(&fixture.program_id);
@@ -1419,7 +1473,7 @@ fn invalid_consume_gateway_mint_wrong_recipient_token_owner_rejects_before_live_
 }
 
 #[test]
-#[ignore = "requires cargo build-sbf and target/deploy/xxxl_svm.so"]
+#[ignore = "artifact-runtime: requires explicit Mollusk artifact run"]
 fn invalid_consume_gateway_mint_zero_amount_rejects_before_live_route() {
     let fixture = ScaffoldFixture::new();
     let mollusk = mollusk_for_program(&fixture.program_id);
@@ -1444,7 +1498,7 @@ fn invalid_consume_gateway_mint_zero_amount_rejects_before_live_route() {
 }
 
 #[test]
-#[ignore = "requires cargo build-sbf and target/deploy/xxxl_svm.so"]
+#[ignore = "artifact-runtime: requires explicit Mollusk artifact run"]
 fn invalid_consume_gateway_mint_length_rejects_before_scaffold_path() {
     let fixture = ScaffoldFixture::new();
     let mollusk = mollusk_for_program(&fixture.program_id);
@@ -1466,7 +1520,7 @@ fn invalid_consume_gateway_mint_length_rejects_before_scaffold_path() {
 }
 
 #[test]
-#[ignore = "requires cargo build-sbf and target/deploy/xxxl_svm.so"]
+#[ignore = "artifact-runtime: requires explicit Mollusk artifact run"]
 fn invalid_consume_gateway_mint_discriminator_rejects_before_scaffold_path() {
     let fixture = ScaffoldFixture::new();
     let mollusk = mollusk_for_program(&fixture.program_id);
@@ -1488,7 +1542,7 @@ fn invalid_consume_gateway_mint_discriminator_rejects_before_scaffold_path() {
 }
 
 #[test]
-#[ignore = "requires cargo build-sbf and target/deploy/xxxl_svm.so"]
+#[ignore = "artifact-runtime: requires explicit Mollusk artifact run"]
 fn invalid_consume_gateway_mint_version_rejects_before_scaffold_path() {
     let fixture = ScaffoldFixture::new();
     let mollusk = mollusk_for_program(&fixture.program_id);
